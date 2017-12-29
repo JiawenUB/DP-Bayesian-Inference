@@ -128,6 +128,7 @@ class BayesInferwithDirPrior(object):
 		self._LS = {}
 		self._VS = {}
 		self._LS2 = 0.0
+		self._candidate_VS_scores = {}
 		self._accuracy = {"Laplace Mechanism":[],"Randomize Response":[],"Exponential Mechanism":[]}
 		self._average = {"Laplace Mechanism":[],"Randomize Response":[],"Exponential Mechanism":[]}
 		self._accuracy_expomech = {"Exponential Mechanism with Local Sensitivity":[],"Laplace Mechanism":[], "Exponential Mechanism with Varying Sensitivity":[], "Exponential Mechanism with Global Sensitivity":[]}		
@@ -181,12 +182,10 @@ class BayesInferwithDirPrior(object):
 
 	def _set_VS(self):
 		t = 2 * math.log(len(self._candidates) / 0.9) / self._epsilon
-		LS = {}
 		for r in self._candidates:
-			LS[r] = r._score_sensitivity(self._posterior)
-		for r in self._candidates:
-			self._VS[r] = max([abs((-self._candidate_scores[r] + t * LS[r] - ((-self._candidate_scores[i]) + t * LS[i]))/(LS[r] + LS[i])) for i in self._candidates])
+			self._candidate_VS_scores[r] = -max([abs((self._candidate_scores[r] + t * self._LS[r] - ((self._candidate_scores[i]) + t * self._LS[i]))/(self._LS[r] + self._LS[i])) for i in self._candidates])
 			#self._GS = max(self._GS, self._LS[r])
+		print self._candidate_VS_scores
 
 	def _almost_randomize(self):
 		return
@@ -227,7 +226,7 @@ class BayesInferwithDirPrior(object):
 		probabilities = {}
 		nomalizer = 0.0
 		for r in self._candidates:
-			probabilities[r] = math.exp(self._epsilon * self._candidate_scores[r]/(self._VS[r]))
+			probabilities[r] = math.exp(self._epsilon * self._candidate_VS_scores[r]/(1.0))
 			nomalizer += probabilities[r]
 		outpro = random.random()
 		for r in self._candidates:
@@ -241,8 +240,8 @@ class BayesInferwithDirPrior(object):
 		self._set_candidate_scores()
 		self._set_LS()
 		self._set_GS()
-		self._set_VS()
 		self._set_LS_2()
+		self._set_VS()
 		self._show_all()
 		for i in range(times):
 			self._show_laplaced()
@@ -320,7 +319,7 @@ class BayesInferwithDirPrior(object):
 		self._show_laplaced()
 		self._show_randomized()
 		self._show_exponential()
-		self._show_VS()
+		#self._show_VS()
 
 
 
@@ -397,7 +396,7 @@ def draw_error_average(averages, model):
 if __name__ == "__main__":
 	# Tests the functioning of the module
 
-	sample_size = 100
+	sample_size = 120
 	epsilon = 0.8
 	prior = Dir([2,2])
 	Bayesian_Model = BayesInferwithDirPrior(prior, sample_size, epsilon)
