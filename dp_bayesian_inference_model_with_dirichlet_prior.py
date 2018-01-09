@@ -6,67 +6,79 @@ import math
 import scipy
 from scipy.stats import beta
 from fractions import Fraction
-
-def beta_function(alpha, beta):
-	f = Fraction(1,1)
-	t = (min(alpha, beta))
-	k = (max(alpha, beta))
-	if t % 1 == 0.0 and k % 1 == 0.0:
-		for i in range(1, int(t)):
-			f = f * Fraction(i, (i + int(k)))
-		f = f * Fraction(1, int(k))
-		f = (1.0 * f.numerator) / (f.denominator)
-	elif t % 1 == 0.0 and k % 1 != 0.0:
-		k = Fraction(int(k * 2), 2)
-		f = 1 / k
-		t = Fraction((int(t) - 1) * 2, 2)
-		while t >= 1:
-			f = f * t / (k + t)
-			t = t - 1
-		f = (1.0 * f.numerator) / (f.denominator)
-	elif k % 1 == 0.0 and t % 1 != 0.0:
-		t = Fraction(int(t * 2), 2)
-		f = 1 / t
-		k = Fraction(int(k - 1)*2, 2)
-		while k >= 1:
-			f = f * k / (k + t) 
-			k = k - 1
-		f = (1.0 * f.numerator) / (f.denominator)
-	else:
-		k = Fraction(int(k * 2), 2)
-		#print k
-		t = Fraction(int(t * 2), 2)
-		#print t
-		k = k - 1
-		s = k + t
-		while k > 0:
-			#print f,k,s
-			f = f * k / s
-			k = k - 1
-			s = s - 1
-		t = t - 1
-		while t > 0:
-			#print f,t,s
-			f = f * t / s
-			t = t - 1
-			s = s - 1
-		f =  math.sqrt(math.pi) * math.sqrt(math.pi) * (1.0 * f.numerator) / (f.denominator)
-	return f
+import operator
 
 
 
 def multibeta_function(alphas):
 	numerator = 1.0
-	denominator = 1.0
+	denominator = 0.0
 	for alpha in alphas:
 		numerator = numerator * math.gamma(alpha)
 		denominator = denominator + alpha
+	# print numerator / math.gamma(denominator)
 	return numerator / math.gamma(denominator)
 
+def optimized_multibeta_function(alphas):
+	denominator = -1.0
+	nominators = []
+	denominators = []
+	r = 1.0
+	for alpha in alphas:
+		denominator = denominator + alpha
+	for alpha in alphas:
+		temp = alpha - 1
+		while temp > 0.0:
+			nominators.append(temp)
+			temp -=1
+		if temp < 0.0:
+			nominators.append(math.gamma(1 + temp))
+	while denominator > 0.0:
+		denominators.append(denominator)
+		denominator -= 1
+	if denominator < 0.0:
+		denominators.append(math.gamma(1 + denominator))
+	# print nominators
+	# print denominators
+	d_pointer = len(denominators) - 1
+	n_pointer = len(nominators) - 1
+	while d_pointer >= 0 and n_pointer >= 0:
+		# print nominators[n_pointer],denominators[d_pointer]
+		r *= nominators[n_pointer] / denominators[d_pointer]
+		n_pointer -= 1
+		d_pointer -= 1
+	while d_pointer >= 0:
+		# print n_pointer,denominators[d_pointer]
+		r *= 1.0 / denominators[d_pointer]
+		d_pointer -= 1
+	while n_pointer >= 0:
+		# print nominators[n_pointer] ,d_pointer
+		r *= nominators[n_pointer] 
+		n_pointer -= 1
+	# 	while temp > 0.0:
+	# 		r *= (temp / denominator)
+	# 		temp -= 1
+	# 		denominator -= 1
+	# 		print r,temp,denominator
+	# 	if temp < 0.0:
+	# 		r *= (math.gamma(1 + temp) / denominator)
+	# 		denominator -= 1
+	# 		print r, temp, denominator
+	# while denominator > 0.0:
+	# 	r /= denominator
+	# 	denominator -= 1
+	# if denominator < 0.0:
+	# 	r /= math.gamma(1 + denominator)
+	# print r
+	return r
 
 def Hellinger_Distance_Dir(Dir1, Dir2):
 	return math.sqrt(1 - multibeta_function((numpy.array(Dir1._alphas) + numpy.array(Dir2._alphas)) / 2.0)/ \
 		math.sqrt(multibeta_function(Dir1._alphas) * multibeta_function(Dir2._alphas)))
+
+def Optimized_Hellinger_Distance_Dir(Dir1, Dir2):
+	return math.sqrt(1 - optimized_multibeta_function((numpy.array(Dir1._alphas) + numpy.array(Dir2._alphas)) / 2.0)/ \
+		math.sqrt(optimized_multibeta_function(Dir1._alphas) * optimized_multibeta_function(Dir2._alphas)))
 
 
 class Dir(object):
@@ -75,14 +87,13 @@ class Dir(object):
 		self._size = len(alphas)
 
 	def __sub__(self, other):
-		return Hellinger_Distance_Dir(self, other)
+		return Optimized_Hellinger_Distance_Dir(self, other)
 
 	def __add__(self, other):
 		return Dir(list(numpy.array(self._alphas) + numpy.array(other._alphas)))
 
 	def show(self):
-		print "Dirichlet"
-		print str(self._alphas)
+		print "Dirichlet("+str(self._alphas) + ")"
 
 	def _hellinger_sensitivity(self, r):
 		LS = 0.0
@@ -91,7 +102,8 @@ class Dir(object):
 			temp[i] += 1
 			for j in range(i + 1, r._size):
 				temp[j] -= 1
-				LS = max(LS, abs((r - self) - (self - Dir(temp))))
+				LS = max(LS, abs((r - self) - (Dir(temp) - self )))
+				# print r._alphas,self._alphas,temp,(r-self),(Dir(temp) - self)
 				temp[j] += 1
 			temp[i] -= 1
 		return LS
@@ -103,7 +115,7 @@ class Dir(object):
 			temp[i] += 1
 			for j in range(i + 1, self._size):
 				temp[j] -= 1
-				LS = max(LS, abs((r - self) - (r - Dir(temp))))
+				LS = max(LS, abs(-(r - self) + (r - Dir(temp))))
 				temp[j] += 1
 			temp[i] -= 1
 		return LS
@@ -127,7 +139,7 @@ class BayesInferwithDirPrior(object):
 		self._GS = 0.0
 		self._LS = {}
 		self._VS = {}
-		self._LS2 = 0.0
+		self._LS_max = 0.0
 		self._candidate_VS_scores = {}
 		self._accuracy = {"Laplace Mechanism":[],"Randomize Response":[],"Exponential Mechanism":[]}
 		self._average = {"Laplace Mechanism":[],"Randomize Response":[],"Exponential Mechanism":[]}
@@ -138,7 +150,7 @@ class BayesInferwithDirPrior(object):
 		self._update_observation()
 
 	def _update_observation(self):
-		self._observation = numpy.random.multinomial(1, self._prior._alphas, self._sample_size)
+		self._observation = numpy.random.multinomial(1, self._bias, self._sample_size)
 		self._posterior = Dir(self._observation_counts) + self._prior
 
 	def _set_candidate_scores(self):
@@ -147,6 +159,8 @@ class BayesInferwithDirPrior(object):
 		# 	print r._alphas
 		for r in self._candidates:
 			self._candidate_scores[r] = -(self._posterior - r)
+			if self._candidate_scores[r] == 0.0:
+				self._mark = r
 
 	def _set_candidates(self, current, rest):
 		if len(current) == len(self._prior._alphas) - 1:
@@ -162,16 +176,21 @@ class BayesInferwithDirPrior(object):
 	def _set_LS(self):
 		for r in self._candidates:
 			self._LS[r] = r._hellinger_sensitivity(self._posterior)
+			# r.show()
+			# print self._LS[r]
+			self._LS_max = max(self._LS_max, self._LS[r])
+		# print self._LS
 
-	def _set_LS_2(self):
-		temp = deepcopy(self._posterior._alphas)
-		for i in range(0, self._posterior._size):
-			temp[i] += 1
-			for j in range(i + 1, self._posterior._size):
-				temp[j] -= 1
-				self._LS2 = max(self._LS2, abs(self._posterior - Dir(temp)))
-				temp[j] += 1
-			temp[i] -= 1
+	def _set_LS_max(self):
+		# temp = deepcopy(self._posterior._alphas)
+		# for i in range(0, self._posterior._size):
+		# 	temp[i] += 1
+		# 	for j in range(i + 1, self._posterior._size):
+		# 		temp[j] -= 1
+		# 		self._LS_max = max(self._LS_max, abs(self._posterior - Dir(temp)))
+		# 		temp[j] += 1
+		# 	temp[i] -= 1
+		self._LS_max = self._posterior._hellinger_sensitivity(self._posterior)
 
 
 	def _set_GS(self):
@@ -181,17 +200,31 @@ class BayesInferwithDirPrior(object):
 		self._GS = Dir([1,1,1,2]) - Dir([1,2,1,1])
 
 	def _set_VS(self):
-		t = 2 * math.log(len(self._candidates) / 0.9) / self._epsilon
+		t = 2 * math.log(len(self._candidates) / 0.8) / self._epsilon
 		for r in self._candidates:
-			self._candidate_VS_scores[r] = -max([abs((self._candidate_scores[r] + t * self._LS[r] - ((self._candidate_scores[i]) + t * self._LS[i]))/(self._LS[r] + self._LS[i])) for i in self._candidates])
+			self._candidate_VS_scores[r] = - max([(self._candidate_scores[r] + t * self._LS[r] - ((self._candidate_scores[i]) + t * self._LS[i])/(self._LS[r] + self._LS[i])) for i in self._candidates])
 			#self._GS = max(self._GS, self._LS[r])
-		print self._candidate_VS_scores
+		#print self._candidate_VS_scores
 
 	def _almost_randomize(self):
 		return
 
 	def _laplace_noize(self):
+		#self._laplaced_posterior = Dir([alpha + abs(numpy.random.laplace(0, len(self._prior._alphas) * 1.0/self._epsilon)) for alpha in self._posterior._alphas])
 		self._laplaced_posterior = Dir([alpha + abs(numpy.random.laplace(0, len(self._prior._alphas) * 1.0/self._epsilon)) for alpha in self._posterior._alphas])
+
+	def _laplace_noize_mle(self):
+		#self._laplaced_posterior = Dir([alpha + abs(numpy.random.laplace(0, len(self._prior._alphas) * 1.0/self._epsilon)) for alpha in self._posterior._alphas])
+		while True:
+			flage = True
+			self._laplaced_posterior = Dir([alpha + round(numpy.random.laplace(0, 2.0/self._epsilon)) for alpha in self._posterior._alphas])
+			self._laplaced_posterior._alphas[0] += (sum(self._prior._alphas) + self._sample_size - sum(self._laplaced_posterior._alphas))
+			for  alpha in self._laplaced_posterior._alphas:
+				if alpha < 0.0:
+					flage = False
+			if flage:
+				break
+
 
 	def _randomize(self):
 		return
@@ -213,7 +246,7 @@ class BayesInferwithDirPrior(object):
 		probabilities = {}
 		nomalizer = 0.0
 		for r in self._candidates:
-			probabilities[r] = math.exp(self._epsilon * self._candidate_scores[r]/(self._LS[r]))
+			probabilities[r] = math.exp(self._epsilon * self._candidate_scores[r]/(self._LS_max))
 			nomalizer += probabilities[r]
 		outpro = random.random()
 		for r in self._candidates:
@@ -238,14 +271,13 @@ class BayesInferwithDirPrior(object):
 
 	def _update_expomech(self, times):
 		self._set_candidate_scores()
-		self._set_LS()
+		self._show_observation()
+		#self._set_LS()
 		self._set_GS()
-		self._set_LS_2()
+		self._set_LS_max()
 		self._set_VS()
 		self._show_all()
 		for i in range(times):
-			self._show_laplaced()
-			self._show_exponential()
 			#self._exponentialize()
 			#self._accuracy_expomech["Exponential Mechanism with Global Sensitivity"].append(self._posterior - self._exponential_posterior)
 			self._exponentialize_LS()
@@ -254,7 +286,9 @@ class BayesInferwithDirPrior(object):
 			self._accuracy_expomech["Exponential Mechanism with Varying Sensitivity"].append(self._posterior - self._exponential_posterior)
 			self._exponentialize_GS()
 			self._accuracy_expomech["Exponential Mechanism with Global Sensitivity"].append(self._posterior - self._exponential_posterior)
-			self._laplace_noize()
+			self._laplace_noize_mle()
+			self._show_exponential()
+			self._show_laplaced()
 			self._accuracy_expomech["Laplace Mechanism"].append(self._posterior - self._laplaced_posterior)
 			for key,item in self._accuracy.items():
 				self._average[key].append(numpy.mean(item))
@@ -278,6 +312,8 @@ class BayesInferwithDirPrior(object):
 
 	def _get_posterior(self):
 		return self._posterior
+
+
 
 
 	def _show_bias(self):
@@ -323,37 +359,7 @@ class BayesInferwithDirPrior(object):
 
 
 
-def draw_distribution(datas, names):
-	plt.subplots(nrows=len(datas), ncols=1, figsize=(10,len(datas) * 2.3))
-	plt.tight_layout()
-	for i in range(len(datas)):
-		datas[i] = [round(item * 10 * 2.0)/2.0/10 for item in datas[i]]
-		X = list(set(datas[i]))
-		X.sort()
-		Y = []
-		for x in X:
-			Y.append(datas[i].count(x)/1000.0)
-		plt.subplot(len(datas),1,i+1)
-		plt.bar(range(len(Y)), Y, facecolor='g', tick_label = X)
-		plt.title(names[i])
-		plt.ylim(0,1)
-		olt.xlim(0,len(item))
-		plt.grid()
-	plt.show()
 
-	return
-
-def draw_beta_distribution(datas, names):
-	plt.subplots(nrows=len(datas), ncols=1, figsize=(10,len(datas) * 3))
-	plt.tight_layout()
-	for i in range(len(datas)):
-		x = numpy.linspace(scipy.stats.beta.ppf(0.01, datas[i]._alpha, datas[i]._beta),scipy.stats.beta.ppf(0.99, datas[i]._alpha, datas[i]._beta), 100)
-		plt.subplot(len(datas),1,i+1)
-		plt.plot(x, scipy.stats.beta.pdf(x, datas[i]._alpha, datas[i]._beta),'r-', lw=5, alpha=0.8, label='Beta(' + str(datas[i]._alpha) + "," + str(datas[i]._beta) + ")")
-		plt.title(names[i])
-		plt.legend()
-	plt.show()
-	return
 
 def draw_error(errors, model):
 	plt.subplots(nrows=len(errors), ncols=1, figsize=(12, len(errors) * 5.0))
@@ -365,15 +371,14 @@ def draw_error(errors, model):
 		plt.axhline(y=numpy.mean(item), color='r', linestyle = '--', alpha = 0.8, label = "average error",linewidth=3)
 		plt.scatter(x, numpy.array(item), s = 40, c = 'b', marker = 'o', alpha = 0.7, edgecolors='white', label = " error")
 		plt.ylabel('Hellinger Distance')
-		plt.xlabel('Runs (Bias = ' + str(model._bias) + ', GS = ' + str(model._GS) + ', max LS = ' + str(model._LS2) + ')')
+		plt.xlabel('Runs (Bias = ' + str(model._bias) + ', GS = ' + str(model._GS) + ', max LS = ' + str(model._LS_max) + ')')
 		plt.title(key + ' (Data Size = ' + str(model._sample_size) + ', Global epsilon = ' + str(model._epsilon) + ')')
 		plt.legend(loc="best")
 		rows = rows + 1
 		plt.ylim(-0.1,1.0)
 		plt.xlim(0.0,len(item)*1.0)
 		plt.grid()
-	#plt.show()
-	plt.savefig("dirichlet-GS-VS-LS-2.png")
+	plt.savefig("dirichlet-GS-VS-LS-size200order2runs100.png")
 	return
 
 def draw_error_average(averages, model):
@@ -396,44 +401,14 @@ def draw_error_average(averages, model):
 if __name__ == "__main__":
 	# Tests the functioning of the module
 
-	sample_size = 120
+	sample_size = 100
 	epsilon = 0.8
-	prior = Dir([2,2])
+	prior = Dir([7, 4, 5])
 	Bayesian_Model = BayesInferwithDirPrior(prior, sample_size, epsilon)
 
-	# draw_distribution([list(numpy.random.beta(alpha + Bayesian_Model._get_ones(),\
-	# beta + Bayesian_Model._get_zeros(), 1000)), \
-	# list(numpy.random.beta(alpha + Bayesian_Model._get_randomized_ones(),\
-	# beta + Bayesian_Model._get_randomized_zeros(), 1000)),\
-	# list(numpy.random.beta(alpha + Bayesian_Model._get_laplace_ones(),\
-	# beta + Bayesian_Model._get_laplace_zeros(), 1000)),\
-	# list(numpy.random.beta(alpha + Bayesian_Model._get_exponential_ones(),\
-	# beta + Bayesian_Model._get_exponential_zeros(), 1000))],\
-	# [" Bayesian Inferred Posterior","Randomized Response Posterior",\
-	# "(" + str(epsilon) + ", 0) - DP Posterior Using Laplace Mechanism",\
-	# "Exponential Mechanism Posterior"])
 
-	# draw_beta_distribution([Bayesian_Model._posterior,\
-	# 	Bayesian_Model._randomized_posterior,\
-	# 	Bayesian_Model._laplaced_posterior,\
-	# 	Bayesian_Model._exponential_posterior],
-	# 	[" Bayesian Inferred Posterior","Randomized Response Posterior",\
-	# 	"(" + str(epsilon) + ", 0) - DP Posterior Using Laplace Mechanism",\
-	# 	"Exponential Mechanism Posterior"])
-	Bayesian_Model._update_expomech(200)
+	Bayesian_Model._update_expomech(100)
 
 	draw_error(Bayesian_Model._accuracy_expomech,Bayesian_Model)
-	# draw_error_average(Bayesian_Model._average)
-	# print Beta_Distribution(35,35) - Beta_Distribution(36, 34)
-	# print Beta_Distribution(35,35) - Beta_Distribution(36, 35)
-	# print Beta_Distribution(35,35) - Beta_Distribution(36, 36)
 
-	#print Beta_Distribution(150,1) - Beta_Distribution(149, 2)
-	#print Beta_Distribution(170,1) - Beta_Distribution(169, 2)
-	#print Beta_Distribution(51,50) - Beta_Distribution(50, 51)
-	#print Beta_Distribution(70,71) - Beta_Distribution(71, 70)
-	#print Beta_Distribution(80,81) - Beta_Distribution(81, 80)
-	#print Beta_Distribution(500,5) - Beta_Distribution(499, 2)
-	#print math.gamma(45.5), 89.0/2 * math.gamma(89.0/2)
-	
 
