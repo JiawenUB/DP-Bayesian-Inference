@@ -7,6 +7,8 @@ import scipy
 from scipy.stats import beta
 from fractions import Fraction
 import operator
+import time
+
 
 
 
@@ -55,21 +57,7 @@ def optimized_multibeta_function(alphas):
 		# print nominators[n_pointer] ,d_pointer
 		r *= nominators[n_pointer] 
 		n_pointer -= 1
-	# 	while temp > 0.0:
-	# 		r *= (temp / denominator)
-	# 		temp -= 1
-	# 		denominator -= 1
-	# 		print r,temp,denominator
-	# 	if temp < 0.0:
-	# 		r *= (math.gamma(1 + temp) / denominator)
-	# 		denominator -= 1
-	# 		print r, temp, denominator
-	# while denominator > 0.0:
-	# 	r /= denominator
-	# 	denominator -= 1
-	# if denominator < 0.0:
-	# 	r /= math.gamma(1 + denominator)
-	# print r
+
 	return r
 
 def Hellinger_Distance_Dir(Dir1, Dir2):
@@ -154,13 +142,12 @@ class BayesInferwithDirPrior(object):
 		self._posterior = Dir(self._observation_counts) + self._prior
 
 	def _set_candidate_scores(self):
+		print "Calculating Candidates and Scores....."
+		start = time.clock()
 		self._set_candidates([], numpy.sum(self._observation))
-		# for r in self._candidates:
-		# 	print r._alphas
 		for r in self._candidates:
 			self._candidate_scores[r] = -(self._posterior - r)
-			if self._candidate_scores[r] == 0.0:
-				self._mark = r
+		print str(time.clock() - start) + " seconds."
 
 	def _set_candidates(self, current, rest):
 		if len(current) == len(self._prior._alphas) - 1:
@@ -176,45 +163,33 @@ class BayesInferwithDirPrior(object):
 	def _set_LS(self):
 		for r in self._candidates:
 			self._LS[r] = r._hellinger_sensitivity(self._posterior)
-			# r.show()
-			# print self._LS[r]
 			self._LS_max = max(self._LS_max, self._LS[r])
-		# print self._LS
 
 	def _set_LS_max(self):
-		# temp = deepcopy(self._posterior._alphas)
-		# for i in range(0, self._posterior._size):
-		# 	temp[i] += 1
-		# 	for j in range(i + 1, self._posterior._size):
-		# 		temp[j] -= 1
-		# 		self._LS_max = max(self._LS_max, abs(self._posterior - Dir(temp)))
-		# 		temp[j] += 1
-		# 	temp[i] -= 1
 		self._LS_max = self._posterior._hellinger_sensitivity(self._posterior)
 
 
 	def _set_GS(self):
-		# for r in self._candidates:
-		# 	for j in self._candidates:
-		# 		self._GS = max(self._GS, r._hellinger_sensitivity(j))
 		self._GS = Dir([1,1,1,2]) - Dir([1,2,1,1])
 
 	def _set_VS(self):
 		t = 2 * math.log(len(self._candidates) / 0.8) / self._epsilon
+		print "Calculating Varying Sensitivity Scores....."
+		start = time.clock()
+		print t
 		for r in self._candidates:
-			self._candidate_VS_scores[r] = - max([(self._candidate_scores[r] + t * self._LS[r] - ((self._candidate_scores[i]) + t * self._LS[i])/(self._LS[r] + self._LS[i])) for i in self._candidates])
-			#self._GS = max(self._GS, self._LS[r])
-		#print self._candidate_VS_scores
+			self._LS[r] = r._hellinger_sensitivity(r)
+		for r in self._candidates:
+			self._candidate_VS_scores[r] = -max([((-self._candidate_scores[r] + t * self._LS[r] - (-self._candidate_scores[i] + t * self._LS[i]))/(self._LS[r] + self._LS[i])) for i in self._candidates])
+		print str(time.clock() - start) + "seconds."
 
 	def _almost_randomize(self):
 		return
 
 	def _laplace_noize(self):
-		#self._laplaced_posterior = Dir([alpha + abs(numpy.random.laplace(0, len(self._prior._alphas) * 1.0/self._epsilon)) for alpha in self._posterior._alphas])
 		self._laplaced_posterior = Dir([alpha + abs(numpy.random.laplace(0, len(self._prior._alphas) * 1.0/self._epsilon)) for alpha in self._posterior._alphas])
 
 	def _laplace_noize_mle(self):
-		#self._laplaced_posterior = Dir([alpha + abs(numpy.random.laplace(0, len(self._prior._alphas) * 1.0/self._epsilon)) for alpha in self._posterior._alphas])
 		while True:
 			flage = True
 			self._laplaced_posterior = Dir([alpha + round(numpy.random.laplace(0, 2.0/self._epsilon)) for alpha in self._posterior._alphas])
@@ -224,10 +199,6 @@ class BayesInferwithDirPrior(object):
 					flage = False
 			if flage:
 				break
-
-
-	def _randomize(self):
-		return
 
 	def _exponentialize_GS(self):
 		probabilities = {}
@@ -271,15 +242,11 @@ class BayesInferwithDirPrior(object):
 
 	def _update_expomech(self, times):
 		self._set_candidate_scores()
-		self._show_observation()
-		#self._set_LS()
 		self._set_GS()
 		self._set_LS_max()
 		self._set_VS()
 		self._show_all()
 		for i in range(times):
-			#self._exponentialize()
-			#self._accuracy_expomech["Exponential Mechanism with Global Sensitivity"].append(self._posterior - self._exponential_posterior)
 			self._exponentialize_LS()
 			self._accuracy_expomech["Exponential Mechanism with Local Sensitivity"].append(self._posterior - self._exponential_posterior)
 			self._exponentialize_VS()
@@ -312,8 +279,6 @@ class BayesInferwithDirPrior(object):
 
 	def _get_posterior(self):
 		return self._posterior
-
-
 
 
 	def _show_bias(self):
@@ -358,9 +323,6 @@ class BayesInferwithDirPrior(object):
 		#self._show_VS()
 
 
-
-
-
 def draw_error(errors, model):
 	plt.subplots(nrows=len(errors), ncols=1, figsize=(12, len(errors) * 5.0))
 	plt.tight_layout(pad=2, h_pad=4, w_pad=2, rect=None)
@@ -378,37 +340,18 @@ def draw_error(errors, model):
 		plt.ylim(-0.1,1.0)
 		plt.xlim(0.0,len(item)*1.0)
 		plt.grid()
-	plt.savefig("dirichlet-GS-VS-LS-size200order2runs100.png")
-	return
-
-def draw_error_average(averages, model):
-	plt.subplots(nrows=len(averages), ncols=1, figsize=(12, len(averages) * 5.0))
-	plt.tight_layout(pad=2, h_pad=4, w_pad=2, rect=None)
-	rows = 1
-	for key,item in averages.items():
-		plt.subplot(len(averages), 1, rows)
-		x = numpy.arange(2, len(item) + 2, 1)
-		plt.plot(x, numpy.array(item), 'r-', lw=2, alpha=0.6)
-		plt.ylabel('Hellinger Distance (Bias = ' + str(model._bias) + ')')
-		plt.xlabel('Runs')
-		plt.title(key + ' (Data Size = ' + str(model._sample_size) + ' epsilon = ' + str(model._epsilon) + ')')
-		plt.legend(loc="best")
-		rows = rows + 1
-	plt.show()
+	plt.savefig("dirichlet-GS-VS-LS-size50order3runs100.png")
 	return
 
 
 if __name__ == "__main__":
 	# Tests the functioning of the module
 
-	sample_size = 100
+	sample_size = 200
 	epsilon = 0.8
-	prior = Dir([7, 4, 5])
+	prior = Dir([7, 4, 3])
 	Bayesian_Model = BayesInferwithDirPrior(prior, sample_size, epsilon)
-
 
 	Bayesian_Model._update_expomech(100)
 
 	draw_error(Bayesian_Model._accuracy_expomech,Bayesian_Model)
-
-
