@@ -1,0 +1,150 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% University/School Laboratory Report
+% LaTeX Template
+% Version 3.1 (25/3/14)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original author:
+% Linux and Unix Users Group at Virginia Tech Wiki 
+% (https://vtluug.org/wiki/Example_LaTeX_chem_lab_report)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass{article}
+\usepackage{geometry}
+\usepackage{amssymb}
+\geometry{left=2.5cm,right=2.5cm,top=2.5cm,bottom=3.5cm}
+\usepackage[version=3]{mhchem} % Package for chemical equation typesetting
+\usepackage{siunitx} % Provides the \SI{}{} and \si{} command for typesetting SI units
+\usepackage{graphicx} % Required for the inclusion of images
+\usepackage{natbib} % Required to change bibliography style to APA
+\usepackage{amsmath} % Required for some math elements 
+\usepackage{datetime}
+\usepackage[usenames, dvipsnames]{color}
+\setlength\parindent{0pt} % Removes all indentation from paragraphs
+
+\renewcommand{\labelenumi}{\alph{enumi}.} % Make numbering in the enumerate environment by letter rather than number (e.g. section 6)
+
+%\usepackage{times} % Uncomment to use the Times New Roman font
+
+%----------------------------------------------------------------------------------------
+%	DOCUMENT INFORMATION
+%----------------------------------------------------------------------------------------
+
+\title{\textbf{Proof: Non-private Local Sensitivity}\\
+% \begin{large}
+% \textbf{Probability Distributions and Bayesian Networks}% Title
+% \end{large}
+}
+% \author{Jiawen \textsc{Liu}} % Author name
+
+% \date{\currenttime\ \today} % Date for the report
+
+\begin{document}
+
+\maketitle % Insert the title, author and date
+
+% \begin{center}
+% \begin{tabular}{l r}
+% Date Performed: & January 1, 2012 \\ % Date the experiment was performed
+% %Partners: & James Smith \\ % Partner names
+% %& Mary Smith \\
+% Instructor: & Professor Sargur N. Srihari % Instructor/supervisor
+% \end{tabular}
+% \end{center}
+
+% If you wish to include an abstract, uncomment the lines below
+% \begin{abstract}
+% Abstract text
+% \end{abstract}
+
+%----------------------------------------------------------------------------------------
+%	SECTION 1
+%----------------------------------------------------------------------------------------
+
+For a query $Q$ over database $x$: $Q: x \rightarrow \mathbb{R}$, we have the definition of local sensitivity:
+\begin{equation*}
+\Delta_{local} Q(x) = \max_{\{x'\ adj\ x\}}| |Q(x)- Q(x')|.
+\end{equation*}
+
+\section{Laplace Mechanism under Local Sensitivity}
+
+The Laplace noised query $Q^{*}$ scaled to local sensitivity is:
+
+\begin{equation*}
+Q^{*}(x) = Q(x) + Lap(\frac{\Delta_{local} Q(x)}{\epsilon}).
+\end{equation*}
+
+Suppose we have two adjacent data bases $x,y$. The privacy loss of this noised query $Q$ can be analyzed as:
+
+\begin{equation*}
+\begin{split}
+privacy\ loss = \frac{P[Q^{*}(x) = R]}{P[Q^{*}(y) = R]}
+& = \frac{P[Q(x) + Lap(\frac{\Delta_{local} Q(x)}{\epsilon}) = R]}{P[Q(y) + Lap(\frac{\Delta_{local} Q(y)}{\epsilon}) = R]}\\
+& = \frac{P[Lap(\frac{\Delta_{local} Q(x)}{\epsilon}) = R - Q(x)]}{P[Lap(\frac{\Delta_{local} Q(y)}{\epsilon}) = R - Q(y)]}\\
+& = \frac{exp(-\frac{|R - Q(x)|}{\frac{\Delta_{local} Q(x)}{\epsilon}})}{exp(-\frac{|R - Q(y)|}{\frac{\Delta_{local} Q(y)}{\epsilon}})}\\
+& = exp(\frac{\epsilon |R - Q(y)|}{\Delta_{local} Q(y)} - \frac{\epsilon |R - Q(x)|}{\Delta_{local} Q(x)}).
+\end{split}
+\end{equation*}
+
+Since in local sensitivity $\Delta_{local} Q(x) \neq \Delta_{local} Q(y) $, we have:
+\begin{equation*}
+\begin{split}
+\frac{\epsilon |R - Q(y)|}{\Delta_{local} Q(y)} - \frac{\epsilon |R - Q(x)|}{\Delta_{local} Q(x)}
+& \neq \frac{\epsilon |R - Q(y)|}{\Delta_{local} Q(x)} - \frac{\epsilon |R - Q(x)|}{\Delta_{local} Q(x)} \\
+& = \frac{\epsilon(|R - Q(y)| - |R - Q(x)|)}{\Delta_{local} Q(x)}\\
+% \end{split}
+% \end{equation*}
+% According to the triangle inequality,
+% \begin{equation*}
+% \begin{split}
+% \frac{\epsilon|Q(y) - Q(x)|}{\Delta_{local} Q(x)} 
+% & > \frac{\epsilon(|R - Q(y)| - |R - Q(x)|)}{\Delta_{local} Q(x)} 
+& < \frac{\epsilon|Q(y) - Q(x)|}{\Delta_{local} Q(x)} (triangle\ inequality) \\
+% \epsilon & >\frac{\epsilon(|R - Q(y)| - |R - Q(x)|)}{\Delta_{local} Q(x)} > 
+& < \epsilon.
+\end{split}
+\end{equation*}
+
+i.e.
+\begin{equation*}
+privacy\ loss = \frac{P[Q^{*}(x) = R]}{P[Q^{*}(y) = R]} \nless exp(\epsilon),
+\end{equation*}
+% $privacy\ loss = \frac{P[Q^{*}(x) = R]}{P[Q^{*}(y) = R]} < exp(\epsilon)$ is untenable.
+
+% \textcolor{red}{when the $\Delta_{local} Q(x) < \Delta_{local} Q(y) $, we have:
+% \begin{equation*}
+% \begin{split}
+% \frac{\epsilon |R - Q(y)|}{\Delta_{local} Q(y)} - \frac{\epsilon |R - Q(x)|}{\Delta_{local} Q(x)}
+% & < \frac{\epsilon |R - Q(y)|}{\Delta_{local} Q(x)} - \frac{\epsilon |R - Q(x)|}{\Delta_{local} Q(x)} \\
+% & = \frac{\epsilon(|R - Q(x)| - |R - Q(y)|)}{\Delta_{local} Q(x)} \\
+% & < \frac{\epsilon|Q(y) - Q(x)|}{\Delta_{local} Q(x)} \\
+% & < \epsilon,
+% \end{split}
+% \end{equation*}}
+% i.e.
+% \begin{equation*}
+% privacy\ loss = \frac{P[Q^{*}(x) = R]}{P[Q^{*}(y) = R]} < exp(\epsilon)
+% \end{equation*}
+
+and vice versa.
+
+% \section{Exponential Mechanism under Local Sensitivity}
+% The exponential mechanism scaled to local sensitivity is:
+
+% Privacy loss analysis:
+
+
+
+In conclusion, the privacy loss of Laplace noise under local sensitivity is not necessary smaller or equal to $e^{\epsilon}$, i.e. non-differentially private.
+
+\end{document}
