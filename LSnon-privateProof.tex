@@ -31,6 +31,7 @@
 \usepackage{datetime}
 \usepackage[usenames, dvipsnames]{color}
 \setlength\parindent{0pt} % Removes all indentation from paragraphs
+\newcommand{\mg}[1]{\textcolor[rgb]{.90,0.00,0.00}{[MG: #1]}}
 
 \renewcommand{\labelenumi}{\alph{enumi}.} % Make numbering in the enumerate environment by letter rather than number (e.g. section 6)
 
@@ -71,9 +72,11 @@
 %	SECTION 1
 %----------------------------------------------------------------------------------------
 
-For a query $Q$ over database $x$: $Q: x \rightarrow \mathbb{R}$, we have the definition of local sensitivity:
+For a query $Q$ over databases: $Q: X^n \rightarrow \mathbb{R}$\mg{it
+was wrongly $Q: x \rightarrow \mathbb{R}$ }, we
+have the definition of local sensitivity at $x\in X^n$:
 \begin{equation*}
-\Delta_{local} Q(x) = \max_{\{x'\ adj\ x\}}| |Q(x)- Q(x')|.
+\Delta_{local} Q(x) = \max_{\{x'\ adj\ x\}}| Q(x)- Q(x')|.
 \end{equation*}
 
 \section{Laplace Mechanism under Local Sensitivity}
@@ -91,17 +94,26 @@ Suppose we have two adjacent data bases $x,y$. The privacy loss of this noised q
 privacy\ loss = \frac{P[Q^{*}(x) = R]}{P[Q^{*}(y) = R]}
 & = \frac{P[Q(x) + Lap(\frac{\Delta_{local} Q(x)}{\epsilon}) = R]}{P[Q(y) + Lap(\frac{\Delta_{local} Q(y)}{\epsilon}) = R]}\\
 & = \frac{P[Lap(\frac{\Delta_{local} Q(x)}{\epsilon}) = R - Q(x)]}{P[Lap(\frac{\Delta_{local} Q(y)}{\epsilon}) = R - Q(y)]}\\
-& = \frac{exp(-\frac{|R - Q(x)|}{\frac{\Delta_{local} Q(x)}{\epsilon}})}{exp(-\frac{|R - Q(y)|}{\frac{\Delta_{local} Q(y)}{\epsilon}})}\\
+\end{split}
+\end{equation*}
+We can then reason about the pdf of Laplace:
+\begin{equation*}
+\begin{split}
+\frac{exp(-\frac{|R - Q(x)|}{\frac{\Delta_{local} Q(x)}{\epsilon}})}{exp(-\frac{|R - Q(y)|}{\frac{\Delta_{local} Q(y)}{\epsilon}})}
 & = exp(\frac{\epsilon |R - Q(y)|}{\Delta_{local} Q(y)} - \frac{\epsilon |R - Q(x)|}{\Delta_{local} Q(x)}).
 \end{split}
 \end{equation*}
 
-Since in local sensitivity $\Delta_{local} Q(x) \neq \Delta_{local} Q(y) $, we have:
+We want to show that when $\Delta_{local} Q(x) \neq \Delta_{local}
+Q(y) $ we do not have differential privacy. Without loss of generality
+we can consider the case $\Delta_{local} Q(x) < \Delta_{local}
+Q(y)$, $R -Q(x)>0$, $R - Q(y)>0$ and $\Delta_{local} Q(x)=Q(x)-Q(y)$. We have:
 \begin{equation*}
 \begin{split}
 \frac{\epsilon |R - Q(y)|}{\Delta_{local} Q(y)} - \frac{\epsilon |R - Q(x)|}{\Delta_{local} Q(x)}
-& \neq \frac{\epsilon |R - Q(y)|}{\Delta_{local} Q(x)} - \frac{\epsilon |R - Q(x)|}{\Delta_{local} Q(x)} \\
-& = \frac{\epsilon(|R - Q(y)| - |R - Q(x)|)}{\Delta_{local} Q(x)}\\
+& = \frac{\epsilon (R - Q(y))}{\Delta_{local} Q(y)} - \frac{\epsilon (R - Q(x))}{\Delta_{local} Q(x)}\\
+& > \frac{\epsilon (R - Q(y))}{\Delta_{local} Q(x)} - \frac{\epsilon (R - Q(x))}{\Delta_{local} Q(x)} \\
+& = \frac{\epsilon((R - Q(y)) - (R - Q(x)))}{\Delta_{local} Q(x)}\\
 % \end{split}
 % \end{equation*}
 % According to the triangle inequality,
@@ -109,15 +121,15 @@ Since in local sensitivity $\Delta_{local} Q(x) \neq \Delta_{local} Q(y) $, we h
 % \begin{split}
 % \frac{\epsilon|Q(y) - Q(x)|}{\Delta_{local} Q(x)} 
 % & > \frac{\epsilon(|R - Q(y)| - |R - Q(x)|)}{\Delta_{local} Q(x)} 
-& < \frac{\epsilon|Q(y) - Q(x)|}{\Delta_{local} Q(x)} (triangle\ inequality) \\
+& = \frac{\epsilon(Q(y) - Q(x))}{\Delta_{local} Q(x)} \\
 % \epsilon & >\frac{\epsilon(|R - Q(y)| - |R - Q(x)|)}{\Delta_{local} Q(x)} > 
-& < \epsilon.
+& = \epsilon.
 \end{split}
 \end{equation*}
 
 i.e.
 \begin{equation*}
-privacy\ loss = \frac{P[Q^{*}(x) = R]}{P[Q^{*}(y) = R]} \nless exp(\epsilon),
+privacy\ loss = \frac{P[Q^{*}(x) = R]}{P[Q^{*}(y) = R]} > exp(\epsilon),
 \end{equation*}
 % $privacy\ loss = \frac{P[Q^{*}(x) = R]}{P[Q^{*}(y) = R]} < exp(\epsilon)$ is untenable.
 
