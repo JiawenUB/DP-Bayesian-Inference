@@ -323,7 +323,7 @@ class BayesInferwithDirPrior(object):
 		return
 
 
-	def _update_expomech(self, times):
+	def _experiments(self, times):
 		self._set_candidate_scores()
 		self._set_GS()
 		self._set_SS()
@@ -331,28 +331,19 @@ class BayesInferwithDirPrior(object):
 		self._show_all()
 		for i in range(times):
 			self._laplace_noize_mle()
-			self._accuracy[self.keys[0]].append(self._posterior - self._laplaced_posterior)
+			self._accuracy[self._keys[0]].append(self._posterior - self._laplaced_posterior)
 			self._exponentialize_GS()
-			self._accuracy[self.keys[1]].append(self._posterior - self._exponential_posterior)
-			self._exponentialize_LS()
-			self._accuracy["Exponential Mechanism with Local Sensitivity"].append(self._posterior - self._exponential_posterior)
+			self._accuracy[self._keys[1]].append(self._posterior - self._exponential_posterior)
 			self._Smooth_Sensitivity_Noize()
-			self._accuracy["Smooth Sensitivity with Hellinger Distance"].append(self._posterior - self._SS_posterior)
+			self._accuracy[self._keys[2]].append(self._posterior - self._SS_posterior)
 			self._Smooth_Sensitivity_Noize_Hamming()
-			self._accuracy["Smooth Sensitivity with Hamming Distance"].append(self._posterior - self._SS_posterior)
-			for key,item in self._accuracy.items():
-				self._average[key].append(numpy.mean(item))
+			self._accuracy[self._keys[3]].append(self._posterior - self._SS_posterior)
+			self._Smooth_Sensitivity_Laplace_Noize()
+			self._accuracy[self._keys[4]].append(self._posterior - self._SS_posterior)
+			self._exponentialize_LS()
+			self._accuracy[self._keys[5]].append(self._posterior - self._exponential_posterior)
 
-	def _update_accuracy(self, times):
-		for i in range(times):
-			self._randomize()
-			self._exponentialize()
-			self._laplace_noize()
-			self._accuracy["Laplace Mechanism"].append(self._posterior - self._laplaced_posterior)
-			self._accuracy["Randomize Response"].append(self._posterior - self._randomized_posterior)
-			self._accuracy["Exponential Mechanism"].append(self._posterior - self._exponential_posterior)
-			for key,item in self._accuracy.items():
-				self._average[key].append(numpy.mean(item))
+
 
 	def _get_bias(self):
 		return self._bias
@@ -409,42 +400,28 @@ def draw_error(errors, model):
 		plt.axhline(y=numpy.mean(item), color='r', linestyle = '--', alpha = 0.8, label = "average error",linewidth=3)
 		plt.scatter(x, numpy.array(item), s = 40, c = 'b', marker = 'o', alpha = 0.7, edgecolors='white', label = " error")
 		plt.ylabel('Hellinger Distance')
-		plt.xlabel('Runs (Bias = ' + str(model._bias) + ', GS = ' + str(model._GS) + ', max LS = ' + str(model._LS) + ')')
+		plt.xlabel('Runs (Bias = ' + str(model._bias) + ')')
 		plt.title(key + ' (Data Size = ' + str(model._sample_size) + ', Global epsilon = ' + str(model._epsilon) + ')')
 		plt.legend(loc="best")
 		rows = rows + 1
 		plt.ylim(-0.1,1.0)
 		plt.xlim(0.0,len(item)*1.0)
 		plt.grid()
-	plt.savefig("dirichlet-GS-SS-LS-size200order2runs200-2.png")
+	plt.savefig("dirichlet-GS-SS-LS-size100order2runs200-3.png")
 	return
 
-def draw_error_average(averages, model):
-	plt.subplots(nrows=len(averages), ncols=1, figsize=(12, len(averages) * 5.0))
-	plt.tight_layout(pad=2, h_pad=4, w_pad=2, rect=None)
-	rows = 1
-	for key,item in averages.items():
-		plt.subplot(len(averages), 1, rows)
-		x = numpy.arange(2, len(item) + 2, 1)
-		plt.plot(x, numpy.array(item), 'r-', lw=2, alpha=0.6)
-		plt.ylabel('Hellinger Distance (Bias = ' + str(model._bias) + ')')
-		plt.xlabel('Runs')
-		plt.title(key + ' (Data Size = ' + str(model._sample_size) + ' epsilon = ' + str(model._epsilon) + ')')
-		plt.legend(loc="best")
-		rows = rows + 1
-	plt.show()
-	return
 
 
 if __name__ == "__main__":
 	# Tests the functioning of the module
 
-	sample_size = 200
+	sample_size = 100
 	epsilon = 0.8
+	delta = 0.8
 	prior = Dir([7, 4])
-	Bayesian_Model = BayesInferwithDirPrior(prior, sample_size, epsilon)
+	Bayesian_Model = BayesInferwithDirPrior(prior, sample_size, epsilon, 0.8)
 
-	Bayesian_Model._update_expomech(200)
+	Bayesian_Model._experiments(200)
 
 	draw_error(Bayesian_Model._accuracy,Bayesian_Model)
 
