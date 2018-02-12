@@ -1,0 +1,546 @@
+%%%%%%%% ICML 2018 EXAMPLE LATEX SUBMISSION FILE %%%%%%%%%%%%%%%%%
+
+\documentclass{article}
+% \usepackage[utf8]{inputenc}
+% \usepackage[english]{babel}
+% Recommended, but optional, packages for figures and better typesetting:
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{mdframed}
+\usepackage{subfigure}
+\usepackage{booktabs} % for professional tables
+% hyperref makes hyperlinks in the resulting PDF.
+% If your build breaks (sometimes temporarily if a hyperlink spans a page)
+% please comment out the following usepackage line and replace
+% \usepackage{icml2018} with \usepackage[nohyperref]{icml2018} above.
+\usepackage{hyperref}
+% \renewcommand\qedsymbol{$\blacksquare$}
+% \theoremstyle{plain}
+%   \newtheorem{thm}{Theorem}
+% \theoremstyle{definition}
+%   \newtheorem*{proof1}{Proof of Theorem \ref{Fermat}}
+% Attempt to make hyperref and algorithmic work together better:
+\newcommand{\theHalgorithm}{\arabic{algorithm}}
+% \newenvironment{proofof}[1]{\par
+%   \pushQED{\qed}%
+%   \normalfont \topsep6\p@\@plus6\p@\relax
+%   \trivlist
+%   \item[\hskip\labelsep
+%         \bfseries
+%     Proof of #1\@addpunct{.}]\ignorespaces
+% }{%
+%   \popQED\endtrivlist\@endpefalse
+% }
+% Use the following line for the initial blind version submitted for review:
+\usepackage{icml2018}
+
+% If accepted, instead use the following line for the camera-ready submission:
+%\usepackage[accepted]{icml2018}
+
+% The \icmltitle you define below is probably too long as a header.
+% Therefore, a short form for the running title is supplied here:
+\icmltitlerunning{Submission and Formatting Instructions for ICML 2018}
+
+\begin{document}
+
+\twocolumn[
+\icmltitle{Differentially Private Bayesian Inference}
+
+% It is OKAY to include author information, even for blind
+% submissions: the style file will automatically remove it for you
+% unless you've provided the [accepted] option to the icml2018
+% package.
+
+% List of affiliations: The first argument should be a (short)
+% identifier you will use later to specify author affiliations
+% Academic affiliations should list Department, University, City, Region, Country
+% Industry affiliations should list Company, City, Region, Country
+
+% You can specify symbols, otherwise they are numbered in order.
+% Ideally, you should not use this facility. Affiliations will be numbered
+% in order of appearance and this is the preferred way.
+\icmlsetsymbol{equal}{*}
+
+\begin{icmlauthorlist}
+\icmlauthor{Aeiau Zzzz}{equal,to}
+\icmlauthor{Bauiu C.~Yyyy}{equal,to,goo}
+\icmlauthor{Cieua Vvvvv}{goo}
+\icmlauthor{Iaesut Saoeu}{ed}
+\icmlauthor{Fiuea Rrrr}{to}
+\icmlauthor{Tateu H.~Yasehe}{ed,to,goo}
+\icmlauthor{Aaoeu Iasoh}{goo}
+\icmlauthor{Buiui Eueu}{ed}
+\icmlauthor{Aeuia Zzzz}{ed}
+\icmlauthor{Bieea C.~Yyyy}{to,goo}
+\icmlauthor{Teoau Xxxx}{ed}
+\icmlauthor{Eee Pppp}{ed}
+\end{icmlauthorlist}
+
+\icmlaffiliation{to}{Department of Computation, University of Torontoland, Torontoland, Canada}
+\icmlaffiliation{goo}{Googol ShallowMind, New London, Michigan, USA}
+\icmlaffiliation{ed}{School of Computation, University of Edenborrow, Edenborrow, United Kingdom}
+
+\icmlcorrespondingauthor{Cieua Vvvvv}{c.vvvvv@googol.com}
+\icmlcorrespondingauthor{Eee Pppp}{ep@eden.co.uk}
+
+% You may provide any keywords that you
+% find helpful for describing your paper; these are used to populate
+% the "keywords" metadata in the PDF but will not be shown in the document
+\icmlkeywords{Machine Learning, ICML}
+
+\vskip 0.3in
+]
+
+% this must go after the closing bracket ] following \twocolumn[ ...
+
+% This command actually creates the footnote in the first column
+% listing the affiliations and the copyright notice.
+% The command takes one argument, which is text to display at the start of the footnote.
+% The \icmlEqualContribution command is standard text for equal contribution.
+% Remove it (just {}) if you do not need this facility.
+
+%\printAffiliationsAndNotice{}  % leave blank if no need to mention equal contribution
+\printAffiliationsAndNotice{\icmlEqualContribution} % otherwise use the standard text.
+
+\begin{abstract}
+\end{abstract}
+
+\section{Setting up}
+\label{sec_setup}
+The Bayesian inference process is denoted as $\mathsf{BayesInfer}(x,prior)$ taking an observed data set $x \in \mathcal{X}^n$ and a prior distribution as input, outputting a posterior distribution $posterior$. For conciseness, when prior is given, we use $\mathsf{BayesInfer}(x)$.
+
+For now, we already have a prior distribution $prior$, an observed data set $x$.
+
+\subsection{Exponential Mechanism with Global Sensitivity}
+\label{subsec_emgs}
+
+\subsubsection{Mechanism Set up}
+In exponential mechanism, candidate set $R$ can be obtained by enumerating $y \in \mathcal{X}^n$, i.e.
+\begin{equation*}
+R = \{\mathsf{BayesInfer}(y)\ |\ y \in \mathcal{X}^n\}.
+\end{equation*}
+
+Hellinger distance $\mathsf{Hlg}$ is used here to score these candidates. The utility function:
+\begin{equation}
+\label{equ_utility}
+u(x,r) = -\mathsf{Hlg}(\mathsf{BayesInfer}(x), r); r \in R.
+\end{equation}
+
+Exponential mechanism with global sensitivity selects and outputs a candidate $r \in R$ with probability proportional to $exp(\frac{\epsilon u(x,r)}{2 \Delta_{g}u})$:
+\begin{equation*}
+P[r] = \frac
+{exp(\frac{\epsilon u(x,r)}{2 \Delta_{g}u})}
+{\Sigma_{r' \in R}\ exp(\frac{\epsilon u(x,r')}{2 \Delta_{g}u})},
+\end{equation*}
+where global sensitivity is calculated by:
+\begin{multline*}
+\Delta_{g}u = 
+\mathsf{Hlg}(\mathsf{BayesInfer}(x'), r) - \mathsf{Hlg}(\mathsf{BayesInfer}(y'), r)|\\
+\max_{\{|x',y'| \leq 1;x',y'\in \mathcal{X}^n\}}\max_{\{r\in R\}}.
+\end{multline*}
+
+% We use probability proportional to $exp(\frac{\epsilon u(x,r)}{\Delta_{g}u})$ rather than $exp(\frac{\epsilon u(x,r)}{2 \Delta_{g}u})$. Since $\mathsf{Hlg}$ is monotonic, i.e. our utility function is monotonic. 
+
+\subsubsection{Security Analysis}
+It can be proved that exponential mechanism with global sensitivity is $\epsilon$-differentially private. We denote the $\mathsf{BayesInfer}$ with privacy mechanism as $\mathsf{PrivInfer}$. For adjacent data set $||x,y||_1 = 1$:
+\begin{equation*}
+\begin{split}
+& \frac{P[\mathsf{PrivInfer}(x,u,R) = r]}{P[\mathsf{PrivInfer}(y,u,R) = r]} \\
+& =\frac
+{\frac
+{exp(\frac{\epsilon u(x,r)}{2 \Delta_{g}u})}
+{\Sigma_{r' \in R}\ exp(\frac{\epsilon u(x,r')}{2 \Delta_{g}u})}}
+{\frac
+{exp(\frac{\epsilon u(y,r)}{2 \Delta_{g}u})}
+{\Sigma_{r' \in R}\ exp(\frac{\epsilon u(y,r')}{2 \Delta_{g}u})}} \\
+& = \left(\frac
+{exp(\frac{\epsilon u(x,r)}{2 \Delta_{g}u})}
+{exp(\frac{\epsilon u(y,r)}{2 \Delta_{g}u})}
+\right)
+\cdot
+\left(\frac
+{\sum\limits_{r' \in R}\ exp(\frac{\epsilon u(y,r')}{2 \Delta_{g}u})}
+{\sum\limits_{r' \in R}\ exp(\frac{\epsilon u(x,r')}{2 \Delta_{g}u})}
+\right)\\
+& = exp\left(\frac
+{\epsilon (u(x,r) - u(y,r))}
+{2 \Delta_{g}u}
+\right) \\
+& \cdot
+\left(\frac
+{\sum\limits_{r' \in R}\ exp(\frac{\epsilon u(y,r')}{2 \Delta_{g}u})}
+{\sum\limits_{r' \in R}\ exp(\frac{\epsilon u(x,r')}{2 \Delta_{g}u})}
+\right)\\
+& \leq
+exp(\frac{\epsilon}{2}) \cdot exp(\frac{\epsilon}{2}) \cdot
+\left(\frac
+{\sum\limits_{r' \in R}\ exp(\frac{\epsilon u(x,r')}{2 \Delta_{g}u})}
+{\sum\limits_{r' \in R}\ exp(\frac{\epsilon u(x,r')}{2 \Delta_{g}u})}
+\right)\\
+& = exp(\epsilon).
+\end{split}
+\end{equation*}
+
+Then, $\frac{P[\mathsf{PrivInfer}(x,u,R) = r]}{P[\mathsf{PrivInfer}(y,u,R) = r]} \geq exp(-\epsilon)$ can be obtained by symmetry.
+
+
+\subsection{Exponential Mechanism with Local Sensitivity}
+\label{subsec_emls}
+\subsubsection{Mechanism Set up}
+Exponential mechanism with local sensitivity share the same candidate set and utility function as it with global sensitivity. This outputs a candidate $r \in R$ with probability proportional to $exp(\frac{\epsilon u(x,r)}{2 \Delta_{l}u})$:
+\begin{equation*}
+P[r] = \frac
+{exp(\frac{\epsilon u(x,r)}{2 \Delta_{l}u})}
+{\Sigma_{r' \in R}\ exp(\frac{\epsilon u(x,r')}{2 \Delta_{l}u})},
+\end{equation*}
+
+where local sensitivity is calculated by:
+
+\begin{multline*}
+\Delta_{g}u(x) = 
+\mathsf{Hlg}(\mathsf{BayesInfer}(x), r) - \mathsf{Hlg}(\mathsf{BayesInfer}(y'), r)|\\
+\max_{\{|x,y'| \leq 1;y'\in \mathcal{X}^n\}}\max_{\{r\in R\}}.
+\end{multline*}
+
+\subsubsection{Security Analysis}
+We will then prove that exponential mechanism with local sensitivity is non-differentialy private.
+\begin{equation*}
+\begin{split}
+& \frac{P[\mathsf{PrivInfer}(x,u,R) = r]}{P[\mathsf{PrivInfer}(y,u,R) = r]} \\
+& = exp\left(
+\frac{\epsilon u(x,r)}{2 \Delta_{l}u(x)} - 
+\frac{\epsilon u(y,r)}{2 \Delta_{l}u(y)}
+\right)  \cdot
+\left(\frac
+{\sum\limits_{r' \in R}\ exp(\frac{\epsilon u(y,r')}{2 \Delta_{l}u(y)})}
+{\sum\limits_{r' \in R}\ exp(\frac{\epsilon u(x,r')}{2 \Delta_{l}u(x)})}
+\right) \\
+& = \frac
+{\sum\limits_{r' \in R}\ exp(\frac{\epsilon u(x,r)}{2 \Delta_{l}u(x)} 
++ \frac{\epsilon u(y,r')}{2 \Delta_{l}u(y)})}
+{\sum\limits_{r' \in R}\ exp(\frac{\epsilon u(y,r)}{2 \Delta_{l}u(y)} 
++ \frac{\epsilon u(x,r')}{2 \Delta_{l}u(x)})}.
+\end{split}
+\end{equation*}
+
+Without loss of generality, we consider the case that $\Delta_{l}u(y) < \Delta_{l}u(x)$, $r = arg(\max\limits_{r' \in R}\{u(x,r')\}) = arg(\min\limits_{r' \in R}\{u(y,r')\})$ and $\Delta_{l}u(y) = u(x,r) - u(y,r)$. We have:
+\begin{equation*}
+\begin{split}
+& \frac
+{\sum\limits_{r' \in R}\ exp(\frac{\epsilon u(x,r)}{2 \Delta_{l}u(x)} 
++ \frac{\epsilon u(y,r')}{2 \Delta_{l}u(y)})}
+{\sum\limits_{r' \in R}\ exp(\frac{\epsilon u(y,r)}{2 \Delta_{l}u(y)} 
++ \frac{\epsilon u(x,r')}{2 \Delta_{l}u(x)})}\\
+& > \frac
+{\sum\limits_{r' \in R}\ exp(\frac{\epsilon (u(x,r) + u(y,r'))}{2 \Delta_{l}u(x)})}
+{\sum\limits_{r' \in R}\ exp(\frac{\epsilon (u(y,r) + u(x,r'))}{2 \Delta_{l}u(y)})}\\
+& > \frac
+{|R|\ exp(\frac{\epsilon (u(x,r) + u(y,r))}{2 \Delta_{l}u(x)})}
+{|R|\ exp(\frac{\epsilon (u(y,r) + u(x,r))}{2 \Delta_{l}u(y)})}\\
+& = exp(\frac{\epsilon}{2} (\frac{u(x,r) + u(y,r)}{\Delta_{l}u(x)} - \frac{u(x,r) + u(y,r)}{\Delta_{l}u(y)})).
+\end{split}
+\end{equation*}
+
+From Eq. \ref{equ_utility}, $\{u(x,r') \leq 0|r' \in R\}$ and $\{u(y,r') \leq 0|r' \in R\}$, we can infer that $r = arg(\max\limits_{r \in R}\{u(x,r')\}) = \mathsf{BayesInfer}(x)$ and $u(x,r) = 0$.From $\Delta_{l}u(y) = u(x,r) - u(y,r)$, we can also infer that $\Delta_{l}u(y) = - u(y,r)$. Then, the following relationship between $u(x,r)$, $u(y,r)$, $\Delta_{l}u(x)$ and $\Delta_{l}u(y)$:
+\begin{equation*}
+\begin{split}
+- \Delta_{l}u(x) & < \Delta_{l}u(y) \\
+\Delta_{l}u(x) - \Delta_{l}u(y) & < 2 \Delta_{l}u(x) \\
+- \Delta_{l}u(y) (\Delta_{l}u(y) - \Delta_{l}u(x)) 
+& < 2 \Delta_{l}u(x) \Delta_{l}u(y) \\
+u(y,r) (\Delta_{l}u(y) - \Delta_{l}u(x)) 
+& < 2 \Delta_{l}u(x) \Delta_{l}u(y) \\
+\frac{u(x,r) + u(y,r)}{\Delta_{l}u(x)} - \frac{u(x,r) + u(y,r)}{\Delta_{l}u(y)} & > 2.
+\end{split}
+\end{equation*}
+
+% \begin{equation*}
+% \begin{split}
+% \frac{\Delta_{l}u(x)}{\Delta_{l}u(y)} & > 0\\
+% & > \frac{\Delta_{l}u(x)}{2u(y,r)}\\
+% & = \frac{\Delta_{l}u(x) + 0}{2u(y,r)} \\
+% & = \frac{\Delta_{l}u(x) + 2 u(x,r)}{2u(y,r)}
+% \end{split}
+% \end{equation*}
+holds.
+ 
+Then we can have:
+\begin{equation*}
+\begin{split}
+& exp(\frac{\epsilon}{2} (\frac{u(x,r) + u(y,r)}{\Delta_{l}u(y)} - \frac{u(x,r) + u(y,r)}{\Delta_{l}u(x)}))\\
+& > exp(\frac{\epsilon}{2} * 2) \\
+& = exp(\epsilon),
+\end{split}
+\end{equation*}
+i.e.
+\begin{equation*}
+\begin{split}
+\frac{P[\mathsf{PrivInfer}(x,u,R) = r]}{P[\mathsf{PrivInfer}(y,u,R) = r]}
+& > exp(\epsilon).
+\end{split}
+\end{equation*}
+
+Since there are cases where exponential mechanism with local sensitivity's privacy loss is greater than $e^{\epsilon}$. we can say it is non-differentially private.
+% \begin{equation*}
+% \begin{split}
+% & \epsilon = 0.1\\
+% data size = 2\\
+% the prior is Beta(2，2)\\
+% data set x = [1,0,]\\
+% data set y = [0,0]\\
+% -0.313380201461\\
+% -0.0\\
+% -0.313380201461\\
+% 3 3\\
+% 0.313380201461\\
+% 0.322043464396\\
+% 0.355913071207\\
+% 0.322043464396\\
+% -0.0\\
+% -0.313380201461\\
+% -0.57735026919\\
+% 2 4\\
+% 0.375460728684\\
+% 0.360050126956\\
+% 0.331218326999\\
+% 0.308731546045
+% \end{split}
+% \end{equation*}
+
+% Without loss of generality, we consider the case that $\Delta_{l}u(y) > \Delta_{l}u(x)$ and $\Delta_{l}u(x) = u(x,r) - u(y,r)$. We have:
+% \begin{equation*}
+% \begin{split}
+% exp\left(
+% \frac{\epsilon u(x,r)}{2 \Delta_{l}u(x)}
+% - \frac{\epsilon u(y,r)}{2 \Delta_{l}u(y)}
+% \right)
+% & > exp\left(
+% \frac{\epsilon u(x,r)}{2 \Delta_{l}u(x)}
+% - \frac{\epsilon u(y,r)}{2 \Delta_{l}u(x)}
+% \right)\\
+% & = exp\left(
+% \frac{\epsilon u(x,r) - \epsilon u(y,r)}{2 \Delta_{l}u(x)}
+% \right) \\
+% & = exp(\frac{\epsilon}{2});
+% \end{split}
+% \end{equation*}
+
+% \textcolor{red}{For the second part:
+% , we have:
+% \begin{equation*}
+% \begin{split}
+% \frac{\epsilon u(y,r')}{2 \Delta_{l}(y)} - \frac{\epsilon u(x,r')}{2 \Delta_{l}(x)} 
+% & < \frac{\epsilon u(y,r')}{2 \Delta_{l}(y)} - \frac{\epsilon u(x,r')}{2 \Delta_{l}(y)}\\
+% & \leq \frac{\epsilon}{2}
+% \end{split}
+% \end{equation*}
+% I cannot replace $exp(\frac{\epsilon u(y,r')}{2 \Delta_{l}(y)})$ in $\left(\frac
+% {\sum\limits_{r' \in R}\ exp(\frac{\epsilon u(y,r')}{2 \Delta_{l}u(y)})}
+% {\sum\limits_{r' \in R}\ exp(\frac{\epsilon u(x,r')}{2 \Delta_{l}u(x)})}
+% \right)$ with $ > exp(\frac{\epsilon}{2}) \cdot exp(\frac{\epsilon u(x,r')}{2 \Delta_{l}(x)})$.
+% So, I cannot find the relationship between the whole part and $exp(\epsilon)$.}
+
+% For the second part:
+% \begin{equation*}
+% \begin{split}
+% \left(\frac
+% {\sum\limits_{r' \in R}\ exp(\frac{\epsilon u(y,r')}{2 \Delta_{l}u(y)})}
+% {\sum\limits_{r' \in R}\ exp(\frac{\epsilon u(x,r')}{2 \Delta_{l}u(x)})}
+% \right)
+% & < \left(\frac
+% {\sum\limits_{r' \in R}\ exp(\frac{\epsilon u(y,r')}{2 \Delta_{l}u(x)})}
+% {\sum\limits_{r' \in R}\ exp(\frac{\epsilon u(x,r')}{2 \Delta_{l}u(x)})}
+% \right)\\
+% & < \left(\frac
+% {exp(\frac{\epsilon}{2})
+% \cdot
+% \sum\limits_{r' \in R}\ exp(\frac{\epsilon u(x,r')}{2 \Delta_{l}u(x)})}
+% {\sum\limits_{r' \in R}\ exp(\frac{\epsilon u(x,r')}{2 \Delta_{l}u(x)})}
+% \right)\\
+% & < exp(\frac{\epsilon}{2})
+% \end{split}
+% \end{equation*}
+
+% For the second part(a tighter bound):
+% \begin{equation*}
+% \begin{split}
+% & \left(\frac
+% {\sum\limits_{r' \in R}\ exp(\frac{\epsilon u(y,r')}{2 \Delta_{l}u(y)})}
+% {\sum\limits_{r' \in R}\ exp(\frac{\epsilon u(x,r')}{2 \Delta_{l}u(x)})}
+% \right) \\
+% & = \left(\frac
+% {\sum\limits_{r' \in R}\ exp(\frac{\epsilon u(y,r')}{2 \Delta_{l}u(x)})}
+% {exp(\frac{\Delta _{l}(y) - \Delta _{l}(x)}{\Delta _{l}(x)  \Delta _{l}(y)})
+% \cdot
+% \sum\limits_{r' \in R}\ exp(\frac{\epsilon u(x,r')}{2 \Delta_{l}u(x)})}
+% \right)\\
+% & < \left(\frac
+% {exp(\frac{\epsilon}{2})
+% \cdot
+% \sum\limits_{r' \in R}\ exp(\frac{\epsilon u(x,r')}{2 \Delta_{l}u(x)})}
+% {exp(\frac{\Delta _{l}(y) - \Delta _{l}(x)}{\Delta _{l}(x)  \Delta _{l}(y)})
+% \cdot
+% \sum\limits_{r' \in R}\ exp(\frac{\epsilon u(x,r')}{2 \Delta_{l}u(x)})}
+% \right)\\
+% & < \left(\frac
+% {exp(\frac{\epsilon}{2})}
+% {exp(\frac{\Delta _{l}(y) - \Delta _{l}(x)}{\Delta _{l}(x)  \Delta _{l}(y)})}
+% \right)\\
+% & < exp(\frac{\epsilon}{2} - \frac{\Delta _{l}(y) - \Delta _{l}(x)}{\Delta _{l}(x)  \Delta _{l}(y)})
+% \end{split}
+% \end{equation*}
+
+
+\subsection{Exponential Mechanism of Varying Sensitivity}
+\label{subsec_emvs}
+\subsubsection{Mechanism Setting up}
+
+\subsubsection{Security Analysis}
+
+\subsection{Exponential Mechanism of Smooth Sensitivity}
+\label{subsec_emss}
+\subsubsection{Mechanism Setting up}
+
+\subsubsection{Security Analysis}
+
+
+\section{Privacy Fix}
+
+\subsection{Propositions}
+Assume we have a prior distribution $beta(1,1)$, an observed data set $x \in \{0,1\}^n$, $n>0$. We use the $x+1$ and $x-1$ to denote:
+\begin{small}
+\begin{equation*}
+\begin{split}
+&\mathsf{if\ BayesInfer}(x) = beta(a_1 + 1,b_1 + 1)\\
+&\mathsf{then}\mathsf{\ BayesInfer}(x + 1) = beta((a_1 + 1) +1, (b_1 - 1)+1)\\
+&\quad \quad \mathsf{\ BayesInfer}(x - 1) = beta((a_1 - 1) +1, (b_1 + 1)+1),\\
+\end{split}
+\end{equation*}
+\end{small}
+
+$x_0$ to denote:
+\begin{small}
+\begin{equation*}
+\begin{split}
+&\mathsf{if}\ n\ is\ even\\
+&\mathsf{then}\ \mathsf{BayesInfer}(x_0) = beta(\frac{n}{2} + 1, \frac{n}{2} + 1)\\
+&\mathsf{else}\ \mathsf{BayesInfer}(x_0) = \{beta(\frac{n+1}{2} + 1, \frac{n-1}{2} + 1),\\
+&\quad \quad \quad \quad \quad \quad \quad \quad \quad \quad beta(\frac{n - 1}{2} + 1, \frac{n + 1}{2} + 1)\}
+\end{split}
+\end{equation*}
+\end{small}
+
+Then, we have the following three statements, and proofs of the statements.
+\renewcommand{\labelenumi}{\Roman{enumi}}
+\begin{enumerate}
+\item $\mathsf{Hlg} (\mathsf{BayesInfer}(x), \mathsf{BayesInfer}(x + 1)) < \mathsf{Hlg} (\mathsf{BayesInfer}(x + 1), \mathsf{BayesInfer}(x + 2))\ \forall x \geq x_0$;
+
+or $\mathsf{Hlg} (\mathsf{BayesInfer}(x), \mathsf{BayesInfer}(x + 1)) > \mathsf{Hlg} (\mathsf{BayesInfer}(x + 1), \mathsf{BayesInfer}(x + 2))\forall x \leq x_0$.
+
+\item $\Delta_{l}u(x) = \mathsf{Hlg} (\mathsf{BayesInfer}(x),\mathsf{BayesInfer}(x + 1)),\forall x \geq x_0$;
+
+$\Delta_{l}u(x) = \mathsf{Hlg} (\mathsf{BayesInfer}(x),\mathsf{BayesInfer}(x - 1)),\forall x \leq x_0$.
+
+\item $\forall x \neq x_0: \Delta_{l}u(x) > \Delta_{l}u(x_0)$.
+\end{enumerate}
+
+\subsection{proof}
+
+\subsubsection{Statement I}
+We use the MI (Mathematical Induction) method to prove the first statement.
+
+\begin{proof}
+Since the Hellinger distance is symmetric, if we prove the $\mathsf{Hlg} (\mathsf{BayesInfer}(x), \mathsf{BayesInfer}(x + 1)) < \mathsf{Hlg} (\mathsf{BayesInfer}(x + 1), \mathsf{BayesInfer}(x + 2))\ \forall x \geq x_0$, the other part when $\forall x \leq x_0$ also holds.
+
+1. if $x = x_0$, $\mathsf{Hlg} (\mathsf{BayesInfer}(x_0), \mathsf{BayesInfer}(x_0 + 1)) < \mathsf{Hlg} (\mathsf{BayesInfer}(x_0 + 1), \mathsf{BayesInfer}(x_0 + 2))$ holds:
+
+\begin{mdframed*}
+\begin{equation*}
+\begin{split}
+\mathsf{Hlg}(beta(\frac{n}{2} + 1, \frac{n}{2} + 1), beta(\frac{n}{2} + 1 + 1, \frac{n}{2} + 1 - 1))
+& <  \mathsf{Hlg}(beta(\frac{n}{2} + 1 + 1, \frac{n}{2} + 1 - 1), beta(\frac{n}{2} + 1 + 2, \frac{n}{2} + 1 - 2))\\
+\sqrt{1 - \frac{\mathsf{beta}(\frac{\frac{n}{2} + 1 + \frac{n}{2} + 1 + 1}{2},\frac{\frac{n}{2} + 1 + \frac{n}{2} + 1 - 1}{2})}
+{\sqrt{\mathsf{beta}(\frac{n}{2} + 1, \frac{n}{2} + 1)\mathsf{beta}(\frac{n}{2} + 1 + 1, \frac{n}{2} + 1 - 1)}}}
+& < \sqrt{1 - \frac{\mathsf{beta}(\frac{\frac{n}{2} + 1 + 1 + \frac{n}{2} + 1 + 2}{2}, \frac{\frac{n}{2} + 1 - 1 + \frac{n}{2} + 1 - 2}{2}, )}
+{\sqrt{\mathsf{beta}(\frac{n}{2} + 1 + 1, \frac{n}{2} + 1 - 1)\mathsf{beta}(\frac{n}{2} + 1 + 2, \frac{n}{2} + 1 - 2)}}}\\
+\sqrt{1 - \frac{\mathsf{beta}(\frac{n + 3}{2},\frac{n + 1}{2})}
+{\sqrt{\mathsf{beta}(\frac{n}{2} + 1, \frac{n}{2} + 1)\mathsf{beta}(\frac{n}{2} + 2, \frac{n}{2})}}}
+& < \sqrt{1 - \frac{\mathsf{beta}(\frac{n + 5}{2}, \frac{n - 1}{2})}
+{\sqrt{\mathsf{beta}(\frac{n}{2} + 2, \frac{n}{2})\mathsf{beta}(\frac{n}{2} + 3, \frac{n}{2} - 1)}}}\\
+\frac{\mathsf{beta}(\frac{n + 3}{2},\frac{n + 1}{2})}
+{\sqrt{\mathsf{beta}(\frac{n}{2} + 1, \frac{n}{2} + 1)\mathsf{beta}(\frac{n}{2} + 2, \frac{n}{2})}}
+& > \frac{\mathsf{beta}(\frac{n + 5}{2}, \frac{n - 1}{2})}
+{\sqrt{\mathsf{beta}(\frac{n}{2} + 2, \frac{n}{2})\mathsf{beta}(\frac{n}{2} + 3, \frac{n}{2} - 1)}}\\
+\frac{\mathsf{beta}(\frac{n + 3}{2},\frac{n - 1}{2}) \frac{\frac{n - 1}{2}}{\frac{n - 1}{2} + \frac{n + 3}{2}}}
+{\sqrt{\mathsf{beta}(\frac{n}{2} + 1, \frac{n}{2} - 1) \frac{\frac{n}{2} - 1}{\frac{n}{2} - 1 + \frac{n}{2} + 1} \frac{\frac{n}{2}}{\frac{n}{2} + \frac{n}{2} + 1}}}
+& > \frac{\mathsf{beta}(\frac{n + 3}{2}, \frac{n - 1}{2}) \frac{\frac{n + 3}{2}}{\frac{n + 3}{2} + \frac{n - 1}{2}} }
+{\sqrt{\mathsf{beta}(\frac{n}{2} + 1, \frac{n}{2} - 1) \frac{\frac{n}{2} + 1}{\frac{n}{2} + 1 + \frac{n}{2} - 1} \frac{\frac{n}{2} + 2}{\frac{n}{2} + 2 + \frac{n}{2} - 1}}}\\
+\frac{\frac{n - 1}{2}}{\sqrt{(\frac{n}{2} - 1)(\frac{n}{2})}}
+& > \frac{\frac{n + 3}{2}}{\sqrt{(\frac{n}{2} + 1)(\frac{n}{2} + 2)}}\\
+(n - 1) ^ 2 (n + 2)(n + 4)
+& > (n + 3) ^ 2 n (n - 2)\\
+n & > -1.
+\end{split}
+\end{equation*}
+\end{mdframed*}
+Since $n > 0$, it always holds.
+
+2. if $x = x_0 + m$ holds, then also $x = x_0 + m + 1$ holds:
+
+i.e $\mathsf{Hlg}(beta(\frac{n}{2} + 1 + m, \frac{n}{2} + 1 - m), beta(\frac{n}{2} + 1 + m + 1, \frac{n}{2} + 1 - m - 1)) 
+< \mathsf{Hlg}(beta(\frac{n}{2} + 1 + m + 1, \frac{n}{2} + 1 - m - 1), beta(\frac{n}{2} + 1 + m + 2, \frac{n}{2} + 1 - m - 2))$
+is what we know.
+
+Now, we want to proof $\mathsf{Hlg}(beta(\frac{n}{2} + 1 + m + 1, \frac{n}{2} + 1 - m - 1), beta(\frac{n}{2} + 1 + m + 2, \frac{n}{2} + 1 - m - 2)) 
+< \mathsf{Hlg}(beta(\frac{n}{2} + 1 + m + 2, \frac{n}{2} + 1 - m - 2), beta(\frac{n}{2} + 1 + m + 3, \frac{n}{2} + 1 - m - 3))$ by using what we know:
+
+\begin{equation*}
+\begin{split}
+& \sqrt{1 - \frac{\mathsf{beta}(,)}{\sqrt{\mathsf{beta}(,) \mathsf{beta}(,)}}}\\
+& < \sqrt{1 - \frac{\mathsf{beta}(,)}{\sqrt{\mathsf{beta}(,) \mathsf{beta}(,)}}}\\
+& \frac{\mathsf{beta}(,)}{\sqrt{\mathsf{beta}(,) \mathsf{beta}(,)}}\\
+& > \frac{\mathsf{beta}(,)}{\sqrt{\mathsf{beta}(,) \mathsf{beta}(,)}}
+\end{split}
+\end{equation*}
+
+
+\end{proof}
+
+\subsubsection{Statement II}
+
+\subsubsection{Statement III}
+
+\section{Experimental Evaluations}
+We got some results from these mechanisms.
+
+
+% Acknowledgements should only appear in the accepted version.
+% \section*{Acknowledgements}
+% In the unusual situation where you want a paper to appear in the
+% references without citing it in the main text, use \nocite
+% \nocite{langley00}
+
+
+\bibliography{example_paper}
+\bibliographystyle{icml2018}
+
+
+
+
+
+\end{document}
+
+
+% This document was modified from the file originally made available by
+% Pat Langley and Andrea Danyluk for ICML-2K. This version was created
+% by Iain Murray in 2018. It was modified from a version from Dan Roy in
+% 2017, which was based on a version from Lise Getoor and Tobias
+% Scheffer, which was slightly modified from the 2010 version by
+% Thorsten Joachims & Johannes Fuernkranz, slightly modified from the
+% 2009 version by Kiri Wagstaff and Sam Roweis's 2008 version, which is
+% slightly modified from Prasad Tadepalli's 2007 version which is a
+% lightly changed version of the previous year's version by Andrew
+% Moore, which was in turn edited from those of Kristian Kersting and
+% Codrina Lauth. Alex Smola contributed to the algorithmic style files.
