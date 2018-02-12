@@ -32,14 +32,14 @@ def optimized_multibeta_function(alphas):
 		temp = alpha - 1
 		while temp > 0.0:
 			nominators.append(temp)
-			temp -=1
+			temp -=1.0
 		if temp < 0.0:
 			nominators.append(math.gamma(1 + temp))
 	while denominator > 0.0:
 		denominators.append(denominator)
-		denominator -= 1
+		denominator -= 1.0
 	if denominator < 0.0:
-		denominators.append(math.gamma(1 + denominator))
+		denominators.append(math.gamma(1.0 + denominator))
 	# print nominators
 	# print denominators
 	d_pointer = len(denominators) - 1
@@ -68,6 +68,9 @@ def Optimized_Hellinger_Distance_Dir(Dir1, Dir2):
 	return math.sqrt(1 - optimized_multibeta_function((numpy.array(Dir1._alphas) + numpy.array(Dir2._alphas)) / 2.0)/ \
 		math.sqrt(optimized_multibeta_function(Dir1._alphas) * optimized_multibeta_function(Dir2._alphas)))
 
+def Hamming_Distance(Dir1, Dir2):
+	temp = [abs(a - b) for a,b in Dir1._alphas,Dir2._alphas]
+	return sum(temp)
 
 class Dir(object):
 	def __init__(self, alphas):
@@ -86,14 +89,17 @@ class Dir(object):
 	def _hellinger_sensitivity(self, r):
 		LS = 0.0
 		temp = deepcopy(r._alphas)
-		for i in range(0, r._size):
-			temp[i] += 1
-			for j in range(i + 1, r._size):
-				temp[j] -= 1
-				LS = max(LS, abs((r - self) - (Dir(temp) - self )))
-				# print r._alphas,self._alphas,temp,(r-self),(Dir(temp) - self)
-				temp[j] += 1
-			temp[i] -= 1
+		temp[0] -= 1
+		temp[1] += 1
+		LS = Dir(temp) - self
+		# for i in range(0, r._size):
+		# 	temp[i] += 1
+		# 	for j in range(i + 1, r._size):
+		# 		temp[j] -= 1
+		# 		LS = max(LS, abs((r - self) - (Dir(temp) - self )))
+		# 		# print r._alphas,self._alphas,temp,(r-self),(Dir(temp) - self)
+		# 		temp[j] += 1
+		# 	temp[i] -= 1
 		return LS
 
 	def _score_sensitivity(self, r):
@@ -110,28 +116,30 @@ class Dir(object):
 
 
 class BayesInferwithDirPrior(object):
-	def __init__(self, prior, sample_size, epsilon):
+	def __init__(self, prior, sample_size, epsilon, delta):
 		self._prior = prior
 		self._sample_size = sample_size
 		self._epsilon = epsilon
+		self._delta = delta
 		self._bias = numpy.random.dirichlet(self._prior._alphas)
 		self._observation = numpy.random.multinomial(1, self._bias, self._sample_size)
 		self._observation_counts = numpy.sum(self._observation, 0)
 		self._posterior = Dir(self._observation_counts) + self._prior
 		self._laplaced_posterior = self._posterior
-		self._randomized_posterior = self._posterior
-		self._randomized_observation = deepcopy(self._observation)
 		self._exponential_posterior = self._posterior
+		self._SS_posterior = self._posterior
 		self._candidate_scores = {}
 		self._candidates = []
 		self._GS = 0.0
-		self._LS = {}
+		self._LS_Candidates = {}
 		self._VS = {}
-		self._LS_max = 0.0
+		self._SS = {}
+		self._LS = 0.0
+		self._SS_Hamming = 0.0
+		self._SS_Laplace = 0.0
 		self._candidate_VS_scores = {}
-		self._accuracy = {"Laplace Mechanism":[],"Randomize Response":[],"Exponential Mechanism":[]}
-		self._average = {"Laplace Mechanism":[],"Randomize Response":[],"Exponential Mechanism":[]}
-		self._accuracy_expomech = {"Exponential Mechanism with Local Sensitivity":[],"Laplace Mechanism":[], "Exponential Mechanism with Varying Sensitivity":[], "Exponential Mechanism with Global Sensitivity":[]}		
+		self._keys = ["Laplace Mechanism | Achieving" + str(self._epsilon) + "-DP"]
+		self._accuracy = {self._keys[0]:[]}
 	
 	def _set_bias(self, bias):
 		self._bias = bias
@@ -160,34 +168,93 @@ class BayesInferwithDirPrior(object):
 			self._set_candidates(current, rest - i)
 			current.pop()
 
-	def _set_LS(self):
+	def _set_LS_Candidates(self):
 		for r in self._candidates:
-			self._LS[r] = r._hellinger_sensitivity(self._posterior)
-			self._LS_max = max(self._LS_max, self._LS[r])
+			self._LS_Candidates[r] = r._hellinger_sensitivity(r)
 
-	def _set_LS_max(self):
-		self._LS_max = self._posterior._hellinger_sensitivity(self._posterior)
+	def _set_SS(self):
+		print "Calculating Smooth Sensitivity with Hellinger Distance....."
+		start = time.clock()
+		gamma = 1
+		self._set_LS_Candidates()
+		beta = self._epsilon / (2.0 * len(self._prior._alphas) * (gamma + 1))
+		self._SS = max([self._LS_Candidates[r] * math.exp(- beta * Optimized_Hellinger_Distance_Dir(self._posterior, r)) for r in self._candidates])
+		key1 = "(" + str(self._epsilon / 2.0) + "," + str(beta) + ") Admissible Niose and " + str(beta) + "-Smooth Sensitivity (" + str(self._SS) + ")|" + str(self._epsilon) + "-DP"
+		self._accuracy[key1] = []
+		self._keys.append(key1)
+		print str(time.clock() - start) + "seconds."
+		print "Calculating Smooth Sensitivity with Hamming Distance....."
+		start = time.clock()
+		self._SS_Hamming = max([self._LS_Candidates[r] * math.exp(- beta * Hamming_Distance(self._posterior, r)) for r in self._candidates])
+		key2 = "(" + str(self._epsilon / 2.0) + "," + str(beta) + ") Admissible Niose and " + str(beta) + "-Smooth Sensitivity (" + str(self._SS_Hamming) + ")|" + str(self._epsilon) + "-DP"
+		self._accuracy[key2] = []
+		self._keys.append(key2)
+		print str(time.clock() - start) + "seconds."
+		print "Calculating Smooth Sensitivity with Hamming Distance....."
+		start = time.clock()
+		beta = self._epsilon / (2.0 * math.log(2.0 / self._delta))
+		self._SS_Hamming = max([self._LS_Candidates[r] * math.exp(- beta * Hamming_Distance(self._posterior, r)) for r in self._candidates])
+		key3 = "(" + str(self._epsilon / 2.0) + "," + str(beta) + ") Admissible Niose and " + str(beta) + "-Smooth Sensitivity (" + str(self._SS_Laplace) + ")|(" + str(self._epsilon) + "," + str(self._delta) + ")-DP"
+		self._accuracy[key3] = []
+		self._keys.append(key3)
+		print str(time.clock() - start) + "seconds."	
 
+
+	def _set_LS(self):
+		self._LS = self._posterior._hellinger_sensitivity(self._posterior)
+		key = "Exponential Mechanism with Local Sensitivity - " + str(self._LS) + "| Non Privacy"
+		self._accuracy[key] = []
+		self._keys.append(key)		
 
 	def _set_GS(self):
-		self._GS = Dir([1,1,1,2]) - Dir([1,2,1,1])
+		temp = deepcopy(self._prior._alphas)
+		temp[0] += 1
+		temp[1] -= 1
+		self._GS = self._prior - Dir(temp)
+		key = "Exponential Mechanism with Global Sensitivity - " + str(self._GS) + "| Achieving" + str(self._epsilon) + "-DP"
+		self._accuracy[key] = []
+		self._keys.append(key)
 
 	def _set_VS(self):
 		t = 2 * math.log(len(self._candidates) / 0.8) / self._epsilon
 		print "Calculating Varying Sensitivity Scores....."
 		start = time.clock()
-		print t
+		self._set_LS()
 		for r in self._candidates:
-			self._LS[r] = r._hellinger_sensitivity(r)
-		for r in self._candidates:
-			self._candidate_VS_scores[r] = -max([((-self._candidate_scores[r] + t * self._LS[r] - (-self._candidate_scores[i] + t * self._LS[i]))/(self._LS[r] + self._LS[i])) for i in self._candidates])
+			self._candidate_VS_scores[r] = -max([((-self._candidate_scores[r] + t * self._LS_Candidates[r] - (-self._candidate_scores[i] + t * self._LS_Candidates[i]))/(self._LS_Candidates[r] + self._LS_Candidates[i])) for i in self._candidates])
+		key = "Exponential Mechanism with Varying Sensitivity Scores | Achieving" + str(self._epsilon) + "-DP"
+		self._accuracy[key] = []
+		self._keys.append(key)
 		print str(time.clock() - start) + "seconds."
 
-	def _almost_randomize(self):
+	def _Smooth_Sensitivity_Noize(self):
+		gamma = 1
+		z = numpy.random.standard_cauchy()
+		alpha = self._epsilon/ (2.0 * (gamma + 1))
+		temp = [a + self._SS * z /alpha for a in self._posterior._alphas]
+		self._SS_posterior = Dir(temp)
 		return
 
+	def _Smooth_Sensitivity_Noize_Hamming(self):
+		gamma = 1
+		z = numpy.random.standard_cauchy()
+		alpha = self._epsilon/ (2.0 * (gamma + 1))
+		temp = [a + self._SS_Hamming * z /alpha for a in self._posterior._alphas]
+		self._SS_posterior = Dir(temp)
+		return
+
+	def _Smooth_Sensitivity_Laplace_Noize(self):
+		gamma = 1
+		Z = [numpy.random.laplace(0,1) for i in range(len(self._posterior._alphas))]
+		alpha = self._epsilon/ 2.0
+		temp = [a + self._SS_Laplace * z /alpha for a,z in self._posterior._alphas,Z]
+		self._SS_posterior = Dir(temp)
+		return		
+
+
+
 	def _laplace_noize(self):
-		self._laplaced_posterior = Dir([alpha + abs(numpy.random.laplace(0, len(self._prior._alphas) * 1.0/self._epsilon)) for alpha in self._posterior._alphas])
+		self._laplaced_posterior = Dir([alpha + abs(numpy.random.laplace(0, 2.0/self._epsilon)) for alpha in self._posterior._alphas])
 
 	def _laplace_noize_mle(self):
 		while True:
@@ -195,7 +262,7 @@ class BayesInferwithDirPrior(object):
 			self._laplaced_posterior = Dir([alpha + round(numpy.random.laplace(0, 2.0/self._epsilon)) for alpha in self._posterior._alphas])
 			self._laplaced_posterior._alphas[0] += (sum(self._prior._alphas) + self._sample_size - sum(self._laplaced_posterior._alphas))
 			for  alpha in self._laplaced_posterior._alphas:
-				if alpha < 0.0:
+				if alpha <= 0.0:
 					flage = False
 			if flage:
 				break
@@ -217,7 +284,7 @@ class BayesInferwithDirPrior(object):
 		probabilities = {}
 		nomalizer = 0.0
 		for r in self._candidates:
-			probabilities[r] = math.exp(self._epsilon * self._candidate_scores[r]/(self._LS_max))
+			probabilities[r] = math.exp(self._epsilon * self._candidate_scores[r]/(self._LS))
 			nomalizer += probabilities[r]
 		outpro = random.random()
 		for r in self._candidates:
@@ -239,37 +306,44 @@ class BayesInferwithDirPrior(object):
 			outpro = outpro - probabilities[r]/nomalizer
 			self._exponential_posterior = r
 
+	# def _exponentialize_SS(self):
+	# 	probabilities = {}
+	# 	nomalizer = 0.0
+	# 	for r in self._candidates:
+	# 		probabilities[r] = math.exp(self._epsilon * self._candidate_scores[r]/(self._SS))
+	# 		nomalizer += probabilities[r]
+	# 	outpro = random.random()
+	# 	for r in self._candidates:
+	# 		if outpro < 0:
+	# 			return
+	# 		outpro = outpro - probabilities[r]/nomalizer
+	# 		self._exponential_posterior = r
 
-	def _update_expomech(self, times):
+	def _propose_test_release(self):
+		return
+
+
+	def _experiments(self, times):
 		self._set_candidate_scores()
 		self._set_GS()
-		self._set_LS_max()
-		self._set_VS()
+		self._set_SS()
+		self._set_LS()
 		self._show_all()
 		for i in range(times):
-			self._exponentialize_LS()
-			self._accuracy_expomech["Exponential Mechanism with Local Sensitivity"].append(self._posterior - self._exponential_posterior)
-			self._exponentialize_VS()
-			self._accuracy_expomech["Exponential Mechanism with Varying Sensitivity"].append(self._posterior - self._exponential_posterior)
-			self._exponentialize_GS()
-			self._accuracy_expomech["Exponential Mechanism with Global Sensitivity"].append(self._posterior - self._exponential_posterior)
 			self._laplace_noize_mle()
-			self._show_exponential()
-			self._show_laplaced()
-			self._accuracy_expomech["Laplace Mechanism"].append(self._posterior - self._laplaced_posterior)
-			for key,item in self._accuracy.items():
-				self._average[key].append(numpy.mean(item))
+			self._accuracy[self._keys[0]].append(self._posterior - self._laplaced_posterior)
+			self._exponentialize_GS()
+			self._accuracy[self._keys[1]].append(self._posterior - self._exponential_posterior)
+			self._Smooth_Sensitivity_Noize()
+			self._accuracy[self._keys[2]].append(self._posterior - self._SS_posterior)
+			self._Smooth_Sensitivity_Noize_Hamming()
+			self._accuracy[self._keys[3]].append(self._posterior - self._SS_posterior)
+			self._Smooth_Sensitivity_Laplace_Noize()
+			self._accuracy[self._keys[4]].append(self._posterior - self._SS_posterior)
+			self._exponentialize_LS()
+			self._accuracy[self._keys[5]].append(self._posterior - self._exponential_posterior)
 
-	def _update_accuracy(self, times):
-		for i in range(times):
-			self._randomize()
-			self._exponentialize()
-			self._laplace_noize()
-			self._accuracy["Laplace Mechanism"].append(self._posterior - self._laplaced_posterior)
-			self._accuracy["Randomize Response"].append(self._posterior - self._randomized_posterior)
-			self._accuracy["Exponential Mechanism"].append(self._posterior - self._exponential_posterior)
-			for key,item in self._accuracy.items():
-				self._average[key].append(numpy.mean(item))
+
 
 	def _get_bias(self):
 		return self._bias
@@ -288,11 +362,6 @@ class BayesInferwithDirPrior(object):
 		print "The posterior distribution under Laplace mechanism is: "
 		self._laplaced_posterior.show()
 
-	def _show_randomized(self):
-		print "The randomized data set is: "
-		print self._randomized_observation
-		print "The posterior distribution under randomized mechanism is: "
-		self._randomized_posterior.show()
 
 	def _show_observation(self):
 		print "The observed data set is: "
@@ -318,9 +387,7 @@ class BayesInferwithDirPrior(object):
 		self._show_bias()
 		self._show_observation()
 		self._show_laplaced()
-		self._show_randomized()
 		self._show_exponential()
-		#self._show_VS()
 
 
 def draw_error(errors, model):
@@ -333,25 +400,29 @@ def draw_error(errors, model):
 		plt.axhline(y=numpy.mean(item), color='r', linestyle = '--', alpha = 0.8, label = "average error",linewidth=3)
 		plt.scatter(x, numpy.array(item), s = 40, c = 'b', marker = 'o', alpha = 0.7, edgecolors='white', label = " error")
 		plt.ylabel('Hellinger Distance')
-		plt.xlabel('Runs (Bias = ' + str(model._bias) + ', GS = ' + str(model._GS) + ', max LS = ' + str(model._LS_max) + ')')
+		plt.xlabel('Runs (Bias = ' + str(model._bias) + ')')
 		plt.title(key + ' (Data Size = ' + str(model._sample_size) + ', Global epsilon = ' + str(model._epsilon) + ')')
 		plt.legend(loc="best")
 		rows = rows + 1
 		plt.ylim(-0.1,1.0)
 		plt.xlim(0.0,len(item)*1.0)
 		plt.grid()
-	plt.savefig("dirichlet-GS-VS-LS-size50order3runs100.png")
+	plt.savefig("dirichlet-GS-SS-LS-size100order2runs200-3.png")
 	return
+
 
 
 if __name__ == "__main__":
 	# Tests the functioning of the module
 
-	sample_size = 200
+	sample_size = 100
 	epsilon = 0.8
-	prior = Dir([7, 4, 3])
-	Bayesian_Model = BayesInferwithDirPrior(prior, sample_size, epsilon)
+	delta = 0.8
+	prior = Dir([7, 4])
+	Bayesian_Model = BayesInferwithDirPrior(prior, sample_size, epsilon, 0.8)
 
-	Bayesian_Model._update_expomech(100)
+	Bayesian_Model._experiments(200)
 
-	draw_error(Bayesian_Model._accuracy_expomech,Bayesian_Model)
+	draw_error(Bayesian_Model._accuracy,Bayesian_Model)
+
+
