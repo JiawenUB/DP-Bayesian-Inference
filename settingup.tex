@@ -456,8 +456,10 @@ Since the Hellinger distance is symmetric, if we prove the $\mathsf{Hlg} (\maths
 
 1. if $x = x_0$, $\mathsf{Hlg} (\mathsf{BayesInfer}(x_0), \mathsf{BayesInfer}(x_0 + 1)) < \mathsf{Hlg} (\mathsf{BayesInfer}(x_0 + 1), \mathsf{BayesInfer}(x_0 + 2))$ holds:
 
-\begin{mdframed*}
+
+% \twocolumn{
 \begin{equation*}
+\boxed{
 \begin{split}
 \mathsf{Hlg}(beta(\frac{n}{2} + 1, \frac{n}{2} + 1), beta(\frac{n}{2} + 1 + 1, \frac{n}{2} + 1 - 1))
 & <  \mathsf{Hlg}(beta(\frac{n}{2} + 1 + 1, \frac{n}{2} + 1 - 1), beta(\frac{n}{2} + 1 + 2, \frac{n}{2} + 1 - 2))\\
@@ -483,22 +485,24 @@ Since the Hellinger distance is symmetric, if we prove the $\mathsf{Hlg} (\maths
 & > (n + 3) ^ 2 n (n - 2)\\
 n & > -1.
 \end{split}
+}
 \end{equation*}
-\end{mdframed*}
+
 Since $n > 0$, it always holds.
 
 2. if $x = x_0 + m$ holds, then also $x = x_0 + m + 1$ holds:
 
 i.e $\mathsf{Hlg}(beta(\frac{n}{2} + 1 + m, \frac{n}{2} + 1 - m), beta(\frac{n}{2} + 1 + m + 1, \frac{n}{2} + 1 - m - 1)) 
 < \mathsf{Hlg}(beta(\frac{n}{2} + 1 + m + 1, \frac{n}{2} + 1 - m - 1), beta(\frac{n}{2} + 1 + m + 2, \frac{n}{2} + 1 - m - 2))$
-is what we know.
-
-Now, we want to proof $\mathsf{Hlg}(beta(\frac{n}{2} + 1 + m + 1, \frac{n}{2} + 1 - m - 1), beta(\frac{n}{2} + 1 + m + 2, \frac{n}{2} + 1 - m - 2)) 
-< \mathsf{Hlg}(beta(\frac{n}{2} + 1 + m + 2, \frac{n}{2} + 1 - m - 2), beta(\frac{n}{2} + 1 + m + 3, \frac{n}{2} + 1 - m - 3))$ by using what we know:
+is what we know:
 
 \begin{equation*}
 \begin{split}
-& \sqrt{1 - \frac{\mathsf{beta}(,)}{\sqrt{\mathsf{beta}(,) \mathsf{beta}(,)}}}\\
+& \sqrt{1 - \frac{\mathsf{beta}(
+\frac{\frac{n}{2} + 1 + m + \frac{n}{2} + 1 + m + 1}{2},
+\frac{\frac{n}{2} + 1 - m + \frac{n}{2} + 1 - m - 1}{2})}
+{\sqrt{\mathsf{beta}(\frac{n}{2} + 1 + m, \frac{n}{2} + 1 - m)
+\mathsf{beta}(\frac{n}{2} + 2 + m, \frac{n}{2} - m)}}}\\
 & < \sqrt{1 - \frac{\mathsf{beta}(,)}{\sqrt{\mathsf{beta}(,) \mathsf{beta}(,)}}}\\
 & \frac{\mathsf{beta}(,)}{\sqrt{\mathsf{beta}(,) \mathsf{beta}(,)}}\\
 & > \frac{\mathsf{beta}(,)}{\sqrt{\mathsf{beta}(,) \mathsf{beta}(,)}}
@@ -506,11 +510,14 @@ Now, we want to proof $\mathsf{Hlg}(beta(\frac{n}{2} + 1 + m + 1, \frac{n}{2} + 
 \end{equation*}
 
 
+Now, we want to proof $\mathsf{Hlg}(beta(\frac{n}{2} + 1 + m + 1, \frac{n}{2} + 1 - m - 1), beta(\frac{n}{2} + 1 + m + 2, \frac{n}{2} + 1 - m - 2)) 
+< \mathsf{Hlg}(beta(\frac{n}{2} + 1 + m + 2, \frac{n}{2} + 1 - m - 2), beta(\frac{n}{2} + 1 + m + 3, \frac{n}{2} + 1 - m - 3))$ by using what we know:
 \end{proof}
 
 \subsubsection{Statement II}
 
 \subsubsection{Statement III}
+\vspace*{10cm}
 
 \section{Experimental Evaluations}
 We got some results from these mechanisms.
@@ -522,9 +529,8 @@ We got some results from these mechanisms.
 % references without citing it in the main text, use \nocite
 % \nocite{langley00}
 
-
-\bibliography{example_paper}
 \bibliographystyle{icml2018}
+\bibliography{example_paper}
 
 
 
