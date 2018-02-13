@@ -464,24 +464,69 @@ Since the Hellinger distance is symmetric, if we prove the $\mathsf{Hlg} (\maths
 \begin{equation*}
 \boxed{
 \begin{split}
-\mathsf{Hlg}(beta(\frac{n}{2} + 1, \frac{n}{2} + 1), beta(\frac{n}{2} + 1 + 1, \frac{n}{2} + 1 - 1))
-& <  \mathsf{Hlg}(beta(\frac{n}{2} + 1 + 1, \frac{n}{2} + 1 - 1), beta(\frac{n}{2} + 1 + 2, \frac{n}{2} + 1 - 2))\\
-\sqrt{1 - \frac{\mathsf{beta}(\frac{\frac{n}{2} + 1 + \frac{n}{2} + 1 + 1}{2},\frac{\frac{n}{2} + 1 + \frac{n}{2} + 1 - 1}{2})}
-{\sqrt{\mathsf{beta}(\frac{n}{2} + 1, \frac{n}{2} + 1)\mathsf{beta}(\frac{n}{2} + 1 + 1, \frac{n}{2} + 1 - 1)}}}
-& < \sqrt{1 - \frac{\mathsf{beta}(\frac{\frac{n}{2} + 1 + 1 + \frac{n}{2} + 1 + 2}{2}, \frac{\frac{n}{2} + 1 - 1 + \frac{n}{2} + 1 - 2}{2}, )}
-{\sqrt{\mathsf{beta}(\frac{n}{2} + 1 + 1, \frac{n}{2} + 1 - 1)\mathsf{beta}(\frac{n}{2} + 1 + 2, \frac{n}{2} + 1 - 2)}}}\\
+\mathsf{Hlg}(
+beta(\frac{n}{2} + 1, \frac{n}{2} + 1), 
+beta(\frac{n}{2} + 1 + 1, \frac{n}{2} + 1 - 1))
+& <  \mathsf{Hlg}(
+beta(\frac{n}{2} + 1 + 1, \frac{n}{2} + 1 - 1), 
+beta(\frac{n}{2} + 1 + 2, \frac{n}{2} + 1 - 2))\\
+\sqrt{1 - \frac{\mathsf{beta}(
+\frac{\frac{n}{2} + 1 + \frac{n}{2} + 1 + 1}{2},
+\frac{\frac{n}{2} + 1 + \frac{n}{2} + 1 - 1}{2})}
+{\sqrt{
+\mathsf{beta}(\frac{n}{2} + 1, \frac{n}{2} + 1)
+\mathsf{beta}(\frac{n}{2} + 1 + 1, \frac{n}{2} + 1 - 1)
+}
+}
+}
+& < \sqrt{1 - \frac{\mathsf{beta}(
+\frac{\frac{n}{2} + 1 + 1 + \frac{n}{2} + 1 + 2}{2}, 
+\frac{\frac{n}{2} + 1 - 1 + \frac{n}{2} + 1 - 2}{2}, )}
+{\sqrt{
+\mathsf{beta}(\frac{n}{2} + 1 + 1, \frac{n}{2} + 1 - 1)
+\mathsf{beta}(\frac{n}{2} + 1 + 2, \frac{n}{2} + 1 - 2)
+}
+}
+}\\
 \sqrt{1 - \frac{\mathsf{beta}(\frac{n + 3}{2},\frac{n + 1}{2})}
-{\sqrt{\mathsf{beta}(\frac{n}{2} + 1, \frac{n}{2} + 1)\mathsf{beta}(\frac{n}{2} + 2, \frac{n}{2})}}}
+{\sqrt{
+\mathsf{beta}(\frac{n}{2} + 1, \frac{n}{2} + 1)
+\mathsf{beta}(\frac{n}{2} + 2, \frac{n}{2})
+}
+}
+}
 & < \sqrt{1 - \frac{\mathsf{beta}(\frac{n + 5}{2}, \frac{n - 1}{2})}
-{\sqrt{\mathsf{beta}(\frac{n}{2} + 2, \frac{n}{2})\mathsf{beta}(\frac{n}{2} + 3, \frac{n}{2} - 1)}}}\\
+{\sqrt{
+\mathsf{beta}(\frac{n}{2} + 2, \frac{n}{2})
+\mathsf{beta}(\frac{n}{2} + 3, \frac{n}{2} - 1)
+}
+}
+}\\
 \frac{\mathsf{beta}(\frac{n + 3}{2},\frac{n + 1}{2})}
-{\sqrt{\mathsf{beta}(\frac{n}{2} + 1, \frac{n}{2} + 1)\mathsf{beta}(\frac{n}{2} + 2, \frac{n}{2})}}
+{\sqrt{
+\mathsf{beta}(\frac{n}{2} + 1, \frac{n}{2} + 1)
+\mathsf{beta}(\frac{n}{2} + 2, \frac{n}{2})
+}
+}
 & > \frac{\mathsf{beta}(\frac{n + 5}{2}, \frac{n - 1}{2})}
-{\sqrt{\mathsf{beta}(\frac{n}{2} + 2, \frac{n}{2})\mathsf{beta}(\frac{n}{2} + 3, \frac{n}{2} - 1)}}\\
-\frac{\mathsf{beta}(\frac{n + 3}{2},\frac{n - 1}{2}) \frac{\frac{n - 1}{2}}{\frac{n - 1}{2} + \frac{n + 3}{2}}}
-{\sqrt{\mathsf{beta}(\frac{n}{2} + 1, \frac{n}{2} - 1) \frac{\frac{n}{2} - 1}{\frac{n}{2} - 1 + \frac{n}{2} + 1} \frac{\frac{n}{2}}{\frac{n}{2} + \frac{n}{2} + 1}}}
-& > \frac{\mathsf{beta}(\frac{n + 3}{2}, \frac{n - 1}{2}) \frac{\frac{n + 3}{2}}{\frac{n + 3}{2} + \frac{n - 1}{2}} }
-{\sqrt{\mathsf{beta}(\frac{n}{2} + 1, \frac{n}{2} - 1) \frac{\frac{n}{2} + 1}{\frac{n}{2} + 1 + \frac{n}{2} - 1} \frac{\frac{n}{2} + 2}{\frac{n}{2} + 2 + \frac{n}{2} - 1}}}\\
+{\sqrt{
+\mathsf{beta}(\frac{n}{2} + 2, \frac{n}{2})
+\mathsf{beta}(\frac{n}{2} + 3, \frac{n}{2} - 1)
+}
+}\\
+\frac{\mathsf{beta}(\frac{n + 3}{2},\frac{n - 1}{2}) 
+\frac{\frac{n - 1}{2}}{\frac{n - 1}{2} + \frac{n + 3}{2}}}
+{\sqrt{
+\mathsf{beta}(\frac{n}{2} + 1, \frac{n}{2} - 1) 
+\frac{\frac{n}{2} - 1}{\frac{n}{2} - 1 + \frac{n}{2} + 1} 
+\frac{\frac{n}{2}}{\frac{n}{2} + \frac{n}{2} + 1}}}
+& > \frac{
+\mathsf{beta}(\frac{n + 3}{2}, \frac{n - 1}{2}) 
+\frac{\frac{n + 3}{2}}{\frac{n + 3}{2} + \frac{n - 1}{2}} }
+{\sqrt{
+\mathsf{beta}(\frac{n}{2} + 1, \frac{n}{2} - 1) 
+\frac{\frac{n}{2} + 1}{\frac{n}{2} + 1 + \frac{n}{2} - 1}
+\frac{\frac{n}{2} + 2}{\frac{n}{2} + 2 + \frac{n}{2} - 1}}}\\
 \frac{\frac{n - 1}{2}}{\sqrt{(\frac{n}{2} - 1)(\frac{n}{2})}}
 & > \frac{\frac{n + 3}{2}}{\sqrt{(\frac{n}{2} + 1)(\frac{n}{2} + 2)}}\\
 (n - 1) ^ 2 (n + 2)(n + 4)
