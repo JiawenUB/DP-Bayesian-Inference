@@ -4,6 +4,7 @@
 % \usepackage[utf8]{inputenc}
 % \usepackage[english]{babel}
 % Recommended, but optional, packages for figures and better typesetting:
+\usepackage{mathtools,amssymb}
 \usepackage{microtype}
 \usepackage{graphicx}
 \usepackage{amsmath}
@@ -199,7 +200,7 @@ P[r] = \frac
 where local sensitivity is calculated by:
 
 \begin{multline*}
-\Delta_{g}u(x) = 
+\Delta_{l}u(x) = 
 \mathsf{Hlg}(\mathsf{BayesInfer}(x), r) - \mathsf{Hlg}(\mathsf{BayesInfer}(y'), r)|\\
 \max_{\{|x,y'| \leq 1;y'\in \mathcal{X}^n\}}\max_{\{r\in R\}}.
 \end{multline*}
@@ -545,7 +546,7 @@ Now, we need to proof $\mathsf{Hlg}(beta(\frac{n}{2} + 1 + m + 1, \frac{n}{2} + 
 From $x = x_0 + m$ and property of $\mathsf{beta}(\alpha, \beta)$ function, we know:
 \vspace*{9.5cm}
 
-\begin{small}
+\begin{footnotesize}
 \begin{equation*}
 \begin{split}
 & \frac{\mathsf{beta}(\frac{n + 2m + 5}{2}, \frac{n - 2m - 1}{2})
@@ -556,7 +557,7 @@ From $x = x_0 + m$ and property of $\mathsf{beta}(\alpha, \beta)$ function, we k
 \frac{n - 2m}{n + 2m + 2}
 }
 }\\
-& > \frac{\mathsf{beta}(\frac{n + 2m + 7}{2}, \frac{n - 2m - 3}{2})
+> & \frac{\mathsf{beta}(\frac{n + 2m + 7}{2}, \frac{n - 2m - 3}{2})
 \frac{n - 2m - 3}{n + 2m + 5}}
 {\sqrt{
 \mathsf{beta}(\frac{n}{2} + 2 + m, \frac{n}{2} - m)
@@ -575,7 +576,7 @@ From $x = x_0 + m$ and property of $\mathsf{beta}(\alpha, \beta)$ function, we k
 \mathsf{beta}(\frac{n}{2} + 3 + m, \frac{n}{2} - m - 1)
 }
 }\\
-& > \frac{\mathsf{beta}(\frac{n + 2m + 7}{2}, \frac{n - 2m - 3}{2})}
+> & \frac{\mathsf{beta}(\frac{n + 2m + 7}{2}, \frac{n - 2m - 3}{2})}
 {\sqrt{
 \mathsf{beta}(\frac{n}{2} + 2 + m, \frac{n}{2} - m)
 \mathsf{beta}(\frac{n}{2} + 3 + m, \frac{n}{2} - m - 1)
@@ -588,7 +589,7 @@ From $x = x_0 + m$ and property of $\mathsf{beta}(\alpha, \beta)$ function, we k
 \mathsf{beta}(\frac{n}{2} + 3 + m, \frac{n}{2} - m - 1)
 }
 }}\\
-& < \sqrt{1 - \frac{\mathsf{beta}(\frac{n + 2m + 7}{2}, \frac{n - 2m - 3}{2})}
+< & \sqrt{1 - \frac{\mathsf{beta}(\frac{n + 2m + 7}{2}, \frac{n - 2m - 3}{2})}
 {\sqrt{
 \mathsf{beta}(\frac{n}{2} + 2 + m, \frac{n}{2} - m)
 \mathsf{beta}(\frac{n}{2} + 3 + m, \frac{n}{2} - m - 1)
@@ -596,22 +597,70 @@ From $x = x_0 + m$ and property of $\mathsf{beta}(\alpha, \beta)$ function, we k
 }}\\
 \\
 & \mathsf{Hlg}(beta(\frac{n}{2} + 2 + m, \frac{n}{2} - m), beta(\frac{n}{2} + 3 + m, \frac{n}{2} - 1 - m))\\
-& < \mathsf{Hlg}(beta(\frac{n}{2} + m + 3, \frac{n}{2} - 1 - m), beta(\frac{n}{2} + m + 4, \frac{n}{2} - m - 2))\\
+< & \mathsf{Hlg}(beta(\frac{n}{2} + m + 3, \frac{n}{2} - 1 - m), beta(\frac{n}{2} + m + 4, \frac{n}{2} - m - 2))\\
 \end{split}
 \end{equation*}
-\end{small}
+\end{footnotesize}
 
 i.e. $ x = x_0 + m + 1$ also holds when $x = x_0 + m$ is valid.
 \end{proof}
 
 
-
-
-
 \subsubsection{Statement II}
+\begin{proof}
+
+\begin{equation*}
+\begin{split}
+\because \quad 		& \Delta_l u(x) = |\mathsf{Hlg}(\mathsf{BayesInfer}(x), r) - \mathsf{Hlg}(\mathsf{BayesInfer}(y'), r)|,\\
+					& \max_{\{|x,y'| \leq 1;y'\in \mathcal{X}^n\}}\max_{\{r\in R\}};\\
+\because \quad 		& \mathsf{Hlg}(\mathsf{BayesInfer}(x), r) - \mathsf{Hlg}(\mathsf{BayesInfer}(y'), r)\\
+					& \leq \mathsf{Hlg}(\mathsf{BayesInfer}(x), \mathsf{BayesInfer}(y'));\\
+\therefore \quad 	& \Delta_l u(x) = \mathsf{Hlg}(\mathsf{BayesInfer}(x), \mathsf{BayesInfer}(y')),\\
+					& \max_{\{|x,y'| \leq 1; y'\in \mathcal{X}^n\}};\\
+\therefore \quad 	& \Delta_l u(x) = \max \{\mathsf{Hlg}(\mathsf{BayesInfer}(x), \mathsf{BayesInfer}(x + 1)),\\
+					& \quad \quad \quad \quad \quad \quad \quad \mathsf{Hlg}(\mathsf{BayesInfer}(x), \mathsf{BayesInfer}(x - 1))\};\\
+					& According\ to\ Statement\ I:\\
+\mathsf{if}	  \quad	& x > x_0 \\
+\mathsf{then} \quad	
+					& \mathsf{Hlg}(\mathsf{BayesInfer}(x), \mathsf{BayesInfer}(x - 1))\\
+					&< \mathsf{Hlg}(\mathsf{BayesInfer}(x), \mathsf{BayesInfer}(x + 1));\\
+\mathsf{then} \quad	
+					& \Delta_l u(x) = \mathsf{Hlg}(\mathsf{BayesInfer}(x), \mathsf{BayesInfer}(x + 1));\\
+\mathsf{if}	 \quad	& x < x_0 \\
+\mathsf{then} \quad	
+					& \mathsf{Hlg}(\mathsf{BayesInfer}(x), \mathsf{BayesInfer}(x - 1))\\
+					& > \mathsf{Hlg}(\mathsf{BayesInfer}(x), \mathsf{BayesInfer}(x + 1)); \\
+\mathsf{then} \quad	
+					& \Delta_l u(x) = \mathsf{Hlg}(\mathsf{BayesInfer}(x), \mathsf{BayesInfer}(x - 1));\\
+\mathsf{else} \quad	
+					& \Delta_l u(x_0) = \mathsf{Hlg}(\mathsf{BayesInfer}(x_0), \mathsf{BayesInfer}(x_0 - 1))\\
+					& \quad \quad \quad = \mathsf{Hlg}(\mathsf{BayesInfer}(x_0), \mathsf{BayesInfer}(x_0 + 1)). \\
+\end{split}
+\end{equation*}
+
+From above, we can conclude the Statement II.
+
+\end{proof}
 
 \subsubsection{Statement III}
+\begin{proof}
+From Statement I and Statement II, we can conclude that:
+\begin{equation*}
+\begin{split}
+\mathsf{when} \quad	& x > x_0 \\
+					& \mathsf{Hlg}(\mathsf{BayesInfer}(x), \mathsf{BayesInfer}(x + 1) \\
+					& > \mathsf{Hlg}(\mathsf{BayesInfer}(x_0), \mathsf{BayesInfer}(x_0 + 1); \\
+					& i.e.\ \Delta_l u(x) > \Delta_l u(x_0)\\
+\mathsf{when} \quad	& x < x_0 \\
+					& \mathsf{Hlg}(\mathsf{BayesInfer}(x), \mathsf{BayesInfer}(x - 1) \\
+					& > \mathsf{Hlg}(\mathsf{BayesInfer}(x_0), \mathsf{BayesInfer}(x_0 - 1); \\
+					& i.e.\ \Delta_l u(x) > \Delta_l u(x_0).\\
+\end{split}
+\end{equation*}
 
+i.e $\forall \ x \neq x_0, \Delta_l u(x) > \Delta_l u(x_0)$.
+
+\end{proof}
 
 \section{Experimental Evaluations}
 We got some results from these mechanisms.
