@@ -433,7 +433,7 @@ $x_0$ to denote:
 \end{equation*}
 \end{small}
 
-$\mathsf{beta}(\alpha, \beta)$ is the beta function with two arguments $\alpha$ and $\beta$.
+$\betafun(\alpha, \beta)$ is the beta function with two arguments $\alpha$ and $\beta$.
 
 Then, we have the following three statements, and proofs of the statements.
 \renewcommand{\labelenumi}{\Roman{enumi}}
@@ -470,61 +470,61 @@ beta(\frac{n}{2} + 1 + 1, \frac{n}{2} + 1 - 1))
 & <  \hlg(
 beta(\frac{n}{2} + 1 + 1, \frac{n}{2} + 1 - 1), 
 beta(\frac{n}{2} + 1 + 2, \frac{n}{2} + 1 - 2))\\
-\sqrt{1 - \frac{\mathsf{beta}(
+\sqrt{1 - \frac{\betafun(
 \frac{\frac{n}{2} + 1 + \frac{n}{2} + 1 + 1}{2},
 \frac{\frac{n}{2} + 1 + \frac{n}{2} + 1 - 1}{2})}
 {\sqrt{
-\mathsf{beta}(\frac{n}{2} + 1, \frac{n}{2} + 1)
-\mathsf{beta}(\frac{n}{2} + 1 + 1, \frac{n}{2} + 1 - 1)
+\betafun(\frac{n}{2} + 1, \frac{n}{2} + 1)
+\betafun(\frac{n}{2} + 1 + 1, \frac{n}{2} + 1 - 1)
 }
 }
 }
-& < \sqrt{1 - \frac{\mathsf{beta}(
+& < \sqrt{1 - \frac{\betafun(
 \frac{\frac{n}{2} + 1 + 1 + \frac{n}{2} + 1 + 2}{2}, 
 \frac{\frac{n}{2} + 1 - 1 + \frac{n}{2} + 1 - 2}{2}, )}
 {\sqrt{
-\mathsf{beta}(\frac{n}{2} + 1 + 1, \frac{n}{2} + 1 - 1)
-\mathsf{beta}(\frac{n}{2} + 1 + 2, \frac{n}{2} + 1 - 2)
+\betafun(\frac{n}{2} + 1 + 1, \frac{n}{2} + 1 - 1)
+\betafun(\frac{n}{2} + 1 + 2, \frac{n}{2} + 1 - 2)
 }
 }
 }\\
-\sqrt{1 - \frac{\mathsf{beta}(\frac{n + 3}{2},\frac{n + 1}{2})}
+\sqrt{1 - \frac{\betafun(\frac{n + 3}{2},\frac{n + 1}{2})}
 {\sqrt{
-\mathsf{beta}(\frac{n}{2} + 1, \frac{n}{2} + 1)
-\mathsf{beta}(\frac{n}{2} + 2, \frac{n}{2})
+\betafun(\frac{n}{2} + 1, \frac{n}{2} + 1)
+\betafun(\frac{n}{2} + 2, \frac{n}{2})
 }
 }
 }
-& < \sqrt{1 - \frac{\mathsf{beta}(\frac{n + 5}{2}, \frac{n - 1}{2})}
+& < \sqrt{1 - \frac{\betafun(\frac{n + 5}{2}, \frac{n - 1}{2})}
 {\sqrt{
-\mathsf{beta}(\frac{n}{2} + 2, \frac{n}{2})
-\mathsf{beta}(\frac{n}{2} + 3, \frac{n}{2} - 1)
+\betafun(\frac{n}{2} + 2, \frac{n}{2})
+\betafun(\frac{n}{2} + 3, \frac{n}{2} - 1)
 }
 }
 }\\
-\frac{\mathsf{beta}(\frac{n + 3}{2},\frac{n + 1}{2})}
+\frac{\betafun(\frac{n + 3}{2},\frac{n + 1}{2})}
 {\sqrt{
-\mathsf{beta}(\frac{n}{2} + 1, \frac{n}{2} + 1)
-\mathsf{beta}(\frac{n}{2} + 2, \frac{n}{2})
+\betafun(\frac{n}{2} + 1, \frac{n}{2} + 1)
+\betafun(\frac{n}{2} + 2, \frac{n}{2})
 }
 }
-& > \frac{\mathsf{beta}(\frac{n + 5}{2}, \frac{n - 1}{2})}
+& > \frac{\betafun(\frac{n + 5}{2}, \frac{n - 1}{2})}
 {\sqrt{
-\mathsf{beta}(\frac{n}{2} + 2, \frac{n}{2})
-\mathsf{beta}(\frac{n}{2} + 3, \frac{n}{2} - 1)
+\betafun(\frac{n}{2} + 2, \frac{n}{2})
+\betafun(\frac{n}{2} + 3, \frac{n}{2} - 1)
 }
 }\\
-\frac{\mathsf{beta}(\frac{n + 3}{2},\frac{n - 1}{2}) 
+\frac{\betafun(\frac{n + 3}{2},\frac{n - 1}{2}) 
 \frac{\frac{n - 1}{2}}{\frac{n - 1}{2} + \frac{n + 3}{2}}}
 {\sqrt{
-\mathsf{beta}(\frac{n}{2} + 1, \frac{n}{2} - 1) 
+\betafun(\frac{n}{2} + 1, \frac{n}{2} - 1) 
 \frac{\frac{n}{2} - 1}{\frac{n}{2} - 1 + \frac{n}{2} + 1} 
 \frac{\frac{n}{2}}{\frac{n}{2} + \frac{n}{2} + 1}}}
 & > \frac{
-\mathsf{beta}(\frac{n + 3}{2}, \frac{n - 1}{2}) 
+\betafun(\frac{n + 3}{2}, \frac{n - 1}{2}) 
 \frac{\frac{n + 3}{2}}{\frac{n + 3}{2} + \frac{n - 1}{2}} }
 {\sqrt{
-\mathsf{beta}(\frac{n}{2} + 1, \frac{n}{2} - 1) 
+\betafun(\frac{n}{2} + 1, \frac{n}{2} - 1) 
 \frac{\frac{n}{2} + 1}{\frac{n}{2} + 1 + \frac{n}{2} - 1}
 \frac{\frac{n}{2} + 2}{\frac{n}{2} + 2 + \frac{n}{2} - 1}}}\\
 \frac{\frac{n - 1}{2}}{\sqrt{(\frac{n}{2} - 1)(\frac{n}{2})}}
@@ -548,36 +548,36 @@ is what we know:
 \begin{equation*}
 \begin{split}
 & \sqrt{
-1 - \frac{\mathsf{beta}(
+1 - \frac{\betafun(
 \frac{\frac{n}{2} + 1 + m + \frac{n}{2} + 1 + m + 1}{2},
 \frac{\frac{n}{2} + 1 - m + \frac{n}{2} + 1 - m - 1}{2})}
 {\sqrt{
-\mathsf{beta}(\frac{n}{2} + 1 + m, \frac{n}{2} + 1 - m)
-\mathsf{beta}(\frac{n}{2} + 2 + m, \frac{n}{2} - m)
+\betafun(\frac{n}{2} + 1 + m, \frac{n}{2} + 1 - m)
+\betafun(\frac{n}{2} + 2 + m, \frac{n}{2} - m)
 }
 }
 }\\
 & < \sqrt{
-1 - \frac{\mathsf{beta}(
+1 - \frac{\betafun(
 \frac{\frac{n}{2} + 1 + m + 1 + \frac{n}{2} + 1 + m + 2}{2},
 \frac{\frac{n}{2} + 1 - m - 1 + \frac{n}{2} + 1 - m - 2}{2})}
 {\sqrt{
-\mathsf{beta}(\frac{n}{2} + 2 + m, \frac{n}{2} - m)
-\mathsf{beta}(\frac{n}{2} + 3 + m, \frac{n}{2} - m - 1)
+\betafun(\frac{n}{2} + 2 + m, \frac{n}{2} - m)
+\betafun(\frac{n}{2} + 3 + m, \frac{n}{2} - m - 1)
 }
 }
 }\\
 \\
-& \frac{\mathsf{beta}(\frac{n + 2m + 3}{2}, \frac{n - 2m + 1}{2})}
+& \frac{\betafun(\frac{n + 2m + 3}{2}, \frac{n - 2m + 1}{2})}
 {\sqrt{
-\mathsf{beta}(\frac{n}{2} + 1 + m, \frac{n}{2} + 1 - m)
-\mathsf{beta}(\frac{n}{2} + 2 + m, \frac{n}{2} - m)
+\betafun(\frac{n}{2} + 1 + m, \frac{n}{2} + 1 - m)
+\betafun(\frac{n}{2} + 2 + m, \frac{n}{2} - m)
 }
 }\\
-& > \frac{\mathsf{beta}(\frac{n + 2m + 5}{2}, \frac{n - 2m - 1}{2})}
+& > \frac{\betafun(\frac{n + 2m + 5}{2}, \frac{n - 2m - 1}{2})}
 {\sqrt{
-\mathsf{beta}(\frac{n}{2} + 2 + m, \frac{n}{2} - m)
-\mathsf{beta}(\frac{n}{2} + 3 + m, \frac{n}{2} - m - 1)
+\betafun(\frac{n}{2} + 2 + m, \frac{n}{2} - m)
+\betafun(\frac{n}{2} + 3 + m, \frac{n}{2} - m - 1)
 }
 }
 \end{split}
@@ -588,25 +588,25 @@ Now, we need to proof $\hlg(beta(\frac{n}{2} + 1 + m + 1, \frac{n}{2} + 1 - m - 
 < \hlg(beta(\frac{n}{2} + 1 + m + 2, \frac{n}{2} + 1 - m - 2), beta(\frac{n}{2} + 1 + m + 3, \frac{n}{2} + 1 - m - 3))$ by using what we know.
 
 
-From $x = x_0 + m$ and property of $\mathsf{beta}(\alpha, \beta)$ function, we know:
+From $x = x_0 + m$ and property of $\betafun(\alpha, \beta)$ function, we know:
 \vspace*{9.5cm}
 
 \begin{footnotesize}
 \begin{equation*}
 \begin{split}
-& \frac{\mathsf{beta}(\frac{n + 2m + 5}{2}, \frac{n - 2m - 1}{2})
+& \frac{\betafun(\frac{n + 2m + 5}{2}, \frac{n - 2m - 1}{2})
 \frac{n - 2m - 1}{n + 2m + 3}}
 {\sqrt{
-\mathsf{beta}(\frac{n}{2} + 2 + m, \frac{n}{2} - m)
-\mathsf{beta}(\frac{n}{2} + 3 + m, \frac{n}{2} - m - 1)
+\betafun(\frac{n}{2} + 2 + m, \frac{n}{2} - m)
+\betafun(\frac{n}{2} + 3 + m, \frac{n}{2} - m - 1)
 \frac{n - 2m}{n + 2m + 2}
 }
 }\\
-> & \frac{\mathsf{beta}(\frac{n + 2m + 7}{2}, \frac{n - 2m - 3}{2})
+> & \frac{\betafun(\frac{n + 2m + 7}{2}, \frac{n - 2m - 3}{2})
 \frac{n - 2m - 3}{n + 2m + 5}}
 {\sqrt{
-\mathsf{beta}(\frac{n}{2} + 2 + m, \frac{n}{2} - m)
-\mathsf{beta}(\frac{n}{2} + 3 + m, \frac{n}{2} - m - 1)
+\betafun(\frac{n}{2} + 2 + m, \frac{n}{2} - m)
+\betafun(\frac{n}{2} + 3 + m, \frac{n}{2} - m - 1)
 \frac{n - 2m - 2}{n + 2m + 6}
 }
 }\\
@@ -615,29 +615,29 @@ From $x = x_0 + m$ and property of $\mathsf{beta}(\alpha, \beta)$ function, we k
 
 \begin{equation*}
 \begin{split}
-& \frac{\mathsf{beta}(\frac{n + 2m + 5}{2}, \frac{n - 2m - 1}{2})}
+& \frac{\betafun(\frac{n + 2m + 5}{2}, \frac{n - 2m - 1}{2})}
 {\sqrt{
-\mathsf{beta}(\frac{n}{2} + 2 + m, \frac{n}{2} - m)
-\mathsf{beta}(\frac{n}{2} + 3 + m, \frac{n}{2} - m - 1)
+\betafun(\frac{n}{2} + 2 + m, \frac{n}{2} - m)
+\betafun(\frac{n}{2} + 3 + m, \frac{n}{2} - m - 1)
 }
 }\\
-> & \frac{\mathsf{beta}(\frac{n + 2m + 7}{2}, \frac{n - 2m - 3}{2})}
+> & \frac{\betafun(\frac{n + 2m + 7}{2}, \frac{n - 2m - 3}{2})}
 {\sqrt{
-\mathsf{beta}(\frac{n}{2} + 2 + m, \frac{n}{2} - m)
-\mathsf{beta}(\frac{n}{2} + 3 + m, \frac{n}{2} - m - 1)
+\betafun(\frac{n}{2} + 2 + m, \frac{n}{2} - m)
+\betafun(\frac{n}{2} + 3 + m, \frac{n}{2} - m - 1)
 }
 }\\
 \\
-& \sqrt{1 - \frac{\mathsf{beta}(\frac{n + 2m + 5}{2}, \frac{n - 2m - 1}{2})}
+& \sqrt{1 - \frac{\betafun(\frac{n + 2m + 5}{2}, \frac{n - 2m - 1}{2})}
 {\sqrt{
-\mathsf{beta}(\frac{n}{2} + 2 + m, \frac{n}{2} - m)
-\mathsf{beta}(\frac{n}{2} + 3 + m, \frac{n}{2} - m - 1)
+\betafun(\frac{n}{2} + 2 + m, \frac{n}{2} - m)
+\betafun(\frac{n}{2} + 3 + m, \frac{n}{2} - m - 1)
 }
 }}\\
-< & \sqrt{1 - \frac{\mathsf{beta}(\frac{n + 2m + 7}{2}, \frac{n - 2m - 3}{2})}
+< & \sqrt{1 - \frac{\betafun(\frac{n + 2m + 7}{2}, \frac{n - 2m - 3}{2})}
 {\sqrt{
-\mathsf{beta}(\frac{n}{2} + 2 + m, \frac{n}{2} - m)
-\mathsf{beta}(\frac{n}{2} + 3 + m, \frac{n}{2} - m - 1)
+\betafun(\frac{n}{2} + 2 + m, \frac{n}{2} - m)
+\betafun(\frac{n}{2} + 3 + m, \frac{n}{2} - m - 1)
 }
 }}\\
 \\
