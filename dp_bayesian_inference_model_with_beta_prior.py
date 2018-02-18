@@ -265,7 +265,33 @@ class BayesInferwithBetaPrior(object):
 			outpro = outpro - scores[r]/sum_score
 			self._exponential_posterior = Beta_Distribution(self._prior._alpha + r, self._prior._beta + self._sample_size - r)
 		return
-
+		
+	def _exponentialize_SS(self):
+		R = range(self._sample_size + 1)# [(j + 1, i + 1) for i in range(self._sample_size) for j in range(self._sample_size)]
+		def utility(r):
+			return - (self._posterior - Beta_Distribution(self._prior._alpha + r, self._prior._beta + self._sample_size - r))
+		scores = {}
+		sum_score = 0.0
+		#delta = math.sqrt( (1 - math.pi/4.0))
+		print self._posterior._alpha,self._posterior._beta
+		delta = self._posterior - Beta_Distribution(self._posterior._alpha - 1,self._posterior._beta + 1)
+		print delta
+		for r in R:
+			scores[r] = math.exp(self._epsilon * self._utility[r]/(delta))
+			# print utility(r)
+			sum_score = sum_score + scores[r]
+		outpro = random.random()
+		# print scores
+		self._exponential_ones = R[0]
+		for r in R:
+			print scores[r]/sum_score
+		for r in R:
+			if outpro < 0:
+				return
+			outpro = outpro - scores[r]/sum_score
+			self._exponential_posterior = Beta_Distribution(self._prior._alpha + r, self._prior._beta + self._sample_size - r)
+			
+		return
 	def _update_expomech(self, times):
 		self._set_utility()
 		for i in range(times):
