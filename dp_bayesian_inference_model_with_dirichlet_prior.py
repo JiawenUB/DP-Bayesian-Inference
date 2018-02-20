@@ -86,20 +86,17 @@ class Dir(object):
 	def show(self):
 		print "Dirichlet("+str(self._alphas) + ")"
 
-	def _hellinger_sensitivity(self, r):
+	def _hellinger_sensitivity(self):
 		LS = 0.0
 		temp = deepcopy(r._alphas)
-		temp[0] -= 1
-		temp[1] += 1
-		LS = Dir(temp) - self
-		# for i in range(0, r._size):
-		# 	temp[i] += 1
-		# 	for j in range(i + 1, r._size):
-		# 		temp[j] -= 1
-		# 		LS = max(LS, abs((r - self) - (Dir(temp) - self )))
-		# 		# print r._alphas,self._alphas,temp,(r-self),(Dir(temp) - self)
-		# 		temp[j] += 1
-		# 	temp[i] -= 1
+		for i in range(0, self._size):
+			temp[i] += 1
+			for j in range(i + 1, self._size):
+				temp[j] -= 1
+				LS = max(LS, abs(Dir(temp) - self))
+				# print r._alphas,self._alphas,temp,(r-self),(Dir(temp) - self)
+				temp[j] += 1
+			temp[i] -= 1
 		return LS
 
 	def _score_sensitivity(self, r):
@@ -136,6 +133,7 @@ class BayesInferwithDirPrior(object):
 		self._SS = {}
 		self._LS = 0.0
 		self._SS_Hamming = 0.0
+		self._SS_Expon = 0.0
 		self._SS_Laplace = 0.0
 		self._candidate_VS_scores = {}
 		self._keys = ["Laplace Mechanism | Achieving" + str(self._epsilon) + "-DP"]
@@ -170,7 +168,7 @@ class BayesInferwithDirPrior(object):
 
 	def _set_LS_Candidates(self):
 		for r in self._candidates:
-			self._LS_Candidates[r] = r._hellinger_sensitivity(r)
+			self._LS_Candidates[r] = r._hellinger_sensitivity()
 
 	def _set_SS(self):
 		# print "Calculating Smooth Sensitivity with Hellinger Distance....."
@@ -197,9 +195,11 @@ class BayesInferwithDirPrior(object):
 		key3 = "(" + str(self._epsilon / 2.0) + "," + str(beta) + ") Admissible Niose and " + str(beta) + " - Bound Smooth Sensitivity (" + str(self._SS_Hamming) + ")|(" + str(self._epsilon) + "," + str(self._delta) + ")-DP"
 		self._accuracy[key3] = []
 		self._keys.append(key3)
-		print str(time.clock() - start) + "seconds."	
+		print str(time.clock() - start) + "seconds."
 
-		key2 = "Exponential Mechanism with " + str(beta) + " - Bound Smooth Sensitivity - " + str(self._SS_Hamming) + "| Achieving" + str(self._epsilon) + "-DP"
+		beta = 0.0
+		self._SS_Expon = max(self._LS, max([self._LS_Candidates[r] * math.exp(- beta * Hamming_Distance(self._posterior, r)) for r in self._candidates]))
+		key2 = "Exponential Mechanism with " + str(beta) + " - Bound Smooth Sensitivity - " + str(self._SS_Expon) + "| Achieving" + str(self._epsilon) + "-DP"
 		self._accuracy[key2] = []
 		self._keys.append(key2)
 
@@ -313,7 +313,7 @@ class BayesInferwithDirPrior(object):
 		probabilities = {}
 		nomalizer = 0.0
 		for r in self._candidates:
-			probabilities[r] = math.exp(self._epsilon * self._candidate_scores[r]/(self._SS_Hamming))
+			probabilities[r] = math.exp(self._epsilon * self._candidate_scores[r]/(self._SS_Expon))
 			nomalizer += probabilities[r]
 		outpro = random.random()
 		for r in self._candidates:
