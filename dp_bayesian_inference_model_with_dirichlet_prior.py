@@ -306,18 +306,7 @@ class BayesInferwithDirPrior(object):
 			outpro = outpro - probabilities[r]/nomalizer
 			self._exponential_posterior = r
 
-	# def _exponentialize_SS(self):
-	# 	probabilities = {}
-	# 	nomalizer = 0.0
-	# 	for r in self._candidates:
-	# 		probabilities[r] = math.exp(self._epsilon * self._candidate_scores[r]/(self._SS))
-	# 		nomalizer += probabilities[r]
-	# 	outpro = random.random()
-	# 	for r in self._candidates:
-	# 		if outpro < 0:
-	# 			return
-	# 		outpro = outpro - probabilities[r]/nomalizer
-	# 		self._exponential_posterior = r
+
 
 	def _propose_test_release(self):
 		return

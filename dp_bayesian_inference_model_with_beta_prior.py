@@ -1,4 +1,4 @@
-import numpy
+  import numpy
 import matplotlib.pyplot as plt
 from copy import deepcopy
 import random
@@ -105,14 +105,10 @@ class BayesInferwithBetaPrior(object):
 		self._randomized_observation = deepcopy(self._observation)
 		self._exponential_posterior = self._posterior
 		self._expomech_sensitivities = global_sensitivities(self._prior._alpha, self._prior._beta, self._sample_size)
+		self._expomech_SS = 0.0
 		self._utility = {}
-		self._accuracy = {"Laplace Mechanism":[],"Randomize Response":[],"Exponential Mechanism":[]}
-		self._average = {"Laplace Mechanism":[],"Randomize Response":[],"Exponential Mechanism":[]}
-		# self._accuracy_expomech = {"Exponential Mechanism with Global Sensitivity":[],\
-		# "Exponential Mechanism with Local Sensitivity":[], "Exponential Mechanism with Varying Sensitivity":[],\
-		# "Laplace Mechanism":[]}
-		self._accuracy_expomech = {"Exponential Mechanism with Local Sensitivity":[],"Laplace Mechanism (constrained)":[]}
-
+		self._keys = ["Laplace Mechanism | Achieving" + str(self._epsilon) + "-DP"]
+		self._accuracy = {self._keys[0]:[]}
 
 	def _set_bias(self, bias):
 		self._bias = bias
@@ -289,36 +285,30 @@ class BayesInferwithBetaPrior(object):
 			if outpro < 0:
 				return
 			outpro = outpro - scores[r]/sum_score
-			self._exponential_posterior = Beta_Distribution(self._prior._alpha + r, self._prior._beta + self._sample_size - r)
-			
-		return
-	def _update_expomech(self, times):
-		self._set_utility()
-		for i in range(times):
-			self._show_all()
-			#self._exponentialize()
-			#self._accuracy_expomech["Exponential Mechanism with Global Sensitivity"].append(self._posterior - self._exponential_posterior)
-			self._exponentialize_LS()
-			self._accuracy_expomech["Exponential Mechanism with Local Sensitivity"].append(self._posterior - self._exponential_posterior)
-			#self._exponentialize_VS()
-			#self._accuracy_expomech["Exponential Mechanism with Varying Sensitivity"].append(self._posterior - self._exponential_posterior)
-			self._laplace_constrained_mindistance()
-			self._accuracy_expomech["Laplace Mechanism (constrained)"].append(self._posterior - self._laplaced_posterior)
-			for key,item in self._accuracy.items():
-				self._average[key].append(numpy.mean(item))
+			self._exponential_posterior = Beta_Distribution(self._prior._alpha + r, self._prior._beta + self._sample_size - r)	
 		return
 
-	def _update_accuracy(self, times):
+	def _experiments(self, times):
+		self._set_candidate_scores()
+		self._set_GS()
+		self._set_SS()
+		self._set_LS()
+		self._show_all()
 		for i in range(times):
-			self._randomize()
-			self._exponentialize()
-			self._laplace_noize()
-			self._accuracy["Laplace Mechanism"].append(self._posterior - self._laplaced_posterior)
-			self._accuracy["Randomize Response"].append(self._posterior - self._randomized_posterior)
-			self._accuracy["Exponential Mechanism"].append(self._posterior - self._exponential_posterior)
-			for key,item in self._accuracy.items():
-				self._average[key].append(numpy.mean(item))
-			#self._show_all()
+			self._laplace_noize_mle()
+			self._accuracy[self._keys[0]].append(self._posterior - self._laplaced_posterior)
+			self._exponentialize_GS()
+			self._accuracy[self._keys[1]].append(self._posterior - self._exponential_posterior)
+			self._Smooth_Sensitivity_Noize()
+			self._accuracy[self._keys[2]].append(self._posterior - self._SS_posterior)
+			self._Smooth_Sensitivity_Noize_Hamming()
+			self._accuracy[self._keys[3]].append(self._posterior - self._SS_posterior)
+			self._Smooth_Sensitivity_Laplace_Noize()
+			self._accuracy[self._keys[4]].append(self._posterior - self._SS_posterior)
+			self._exponentialize_LS()
+			self._accuracy[self._keys[5]].append(self._posterior - self._exponential_posterior)
+
+
 
 
 	def _get_bias(self):
@@ -417,21 +407,6 @@ def draw_error(errors, model):
 	plt.show()
 	return
 
-def draw_error_average(averages, model):
-	plt.subplots(nrows=len(averages), ncols=1, figsize=(12, len(averages) * 5.0))
-	plt.tight_layout(pad=2, h_pad=4, w_pad=2, rect=None)
-	rows = 1
-	for key,item in averages.items():
-		plt.subplot(len(averages), 1, rows)
-		x = numpy.arange(2, len(item) + 2, 1)
-		plt.plot(x, numpy.array(item), 'r-', lw=2, alpha=0.6)
-		plt.ylabel('Hellinger Distance (Bias = ' + str(model._bias) + ')')
-		plt.xlabel('Runs')
-		plt.title(key + ' (Data Size = ' + str(model._sample_size) + ' epsilon = ' + str(model._epsilon) + ')')
-		plt.legend(loc="best")
-		rows = rows + 1
-	plt.show()
-	return
 
 
 if __name__ == "__main__":
@@ -462,9 +437,9 @@ if __name__ == "__main__":
 	# 	"(" + str(epsilon) + ", 0) - DP Posterior Using Laplace Mechanism",\
 	# 	"Exponential Mechanism Posterior"])
 	Bayesian_Model._set_bias(0.4)
-	Bayesian_Model._update_expomech(500)
+	Bayesian_Model._experiments(200)
 
-	draw_error(Bayesian_Model._accuracy_expomech,Bayesian_Model)
+	draw_error(Bayesian_Model._accuracy,Bayesian_Model)
 	# draw_error_average(Bayesian_Model._average)
 	# print Beta_Distribution(35,35) - Beta_Distribution(36, 34)
 	# print Beta_Distribution(35,35) - Beta_Distribution(36, 35)
