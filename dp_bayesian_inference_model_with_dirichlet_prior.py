@@ -199,7 +199,7 @@ class BayesInferwithDirPrior(object):
 		self._keys.append(key3)
 		print str(time.clock() - start) + "seconds."	
 
-		key2 = "Exponential Mechanism with Smooth Sensitivity - " + str(self._SS_Hamming) + "| Achieving" + str(self._epsilon) + "-DP"
+		key2 = "Exponential Mechanism with " + str(beta) + " - Bound Smooth Sensitivity - " + str(self._SS_Hamming) + "| Achieving" + str(self._epsilon) + "-DP"
 		self._accuracy[key2] = []
 		self._keys.append(key2)
 
