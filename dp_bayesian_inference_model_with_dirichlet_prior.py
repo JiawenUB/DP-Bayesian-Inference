@@ -411,7 +411,7 @@ def draw_error(errors, model):
 		plt.ylim(-0.1,1.0)
 		plt.xlim(0.0,len(item)*1.0)
 		plt.grid()
-	plt.savefig("beta-GS-SS-LS-size100order2runs50-3.png")
+	plt.savefig("beta-GS-SS-LS-size100order2runs100-3.png")
 	return
 
 
@@ -419,7 +419,7 @@ def draw_error(errors, model):
 if __name__ == "__main__":
 	# Tests the functioning of the module
 
-	sample_size = 30
+	sample_size = 100
 	epsilon = 0.8
 	delta = 0.8
 	prior = Dir([7, 4])
