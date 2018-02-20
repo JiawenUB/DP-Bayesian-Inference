@@ -80,9 +80,6 @@ class Beta_Distribution(object):
 		b = beta_function(self._alpha, self._beta)
 		a = beta_function((self._alpha + other._alpha)/2.0, (self._beta + other._beta)/2.0)
 		c = beta_function(other._alpha, other._beta)
-		# print a, b, c
-		# print math.sqrt(b * c)
-		# print a / math.sqrt(b * c)
 		return math.sqrt(1 - ( a / math.sqrt(b * c)))
 
 	def show(self):
@@ -106,7 +103,15 @@ class BayesInferwithBetaPrior(object):
 		self._exponential_posterior = self._posterior
 		self._expomech_sensitivities = global_sensitivities(self._prior._alpha, self._prior._beta, self._sample_size)
 		self._expomech_SS = 0.0
-		self._utility = {}
+		self._scores = {}
+		self._candidate_scores = {}
+		self._candidates = []
+		self._GS = 0.0
+		self._candidates_LS = {}
+		self._VS = {}
+		self._SS = {}
+		self._LS = 0.0
+		self._SS_Hamming = 0.0
 		self._keys = ["Laplace Mechanism | Achieving" + str(self._epsilon) + "-DP"]
 		self._accuracy = {self._keys[0]:[]}
 
@@ -119,6 +124,63 @@ class BayesInferwithBetaPrior(object):
 		self._posterior = Beta_Distribution(prior._alpha + numpy.count_nonzero(self._observation == 1),\
 			prior._beta + numpy.count_nonzero(self._observation == 0))
 
+	def _set_candidate_scores(self):
+		print "Calculating Candidates and Scores....."
+		start = time.clock()
+		self._set_candidates([], numpy.sum(self._observation))
+		for r in self._candidates:
+			self._candidate_scores[r] = -(self._posterior - r)
+		print str(time.clock() - start) + " seconds."
+
+	def _set_candidates(self, current, rest):
+		if len(current) == len(self._prior._alphas) - 1:
+			current.append(rest)
+			self._candidates.append(Dir(deepcopy(current)) + self._prior)
+			current.pop()
+			return
+		for i in range(0, rest + 1):
+			current.append(i)
+			self._set_candidates(current, rest - i)
+			current.pop()
+
+	def _set_candidates_LS(self):
+		for r in self._candidates:
+			self._candidates_LS[r] = r._hellinger_sensitivity(r)
+
+	def _set_SS(self):
+		self._set_LS_Candidates()
+		print "Calculating Smooth Sensitivity with Hamming Distance....."
+		start = time.clock()
+		self._SS_Hamming = max([self._LS_Candidates[r] * math.exp(- beta * Hamming_Distance(self._posterior, r)) for r in self._candidates])
+		key2 = "(" + str(self._epsilon / 2.0) + "," + str(beta) + ") Admissible Niose and " + str(beta) + "-Smooth Sensitivity (" + str(self._SS_Hamming) + ")|" + str(self._epsilon) + "-DP"
+		self._accuracy[key2] = []
+		self._keys.append(key2)
+		print str(time.clock() - start) + "seconds."
+		print "Calculating Smooth Sensitivity with Hamming Distance....."
+		start = time.clock()
+		beta = self._epsilon / (2.0 * math.log(2.0 / self._delta))
+		self._SS_Hamming = max([self._LS_Candidates[r] * math.exp(- beta * Hamming_Distance(self._posterior, r)) for r in self._candidates])
+		key3 = "(" + str(self._epsilon / 2.0) + "," + str(beta) + ") Admissible Niose and " + str(beta) + "-Smooth Sensitivity (" + str(self._SS_Laplace) + ")|(" + str(self._epsilon) + "," + str(self._delta) + ")-DP"
+		self._accuracy[key3] = []
+		self._keys.append(key3)
+		print str(time.clock() - start) + "seconds."	
+
+
+	def _set_LS(self):
+		self._LS = self._posterior._hellinger_sensitivity(self._posterior)
+		key = "Exponential Mechanism with Local Sensitivity - " + str(self._LS) + "| Non Privacy"
+		self._accuracy[key] = []
+		self._keys.append(key)		
+
+	def _set_GS(self):
+		temp = deepcopy(self._prior._alphas)
+		temp[0] += 1
+		temp[1] -= 1
+		self._GS = self._prior - Dir(temp)
+		key = "Exponential Mechanism with Global Sensitivity - " + str(self._GS) + "| Achieving" + str(self._epsilon) + "-DP"
+		self._accuracy[key] = []
+		self._keys.append(key)
+
 	def _laplace_constrained_mle(self):
 		a = self._posterior._alpha + round(numpy.random.laplace(0, 2.0/self._epsilon)) - self._prior._alpha
 		b = self._posterior._beta + round(numpy.random.laplace(0, 2.0/self._epsilon)) - self._prior._beta
@@ -129,6 +191,7 @@ class BayesInferwithBetaPrior(object):
 		elif a + b >int(self._sample_size):
 			a = a - 1
 		self._laplaced_posterior = Beta_Distribution(int(self._prior._alpha + a), int(self._prior._beta + b))
+
 
 	def _laplace_constrained_mindistance(self):
 		a = self._posterior._alpha + round(numpy.random.laplace(0, 2.0/self._epsilon)) 
@@ -181,16 +244,12 @@ class BayesInferwithBetaPrior(object):
 			self._prior._beta + numpy.count_nonzero(self._randomized_observation == 0))	
 
 	def _exponentialize(self):
-		R = range(self._sample_size - 1)# [(j + 1, i + 1) for i in range(self._sample_size) for j in range(self._sample_size)]
-		def utility(r):
-			return - (self._posterior - Beta_Distribution(self._prior._alpha + r, self._prior._beta + self._sample_size - r))
+		R = range(self._sample_size - 1)
 		scores = {}
 		sum_score = 0.0
-		#delta = math.sqrt( (1 - math.pi/4.0))
-		delta = max(self._expomech_sensitivities)
+		delta = math.sqrt( (1 - math.pi/4.0))
 		for r in R:
-			scores[r] = math.exp(self._epsilon * utility(r)/(2 * delta))
-			# print utility(r)
+			scores[r] = math.exp(self._epsilon * self._scores(r)/(2 * delta))
 			sum_score = sum_score + scores[r]
 		outpro = random.random()
 		# print scores
@@ -202,23 +261,21 @@ class BayesInferwithBetaPrior(object):
 			self._exponential_posterior = Beta_Distribution(self._prior._alpha + r, self._prior._beta + self._sample_size - r)
 		return
 
-	def _set_utility(self):
+	def _set_scores(self):
 		R = range(self._sample_size - 1)
 		for r in R:
-			self._utility[r] = -(self._posterior - Beta_Distribution(self._prior._alpha + r, self._prior._beta + self._sample_size - r))
+			self._scores[r] = -(self._posterior - Beta_Distribution(self._prior._alpha + r, self._prior._beta + self._sample_size - r))
 
 
 	def _exponentialize_LS(self):
 		R = range(self._sample_size - 1)# [(j + 1, i + 1) for i in range(self._sample_size) for j in range(self._sample_size)]
-		def utility(r):
-			return - (self._posterior - Beta_Distribution(self._prior._alpha + r, self._prior._beta + self._sample_size - r))
 		scores = {}
 		sum_score = 0.0
 		#delta = math.sqrt( (1 - math.pi/4.0))
 		delta = self._posterior - Beta_Distribution(self._posterior._alpha + 1,self._posterior._beta - 1)
 		for r in R:
-			scores[r] = math.exp(self._epsilon * self._utility[r]/(delta))
-			# print utility(r)
+			scores[r] = math.exp(self._epsilon * self._scores[r]/(delta))
+			# print scores(r)
 			sum_score = sum_score + scores[r]
 		outpro = random.random()
 		# print scores
@@ -264,8 +321,6 @@ class BayesInferwithBetaPrior(object):
 		
 	def _exponentialize_SS(self):
 		R = range(self._sample_size + 1)# [(j + 1, i + 1) for i in range(self._sample_size) for j in range(self._sample_size)]
-		def utility(r):
-			return - (self._posterior - Beta_Distribution(self._prior._alpha + r, self._prior._beta + self._sample_size - r))
 		scores = {}
 		sum_score = 0.0
 		#delta = math.sqrt( (1 - math.pi/4.0))
@@ -273,8 +328,8 @@ class BayesInferwithBetaPrior(object):
 		delta = self._posterior - Beta_Distribution(self._posterior._alpha - 1,self._posterior._beta + 1)
 		print delta
 		for r in R:
-			scores[r] = math.exp(self._epsilon * self._utility[r]/(delta))
-			# print utility(r)
+			scores[r] = math.exp(self._epsilon * self._scores[r]/(delta))
+			# print scores(r)
 			sum_score = sum_score + scores[r]
 		outpro = random.random()
 		# print scores

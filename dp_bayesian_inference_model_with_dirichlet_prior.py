@@ -173,32 +173,35 @@ class BayesInferwithDirPrior(object):
 			self._LS_Candidates[r] = r._hellinger_sensitivity(r)
 
 	def _set_SS(self):
-		print "Calculating Smooth Sensitivity with Hellinger Distance....."
-		start = time.clock()
+		# print "Calculating Smooth Sensitivity with Hellinger Distance....."
+		# start = time.clock()
 		gamma = 1
 		self._set_LS_Candidates()
-		beta = self._epsilon / (2.0 * len(self._prior._alphas) * (gamma + 1))
-		self._SS = max([self._LS_Candidates[r] * math.exp(- beta * Optimized_Hellinger_Distance_Dir(self._posterior, r)) for r in self._candidates])
-		key1 = "(" + str(self._epsilon / 2.0) + "," + str(beta) + ") Admissible Niose and " + str(beta) + "-Smooth Sensitivity (" + str(self._SS) + ")|" + str(self._epsilon) + "-DP"
-		self._accuracy[key1] = []
-		self._keys.append(key1)
-		print str(time.clock() - start) + "seconds."
-		print "Calculating Smooth Sensitivity with Hamming Distance....."
-		start = time.clock()
-		self._SS_Hamming = max([self._LS_Candidates[r] * math.exp(- beta * Hamming_Distance(self._posterior, r)) for r in self._candidates])
-		key2 = "(" + str(self._epsilon / 2.0) + "," + str(beta) + ") Admissible Niose and " + str(beta) + "-Smooth Sensitivity (" + str(self._SS_Hamming) + ")|" + str(self._epsilon) + "-DP"
-		self._accuracy[key2] = []
-		self._keys.append(key2)
-		print str(time.clock() - start) + "seconds."
+		# beta = self._epsilon / (2.0 * len(self._prior._alphas) * (gamma + 1))
+		# self._SS = max([self._LS_Candidates[r] * math.exp(- beta * Optimized_Hellinger_Distance_Dir(self._posterior, r)) for r in self._candidates])
+		# key1 = "(" + str(self._epsilon / 2.0) + "," + str(beta) + ") Admissible Niose and " + str(beta) + "-Smooth Sensitivity (" + str(self._SS) + ")|" + str(self._epsilon) + "-DP"
+		# self._accuracy[key1] = []
+		# self._keys.append(key1)
+		# print str(time.clock() - start) + "seconds."
+		# print "Calculating Smooth Sensitivity with Hamming Distance....."
+		# start = time.clock()
+		# self._SS_Hamming = max([self._LS_Candidates[r] * math.exp(- beta * Hamming_Distance(self._posterior, r)) for r in self._candidates])
+		# key2 = "(" + str(self._epsilon / 2.0) + "," + str(beta) + ") Admissible Niose and " + str(beta) + "-Smooth Sensitivity (" + str(self._SS_Hamming) + ")|" + str(self._epsilon) + "-DP"
+		# self._accuracy[key2] = []
+		# self._keys.append(key2)
+		# print str(time.clock() - start) + "seconds."
 		print "Calculating Smooth Sensitivity with Hamming Distance....."
 		start = time.clock()
 		beta = self._epsilon / (2.0 * math.log(2.0 / self._delta))
-		self._SS_Hamming = max([self._LS_Candidates[r] * math.exp(- beta * Hamming_Distance(self._posterior, r)) for r in self._candidates])
-		key3 = "(" + str(self._epsilon / 2.0) + "," + str(beta) + ") Admissible Niose and " + str(beta) + "-Smooth Sensitivity (" + str(self._SS_Laplace) + ")|(" + str(self._epsilon) + "," + str(self._delta) + ")-DP"
+		self._SS_Hamming = max(self._LS, max([self._LS_Candidates[r] * math.exp(- beta * Hamming_Distance(self._posterior, r)) for r in self._candidates]))
+		key3 = "(" + str(self._epsilon / 2.0) + "," + str(beta) + ") Admissible Niose and " + str(beta) + " - Bound Smooth Sensitivity (" + str(self._SS_Hamming) + ")|(" + str(self._epsilon) + "," + str(self._delta) + ")-DP"
 		self._accuracy[key3] = []
 		self._keys.append(key3)
 		print str(time.clock() - start) + "seconds."	
 
+		key2 = "Exponential Mechanism with Smooth Sensitivity - " + str(self._SS_Hamming) + "| Achieving" + str(self._epsilon) + "-DP"
+		self._accuracy[key2] = []
+		self._keys.append(key2)
 
 	def _set_LS(self):
 		self._LS = self._posterior._hellinger_sensitivity(self._posterior)
@@ -227,17 +230,17 @@ class BayesInferwithDirPrior(object):
 		self._keys.append(key)
 		print str(time.clock() - start) + "seconds."
 
-	def _Smooth_Sensitivity_Noize(self):
-		gamma = 1
-		z = numpy.random.standard_cauchy()
-		alpha = self._epsilon/ (2.0 * (gamma + 1))
-		temp = [a + self._SS * z /alpha for a in self._posterior._alphas]
-		self._SS_posterior = Dir(temp)
-		return
+	# def _Smooth_Sensitivity_Noize(self):
+	# 	gamma = 1
+	# 	z = numpy.random.standard_cauchy()
+	# 	alpha = self._epsilon/ (2.0 * (gamma + 1))
+	# 	temp = [a + self._SS * z /alpha for a in self._posterior._alphas]
+	# 	self._SS_posterior = Dir(temp)
+	# 	return
 
 	def _Smooth_Sensitivity_Noize_Hamming(self):
 		gamma = 1
-		z = numpy.random.standard_cauchy()
+		z = abs(numpy.random.standard_cauchy())
 		alpha = self._epsilon/ (2.0 * (gamma + 1))
 		temp = [a + self._SS_Hamming * z /alpha for a in self._posterior._alphas]
 		self._SS_posterior = Dir(temp)
@@ -306,7 +309,18 @@ class BayesInferwithDirPrior(object):
 			outpro = outpro - probabilities[r]/nomalizer
 			self._exponential_posterior = r
 
-
+	def _exponentialize_SS(self):
+		probabilities = {}
+		nomalizer = 0.0
+		for r in self._candidates:
+			probabilities[r] = math.exp(self._epsilon * self._candidate_scores[r]/(self._SS_Hamming))
+			nomalizer += probabilities[r]
+		outpro = random.random()
+		for r in self._candidates:
+			if outpro < 0:
+				return
+			outpro = outpro - probabilities[r]/nomalizer
+			self._exponential_posterior = r
 
 	def _propose_test_release(self):
 		return
@@ -315,23 +329,24 @@ class BayesInferwithDirPrior(object):
 	def _experiments(self, times):
 		self._set_candidate_scores()
 		self._set_GS()
-		self._set_SS()
 		self._set_LS()
+		self._set_SS()
 		self._show_all()
 		for i in range(times):
 			self._laplace_noize_mle()
 			self._accuracy[self._keys[0]].append(self._posterior - self._laplaced_posterior)
 			self._exponentialize_GS()
 			self._accuracy[self._keys[1]].append(self._posterior - self._exponential_posterior)
-			self._Smooth_Sensitivity_Noize()
-			self._accuracy[self._keys[2]].append(self._posterior - self._SS_posterior)
+			self._exponentialize_LS()
+			self._accuracy[self._keys[2]].append(self._posterior - self._exponential_posterior)
+			# self._Smooth_Sensitivity_Noize()
+			# self._accuracy[self._keys[2]].append(self._posterior - self._SS_posterior)
 			self._Smooth_Sensitivity_Noize_Hamming()
 			self._accuracy[self._keys[3]].append(self._posterior - self._SS_posterior)
-			self._Smooth_Sensitivity_Laplace_Noize()
-			self._accuracy[self._keys[4]].append(self._posterior - self._SS_posterior)
-			self._exponentialize_LS()
-			self._accuracy[self._keys[5]].append(self._posterior - self._exponential_posterior)
-
+			# self._Smooth_Sensitivity_Laplace_Noize()
+			# self._accuracy[self._keys[4]].append(self._posterior - self._SS_posterior)
+			self._exponentialize_SS()
+			self._accuracy[self._keys[4]].append(self._posterior - self._exponential_posterior)
 
 
 	def _get_bias(self):
@@ -380,7 +395,7 @@ class BayesInferwithDirPrior(object):
 
 
 def draw_error(errors, model):
-	plt.subplots(nrows=len(errors), ncols=1, figsize=(12, len(errors) * 5.0))
+	plt.subplots(nrows=len(errors), ncols=1, figsize=(18, len(errors) * 5.0))
 	plt.tight_layout(pad=2, h_pad=4, w_pad=2, rect=None)
 	rows = 1
 	for key,item in errors.items():
@@ -396,7 +411,7 @@ def draw_error(errors, model):
 		plt.ylim(-0.1,1.0)
 		plt.xlim(0.0,len(item)*1.0)
 		plt.grid()
-	plt.savefig("dirichlet-GS-SS-LS-size100order2runs200-3.png")
+	plt.savefig("beta-GS-SS-LS-size100order2runs50-3.png")
 	return
 
 
@@ -404,7 +419,7 @@ def draw_error(errors, model):
 if __name__ == "__main__":
 	# Tests the functioning of the module
 
-	sample_size = 100
+	sample_size = 30
 	epsilon = 0.8
 	delta = 0.8
 	prior = Dir([7, 4])
