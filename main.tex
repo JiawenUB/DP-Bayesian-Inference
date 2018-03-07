@@ -36,7 +36,7 @@
 % }
 % Use the following line for the initial blind version submitted for review:
 \usepackage{icml2018}
-
+\input{macros}
 % If accepted, instead use the following line for the camera-ready submission:
 %\usepackage[accepted]{icml2018}
 
@@ -110,7 +110,7 @@
 
 \section{Setting up}
 \label{sec_setup}
-The Bayesian inference process is denoted as $\mathsf{BayesInfer}(x,prior)$ taking an observed data set $x \in \mathcal{X}^n$ and a prior distribution as input, outputting a posterior distribution $posterior$. For conciseness, when prior is given, we use $\mathsf{BayesInfer}(x)$.
+The Bayesian inference process is denoted as $\bysinfer(x,prior)$ taking an observed data set $x \in \mathcal{X}^n$ and a prior distribution as input, outputting a posterior distribution $posterior$. For conciseness, when prior is given, we use $\bysinfer(x)$.
 
 For now, we already have a prior distribution $prior$, an observed data set $x$.
 
@@ -120,13 +120,13 @@ For now, we already have a prior distribution $prior$, an observed data set $x$.
 \subsubsection{Mechanism Set up}
 In exponential mechanism, candidate set $R$ can be obtained by enumerating $y \in \mathcal{X}^n$, i.e.
 \begin{equation*}
-R = \{\mathsf{BayesInfer}(y)\ |\ y \in \mathcal{X}^n\}.
+R = \{\bysinfer(y)\ |\ y \in \mathcal{X}^n\}.
 \end{equation*}
 
-Hellinger distance $\mathsf{Hlg}$ is used here to score these candidates. The utility function:
+Hellinger distance $\hlg$ is used here to score these candidates. The utility function:
 \begin{equation}
 \label{equ_utility}
-u(x,r) = -\mathsf{Hlg}(\mathsf{BayesInfer}(x), r); r \in R.
+u(x,r) = -\hlg(\bysinfer(x), r); r \in R.
 \end{equation}
 
 Exponential mechanism with global sensitivity selects and outputs a candidate $r \in R$ with probability proportional to $exp(\frac{\epsilon u(x,r)}{2 \Delta_{g}u})$:
@@ -138,14 +138,14 @@ P[r] = \frac
 where global sensitivity is calculated by:
 \begin{multline*}
 \Delta_{g}u = 
-\mathsf{Hlg}(\mathsf{BayesInfer}(x'), r) - \mathsf{Hlg}(\mathsf{BayesInfer}(y'), r)|\\
+\hlg(\bysinfer(x'), r) - \hlg(\bysinfer(y'), r)|\\
 \max_{\{|x',y'| \leq 1;x',y'\in \mathcal{X}^n\}}\max_{\{r\in R\}}.
 \end{multline*}
 
-% We use probability proportional to $exp(\frac{\epsilon u(x,r)}{\Delta_{g}u})$ rather than $exp(\frac{\epsilon u(x,r)}{2 \Delta_{g}u})$. Since $\mathsf{Hlg}$ is monotonic, i.e. our utility function is monotonic. 
+% We use probability proportional to $exp(\frac{\epsilon u(x,r)}{\Delta_{g}u})$ rather than $exp(\frac{\epsilon u(x,r)}{2 \Delta_{g}u})$. Since $\hlg$ is monotonic, i.e. our utility function is monotonic. 
 
 \subsubsection{Security Analysis}
-It can be proved that exponential mechanism with global sensitivity is $\epsilon$-differentially private. We denote the $\mathsf{BayesInfer}$ with privacy mechanism as $\mathsf{PrivInfer}$. For adjacent data set $||x,y||_1 = 1$:
+It can be proved that exponential mechanism with global sensitivity is $\epsilon$-differentially private. We denote the $\bysinfer$ with privacy mechanism as $\mathsf{PrivInfer}$. For adjacent data set $||x,y||_1 = 1$:
 \begin{equation*}
 \begin{split}
 & \frac{P[\mathsf{PrivInfer}(x,u,R) = r]}{P[\mathsf{PrivInfer}(y,u,R) = r]} \\
@@ -201,7 +201,7 @@ where local sensitivity is calculated by:
 
 \begin{multline*}
 \Delta_{l}u(x) = 
-\mathsf{Hlg}(\mathsf{BayesInfer}(x), r) - \mathsf{Hlg}(\mathsf{BayesInfer}(y'), r)|\\
+\hlg(\bysinfer(x), r) - \hlg(\bysinfer(y'), r)|\\
 \max_{\{|x,y'| \leq 1;y'\in \mathcal{X}^n\}}\max_{\{r\in R\}}.
 \end{multline*}
 
@@ -244,7 +244,7 @@ Without loss of generality, we consider the case that $\Delta_{l}u(y) < \Delta_{
 \end{split}
 \end{equation*}
 
-From Eq. \ref{equ_utility}, $\{u(x,r') \leq 0|r' \in R\}$ and $\{u(y,r') \leq 0|r' \in R\}$, we can infer that $r = arg(\max\limits_{r \in R}\{u(x,r')\}) = \mathsf{BayesInfer}(x)$ and $u(x,r) = 0$.From $\Delta_{l}u(y) = u(x,r) - u(y,r)$, we can also infer that $\Delta_{l}u(y) = - u(y,r)$. Then, the following relationship between $u(x,r)$, $u(y,r)$, $\Delta_{l}u(x)$ and $\Delta_{l}u(y)$:
+From Eq. \ref{equ_utility}, $\{u(x,r') \leq 0|r' \in R\}$ and $\{u(y,r') \leq 0|r' \in R\}$, we can infer that $r = arg(\max\limits_{r \in R}\{u(x,r')\}) = \bysinfer(x)$ and $u(x,r) = 0$.From $\Delta_{l}u(y) = u(x,r) - u(y,r)$, we can also infer that $\Delta_{l}u(y) = - u(y,r)$. Then, the following relationship between $u(x,r)$, $u(y,r)$, $\Delta_{l}u(x)$ and $\Delta_{l}u(y)$:
 \begin{equation*}
 \begin{split}
 - \Delta_{l}u(x) & < \Delta_{l}u(y) \\
@@ -426,25 +426,25 @@ $x_0$ to denote:
 \begin{equation*}
 \begin{split}
 &\mathsf{if}\ n\ is\ even\\
-&\mathsf{then}\ \mathsf{BayesInfer}(x_0) = beta(\frac{n}{2} + 1, \frac{n}{2} + 1)\\
-&\mathsf{else}\ \mathsf{BayesInfer}(x_0) = \{beta(\frac{n+1}{2} + 1, \frac{n-1}{2} + 1),\\
+&\mathsf{then}\ \bysinfer(x_0) = beta(\frac{n}{2} + 1, \frac{n}{2} + 1)\\
+&\mathsf{else}\ \bysinfer(x_0) = \{beta(\frac{n+1}{2} + 1, \frac{n-1}{2} + 1),\\
 &\quad \quad \quad \quad \quad \quad \quad \quad \quad \quad beta(\frac{n - 1}{2} + 1, \frac{n + 1}{2} + 1)\}
 \end{split}
 \end{equation*}
 \end{small}
 
-$\mathsf{beta}(\alpha, \beta)$ is the beta function with two arguments $\alpha$ and $\beta$.
+$\betafun(\alpha, \beta)$ is the beta function with two arguments $\alpha$ and $\beta$.
 
 Then, we have the following three statements, and proofs of the statements.
 \renewcommand{\labelenumi}{\Roman{enumi}}
 \begin{enumerate}
-\item $\mathsf{Hlg} (\mathsf{BayesInfer}(x), \mathsf{BayesInfer}(x + 1)) < \mathsf{Hlg} (\mathsf{BayesInfer}(x + 1), \mathsf{BayesInfer}(x + 2))\ \forall x \geq x_0$;
+\item $\hlg (\bysinfer(x), \bysinfer(x + 1)) < \hlg (\bysinfer(x + 1), \bysinfer(x + 2))\ \forall x \geq x_0$;
 
-or $\mathsf{Hlg} (\mathsf{BayesInfer}(x), \mathsf{BayesInfer}(x + 1)) > \mathsf{Hlg} (\mathsf{BayesInfer}(x + 1), \mathsf{BayesInfer}(x + 2))\forall x \leq x_0$.
+or $\hlg (\bysinfer(x), \bysinfer(x + 1)) > \hlg (\bysinfer(x + 1), \bysinfer(x + 2))\forall x \leq x_0$.
 
-\item $\Delta_{l}u(x) = \mathsf{Hlg} (\mathsf{BayesInfer}(x),\mathsf{BayesInfer}(x + 1)),\forall x \geq x_0$;
+\item $\Delta_{l}u(x) = \hlg (\bysinfer(x),\bysinfer(x + 1)),\forall x \geq x_0$;
 
-$\Delta_{l}u(x) = \mathsf{Hlg} (\mathsf{BayesInfer}(x),\mathsf{BayesInfer}(x - 1)),\forall x \leq x_0$.
+$\Delta_{l}u(x) = \hlg (\bysinfer(x),\bysinfer(x - 1)),\forall x \leq x_0$.
 
 \item $\forall x \neq x_0: \Delta_{l}u(x) > \Delta_{l}u(x_0)$.
 \end{enumerate}
@@ -455,76 +455,76 @@ $\Delta_{l}u(x) = \mathsf{Hlg} (\mathsf{BayesInfer}(x),\mathsf{BayesInfer}(x - 1
 We use the MI (Mathematical Induction) method to prove the first statement.
 
 \begin{proof}
-Since the Hellinger distance is symmetric, if we prove the $\mathsf{Hlg} (\mathsf{BayesInfer}(x), \mathsf{BayesInfer}(x + 1)) < \mathsf{Hlg} (\mathsf{BayesInfer}(x + 1), \mathsf{BayesInfer}(x + 2))\ \forall x \geq x_0$, the other part when $\forall x \leq x_0$ also holds.
+Since the Hellinger distance is symmetric, if we prove the $\hlg (\bysinfer(x), \bysinfer(x + 1)) < \hlg (\bysinfer(x + 1), \bysinfer(x + 2))\ \forall x \geq x_0$, the other part when $\forall x \leq x_0$ also holds.
 
-1. if $x = x_0$, $\mathsf{Hlg} (\mathsf{BayesInfer}(x_0), \mathsf{BayesInfer}(x_0 + 1)) < \mathsf{Hlg} (\mathsf{BayesInfer}(x_0 + 1), \mathsf{BayesInfer}(x_0 + 2))$ holds:
+1. if $x = x_0$, $\hlg (\bysinfer(x_0), \bysinfer(x_0 + 1)) < \hlg (\bysinfer(x_0 + 1), \bysinfer(x_0 + 2))$ holds:
 
 
 % \twocolumn{
 \begin{equation*}
 \boxed{
 \begin{split}
-\mathsf{Hlg}(
+\hlg(
 beta(\frac{n}{2} + 1, \frac{n}{2} + 1), 
 beta(\frac{n}{2} + 1 + 1, \frac{n}{2} + 1 - 1))
-& <  \mathsf{Hlg}(
+& <  \hlg(
 beta(\frac{n}{2} + 1 + 1, \frac{n}{2} + 1 - 1), 
 beta(\frac{n}{2} + 1 + 2, \frac{n}{2} + 1 - 2))\\
-\sqrt{1 - \frac{\mathsf{beta}(
+\sqrt{1 - \frac{\betafun(
 \frac{\frac{n}{2} + 1 + \frac{n}{2} + 1 + 1}{2},
 \frac{\frac{n}{2} + 1 + \frac{n}{2} + 1 - 1}{2})}
 {\sqrt{
-\mathsf{beta}(\frac{n}{2} + 1, \frac{n}{2} + 1)
-\mathsf{beta}(\frac{n}{2} + 1 + 1, \frac{n}{2} + 1 - 1)
+\betafun(\frac{n}{2} + 1, \frac{n}{2} + 1)
+\betafun(\frac{n}{2} + 1 + 1, \frac{n}{2} + 1 - 1)
 }
 }
 }
-& < \sqrt{1 - \frac{\mathsf{beta}(
+& < \sqrt{1 - \frac{\betafun(
 \frac{\frac{n}{2} + 1 + 1 + \frac{n}{2} + 1 + 2}{2}, 
 \frac{\frac{n}{2} + 1 - 1 + \frac{n}{2} + 1 - 2}{2}, )}
 {\sqrt{
-\mathsf{beta}(\frac{n}{2} + 1 + 1, \frac{n}{2} + 1 - 1)
-\mathsf{beta}(\frac{n}{2} + 1 + 2, \frac{n}{2} + 1 - 2)
+\betafun(\frac{n}{2} + 1 + 1, \frac{n}{2} + 1 - 1)
+\betafun(\frac{n}{2} + 1 + 2, \frac{n}{2} + 1 - 2)
 }
 }
 }\\
-\sqrt{1 - \frac{\mathsf{beta}(\frac{n + 3}{2},\frac{n + 1}{2})}
+\sqrt{1 - \frac{\betafun(\frac{n + 3}{2},\frac{n + 1}{2})}
 {\sqrt{
-\mathsf{beta}(\frac{n}{2} + 1, \frac{n}{2} + 1)
-\mathsf{beta}(\frac{n}{2} + 2, \frac{n}{2})
+\betafun(\frac{n}{2} + 1, \frac{n}{2} + 1)
+\betafun(\frac{n}{2} + 2, \frac{n}{2})
 }
 }
 }
-& < \sqrt{1 - \frac{\mathsf{beta}(\frac{n + 5}{2}, \frac{n - 1}{2})}
+& < \sqrt{1 - \frac{\betafun(\frac{n + 5}{2}, \frac{n - 1}{2})}
 {\sqrt{
-\mathsf{beta}(\frac{n}{2} + 2, \frac{n}{2})
-\mathsf{beta}(\frac{n}{2} + 3, \frac{n}{2} - 1)
+\betafun(\frac{n}{2} + 2, \frac{n}{2})
+\betafun(\frac{n}{2} + 3, \frac{n}{2} - 1)
 }
 }
 }\\
-\frac{\mathsf{beta}(\frac{n + 3}{2},\frac{n + 1}{2})}
+\frac{\betafun(\frac{n + 3}{2},\frac{n + 1}{2})}
 {\sqrt{
-\mathsf{beta}(\frac{n}{2} + 1, \frac{n}{2} + 1)
-\mathsf{beta}(\frac{n}{2} + 2, \frac{n}{2})
+\betafun(\frac{n}{2} + 1, \frac{n}{2} + 1)
+\betafun(\frac{n}{2} + 2, \frac{n}{2})
 }
 }
-& > \frac{\mathsf{beta}(\frac{n + 5}{2}, \frac{n - 1}{2})}
+& > \frac{\betafun(\frac{n + 5}{2}, \frac{n - 1}{2})}
 {\sqrt{
-\mathsf{beta}(\frac{n}{2} + 2, \frac{n}{2})
-\mathsf{beta}(\frac{n}{2} + 3, \frac{n}{2} - 1)
+\betafun(\frac{n}{2} + 2, \frac{n}{2})
+\betafun(\frac{n}{2} + 3, \frac{n}{2} - 1)
 }
 }\\
-\frac{\mathsf{beta}(\frac{n + 3}{2},\frac{n - 1}{2}) 
+\frac{\betafun(\frac{n + 3}{2},\frac{n - 1}{2}) 
 \frac{\frac{n - 1}{2}}{\frac{n - 1}{2} + \frac{n + 3}{2}}}
 {\sqrt{
-\mathsf{beta}(\frac{n}{2} + 1, \frac{n}{2} - 1) 
+\betafun(\frac{n}{2} + 1, \frac{n}{2} - 1) 
 \frac{\frac{n}{2} - 1}{\frac{n}{2} - 1 + \frac{n}{2} + 1} 
 \frac{\frac{n}{2}}{\frac{n}{2} + \frac{n}{2} + 1}}}
 & > \frac{
-\mathsf{beta}(\frac{n + 3}{2}, \frac{n - 1}{2}) 
+\betafun(\frac{n + 3}{2}, \frac{n - 1}{2}) 
 \frac{\frac{n + 3}{2}}{\frac{n + 3}{2} + \frac{n - 1}{2}} }
 {\sqrt{
-\mathsf{beta}(\frac{n}{2} + 1, \frac{n}{2} - 1) 
+\betafun(\frac{n}{2} + 1, \frac{n}{2} - 1) 
 \frac{\frac{n}{2} + 1}{\frac{n}{2} + 1 + \frac{n}{2} - 1}
 \frac{\frac{n}{2} + 2}{\frac{n}{2} + 2 + \frac{n}{2} - 1}}}\\
 \frac{\frac{n - 1}{2}}{\sqrt{(\frac{n}{2} - 1)(\frac{n}{2})}}
@@ -540,73 +540,73 @@ Since $n > 0$, it always holds.
 
 2. if $x = x_0 + m$ holds, then also $x = x_0 + m + 1$ holds:
 
-i.e $\mathsf{Hlg}(beta(\frac{n}{2} + 1 + m, \frac{n}{2} + 1 - m), beta(\frac{n}{2} + 1 + m + 1, \frac{n}{2} + 1 - m - 1)) 
-< \mathsf{Hlg}(beta(\frac{n}{2} + 1 + m + 1, \frac{n}{2} + 1 - m - 1), beta(\frac{n}{2} + 1 + m + 2, \frac{n}{2} + 1 - m - 2))$
+i.e $\hlg(beta(\frac{n}{2} + 1 + m, \frac{n}{2} + 1 - m), beta(\frac{n}{2} + 1 + m + 1, \frac{n}{2} + 1 - m - 1)) 
+< \hlg(beta(\frac{n}{2} + 1 + m + 1, \frac{n}{2} + 1 - m - 1), beta(\frac{n}{2} + 1 + m + 2, \frac{n}{2} + 1 - m - 2))$
 is what we know:
 
 \begin{small}
 \begin{equation*}
 \begin{split}
 & \sqrt{
-1 - \frac{\mathsf{beta}(
+1 - \frac{\betafun(
 \frac{\frac{n}{2} + 1 + m + \frac{n}{2} + 1 + m + 1}{2},
 \frac{\frac{n}{2} + 1 - m + \frac{n}{2} + 1 - m - 1}{2})}
 {\sqrt{
-\mathsf{beta}(\frac{n}{2} + 1 + m, \frac{n}{2} + 1 - m)
-\mathsf{beta}(\frac{n}{2} + 2 + m, \frac{n}{2} - m)
+\betafun(\frac{n}{2} + 1 + m, \frac{n}{2} + 1 - m)
+\betafun(\frac{n}{2} + 2 + m, \frac{n}{2} - m)
 }
 }
 }\\
 & < \sqrt{
-1 - \frac{\mathsf{beta}(
+1 - \frac{\betafun(
 \frac{\frac{n}{2} + 1 + m + 1 + \frac{n}{2} + 1 + m + 2}{2},
 \frac{\frac{n}{2} + 1 - m - 1 + \frac{n}{2} + 1 - m - 2}{2})}
 {\sqrt{
-\mathsf{beta}(\frac{n}{2} + 2 + m, \frac{n}{2} - m)
-\mathsf{beta}(\frac{n}{2} + 3 + m, \frac{n}{2} - m - 1)
+\betafun(\frac{n}{2} + 2 + m, \frac{n}{2} - m)
+\betafun(\frac{n}{2} + 3 + m, \frac{n}{2} - m - 1)
 }
 }
 }\\
 \\
-& \frac{\mathsf{beta}(\frac{n + 2m + 3}{2}, \frac{n - 2m + 1}{2})}
+& \frac{\betafun(\frac{n + 2m + 3}{2}, \frac{n - 2m + 1}{2})}
 {\sqrt{
-\mathsf{beta}(\frac{n}{2} + 1 + m, \frac{n}{2} + 1 - m)
-\mathsf{beta}(\frac{n}{2} + 2 + m, \frac{n}{2} - m)
+\betafun(\frac{n}{2} + 1 + m, \frac{n}{2} + 1 - m)
+\betafun(\frac{n}{2} + 2 + m, \frac{n}{2} - m)
 }
 }\\
-& > \frac{\mathsf{beta}(\frac{n + 2m + 5}{2}, \frac{n - 2m - 1}{2})}
+& > \frac{\betafun(\frac{n + 2m + 5}{2}, \frac{n - 2m - 1}{2})}
 {\sqrt{
-\mathsf{beta}(\frac{n}{2} + 2 + m, \frac{n}{2} - m)
-\mathsf{beta}(\frac{n}{2} + 3 + m, \frac{n}{2} - m - 1)
+\betafun(\frac{n}{2} + 2 + m, \frac{n}{2} - m)
+\betafun(\frac{n}{2} + 3 + m, \frac{n}{2} - m - 1)
 }
 }
 \end{split}
 \end{equation*}
 \end{small}
 
-Now, we need to proof $\mathsf{Hlg}(beta(\frac{n}{2} + 1 + m + 1, \frac{n}{2} + 1 - m - 1), beta(\frac{n}{2} + 1 + m + 2, \frac{n}{2} + 1 - m - 2)) 
-< \mathsf{Hlg}(beta(\frac{n}{2} + 1 + m + 2, \frac{n}{2} + 1 - m - 2), beta(\frac{n}{2} + 1 + m + 3, \frac{n}{2} + 1 - m - 3))$ by using what we know.
+Now, we need to proof $\hlg(beta(\frac{n}{2} + 1 + m + 1, \frac{n}{2} + 1 - m - 1), beta(\frac{n}{2} + 1 + m + 2, \frac{n}{2} + 1 - m - 2)) 
+< \hlg(beta(\frac{n}{2} + 1 + m + 2, \frac{n}{2} + 1 - m - 2), beta(\frac{n}{2} + 1 + m + 3, \frac{n}{2} + 1 - m - 3))$ by using what we know.
 
 
-From $x = x_0 + m$ and property of $\mathsf{beta}(\alpha, \beta)$ function, we know:
+From $x = x_0 + m$ and property of $\betafun(\alpha, \beta)$ function, we know:
 \vspace*{9.5cm}
 
 \begin{footnotesize}
 \begin{equation*}
 \begin{split}
-& \frac{\mathsf{beta}(\frac{n + 2m + 5}{2}, \frac{n - 2m - 1}{2})
+& \frac{\betafun(\frac{n + 2m + 5}{2}, \frac{n - 2m - 1}{2})
 \frac{n - 2m - 1}{n + 2m + 3}}
 {\sqrt{
-\mathsf{beta}(\frac{n}{2} + 2 + m, \frac{n}{2} - m)
-\mathsf{beta}(\frac{n}{2} + 3 + m, \frac{n}{2} - m - 1)
+\betafun(\frac{n}{2} + 2 + m, \frac{n}{2} - m)
+\betafun(\frac{n}{2} + 3 + m, \frac{n}{2} - m - 1)
 \frac{n - 2m}{n + 2m + 2}
 }
 }\\
-> & \frac{\mathsf{beta}(\frac{n + 2m + 7}{2}, \frac{n - 2m - 3}{2})
+> & \frac{\betafun(\frac{n + 2m + 7}{2}, \frac{n - 2m - 3}{2})
 \frac{n - 2m - 3}{n + 2m + 5}}
 {\sqrt{
-\mathsf{beta}(\frac{n}{2} + 2 + m, \frac{n}{2} - m)
-\mathsf{beta}(\frac{n}{2} + 3 + m, \frac{n}{2} - m - 1)
+\betafun(\frac{n}{2} + 2 + m, \frac{n}{2} - m)
+\betafun(\frac{n}{2} + 3 + m, \frac{n}{2} - m - 1)
 \frac{n - 2m - 2}{n + 2m + 6}
 }
 }\\
@@ -615,34 +615,34 @@ From $x = x_0 + m$ and property of $\mathsf{beta}(\alpha, \beta)$ function, we k
 
 \begin{equation*}
 \begin{split}
-& \frac{\mathsf{beta}(\frac{n + 2m + 5}{2}, \frac{n - 2m - 1}{2})}
+& \frac{\betafun(\frac{n + 2m + 5}{2}, \frac{n - 2m - 1}{2})}
 {\sqrt{
-\mathsf{beta}(\frac{n}{2} + 2 + m, \frac{n}{2} - m)
-\mathsf{beta}(\frac{n}{2} + 3 + m, \frac{n}{2} - m - 1)
+\betafun(\frac{n}{2} + 2 + m, \frac{n}{2} - m)
+\betafun(\frac{n}{2} + 3 + m, \frac{n}{2} - m - 1)
 }
 }\\
-> & \frac{\mathsf{beta}(\frac{n + 2m + 7}{2}, \frac{n - 2m - 3}{2})}
+> & \frac{\betafun(\frac{n + 2m + 7}{2}, \frac{n - 2m - 3}{2})}
 {\sqrt{
-\mathsf{beta}(\frac{n}{2} + 2 + m, \frac{n}{2} - m)
-\mathsf{beta}(\frac{n}{2} + 3 + m, \frac{n}{2} - m - 1)
+\betafun(\frac{n}{2} + 2 + m, \frac{n}{2} - m)
+\betafun(\frac{n}{2} + 3 + m, \frac{n}{2} - m - 1)
 }
 }\\
 \\
-& \sqrt{1 - \frac{\mathsf{beta}(\frac{n + 2m + 5}{2}, \frac{n - 2m - 1}{2})}
+& \sqrt{1 - \frac{\betafun(\frac{n + 2m + 5}{2}, \frac{n - 2m - 1}{2})}
 {\sqrt{
-\mathsf{beta}(\frac{n}{2} + 2 + m, \frac{n}{2} - m)
-\mathsf{beta}(\frac{n}{2} + 3 + m, \frac{n}{2} - m - 1)
+\betafun(\frac{n}{2} + 2 + m, \frac{n}{2} - m)
+\betafun(\frac{n}{2} + 3 + m, \frac{n}{2} - m - 1)
 }
 }}\\
-< & \sqrt{1 - \frac{\mathsf{beta}(\frac{n + 2m + 7}{2}, \frac{n - 2m - 3}{2})}
+< & \sqrt{1 - \frac{\betafun(\frac{n + 2m + 7}{2}, \frac{n - 2m - 3}{2})}
 {\sqrt{
-\mathsf{beta}(\frac{n}{2} + 2 + m, \frac{n}{2} - m)
-\mathsf{beta}(\frac{n}{2} + 3 + m, \frac{n}{2} - m - 1)
+\betafun(\frac{n}{2} + 2 + m, \frac{n}{2} - m)
+\betafun(\frac{n}{2} + 3 + m, \frac{n}{2} - m - 1)
 }
 }}\\
 \\
-& \mathsf{Hlg}(beta(\frac{n}{2} + 2 + m, \frac{n}{2} - m), beta(\frac{n}{2} + 3 + m, \frac{n}{2} - 1 - m))\\
-< & \mathsf{Hlg}(beta(\frac{n}{2} + m + 3, \frac{n}{2} - 1 - m), beta(\frac{n}{2} + m + 4, \frac{n}{2} - m - 2))\\
+& \hlg(beta(\frac{n}{2} + 2 + m, \frac{n}{2} - m), beta(\frac{n}{2} + 3 + m, \frac{n}{2} - 1 - m))\\
+< & \hlg(beta(\frac{n}{2} + m + 3, \frac{n}{2} - 1 - m), beta(\frac{n}{2} + m + 4, \frac{n}{2} - m - 2))\\
 \end{split}
 \end{equation*}
 \end{footnotesize}
@@ -656,30 +656,30 @@ i.e. $ x = x_0 + m + 1$ also holds when $x = x_0 + m$ is valid.
 
 \begin{equation*}
 \begin{split}
-\because \quad 		& \Delta_l u(x) = |\mathsf{Hlg}(\mathsf{BayesInfer}(x), r) - \mathsf{Hlg}(\mathsf{BayesInfer}(y'), r)|,\\
+\because \quad 		& \Delta_l u(x) = |\hlg(\bysinfer(x), r) - \hlg(\bysinfer(y'), r)|,\\
 					& \max_{\{|x,y'| \leq 1;y'\in \mathcal{X}^n\}}\max_{\{r\in R\}};\\
-\because \quad 		& \mathsf{Hlg}(\mathsf{BayesInfer}(x), r) - \mathsf{Hlg}(\mathsf{BayesInfer}(y'), r)\\
-					& \leq \mathsf{Hlg}(\mathsf{BayesInfer}(x), \mathsf{BayesInfer}(y'));\\
-\therefore \quad 	& \Delta_l u(x) = \mathsf{Hlg}(\mathsf{BayesInfer}(x), \mathsf{BayesInfer}(y')),\\
+\because \quad 		& \hlg(\bysinfer(x), r) - \hlg(\bysinfer(y'), r)\\
+					& \leq \hlg(\bysinfer(x), \bysinfer(y'));\\
+\therefore \quad 	& \Delta_l u(x) = \hlg(\bysinfer(x), \bysinfer(y')),\\
 					& \max_{\{|x,y'| \leq 1; y'\in \mathcal{X}^n\}};\\
-\therefore \quad 	& \Delta_l u(x) = \max \{\mathsf{Hlg}(\mathsf{BayesInfer}(x), \mathsf{BayesInfer}(x + 1)),\\
-					& \quad \quad \quad \quad \quad \quad \quad \mathsf{Hlg}(\mathsf{BayesInfer}(x), \mathsf{BayesInfer}(x - 1))\};\\
+\therefore \quad 	& \Delta_l u(x) = \max \{\hlg(\bysinfer(x), \bysinfer(x + 1)),\\
+					& \quad \quad \quad \quad \quad \quad \quad \hlg(\bysinfer(x), \bysinfer(x - 1))\};\\
 					& According\ to\ Statement\ I:\\
 \mathsf{if}	  \quad	& x > x_0 \\
 \mathsf{then} \quad	
-					& \mathsf{Hlg}(\mathsf{BayesInfer}(x), \mathsf{BayesInfer}(x - 1))\\
-					&< \mathsf{Hlg}(\mathsf{BayesInfer}(x), \mathsf{BayesInfer}(x + 1));\\
+					& \hlg(\bysinfer(x), \bysinfer(x - 1))\\
+					&< \hlg(\bysinfer(x), \bysinfer(x + 1));\\
 \mathsf{then} \quad	
-					& \Delta_l u(x) = \mathsf{Hlg}(\mathsf{BayesInfer}(x), \mathsf{BayesInfer}(x + 1));\\
+					& \Delta_l u(x) = \hlg(\bysinfer(x), \bysinfer(x + 1));\\
 \mathsf{if}	 \quad	& x < x_0 \\
 \mathsf{then} \quad	
-					& \mathsf{Hlg}(\mathsf{BayesInfer}(x), \mathsf{BayesInfer}(x - 1))\\
-					& > \mathsf{Hlg}(\mathsf{BayesInfer}(x), \mathsf{BayesInfer}(x + 1)); \\
+					& \hlg(\bysinfer(x), \bysinfer(x - 1))\\
+					& > \hlg(\bysinfer(x), \bysinfer(x + 1)); \\
 \mathsf{then} \quad	
-					& \Delta_l u(x) = \mathsf{Hlg}(\mathsf{BayesInfer}(x), \mathsf{BayesInfer}(x - 1));\\
+					& \Delta_l u(x) = \hlg(\bysinfer(x), \bysinfer(x - 1));\\
 \mathsf{else} \quad	
-					& \Delta_l u(x_0) = \mathsf{Hlg}(\mathsf{BayesInfer}(x_0), \mathsf{BayesInfer}(x_0 - 1))\\
-					& \quad \quad \quad = \mathsf{Hlg}(\mathsf{BayesInfer}(x_0), \mathsf{BayesInfer}(x_0 + 1)). \\
+					& \Delta_l u(x_0) = \hlg(\bysinfer(x_0), \bysinfer(x_0 - 1))\\
+					& \quad \quad \quad = \hlg(\bysinfer(x_0), \bysinfer(x_0 + 1)). \\
 \end{split}
 \end{equation*}
 
@@ -693,12 +693,12 @@ From Statement I and Statement II, we can conclude that:
 \begin{equation*}
 \begin{split}
 \mathsf{when} \quad	& x > x_0 \\
-					& \mathsf{Hlg}(\mathsf{BayesInfer}(x), \mathsf{BayesInfer}(x + 1) \\
-					& > \mathsf{Hlg}(\mathsf{BayesInfer}(x_0), \mathsf{BayesInfer}(x_0 + 1); \\
+					& \hlg(\bysinfer(x), \bysinfer(x + 1) \\
+					& > \hlg(\bysinfer(x_0), \bysinfer(x_0 + 1); \\
 					& i.e.\ \Delta_l u(x) > \Delta_l u(x_0)\\
 \mathsf{when} \quad	& x < x_0 \\
-					& \mathsf{Hlg}(\mathsf{BayesInfer}(x), \mathsf{BayesInfer}(x - 1) \\
-					& > \mathsf{Hlg}(\mathsf{BayesInfer}(x_0), \mathsf{BayesInfer}(x_0 - 1); \\
+					& \hlg(\bysinfer(x), \bysinfer(x - 1) \\
+					& > \hlg(\bysinfer(x_0), \bysinfer(x_0 - 1); \\
 					& i.e.\ \Delta_l u(x) > \Delta_l u(x_0).\\
 \end{split}
 \end{equation*}
