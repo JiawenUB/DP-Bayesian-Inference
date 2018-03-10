@@ -710,6 +710,17 @@ i.e $\forall \ x \neq x_0, \Delta_l u(x) > \Delta_l u(x_0)$.
 \section{Experimental Evaluations}
 We got some results from these mechanisms.
 
+\section{Dilation Property of Laplace Noise}
+\label{sec_Dila}
+\begin{proof}
+We take 1-dimensional Laplace distribution, $h(z) = \frac{1}{2} e^{-|z|}$.
+The dilation property is:
+\begin{equation*}
+Pr[z \in S] \leq e^{\frac{\epsilon}{2}} Pr[z \in e^{\lambda} S] + \frac{\delta}{2}
+\end{equation*}
+In this case, we have $\alpha = \frac{\epsilon}{2}$, $\beta = \frac{\epsilon}{2 \rho_{\delta/2}(|z|)}$ or $ \frac{\epsilon}{2 ln(2/\delta)}$.
+
+\end{proof} 
 
 
 \bibliographystyle{icml2018}

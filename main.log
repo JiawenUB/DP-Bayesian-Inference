@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  16 FEB 2018 18:38
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  10 MAR 2018 13:18
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -862,20 +862,20 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [3]
 No file main.bbl.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 722.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 733.
 [4]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 722.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 733.
  (./main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 722.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 722.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 733.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 733.
 Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 17834 strings out of 492995
- 311349 string characters out of 6132704
- 456736 words of memory out of 5000000
- 21061 multiletter control sequences out of 15000+600000
+ 17836 strings out of 492995
+ 311368 string characters out of 6132704
+ 456759 words of memory out of 5000000
+ 21062 multiletter control sequences out of 15000+600000
  30087 words of font info for 105 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  39i,18n,45p,10415b,432s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -904,10 +904,10 @@ public/amsfonts/symbols/msam10.pfb></usr/local/texlive/2017/texmf-dist/fonts/ty
 pe1/urw/times/utmb8a.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/urw/ti
 mes/utmr8a.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/urw/times/utmri8
 a.pfb>
-Output written on main.pdf (4 pages, 247120 bytes).
+Output written on main.pdf (4 pages, 249773 bytes).
 PDF statistics:
- 153 PDF objects out of 1000 (max. 8388607)
- 121 compressed objects within 2 object streams
- 29 named destinations out of 1000 (max. 500000)
+ 154 PDF objects out of 1000 (max. 8388607)
+ 122 compressed objects within 2 object streams
+ 30 named destinations out of 1000 (max. 500000)
  27137 words of extra memory for PDF output out of 29859 (max. 10000000)
 
