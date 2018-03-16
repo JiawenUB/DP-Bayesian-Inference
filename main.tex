@@ -718,7 +718,7 @@ The dilation property is:
 \begin{equation*}
 Pr[z \in S] \leq e^{\frac{\epsilon}{2}} Pr[z \in e^{\lambda} S] + \frac{\delta}{2}
 \end{equation*}
-In this case, we have $\alpha = \frac{\epsilon}{2}$, $\beta = \frac{\epsilon}{2 \rho_{\delta/2}(|z|)}$ or $ \frac{\epsilon}{2 ln(2/\delta)}$. We have some prior knowledge that $|\lambda| \leq \beta$.
+In this case, we have $\alpha = \frac{\epsilon}{2}$, $\beta = \frac{\epsilon}{2 \rho_{\delta/3}(|z|)}$ or $ \frac{\epsilon}{2 ln(2/\delta)}$. We have some prior knowledge that $|\lambda| \leq \beta$.
 
 \begin{itemize}
 	\item \textbf{case 1: $\lambda > 0$}
@@ -738,7 +738,9 @@ In this case, we have $\alpha = \frac{\epsilon}{2}$, $\beta = \frac{\epsilon}{2 
 						\leq e^{\lambda}\\
 	\therefore\		&	ln(\frac{e^{\lambda} h(e^{\lambda} z)}{h(z)})
 						\leq \lambda \\
-	\because\		&	\\
+	\because\		&	\lambda \leq \beta = \frac{\epsilon}{2 ln(3 / \delta)}, \delta < 1 \\
+	\therefore\		&	\lambda \leq \frac{\epsilon}{2} \\
+	\therefore\		&	\frac{Pr[z \in e^{\lambda} S]}{Pr[z \in S]} \leq \frac{\epsilon}{2} \\
 	\end{split}
 	\end{equation*}
 
@@ -748,6 +750,22 @@ In this case, we have $\alpha = \frac{\epsilon}{2}$, $\beta = \frac{\epsilon}{2 
 	\because\	& \frac{h(e^{\lambda} z)}{h(z)} = exp(|z|(1 - e^{\lambda})) \leq |\lambda|\\
 	\therefore\	& ln(\frac{e^{\lambda} h(e^{\lambda} z)}{h(z)}) \leq |z||\lambda|\\
 	\end{split}
+	\end{equation*}
+
+	We consider an event $G = \{z |\ |z|\leq log(\frac{1}{\delta}) \}$. Under this event, we have:
+
+	\begin{equation*}
+	|z||\lambda| \leq log(\frac{1}{\delta})|\lambda| \leq log(\frac{1}{\delta})\frac{\epsilon}{2 log(\frac{3}{\delta})} \leq \frac{\epsilon}{2}.
+	\end{equation*}
+
+	We start from the thing we want to proof:
+
+	\begin{equation*}
+	Pr[z \in S] \leq e^{\frac{\epsilon}{2}} Pr[z \in e^{\lambda} \in e^{\lambda} S] + \frac{\delta}{2}
+	\end{equation*}
+
+	\begin{equation*}
+	Pr[z \in S] \leq Pr[z \in S  G]
 	\end{equation*}
 
 \end{itemize}
