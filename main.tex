@@ -9,6 +9,7 @@
 \usepackage{graphicx}
 \usepackage{amsmath}
 \usepackage{amsthm}
+\usepackage{mathtools}
 \usepackage{mdframed}
 \usepackage{subfigure}
 \usepackage{booktabs} % for professional tables
@@ -758,14 +759,31 @@ In this case, we have $\alpha = \frac{\epsilon}{2}$, $\beta = \frac{\epsilon}{2 
 	|z||\lambda| \leq log(\frac{1}{\delta})|\lambda| \leq log(\frac{1}{\delta})\frac{\epsilon}{2 log(\frac{3}{\delta})} \leq \frac{\epsilon}{2}.
 	\end{equation*}
 
-	We start from the thing we want to proof:
+	Also, from the Laplace distribution property we have:
 
 	\begin{equation*}
-	Pr[z \in S] \leq e^{\frac{\epsilon}{2}} Pr[z \in e^{\lambda} \in e^{\lambda} S] + \frac{\delta}{2}
+	Pr[G] \geq 1 - \delta ;
 	\end{equation*}
 
 	\begin{equation*}
-	Pr[z \in S] \leq Pr[z \in S  G]
+	Pr[\overline{G}] \leq \delta .
+	\end{equation*}
+
+	We start from the thing we want to proof:
+
+	\begin{equation*}
+	Pr[z \in S] \leq e^{\frac{\epsilon}{2}} Pr[z \in e^{\lambda} S] + \frac{\delta}{2};
+	\end{equation*}
+
+	\begin{equation*}
+	\begin{split}
+	\underset{z \thicksim Lap(1)}{Pr}[z \in S] \leq & Pr[z \in S \cap G] + Pr[z \in \overline{G}]\\
+	\leq 	& Pr[z \in S \cap G] + \delta\\
+	\leq 	& e^{|z||\lambda|} \underset{z \thicksim Lap(e^{\lambda})}{Pr}[z \in S \cap G] + \delta \\
+	\leq	& e^{|z||\lambda|} \underset{z \thicksim Lap(e^{\lambda})}{Pr}[z \in S] + \delta\\
+	\leq	& e^{\frac{\epsilon}{2}} \underset{z \thicksim Lap(e^{\lambda})}{Pr}[z \in S] + \delta\\
+	=		& e^{\frac{\epsilon}{2}} \underset{z \thicksim Lap(1)}{Pr}[z \in e^{\lambda} S] + \delta\\
+	\end{split}
 	\end{equation*}
 
 \end{itemize}
