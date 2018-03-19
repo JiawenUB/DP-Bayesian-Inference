@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  15 MAR 2018 22:17
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  16 MAR 2018 11:25
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -876,14 +876,14 @@ Overfull \hbox (20.00003pt too wide) detected at line 746
 
 [4]
 No file main.bbl.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 803.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 801.
 [5
 
 ]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 803.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 801.
  (./main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 803.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 803.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 801.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 801.
 Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
