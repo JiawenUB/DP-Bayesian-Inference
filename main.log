@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  26 MAR 2018 13:29
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  26 MAR 2018 13:31
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -875,12 +875,12 @@ Overfull \hbox (20.00003pt too wide) detected at line 746
  []
 
 
-Overfull \hbox (10.37842pt too wide) detected at line 796
+Overfull \hbox (10.37842pt too wide) detected at line 795
 [] \OT1/cmr/m/n/10 = [] = [] = \OML/cmm/m/it/10 e[]e[]
  []
 
 [4]
-Overfull \hbox (5.25444pt too wide) detected at line 832
+Overfull \hbox (5.25444pt too wide) detected at line 831
 []\OT1/cmr/m/n/10 [\OML/cmm/m/it/10 z \OMS/cmsy/m/n/10 2 \OML/cmm/m/it/10 S\OT1
 /cmr/m/n/10 ] \OMS/cmsy/m/n/10 ^^T \OML/cmm/m/it/10 e[][]\OT1/cmr/m/n/10 [\OML/
 cmm/m/it/10 z \OMS/cmsy/m/n/10 2 \OML/cmm/m/it/10 S\OT1/cmr/m/n/10 ] = \OML/cmm
@@ -889,12 +889,12 @@ cmm/m/it/10 z \OMS/cmsy/m/n/10 2 \OML/cmm/m/it/10 S\OT1/cmr/m/n/10 ] = \OML/cmm
  []
 
 No file main.bbl.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 892.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 887.
 [5]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 892.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 887.
  (./main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 892.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 892.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 887.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 887.
 Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
@@ -932,7 +932,7 @@ pe1/public/amsfonts/symbols/msbm7.pfb></usr/local/texlive/2017/texmf-dist/fonts
 /type1/urw/times/utmb8a.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/urw
 /times/utmr8a.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/urw/times/utm
 ri8a.pfb>
-Output written on main.pdf (5 pages, 258204 bytes).
+Output written on main.pdf (5 pages, 258240 bytes).
 PDF statistics:
  163 PDF objects out of 1000 (max. 8388607)
  129 compressed objects within 2 object streams
