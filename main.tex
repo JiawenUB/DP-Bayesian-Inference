@@ -746,45 +746,135 @@ In this case, we have $\alpha = \frac{\epsilon}{2}$, $\beta = \frac{\epsilon}{2 
 	\end{equation*}
 
 	\item \textbf{case 2: $\lambda < 0$}
+	% \begin{equation*}
+	% \begin{split}
+	% \because\	& \frac{h(e^{\lambda} z)}{h(z)} = exp(|z|(1 - e^{\lambda})) \leq |\lambda|\\
+	% \therefore\	& ln(\frac{e^{\lambda} h(e^{\lambda} z)}{h(z)}) \leq |z||\lambda|\\
+	% \end{split}
+	% \end{equation*}
+
+	% We consider an event $G = \{z |\ |z|\leq log(\frac{1}{\delta}) \}$. Under this event, we have:
+
+	% \begin{equation*}
+	% |z||\lambda| \leq log(\frac{1}{\delta})|\lambda| \leq log(\frac{1}{\delta})\frac{\epsilon}{2 log(\frac{3}{\delta})} \leq \frac{\epsilon}{2}.
+	% \end{equation*}
+
+	% Also, from the Laplace distribution property we have:
+
+	% \begin{equation*}
+	% Pr[G] \geq 1 - \delta ;
+	% \end{equation*}
+
+	% \begin{equation*}
+	% Pr[\overline{G}] \leq \delta .
+	% \end{equation*}
+
+	% We start from the thing we want to proof:
+
+	% \begin{equation*}
+	% Pr[z \in S] \leq e^{\frac{\epsilon}{2}} Pr[z \in e^{\lambda} S] + \frac{\delta}{2};
+	% \end{equation*}
+
+	% \begin{equation*}
+	% \begin{split}
+	% \underset{z \thicksim Lap(1)}{Pr}[z \in S] \leq & Pr[z \in S \cap G] + Pr[z \in \overline{G}]\\
+	% \leq 	& Pr[z \in S \cap G] + \delta\\
+	% \leq 	& e^{|z||\lambda|} \underset{z \thicksim Lap(e^{\lambda})}{Pr}[z \in S \cap G] + \delta \\
+	% \leq	& e^{|z||\lambda|} \underset{z \thicksim Lap(e^{\lambda})}{Pr}[z \in S] + \delta\\
+	% \leq	& e^{\frac{\epsilon}{2}} \underset{z \thicksim Lap(e^{\lambda})}{Pr}[z \in S] + \delta\\
+	% =		& e^{\frac{\epsilon}{2}} \underset{z \thicksim Lap(1)}{Pr}[z \in e^{\lambda} S] + \delta\\
+	% \end{split}
+	% \end{equation*}
+	From integral property, we firstly have:
+
+	\begin{equation*}
+	\frac{Pr[z\in e^{\lambda} S]}{Pr[z\in S]} 
+	= \frac{e^{-|e^{\lambda}z|} e^{\lambda}}{e^{-|z|}} 
+	= \frac{h(e^{\lambda} z) e^{\lambda}}{h(z)} 
+	= e^{\lambda}e^{|z|(1 - e^{\lambda})}
+	\end{equation*}
+
+
+
 	\begin{equation*}
 	\begin{split}
-	\because\	& \frac{h(e^{\lambda} z)}{h(z)} = exp(|z|(1 - e^{\lambda})) \leq |\lambda|\\
-	\therefore\	& ln(\frac{e^{\lambda} h(e^{\lambda} z)}{h(z)}) \leq |z||\lambda|\\
+	\because\	& 1 - e^{\lambda} \leq |\lambda| \\
+	\therefore\	& \ln (\frac{h(e^{\lambda} z) e^{\lambda}}{h(z)} )
+	\leq \lambda + |z||\lambda|\\
+	\because\	& \lambda < 0\\
+	\therefore\	& \ln (\frac{h(e^{\lambda} z) e^{\lambda}}{h(z)} )
+	\leq |z||\lambda|\\
 	\end{split}
 	\end{equation*}
 
-	We consider an event $G = \{z |\ |z|\leq log(\frac{1}{\delta}) \}$. Under this event, we have:
-
-	\begin{equation*}
-	|z||\lambda| \leq log(\frac{1}{\delta})|\lambda| \leq log(\frac{1}{\delta})\frac{\epsilon}{2 log(\frac{3}{\delta})} \leq \frac{\epsilon}{2}.
-	\end{equation*}
-
-	Also, from the Laplace distribution property we have:
-
-	\begin{equation*}
-	Pr[G] \geq 1 - \delta ;
-	\end{equation*}
-
-	\begin{equation*}
-	Pr[\overline{G}] \leq \delta .
-	\end{equation*}
-
-	We start from the thing we want to proof:
-
-	\begin{equation*}
-	Pr[z \in S] \leq e^{\frac{\epsilon}{2}} Pr[z \in e^{\lambda} S] + \frac{\delta}{2};
-	\end{equation*}
+	By setting $h'(z) = e^{\lambda} h(e^{\lambda} z)$, we can get:
 
 	\begin{equation*}
 	\begin{split}
-	\underset{z \thicksim Lap(1)}{Pr}[z \in S] \leq & Pr[z \in S \cap G] + Pr[z \in \overline{G}]\\
-	\leq 	& Pr[z \in S \cap G] + \delta\\
-	\leq 	& e^{|z||\lambda|} \underset{z \thicksim Lap(e^{\lambda})}{Pr}[z \in S \cap G] + \delta \\
-	\leq	& e^{|z||\lambda|} \underset{z \thicksim Lap(e^{\lambda})}{Pr}[z \in S] + \delta\\
-	\leq	& e^{\frac{\epsilon}{2}} \underset{z \thicksim Lap(e^{\lambda})}{Pr}[z \in S] + \delta\\
-	=		& e^{\frac{\epsilon}{2}} \underset{z \thicksim Lap(1)}{Pr}[z \in e^{\lambda} S] + \delta\\
+	&\ln(\frac{h'(z)}{h(z)}) \leq |z||\lambda|\\
+	\Rightarrow & h'(z)\leq  e^{|z||\lambda|}h(z)
 	\end{split}
 	\end{equation*}
+
+	By exchanging the notation of $h'$ and $h$, we have:
+
+	\begin{equation*}
+	h(z) \leq e^{|z||\lambda|}h'(z)
+	\end{equation*}
+
+	i.e.
+
+	\begin{equation*}
+	\underset{z \thicksim h}{Pr}[z \in S] 
+	\leq  e^{|z||\lambda|}\underset{z \thicksim h'}{Pr}[z \in S]
+	= e^{|z||\lambda|}\underset{z \thicksim h}{Pr}[z \in e^{\lambda} S]
+	\end{equation*}
+
+	We consider an event $G = \{z |\ |z|\leq log(\frac{2}{\delta}) \}$. Under this event, we have:
+
+	\begin{equation*}
+	\begin{split}
+	|z||\lambda| 	& \leq log(\frac{2}{\delta})|\lambda|\\
+					& \leq log(\frac{2}{\delta}) \beta\\
+					&\leq log(\frac{2}{\delta})\frac{\epsilon}{2 log(\frac{3}{\delta})} \\
+					&\leq \frac{\epsilon}{2}.
+	\end{split}
+	\end{equation*}
+
+	Then:
+
+	\begin{equation*}
+	\begin{split}
+	\underset{z \thicksim h}{Pr}[z \in S \cap G] 
+	& \leq  e^{|z||\lambda|}\underset{z \thicksim h'}{Pr}[z \in S\cap G]\\
+	& \leq e^{\frac{\epsilon}{2}} \underset{z \thicksim h'}{Pr}[z \in S \cap G]\\
+	\end{split}
+	\end{equation*}	
+
+
+	We also have:
+
+	\begin{equation*}
+	Pr[\overline{G}] = Pr[|z| > log(\frac{2}{\delta})] = exp(-log(\frac{2}{\delta})) = \frac{\delta}{2}
+	\end{equation*}
+
+	Then, we can get
+
+	\begin{equation*}
+	\begin{split}
+	\underset{z \thicksim h}{Pr}[z \in S] 
+	& \leq \underset{z \thicksim h}{Pr}[z \in S\cap G] + \underset{z \thicksim h}{Pr}[z \in \overline{G}]\\
+	& \leq e^{\frac{\epsilon}{2}} \underset{z \thicksim h'}{Pr}[z \in S \cap G] + \frac{\delta}{2}\\ 
+	& \leq e^{\frac{\epsilon}{2}} \underset{z \thicksim h'}{Pr}[z \in S] + \frac{\delta}{2}\\ 
+	& = e^{\frac{\epsilon}{2}} \underset{z \thicksim h}{Pr}[z \in e^{\lambda} S] + \frac{\delta}{2}\\ 
+	\end{split}
+	\end{equation*}	
+
+	
+
+	
+
+
 
 \end{itemize}
 
