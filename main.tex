@@ -716,7 +716,7 @@ We got some results from these mechanisms.
 \subsection{Dilation Property of Laplace Noise}
 \label{sec_Dila}
 \begin{lem}
-For 1-dimensional Laplace distribution, $h(z) = \frac{1}{2} e^{-|z|}$, $\alpha = \frac{\epsilon}{2}$, $\beta = \frac{\epsilon}{2 \rho_{\delta/3}(|z|)}$ or $ \frac{\epsilon}{2 ln(2/\delta)}$. We have some prior knowledge that $|\lambda| \leq \beta$, the $h$ has dilation property:
+For 1-dimensional Laplace distribution: $h(z) = \frac{1}{2} e^{-|z|}$, $\alpha = \frac{\epsilon}{2}$, $\beta = \frac{\epsilon}{2 \rho_{\delta/3}(|z|)}$ or $ \frac{\epsilon}{2 ln(2/\delta)}$ and $|\lambda| \leq \beta$, the dilation property holds for any $z$ sampled from $h$:
 \begin{equation*}
 Pr[z \in S] \leq e^{\frac{\epsilon}{2}} Pr[z \in e^{\lambda} S] + \frac{\delta}{2}
 \end{equation*}
@@ -725,19 +725,38 @@ Pr[z \in S] \leq e^{\frac{\epsilon}{2}} Pr[z \in e^{\lambda} S] + \frac{\delta}{
 \begin{proof}
 
 \begin{itemize}
+
+	From the integral substitution property, we have:
+
+	\begin{equation*}
+	\begin{split}
+	\frac{Pr[z \in e^{\lambda} S]}{Pr[z \in S]} 
+						= &\frac
+						{\int_{e^{\lambda} S}{} \frac{1}{2}e^{-|z|} dz}
+						{\int_{S}{} \frac{1}{2}e^{-|z|} dz} 
+						= \frac
+						{\int_{S}{} \frac{1}{2}e^{-|e^{\lambda}z|} e^{\lambda} dz}
+						{\int_{S}{} \frac{1}{2}e^{-|z|}dz} \\
+						= & \frac{e^{-|e^{\lambda}z|} e^{\lambda}}{e^{-|z|}}
+						= \frac{e^{\lambda} h(e^{\lambda} z)}{h(z)}\\
+	\end{split}
+	\end{equation*}
+
+	Then, we proof the property in cases of $\lambda > 0$ and $\lambda < 0$:
+
 	\item \textbf{case 1: $\lambda > 0$}
 
 	\begin{equation*}
 	\begin{split}
 	\because\ 		& 	h(e^{\lambda} z) =  \frac{1}{2} e^{-|e^{\lambda} z|} < \frac{1}{2} e^{-|z|} = h(z)\\
 	\therefore\		& 	\frac{Pr[z \in e^{\lambda} S]}{Pr[z \in S]} 
-						= \frac
-						{\int_{e^{\lambda} S}{} \frac{1}{2}e^{-|z|} dz}
-						{\int_{S}{} \frac{1}{2}e^{-|z|} dz} 
-						= \frac
-						{\int_{S}{} \frac{1}{2}e^{-|e^{\lambda}z|} e^{\lambda} dz}
-						{\int_{S}{} \frac{1}{2}e^{-|z|}dz} \\
-					&	= \frac{e^{-|e^{\lambda}z|} e^{\lambda}}{e^{-|z|}}
+					% 	= \frac
+					% 	{\int_{e^{\lambda} S}{} \frac{1}{2}e^{-|z|} dz}
+					% 	{\int_{S}{} \frac{1}{2}e^{-|z|} dz} 
+					% 	= \frac
+					% 	{\int_{S}{} \frac{1}{2}e^{-|e^{\lambda}z|} e^{\lambda} dz}
+					% 	{\int_{S}{} \frac{1}{2}e^{-|z|}dz} \\
+					% &	= \frac{e^{-|e^{\lambda}z|} e^{\lambda}}{e^{-|z|}}
 						= \frac{e^{\lambda} h(e^{\lambda} z)}{h(z)}
 						\leq e^{\lambda}\\
 	\therefore\		&	ln(\frac{e^{\lambda} h(e^{\lambda} z)}{h(z)})

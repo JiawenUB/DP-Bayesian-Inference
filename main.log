@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  29 MAR 2018 13:48
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  29 MAR 2018 13:59
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -886,30 +886,28 @@ Overfull \hbox (19.30145pt too wide) in paragraph at lines 647--647
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [3]
-Underfull \hbox (badness 1817) in paragraph at lines 719--720
+Underfull \hbox (badness 1552) in paragraph at lines 719--720
 [][]\OT1/ptm/b/n/10 Lemma 4.1. []\OT1/ptm/m/it/10 (+20) For 1-dimensional Lapla
-ce dis-tri-bu-tion,
+ce dis-tri-bu-tion:
  []
 
-LaTeX Font Info:    Try loading font information for OMS+ptm on input line 728.
+LaTeX Font Info:    Try loading font information for OMS+ptm on input line 747.
 
 (/usr/local/texlive/2017/texmf-dist/tex/latex/psnfss/omsptm.fd
 File: omsptm.fd 
 )
 LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 728.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 747.
 
-Overfull \hbox (20.00003pt too wide) detected at line 749
-[]
- []
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
-
-Overfull \hbox (10.37842pt too wide) detected at line 798
+ [4]
+Overfull \hbox (10.37842pt too wide) detected at line 817
 [] \OT1/cmr/m/n/10 = [] = [] = \OML/cmm/m/it/10 e[]e[]
  []
 
-[4]
-Overfull \hbox (5.25444pt too wide) detected at line 834
+
+Overfull \hbox (5.25444pt too wide) detected at line 853
 []\OT1/cmr/m/n/10 [\OML/cmm/m/it/10 z \OMS/cmsy/m/n/10 2 \OML/cmm/m/it/10 S\OT1
 /cmr/m/n/10 ] \OMS/cmsy/m/n/10 ^^T \OML/cmm/m/it/10 e[][]\OT1/cmr/m/n/10 [\OML/
 cmm/m/it/10 z \OMS/cmsy/m/n/10 2 \OML/cmm/m/it/10 S\OT1/cmr/m/n/10 ] = \OML/cmm
@@ -918,23 +916,23 @@ cmm/m/it/10 z \OMS/cmsy/m/n/10 2 \OML/cmm/m/it/10 S\OT1/cmr/m/n/10 ] = \OML/cmm
  []
 
 No file main.bbl.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 900.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 919.
 [5]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 900.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 919.
  (./main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 900.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 900.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 919.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 919.
 Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 18046 strings out of 492995
- 314063 string characters out of 6132704
+ 18043 strings out of 492995
+ 314033 string characters out of 6132704
  459256 words of memory out of 5000000
  21245 multiletter control sequences out of 15000+600000
- 30605 words of font info for 110 fonts, out of 8000000 for 9000
+ 30404 words of font info for 108 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 39i,18n,45p,10415b,467s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 39i,18n,45p,10415b,465s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
 exlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/te
 xlive/2017/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex9.pfb></usr/local
@@ -961,7 +959,7 @@ pe1/public/amsfonts/symbols/msbm7.pfb></usr/local/texlive/2017/texmf-dist/fonts
 /type1/urw/times/utmb8a.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/urw
 /times/utmr8a.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/urw/times/utm
 ri8a.pfb>
-Output written on main.pdf (5 pages, 265711 bytes).
+Output written on main.pdf (5 pages, 264830 bytes).
 PDF statistics:
  168 PDF objects out of 1000 (max. 8388607)
  134 compressed objects within 2 object streams
