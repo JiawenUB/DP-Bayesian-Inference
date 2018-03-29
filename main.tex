@@ -96,11 +96,11 @@ P[r] = \frac
 
 where local sensitivity is calculated by:
 
-\begin{multline*}
+\begin{equation*}
 \Delta_{l}u(x) = 
-\hlg(\bysinfer(x), r) - \hlg(\bysinfer(y'), r)|\\
 \max_{\{|x,y'| \leq 1;y'\in \mathcal{X}^n\}}\max_{\{r\in R\}}.
-\end{multline*}
+\hlg(\bysinfer(x), r) - \hlg(\bysinfer(y'), r)|
+\end{equation*}
 
 \subsubsection{Security Analysis}
 We will then prove that exponential mechanism with local sensitivity is non-differentialy private.
@@ -126,11 +126,11 @@ We will then prove that exponential mechanism with local sensitivity is non-diff
 Without loss of generality, we consider the case that $\Delta_{l}u(y) < \Delta_{l}u(x)$, $r = arg(\max\limits_{r' \in R}\{u(x,r')\}) = arg(\min\limits_{r' \in R}\{u(y,r')\})$ and $\Delta_{l}u(y) = u(x,r) - u(y,r)$. We have:
 \begin{equation*}
 \begin{split}
-& \frac
+\frac
 {\sum\limits_{r' \in R}\ exp(\frac{\epsilon u(x,r)}{2 \Delta_{l}u(x)} 
 + \frac{\epsilon u(y,r')}{2 \Delta_{l}u(y)})}
 {\sum\limits_{r' \in R}\ exp(\frac{\epsilon u(y,r)}{2 \Delta_{l}u(y)} 
-+ \frac{\epsilon u(x,r')}{2 \Delta_{l}u(x)})}\\
++ \frac{\epsilon u(x,r')}{2 \Delta_{l}u(x)})}
 & > \frac
 {\sum\limits_{r' \in R}\ exp(\frac{\epsilon (u(x,r) + u(y,r'))}{2 \Delta_{l}u(x)})}
 {\sum\limits_{r' \in R}\ exp(\frac{\epsilon (u(y,r) + u(x,r'))}{2 \Delta_{l}u(y)})}\\
@@ -358,6 +358,7 @@ Since the Hellinger distance is symmetric, if we prove the $\hlg (\bysinfer(x), 
 
 
 % \twocolumn{
+\begin{small}
 \begin{equation*}
 \begin{split}
 \hlg(
@@ -430,6 +431,7 @@ beta(\frac{n}{2} + 1 + 2, \frac{n}{2} + 1 - 2))\\
 n & > -1.
 \end{split}
 \end{equation*}
+\end{small}
 
 Since $n > 0$, it always holds.
 
@@ -485,7 +487,7 @@ Now, we need to proof $\hlg(beta(\frac{n}{2} + 1 + m + 1, \frac{n}{2} + 1 - m - 
 
 From $x = x_0 + m$ and property of $\betafun(\alpha, \beta)$ function, we know:
 
-\begin{footnotesize}
+\begin{small}
 \begin{equation*}
 \begin{split}
 & \frac{\betafun(\frac{n + 2m + 5}{2}, \frac{n - 2m - 1}{2})
@@ -539,7 +541,7 @@ From $x = x_0 + m$ and property of $\betafun(\alpha, \beta)$ function, we know:
 < & \hlg(beta(\frac{n}{2} + m + 3, \frac{n}{2} - 1 - m), beta(\frac{n}{2} + m + 4, \frac{n}{2} - m - 2))\\
 \end{split}
 \end{equation*}
-\end{footnotesize}
+\end{small}
 
 i.e. $ x = x_0 + m + 1$ also holds when $x = x_0 + m$ is valid.
 \end{proof}
@@ -602,9 +604,6 @@ From Statement I and Statement II, we can conclude that:
 i.e $\forall \ x \neq x_0, \Delta_l u(x) > \Delta_l u(x_0)$.
 
 \end{proof}
-
-\section{Experimental Evaluations}
-We got some results from these mechanisms.
 
 \section{Smooth sensitivity}
 \label{sec_smoo}
@@ -799,16 +798,48 @@ Pr[z \in S] \leq e^{\frac{\epsilon}{2}} Pr[z \in e^{\lambda} S] + \frac{\delta}{
 for any exponential mechanism $\expomech$, $\lambda = f(\epsilon, \delta)$, $\epsilon$ and $|\delta| < 1$, the sliding property holds:
 
 \begin{equation*}
-\underset{z \thicksim \expomech}{Pr}[u(r,x) = \hat{s}] \leq e^{\frac{\epsilon}{2}} \underset{z \thicksim \expomech}{Pr}[u(r,x) = (\Delta + \hat{s})] + \frac{\delta}{2}
+\underset{z \thicksim \expomech}{Pr}[u(r,x) = \hat{s}]
+\leq
+e^{\frac{\epsilon}{2}} \underset{z \thicksim \expomech}{Pr}[u(r,x) = (\Delta + \hat{s})] + \frac{\delta}{2},
 \end{equation*}
+where the sensitivity in mechanism is smooth sensitivity $S(x)$, calculated by:
+\begin{equation*}
+S_{\beta}(x) = \max(\Delta_{l}u(x), \max_{y \neq x; y \in D^{n}}(\Delta_{l}u(y)\cdot e^{-\beta d(x,y)})),
+\end{equation*}
+where $\beta = \beta(\epsilon, \delta)$.
 
 \end{lem}
 
 \begin{proof}
+We denote the normalizer of the probability mass in $\expomech$: $\sum_{r' \in \mathcal{R}}exp(\frac{\epsilon u(r',x)}{2 S(x)})$ as $NL_x$:
+\begin{equation*}
+\begin{split}
+LHS 
+  = \underset{z \thicksim \expomech}{Pr}[u(r,x) = \hat{s}]
+& = \frac{exp(\frac{\epsilon \hat{s}}{2 S(x)})}{NL_x}\\
+& = \frac{exp(\frac{\epsilon (\hat{s} + \Delta - \Delta)}{2 S(x)})}{NL_x}\\
+& = \frac{exp(\frac{\epsilon (\hat{s} + \Delta)}{2 S(x)} + \frac{- \epsilon \Delta}{2 S(x)})}{NL_x}\\
+& = \frac{exp(\frac{\epsilon (\hat{s} + \Delta)}{2 S(x)})}{NL_x} \cdot e^{\frac{- \epsilon \Delta}{2 S(x)})}.\\
+\end{split}
+\end{equation*}
+
+By bounding the $\Delta \geq -S(x)$, we can get:
+
+\begin{equation*}
+\begin{split}
+\frac{exp(\frac{\epsilon (\hat{s} + \Delta)}{2 S(x)})}{NL_x} \cdot e^{\frac{- \epsilon \Delta}{2 S(x)}}
+& \leq \frac{exp(\frac{\epsilon (\hat{s} + \Delta)}{2 S(x)})}{NL_x} \cdot e^{\frac{\epsilon}{2}}\\
+&  =  e^{\frac{\epsilon}{2}} \underset{z \thicksim \expomech}{Pr}[u(r,x) = (\Delta + \hat{s})] \leq RHS\\
+\end{split}
+\end{equation*}
+
 \end{proof}
 
 \subsection{Dilation Property of Exponential Mechanism}
 
+
+\section{Experimental Evaluations}
+We got some results from these mechanisms.
 
 
 % \bibliographystyle{icml2018}
