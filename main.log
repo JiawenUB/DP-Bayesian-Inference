@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  26 MAR 2018 13:31
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  27 MAR 2018 21:25
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -861,26 +861,26 @@ Overfull \hbox (19.30145pt too wide) in paragraph at lines 648--648
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [3]
-LaTeX Font Info:    Try loading font information for OMS+ptm on input line 725.
+LaTeX Font Info:    Try loading font information for OMS+ptm on input line 728.
 
 
 (/usr/local/texlive/2017/texmf-dist/tex/latex/psnfss/omsptm.fd
 File: omsptm.fd 
 )
 LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 725.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 728.
 
-Overfull \hbox (20.00003pt too wide) detected at line 746
+Overfull \hbox (20.00003pt too wide) detected at line 749
 []
  []
 
 
-Overfull \hbox (10.37842pt too wide) detected at line 795
+Overfull \hbox (10.37842pt too wide) detected at line 798
 [] \OT1/cmr/m/n/10 = [] = [] = \OML/cmm/m/it/10 e[]e[]
  []
 
 [4]
-Overfull \hbox (5.25444pt too wide) detected at line 831
+Overfull \hbox (5.25444pt too wide) detected at line 834
 []\OT1/cmr/m/n/10 [\OML/cmm/m/it/10 z \OMS/cmsy/m/n/10 2 \OML/cmm/m/it/10 S\OT1
 /cmr/m/n/10 ] \OMS/cmsy/m/n/10 ^^T \OML/cmm/m/it/10 e[][]\OT1/cmr/m/n/10 [\OML/
 cmm/m/it/10 z \OMS/cmsy/m/n/10 2 \OML/cmm/m/it/10 S\OT1/cmr/m/n/10 ] = \OML/cmm
@@ -889,20 +889,20 @@ cmm/m/it/10 z \OMS/cmsy/m/n/10 2 \OML/cmm/m/it/10 S\OT1/cmr/m/n/10 ] = \OML/cmm
  []
 
 No file main.bbl.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 887.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 894.
 [5]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 887.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 894.
  (./main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 887.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 887.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 894.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 894.
 Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 17855 strings out of 492995
- 311699 string characters out of 6132704
- 456759 words of memory out of 5000000
- 21077 multiletter control sequences out of 15000+600000
+ 17859 strings out of 492995
+ 311741 string characters out of 6132704
+ 456789 words of memory out of 5000000
+ 21078 multiletter control sequences out of 15000+600000
  30087 words of font info for 105 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  39i,18n,45p,10415b,457s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -932,10 +932,10 @@ pe1/public/amsfonts/symbols/msbm7.pfb></usr/local/texlive/2017/texmf-dist/fonts
 /type1/urw/times/utmb8a.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/urw
 /times/utmr8a.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/urw/times/utm
 ri8a.pfb>
-Output written on main.pdf (5 pages, 258240 bytes).
+Output written on main.pdf (5 pages, 258599 bytes).
 PDF statistics:
- 163 PDF objects out of 1000 (max. 8388607)
- 129 compressed objects within 2 object streams
- 31 named destinations out of 1000 (max. 500000)
+ 166 PDF objects out of 1000 (max. 8388607)
+ 132 compressed objects within 2 object streams
+ 34 named destinations out of 1000 (max. 500000)
  27137 words of extra memory for PDF output out of 29859 (max. 10000000)
 
