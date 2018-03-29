@@ -839,11 +839,23 @@ By bounding the $\Delta \geq -S(x)$, we can get:
 \end{proof}
 
 \subsection{Dilation Property of Exponential Mechanism}
+\begin{lem}
+for any exponential mechanism $\expomech$, $\lambda = f(\epsilon, \delta)$, $\epsilon$ and $|\delta| < 1$, the dilation property holds:
 
+\begin{equation*}
+\underset{z \thicksim \expomech}{Pr}[u(r,x) = \hat{s}]
+\leq
+e^{\frac{\epsilon}{2}} \underset{z \thicksim \expomech}{Pr}[u(r,x) = e^{\lambda} \hat{s}] + \frac{\delta}{2},
+\end{equation*}
+where the sensitivity in mechanism is still smooth sensitivity as above.
+
+\end{lem}
+\begin{proof}
+
+\end{proof}
 
 \section{Experimental Evaluations}
 We got some results from these mechanisms.
-
 
 % \bibliographystyle{icml2018}
 % \bibliography{example_paper}
