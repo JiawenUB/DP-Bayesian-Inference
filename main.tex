@@ -24,7 +24,6 @@
 % \theoremstyle{definition}
 %   \newtheorem*{proof1}{Proof of Theorem \ref{Fermat}}
 % Attempt to make hyperref and algorithmic work together better:
-\newcommand{\theHalgorithm}{\arabic{algorithm}}
 % \newenvironment{proofof}[1]{\par
 %   \pushQED{\qed}%
 %   \normalfont \topsep6\p@\@plus6\p@\relax
@@ -716,13 +715,14 @@ We got some results from these mechanisms.
 
 \subsection{Dilation Property of Laplace Noise}
 \label{sec_Dila}
-\begin{proof}
-We take 1-dimensional Laplace distribution, $h(z) = \frac{1}{2} e^{-|z|}$.
-The dilation property is:
+\begin{lem}
+For 1-dimensional Laplace distribution, $h(z) = \frac{1}{2} e^{-|z|}$, $\alpha = \frac{\epsilon}{2}$, $\beta = \frac{\epsilon}{2 \rho_{\delta/3}(|z|)}$ or $ \frac{\epsilon}{2 ln(2/\delta)}$. We have some prior knowledge that $|\lambda| \leq \beta$, the $h$ has dilation property:
 \begin{equation*}
 Pr[z \in S] \leq e^{\frac{\epsilon}{2}} Pr[z \in e^{\lambda} S] + \frac{\delta}{2}
 \end{equation*}
-In this case, we have $\alpha = \frac{\epsilon}{2}$, $\beta = \frac{\epsilon}{2 \rho_{\delta/3}(|z|)}$ or $ \frac{\epsilon}{2 ln(2/\delta)}$. We have some prior knowledge that $|\lambda| \leq \beta$.
+\end{lem}
+
+\begin{proof}
 
 \begin{itemize}
 	\item \textbf{case 1: $\lambda > 0$}
@@ -880,7 +880,11 @@ In this case, we have $\alpha = \frac{\epsilon}{2}$, $\beta = \frac{\epsilon}{2 
 \end{proof}
 
 \subsection{Sliding Property of Exponential Mechanism}
-
+\begin{lem}
+for any exponential mechanism $\mathcal{M}_E(x, u, \mathcal{R})$ $Pr[]$
+\end{lem}
+\begin{proof}
+\end{proof}
 
 \subsection{Dilation Property of Exponential Mechanism}
 
