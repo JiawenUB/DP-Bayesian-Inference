@@ -1,113 +1,10 @@
-%%%%%%%% ICML 2018 EXAMPLE LATEX SUBMISSION FILE %%%%%%%%%%%%%%%%%
 
-\documentclass{article}
-% \usepackage[utf8]{inputenc}
-% \usepackage[english]{babel}
-% Recommended, but optional, packages for figures and better typesetting:
-\usepackage{mathtools,amssymb}
-\usepackage{microtype}
-\usepackage{graphicx}
-\usepackage{amsmath}
-\usepackage{amsthm}
-\usepackage{mathtools}
-\usepackage{mdframed}
-\usepackage{subfigure}
-\usepackage{booktabs} % for professional tables
-% hyperref makes hyperlinks in the resulting PDF.
-% If your build breaks (sometimes temporarily if a hyperlink spans a page)
-% please comment out the following usepackage line and replace
-% \usepackage{icml2018} with \usepackage[nohyperref]{icml2018} above.
-\usepackage{hyperref}
-% \renewcommand\qedsymbol{$\blacksquare$}
-% \theoremstyle{plain}
-%   \newtheorem{thm}{Theorem}
-% \theoremstyle{definition}
-%   \newtheorem*{proof1}{Proof of Theorem \ref{Fermat}}
-% Attempt to make hyperref and algorithmic work together better:
-% \newenvironment{proofof}[1]{\par
-%   \pushQED{\qed}%
-%   \normalfont \topsep6\p@\@plus6\p@\relax
-%   \trivlist
-%   \item[\hskip\labelsep
-%         \bfseries
-%     Proof of #1\@addpunct{.}]\ignorespaces
-% }{%
-%   \popQED\endtrivlist\@endpefalse
-% }
-% Use the following line for the initial blind version submitted for review:
-\usepackage{icml2018}
 \input{macros}
-% If accepted, instead use the following line for the camera-ready submission:
-%\usepackage[accepted]{icml2018}
 
-% The \icmltitle you define below is probably too long as a header.
-% Therefore, a short form for the running title is supplied here:
-\icmltitlerunning{Submission and Formatting Instructions for ICML 2018}
+\title{\textbf{Notes of DP - Bayesian Inference}\\}
+\author{Jiawen \textsc{Liu}}
 
 \begin{document}
-
-\twocolumn[
-\icmltitle{Differentially Private Bayesian Inference}
-
-% It is OKAY to include author information, even for blind
-% submissions: the style file will automatically remove it for you
-% unless you've provided the [accepted] option to the icml2018
-% package.
-
-% List of affiliations: The first argument should be a (short)
-% identifier you will use later to specify author affiliations
-% Academic affiliations should list Department, University, City, Region, Country
-% Industry affiliations should list Company, City, Region, Country
-
-% You can specify symbols, otherwise they are numbered in order.
-% Ideally, you should not use this facility. Affiliations will be numbered
-% in order of appearance and this is the preferred way.
-\icmlsetsymbol{equal}{*}
-
-\begin{icmlauthorlist}
-\icmlauthor{Aeiau Zzzz}{equal,to}
-\icmlauthor{Bauiu C.~Yyyy}{equal,to,goo}
-\icmlauthor{Cieua Vvvvv}{goo}
-\icmlauthor{Iaesut Saoeu}{ed}
-\icmlauthor{Fiuea Rrrr}{to}
-\icmlauthor{Tateu H.~Yasehe}{ed,to,goo}
-\icmlauthor{Aaoeu Iasoh}{goo}
-\icmlauthor{Buiui Eueu}{ed}
-\icmlauthor{Aeuia Zzzz}{ed}
-\icmlauthor{Bieea C.~Yyyy}{to,goo}
-\icmlauthor{Teoau Xxxx}{ed}
-\icmlauthor{Eee Pppp}{ed}
-\end{icmlauthorlist}
-
-\icmlaffiliation{to}{Department of Computation, University of Torontoland, Torontoland, Canada}
-\icmlaffiliation{goo}{Googol ShallowMind, New London, Michigan, USA}
-\icmlaffiliation{ed}{School of Computation, University of Edenborrow, Edenborrow, United Kingdom}
-
-\icmlcorrespondingauthor{Cieua Vvvvv}{c.vvvvv@googol.com}
-\icmlcorrespondingauthor{Eee Pppp}{ep@eden.co.uk}
-
-% You may provide any keywords that you
-% find helpful for describing your paper; these are used to populate
-% the "keywords" metadata in the PDF but will not be shown in the document
-\icmlkeywords{Machine Learning, ICML}
-
-\vskip 0.3in
-]
-
-% this must go after the closing bracket ] following \twocolumn[ ...
-
-% This command actually creates the footnote in the first column
-% listing the affiliations and the copyright notice.
-% The command takes one argument, which is text to display at the start of the footnote.
-% The \icmlEqualContribution command is standard text for equal contribution.
-% Remove it (just {}) if you do not need this facility.
-
-%\printAffiliationsAndNotice{}  % leave blank if no need to mention equal contribution
-\printAffiliationsAndNotice{\icmlEqualContribution} % otherwise use the standard text.
-
-\begin{abstract}
-\end{abstract}
-
 \section{Setting up}
 \label{sec_setup}
 The Bayesian inference process is denoted as $\bysinfer(x,prior)$ taking an observed data set $x \in \mathcal{X}^n$ and a prior distribution as input, outputting a posterior distribution $posterior$. For conciseness, when prior is given, we use $\bysinfer(x)$.
@@ -136,19 +33,19 @@ P[r] = \frac
 {\Sigma_{r' \in R}\ exp(\frac{\epsilon u(x,r')}{2 \Delta_{g}u})},
 \end{equation*}
 where global sensitivity is calculated by:
-\begin{multline*}
+\begin{equation*}
 \Delta_{g}u = 
-\hlg(\bysinfer(x'), r) - \hlg(\bysinfer(y'), r)|\\
-\max_{\{|x',y'| \leq 1;x',y'\in \mathcal{X}^n\}}\max_{\{r\in R\}}.
-\end{multline*}
+\max_{\{|x',y'| \leq 1;x',y'\in \mathcal{X}^n\}}\max_{\{r\in R\}}
+|\hlg(\bysinfer(x'), r) - \hlg(\bysinfer(y'), r)|
+\end{equation*}
 
 % We use probability proportional to $exp(\frac{\epsilon u(x,r)}{\Delta_{g}u})$ rather than $exp(\frac{\epsilon u(x,r)}{2 \Delta_{g}u})$. Since $\hlg$ is monotonic, i.e. our utility function is monotonic. 
 
 \subsubsection{Security Analysis}
-It can be proved that exponential mechanism with global sensitivity is $\epsilon$-differentially private. We denote the $\bysinfer$ with privacy mechanism as $\mathsf{PrivInfer}$. For adjacent data set $||x,y||_1 = 1$:
+It can be proved that exponential mechanism with global sensitivity is $\epsilon$-differentially private. We denote the $\bysinfer$ with privacy mechanism as $\privinfer$. For adjacent data set $||x,y||_1 = 1$:
 \begin{equation*}
 \begin{split}
-& \frac{P[\mathsf{PrivInfer}(x,u,R) = r]}{P[\mathsf{PrivInfer}(y,u,R) = r]} \\
+\frac{P[\privinfer(x,u,R) = r]}{P[\privinfer(y,u,R) = r]}
 & =\frac
 {\frac
 {exp(\frac{\epsilon u(x,r)}{2 \Delta_{g}u})}
@@ -168,8 +65,8 @@ It can be proved that exponential mechanism with global sensitivity is $\epsilon
 & = exp\left(\frac
 {\epsilon (u(x,r) - u(y,r))}
 {2 \Delta_{g}u}
-\right) \\
-& \cdot
+\right)
+\cdot
 \left(\frac
 {\sum\limits_{r' \in R}\ exp(\frac{\epsilon u(y,r')}{2 \Delta_{g}u})}
 {\sum\limits_{r' \in R}\ exp(\frac{\epsilon u(x,r')}{2 \Delta_{g}u})}
@@ -184,7 +81,7 @@ exp(\frac{\epsilon}{2}) \cdot exp(\frac{\epsilon}{2}) \cdot
 \end{split}
 \end{equation*}
 
-Then, $\frac{P[\mathsf{PrivInfer}(x,u,R) = r]}{P[\mathsf{PrivInfer}(y,u,R) = r]} \geq exp(-\epsilon)$ can be obtained by symmetry.
+Then, $\frac{P[\privinfer(x,u,R) = r]}{P[\privinfer(y,u,R) = r]} \geq exp(-\epsilon)$ can be obtained by symmetry.
 
 
 \subsection{Exponential Mechanism with Local Sensitivity}
@@ -209,7 +106,7 @@ where local sensitivity is calculated by:
 We will then prove that exponential mechanism with local sensitivity is non-differentialy private.
 \begin{equation*}
 \begin{split}
-& \frac{P[\mathsf{PrivInfer}(x,u,R) = r]}{P[\mathsf{PrivInfer}(y,u,R) = r]} \\
+\frac{P[\privinfer(x,u,R) = r]}{P[\privinfer(y,u,R) = r]} 
 & = exp\left(
 \frac{\epsilon u(x,r)}{2 \Delta_{l}u(x)} - 
 \frac{\epsilon u(y,r)}{2 \Delta_{l}u(y)}
@@ -278,7 +175,7 @@ Then we can have:
 i.e.
 \begin{equation*}
 \begin{split}
-\frac{P[\mathsf{PrivInfer}(x,u,R) = r]}{P[\mathsf{PrivInfer}(y,u,R) = r]}
+\frac{P[\privinfer(x,u,R) = r]}{P[\privinfer(y,u,R) = r]}
 & > exp(\epsilon).
 \end{split}
 \end{equation*}
@@ -462,7 +359,6 @@ Since the Hellinger distance is symmetric, if we prove the $\hlg (\bysinfer(x), 
 
 % \twocolumn{
 \begin{equation*}
-\boxed{
 \begin{split}
 \hlg(
 beta(\frac{n}{2} + 1, \frac{n}{2} + 1), 
@@ -533,7 +429,6 @@ beta(\frac{n}{2} + 1 + 2, \frac{n}{2} + 1 - 2))\\
 & > (n + 3) ^ 2 n (n - 2)\\
 n & > -1.
 \end{split}
-}
 \end{equation*}
 
 Since $n > 0$, it always holds.
@@ -589,7 +484,6 @@ Now, we need to proof $\hlg(beta(\frac{n}{2} + 1 + m + 1, \frac{n}{2} + 1 - m - 
 
 
 From $x = x_0 + m$ and property of $\betafun(\alpha, \beta)$ function, we know:
-\vspace*{9.5cm}
 
 \begin{footnotesize}
 \begin{equation*}
@@ -656,11 +550,13 @@ i.e. $ x = x_0 + m + 1$ also holds when $x = x_0 + m$ is valid.
 
 \begin{equation*}
 \begin{split}
-\because \quad 		& \Delta_l u(x) = |\hlg(\bysinfer(x), r) - \hlg(\bysinfer(y'), r)|,\\
+\because \footnote{the symbol of $\because$ here means because}
+\quad 		& \Delta_l u(x) = |\hlg(\bysinfer(x), r) - \hlg(\bysinfer(y'), r)|,\\
 					& \max_{\{|x,y'| \leq 1;y'\in \mathcal{X}^n\}}\max_{\{r\in R\}};\\
 \because \quad 		& \hlg(\bysinfer(x), r) - \hlg(\bysinfer(y'), r)\\
 					& \leq \hlg(\bysinfer(x), \bysinfer(y'));\\
-\therefore \quad 	& \Delta_l u(x) = \hlg(\bysinfer(x), \bysinfer(y')),\\
+\therefore \footnote{the symbol of $\therefore$ here means therefore}
+\quad 	& \Delta_l u(x) = \hlg(\bysinfer(x), \bysinfer(y')),\\
 					& \max_{\{|x,y'| \leq 1; y'\in \mathcal{X}^n\}};\\
 \therefore \quad 	& \Delta_l u(x) = \max \{\hlg(\bysinfer(x), \bysinfer(x + 1)),\\
 					& \quad \quad \quad \quad \quad \quad \quad \hlg(\bysinfer(x), \bysinfer(x - 1))\};\\
@@ -731,18 +627,18 @@ Pr[z \in S] \leq e^{\frac{\epsilon}{2}} Pr[z \in e^{\lambda} S] + \frac{\delta}{
 	\begin{equation*}
 	\begin{split}
 	\frac{Pr[z \in e^{\lambda} S]}{Pr[z \in S]} 
-						= &\frac
-						{\int_{e^{\lambda} S}{} \frac{1}{2}e^{-|z|} dz}
-						{\int_{S}{} \frac{1}{2}e^{-|z|} dz} 
-						= \frac
-						{\int_{S}{} \frac{1}{2}e^{-|e^{\lambda}z|} e^{\lambda} dz}
-						{\int_{S}{} \frac{1}{2}e^{-|z|}dz} \\
-						= & \frac{e^{-|e^{\lambda}z|} e^{\lambda}}{e^{-|z|}}
-						= \frac{e^{\lambda} h(e^{\lambda} z)}{h(z)}\\
+		= &\frac
+		{\int_{e^{\lambda} S}{} \frac{1}{2}e^{-|z|} dz}
+		{\int_{S}{} \frac{1}{2}e^{-|z|} dz} \\
+		= &\frac
+		{\int_{S}{} \frac{1}{2}e^{-|e^{\lambda}z|} e^{\lambda} dz}
+		{\int_{S}{} \frac{1}{2}e^{-|z|}dz} \\
+		= & \frac{e^{-|e^{\lambda}z|} e^{\lambda}}{e^{-|z|}} \\
+		= & \frac{e^{\lambda} h(e^{\lambda} z)}{h(z)}\\
 	\end{split}
 	\end{equation*}
 
-	Then, we proof the property in cases of $\lambda > 0$ and $\lambda < 0$:
+	Then, we proof the dilation property in cases of $\lambda > 0$ and $\lambda < 0$ separately:
 
 	\item \textbf{case 1: $\lambda > 0$}
 
@@ -900,8 +796,14 @@ Pr[z \in S] \leq e^{\frac{\epsilon}{2}} Pr[z \in e^{\lambda} S] + \frac{\delta}{
 
 \subsection{Sliding Property of Exponential Mechanism}
 \begin{lem}
-for any exponential mechanism $\mathcal{M}_E(x, u, \mathcal{R})$ $Pr[]$
+for any exponential mechanism $\expomech$, $\lambda = f(\epsilon, \delta)$, $\epsilon$ and $|\delta| < 1$, the sliding property holds:
+
+\begin{equation*}
+\underset{z \thicksim \expomech}{Pr}[u(r,x) = \hat{s}] \leq e^{\frac{\epsilon}{2}} \underset{z \thicksim \expomech}{Pr}[u(r,x) = (\Delta + \hat{s})] + \frac{\delta}{2}
+\end{equation*}
+
 \end{lem}
+
 \begin{proof}
 \end{proof}
 
@@ -909,8 +811,8 @@ for any exponential mechanism $\mathcal{M}_E(x, u, \mathcal{R})$ $Pr[]$
 
 
 
-\bibliographystyle{icml2018}
-\bibliography{example_paper}
+% \bibliographystyle{icml2018}
+% \bibliography{example_paper}
 
 
 
