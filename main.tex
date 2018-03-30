@@ -3,7 +3,7 @@
 
 \title{\textbf{Notes of DP - Bayesian Inference}\\}
 % \author{Jiawen \textsc{Liu}}
-\date{\vspace{-5ex}}
+\date{\vspace{-10ex}}
 
 \begin{document}
 \maketitle
@@ -447,7 +447,7 @@ is what we know:
 \begin{small}
 \begin{equation*}
 \begin{split}
-& \sqrt{
+\sqrt{
 1 - \frac{\betafun(
 \frac{\frac{n}{2} + 1 + m + \frac{n}{2} + 1 + m + 1}{2},
 \frac{\frac{n}{2} + 1 - m + \frac{n}{2} + 1 - m - 1}{2})}
@@ -456,7 +456,7 @@ is what we know:
 \betafun(\frac{n}{2} + 2 + m, \frac{n}{2} - m)
 }
 }
-}\\
+}
 & < \sqrt{
 1 - \frac{\betafun(
 \frac{\frac{n}{2} + 1 + m + 1 + \frac{n}{2} + 1 + m + 2}{2},
@@ -468,12 +468,12 @@ is what we know:
 }
 }\\
 \\
-& \frac{\betafun(\frac{n + 2m + 3}{2}, \frac{n - 2m + 1}{2})}
+\frac{\betafun(\frac{n + 2m + 3}{2}, \frac{n - 2m + 1}{2})}
 {\sqrt{
 \betafun(\frac{n}{2} + 1 + m, \frac{n}{2} + 1 - m)
 \betafun(\frac{n}{2} + 2 + m, \frac{n}{2} - m)
 }
-}\\
+}
 & > \frac{\betafun(\frac{n + 2m + 5}{2}, \frac{n - 2m - 1}{2})}
 {\sqrt{
 \betafun(\frac{n}{2} + 2 + m, \frac{n}{2} - m)
@@ -493,14 +493,14 @@ From $x = x_0 + m$ and property of $\betafun(\alpha, \beta)$ function, we know:
 \begin{small}
 \begin{equation*}
 \begin{split}
-& \frac{\betafun(\frac{n + 2m + 5}{2}, \frac{n - 2m - 1}{2})
+ \frac{\betafun(\frac{n + 2m + 5}{2}, \frac{n - 2m - 1}{2})
 \frac{n - 2m - 1}{n + 2m + 3}}
 {\sqrt{
 \betafun(\frac{n}{2} + 2 + m, \frac{n}{2} - m)
 \betafun(\frac{n}{2} + 3 + m, \frac{n}{2} - m - 1)
 \frac{n - 2m}{n + 2m + 2}
 }
-}\\
+}
 > & \frac{\betafun(\frac{n + 2m + 7}{2}, \frac{n - 2m - 3}{2})
 \frac{n - 2m - 3}{n + 2m + 5}}
 {\sqrt{
@@ -514,12 +514,12 @@ From $x = x_0 + m$ and property of $\betafun(\alpha, \beta)$ function, we know:
 
 \begin{equation*}
 \begin{split}
-& \frac{\betafun(\frac{n + 2m + 5}{2}, \frac{n - 2m - 1}{2})}
+\frac{\betafun(\frac{n + 2m + 5}{2}, \frac{n - 2m - 1}{2})}
 {\sqrt{
 \betafun(\frac{n}{2} + 2 + m, \frac{n}{2} - m)
 \betafun(\frac{n}{2} + 3 + m, \frac{n}{2} - m - 1)
 }
-}\\
+}
 > & \frac{\betafun(\frac{n + 2m + 7}{2}, \frac{n - 2m - 3}{2})}
 {\sqrt{
 \betafun(\frac{n}{2} + 2 + m, \frac{n}{2} - m)
@@ -527,12 +527,12 @@ From $x = x_0 + m$ and property of $\betafun(\alpha, \beta)$ function, we know:
 }
 }\\
 \\
-& \sqrt{1 - \frac{\betafun(\frac{n + 2m + 5}{2}, \frac{n - 2m - 1}{2})}
+\sqrt{1 - \frac{\betafun(\frac{n + 2m + 5}{2}, \frac{n - 2m - 1}{2})}
 {\sqrt{
 \betafun(\frac{n}{2} + 2 + m, \frac{n}{2} - m)
 \betafun(\frac{n}{2} + 3 + m, \frac{n}{2} - m - 1)
 }
-}}\\
+}}
 < & \sqrt{1 - \frac{\betafun(\frac{n + 2m + 7}{2}, \frac{n - 2m - 3}{2})}
 {\sqrt{
 \betafun(\frac{n}{2} + 2 + m, \frac{n}{2} - m)
@@ -540,7 +540,7 @@ From $x = x_0 + m$ and property of $\betafun(\alpha, \beta)$ function, we know:
 }
 }}\\
 \\
-& \hlg(beta(\frac{n}{2} + 2 + m, \frac{n}{2} - m), beta(\frac{n}{2} + 3 + m, \frac{n}{2} - 1 - m))\\
+\hlg(beta(\frac{n}{2} + 2 + m, \frac{n}{2} - m), beta(\frac{n}{2} + 3 + m, \frac{n}{2} - 1 - m))
 < & \hlg(beta(\frac{n}{2} + m + 3, \frac{n}{2} - 1 - m), beta(\frac{n}{2} + m + 4, \frac{n}{2} - m - 2))\\
 \end{split}
 \end{equation*}
@@ -556,31 +556,24 @@ i.e. $ x = x_0 + m + 1$ also holds when $x = x_0 + m$ is valid.
 \begin{equation*}
 \begin{split}
 \because \footnote{the symbol of $\because$ here means because}
-\quad 		& \Delta_l u(x) = |\hlg(\bysinfer(x), r) - \hlg(\bysinfer(y'), r)|,\\
-					& \max_{\{|x,y'| \leq 1;y'\in \mathcal{X}^n\}}\max_{\{r\in R\}};\\
-\because \quad 		& \hlg(\bysinfer(x), r) - \hlg(\bysinfer(y'), r)\\
-					& \leq \hlg(\bysinfer(x), \bysinfer(y'));\\
+\quad 		& \Delta_l u(x) = \max_{\{|x,y'| \leq 1;y'\in \mathcal{X}^n\}}\max_{\{r\in R\}} |\hlg(\bysinfer(x), r) - \hlg(\bysinfer(y'), r)|,\\
+\because \quad 		& \hlg(\bysinfer(x), r) - \hlg(\bysinfer(y'), r) \leq \hlg(\bysinfer(x), \bysinfer(y'));\\
 \therefore \footnote{the symbol of $\therefore$ here means therefore}
-\quad 	& \Delta_l u(x) = \hlg(\bysinfer(x), \bysinfer(y')),\\
-					& \max_{\{|x,y'| \leq 1; y'\in \mathcal{X}^n\}};\\
-\therefore \quad 	& \Delta_l u(x) = \max \{\hlg(\bysinfer(x), \bysinfer(x + 1)),\\
-					& \quad \quad \quad \quad \quad \quad \quad \hlg(\bysinfer(x), \bysinfer(x - 1))\};\\
+\quad 	& \Delta_l u(x) = \max_{\{|x,y'| \leq 1; y'\in \mathcal{X}^n\}} \hlg(\bysinfer(x), \bysinfer(y')),\\
+\therefore \quad 	& \Delta_l u(x) = \max \{\hlg(\bysinfer(x), \bysinfer(x + 1)), \hlg(\bysinfer(x), \bysinfer(x - 1))\};\\
 					& According\ to\ Statement\ I:\\
 \mathsf{if}	  \quad	& x > x_0 \\
 \mathsf{then} \quad	
-					& \hlg(\bysinfer(x), \bysinfer(x - 1))\\
-					&< \hlg(\bysinfer(x), \bysinfer(x + 1));\\
+					& \hlg(\bysinfer(x), \bysinfer(x - 1)) < \hlg(\bysinfer(x), \bysinfer(x + 1));\\
 \mathsf{then} \quad	
 					& \Delta_l u(x) = \hlg(\bysinfer(x), \bysinfer(x + 1));\\
 \mathsf{if}	 \quad	& x < x_0 \\
 \mathsf{then} \quad	
-					& \hlg(\bysinfer(x), \bysinfer(x - 1))\\
-					& > \hlg(\bysinfer(x), \bysinfer(x + 1)); \\
+					& \hlg(\bysinfer(x), \bysinfer(x - 1))  > \hlg(\bysinfer(x), \bysinfer(x + 1)); \\
 \mathsf{then} \quad	
 					& \Delta_l u(x) = \hlg(\bysinfer(x), \bysinfer(x - 1));\\
 \mathsf{else} \quad	
-					& \Delta_l u(x_0) = \hlg(\bysinfer(x_0), \bysinfer(x_0 - 1))\\
-					& \quad \quad \quad = \hlg(\bysinfer(x_0), \bysinfer(x_0 + 1)). \\
+					& \Delta_l u(x_0) = \hlg(\bysinfer(x_0), \bysinfer(x_0 - 1)) = \hlg(\bysinfer(x_0), \bysinfer(x_0 + 1)). \\
 \end{split}
 \end{equation*}
 
@@ -594,12 +587,10 @@ From Statement I and Statement II, we can conclude that:
 \begin{equation*}
 \begin{split}
 \mathsf{when} \quad	& x > x_0 \\
-					& \hlg(\bysinfer(x), \bysinfer(x + 1) \\
-					& > \hlg(\bysinfer(x_0), \bysinfer(x_0 + 1); \\
+					& \hlg(\bysinfer(x), \bysinfer(x + 1) > \hlg(\bysinfer(x_0), \bysinfer(x_0 + 1); \\
 					& i.e.\ \Delta_l u(x) > \Delta_l u(x_0)\\
 \mathsf{when} \quad	& x < x_0 \\
-					& \hlg(\bysinfer(x), \bysinfer(x - 1) \\
-					& > \hlg(\bysinfer(x_0), \bysinfer(x_0 - 1); \\
+					& \hlg(\bysinfer(x), \bysinfer(x - 1)  > \hlg(\bysinfer(x_0), \bysinfer(x_0 - 1); \\
 					& i.e.\ \Delta_l u(x) > \Delta_l u(x_0).\\
 \end{split}
 \end{equation*}
