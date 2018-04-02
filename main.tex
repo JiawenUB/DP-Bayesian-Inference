@@ -844,7 +844,31 @@ where the sensitivity in mechanism is still smooth sensitivity as above.
 \begin{proof}
 
 \begin{equation*}
+\begin{split}
+\frac{exp(\frac{\epsilon \hat{s}}{2 S(x)})}{NL_x}
+& \leq \frac{exp(\frac{\epsilon (\hat{s} \cdot e^{\lambda})}{2 S(x)})}{NL_x}\\
+exp(\frac{\epsilon \hat{s}}{2 S(x)})
+& \leq exp(\frac{\epsilon (\hat{s} \cdot e^{\lambda})}{2 S(x)}) \\
+\frac{\epsilon \hat{s}}{2 S(x)}
+& \leq \frac{\epsilon}{2} + \frac{\epsilon \hat{s} \cdot  e^{\lambda}}{2 S(x)}\\
+\hat{s} & \leq S(x) + \hat{s} \cdot e^{\lambda}\\
+(1 - e^{\lambda}) \cdot \hat{s} & \leq S(x)
+\end{split}
 \end{equation*}
+
+To proof this, we discuss some cases:
+\begin{itemize}
+	\item $\lambda > 0$
+	\begin{itemize}
+		\item $u(x,r) > 0$
+		\item $u(x,r) < 0$
+	\end{itemize}
+	\item $\lambda < 0$
+	\begin{itemize}
+		\item $u(x,r) > 0$
+		\item $u(x,r) < 0$
+	\end{itemize}
+\end{itemize}
 
 \end{proof}
 
