@@ -1,0 +1,108 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% University/School Laboratory Report
+% LaTeX Template
+% Version 3.1 (25/3/14)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original author:
+% Linux and Unix Users Group at Virginia Tech Wiki 
+% (https://vtluug.org/wiki/Example_LaTeX_chem_lab_report)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass{article}
+\usepackage{geometry}
+\geometry{left=2.5cm,right=2.5cm,top=2.5cm,bottom=3.5cm}
+\usepackage[version=3]{mhchem} % Package for chemical equation typesetting
+\usepackage{siunitx} % Provides the \SI{}{} and \si{} command for typesetting SI units
+\usepackage{graphicx} % Required for the inclusion of images
+\usepackage{natbib} % Required to change bibliography style to APA
+\usepackage{amsmath} % Required for some math elements 
+\usepackage{datetime}
+\setlength\parindent{0pt} % Removes all indentation from paragraphs
+
+\renewcommand{\labelenumi}{\alph{enumi}.} % Make numbering in the enumerate environment by letter rather than number (e.g. section 6)
+
+%\usepackage{times} % Uncomment to use the Times New Roman font
+
+%----------------------------------------------------------------------------------------
+%	DOCUMENT INFORMATION
+%----------------------------------------------------------------------------------------
+
+\title{\textbf{Proof of DP - Bayesian Inference}\\
+% \begin{large}
+% \textbf{Probability Distributions and Bayesian Networks}% Title
+% \end{large}
+}
+\author{Jiawen \textsc{Liu}} % Author name
+
+% \date{\currenttime\ \today} % Date for the report
+
+\begin{document}
+
+\maketitle % Insert the title, author and date
+
+% \begin{center}
+% \begin{tabular}{l r}
+% Date Performed: & January 1, 2012 \\ % Date the experiment was performed
+% %Partners: & James Smith \\ % Partner names
+% %& Mary Smith \\
+% Instructor: & Professor Sargur N. Srihari % Instructor/supervisor
+% \end{tabular}
+% \end{center}
+
+% If you wish to include an abstract, uncomment the lines below
+% \begin{abstract}
+% Abstract text
+% \end{abstract}
+
+%----------------------------------------------------------------------------------------
+%	SECTION 1
+%----------------------------------------------------------------------------------------
+If we want the posterior distribution from the Bayesian inference is $\epsilon$ - differential privacy, this mechanism should satisfy:
+\begin{equation*}
+\frac{Pr[BayesInfer_{DP}(d_1) \in S]}{Pr[BayesInfer_{DP}(d_2) \in S]} \leq e^{\epsilon},
+\end{equation*}
+where $BayesInfer_{DP}$ is a differentially private Bayesian inference mechanism: $d \rightarrow posterior\ distribution$. $d_1$, $d_2$ is a pair of adjacent observed data sets. Since in our model, this inference is based on a bias $p$ with beta prior distribution: $p \sim Beta(\alpha_0, \beta_0)$ and an observed data set $d \sim B(n,p)$, which result in a posterior distribution on $p \sim Beta(\alpha_0 + k, \beta_0 + l)$ where $k$ and $l$ is the number of $1$ and $0$ in $d$. As a result, the requirement above can be rewrote as:
+\begin{equation*}
+\frac{Pr[Beta(\alpha_0 + k^*_1, \beta_0 + l^*_1) \in S]}{Pr[Beta(\alpha_0 + k^*_2, \beta_0 + l^*_2) \in S]} \leq e^{\epsilon},
+\end{equation*}
+where $k^*_1$ and $l^*_1$ is the number of $1$ and $0$ in $d_1$ after protection, the same with $k^*_2$ and $l^*_2$.  $S\subseteq B = \{Beta(a,b) | a,b \in N\}$. The equation above is equivalent to:
+\begin{equation*}
+\frac{Pr[\langle \alpha_0 + k^*_1, \beta_0 + l^*_1 \rangle = S]}{Pr[ \langle \alpha_0 + k^*_2, \beta_0 + l^*_2 \rangle = S]} \leq e^{\epsilon}.
+\end{equation*}
+
+Under Laplace mechanism, the sensitivity of $BayesInfer_{DP}: d \rightarrow k$, $d \rightarrow l$ are both $1$, we have $k^* = k + Lap(\frac{1}{\frac{\epsilon}{2}}) = k + Lap(\frac{2}{\epsilon})$, and $l^* = l + Lap(\frac{2}{\epsilon})$. When $\langle \alpha_0 + k^*, \beta_0 + l^* \rangle = S$, since $S = Beta(s_1,s_2) = \langle s_1, s_2 \rangle $, we have $ (s_1 - \alpha_0  - k) \sim Lap(\frac{2}{\epsilon}), (s_2 - \beta_0 - l) \sim Lap(\frac{2}{\epsilon})$. Then,
+\begin{equation*}
+\frac{Pr[\langle \alpha_0 + k^*_1, \beta_0 + l^*_1 \rangle = S]}{Pr[\langle \alpha_0 + k^*_2, \beta_0 + l^*_2 \rangle = S]} = \frac{exp(-\frac{(s_1 - \alpha_0  - k_1)}{\frac{2}{\epsilon}})) exp(-\frac{(s_2 - \beta_0  - l_1)}{\frac{2}{\epsilon}}))}{exp(-\frac{(s_1 - \alpha_0  - k_2)}{\frac{2}{\epsilon}})) exp(-\frac{(s_2 - \beta_0  - l_2)}{\frac{2}{\epsilon}}))} = exp(\epsilon)
+\end{equation*}
+i.e.
+\begin{equation*}
+\frac{Pr[BayesInfer_{DP}(d_1) \in S]}{Pr[BayesInfer_{DP}(d_2) \in S]} \leq e^{\epsilon},
+\end{equation*}
+
+%----------------------------------------------------------------------------------------
+%	SECTION 6
+%----------------------------------------------------------------------------------------
+
+%----------------------------------------------------------------------------------------
+%	BIBLIOGRAPHY
+%----------------------------------------------------------------------------------------
+
+% \bibliographystyle{apalike}
+
+% \bibliography{dp-proof}
+
+%----------------------------------------------------------------------------------------
+
+
+\end{document}
