@@ -857,26 +857,41 @@ exp(\frac{\epsilon \hat{s}}{2 S(x)})
 \end{equation*}
 
 To proof this, we discuss some cases:
+
+Since the sensitivity is always greater than 0, but the utility function and $\lambda$ can be positive or negative. That's what we need to discuss.
+
 \begin{itemize}
 	\item $\lambda > 0$
 	\begin{itemize}
 		\item $u(x,r) > 0$
+
+		The left hand side will always be smaller than 0 and the right hand side greater than 0. This will always holds.
+
 		\item $u(x,r) < 0$
+
+		This need to be discuss further.
+
 	\end{itemize}
 	\item $\lambda < 0$
 	\begin{itemize}
 		\item $u(x,r) > 0$
+
+		This need to be discuss further.
+
 		\item $u(x,r) < 0$
+
+		The left hand side will always be smaller than 0 and the right hand side greater than 0. This will always holds.
+
 	\end{itemize}
 \end{itemize}
+
+So, we only need to proof it in two cases where $\lambda > 0, u(x,r) < 0$ and $\lambda < 0, u(x,r) > 0$.
 
 \end{proof}
 
 \section{Experimental Evaluations}
 We got some results from these mechanisms.
 
-% \bibliographystyle{icml2018}
-% \bibliography{example_paper}
 
 
 \end{document}
