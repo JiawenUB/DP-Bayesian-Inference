@@ -869,14 +869,23 @@ Since the sensitivity is always greater than 0, but the utility function and $\l
 
 		\item $u(x,r) < 0$
 
-		This need to be discuss further.
+		% This need to be discuss further.
+		We can have:
+		\begin{equation*}
+		\lambda\leq \ln (1 - \frac{S(x)}{\hat{s}}) 
+		\end{equation*}
 
 	\end{itemize}
 	\item $\lambda < 0$
 	\begin{itemize}
 		\item $u(x,r) > 0$
 
-		This need to be discuss further.
+		% This need to be discuss further.
+		We can have:
+		\begin{equation*}
+		\lambda\geq \ln (1 - \frac{S(x)}{\hat{s}}) 
+		\end{equation*}
+		Since $\lambda > 0$ is the pre-condition, it can be inferred that the property cannot hold under this case.
 
 		\item $u(x,r) < 0$
 
@@ -885,7 +894,12 @@ Since the sensitivity is always greater than 0, but the utility function and $\l
 	\end{itemize}
 \end{itemize}
 
-So, we only need to proof it in two cases where $\lambda > 0, u(x,r) < 0$ and $\lambda < 0, u(x,r) > 0$.
+In conclusion, the dilation property holds under these conditions that: $\lambda u(x,r) > 0$ or $\lambda > 0, u(x,r) < 0, \lambda \leq \ln (1 - \frac{S(x)}{\hat{s}})$.
+
+% So, we only need to proof it in two cases where $\lambda > 0, u(x,r) < 0$ and $\lambda < 0, u(x,r) > 0$.
+
+% We take the absolute value of utility function, then there is only one case we need to discuss: $(1 - e^{\lambda}) |\hat{s}| \leq S(x)$, $\lambda < 0$. 
+
 
 \end{proof}
 
