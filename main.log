@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  3 APR 2018 17:21
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  9 APR 2018 18:36
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1522,21 +1522,21 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 636.
  [6]
 [7] [8]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 912.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 936.
  [9]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 912.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 936.
  (./main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 912.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 912.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 936.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 936.
 Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: 202E8C04D0E093A29CD2E7E75954E8F4;1794.
  ) 
 Here is how much of TeX's memory you used:
- 22738 strings out of 492995
- 427765 string characters out of 6132704
+ 22742 strings out of 492995
+ 427797 string characters out of 6132704
  587082 words of memory out of 5000000
  25885 multiletter control sequences out of 15000+600000
- 552619 words of font info for 123 fonts, out of 8000000 for 9000
+ 552721 words of font info for 125 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  44i,22n,45p,10383b,863s stack positions out of 5000i,500n,10000p,200000b,80000s
 pdfTeX warning (dest): name{Hfootnote.2} has been referenced but does not exi
@@ -1570,11 +1570,12 @@ dist/fonts/type1/public/mathabx-type1/matha6.pfb></usr/local/texlive/2017/texmf
 f-dist/fonts/type1/public/mathabx-type1/matha9.pfb></usr/local/texlive/2017/tex
 mf-dist/fonts/type1/public/mathabx-type1/mathb10.pfb></usr/local/texlive/2017/t
 exmf-dist/fonts/type1/public/mathabx-type1/mathx10.pfb></usr/local/texlive/2017
-/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb>
-Output written on main.pdf (9 pages, 254721 bytes).
+/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/
+2017/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb>
+Output written on main.pdf (9 pages, 259389 bytes).
 PDF statistics:
- 274 PDF objects out of 1000 (max. 8388607)
- 232 compressed objects within 3 object streams
+ 278 PDF objects out of 1000 (max. 8388607)
+ 235 compressed objects within 3 object streams
  43 named destinations out of 1000 (max. 500000)
  28353 words of extra memory for PDF output out of 29859 (max. 10000000)
 

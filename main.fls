@@ -332,4 +332,5 @@ INPUT /usr/local/texlive/2017/texmf-dist/fonts/type1/public/mathabx-type1/matha7
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/type1/public/mathabx-type1/matha9.pfb
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/type1/public/mathabx-type1/mathb10.pfb
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/type1/public/mathabx-type1/mathx10.pfb
+INPUT /usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb
