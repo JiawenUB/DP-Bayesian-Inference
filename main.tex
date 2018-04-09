@@ -858,45 +858,44 @@ exp(\frac{\epsilon \hat{s}}{2 S(x)})
 
 To proof this, we discuss some cases:
 
-Since the sensitivity is always greater than 0, but the utility function and $\lambda$ can be positive or negative. That's what we need to discuss.
+The sensitivity is always greater than 0, and we are using $-\hlg(\bysinfer(x),r)$ for utility function, i.e., $u(r) \leq 0$, we need to consider two event that $G=\{\lambda < 0\}$, and $\overline{G} = \{\lambda > 0\}$:
 
 \begin{itemize}
-	\item $\lambda > 0$
-	\begin{itemize}
-		\item $u(r) > 0$
 
-		The left hand side will always be smaller than 0 and the right hand side greater than 0. This will always holds.
-
-		\item $u(r) < 0$
-
-		% This need to be discuss further.
-		% We can have:
-		% \begin{equation*}
-		% \lambda\leq \ln (1 - \frac{S(x)}{\hat{s}}) 
-		% \end{equation*}
-
-	\end{itemize}
 	\item $\lambda < 0$
-	\begin{itemize}
-		\item $u(r) > 0$
+	% \begin{itemize}
+		% \item $u(r) > 0$
 
-		% This need to be discuss further.
-		% We can have:
-		% \begin{equation*}
-		% \lambda\geq \ln (1 - \frac{S(x)}{\hat{s}}) 
-		% \end{equation*}
-		% Since $\lambda > 0$ is the pre-condition, it can be inferred that the property cannot hold under this case.
-
-		\item $u(r) \leq 0$
+		% % This need to be discuss further.
+		% % We can have:
+		% % \begin{equation*}
+		% % \lambda\geq \ln (1 - \frac{S(x)}{\hat{s}}) 
+		% % \end{equation*}
+		% % Since $\lambda > 0$ is the pre-condition, it can be inferred that the property cannot hold under this case.
+		% \item $u(r) \leq 0$
 
 		The left hand side will always be smaller than 0 and the right hand side greater than 0. This will always holds.
+	\item $\lambda > 0$
+	% \begin{itemize}
+	% 	% \item $u(r) > 0$
 
-	\end{itemize}
+	% 	% The left hand side will always be smaller than 0 and the right hand side greater than 0. This will always holds.
+
+	% 	% \item $u(r) < 0$
+
+	% 	% This need to be discuss further.
+	% 	% We can have:
+	% 	% \begin{equation*}
+	% 	% \lambda\leq \ln (1 - \frac{S(x)}{\hat{s}}) 
+	% 	% \end{equation*}
+
+	% \end{itemize}
+	% \end{itemize}
 \end{itemize}
 
 % In conclusion, the dilation property holds under these conditions that: $\lambda u(x,r) > 0$ or $\lambda > 0, u(x,r) < 0, \lambda \leq \ln (1 - \frac{S(x)}{\hat{s}})$.
 
-In our case, we are using $-\hlg(\bysinfer(x),r)$ for utility function, we only need to consider the case $u(r) \leq 0$.
+In our case, we are using $-\hlg(\bysinfer(x),r)$ for utility function, so we only need to consider the case $u(r) \leq 0$.
 
 Because $\hat{s} = u(r)$ where $r \thicksim \expomech$, we can substitute $\hat{s}$ with $u(\expomech)$. Then, what we need to proof under the event $G = \{\lambda > 0, u(r) \leq 0\}$ is:
 \begin{equation*}
