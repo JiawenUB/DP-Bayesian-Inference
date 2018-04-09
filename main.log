@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  9 APR 2018 18:50
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  9 APR 2018 18:59
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1522,21 +1522,21 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 636.
  [6]
 [7] [8]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 935.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 937.
  [9]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 935.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 937.
  (./main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 935.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 935.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 937.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 937.
 Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: 202E8C04D0E093A29CD2E7E75954E8F4;1794.
  ) 
 Here is how much of TeX's memory you used:
- 22742 strings out of 492995
- 427797 string characters out of 6132704
+ 22740 strings out of 492995
+ 427781 string characters out of 6132704
  587082 words of memory out of 5000000
  25885 multiletter control sequences out of 15000+600000
- 552735 words of font info for 125 fonts, out of 8000000 for 9000
+ 552684 words of font info for 124 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  44i,22n,45p,10383b,863s stack positions out of 5000i,500n,10000p,200000b,80000s
 pdfTeX warning (dest): name{Hfootnote.2} has been referenced but does not exi
@@ -1572,7 +1572,7 @@ mf-dist/fonts/type1/public/mathabx-type1/mathb10.pfb></usr/local/texlive/2017/t
 exmf-dist/fonts/type1/public/mathabx-type1/mathx10.pfb></usr/local/texlive/2017
 /texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/
 2017/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb>
-Output written on main.pdf (9 pages, 259335 bytes).
+Output written on main.pdf (9 pages, 259404 bytes).
 PDF statistics:
  278 PDF objects out of 1000 (max. 8388607)
  235 compressed objects within 3 object streams
