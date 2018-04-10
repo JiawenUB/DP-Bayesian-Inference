@@ -834,31 +834,35 @@ By bounding the $\Delta \geq -S(x)$, we can get:
 for any exponential mechanism $\expomech$, $\lambda = f(\epsilon, \delta)$, $\epsilon$ and $|\delta| < 1$, the dilation property holds:
 
 \begin{equation*}
-\underset{z \thicksim \expomech}{Pr}[u(z) = \hat{s}]
+\underset{r \thicksim \expomech}{Pr}[u(r) = z]
 \leq
-e^{\frac{\epsilon}{2}} \underset{z \thicksim \expomech}{Pr}[u(r) = e^{\lambda} \hat{s}] + \frac{\delta}{2},
+e^{\frac{\epsilon}{2}} \underset{r \thicksim \expomech}{Pr}[u(r) = e^{\lambda} z] + \frac{\delta}{2},
 \end{equation*}
 where the sensitivity in mechanism is still smooth sensitivity as above.
 \end{lem}
 
 \begin{proof}
 
-\begin{equation*}
-\begin{split}
-\frac{exp(\frac{\epsilon \hat{s}}{2 S(x)})}{NL_x}
-&  \leq e^{\frac{\epsilon}{2}} \cdot \frac{exp(\frac{\epsilon (\hat{s} \cdot e^{\lambda})}{2 S(x)})}{NL_x}\\
-exp(\frac{\epsilon \hat{s}}{2 S(x)})
-& \leq e^{\frac{\epsilon}{2}} \cdot exp(\frac{\epsilon (\hat{s} \cdot e^{\lambda})}{2 S(x)}) \\
-\frac{\epsilon \hat{s}}{2 S(x)}
-& \leq \frac{\epsilon}{2} + \frac{\epsilon \hat{s} \cdot  e^{\lambda}}{2 S(x)}\\
-\hat{s} & \leq S(x) + \hat{s} \cdot e^{\lambda}\\
-(1 - e^{\lambda}) \cdot \hat{s} & \leq S(x)
-\end{split}
-\end{equation*}
-
-To proof this, we consider some cases:
+% \begin{equation*}
+% \begin{split}
+% \frac{exp(\frac{\epsilon \hat{s}}{2 S(x)})}{NL_x}
+% &  \leq e^{\frac{\epsilon}{2}} \cdot \frac{exp(\frac{\epsilon (\hat{s} \cdot e^{\lambda})}{2 S(x)})}{NL_x}\\
+% exp(\frac{\epsilon \hat{s}}{2 S(x)})
+% & \leq e^{\frac{\epsilon}{2}} \cdot exp(\frac{\epsilon (\hat{s} \cdot e^{\lambda})}{2 S(x)}) \\
+% \frac{\epsilon \hat{s}}{2 S(x)}
+% & \leq \frac{\epsilon}{2} + \frac{\epsilon \hat{s} \cdot  e^{\lambda}}{2 S(x)}\\
+% \hat{s} & \leq S(x) + \hat{s} \cdot e^{\lambda}\\
+% (1 - e^{\lambda}) \cdot \hat{s} & \leq S(x)
+% \end{split}
+% \end{equation*}
 
 The sensitivity is always greater than 0, and we are using $-\hlg(\bysinfer(x),r)$ for utility function, i.e., $u(r) \leq 0$, we need to consider two cases that $\lambda < 0$, and $\lambda > 0$:
+
+We set the $h(z) = Pr[u(\expomech) = z] = \frac{exp(\frac{\epsilon z}{2 S(x)})}{NL_x}$.
+
+We first consider $\lambda < 0$. In this case, $1 < e ^ {\lambda}$, so the ratio $\frac{h(z)}{h(e^{\lambda}z)} = \frac{exp(\frac{\epsilon z}{2 S(x)})}{exp(\frac{\epsilon (z \cdot e^{\lambda})}{2 S(x)})}$ is at most $\frac{\epsilon}{2}$.
+
+Next, we proof the dilation property for $\lambda > 0$, The ratio of $\frac{h(z)}{h(e^{\lambda}z)}$ is $\exp(\frac{\epsilon}{2} \cdot \frac{u(\expomech) (1 - e^{\lambda})}{S(x)})$. Consider the event $G = \{ \expomech : u(\expomech) \leq \frac{S(x)}{(1 - e^{\lambda})}\}$. Under this event, the log-ratio above is at most $\frac{\epsilon}{2}$. The probability of $G$ under density $h(z)$ is $1 - \frac{\delta}{2}$. Thus, the probability of a given event $z$ is at most $Pr[z \cap G] + Pr[\overline{G}] \leq e^{\frac{\epsilon}{2}} Pr[e^{\lambda}z \cap G] + \frac{\delta}{2} \leq e^{\frac{\epsilon}{2}} Pr[e^{\lambda}z] + \frac{\delta}{2}$. The $\beta$ is set as 
 
 \begin{itemize}
 
@@ -922,8 +926,7 @@ When we set $\lambda \leq \ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta}{2 (n + 1)
 \end{itemize}
 % So, we only need to proof it in two cases where $\lambda > 0, u(x,r) < 0$ and $\lambda < 0, u(x,r) > 0$.
 
-% We take the absolute value of utility function, then there is only one case we need to discuss: $(1 - e^{\lambda}) |\hat{s}| \leq S(x)$, $\lambda < 0$. 
-
+% We take the absolute value of utility function, then there is only one case we need to discuss: $(1 - e^{\lambda}) |\hat{s}| \leq S(x)$, $\lambda < 0$.
 
 \end{proof}
 
