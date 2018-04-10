@@ -196,6 +196,11 @@ INPUT /usr/local/texlive/2017/texmf-dist/tex/latex/datetime/datetime-defaults.st
 INPUT /usr/local/texlive/2017/texmf-dist/tex/generic/mathabx/mathabx.sty
 INPUT /usr/local/texlive/2017/texmf-dist/tex/generic/mathabx/mathabx.sty
 INPUT /usr/local/texlive/2017/texmf-dist/tex/generic/mathabx/mathabx.dcl
+INPUT /usr/local/texlive/2017/texmf-dist/tex/latex/cancel/cancel.sty
+INPUT /usr/local/texlive/2017/texmf-dist/tex/latex/cancel/cancel.sty
+INPUT /usr/local/texlive/2017/texmf-dist/tex/generic/ulem/ulem.sty
+INPUT /usr/local/texlive/2017/texmf-dist/tex/generic/ulem/ulem.sty
+INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/public/latex-fonts/lasy6.tfm
 INPUT main.aux
 INPUT main.aux
 OUTPUT main.aux

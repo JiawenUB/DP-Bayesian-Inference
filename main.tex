@@ -831,7 +831,7 @@ By bounding the $\Delta \geq -S(x)$, we can get:
 
 \subsection{Dilation Property of Exponential Mechanism}
 \begin{lem}
-for any exponential mechanism $\expomech$, $\lambda = f(\epsilon, \delta)$, $\epsilon$ and $|\delta| < 1$, the dilation property holds:
+for any exponential mechanism $\expomech$, $\lambda < |\beta|$, $\epsilon$, $|\delta| < 1$ and $\beta \leq \ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta}{2 (n + 1)})})$, the dilation property holds:
 
 \begin{equation*}
 \underset{r \thicksim \expomech}{Pr}[u(r) = z]
@@ -862,8 +862,9 @@ We set the $h(z) = Pr[u(\expomech) = z] = \frac{exp(\frac{\epsilon z}{2 S(x)})}{
 
 We first consider $\lambda < 0$. In this case, $1 < e ^ {\lambda}$, so the ratio $\frac{h(z)}{h(e^{\lambda}z)} = \frac{exp(\frac{\epsilon z}{2 S(x)})}{exp(\frac{\epsilon (z \cdot e^{\lambda})}{2 S(x)})}$ is at most $\frac{\epsilon}{2}$.
 
-Next, we proof the dilation property for $\lambda > 0$, The ratio of $\frac{h(z)}{h(e^{\lambda}z)}$ is $\exp(\frac{\epsilon}{2} \cdot \frac{u(\expomech) (1 - e^{\lambda})}{S(x)})$. Consider the event $G = \{ \expomech : u(\expomech) \leq \frac{S(x)}{(1 - e^{\lambda})}\}$. Under this event, the log-ratio above is at most $\frac{\epsilon}{2}$. The probability of $G$ under density $h(z)$ is $1 - \frac{\delta}{2}$. Thus, the probability of a given event $z$ is at most $Pr[z \cap G] + Pr[\overline{G}] \leq e^{\frac{\epsilon}{2}} Pr[e^{\lambda}z \cap G] + \frac{\delta}{2} \leq e^{\frac{\epsilon}{2}} Pr[e^{\lambda}z] + \frac{\delta}{2}$. The $\beta$ is set as 
+Next, we proof the dilation property for $\lambda > 0$, The ratio of $\frac{h(z)}{h(e^{\lambda}z)}$ is $\exp(\frac{\epsilon}{2} \cdot \frac{u(\expomech) (1 - e^{\lambda})}{S(x)})$. Consider the event $G = \{ \expomech : u(\expomech) \leq \frac{S(x)}{(1 - e^{\lambda})}\}$. Under this event, the log-ratio above is at most $\frac{\epsilon}{2}$. The probability of $G$ under density $h(z)$ is $1 - \frac{\delta}{2}$. Thus, the probability of a given event $z$ is at most $Pr[z \cap G] + Pr[\overline{G}] \leq e^{\frac{\epsilon}{2}} Pr[e^{\lambda}z \cap G] + \frac{\delta}{2} \leq e^{\frac{\epsilon}{2}} Pr[e^{\lambda}z] + \frac{\delta}{2}$. 
 
+% \sout{
 \begin{itemize}
 
 	\item $\lambda < 0$
@@ -924,6 +925,7 @@ Pr[u(\expomech) \leq \frac{S(x)}{(1 - e ^ {\lambda})}]
 When we set $\lambda \leq \ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta}{2 (n + 1)})})$, it is easily to derive that $Pr[u(\expomech) \leq \frac{S(x)}{(1 - e ^ {\lambda})}] \leq \frac{\delta}{2}$.
 
 \end{itemize}
+% }
 % So, we only need to proof it in two cases where $\lambda > 0, u(x,r) < 0$ and $\lambda < 0, u(x,r) > 0$.
 
 % We take the absolute value of utility function, then there is only one case we need to discuss: $(1 - e^{\lambda}) |\hat{s}| \leq S(x)$, $\lambda < 0$.
