@@ -846,9 +846,9 @@ where the sensitivity in mechanism is still smooth sensitivity as above.
 \begin{equation*}
 \begin{split}
 \frac{exp(\frac{\epsilon \hat{s}}{2 S(x)})}{NL_x}
-& \leq \frac{exp(\frac{\epsilon (\hat{s} \cdot e^{\lambda})}{2 S(x)})}{NL_x}\\
+&  \leq e^{\frac{\epsilon}{2}} \cdot \frac{exp(\frac{\epsilon (\hat{s} \cdot e^{\lambda})}{2 S(x)})}{NL_x}\\
 exp(\frac{\epsilon \hat{s}}{2 S(x)})
-& \leq exp(\frac{\epsilon (\hat{s} \cdot e^{\lambda})}{2 S(x)}) \\
+& \leq e^{\frac{\epsilon}{2}} \cdot exp(\frac{\epsilon (\hat{s} \cdot e^{\lambda})}{2 S(x)}) \\
 \frac{\epsilon \hat{s}}{2 S(x)}
 & \leq \frac{\epsilon}{2} + \frac{\epsilon \hat{s} \cdot  e^{\lambda}}{2 S(x)}\\
 \hat{s} & \leq S(x) + \hat{s} \cdot e^{\lambda}\\
@@ -856,9 +856,9 @@ exp(\frac{\epsilon \hat{s}}{2 S(x)})
 \end{split}
 \end{equation*}
 
-To proof this, we consider some events:
+To proof this, we consider some cases:
 
-The sensitivity is always greater than 0, and we are using $-\hlg(\bysinfer(x),r)$ for utility function, i.e., $u(r) \leq 0$, we need to consider two event that $G=\{\lambda < 0\}$, and $\overline{G} = \{\lambda > 0\}$:
+The sensitivity is always greater than 0, and we are using $-\hlg(\bysinfer(x),r)$ for utility function, i.e., $u(r) \leq 0$, we need to consider two cases that $\lambda < 0$, and $\lambda > 0$:
 
 \begin{itemize}
 
@@ -884,32 +884,30 @@ The sensitivity is always greater than 0, and we are using $-\hlg(\bysinfer(x),r
 	% 	% The left hand side will always be smaller than 0 and the right hand side greater than 0. This will always holds.
 
 	% 	% \item $u(r) < 0$
-
 	% 	% This need to be discuss further.
 	% 	% We can have:
 	% 	% \begin{equation*}
 	% 	% \lambda\leq \ln (1 - \frac{S(x)}{\hat{s}}) 
 	% 	% \end{equation*}
-
 	% \end{itemize}
 	% \end{itemize}
-
-
 % In conclusion, the dilation property holds under these conditions that: $\lambda u(x,r) > 0$ or $\lambda > 0, u(x,r) < 0, \lambda \leq \ln (1 - \frac{S(x)}{\hat{s}})$.
 
-In our case, we are using $-\hlg(\bysinfer(x),r)$ for utility function, so we only need to consider the case $u(r) \leq 0$.
 
-Because $\hat{s} = u(r)$ where $r \thicksim \expomech$, we can substitute $\hat{s}$ with $u(\expomech)$. Then, what we need to proof under the event $G = \{\lambda > 0, u(r) \leq 0\}$ is:
+% In our case, we are using $-\hlg(\bysinfer(x),r)$ for utility function, so we only need to consider the case $u(r) \leq 0$.
+
+Because $\hat{s} = u(r)$ where $r \thicksim \expomech$, we can substitute $\hat{s}$ with $u(\expomech)$. Then, what we need to proof under the case $\lambda > 0$ is:
 \begin{equation*}
 u(\expomech) \leq \frac{S(x)}{(1 - e ^ {\lambda})}
 \end{equation*}
-By applying the accuracy property of exponential mechanism, we bound the probability that the equation holds with:
+By applying the accuracy property of exponential mechanism, we bound the probability that the equation holds with probability:
 \begin{equation*}
 \begin{split}
 Pr[u(\expomech) \leq \frac{S(x)}{(1 - e ^ {\lambda})}] 
 & \leq \frac{|\mathcal{R}|exp(\frac{\epsilon S(x)}{(1 - e ^ {\lambda})}/2 S(x))}{|\mathcal{R}_{OPT}| exp(\epsilon OPT_{u(x)}/2 S(x))}\\
 \end{split}
 \end{equation*}
+
 In our Bayesian Inference mechanism, the size of the candidate set $\mathcal{R}$ is equal to the size of observed data set plus 1, i.e., $n + 1$, and $OPT_{u(x)} = 0$, then we have:
 \begin{equation*}
 \begin{split}
