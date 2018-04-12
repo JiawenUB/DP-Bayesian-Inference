@@ -1,4 +1,4 @@
-  import numpy
+import numpy
 import matplotlib.pyplot as plt
 from copy import deepcopy
 import random
@@ -6,6 +6,7 @@ import math
 import scipy
 from scipy.stats import beta
 from fractions import Fraction
+import time
 
 def beta_function(alpha, beta):
 	f = Fraction(1,1)
@@ -133,7 +134,7 @@ class BayesInferwithBetaPrior(object):
 		print str(time.clock() - start) + " seconds."
 
 	def _set_candidates(self, current, rest):
-		if len(current) == len(self._prior._alphas) - 1:
+		if len(current) == len(self._prior._alpha) - 1:
 			current.append(rest)
 			self._candidates.append(Dir(deepcopy(current)) + self._prior)
 			current.pop()
@@ -149,16 +150,16 @@ class BayesInferwithBetaPrior(object):
 
 	def _set_SS(self):
 		self._set_LS_Candidates()
+		# print "Calculating Smooth Sensitivity with Hamming Distance....."
+		# start = time.clock()
+		# self._SS_Hamming = max([self._LS_Candidates[r] * math.exp(- beta * Hamming_Distance(self._posterior, r)) for r in self._candidates])
+		# key2 = "(" + str(self._epsilon / 2.0) + "," + str(beta) + ") Admissible Niose and " + str(beta) + "-Smooth Sensitivity (" + str(self._SS_Hamming) + ")|" + str(self._epsilon) + "-DP"
+		# self._accuracy[key2] = []
+		# self._keys.append(key2)
+		# print str(time.clock() - start) + "seconds."
 		print "Calculating Smooth Sensitivity with Hamming Distance....."
 		start = time.clock()
-		self._SS_Hamming = max([self._LS_Candidates[r] * math.exp(- beta * Hamming_Distance(self._posterior, r)) for r in self._candidates])
-		key2 = "(" + str(self._epsilon / 2.0) + "," + str(beta) + ") Admissible Niose and " + str(beta) + "-Smooth Sensitivity (" + str(self._SS_Hamming) + ")|" + str(self._epsilon) + "-DP"
-		self._accuracy[key2] = []
-		self._keys.append(key2)
-		print str(time.clock() - start) + "seconds."
-		print "Calculating Smooth Sensitivity with Hamming Distance....."
-		start = time.clock()
-		beta = self._epsilon / (2.0 * math.log(2.0 / self._delta))
+		beta = math.log(1 - self._epsilon / (2.0 * math.log(self._delta / (2 (n + 1)))))
 		self._SS_Hamming = max([self._LS_Candidates[r] * math.exp(- beta * Hamming_Distance(self._posterior, r)) for r in self._candidates])
 		key3 = "(" + str(self._epsilon / 2.0) + "," + str(beta) + ") Admissible Niose and " + str(beta) + "-Smooth Sensitivity (" + str(self._SS_Laplace) + ")|(" + str(self._epsilon) + "," + str(self._delta) + ")-DP"
 		self._accuracy[key3] = []
@@ -353,15 +354,15 @@ class BayesInferwithBetaPrior(object):
 			self._laplace_noize_mle()
 			self._accuracy[self._keys[0]].append(self._posterior - self._laplaced_posterior)
 			self._exponentialize_GS()
-			self._accuracy[self._keys[1]].append(self._posterior - self._exponential_posterior)
-			self._Smooth_Sensitivity_Noize()
-			self._accuracy[self._keys[2]].append(self._posterior - self._SS_posterior)
+			# self._accuracy[self._keys[1]].append(self._posterior - self._exponential_posterior)
+			# self._Smooth_Sensitivity_Noize()
+			self._accuracy[self._keys[1]].append(self._posterior - self._SS_posterior)
 			self._Smooth_Sensitivity_Noize_Hamming()
-			self._accuracy[self._keys[3]].append(self._posterior - self._SS_posterior)
+			self._accuracy[self._keys[2]].append(self._posterior - self._SS_posterior)
 			self._Smooth_Sensitivity_Laplace_Noize()
-			self._accuracy[self._keys[4]].append(self._posterior - self._SS_posterior)
+			self._accuracy[self._keys[3]].append(self._posterior - self._SS_posterior)
 			self._exponentialize_LS()
-			self._accuracy[self._keys[5]].append(self._posterior - self._exponential_posterior)
+			self._accuracy[self._keys[4]].append(self._posterior - self._exponential_posterior)
 
 
 
@@ -467,7 +468,7 @@ def draw_error(errors, model):
 if __name__ == "__main__":
 	# Tests the functioning of the module
 
-	sample_size = 400
+	sample_size = 200
 	epsilon = 1
 	prior = Beta_Distribution(4, 4)
 	Bayesian_Model = BayesInferwithBetaPrior(prior, sample_size, epsilon)
