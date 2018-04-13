@@ -1,21 +1,11 @@
 # Fdb version 3
-<<<<<<< HEAD
-["biber main"] 1523634789 "main.bcf" "main.bbl" "main" 1523634807
-  "bayesian.bib" 1523591719 346 90312d12c76ecc5b971495feee4ccc53 ""
-  "main.bcf" 1523634807 95815 13f98a1c6350ad745a9bfa9a6583faac ""
+["biber main"] 1523592613 "main.bcf" "main.bbl" "main" 1523635930
+  "bayesian.bib" 1523635189 346 90312d12c76ecc5b971495feee4ccc53 ""
+  "main.bcf" 1523635930 95815 13f98a1c6350ad745a9bfa9a6583faac ""
   (generated)
-  "main.blg"
   "main.bbl"
-["pdflatex"] 1523634805 "main.tex" "main.pdf" "main" 1523634807
-=======
-["biber main"] 1523592613 "main.bcf" "main.bbl" "main" 1523594963
-  "bayesian.bib" 1523591719 346 90312d12c76ecc5b971495feee4ccc53 ""
-  "main.bcf" 1523594963 95815 13f98a1c6350ad745a9bfa9a6583faac ""
-  (generated)
   "main.blg"
-  "main.bbl"
-["pdflatex"] 1523594962 "main.tex" "main.pdf" "main" 1523594963
->>>>>>> parent of 351ae0d... update efficiency part
+["pdflatex"] 1523635929 "main.tex" "main.pdf" "main" 1523635930
   "/usr/local/texlive/2017/texmf-dist/fonts/map/fontname/texfonts.map" 1480098670 3287 e6b82fe08f5336d4d5ebc73fb1152e87 ""
   "/usr/local/texlive/2017/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1480098698 1004 54797486969f23fa377b128694d548df ""
   "/usr/local/texlive/2017/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1480098698 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
@@ -199,32 +189,20 @@
   "/usr/local/texlive/2017/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1495593472 2350277 a699055bee05bf8a40b0504752487295 ""
   "/usr/local/texlive/2017/texmf-var/web2c/pdftex/pdflatex.fmt" 1495593487 4129592 0e6cfee100d68e6d96b92c0258f2ff73 ""
   "/usr/local/texlive/2017/texmf.cnf" 1495593465 577 2b71d4d888f9e5560b2e99985915a9fa ""
-<<<<<<< HEAD
-  "efficiency.eps" 1523634699 2243393 88b5383a600e98931dbf67a8f4cff351 ""
+  "efficiency.eps" 1523635756 2883421 2d02c713e03726e65cc041a1230053d7 ""
   "macros.tex" 1523592226 1649 d5c5a566fcbd826aaf1542be1ac694db ""
-  "main.aux" 1523634807 3311 dc2ee2cd920b440f781a423708654e13 ""
-  "main.bbl" 1523634791 1838 f87df9cf4fc5e5c77075b58a7fd1df7a "biber main"
-  "main.out" 1523634807 837 518472d7625fc1d3401b43f3093f2b62 ""
-  "main.run.xml" 1523634807 2303 3b4c740728c22aad8fcb6792b1e624b4 ""
-  "main.tex" 1523634805 11249 b7ce18c190a15ca522aba9dc1f5e66e6 ""
+  "main.aux" 1523635930 3427 d09812d162c5e828cf5288d1dbaf39e1 ""
+  "main.bbl" 1523635826 1838 f87df9cf4fc5e5c77075b58a7fd1df7a "biber main"
+  "main.out" 1523635930 920 9f857e1703efb6b8b4f4596c5c86cc20 ""
+  "main.run.xml" 1523635930 2303 3b4c740728c22aad8fcb6792b1e624b4 ""
+  "main.tex" 1523635926 11296 6fa179f513e524a367555c36ca0b195a ""
   (generated)
-  "main.aux"
-  "main.pdf"
-  "main.run.xml"
-  "main.out"
+  "macros.tex"
+  "main.bbl"
   "main.log"
-=======
-  "macros.tex" 1523592226 1649 d5c5a566fcbd826aaf1542be1ac694db ""
-  "main.aux" 1523594963 3078 4284c4fb4813d91eaaf788e4481fd85d ""
-  "main.bbl" 1523592614 1838 f87df9cf4fc5e5c77075b58a7fd1df7a "biber main"
-  "main.out" 1523594963 837 518472d7625fc1d3401b43f3093f2b62 ""
-  "main.run.xml" 1523594963 2303 3b4c740728c22aad8fcb6792b1e624b4 ""
-  "main.tex" 1523594961 10137 ae235d02b8d44928a05d9c2f5d720af0 ""
-  (generated)
-  "main.log"
+  "main.tex"
   "main.pdf"
-  "main.run.xml"
   "main.out"
+  "main.run.xml"
   "main.aux"
->>>>>>> parent of 351ae0d... update efficiency part
   "main.bcf"
