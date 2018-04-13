@@ -11,6 +11,8 @@
 \label{sec_bayesInfer}
 The Bayesian inference process is denoted as $\bysinfer(x,prior)$ taking an observed data set $x \in \mathcal{X}^n$ and a prior distribution as input, outputting a posterior distribution $posterior$. For conciseness, when prior is given, we use $\bysinfer(x)$.
 
+In our inference algorithm, we take a Dirichlet distribution as $prior$, $\dirichlet(\alpha_1, \alpha_2, \cdots, \alpha_3)$.
+
 \section{Algorithm Setting up}
 \label{sec_setup}
 
@@ -116,7 +118,7 @@ The exponential mechanism with local sensitivity is non differential privacy\cit
 \subsection{Exponential Mechanism with Smooth Sensitivity}
 \label{sec_smoo}
 
-\subsubsection{Algorithm Setting Up}
+\subsubsection{Algorithm Setting up}
 The candidate set and utility function are still the same as before, differ only in the sensitivity. It will output a candidate $r \in R$ with probability proportional to $\exp(\frac{\epsilon u(x,r)}{2 S(x)})$:
 
 \begin{equation*}
@@ -233,13 +235,28 @@ When we set $\lambda \leq \ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta}{2 (n + 1)
 The formula for computing the local sensitivity is presented in Sec. \ref{subsec_emls}:$\max\limits_{\{|x,y'| \leq 1; y'\in \mathcal{X}^n\}}\max\limits_{\{r\in R\}} \{\hlg(\bysinfer(x), r) - \hlg(\bysinfer(y'), r)|\}$ can be reduced to $\max\limits_{\{|x,y'| \leq 1;y'\in \mathcal{X}^n\}}\hlg(\bysinfer(x), \bysinfer(y'))|$ by applying the distance triangle property. i.e., the maximum value over $\max\limits_{r \in R}$ always happen when $r = \bysinfer(x)$ itself, where $\Delta_{l}u(x) = \max\limits_{\{|x,y'| \leq 1;y'\in \mathcal{X}^n\}} \{\hlg(\bysinfer(x), \bysinfer(x)) - \hlg(\bysinfer(y'), \bysinfer(x))|\} = \max\limits_{\{|x,y'| \leq 1;y'\in \mathcal{X}^n\}} \{\hlg(\bysinfer(y'), \bysinfer(x))|\}$. We also have some experiments for validating our proposal as in Fig. \ref{fig_efficiency}, where we calculate the $\max\limits_{\{|x,y'| \leq 1;y'\in \mathcal{X}^n\}}$ value for every candidate $r \in R$. It is shown that maximum value taken when  $r = \bysinfer(x)$.
 
  \begin{figure}[h]
-    \centering
-    \includegraphics[width=1.0\textwidth]{efficiency}
-    \label{fig_efficiency}
-    \caption{An Experimental Result for Finding the Local Sensitivity efficiently}
-    \end{figure}
+\centering
+\includegraphics[width=1.0\textwidth]{efficiency}
+\label{fig_efficiency}
+\caption{Experimental Results for Finding the Local Sensitivity Efficiently}
+\end{figure}
 
 \subsection{Accuracy Study of Algorithms}
+\begin{figure*}
+\begin{center}
+\centering
+  \subfigure[Data size $n = 200$ with global $\epsilon = 0.5$]{
+    \includegraphics[width=0.48\textwidth]{accuracy_1.eps}}
+  \subfigure[Data size $n = 200$ with global $\epsilon = 0.8$]{
+    \includegraphics[width=0.48\textwidth]{accuracy_2.eps}} 
+\caption{The experimental results of accuracy of four algorithms}
+\label{fig_data}
+\end{center}
+\end{figure*}
+
+We study the accuracy property of the exponential mechanism with three kind of sensitivity, as well as the Laplace mechanism for comparison. As in Fig. \ref{fig_data}, the two figures shown the accuracy of four algorithms under same configuration. The accuracy is measured by Hellinger distance between output $r^*$ and the true inference result $\bysinfer(x)$, $\hlg(r^*, \bysinfer(x))$.
+
+
 
 \printbibliography
 

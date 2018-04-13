@@ -1,17 +1,17 @@
 [0] Config.pm:354> INFO - This is Biber 2.7
 [0] Config.pm:357> INFO - Logfile is 'main.blg'
-[39] biber-darwin:303> INFO - === Fri Apr 13, 2018, 12:10:25
-[63] Biber.pm:359> INFO - Reading 'main.bcf'
-[146] Biber.pm:835> INFO - Found 1 citekeys in bib section 0
-[159] Biber.pm:3670> INFO - Processing section 0
-[174] Biber.pm:3840> INFO - Looking for bibtex format file 'bayesian.bib' for section 0
-[175] bibtex.pm:1435> INFO - Decoding LaTeX character macros into UTF-8
-[180] bibtex.pm:1292> INFO - Found BibTeX data source 'bayesian.bib'
-[192] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
-[192] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
-[192] Biber.pm:3499> INFO - Sorting list 'nty/global/' of type 'entry' with scheme 'nty' and locale 'en-US'
-[192] Biber.pm:3505> INFO - No sort tailoring available for locale 'en-US'
-[194] bbl.pm:608> INFO - Writing 'main.bbl' with encoding 'ascii'
-[196] Utils.pm:164> WARN - The entry 'dwork2014algorithmic' has characters which cannot be encoded in 'ascii'. Recoding problematic characters into macros.
-[196] bbl.pm:712> INFO - Output to main.bbl
-[196] Biber.pm:109> INFO - WARNINGS: 1
+[53] biber-darwin:303> INFO - === Fri Apr 13, 2018, 12:57:49
+[79] Biber.pm:359> INFO - Reading 'main.bcf'
+[159] Biber.pm:835> INFO - Found 1 citekeys in bib section 0
+[171] Biber.pm:3670> INFO - Processing section 0
+[190] Biber.pm:3840> INFO - Looking for bibtex format file 'bayesian.bib' for section 0
+[191] bibtex.pm:1435> INFO - Decoding LaTeX character macros into UTF-8
+[199] bibtex.pm:1292> INFO - Found BibTeX data source 'bayesian.bib'
+[210] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[210] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[210] Biber.pm:3499> INFO - Sorting list 'nty/global/' of type 'entry' with scheme 'nty' and locale 'en-US'
+[210] Biber.pm:3505> INFO - No sort tailoring available for locale 'en-US'
+[213] bbl.pm:608> INFO - Writing 'main.bbl' with encoding 'ascii'
+[215] Utils.pm:164> WARN - The entry 'dwork2014algorithmic' has characters which cannot be encoded in 'ascii'. Recoding problematic characters into macros.
+[215] bbl.pm:712> INFO - Output to main.bbl
+[215] Biber.pm:109> INFO - WARNINGS: 1

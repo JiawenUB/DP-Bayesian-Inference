@@ -269,21 +269,21 @@ class BayesInferwithDirPrior(object):
 			count += 1
 		y = numpy.array(y)
 		x = numpy.arange(0, len(y), 1)
-		plt.figure(figsize=(150,35))
+		plt.figure(figsize=(80,35))
 		plt.rc('text', usetex=True)
 		plt.rc('font', family='serif')
 		# plt.tight_layout()
 		plt.scatter(x, y, s = 100, c = 'b', marker = 'o', alpha = 0.7, edgecolors='white', label = r"$\displaystyle\max_{\{D'\ adj\ D\}}|H(D,r)-D(D',r)|$")
-		plt.axvline(x=xmark, color='r', label = 'True Posterior:'+str(self._posterior._alphas))
+		plt.axvline(x=xmark, color='r', label = 'True Posterior:'+str(self._posterior._alphas),linewidth = 6.0)
 		plt.ylim(0.0,self._LS_max+0.01)
 		plt.xlim(0.0,len(y)*1.0)
 		plt.grid()
-		plt.legend(prop={'size': 90})
-		plt.xticks(x, labels, rotation='vertical',fontsize=6)
-		plt.xlabel(r"$Candidates\ r\in R\ (3\ Order\ Dirichlet\ Distribution\ with\ Data\ Size\ 100)$", fontsize=60)
+		plt.legend(prop={'size': 90}, loc="best")
+		plt.xticks(x, labels, rotation='vertical',fontsize=7)
+		plt.xlabel(r"$Candidates\ r\in R\ (3\ Order\ Dirichlet\ Distribution\ with\ Data\ Size\ 50)$", fontsize=70)
 		plt.ylabel(r"$\displaystyle\max_{\{D'\ adj\ D\}}|H(D,r)-D(D',r)|$", fontsize=90)
 		#plt.show()
-		plt.savefig("Local_SensitivitiesOrder3size100labels_latex.png")
+		plt.savefig("Local_Sensitivitiessize50labels_latex.png")
 
 
 
@@ -291,7 +291,7 @@ class BayesInferwithDirPrior(object):
 if __name__ == "__main__":
 	# Tests the functioning of the module
 
-	sample_size = 100
+	sample_size = 50
 	epsilon = 0.8
 	prior = Dir([7, 4, 5])
 	Bayesian_Model = BayesInferwithDirPrior(prior, sample_size, epsilon)
