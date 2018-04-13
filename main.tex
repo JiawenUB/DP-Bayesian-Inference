@@ -13,7 +13,7 @@ The Bayesian inference process is denoted as $\bysinfer(x,prior)$ taking an obse
 
 In our inference algorithm, we take a Dirichlet distribution as $prior$, $\dirichlet(\alpha_1, \alpha_2, \cdots, \alpha_m)$. Columns of the data set is corresponding to the number of parameters ($m$) in Dirichlet distribution. The posterior distribution is still a Dirichlet distribution with parameters $(\alpha_1 + n_1, \alpha_2 + n_2, \cdots, \alpha_m + n_m)$, where $n_i$ is the number of $1$ at the column $i$ in observed data set.
 
-In the case that $m = 2$, it is reduced to a Beta distribution $\betad(\alpha, \beta)$. Then we have only one column take value from $\{0,1\}$. THe posterior is computed as $(\alpha + n_1, \beta + n_0))$, where $n_1$ is the number of $1$ in the data set and $n_0$ is the number of $0$ in the data set.
+In the case that $m = 2$, it is reduced to a Beta distribution $\betad(\alpha, \beta)$. Then we have only one column take value from $\{0,1\}$. THe posterior is computed as $(\alpha + n_1, \beta + n_0)$, where $n_1$ is the number of $1$ in the data set and $n_0$ is the number of $0$ in the data set.
 
 \section{Algorithm Setting up}
 \label{sec_setup}
@@ -23,6 +23,7 @@ For now, we already have a prior distribution $prior$, an observed data set $x$.
 \label{subsec_emgs}
 
 % \subsubsection{Mechanism Set up}
+
 In exponential mechanism, candidate set $R$ can be obtained by enumerating $y \in \mathcal{X}^n$, i.e.
 \begin{equation*}
 R = \{\bysinfer(y)\ |\ y \in \mathcal{X}^n\}.

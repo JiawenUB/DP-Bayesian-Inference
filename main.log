@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  13 APR 2018 14:21
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  13 APR 2018 14:25
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1723,19 +1723,19 @@ LaTeX Warning: No \author given.
 
 {/usr/local/texlive/2017/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
 [2]
-Underfull \hbox (badness 10000) in paragraph at lines 192--193
+Underfull \hbox (badness 10000) in paragraph at lines 193--194
 
  []
 
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 198.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 199.
 
 (/usr/local/texlive/2017/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 198.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 199.
 
-Overfull \hbox (19.40938pt too wide) in paragraph at lines 235--236
+Overfull \hbox (19.40938pt too wide) in paragraph at lines 236--237
 \OT1/cmr/m/n/10 (-20) the max-i-mum value over $[]$ al-ways hap-pen when $\OML/
 cmm/m/it/10 r \U/matha/m/n/10 ^^P []p\OML/cmm/m/it/10 x\U/matha/m/n/10 q$ \OT1/
 cmr/m/n/10 (-20) it-self, where $^^A[]\OML/cmm/m/it/10 u\U/matha/m/n/10 p\OML/c
@@ -1753,13 +1753,13 @@ Package epstopdf Info: Source file: <efficiency.eps>
 (epstopdf)                    size: 859239 bytes
 (epstopdf)             Command: <repstopdf --outfile=efficiency-eps-converted-t
 o.pdf efficiency.eps>
-(epstopdf)             \includegraphics on input line 239.
+(epstopdf)             \includegraphics on input line 240.
 Package epstopdf Info: Output file is already uptodate.
  <efficiency-eps-converted-to.pdf, id=89, 8030.0pt x 3513.125pt>
 File: efficiency-eps-converted-to.pdf Graphic file (type pdf)
 
 <use efficiency-eps-converted-to.pdf>
-Package pdftex.def Info: efficiency-eps-converted-to.pdf used on input line 239
+Package pdftex.def Info: efficiency-eps-converted-to.pdf used on input line 240
 .
 (pdftex.def)             Requested size: 472.03123pt x 206.48993pt.
 Package epstopdf Info: Source file: <accuracy_1.eps>
@@ -1770,14 +1770,14 @@ Package epstopdf Info: Source file: <accuracy_1.eps>
 (epstopdf)                    size: 288784 bytes
 (epstopdf)             Command: <repstopdf --outfile=accuracy_1-eps-converted-t
 o.pdf accuracy_1.eps>
-(epstopdf)             \includegraphics on input line 249.
+(epstopdf)             \includegraphics on input line 250.
 Package epstopdf Info: Output file is already uptodate.
 
 <accuracy_1-eps-converted-to.pdf, id=90, 1806.75pt x 2007.5pt>
 File: accuracy_1-eps-converted-to.pdf Graphic file (type pdf)
 
 <use accuracy_1-eps-converted-to.pdf>
-Package pdftex.def Info: accuracy_1-eps-converted-to.pdf used on input line 249
+Package pdftex.def Info: accuracy_1-eps-converted-to.pdf used on input line 250
 .
 (pdftex.def)             Requested size: 226.57297pt x 251.7333pt.
 Package epstopdf Info: Source file: <accuracy_2.eps>
@@ -1788,26 +1788,26 @@ Package epstopdf Info: Source file: <accuracy_2.eps>
 (epstopdf)                    size: 290411 bytes
 (epstopdf)             Command: <repstopdf --outfile=accuracy_2-eps-converted-t
 o.pdf accuracy_2.eps>
-(epstopdf)             \includegraphics on input line 251.
+(epstopdf)             \includegraphics on input line 252.
 Package epstopdf Info: Output file is already uptodate.
 
 <accuracy_2-eps-converted-to.pdf, id=91, 1806.75pt x 2007.5pt>
 File: accuracy_2-eps-converted-to.pdf Graphic file (type pdf)
 
 <use accuracy_2-eps-converted-to.pdf>
-Package pdftex.def Info: accuracy_2-eps-converted-to.pdf used on input line 251
+Package pdftex.def Info: accuracy_2-eps-converted-to.pdf used on input line 252
 .
 (pdftex.def)             Requested size: 226.57297pt x 251.7333pt.
 LaTeX Font Info:    Font shape `OMS/cmr/m/it' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 261.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 263.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 262.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 264.
  [4 <./efficiency-eps-converted-to.pdf>]
 [5 <./accuracy_1-eps-converted-to.pdf> <./accuracy_2-eps-converted-to.pdf>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 263.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 264.
 
 (./main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 263.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 263.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 264.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 264.
 Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: A85359477B45AF232EEAA2DC2FE9B1A8;925.
 Package logreq Info: Writing requests to 'main.run.xml'.
@@ -1815,11 +1815,11 @@ Package logreq Info: Writing requests to 'main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 28542 strings out of 492995
- 538041 string characters out of 6132704
+ 28540 strings out of 492995
+ 538025 string characters out of 6132704
  1040572 words of memory out of 5000000
  31652 multiletter control sequences out of 15000+600000
- 549367 words of font info for 109 fonts, out of 8000000 for 9000
+ 549316 words of font info for 108 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  45i,18n,45p,10383b,1286s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
@@ -1843,7 +1843,7 @@ e/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/local/texlive
 e/2017/texmf-dist/fonts/type1/public/mathabx-type1/mathx10.pfb></usr/local/texl
 ive/2017/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/
 texlive/2017/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb>
-Output written on main.pdf (5 pages, 1633465 bytes).
+Output written on main.pdf (5 pages, 1633466 bytes).
 PDF statistics:
  192 PDF objects out of 1000 (max. 8388607)
  156 compressed objects within 2 object streams
