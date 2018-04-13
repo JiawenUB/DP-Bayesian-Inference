@@ -9,9 +9,9 @@
 
 \section{Bayesian Inference Based on Beta-Bernoulli Distribution}
 \label{sec_bayesInfer}
-The Bayesian inference process is denoted as $\bysinfer(x,prior)$ taking an observed data set $x \in \mathcal{X}^n$ and a prior distribution as input, outputting a posterior distribution $posterior$. For conciseness, when prior is given, we use $\bysinfer(x)$.
+The Bayesian inference process is denoted as $\bysinfer(x,prior)$ taking an observed data set $x \in \mathcal{X}^n$ and a prior distribution as input, outputting a posterior distribution $posterior$. For conciseness, when prior is given, we use $\bysinfer(x)$. $n$ is the size of the observed data size.
 
-In our inference algorithm, we take a Dirichlet distribution as $prior$, $\dirichlet(\alpha_1, \alpha_2, \cdots, \alpha_3)$.
+In our inference algorithm, we take a Dirichlet distribution as $prior$, $\dirichlet(\alpha_1, \alpha_2, \cdots, \alpha_3)$. Columns of the data set is corresponding to the number of parameters in Dirichlet distribution. The posterior distribution is still a Dirichlet distribution with parameters $(\alpha_1 + n_1, \alpha_2 + n_2, \cdots, \alpha_m + n_m)$, where $n_i$ is the number of $1$ at the column $i$.
 
 \section{Algorithm Setting up}
 \label{sec_setup}
@@ -241,7 +241,7 @@ The formula for computing the local sensitivity is presented in Sec. \ref{subsec
 \caption{Experimental Results for Finding the Local Sensitivity Efficiently}
 \end{figure}
 
-\subsection{Accuracy Study of Algorithms}
+\subsection{Accuracy Study with Hellinger Distance}
 \begin{figure*}
 \begin{center}
 \centering
