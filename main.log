@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  13 APR 2018 13:46
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  13 APR 2018 14:21
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1744,6 +1744,7 @@ mm/m/it/10 x\U/matha/m/n/10 q ^^P []t\OT1/cmss/m/n/10 (-20) H\U/matha/m/n/10 p[
 /cmm/m/it/10 x\U/matha/m/n/10 qq ^^A
  []
 
+[3]
 Package epstopdf Info: Source file: <efficiency.eps>
 (epstopdf)                    date: 2018-04-13 12:09:16
 (epstopdf)                    size: 2883421 bytes
@@ -1754,17 +1755,13 @@ Package epstopdf Info: Source file: <efficiency.eps>
 o.pdf efficiency.eps>
 (epstopdf)             \includegraphics on input line 239.
 Package epstopdf Info: Output file is already uptodate.
-<efficiency-eps-converted-to.pdf, id=82, 8030.0pt x 3513.125pt>
+ <efficiency-eps-converted-to.pdf, id=89, 8030.0pt x 3513.125pt>
 File: efficiency-eps-converted-to.pdf Graphic file (type pdf)
 
 <use efficiency-eps-converted-to.pdf>
 Package pdftex.def Info: efficiency-eps-converted-to.pdf used on input line 239
 .
 (pdftex.def)             Requested size: 472.03123pt x 206.48993pt.
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
 Package epstopdf Info: Source file: <accuracy_1.eps>
 (epstopdf)                    date: 2018-04-13 12:56:24
 (epstopdf)                    size: 356399 bytes
@@ -1775,7 +1772,8 @@ Package epstopdf Info: Source file: <accuracy_1.eps>
 o.pdf accuracy_1.eps>
 (epstopdf)             \includegraphics on input line 249.
 Package epstopdf Info: Output file is already uptodate.
-<accuracy_1-eps-converted-to.pdf, id=83, 1806.75pt x 2007.5pt>
+
+<accuracy_1-eps-converted-to.pdf, id=90, 1806.75pt x 2007.5pt>
 File: accuracy_1-eps-converted-to.pdf Graphic file (type pdf)
 
 <use accuracy_1-eps-converted-to.pdf>
@@ -1793,19 +1791,18 @@ o.pdf accuracy_2.eps>
 (epstopdf)             \includegraphics on input line 251.
 Package epstopdf Info: Output file is already uptodate.
 
-<accuracy_2-eps-converted-to.pdf, id=84, 1806.75pt x 2007.5pt>
+<accuracy_2-eps-converted-to.pdf, id=91, 1806.75pt x 2007.5pt>
 File: accuracy_2-eps-converted-to.pdf Graphic file (type pdf)
 
 <use accuracy_2-eps-converted-to.pdf>
 Package pdftex.def Info: accuracy_2-eps-converted-to.pdf used on input line 251
 .
 (pdftex.def)             Requested size: 226.57297pt x 251.7333pt.
- [3]
 LaTeX Font Info:    Font shape `OMS/cmr/m/it' in size <10> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 261.
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 263.
- [4 <./efficiency-eps-converted-to.pdf>] [5 <./accuracy_1-eps-converted-to.pdf>
- <./accuracy_2-eps-converted-to.pdf>]
+ [4 <./efficiency-eps-converted-to.pdf>]
+[5 <./accuracy_1-eps-converted-to.pdf> <./accuracy_2-eps-converted-to.pdf>]
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 263.
 
 (./main.aux)
@@ -1818,13 +1815,13 @@ Package logreq Info: Writing requests to 'main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 28537 strings out of 492995
- 537890 string characters out of 6132704
- 1040525 words of memory out of 5000000
- 31648 multiletter control sequences out of 15000+600000
+ 28542 strings out of 492995
+ 538041 string characters out of 6132704
+ 1040572 words of memory out of 5000000
+ 31652 multiletter control sequences out of 15000+600000
  549367 words of font info for 109 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 44i,18n,45p,10383b,1286s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 45i,18n,45p,10383b,1286s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 ></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
 </usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><
@@ -1846,10 +1843,10 @@ e/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/local/texlive
 e/2017/texmf-dist/fonts/type1/public/mathabx-type1/mathx10.pfb></usr/local/texl
 ive/2017/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/
 texlive/2017/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb>
-Output written on main.pdf (5 pages, 1630035 bytes).
+Output written on main.pdf (5 pages, 1633465 bytes).
 PDF statistics:
- 190 PDF objects out of 1000 (max. 8388607)
- 154 compressed objects within 2 object streams
- 26 named destinations out of 1000 (max. 500000)
+ 192 PDF objects out of 1000 (max. 8388607)
+ 156 compressed objects within 2 object streams
+ 27 named destinations out of 1000 (max. 500000)
  23656 words of extra memory for PDF output out of 24883 (max. 10000000)
 

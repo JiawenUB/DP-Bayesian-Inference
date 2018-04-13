@@ -1,11 +1,11 @@
 # Fdb version 3
-["biber main"] 1523638668 "main.bcf" "main.bbl" "main" 1523641568
-  "bayesian.bib" 1523635189 346 90312d12c76ecc5b971495feee4ccc53 ""
-  "main.bcf" 1523641568 95815 13f98a1c6350ad745a9bfa9a6583faac ""
+["biber main"] 1523642612 "main.bcf" "main.bbl" "main" 1523643663
+  "bayesian.bib" 1523642571 651 c0ed3a4b7d2c052133684085a64892bc ""
+  "main.bcf" 1523643663 95873 00b1b46190d0fb511a3d8f50c616eaf0 ""
   (generated)
   "main.bbl"
   "main.blg"
-["pdflatex"] 1523641567 "main.tex" "main.pdf" "main" 1523641568
+["pdflatex"] 1523643662 "main.tex" "main.pdf" "main" 1523643663
   "/usr/local/texlive/2017/texmf-dist/fonts/map/fontname/texfonts.map" 1480098670 3287 e6b82fe08f5336d4d5ebc73fb1152e87 ""
   "/usr/local/texlive/2017/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1480098698 1004 54797486969f23fa377b128694d548df ""
   "/usr/local/texlive/2017/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1480098698 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
@@ -195,16 +195,16 @@
   "accuracy_1.eps" 1523638584 356399 5cdca1132a98b8110830e857e53f8c59 ""
   "accuracy_2.eps" 1523638592 356652 24766715f1ab058b807b8fa7bc44894b ""
   "efficiency.eps" 1523635756 2883421 2d02c713e03726e65cc041a1230053d7 ""
-  "macros.tex" 1523640278 1757 71965e6af86fbc6a864d2ded0e8a01b9 ""
-  "main.aux" 1523641568 3951 3720e88e48d4e7bc80cef8eb6082aec6 ""
-  "main.bbl" 1523638669 1838 f87df9cf4fc5e5c77075b58a7fd1df7a "biber main"
-  "main.out" 1523641568 925 a85359477b45af232eeaa2dc2fe9b1a8 ""
-  "main.run.xml" 1523641568 2303 3b4c740728c22aad8fcb6792b1e624b4 ""
-  "main.tex" 1523641567 12526 3f6789adb1970d804a697fa8f0c97918 ""
+  "macros.tex" 1523643278 1755 0bb73d17367bb85e6800c59be06b16a9 ""
+  "main.aux" 1523643663 4082 00c9deeaf408904b084fe3faf136f070 ""
+  "main.bbl" 1523642614 3209 74272d4963a55bb136f4aee92de2c773 "biber main"
+  "main.out" 1523643663 925 a85359477b45af232eeaa2dc2fe9b1a8 ""
+  "main.run.xml" 1523643663 2303 3b4c740728c22aad8fcb6792b1e624b4 ""
+  "main.tex" 1523643659 12877 76dc88dbd9db068eac39f27a3e7292d1 ""
   (generated)
-  "main.aux"
-  "main.out"
   "main.pdf"
   "main.run.xml"
   "main.bcf"
+  "main.out"
   "main.log"
+  "main.aux"

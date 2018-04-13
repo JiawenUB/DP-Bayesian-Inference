@@ -53,6 +53,41 @@
       \field{pages}{211\bibrangedash 407}
       \range{pages}{197}
     \endentry
+    \entry{nissim2007smooth}{inproceedings}{}
+      \name{author}{3}{}{%
+        {{hash=f420df13b9ad6b7a1a9cbcdba96c8381}{%
+           family={Nissim},
+           familyi={N\bibinitperiod},
+           given={Kobbi},
+           giveni={K\bibinitperiod}}}%
+        {{hash=595cb420436ece2997a0f6b90fa4089f}{%
+           family={Raskhodnikova},
+           familyi={R\bibinitperiod},
+           given={Sofya},
+           giveni={S\bibinitperiod}}}%
+        {{hash=5ccecf114bbd51a1a2979a23dd69c78c}{%
+           family={Smith},
+           familyi={S\bibinitperiod},
+           given={Adam},
+           giveni={A\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {ACM}%
+      }
+      \strng{namehash}{f421067e62fbcac3e0219c59e1f88613}
+      \strng{fullhash}{f421067e62fbcac3e0219c59e1f88613}
+      \strng{authornamehash}{f421067e62fbcac3e0219c59e1f88613}
+      \strng{authorfullhash}{f421067e62fbcac3e0219c59e1f88613}
+      \field{sortinit}{N}
+      \field{sortinithash}{1163c28585427c673ad5a010cbf82f52}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of the thirty-ninth annual ACM symposium on Theory of computing}
+      \field{title}{Smooth sensitivity and sampling in private data analysis}
+      \field{year}{2007}
+      \field{pages}{75\bibrangedash 84}
+      \range{pages}{10}
+    \endentry
   \endsortlist
 \endrefsection
 \endinput
