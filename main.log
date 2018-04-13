@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  10 APR 2018 17:34
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  13 APR 2018 00:49
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -972,13 +972,6 @@ Package: translator 2010/06/12 ver 1.10
 
 (/usr/local/texlive/2017/texmf-dist/tex/latex/beamer/translator/translator-lang
 uage-mappings.tex)))
-(/usr/local/texlive/2017/texmf-dist/tex/latex/natbib/natbib.sty
-Package: natbib 2010/09/13 8.31b (PWD, AO)
-\bibhang=\skip153
-\bibsep=\skip154
-LaTeX Info: Redefining \cite on input line 694.
-\c@NAT@ctr=\count311
-)
 (/usr/local/texlive/2017/texmf-dist/tex/latex/datetime/datetime.sty
 Package: datetime 2015/03/20 v2.60 Date Time Package
 
@@ -996,7 +989,7 @@ Package: xkeyval 2014/12/03 v2.7a package option processing (HA)
 \XKV@toks=\toks30
 \XKV@tempa@toks=\toks31
 )
-\XKV@depth=\count312
+\XKV@depth=\count311
 File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
 ))
 (/usr/local/texlive/2017/texmf-dist/tex/latex/fmtcount/fcprefix.sty
@@ -1004,17 +997,17 @@ Package: fcprefix 2012/09/28
 
 (/usr/local/texlive/2017/texmf-dist/tex/latex/fmtcount/fcnumparser.sty
 Package: fcnumparser 2012/09/28
-\fc@digit@counter=\count313
+\fc@digit@counter=\count312
 ))
-\c@padzeroesN=\count314
-\fc@tmpcatcode=\count315
-\@DT@modctr=\count316
-\@ordinalctr=\count317
-\@orgargctr=\count318
-\@strctr=\count319
-\@tmpstrctr=\count320
-\@DT@loopN=\count321
-\@DT@X=\count322
+\c@padzeroesN=\count313
+\fc@tmpcatcode=\count314
+\@DT@modctr=\count315
+\@ordinalctr=\count316
+\@orgargctr=\count317
+\@strctr=\count318
+\@tmpstrctr=\count319
+\@DT@loopN=\count320
+\@DT@X=\count321
 
 (/usr/local/texlive/2017/texmf-dist/tex/latex/fmtcount/fc-english.def
 File: fc-english.def 2013/08/17
@@ -1022,23 +1015,23 @@ File: fc-english.def 2013/08/17
 (/usr/local/texlive/2017/texmf-dist/tex/latex/datetime/datetime-defaults.sty
 Package: datetime-defaults 2013/09/10
 )
-\@day=\count323
-\@month=\count324
-\@year=\count325
-\c@HOUR=\count326
-\c@HOURXII=\count327
-\c@MINUTE=\count328
-\c@TOHOUR=\count329
-\c@TOMINUTE=\count330
-\c@SECOND=\count331
-\currenthour=\count332
-\currentminute=\count333
-\currentsecond=\count334
+\@day=\count322
+\@month=\count323
+\@year=\count324
+\c@HOUR=\count325
+\c@HOURXII=\count326
+\c@MINUTE=\count327
+\c@TOHOUR=\count328
+\c@TOMINUTE=\count329
+\c@SECOND=\count330
+\currenthour=\count331
+\currentminute=\count332
+\currentsecond=\count333
 Package datetime Info: No datetime.cfg file found, using default settings on in
 put line 308.
-\@dtctr=\count335
-\dayofyear=\count336
-\dayofweek=\count337
+\@dtctr=\count334
+\dayofyear=\count335
+\dayofweek=\count336
 LaTeX Info: Redefining \today on input line 736.
 \dt@a=\toks32
 \dt@b=\toks33
@@ -1309,10 +1302,10 @@ LaTeX Font Info:    Redeclaring math symbol \boxplus on input line 683.
 LaTeX Font Info:    Redeclaring math symbol \boxminus on input line 684.
 LaTeX Font Info:    Redeclaring math symbol \boxtimes on input line 686.
 LaTeX Font Info:    Redeclaring math symbol \boxdot on input line 688.
-\mayacnter=\count338
-\mayacnta=\count339
-\mayacntb=\count340
-\mayacntc=\count341
+\mayacnter=\count337
+\mayacnta=\count338
+\mayacntb=\count339
+\mayacntc=\count340
 \mayawidth=\dimen258
 LaTeX Font Info:    Redeclaring math symbol \intop on input line 753.
 LaTeX Font Info:    Redeclaring math symbol \ointop on input line 760.
@@ -1343,42 +1336,254 @@ LaTeX Font Info:    Redeclaring math symbol \braceru on input line 909.
 LaTeX Font Info:    Redeclaring math accent \widehat on input line 944.
 LaTeX Font Info:    Redeclaring math accent \widetilde on input line 946.
 ))
+(/usr/local/texlive/2017/texmf-dist/tex/latex/biblatex/biblatex.sty
+Package: biblatex 2016/12/05 v3.7 programmable bibliographies (PK/JW/AB)
+
+(/usr/local/texlive/2017/texmf-dist/tex/latex/logreq/logreq.sty
+Package: logreq 2010/08/04 v1.0 xml request logger
+\lrq@indent=\count341
+
+(/usr/local/texlive/2017/texmf-dist/tex/latex/logreq/logreq.def
+File: logreq.def 2010/08/04 v1.0 logreq spec v1.0
+))
+(/usr/local/texlive/2017/texmf-dist/tex/generic/xstring/xstring.sty
+(/usr/local/texlive/2017/texmf-dist/tex/generic/xstring/xstring.tex
+\@xs@message=\write3
+\integerpart=\count342
+\decimalpart=\count343
+)
+Package: xstring 2013/10/13  v1.7c  String manipulations (C Tellechea)
+)
+\c@tabx@nest=\count344
+\c@listtotal=\count345
+\c@listcount=\count346
+\c@liststart=\count347
+\c@liststop=\count348
+\c@citecount=\count349
+\c@citetotal=\count350
+\c@multicitecount=\count351
+\c@multicitetotal=\count352
+\c@instcount=\count353
+\c@maxnames=\count354
+\c@minnames=\count355
+\c@maxitems=\count356
+\c@minitems=\count357
+\c@citecounter=\count358
+\c@savedcitecounter=\count359
+\c@uniquelist=\count360
+\c@uniquename=\count361
+\c@refsection=\count362
+\c@refsegment=\count363
+\c@maxextratitle=\count364
+\c@maxextratitleyear=\count365
+\c@maxextrayear=\count366
+\c@maxextraalpha=\count367
+\c@abbrvpenalty=\count368
+\c@highnamepenalty=\count369
+\c@lownamepenalty=\count370
+\c@maxparens=\count371
+\c@parenlevel=\count372
+\blx@tempcnta=\count373
+\blx@tempcntb=\count374
+\blx@tempcntc=\count375
+\blx@maxsection=\count376
+\blx@maxsegment@0=\count377
+\blx@notetype=\count378
+\blx@parenlevel@text=\count379
+\blx@parenlevel@foot=\count380
+\blx@sectionciteorder@0=\count381
+\labelnumberwidth=\skip153
+\labelalphawidth=\skip154
+\biblabelsep=\skip155
+\bibitemsep=\skip156
+\bibnamesep=\skip157
+\bibinitsep=\skip158
+\bibparsep=\skip159
+\bibhang=\skip160
+\blx@bcfin=\read2
+\blx@bcfout=\write4
+\c@mincomprange=\count382
+\c@maxcomprange=\count383
+\c@mincompwidth=\count384
+Package biblatex Info: Trying to load biblatex default data model...
+Package biblatex Info: ... file 'blx-dm.def' found.
+
+(/usr/local/texlive/2017/texmf-dist/tex/latex/biblatex/blx-dm.def)
+Package biblatex Info: Trying to load biblatex custom data model...
+Package biblatex Info: ... file 'biblatex-dm.cfg' not found.
+\c@afterword=\count385
+\c@savedafterword=\count386
+\c@annotator=\count387
+\c@savedannotator=\count388
+\c@author=\count389
+\c@savedauthor=\count390
+\c@bookauthor=\count391
+\c@savedbookauthor=\count392
+\c@commentator=\count393
+\c@savedcommentator=\count394
+\c@editor=\count395
+\c@savededitor=\count396
+\c@editora=\count397
+\c@savededitora=\count398
+\c@editorb=\count399
+\c@savededitorb=\count400
+\c@editorc=\count401
+\c@savededitorc=\count402
+\c@foreword=\count403
+\c@savedforeword=\count404
+\c@holder=\count405
+\c@savedholder=\count406
+\c@introduction=\count407
+\c@savedintroduction=\count408
+\c@namea=\count409
+\c@savednamea=\count410
+\c@nameb=\count411
+\c@savednameb=\count412
+\c@namec=\count413
+\c@savednamec=\count414
+\c@translator=\count415
+\c@savedtranslator=\count416
+\c@shortauthor=\count417
+\c@savedshortauthor=\count418
+\c@shorteditor=\count419
+\c@savedshorteditor=\count420
+\c@labelname=\count421
+\c@savedlabelname=\count422
+\c@institution=\count423
+\c@savedinstitution=\count424
+\c@lista=\count425
+\c@savedlista=\count426
+\c@listb=\count427
+\c@savedlistb=\count428
+\c@listc=\count429
+\c@savedlistc=\count430
+\c@listd=\count431
+\c@savedlistd=\count432
+\c@liste=\count433
+\c@savedliste=\count434
+\c@listf=\count435
+\c@savedlistf=\count436
+\c@location=\count437
+\c@savedlocation=\count438
+\c@organization=\count439
+\c@savedorganization=\count440
+\c@origlocation=\count441
+\c@savedoriglocation=\count442
+\c@origpublisher=\count443
+\c@savedorigpublisher=\count444
+\c@publisher=\count445
+\c@savedpublisher=\count446
+\c@language=\count447
+\c@savedlanguage=\count448
+\c@pageref=\count449
+\c@savedpageref=\count450
+\shorthandwidth=\skip161
+\shortjournalwidth=\skip162
+\shortserieswidth=\skip163
+\shorttitlewidth=\skip164
+\shortauthorwidth=\skip165
+\shorteditorwidth=\skip166
+Package biblatex Info: Trying to load compatibility code...
+Package biblatex Info: ... file 'blx-compat.def' found.
+
+(/usr/local/texlive/2017/texmf-dist/tex/latex/biblatex/blx-compat.def
+File: blx-compat.def 2016/12/05 v3.7 biblatex compatibility (PK/JW/AB)
+)
+Package biblatex Info: Trying to load generic definitions...
+Package biblatex Info: ... file 'biblatex.def' found.
+
+(/usr/local/texlive/2017/texmf-dist/tex/latex/biblatex/biblatex.def
+File: biblatex.def 2016/12/05 v3.7 biblatex compatibility (PK/JW/AB)
+\c@textcitecount=\count451
+\c@textcitetotal=\count452
+\c@textcitemaxnames=\count453
+\c@biburlnumpenalty=\count454
+\c@biburlucpenalty=\count455
+\c@biburllcpenalty=\count456
+\c@smartand=\count457
+)
+Package biblatex Info: Trying to load bibliography style 'numeric'...
+Package biblatex Info: ... file 'numeric.bbx' found.
+
+(/usr/local/texlive/2017/texmf-dist/tex/latex/biblatex/bbx/numeric.bbx
+File: numeric.bbx 2016/12/05 v3.7 biblatex bibliography style (PK/JW/AB)
+Package biblatex Info: Trying to load bibliography style 'standard'...
+Package biblatex Info: ... file 'standard.bbx' found.
+
+(/usr/local/texlive/2017/texmf-dist/tex/latex/biblatex/bbx/standard.bbx
+File: standard.bbx 2016/12/05 v3.7 biblatex bibliography style (PK/JW/AB)
+\c@bbx:relatedcount=\count458
+\c@bbx:relatedtotal=\count459
+))
+Package biblatex Info: Trying to load citation style 'numeric'...
+Package biblatex Info: ... file 'numeric.cbx' found.
+
+(/usr/local/texlive/2017/texmf-dist/tex/latex/biblatex/cbx/numeric.cbx
+File: numeric.cbx 2016/12/05 v3.7 biblatex citation style (PK/JW/AB)
+Package biblatex Info: Redefining '\cite'.
+Package biblatex Info: Redefining '\parencite'.
+Package biblatex Info: Redefining '\footcite'.
+Package biblatex Info: Redefining '\footcitetext'.
+Package biblatex Info: Redefining '\smartcite'.
+Package biblatex Info: Redefining '\supercite'.
+Package biblatex Info: Redefining '\textcite'.
+Package biblatex Info: Redefining '\textcites'.
+Package biblatex Info: Redefining '\cites'.
+Package biblatex Info: Redefining '\parencites'.
+Package biblatex Info: Redefining '\smartcites'.
+)
+Package biblatex Info: Trying to load configuration file...
+Package biblatex Info: ... file 'biblatex.cfg' found.
+
+(/usr/local/texlive/2017/texmf-dist/tex/latex/biblatex/biblatex.cfg
+File: biblatex.cfg 
+))
 (/usr/local/texlive/2017/texmf-dist/tex/latex/cancel/cancel.sty
 Package: cancel 2013/04/12 v2.2 Cancel math terms
 )
 (/usr/local/texlive/2017/texmf-dist/tex/generic/ulem/ulem.sty
 \UL@box=\box56
 \UL@hyphenbox=\box57
-\UL@skip=\skip155
+\UL@skip=\skip167
 \UL@hook=\toks34
 \UL@height=\dimen259
-\UL@pe=\count342
+\UL@pe=\count460
 \UL@pixel=\dimen260
 \ULC@box=\box58
 Package: ulem 2012/05/18
 \ULdepth=\dimen261
 )
-\c@thm=\count343
-\c@defn=\count344
-\c@conj=\count345
-\c@exmp=\count346
-) (./main.aux)
+\c@thm=\count461
+\c@defn=\count462
+\c@conj=\count463
+\c@exmp=\count464
+)
+Package biblatex Info: Trying to load language 'english'...
+Package biblatex Info: ... file 'english.lbx' found.
+
+(/usr/local/texlive/2017/texmf-dist/tex/latex/biblatex/lbx/english.lbx
+File: english.lbx 2016/12/05 v3.7 biblatex localization (PK/JW/AB)
+)
+\@quotelevel=\count465
+\@quotereset=\count466
+
+(./main.aux)
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 8.
-LaTeX Font Info:    ... okay on input line 8.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 8.
-LaTeX Font Info:    ... okay on input line 8.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 8.
-LaTeX Font Info:    ... okay on input line 8.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 8.
-LaTeX Font Info:    ... okay on input line 8.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 8.
-LaTeX Font Info:    ... okay on input line 8.
-LaTeX Font Info:    Checking defaults for U/mathx/m/n on input line 8.
-LaTeX Font Info:    ... okay on input line 8.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 8.
-LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for U/mathx/m/n on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -1416,24 +1621,24 @@ LaTeX Font Info:    ... okay on input line 8.
 
 (/usr/local/texlive/2017/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count347
+\scratchcounter=\count467
 \scratchdimen=\dimen262
 \scratchbox=\box59
-\nofMPsegments=\count348
-\nofMParguments=\count349
+\nofMPsegments=\count468
+\nofMParguments=\count469
 \everyMPshowfont=\toks35
-\MPscratchCnt=\count350
+\MPscratchCnt=\count470
 \MPscratchDim=\dimen263
-\MPnumerator=\count351
-\makeMPintoPDFobject=\count352
+\MPnumerator=\count471
+\makeMPintoPDFobject=\count472
 \everyMPtoPDFconversion=\toks36
 )
 .................................................
 . chemgreek info: "mapping-activated"
 . 
-. Activating mapping `default' on line 8.
+. Activating mapping `default' on line 7.
 .................................................
-LaTeX Info: Redefining \microtypecontext on input line 8.
+LaTeX Info: Redefining \microtypecontext on input line 7.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
@@ -1448,7 +1653,7 @@ File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman
 (RS)
 )
 \AtBeginShipoutBox=\box60
-Package hyperref Info: Link coloring OFF on input line 8.
+Package hyperref Info: Link coloring OFF on input line 7.
 
 (/usr/local/texlive/2017/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
@@ -1456,15 +1661,15 @@ Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
 (/usr/local/texlive/2017/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
-\c@section@level=\count353
+\c@section@level=\count473
 )
-LaTeX Info: Redefining \ref on input line 8.
-LaTeX Info: Redefining \pageref on input line 8.
-LaTeX Info: Redefining \nameref on input line 8.
+LaTeX Info: Redefining \ref on input line 7.
+LaTeX Info: Redefining \pageref on input line 7.
+LaTeX Info: Redefining \nameref on input line 7.
 
 (./main.out) (./main.out)
-\@outlinefile=\write3
-\openout3 = `main.out'.
+\@outlinefile=\write5
+\openout5 = `main.out'.
 
 
 (/usr/local/texlive/2017/texmf-dist/tex/latex/beamer/translator/dicts/translato
@@ -1474,15 +1679,26 @@ Dictionary: translator-basic-dictionary, Language: English
 (/usr/local/texlive/2017/texmf-dist/tex/latex/siunitx/siunitx-abbreviations.cfg
 File: siunitx-abbreviations.cfg 2017/05/19 v2.7g siunitx: Abbreviated units
 )
-\c__siunitx_mathsf_int=\count354
-LaTeX Font Info:    Try loading font information for U+msa on input line 8.
+Package biblatex Info: No input encoding detected.
+(biblatex)             Assuming 'ascii'.
+Package biblatex Info: Automatic encoding selection.
+(biblatex)             Assuming data encoding 'ascii'.
+\openout4 = `main.bcf'.
+
+Package biblatex Info: Trying to load bibliographic data...
+Package biblatex Info: ... file 'main.bbl' found.
+ (./main.bbl)
+Package biblatex Info: Reference section=0 on input line 7.
+Package biblatex Info: Reference segment=0 on input line 7.
+\c__siunitx_mathsf_int=\count474
+LaTeX Font Info:    Try loading font information for U+msa on input line 7.
  (/usr/local/texlive/2017/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
 (/usr/local/texlive/2017/texmf-dist/tex/latex/microtype/mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 8.
+LaTeX Font Info:    Try loading font information for U+msb on input line 7.
 
 (/usr/local/texlive/2017/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
@@ -1494,7 +1710,7 @@ Package microtype Info: Loading generic settings for font family
 (microtype)             `cmss' (encoding: OT1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
-\c__siunitx_mathtt_int=\count355
+\c__siunitx_mathtt_int=\count475
 Package microtype Info: Loading generic settings for font family
 (microtype)             `cmtt' (encoding: OT1).
 (microtype)             For optimal results, create family-specific settings.
@@ -1506,90 +1722,62 @@ LaTeX Warning: No \author given.
 [1
 
 {/usr/local/texlive/2017/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-[2] [3]
-Overfull \hbox (6.032pt too wide) in paragraph at lines 436--436
-[] 
+[2]
+Underfull \hbox (badness 10000) in paragraph at lines 190--191
+
  []
 
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 196.
 
-Overfull \hbox (34.22633pt too wide) in paragraph at lines 484--484
-[] 
- []
-
-
-Overfull \hbox (45.07039pt too wide) in paragraph at lines 513--513
-[] 
- []
-
-
-Overfull \hbox (31.1028pt too wide) in paragraph at lines 546--546
-[] 
- []
-
-[4] [5]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 636.
-
- (/usr/local/texlive/2017/texmf-dist/tex/latex/base/omscmr.fd
+(/usr/local/texlive/2017/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 636.
- [6]
-[7] [8]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 940.
- [9]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 940.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 196.
+LaTeX Font Info:    Font shape `OMS/cmr/m/it' in size <10> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 236.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 238.
+ [3]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 238.
  (./main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 940.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 940.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 238.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 238.
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 202E8C04D0E093A29CD2E7E75954E8F4;1794.
+(rerunfilecheck)             Checksum: 518472D7625FC1D3401B43F3093F2B62;837.
+Package logreq Info: Writing requests to 'main.run.xml'.
+\openout1 = `main.run.xml'.
+
  ) 
 Here is how much of TeX's memory you used:
- 22841 strings out of 492995
- 428989 string characters out of 6132704
- 588810 words of memory out of 5000000
- 25986 multiletter control sequences out of 15000+600000
- 552515 words of font info for 121 fonts, out of 8000000 for 9000
+ 28485 strings out of 492995
+ 537141 string characters out of 6132704
+ 1038389 words of memory out of 5000000
+ 31631 multiletter control sequences out of 15000+600000
+ 549047 words of font info for 103 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 44i,22n,45p,10383b,866s stack positions out of 5000i,500n,10000p,200000b,80000s
-pdfTeX warning (dest): name{Hfootnote.2} has been referenced but does not exi
-st, replaced by a fixed one
-
-pdfTeX warning (dest): name{Hfootnote.1} has been referenced but does not exist
-, replaced by a fixed one
-
-</usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><
-/usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></
-usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></u
-sr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr
-/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/l
-ocal/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/loc
-al/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/local
-/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/t
-exlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/texl
-ive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive
-/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/20
-17/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2017/
-texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/local/texlive/2017/t
-exmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/local/texlive/2017/tex
-mf-dist/fonts/type1/public/amsfonts/cm/cmss9.pfb></usr/local/texlive/2017/texmf
--dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2017/texmf-
-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2017/texmf-di
-st/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2017/texmf-dis
-t/fonts/type1/public/mathabx-type1/matha10.pfb></usr/local/texlive/2017/texmf-d
-ist/fonts/type1/public/mathabx-type1/matha5.pfb></usr/local/texlive/2017/texmf-
-dist/fonts/type1/public/mathabx-type1/matha6.pfb></usr/local/texlive/2017/texmf
--dist/fonts/type1/public/mathabx-type1/matha7.pfb></usr/local/texlive/2017/texm
-f-dist/fonts/type1/public/mathabx-type1/matha9.pfb></usr/local/texlive/2017/tex
-mf-dist/fonts/type1/public/mathabx-type1/mathb10.pfb></usr/local/texlive/2017/t
-exmf-dist/fonts/type1/public/mathabx-type1/mathx10.pfb></usr/local/texlive/2017
-/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/
-2017/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb>
-Output written on main.pdf (9 pages, 261423 bytes).
+ 44i,18n,45p,10383b,1286s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
+></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
+</usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><
+/usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></u
+sr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr
+/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/l
+ocal/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/loca
+l/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/t
+exlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/local/te
+xlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/tex
+live/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texli
+ve/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texliv
+e/2017/texmf-dist/fonts/type1/public/mathabx-type1/matha10.pfb></usr/local/texl
+ive/2017/texmf-dist/fonts/type1/public/mathabx-type1/matha5.pfb></usr/local/tex
+live/2017/texmf-dist/fonts/type1/public/mathabx-type1/matha7.pfb></usr/local/te
+xlive/2017/texmf-dist/fonts/type1/public/mathabx-type1/mathx10.pfb></usr/local/
+texlive/2017/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/lo
+cal/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb>
+Output written on main.pdf (3 pages, 172051 bytes).
 PDF statistics:
- 278 PDF objects out of 1000 (max. 8388607)
- 235 compressed objects within 3 object streams
- 43 named destinations out of 1000 (max. 500000)
- 28353 words of extra memory for PDF output out of 29859 (max. 10000000)
+ 147 PDF objects out of 1000 (max. 8388607)
+ 122 compressed objects within 2 object streams
+ 19 named destinations out of 1000 (max. 500000)
+ 23633 words of extra memory for PDF output out of 24883 (max. 10000000)
 
