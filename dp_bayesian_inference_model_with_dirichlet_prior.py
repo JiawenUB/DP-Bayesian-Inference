@@ -412,7 +412,7 @@ def draw_error(errors, model):
 		plt.xlim(0.0,len(item)*1.0)
 		plt.grid()
 	plt.savefig("beta-GS-SS-LS-size300-runs200-epsilon0-5.png")
-	return
+	return 
 
 
 
