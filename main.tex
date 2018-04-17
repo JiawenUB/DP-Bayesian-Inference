@@ -9,9 +9,13 @@
 
 \section{Bayesian Inference Based on Beta-Bernoulli Distribution}
 \label{sec_bayesInfer}
-The Bayesian inference process is denoted as $\bysinfer(x,prior)$ taking an observed data set $x \in \mathcal{X}^n$ and a prior distribution as input, outputting a posterior distribution $posterior$. For conciseness, when prior is given, we use $\bysinfer(x)$. $n$ is the size of the observed data size.
+In the Bayesian inference, first there is a prior distribution $\pi(\alphas)$ to present our belief about parameter $\alphas$. Then, we get some observed data $x$ sizing $n$, and produce a posterior distribution $Pr(\alphas | x)$. The Bayesian inference is based on the Bayes' rule to calculate the posterior distribution:
+\begin{equation*}
+Pr(\alphas | x) = \frac{Pr(x | \alphas) \pi(\alphas)}{Pr(x)}
+\end{equation*}
+It is denoted as $\bysinfer(x,\pi(\alphas))$ taking an observed data set $x \in \mathcal{X}^n$ and a prior distribution $\pi(\alphas)$ as input, outputting a posterior distribution of the parameter $\alphas$. For conciseness, when prior is given, we use $\bysinfer(x)$. $n$ is the size of the observed data size.
 
-In our inference algorithm, we take a Dirichlet distribution as $prior$, $\dirichlet(\alpha_1, \alpha_2, \cdots, \alpha_m)$. Columns of the data set is corresponding to the number of parameters ($m$) in Dirichlet distribution. The posterior distribution is still a Dirichlet distribution with parameters $(\alpha_1 + n_1, \alpha_2 + n_2, \cdots, \alpha_m + n_m)$, where $n_i$ is the number of $1$ at the column $i$ in observed data set.
+In our inference algorithm, we take a Dirichlet distribution as prior belief for the , $\dirichlet(\alpha_1, \alpha_2, \cdots, \alpha_m)$. Columns of the data set is corresponding to the number of parameters ($m$) in Dirichlet distribution. The posterior distribution is still a Dirichlet distribution with parameters $(\alpha_1 + n_1, \alpha_2 + n_2, \cdots, \alpha_m + n_m)$, where $n_i$ is the number of $1$ at the column $i$ in observed data set.
 
 In the case that $m = 2$, it is reduced to a Beta distribution $\betad(\alpha, \beta)$. We can have only one column take value from $\{0,1\}$. The posterior is computed as $(\alpha + n_1, \beta + n_0)$, where $n_1$ is the number of $1$ in the data set and $n_0$ is the number of $0$ in the data set.
 
