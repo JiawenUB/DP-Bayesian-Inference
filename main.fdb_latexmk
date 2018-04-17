@@ -1,11 +1,11 @@
 # Fdb version 3
-["biber main"] 1523642612 "main.bcf" "main.bbl" "main" 1523981162
+["biber main"] 1523642612 "main.bcf" "main.bbl" "main" 1523984009
   "bayesian.bib" 1523642571 651 c0ed3a4b7d2c052133684085a64892bc ""
-  "main.bcf" 1523981162 95873 00b1b46190d0fb511a3d8f50c616eaf0 ""
+  "main.bcf" 1523984009 95873 00b1b46190d0fb511a3d8f50c616eaf0 ""
   (generated)
   "main.bbl"
   "main.blg"
-["pdflatex"] 1523981161 "main.tex" "main.pdf" "main" 1523981162
+["pdflatex"] 1523984007 "main.tex" "main.pdf" "main" 1523984009
   "/usr/local/texlive/2017/texmf-dist/fonts/map/fontname/texfonts.map" 1480098670 3287 e6b82fe08f5336d4d5ebc73fb1152e87 ""
   "/usr/local/texlive/2017/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy5.tfm" 1480098698 1120 1e8878807317373affa7f7bba4cf2f6a ""
   "/usr/local/texlive/2017/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy7.tfm" 1480098698 1120 7f9f170e8aa57527ad6c49feafd45d54 ""
@@ -73,6 +73,7 @@
   "/usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb" 1480098733 32569 5e5ddc8df908dea60932f3c484a54c0d ""
   "/usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb" 1480098733 32716 08e384dc442464e7285e891af9f45947 ""
   "/usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb" 1480098733 37944 359e864bd06cde3b1cf57bb20757fb06 ""
+  "/usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib7.pfb" 1480098733 39386 0bb525d495ceab21fe797301a586e0d7 ""
   "/usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb" 1480098734 34694 ad62b13721ee8eda1dcc8993c8bd7041 ""
   "/usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb" 1480098734 35309 940e81a5b9e04201a07e8b33a3ae6e64 ""
   "/usr/local/texlive/2017/texmf-dist/fonts/type1/public/mathabx-type1/matha10.pfb" 1480098742 90043 a01ee69dbd537ea8a0835a2b4841a64e ""
@@ -204,16 +205,16 @@
   "accuracy_1.eps" 1523638584 356399 5cdca1132a98b8110830e857e53f8c59 ""
   "accuracy_2.eps" 1523638592 356652 24766715f1ab058b807b8fa7bc44894b ""
   "efficiency.eps" 1523635756 2883421 2d02c713e03726e65cc041a1230053d7 ""
-  "macros.tex" 1523976911 1797 ba2fd39e74f147cca2e256960cf4f189 ""
-  "main.aux" 1523981162 4082 7353fcd1d664dd72524b148223bd196b ""
+  "macros.tex" 1523981536 1833 8618b498cd9b702591e87592833e76f7 ""
+  "main.aux" 1523984009 4092 3c5c5d7bac408f9961a55ac39f19dfd6 ""
   "main.bbl" 1523642614 3209 74272d4963a55bb136f4aee92de2c773 "biber main"
-  "main.out" 1523981162 925 a85359477b45af232eeaa2dc2fe9b1a8 ""
-  "main.run.xml" 1523981162 2303 3b4c740728c22aad8fcb6792b1e624b4 ""
-  "main.tex" 1523981159 13380 fd6f45358c26524c91c0e4b258c7165f ""
+  "main.out" 1523984009 930 4d7906876ab42cc5cdf9c327f95838d3 ""
+  "main.run.xml" 1523984009 2303 3b4c740728c22aad8fcb6792b1e624b4 ""
+  "main.tex" 1523984005 13805 c051b764b0a9ba12249045ca6d97f9a6 ""
   (generated)
-  "main.bcf"
-  "main.aux"
-  "main.run.xml"
   "main.pdf"
   "main.log"
+  "main.aux"
+  "main.bcf"
   "main.out"
+  "main.run.xml"

@@ -7,19 +7,19 @@
 \begin{document}
 \maketitle
 
-\section{Bayesian Inference Based on Beta-Bernoulli Distribution}
+\section{Bayesian Inference Based on Dirichlet-Bernoulli Distribution}
 \label{sec_bayesInfer}
-In the Bayesian inference, first there is a prior distribution $\pi(\alphas)$ to present our belief about parameter $\alphas$. Then, we get some observed data $x$ sizing $n$, and produce a posterior distribution $Pr(\alphas | x)$. The Bayesian inference is based on the Bayes' rule to calculate the posterior distribution:
+In the Bayesian inference, first there is a prior distribution $\pi(\xis)$ to present our belief about parameter $\xis$. Then, we get some observed data $x$ sizing $n$, and produce a posterior distribution $Pr(\xis | x)$. The Bayesian inference is based on the Bayes' rule to calculate the posterior distribution:
 \begin{equation*}
-Pr(\alphas | x) = \frac{Pr(x | \alphas) \pi(\alphas)}{Pr(x)}
+Pr(\xis | x) = \frac{Pr(x | \xis) \pi(\xis)}{Pr(x)}
 \end{equation*}
-It is denoted as $\bysinfer(x,\pi(\alphas))$ taking an observed data set $x \in \mathcal{X}^n$ and a prior distribution $\pi(\alphas)$ as input, outputting a posterior distribution of the parameter $\alphas$. For conciseness, when prior is given, we use $\bysinfer(x)$. $n$ is the size of the observed data size.
+It is denoted as $\bysinfer(x,\pi(\xis))$ taking an observed data set $x \in \mathcal{X}^n$ and a prior distribution $\pi(\xis)$ as input, outputting a posterior distribution of the parameter $\alphas$. For conciseness, when prior is given, we use $\bysinfer(x)$. $n$ is the size of the observed data size.
 
-In our inference algorithm, we take a Dirichlet distribution as prior belief for the parameters, $\dirichlet(\alphas)$, and the Bernoulli distribution as the statistic model for $Pr(x | \alphas)$.  
+In our inference algorithm, we take a Dirichlet distribution as prior belief for the parameters, $\dirichlet(\alphas)$, where $\pi(\xis) = \dirichlet(\xis | \alphas) = \frac{\prod_{i = 1}^{m}\xi_i^{\alpha_i}}{B(\alphas)}$, and the Bernoulli distribution as the statistic model for $Pr(x | \alphas)$. $m$ is the order of the Dirichlet distribution.
 
-Columns of the data set is corresponding to the number of parameters ($m$) in Dirichlet distribution. The posterior distribution is still a Dirichlet distribution with parameters $(\alpha_1 + n_1, \alpha_2 + n_2, \cdots, \alpha_m + n_m)$, where $n_i$ is the number of $1$ at the column $i$ in observed data set.
+We give a inference process based on a concrete example, where we throw an irregular $m$ sides dice. We want to infer the probability of getting each side $\xis$. We get a observed data set $\{s_{k_1}, s_{k_2}, \cdots, s_{k_n}\}$ by throwing the dice $n$ times, where $k_i \in \{1,2,\cdots, m\}$ denotes the side we get when we throw the dice the $i^{th}$ time. The posterior distribution is still a Dirichlet distribution with parameters $(\alpha_1 + n_1, \alpha_2 + n_2, \cdots, \alpha_m + n_m)$, where $n_i$ is the appearance time of the side $i$ in total.
 
-In the case that $m = 2$, it is reduced to a Beta distribution $\betad(\alpha, \beta)$. We can have only one column take value from $\{0,1\}$. The posterior is computed as $(\alpha + n_1, \beta + n_0)$, where $n_1$ is the number of $1$ in the data set and $n_0$ is the number of $0$ in the data set.
+In the case that $m = 2$, it is reduced to a Beta distribution $\betad(\alpha, \beta)$. The $m$ side dice change into a irregular coin with side $1$ and side $2$. The posterior is computed as $(\alpha + n_1, \beta + n_0)$, where $n_1$ is the appearance time of side $1$ in the observed data set and $n_0$ is the appearance time of the other side.
 
 
 
