@@ -226,7 +226,7 @@ class BayesInferwithDirPrior(object):
 		self._set_LS()
 		for r in self._candidates:
 			self._candidate_VS_scores[r] = -max([((-self._candidate_scores[r] + t * self._LS_Candidates[r] - (-self._candidate_scores[i] + t * self._LS_Candidates[i]))/(self._LS_Candidates[r] + self._LS_Candidates[i])) for i in self._candidates])
-		key = "Exponential Mechanism with Varying Sensitivity Scores | Achieving" + str(self._epsilon) + "-DP"
+		key = "Exponential Mechanism with Varying Sensitivity Scores | Achieving " + str(self._epsilon) + "-DP"
 		self._accuracy[key] = []
 		self._keys.append(key)
 		print str(time.clock() - start) + "seconds."
@@ -420,8 +420,10 @@ def draw_error(errors, model):
 	# plt.tight_layout(pad=2, h_pad=4, w_pad=2, rect=None)
 	rows = 1
 	data = []
+	title = []
 	for key,item in errors.items():
 		data.append(item)
+		title.append(key)
 		# plt.subplot(len(errors), 1, rows)
 		# x = numpy.arange(0, len(item), 1)
 		# plt.axhline(y=numpy.mean(item), color='r', linestyle = '--', alpha = 0.8, label = "average error",linewidth=3)
@@ -435,8 +437,10 @@ def draw_error(errors, model):
 		# plt.xlim(0.0,len(item)*1.0)
 		# plt.grid()
 	fig, ax = plt.subplots()
-	ax.boxplot(data, 0, 'rs', 0, 0.75)
-	plt.show()
+	ax.set_xlim(0.5, len(errors) + 0.5)
+	ax.boxplot(data, notch=1, widths=0.4, sym='+', vert=2, whis=1.5)
+	ax.set_xticklabels(title, rotation=90)
+    #plt.show()
 	plt.savefig("beta-GS-SS-LS-size100-runs200-epsilon0-5-box.png")
 	return 
 
