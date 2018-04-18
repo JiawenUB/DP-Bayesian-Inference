@@ -8,6 +8,7 @@ from scipy.stats import beta
 from fractions import Fraction
 import operator
 import time
+from matplotlib.patches import Polygon
 
 
 
@@ -394,7 +395,7 @@ class BayesInferwithDirPrior(object):
 		self._show_exponential()
 
 
-def draw_error(errors, model):
+def draw_error_1(errors, model):
 	plt.subplots(nrows=len(errors), ncols=1, figsize=(18, len(errors) * 5.0))
 	plt.tight_layout(pad=2, h_pad=4, w_pad=2, rect=None)
 	rows = 1
@@ -414,12 +415,36 @@ def draw_error(errors, model):
 	plt.savefig("beta-GS-SS-LS-size300-runs200-epsilon0-5.png")
 	return 
 
+def draw_error(errors, model):
+	# plt.subplots(nrows=len(errors), ncols=1, figsize=(18, len(errors) * 5.0))
+	# plt.tight_layout(pad=2, h_pad=4, w_pad=2, rect=None)
+	rows = 1
+	data = []
+	for key,item in errors.items():
+		data.append(item)
+		# plt.subplot(len(errors), 1, rows)
+		# x = numpy.arange(0, len(item), 1)
+		# plt.axhline(y=numpy.mean(item), color='r', linestyle = '--', alpha = 0.8, label = "average error",linewidth=3)
+		# plt.scatter(x, numpy.array(item), s = 40, c = 'b', marker = 'o', alpha = 0.7, edgecolors='white', label = " error")
+		# plt.ylabel('Hellinger Distance')
+		# plt.xlabel('Runs (Bias = ' + str(model._bias) + ')')
+		# plt.title(key + ' (Data Size = ' + str(model._sample_size) + ', Global epsilon = ' + str(model._epsilon) + ')')
+		# plt.legend(loc="best")
+		# rows = rows + 1
+		# plt.ylim(-0.1,1.0)
+		# plt.xlim(0.0,len(item)*1.0)
+		# plt.grid()
+	fig, ax = plt.subplots()
+	ax.boxplot(data)
+	plt.show()
+	plt.savefig("beta-GS-SS-LS-size100-runs200-epsilon0-5-box.png")
+	return 
 
 
 if __name__ == "__main__":
 	# Tests the functioning of the module
 
-	sample_size = 300
+	sample_size = 100
 	epsilon = 0.5
 	delta = 0.8
 	prior = Dir([7, 4])
