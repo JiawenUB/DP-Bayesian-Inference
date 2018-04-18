@@ -1,11 +1,11 @@
 # Fdb version 3
-["biber main"] 1523642612 "main.bcf" "main.bbl" "main" 1523984009
+["biber main"] 1523642612 "main.bcf" "main.bbl" "main" 1524068911
   "bayesian.bib" 1523642571 651 c0ed3a4b7d2c052133684085a64892bc ""
-  "main.bcf" 1523984009 95873 00b1b46190d0fb511a3d8f50c616eaf0 ""
+  "main.bcf" 1524068911 95873 00b1b46190d0fb511a3d8f50c616eaf0 ""
   (generated)
   "main.bbl"
   "main.blg"
-["pdflatex"] 1523984007 "main.tex" "main.pdf" "main" 1523984009
+["pdflatex"] 1524068910 "main.tex" "main.pdf" "main" 1524068911
   "/usr/local/texlive/2017/texmf-dist/fonts/map/fontname/texfonts.map" 1480098670 3287 e6b82fe08f5336d4d5ebc73fb1152e87 ""
   "/usr/local/texlive/2017/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy5.tfm" 1480098698 1120 1e8878807317373affa7f7bba4cf2f6a ""
   "/usr/local/texlive/2017/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy7.tfm" 1480098698 1120 7f9f170e8aa57527ad6c49feafd45d54 ""
@@ -204,17 +204,19 @@
   "/usr/local/texlive/2017/texmf.cnf" 1495593465 577 2b71d4d888f9e5560b2e99985915a9fa ""
   "accuracy_1.eps" 1523638584 356399 5cdca1132a98b8110830e857e53f8c59 ""
   "accuracy_2.eps" 1523638592 356652 24766715f1ab058b807b8fa7bc44894b ""
+  "accuracy_box_1.eps" 1524068840 39577 9c96b275817060d5203b6b46b08d32c9 ""
+  "accuracy_box_2.eps" 1524068566 41546 8da4625ab28d9205e5cd82a0f920664b ""
   "efficiency.eps" 1523635756 2883421 2d02c713e03726e65cc041a1230053d7 ""
   "macros.tex" 1523981536 1833 8618b498cd9b702591e87592833e76f7 ""
-  "main.aux" 1523984009 4092 3c5c5d7bac408f9961a55ac39f19dfd6 ""
+  "main.aux" 1524068911 4645 f447c05347efab5f4ea8499d2c1a96f0 ""
   "main.bbl" 1523642614 3209 74272d4963a55bb136f4aee92de2c773 "biber main"
-  "main.out" 1523984009 930 4d7906876ab42cc5cdf9c327f95838d3 ""
-  "main.run.xml" 1523984009 2303 3b4c740728c22aad8fcb6792b1e624b4 ""
-  "main.tex" 1523984005 13805 c051b764b0a9ba12249045ca6d97f9a6 ""
+  "main.out" 1524068911 930 4d7906876ab42cc5cdf9c327f95838d3 ""
+  "main.run.xml" 1524068911 2303 3b4c740728c22aad8fcb6792b1e624b4 ""
+  "main.tex" 1524068909 14231 4777907170c57e2a95ec041261674176 ""
   (generated)
   "main.pdf"
-  "main.log"
-  "main.aux"
-  "main.bcf"
   "main.out"
+  "main.bcf"
+  "main.log"
   "main.run.xml"
+  "main.aux"
