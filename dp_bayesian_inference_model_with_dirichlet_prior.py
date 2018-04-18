@@ -435,7 +435,7 @@ def draw_error(errors, model):
 		# plt.xlim(0.0,len(item)*1.0)
 		# plt.grid()
 	fig, ax = plt.subplots()
-	ax.boxplot(data)
+	ax.boxplot(data, 0, 'rs', 0, 0.75)
 	plt.show()
 	plt.savefig("beta-GS-SS-LS-size100-runs200-epsilon0-5-box.png")
 	return 
