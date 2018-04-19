@@ -250,18 +250,18 @@ The formula for computing the local sensitivity is presented in Sec. \ref{subsec
 \caption{Experimental Results for Finding the Local Sensitivity Efficiently}
 \end{figure}
 
-\subsection{Accuracy Study with Hellinger Distance}
-\begin{figure*}
-\begin{center}
-\centering
-  \subfigure[Data size $n = 300$ with global $\epsilon = 0.5$]{
-    \includegraphics[width=0.48\textwidth]{accuracy_1.eps}}
-  \subfigure[Data size $n = 200$ with global $\epsilon = 0.8$]{
-    \includegraphics[width=0.48\textwidth]{accuracy_2.eps}} 
-\caption{The experimental results of accuracy of four algorithms}
-\label{fig_data}
-\end{center}
-\end{figure*}
+\subsection{Accuracy Study Based on Hellinger Distance}
+% \begin{figure*}
+% \begin{center}
+% \centering
+%   \subfigure[Data size $n = 300$ with global $\epsilon = 0.5$]{
+%     \includegraphics[width=0.48\textwidth]{accuracy_1.eps}}
+%   \subfigure[Data size $n = 200$ with global $\epsilon = 0.8$]{
+%     \includegraphics[width=0.48\textwidth]{accuracy_2.eps}} 
+% \caption{The experimental results of accuracy of four algorithms}
+% \label{fig_data}
+% \end{center}
+% \end{figure*}
 
 \begin{figure*}
 \begin{center}
@@ -270,14 +270,41 @@ The formula for computing the local sensitivity is presented in Sec. \ref{subsec
     \includegraphics[width=0.48\textwidth]{accuracy_box_2.eps}}
   \subfigure[Data size $n = 300$ with global $\epsilon = 0.5$]{
     \includegraphics[width=0.48\textwidth]{accuracy_box_1.eps}} 
-\caption{The experimental results of accuracy of algorithms in forms of box plot}
-\label{fig_data}
+\caption{The experimental results of accuracy of algorithms with Beta prior distribution $\betad(7,4)$ based on Hellinger distance}
+\label{fig_beta_hellinger}
 \end{center}
 \end{figure*}
 
-We study the accuracy property of the exponential mechanism with three kind of sensitivity, as well as the Laplace mechanism for comparison. As in Fig. \ref{fig_data}, the two figures shown the accuracy of four algorithms under same configuration. The accuracy is measured by Hellinger distance between output $r^*$ and the true inference result $\bysinfer(x)$, $\hlg(r^*, \bysinfer(x))$.
+We study the accuracy property of the exponential mechanism with three kind of sensitivity, as well as the Laplace mechanism for comparison. As in Fig. \ref{fig_beta_hellinger}, the two figures shown the accuracy of four algorithms under same configuration. The accuracy is measured by Hellinger distance between output $r^*$ and the true inference result $\bysinfer(x)$, $\hlg(r^*, \bysinfer(x))$.
+
+Then, we extended the $\betad$ to the Bernoulli distribution, got the result in Fig. \ref{fig_dirichlet_hellinger}
+\begin{figure*}
+\begin{center}
+\centering
+  \subfigure[Data size $n = 100$, the exponential mechanism with global sensitivity 0.239992747797 is 0.8 -DP, with local sensitivity 0.08 is Non-Private and with 0.0699407108115 - bound smooth sensitivity 0.09 is (0.8,0.8)-DP]{
+    \includegraphics[width=0.48\textwidth]{accuracy_dirichlet_hellinger_1.eps}}
+  \subfigure[Data size $n = 120$, the exponential mechanism with global sensitivity 0.239992747797 is 0.8 -DP, with local sensitivity 0.0945 is Non-Private, with 0.0677791100173 - bound smooth sensitivity 0.096 is (0.8,0.8)-DP]{
+    \includegraphics[width=0.48\textwidth]{accuracy_dirichlet_hellinger_2.eps}} 
+\caption{The experimental results of accuracy of algorithms with Dirichlet prior distribution $\dirichlet(7, 4, 5)$ based on Hellinger distance}
+\label{fig_dirichlet_hellinger}
+\end{center}
+\end{figure*}
 
 
+\subsection{Accuracy Study Based on L1 Norm Distance}
+For comparison, we study the accuracy of these four mechanisms based on l1 norm, with the Dirichlet distribution $\dirichlet(7,4,5)$ and data size $150$, shown in Fig. \ref{fig_dirichlet_hellinger_l1}.
+
+\begin{figure*}
+\begin{center}
+\centering
+  \subfigure[accuracy measurement based on Hellinger distance]{
+    \includegraphics[width=0.48\textwidth]{accuracy_compare_dirichlet_hellinger.eps}}
+  \subfigure[accuracy measurement based on l1 norm]{
+    \includegraphics[width=0.48\textwidth]{accuracy_compare_dirichlet_l1.eps}} 
+\caption{The experimental results of accuracy of algorithms with Dirichlet prior distribution $\dirichlet(7, 4, 5)$ based on Hellinger distance and l1 norm, where data size $n = 150$, the exponential mechanism with global sensitivity 0.239992747797 is 0.8 -DP, with local sensitivity 0.0945 is Non-Private, with 0.0677791100173 - bound smooth sensitivity 0.096 is (0.8,0.8)-DP}
+\label{fig_dirichlet_hellinger_l1}
+\end{center}
+\end{figure*}
 
 \printbibliography
 

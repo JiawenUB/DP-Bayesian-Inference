@@ -11,7 +11,8 @@ import time
 from matplotlib.patches import Polygon
 
 
-
+def L1_Nrom(A, B):
+	return numpy.sum(abs(numpy.array(A._alphas) - numpy.array(B._alphas)))
 
 def multibeta_function(alphas):
 	numerator = 1.0
@@ -70,7 +71,7 @@ def Optimized_Hellinger_Distance_Dir(Dir1, Dir2):
 		math.sqrt(optimized_multibeta_function(Dir1._alphas) * optimized_multibeta_function(Dir2._alphas)))
 
 def Hamming_Distance(Dir1, Dir2):
-	temp = [abs(a - b) for a,b in Dir1._alphas,Dir2._alphas]
+	temp = [abs(a - b) for a,b in zip(Dir1._alphas,Dir2._alphas)]
 	return sum(temp)
 
 class Dir(object):
@@ -140,6 +141,7 @@ class BayesInferwithDirPrior(object):
 		#self._keys = ["Laplace Mechanism | Achieving" + str(self._epsilon) + "-DP"]
 		self._keys = ["LaplaceMech"]
 		self._accuracy = {self._keys[0]:[]}
+		self._accuracy_l1 = {self._keys[0]:[]}
 	
 	def _set_bias(self, bias):
 		self._bias = bias
@@ -195,8 +197,10 @@ class BayesInferwithDirPrior(object):
 		beta = math.log(1 - self._epsilon / (2.0 * math.log(self._delta / (2.0 * (self._sample_size)))))
 		self._SS_Hamming = max(self._LS, max([self._LS_Candidates[r] * math.exp(- beta * Hamming_Distance(self._posterior, r)) for r in self._candidates]))
 		key3 = "Exponential Mechanism with " + str(beta) + " - Bound Smooth Sensitivity (" + str(self._SS_Hamming) + ")|(" + str(self._epsilon) + "," + str(self._delta) + ")-DP"
+		print key3
 		key3 = "ExpoMech of SS"
 		self._accuracy[key3] = []
+		self._accuracy_l1[key3] = []
 		self._keys.append(key3)
 		print str(time.clock() - start) + "seconds."
 
@@ -208,9 +212,11 @@ class BayesInferwithDirPrior(object):
 
 	def _set_LS(self):
 		self._LS = self._posterior._hellinger_sensitivity(self._posterior)#self._posterior
-		#key = "Exponential Mechanism with Local Sensitivity - " + str(self._LS) + "| Non Privacy"
+		key = "Exponential Mechanism with Local Sensitivity - " + str(self._LS) + "| Non Privacy"
+		print key
 		key = "Expomech of LS"
 		self._accuracy[key] = []
+		self._accuracy_l1[key] = []
 		self._keys.append(key)		
 
 	def _set_GS(self):
@@ -218,9 +224,11 @@ class BayesInferwithDirPrior(object):
 		temp[0] += 1
 		temp[1] -= 1
 		self._GS = self._prior - Dir(temp)
-		#key = "Exponential Mechanism with Global Sensitivity - " + str(self._GS) + "| Achieving" + str(self._epsilon) + "-DP"
+		key = "Exponential Mechanism with Global Sensitivity - " + str(self._GS) + "| Achieving" + str(self._epsilon) + "-DP"
+		print key
 		key = "ExpoMech of GS"
 		self._accuracy[key] = []
+		self._accuracy_l1[key] = []
 		self._keys.append(key)
 
 	def _set_VS(self):
@@ -230,9 +238,11 @@ class BayesInferwithDirPrior(object):
 		self._set_LS()
 		for r in self._candidates:
 			self._candidate_VS_scores[r] = -max([((-self._candidate_scores[r] + t * self._LS_Candidates[r] - (-self._candidate_scores[i] + t * self._LS_Candidates[i]))/(self._LS_Candidates[r] + self._LS_Candidates[i])) for i in self._candidates])
-		#key = "Exponential Mechanism with Varying Sensitivity Scores | Achieving " + str(self._epsilon) + "-DP"
+		key = "Exponential Mechanism with Varying Sensitivity Scores | Achieving " + str(self._epsilon) + "-DP"
+		print key
 		key = "ExpoMech of VS"
 		self._accuracy[key] = []
+		self._accuracy_l1[key] = []
 		self._keys.append(key)
 		print str(time.clock() - start) + "seconds."
 
@@ -337,14 +347,18 @@ class BayesInferwithDirPrior(object):
 		self._set_GS()
 		self._set_LS()
 		self._set_SS()
-		self._show_all()
+		#self._show_all()
 		for i in range(times):
 			self._laplace_noize_mle()
 			self._accuracy[self._keys[0]].append(self._posterior - self._laplaced_posterior)
+			self._laplace_noize()
+			self._accuracy_l1[self._keys[0]].append(L1_Nrom(self._posterior, self._laplaced_posterior))
 			self._exponentialize_GS()
+			self._accuracy_l1[self._keys[1]].append(L1_Nrom(self._posterior, self._exponential_posterior))
 			self._accuracy[self._keys[1]].append(self._posterior - self._exponential_posterior)
 			self._exponentialize_LS()
 			self._accuracy[self._keys[2]].append(self._posterior - self._exponential_posterior)
+			self._accuracy_l1[self._keys[2]].append(L1_Nrom(self._posterior, self._exponential_posterior))
 			# self._Smooth_Sensitivity_Noize()
 			# self._accuracy[self._keys[2]].append(self._posterior - self._SS_posterior)
 			# self._Smooth_Sensitivity_Noize_Hamming()
@@ -353,6 +367,7 @@ class BayesInferwithDirPrior(object):
 			# self._accuracy[self._keys[4]].append(self._posterior - self._SS_posterior)
 			self._exponentialize_SS()
 			self._accuracy[self._keys[3]].append(self._posterior - self._exponential_posterior)
+			self._accuracy_l1[self._keys[3]].append(L1_Nrom(self._posterior, self._exponential_posterior))
 
 
 	def _get_bias(self):
@@ -420,7 +435,7 @@ def draw_error_1(errors, model):
 	plt.savefig("beta-GS-SS-LS-size300-runs200-epsilon0-5.png")
 	return 
 
-def draw_error(errors, model):
+def draw_error(errors, model, filename):
 	# plt.subplots(nrows=len(errors), ncols=1, figsize=(18, len(errors) * 5.0))
 	# plt.tight_layout(pad=2, h_pad=4, w_pad=2, rect=None)
 	rows = 1
@@ -444,30 +459,66 @@ def draw_error(errors, model):
 	fig, ax = plt.subplots()
 	bplot = plt.boxplot(data, notch=1, widths=0.4, sym='+', vert=2, whis=1.5,patch_artist=True)
 	plt.xlabel("different mechanisms")
-	plt.ylabel('Accuracy Based on Hellinger Distance')
+	plt.ylabel('Distance Based on Hellinger Distance')
 	#ax.set_xlim(0.5, len(errors) + 0.5)
 
 	plt.xticks(range(1, len(errors)+1),title)
-	plt.title('(Data Size = ' + str(model._sample_size) + ', Global epsilon = ' + str(model._epsilon) + ')')
+	plt.title('Accuracy')
 	for box in bplot["boxes"]:
 		box.set(color='navy', linewidth=1.5)
 		box.set(facecolor='lightblue' )
     #plt.show()
-	plt.savefig("beta-GS-SS-LS-size500-runs200-epsilon0-5-box.png")
+	plt.savefig(filename)
 	return 
 
+def draw_error_l1(errors, model, filename):
+	# plt.subplots(nrows=len(errors), ncols=1, figsize=(18, len(errors) * 5.0))
+	# plt.tight_layout(pad=2, h_pad=4, w_pad=2, rect=None)
+	rows = 1
+	data = []
+	title = []
+	for key,item in errors.items():
+		data.append(item)
+		title.append(key)
+		# plt.subplot(len(errors), 1, rows)
+		# x = numpy.arange(0, len(item), 1)
+		# plt.axhline(y=numpy.mean(item), color='r', linestyle = '--', alpha = 0.8, label = "average error",linewidth=3)
+		# plt.scatter(x, numpy.array(item), s = 40, c = 'b', marker = 'o', alpha = 0.7, edgecolors='white', label = " error")
+		# plt.ylabel('Hellinger Distance')
+		# plt.xlabel('Runs (Bias = ' + str(model._bias) + ')')
+		# plt.title(key + ' (Data Size = ' + str(model._sample_size) + ', Global epsilon = ' + str(model._epsilon) + ')')
+		# plt.legend(loc="best")
+		# rows = rows + 1
+		# plt.ylim(-0.1,1.0)
+		# plt.xlim(0.0,len(item)*1.0)
+		# plt.grid()
+	fig, ax = plt.subplots()
+	bplot = plt.boxplot(data, notch=1, widths=0.4, sym='+', vert=2, whis=1.5,patch_artist=True)
+	plt.xlabel("different mechanisms")
+	plt.ylabel('Distance Based on L1 Norm Distance')
+	#ax.set_xlim(0.5, len(errors) + 0.5)
+
+	plt.xticks(range(1, len(errors)+1),title)
+	plt.title('Accuracy')
+	for box in bplot["boxes"]:
+		box.set(color='navy', linewidth=1.5)
+		box.set(facecolor='lightblue' )
+    #plt.show()
+	plt.savefig(filename)
+	return 
 
 if __name__ == "__main__":
 	# Tests the functioning of the module
 
-	sample_size = 500
+	sample_size = 150
 	epsilon = 0.8
 	delta = 0.8
-	prior = Dir([7, 4])
-	Bayesian_Model = BayesInferwithDirPrior(prior, sample_size, epsilon, 0.8)
+	prior = Dir([7, 4, 5])
+	Bayesian_Model = BayesInferwithDirPrior(prior, sample_size, epsilon, delta)
 
 	Bayesian_Model._experiments(200)
 
-	draw_error(Bayesian_Model._accuracy,Bayesian_Model)
+	draw_error(Bayesian_Model._accuracy,Bayesian_Model, "order-3-size-150-runs-200-epsilon-08-hellinger-box.png")
 
+	draw_error_l1(Bayesian_Model._accuracy_l1,Bayesian_Model, "order-3-size-150-runs-200-epsilon-08-l1norm-box.png")
 

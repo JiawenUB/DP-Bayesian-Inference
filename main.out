@@ -8,4 +8,5 @@
 \BOOKMARK [3][-]{subsubsection.2.3.3}{Dilation Property of Exponential Mechanism}{subsection.2.3}% 8
 \BOOKMARK [1][-]{section.3}{Experimental Evaluations}{}% 9
 \BOOKMARK [2][-]{subsection.3.1}{Computation Efficiency}{section.3}% 10
-\BOOKMARK [2][-]{subsection.3.2}{Accuracy Study with Hellinger Distance}{section.3}% 11
+\BOOKMARK [2][-]{subsection.3.2}{Accuracy Study Based on Hellinger Distance}{section.3}% 11
+\BOOKMARK [2][-]{subsection.3.3}{Accuracy Study Based on L1 Norm Distance}{section.3}% 12
