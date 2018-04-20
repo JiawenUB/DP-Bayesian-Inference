@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  19 APR 2018 19:08
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  20 APR 2018 13:16
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1735,7 +1735,7 @@ File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 207.
  [3]
-Overfull \hbox (19.40938pt too wide) in paragraph at lines 244--245
+Overfull \hbox (19.40938pt too wide) in paragraph at lines 261--262
 \OT1/cmr/m/n/10 (-20) the max-i-mum value over $[]$ al-ways hap-pen when $\OML/
 cmm/m/it/10 r \U/matha/m/n/10 ^^P []p\OML/cmm/m/it/10 x\U/matha/m/n/10 q$ \OT1/
 cmr/m/n/10 (-20) it-self, where $^^A[]\OML/cmm/m/it/10 u\U/matha/m/n/10 p\OML/c
@@ -1752,13 +1752,13 @@ Package epstopdf Info: Source file: <efficiency.eps>
 (epstopdf)                    size: 859239 bytes
 (epstopdf)             Command: <repstopdf --outfile=efficiency-eps-converted-t
 o.pdf efficiency.eps>
-(epstopdf)             \includegraphics on input line 248.
+(epstopdf)             \includegraphics on input line 265.
 Package epstopdf Info: Output file is already uptodate.
-<efficiency-eps-converted-to.pdf, id=95, 8030.0pt x 3513.125pt>
+<efficiency-eps-converted-to.pdf, id=115, 8030.0pt x 3513.125pt>
 File: efficiency-eps-converted-to.pdf Graphic file (type pdf)
 
 <use efficiency-eps-converted-to.pdf>
-Package pdftex.def Info: efficiency-eps-converted-to.pdf used on input line 248
+Package pdftex.def Info: efficiency-eps-converted-to.pdf used on input line 265
 .
 (pdftex.def)             Requested size: 472.03123pt x 206.48993pt.
 Package epstopdf Info: Source file: <accuracy_box_2.eps>
@@ -1769,15 +1769,15 @@ Package epstopdf Info: Source file: <accuracy_box_2.eps>
 (epstopdf)                    size: 41971 bytes
 (epstopdf)             Command: <repstopdf --outfile=accuracy_box_2-eps-convert
 ed-to.pdf accuracy_box_2.eps>
-(epstopdf)             \includegraphics on input line 270.
+(epstopdf)             \includegraphics on input line 287.
 Package epstopdf Info: Output file is already uptodate.
 
-<accuracy_box_2-eps-converted-to.pdf, id=96, 803.0pt x 602.25pt>
+<accuracy_box_2-eps-converted-to.pdf, id=116, 803.0pt x 602.25pt>
 File: accuracy_box_2-eps-converted-to.pdf Graphic file (type pdf)
 
 <use accuracy_box_2-eps-converted-to.pdf>
 Package pdftex.def Info: accuracy_box_2-eps-converted-to.pdf used on input line
- 270.
+ 287.
 (pdftex.def)             Requested size: 226.57297pt x 169.92458pt.
 Package epstopdf Info: Source file: <accuracy_box_1.eps>
 (epstopdf)                    date: 2018-04-18 12:27:20
@@ -1787,16 +1787,17 @@ Package epstopdf Info: Source file: <accuracy_box_1.eps>
 (epstopdf)                    size: 41515 bytes
 (epstopdf)             Command: <repstopdf --outfile=accuracy_box_1-eps-convert
 ed-to.pdf accuracy_box_1.eps>
-(epstopdf)             \includegraphics on input line 272.
+(epstopdf)             \includegraphics on input line 289.
 Package epstopdf Info: Output file is already uptodate.
 
-<accuracy_box_1-eps-converted-to.pdf, id=97, 803.0pt x 602.25pt>
+<accuracy_box_1-eps-converted-to.pdf, id=117, 803.0pt x 602.25pt>
 File: accuracy_box_1-eps-converted-to.pdf Graphic file (type pdf)
 
 <use accuracy_box_1-eps-converted-to.pdf>
 Package pdftex.def Info: accuracy_box_1-eps-converted-to.pdf used on input line
- 272.
+ 289.
 (pdftex.def)             Requested size: 226.57297pt x 169.92458pt.
+ [4 <./efficiency-eps-converted-to.pdf>]
 Package epstopdf Info: Source file: <accuracy_dirichlet_hellinger_1.eps>
 (epstopdf)                    date: 2018-04-18 22:02:38
 (epstopdf)                    size: 44376 bytes
@@ -1806,16 +1807,16 @@ ed-to.pdf>
 (epstopdf)                    size: 71231 bytes
 (epstopdf)             Command: <repstopdf --outfile=accuracy_dirichlet_helling
 er_1-eps-converted-to.pdf accuracy_dirichlet_hellinger_1.eps>
-(epstopdf)             \includegraphics on input line 285.
+(epstopdf)             \includegraphics on input line 302.
 Package epstopdf Info: Output file is already uptodate.
 
-<accuracy_dirichlet_hellinger_1-eps-converted-to.pdf, id=100, 803.0pt x 602.25p
+<accuracy_dirichlet_hellinger_1-eps-converted-to.pdf, id=128, 803.0pt x 602.25p
 t>
 File: accuracy_dirichlet_hellinger_1-eps-converted-to.pdf Graphic file (type pd
 f)
  <use accuracy_dirichlet_hellinger_1-eps-converted-to.pdf>
 Package pdftex.def Info: accuracy_dirichlet_hellinger_1-eps-converted-to.pdf us
-ed on input line 285.
+ed on input line 302.
 (pdftex.def)             Requested size: 226.57297pt x 169.92458pt.
 Package epstopdf Info: Source file: <accuracy_dirichlet_hellinger_2.eps>
 (epstopdf)                    date: 2018-04-18 22:09:03
@@ -1826,29 +1827,29 @@ ed-to.pdf>
 (epstopdf)                    size: 71346 bytes
 (epstopdf)             Command: <repstopdf --outfile=accuracy_dirichlet_helling
 er_2-eps-converted-to.pdf accuracy_dirichlet_hellinger_2.eps>
-(epstopdf)             \includegraphics on input line 287.
+(epstopdf)             \includegraphics on input line 304.
 Package epstopdf Info: Output file is already uptodate.
 
-<accuracy_dirichlet_hellinger_2-eps-converted-to.pdf, id=101, 803.0pt x 602.25p
+<accuracy_dirichlet_hellinger_2-eps-converted-to.pdf, id=129, 803.0pt x 602.25p
 t>
 File: accuracy_dirichlet_hellinger_2-eps-converted-to.pdf Graphic file (type pd
 f)
  <use accuracy_dirichlet_hellinger_2-eps-converted-to.pdf>
 Package pdftex.def Info: accuracy_dirichlet_hellinger_2-eps-converted-to.pdf us
-ed on input line 287.
+ed on input line 304.
 (pdftex.def)             Requested size: 226.57297pt x 169.92458pt.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 294.
+(hyperref)                removing `math shift' on input line 311.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `subscript' on input line 294.
+(hyperref)                removing `subscript' on input line 311.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 294.
+(hyperref)                removing `math shift' on input line 311.
 
 Package epstopdf Info: Source file: <accuracy_compare_dirichlet_hellinger.eps>
 (epstopdf)                    date: 2018-04-18 22:25:21
@@ -1859,16 +1860,16 @@ onverted-to.pdf>
 (epstopdf)                    size: 70574 bytes
 (epstopdf)             Command: <repstopdf --outfile=accuracy_compare_dirichlet
 _hellinger-eps-converted-to.pdf accuracy_compare_dirichlet_hellinger.eps>
-(epstopdf)             \includegraphics on input line 301.
+(epstopdf)             \includegraphics on input line 318.
 Package epstopdf Info: Output file is already uptodate.
 
-<accuracy_compare_dirichlet_hellinger-eps-converted-to.pdf, id=103, 803.0pt x 6
+<accuracy_compare_dirichlet_hellinger-eps-converted-to.pdf, id=131, 803.0pt x 6
 02.25pt>
 File: accuracy_compare_dirichlet_hellinger-eps-converted-to.pdf Graphic file (t
 ype pdf)
  <use accuracy_compare_dirichlet_hellinger-eps-converted-to.pdf>
 Package pdftex.def Info: accuracy_compare_dirichlet_hellinger-eps-converted-to.
-pdf used on input line 301.
+pdf used on input line 318.
 (pdftex.def)             Requested size: 226.57297pt x 169.92458pt.
 Package epstopdf Info: Source file: <accuracy_compare_dirichlet_l1.eps>
 (epstopdf)                    date: 2018-04-18 22:25:10
@@ -1879,43 +1880,43 @@ d-to.pdf>
 (epstopdf)                    size: 36126 bytes
 (epstopdf)             Command: <repstopdf --outfile=accuracy_compare_dirichlet
 _l1-eps-converted-to.pdf accuracy_compare_dirichlet_l1.eps>
-(epstopdf)             \includegraphics on input line 303.
+(epstopdf)             \includegraphics on input line 320.
 Package epstopdf Info: Output file is already uptodate.
 
-<accuracy_compare_dirichlet_l1-eps-converted-to.pdf, id=104, 803.0pt x 602.25pt
+<accuracy_compare_dirichlet_l1-eps-converted-to.pdf, id=132, 803.0pt x 602.25pt
 >
 File: accuracy_compare_dirichlet_l1-eps-converted-to.pdf Graphic file (type pdf
 )
  <use accuracy_compare_dirichlet_l1-eps-converted-to.pdf>
 Package pdftex.def Info: accuracy_compare_dirichlet_l1-eps-converted-to.pdf use
-d on input line 303.
+d on input line 320.
 (pdftex.def)             Requested size: 226.57297pt x 169.92458pt.
 LaTeX Font Info:    Font shape `OMS/cmr/m/it' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 309.
- [4 <./efficiency-eps-converted-to.pdf>] [5 <./accuracy_box_2-eps-converted-to.
-pdf> <./accuracy_box_1-eps-converted-to.pdf> <./accuracy_dirichlet_hellinger_1-
-eps-converted-to.pdf> <./accuracy_dirichlet_hellinger_2-eps-converted-to.pdf>]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 311.
- [6 <./accuracy_compare_dirichlet_hellinger-eps-converted-to.pdf> <./accuracy_c
-ompare_dirichlet_l1-eps-converted-to.pdf>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 311.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 326.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 328.
+ [5 <./accuracy_box_2-eps-converted-to.pdf> <./accuracy_box_1-eps-converted-to.
+pdf>] [6 <./accuracy_dirichlet_hellinger_1-eps-converted-to.pdf> <./accuracy_di
+richlet_hellinger_2-eps-converted-to.pdf> <./accuracy_compare_dirichlet_helling
+er-eps-converted-to.pdf> <./accuracy_compare_dirichlet_l1-eps-converted-to.pdf>
+]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 328.
  (./main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 311.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 311.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 328.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 328.
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 19BE670E314233B0B6A067D0347E030D;1024.
+(rerunfilecheck)             Checksum: FA062E569948860F3155106B7858DC45;1428.
 Package logreq Info: Writing requests to 'main.run.xml'.
 \openout1 = `main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 28611 strings out of 492995
- 539738 string characters out of 6132704
- 1041181 words of memory out of 5000000
- 31689 multiletter control sequences out of 15000+600000
+ 28621 strings out of 492995
+ 539878 string characters out of 6132704
+ 1041184 words of memory out of 5000000
+ 31694 multiletter control sequences out of 15000+600000
  552118 words of font info for 123 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 45i,18n,45p,10383b,1829s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 45i,18n,45p,10383b,1286s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 ></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
 </usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><
@@ -1941,10 +1942,10 @@ e/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/local/texlive
 e/2017/texmf-dist/fonts/type1/public/mathabx-type1/mathx10.pfb></usr/local/texl
 ive/2017/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/
 texlive/2017/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb>
-Output written on main.pdf (6 pages, 1419300 bytes).
+Output written on main.pdf (6 pages, 1420930 bytes).
 PDF statistics:
- 241 PDF objects out of 1000 (max. 8388607)
- 192 compressed objects within 2 object streams
- 35 named destinations out of 1000 (max. 500000)
- 24708 words of extra memory for PDF output out of 24883 (max. 10000000)
+ 265 PDF objects out of 1000 (max. 8388607)
+ 215 compressed objects within 3 object streams
+ 40 named destinations out of 1000 (max. 500000)
+ 24748 words of extra memory for PDF output out of 24883 (max. 10000000)
 

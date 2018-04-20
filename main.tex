@@ -241,12 +241,21 @@ When we set $\lambda \leq \ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta}{2 (n + 1)
 
 \section{Accuracy Analysis}
 \subsection{Laplace Mechanism}
+Fixing a data set $x$, we already had the accuracy bound based on the $l_1$ norm as:
+\begin{equation*}
+Pr[||Lap(\bysinfer(x)) - \bysinfer(x)||_1 \geq |x| \ln (\frac{m}{\gamma}) \frac{\Delta f}{\epsilon}] \leq \gamma,
+\end{equation*}
+where $m$ is the order of the Dirichlet distribution.
+
 
 \subsection{Exponential Mechanism with Global Sensitivity}
 
+
 \subsection{Exponential Mechanism with Local Sensitivity}
 
+
 \subsection{Exponential Mechanism with Smooth Sensitivity}
+
 
 \section{Experimental Evaluations}
 \subsection{Computation Efficiency}

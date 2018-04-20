@@ -6,7 +6,12 @@
 \BOOKMARK [3][-]{subsubsection.2.3.1}{Algorithm Setting up}{subsection.2.3}% 6
 \BOOKMARK [3][-]{subsubsection.2.3.2}{Sliding Property of Exponential Mechanism}{subsection.2.3}% 7
 \BOOKMARK [3][-]{subsubsection.2.3.3}{Dilation Property of Exponential Mechanism}{subsection.2.3}% 8
-\BOOKMARK [1][-]{section.3}{Experimental Evaluations}{}% 9
-\BOOKMARK [2][-]{subsection.3.1}{Computation Efficiency}{section.3}% 10
-\BOOKMARK [2][-]{subsection.3.2}{Accuracy Study Based on Hellinger Distance}{section.3}% 11
-\BOOKMARK [2][-]{subsection.3.3}{Accuracy Study Based on L1 Norm Distance}{section.3}% 12
+\BOOKMARK [1][-]{section.3}{Accuracy Analysis}{}% 9
+\BOOKMARK [2][-]{subsection.3.1}{Laplace Mechanism}{section.3}% 10
+\BOOKMARK [2][-]{subsection.3.2}{Exponential Mechanism with Global Sensitivity}{section.3}% 11
+\BOOKMARK [2][-]{subsection.3.3}{Exponential Mechanism with Local Sensitivity}{section.3}% 12
+\BOOKMARK [2][-]{subsection.3.4}{Exponential Mechanism with Smooth Sensitivity}{section.3}% 13
+\BOOKMARK [1][-]{section.4}{Experimental Evaluations}{}% 14
+\BOOKMARK [2][-]{subsection.4.1}{Computation Efficiency}{section.4}% 15
+\BOOKMARK [2][-]{subsection.4.2}{Accuracy Study Based on Hellinger Distance}{section.4}% 16
+\BOOKMARK [2][-]{subsection.4.3}{Accuracy Study Based on L1 Norm Distance}{section.4}% 17
