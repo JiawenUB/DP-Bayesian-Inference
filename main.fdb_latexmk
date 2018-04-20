@@ -1,11 +1,11 @@
 # Fdb version 3
-["biber main"] 1523642612 "main.bcf" "main.bbl" "main" 1524104769
+["biber main"] 1523642612 "main.bcf" "main.bbl" "main" 1524179330
   "bayesian.bib" 1523642571 651 c0ed3a4b7d2c052133684085a64892bc ""
-  "main.bcf" 1524104769 95873 00b1b46190d0fb511a3d8f50c616eaf0 ""
+  "main.bcf" 1524179329 95873 00b1b46190d0fb511a3d8f50c616eaf0 ""
   (generated)
-  "main.bbl"
   "main.blg"
-["pdflatex"] 1524104767 "main.tex" "main.pdf" "main" 1524104769
+  "main.bbl"
+["pdflatex"] 1524179328 "main.tex" "main.pdf" "main" 1524179330
   "/usr/local/texlive/2017/texmf-dist/fonts/map/fontname/texfonts.map" 1480098670 3287 e6b82fe08f5336d4d5ebc73fb1152e87 ""
   "/usr/local/texlive/2017/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy5.tfm" 1480098698 1120 1e8878807317373affa7f7bba4cf2f6a ""
   "/usr/local/texlive/2017/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy7.tfm" 1480098698 1120 7f9f170e8aa57527ad6c49feafd45d54 ""
@@ -61,12 +61,14 @@
   "/usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb" 1480098733 34811 78b52f49e893bcba91bd7581cdc144c0 ""
   "/usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb" 1480098733 32080 340ef9bf63678554ee606688e7b5339d ""
   "/usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb" 1480098733 36299 5f9df58c2139e7edcf37c8fca4bd384d ""
+  "/usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb" 1480098733 36741 fa121aac0049305630cf160b86157ee4 ""
   "/usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb" 1480098733 37912 77d683123f92148345f3fc36a38d9ab1 ""
   "/usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb" 1480098733 36281 c355509802a035cadc5f15869451dcee ""
   "/usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb" 1480098733 35469 70d41d2b9ea31d5d813066df7c99281c ""
   "/usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb" 1480098733 36912 b448ef9ad9d7228ec3c6e71005136d55 ""
   "/usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb" 1480098733 35752 024fb6c41858982481f6968b5fc26508 ""
   "/usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb" 1480098733 31809 8670ca339bf94e56da1fc21c80635e2a ""
+  "/usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb" 1480098733 32734 69e00a6b65cedb993666e42eedb3d48f ""
   "/usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb" 1480098733 32762 224316ccc9ad3ca0423a14971cfa7fc1 ""
   "/usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb" 1480098733 32726 0a1aea6fcd6468ee2cf64d891f5c43c8 ""
   "/usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb" 1480098733 24457 5cbb7bdf209d5d1ce9892a9b80a307cc ""
@@ -210,15 +212,15 @@
   "accuracy_dirichlet_hellinger_2.eps" 1524103743 43784 17ed71bebcf12dbfc5f86263d4cdb3aa ""
   "efficiency.eps" 1523635756 2883421 2d02c713e03726e65cc041a1230053d7 ""
   "macros.tex" 1523981536 1833 8618b498cd9b702591e87592833e76f7 ""
-  "main.aux" 1524104769 6529 3ee9eb38c0fd602e55b06de82d6093a3 ""
+  "main.aux" 1524179329 6567 bb69b999399ccc822ceb0687815ee2c2 ""
   "main.bbl" 1523642614 3209 74272d4963a55bb136f4aee92de2c773 "biber main"
-  "main.out" 1524104769 1024 19be670e314233b0b6a067d0347e030d ""
-  "main.run.xml" 1524104769 2303 3b4c740728c22aad8fcb6792b1e624b4 ""
-  "main.tex" 1524104638 16304 05a1b8504836c0fbf2bf6c6732256180 ""
+  "main.out" 1524179329 1024 19be670e314233b0b6a067d0347e030d ""
+  "main.run.xml" 1524179329 2303 3b4c740728c22aad8fcb6792b1e624b4 ""
+  "main.tex" 1524179308 16342 3f8bfe0b32f18190617b301efa7effbf ""
   (generated)
-  "main.pdf"
+  "main.bcf"
   "main.aux"
   "main.run.xml"
   "main.log"
   "main.out"
-  "main.bcf"
+  "main.pdf"
