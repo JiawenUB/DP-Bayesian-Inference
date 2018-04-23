@@ -246,6 +246,13 @@ Fixing a data set $x$, we already had the accuracy bound based on the $l_1$ norm
 Pr[||Lap(\bysinfer(x)) - \bysinfer(x)||_1 \geq |x| \ln (\frac{m}{\gamma}) \frac{2}{\epsilon}] \leq \gamma,
 \end{equation*}
 where $m$ is the order of the Dirichlet distribution. Then we have the accuracy bound based on $\hlg$ distance.
+\begin{equation*}
+\begin{split}
+Pr[||Lap(\bysinfer(x)) - \bysinfer(x)||_1 \geq |x| \ln (\frac{m}{\gamma}) \frac{2}{\epsilon}] & \leq Pr[|x| ||Lap(\bysinfer(x)) - \bysinfer(x)||_1 \geq |x| \ln (\frac{m}{\gamma}) \frac{2}{\epsilon}]\\
+& = Pr[||Lap(\bysinfer(x)) - \bysinfer(x)||_1 \geq \ln (\frac{m}{\gamma}) \frac{2}{\epsilon}]\\
+& = \gamma
+\end{split} 
+\end{equation*}
 
 
 \subsection{Exponential Mechanism with Global Sensitivity}
