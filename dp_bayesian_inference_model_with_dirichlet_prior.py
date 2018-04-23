@@ -510,15 +510,15 @@ def draw_error_l1(errors, model, filename):
 if __name__ == "__main__":
 	# Tests the functioning of the module
 
-	sample_size = 150
+	sample_size = 100
 	epsilon = 0.8
-	delta = 0.8
-	prior = Dir([7, 4, 5])
+	delta = 0.005
+	prior = Dir([2,2,2])
 	Bayesian_Model = BayesInferwithDirPrior(prior, sample_size, epsilon, delta)
 
 	Bayesian_Model._experiments(200)
 
-	draw_error(Bayesian_Model._accuracy,Bayesian_Model, "order-3-size-150-runs-200-epsilon-08-hellinger-box.png")
+	draw_error(Bayesian_Model._accuracy,Bayesian_Model, "order-3-size-100-runs-200-epsilon-08-hellinger-delta0005-box.png")
 
-	draw_error_l1(Bayesian_Model._accuracy_l1,Bayesian_Model, "order-3-size-150-runs-200-epsilon-08-l1norm-box.png")
+	draw_error_l1(Bayesian_Model._accuracy_l1,Bayesian_Model, "order-3-size-100-runs-200-epsilon-08-l1norm-delta0005-box.png")
 

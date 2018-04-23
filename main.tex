@@ -248,8 +248,8 @@ Pr[||Lap(\bysinfer(x)) - \bysinfer(x)||_1 \geq |x| \ln (\frac{m}{\gamma}) \frac{
 where $m$ is the order of the Dirichlet distribution. Then we have the accuracy bound based on $\hlg$ distance.
 \begin{equation*}
 \begin{split}
-Pr[||Lap(\bysinfer(x)) - \bysinfer(x)||_1 \geq |x| \ln (\frac{m}{\gamma}) \frac{2}{\epsilon}] & \leq Pr[|x| ||Lap(\bysinfer(x)) - \bysinfer(x)||_1 \geq |x| \ln (\frac{m}{\gamma}) \frac{2}{\epsilon}]\\
-& = Pr[||Lap(\bysinfer(x)) - \bysinfer(x)||_1 \geq \ln (\frac{m}{\gamma}) \frac{2}{\epsilon}]\\
+Pr[||Lap(\bysinfer(x)) - \bysinfer(x)||_1 \geq m \ln (\frac{m}{\gamma}) \frac{2}{\epsilon}] & \leq Pr[m ||Lap(\bysinfer(x)) - \bysinfer(x)||_{\infty} \geq m \ln (\frac{m}{\gamma}) \frac{2}{\epsilon}]\\
+& = Pr[||Lap(\bysinfer(x)) - \bysinfer(x)||_{\infty} \geq \ln (\frac{m}{\gamma}) \frac{2}{\epsilon}]\\
 & = \gamma
 \end{split} 
 \end{equation*}
@@ -316,7 +316,7 @@ Then, we extended the $\betad$ to the Bernoulli distribution, got the result in 
 \end{figure*}
 
 
-\subsection{Accuracy Study Based on $L_1$ Norm Distance}
+\subsection{Accuracy Study Based on $L_1$ Norm}
 For comparison, we study the accuracy of these four mechanisms based on $l_1$ norm, with the Dirichlet distribution $\dirichlet(7,4,5)$ and data size $150$, shown in Fig. \ref{fig_dirichlet_hellinger_l1}.
 
 \begin{figure*}
