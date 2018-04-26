@@ -131,7 +131,7 @@ The exponential mechanism with local sensitivity is non differential privacy\cit
 The candidate set and utility function are still the same as before, differ only in the sensitivity. It will output a candidate $r \in R$ with probability proportional to $\exp(\frac{\epsilon u(x,r)}{2 S(x)})$:
 
 \begin{equation*}
-P[r] = \frac
+Pr_{\expomech}[r] = \frac
 {exp(\frac{\epsilon u(x,r)}{2 S(x)})}
 {\Sigma_{r' \in R}\ exp(\frac{\epsilon u(x,r')}{2 S(x)})},
 \end{equation*}
@@ -333,7 +333,8 @@ For comparison, we study the accuracy of these four mechanisms based on $l_1$ no
 \end{center}
 \end{figure*}
 
-\printbibliography
+\bibliographystyle{plain}
+\bibliography{bayesian.bib}
 
 \end{document}
 
