@@ -154,11 +154,13 @@ e^{\frac{\epsilon}{2}} \underset{z \thicksim \expomech}{Pr}[u(r,x) = (\Delta + \
 \end{lem}
 
 \begin{proof}
+We firstly proof that $Pr[\expomech = z] = \underset{r \thicksim \expomech}{Pr}[u(r,x) = u(z,x)]$. Then we can use the exponential probability in following proofs. From the output probability of every candidate $r$ in $\expomech$, $Pr[\expomech = z] \sim u(z,x)$. We can derive, if $u(z,x) = u(z',x)$ then $Pr[\expomech = z] = Pr[\expomech = z']$. We assume the number of candidates $r \in \mathsf{R}$ that satisfy $u(z,x) = u(r,x)$ is $|z|$, we have  $\underset{r \thicksim \expomech}{Pr}[u(r,x) = u(z,x)] = |z| Pr[\expomech = z]$. In our case, $u(r,x)$ come from Hellinger distance is axial symmetry, where the true output is the symmetry axis. It can be infer that |z| = 2 for any candidates, apart from the true output, i.e., $\underset{r \thicksim \expomech}{Pr}[u(r,x) = u(z,x)] = 2 Pr[\expomech = z]$. This parameter can be eliminate in both sides in proving.
+
 We denote the normalizer of the probability mass in $\expomech$: $\sum_{r' \in \mathcal{R}}exp(\frac{\epsilon u(r',x)}{2 S(x)})$ as $NL_x$:
 \begin{equation*}
 \begin{split}
 LHS 
-  = \underset{z \thicksim \expomech}{Pr}[u(r,x) = \hat{s}]
+  = \underset{r \thicksim \expomech}{Pr}[u(r,x) = \hat{s}]
 & = \frac{exp(\frac{\epsilon \hat{s}}{2 S(x)})}{NL_x}\\
 & = \frac{exp(\frac{\epsilon (\hat{s} + \Delta - \Delta)}{2 S(x)})}{NL_x}\\
 & = \frac{exp(\frac{\epsilon (\hat{s} + \Delta)}{2 S(x)} + \frac{- \epsilon \Delta}{2 S(x)})}{NL_x}\\

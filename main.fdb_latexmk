@@ -1,11 +1,11 @@
 # Fdb version 3
-["biber main"] 1523642612 "main.bcf" "main.bbl" "main" 1524519921
+["biber main"] 1523642612 "main.bcf" "main.bbl" "main" 1524707907
   "bayesian.bib" 1523642571 651 c0ed3a4b7d2c052133684085a64892bc ""
-  "main.bcf" 1524519921 95873 00b1b46190d0fb511a3d8f50c616eaf0 ""
+  "main.bcf" 1524707907 95873 00b1b46190d0fb511a3d8f50c616eaf0 ""
   (generated)
   "main.blg"
   "main.bbl"
-["pdflatex"] 1524519920 "main.tex" "main.pdf" "main" 1524519921
+["pdflatex"] 1524707906 "main.tex" "main.pdf" "main" 1524707907
   "/usr/local/texlive/2017/texmf-dist/fonts/map/fontname/texfonts.map" 1480098670 3287 e6b82fe08f5336d4d5ebc73fb1152e87 ""
   "/usr/local/texlive/2017/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy5.tfm" 1480098698 1120 1e8878807317373affa7f7bba4cf2f6a ""
   "/usr/local/texlive/2017/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy7.tfm" 1480098698 1120 7f9f170e8aa57527ad6c49feafd45d54 ""
@@ -212,15 +212,15 @@
   "accuracy_dirichlet_hellinger_2.eps" 1524103743 43784 17ed71bebcf12dbfc5f86263d4cdb3aa ""
   "efficiency.eps" 1523635756 2883421 2d02c713e03726e65cc041a1230053d7 ""
   "macros.tex" 1524519842 1833 8618b498cd9b702591e87592833e76f7 ""
-  "main.aux" 1524519921 7131 6497524c6b0394552ffe3a2dcb79e8e0 ""
+  "main.aux" 1524707907 7131 e1a9dca38b276e06b540dedcdb38c522 ""
   "main.bbl" 1523642614 3209 74272d4963a55bb136f4aee92de2c773 "biber main"
-  "main.out" 1524519921 1419 11f81a1ee5db02c5b63b9c16122b13bd ""
-  "main.run.xml" 1524519921 2303 3b4c740728c22aad8fcb6792b1e624b4 ""
-  "main.tex" 1524519919 17292 7f835cebd2814f4decb55e2ba3f408ee ""
+  "main.out" 1524707907 1419 11f81a1ee5db02c5b63b9c16122b13bd ""
+  "main.run.xml" 1524707907 2303 3b4c740728c22aad8fcb6792b1e624b4 ""
+  "main.tex" 1524707905 18160 4dd595013630b8a6a7ddda1579da57e1 ""
   (generated)
-  "main.log"
-  "main.bcf"
   "main.out"
+  "main.run.xml"
+  "main.bcf"
   "main.pdf"
   "main.aux"
-  "main.run.xml"
+  "main.log"
