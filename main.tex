@@ -128,33 +128,63 @@ The exponential mechanism with local sensitivity is non differential privacy\cit
 \label{sec_smoo}
 
 \subsubsection{Algorithm Setting up}
-The candidate set and utility function are still the same as before, differ only in the sensitivity. It will output a candidate $r \in R$ with probability proportional to $\exp(\frac{\epsilon u(x,r)}{2 S(x)})$:
+We define a new mechanism $\hexpmech(x)$
+which is similar to the exponential mechanism where we use
+$\mathcal{R}$ as the set $\betaset$ of beta distributions with integer parameters
+summing up to $n+2$, as scoring function we use the Hellinger distance
+from $\bysinfer(x)$, i.e. $\hlg(\bysinfer(x),-)$, and we 
+calibrate the noise to the smooth sensitivity~\cite{nissim2007smooth}. The
+only difference is in the sensitivity part, since now we use the
+smooth sensitivity.
 
+\begin{definition} The mechanism $\hexpmech(x)$ outputs a candidate $r \in \betaset$ with probability
 \begin{equation*}
-Pr_{\expomech}[r] = \frac
-{exp(\frac{\epsilon u(x,r)}{2 S(x)})}
-{\Sigma_{r' \in R}\ exp(\frac{\epsilon u(x,r')}{2 S(x)})},
+\underset{z \thicksim \hexpmech(x)}{Pr}[z=r] = \frac
+{exp(\frac{-\epsilon\hlg(\bysinfer(x),r)}{2 S_\beta(x)})}
+{\Sigma_{r' \in R}\ exp(\frac{-\epsilon \hlg(\bysinfer(x),r')}{2 S_\beta(x)})},
 \end{equation*}
-where the sensitivity in mechanism is smooth sensitivity $S(x)$\cite{nissim2007smooth}, calculated by:
+where $s_\beta(x)$ is the smooth sensitivity of $\hlg(\bysinfer(x),-)$, calculated by:
 \begin{equation*}
-S_{\beta}(x) = \max(\Delta_{l}u(x), \max_{y \neq x; y \in D^{n}}(\Delta_{l}u(y)\cdot e^{-\beta d(x,y)})),
+S_{\beta}(x) = \max(\Delta_{l}\hlg(\bysinfer(x),-), \max_{y \neq x; y \in D^{n}}(\Delta_{l}\hlg(\bysinfer(x),-)\cdot e^{-\beta d(x,y)})),
 \end{equation*}
-where $\beta = \beta(\epsilon, \delta)$. In our private Bayesian inference mechanism, we set the $\beta$ as $\ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta}{2 (n + 1)})})$. 
+where $d$ is the Hamming distance between two datasets, and $\beta =
+\beta(\epsilon, \delta)$ is a function of $\epsilon$ and $\delta$. 
+\end{definition}
+
+
+In what follows, we will use a correspondence between the probability
+ $\underset{z \thicksim \hexpmech(x)}{Pr}[z = r]$ of every
+ $r\in\betaset$ and the probability 
+ $\underset{z \thicksim \hexpmech(x)}{Pr}[\hlg(\bysinfer(x),z) =
+ \hlg(\bysinfer(x),r)]$ for the utility score for $r$. In particular, for every
+ $r\in\betaset$ we have:
+$$
+\underset{z \thicksim \hexpmech(x)}{Pr}[z = r]=
+\frac{1}{2}\Big (\underset{z \thicksim \hexpmech(x)}{Pr}[\hlg(\bysinfer(x),z) =
+ \hlg(\bysinfer(x),r)]\Big )
+$$
+To see this, it is enough to notice that ...
+
+
+ From the output probability of every candidate $r$ in $\expomech$, $Pr[\expomech = z] \sim u(z,x)$. We can derive, if $u(z,x) = u(z',x)$ then $Pr[\expomech = z] = Pr[\expomech = z']$. We assume the number of candidates $r \in \mathsf{R}$ that satisfy $u(z,x) = u(r,x)$ is $|z|$, we have  $\underset{r \thicksim \expomech}{Pr}[u(r,x) = u(z,x)] = |z| Pr[\expomech = z]$. In our case, $u(r,x)$ come from Hellinger distance is axial symmetry, where the true output is the symmetry axis. It can be infer that |z| = 2 for any candidates, apart from the true output, i.e., $\underset{r \thicksim \expomech}{Pr}[u(r,x) = u(z,x)] = 2 Pr[\expomech = z]$. This parameter can be eliminate in both sides in proving.
+
+In our private Bayesian inference mechanism, we set the $\beta$ as $\ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta}{2 (n + 1)})})$. 
+
 
 \subsubsection{Sliding Property of Exponential Mechanism}
 \begin{lem}
-for any exponential mechanism $\expomech$, $\lambda = f(\epsilon, \delta)$, $\epsilon$ and $|\delta| < 1$, the sliding property holds:
-
+Consider the exponential mechanism  $\sexpmech(x,u,\mathcal{R})$
+calibrated on the smooth sensitivity. Let $\lambda = f(\epsilon,
+\delta)$, $\epsilon\geq 0$ and $|\delta| < 1$. Then, the following \emph{sliding property} holds:
 \begin{equation*}
-\underset{z \thicksim \expomech}{Pr}[u(r,x) = \hat{s}]
+\underset{r \thicksim \expomech}{Pr}[u(r,x) = \hat{s}]
 \leq
-e^{\frac{\epsilon}{2}} \underset{z \thicksim \expomech}{Pr}[u(r,x) = (\Delta + \hat{s})] + \frac{\delta}{2},
+e^{\frac{\epsilon}{2}} \underset{r \thicksim \expomech}{Pr}[u(r,x) = (\Delta + \hat{s})] + \frac{\delta}{2},
 \end{equation*}
 
 \end{lem}
 
 \begin{proof}
-We firstly proof that $Pr[\expomech = z] = \underset{r \thicksim \expomech}{Pr}[u(r,x) = u(z,x)]$. Then we can use the exponential probability in following proofs. From the output probability of every candidate $r$ in $\expomech$, $Pr[\expomech = z] \sim u(z,x)$. We can derive, if $u(z,x) = u(z',x)$ then $Pr[\expomech = z] = Pr[\expomech = z']$. We assume the number of candidates $r \in \mathsf{R}$ that satisfy $u(z,x) = u(r,x)$ is $|z|$, we have  $\underset{r \thicksim \expomech}{Pr}[u(r,x) = u(z,x)] = |z| Pr[\expomech = z]$. In our case, $u(r,x)$ come from Hellinger distance is axial symmetry, where the true output is the symmetry axis. It can be infer that |z| = 2 for any candidates, apart from the true output, i.e., $\underset{r \thicksim \expomech}{Pr}[u(r,x) = u(z,x)] = 2 Pr[\expomech = z]$. This parameter can be eliminate in both sides in proving.
 
 We denote the normalizer of the probability mass in $\expomech$: $\sum_{r' \in \mathcal{R}}exp(\frac{\epsilon u(r',x)}{2 S(x)})$ as $NL_x$:
 \begin{equation*}
