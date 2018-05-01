@@ -19,40 +19,40 @@ In our inference algorithm, we take a Dirichlet distribution as prior belief for
 
 We give a inference process based on a concrete example, where we throw an irregular $m$ sides dice. We want to infer the probability of getting each side $\xis$. We get a observed data set $\{s_{k_1}, s_{k_2}, \cdots, s_{k_n}\}$ by throwing the dice $n$ times, where $k_i \in \{1,2,\cdots, m\}$ denotes the side we get when we throw the dice the $i^{th}$ time. The posterior distribution is still a Dirichlet distribution with parameters $(\alpha_1 + n_1, \alpha_2 + n_2, \cdots, \alpha_m + n_m)$, where $n_i$ is the appearance time of the side $i$ in total.
 
-In the case that $m = 2$, it is reduced to a Beta distribution $\betad(\alpha, \beta)$. The $m$ side dice change into a irregular coin with side $1$ and side $2$. The posterior is computed as $(\alpha + n_1, \beta + n_0)$, where $n_1$ is the appearance time of side $1$ in the observed data set and $n_0$ is the appearance time of the other side.
+In the case that $m = 2$, it is reduced to a Beta distribution $\betad(\alpha, \beta)$. The $m$ side dice change into a irregular coin with side $A$ and side $B$. The posterior is computed as $(\alpha + n_1, \beta + n_0)$, where $n_1$ is the appearance time of side $A$ in the observed data set and $n_0$ is the appearance time of the other side.
 
 
 
 \section{Algorithm Setting up}
 \label{sec_setup}
-For now, we already have a prior distribution $prior$, an observed data set $x$.
+For now, we already have a prior distribution $\pi(\xis)$, an observed data set $x$.
 
 \subsection{Exponential Mechanism with Global Sensitivity}
 \label{subsec_emgs}
 
 % \subsubsection{Mechanism Set up}
 
-In exponential mechanism, candidate set $R$ can be obtained by enumerating $y \in \mathcal{X}^n$, i.e.
+In exponential mechanism, candidate set $\mathcal{R}$ can be obtained by enumerating $y \in \mathcal{X}^n$, i.e.
 \begin{equation*}
-R = \{\bysinfer(y)\ |\ y \in \mathcal{X}^n\}.
+\mathcal{R} = \{\bysinfer(y)\ |\ y \in \mathcal{X}^n\}.
 \end{equation*}
 
 Hellinger distance $\hlg$ is used here to score these candidates. The utility function:
 \begin{equation}
 \label{equ_utility}
-u(x,r) = -\hlg(\bysinfer(x), r); r \in R.
+u(x,r) = -\hlg(\bysinfer(x), r); r \in \mathcal{R}.
 \end{equation}
 
-Exponential mechanism with global sensitivity selects and outputs a candidate $r \in R$ with probability proportional to $exp(\frac{\epsilon u(x,r)}{2 \Delta_{g}u})$:
+Exponential mechanism with global sensitivity selects and outputs a candidate $r \in \mathcal{R}$ with probability proportional to $exp(\frac{\epsilon u(x,r)}{2 \Delta_{g}u})$:
 \begin{equation*}
 P[r] = \frac
 {exp(\frac{\epsilon u(x,r)}{2 \Delta_{g}u})}
-{\Sigma_{r' \in R}\ exp(\frac{\epsilon u(x,r')}{2 \Delta_{g}u})},
+{\Sigma_{r' \in \mathcal{R}}\ exp(\frac{\epsilon u(x,r')}{2 \Delta_{g}u})},
 \end{equation*}
 where global sensitivity is calculated by:
 \begin{equation*}
 \Delta_{g}u = 
-\max_{\{|x',y'| \leq 1;x',y'\in \mathcal{X}^n\}}\max_{\{r\in R\}}
+\max_{\{|x',y'| \leq 1;x',y'\in \mathcal{X}^n\}}\max_{\{r\in \mathcal{R}\}}
 |\hlg(\bysinfer(x'), r) - \hlg(\bysinfer(y'), r)|
 \end{equation*}
 
@@ -106,18 +106,18 @@ The basic exponential mechanism is $\epsilon -$differential privacy\cite{dwork20
 \subsection{Exponential Mechanism with Local Sensitivity}
 \label{subsec_emls}
 % \subsubsection{Mechanism Set up}
-Exponential mechanism with local sensitivity share the same candidate set and utility function as it with global sensitivity. This outputs a candidate $r \in R$ with probability proportional to $exp(\frac{\epsilon u(x,r)}{2 \Delta_{l}u})$:
+Exponential mechanism with local sensitivity share the same candidate set and utility function as it with global sensitivity. This outputs a candidate $r \in \mathcal{R}$ with probability proportional to $exp(\frac{\epsilon u(x,r)}{2 \Delta_{l}u})$:
 \begin{equation*}
 P[r] = \frac
 {exp(\frac{\epsilon u(x,r)}{2 \Delta_{l}u})}
-{\Sigma_{r' \in R}\ exp(\frac{\epsilon u(x,r')}{2 \Delta_{l}u})},
+{\Sigma_{r' \in \mathcal{R}}\ exp(\frac{\epsilon u(x,r')}{2 \Delta_{l}u})},
 \end{equation*}
 
 where local sensitivity is calculated by:
 
 \begin{equation*}
 \Delta_{l}u(x) = 
-\max_{\{|x,y'| \leq 1;y'\in \mathcal{X}^n\}}\max_{\{r\in R\}}.
+\max_{\{|x,y'| \leq 1;y'\in \mathcal{X}^n\}}\max_{\{r\in \mathcal{R}\}}.
 \hlg(\bysinfer(x), r) - \hlg(\bysinfer(y'), r)|
 \end{equation*}
 
@@ -212,18 +212,18 @@ By bounding the $\Delta \geq -S(x)$, we can get:
 for any exponential mechanism $\hexpmech(x)$, $\lambda < |\beta|$, $\epsilon$, $|\delta| < 1$ and $\beta \leq \ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta}{2 (n + 1)})})$, the dilation property holds:
 
 \begin{equation*}
-\underset{r \thicksim \hexpmech(x)}{Pr}[u(r) = z]
+\underset{r \thicksim \hexpmech(x)}{Pr}[u(r,x) = z]
 \leq
-e^{\frac{\epsilon}{2}} \underset{r \thicksim \hexpmech(x)}{Pr}[u(r) = e^{\lambda} z] + \frac{\delta}{2},
+e^{\frac{\epsilon}{2}} \underset{r \thicksim \hexpmech(x)}{Pr}[u(r,x) = e^{\lambda} z] + \frac{\delta}{2},
 \end{equation*}
 where the sensitivity in mechanism is still smooth sensitivity as above.
 \end{lem}
 
 \begin{proof}
 
-The sensitivity is always greater than 0, and we are using $-\hlg(\bysinfer(x),r)$ for utility function, i.e., $u(r) \leq 0$, we need to consider two cases that $\lambda < 0$, and $\lambda > 0$:
+The sensitivity is always greater than 0, and our utility function $-\hlg(\bysinfer(x),r)$ is smaller than zero, i.e., $u(r,x) \leq 0$, we need to consider two cases where $\lambda < 0$, and $\lambda > 0$:
 
-We set the $h(z) = Pr[u(\hexpmech(x)) = z] = \frac{exp(\frac{\epsilon z}{2 S(x)})}{NL_x}$.
+We set the $h(z) = Pr[u(\hexpmech(x)) = z] = 2\frac{exp(\frac{\epsilon z}{2 S(x)})}{NL_x}$.
 
 We first consider $\lambda < 0$. In this case, $1 < e ^ {\lambda}$, so the ratio $\frac{h(z)}{h(e^{\lambda}z)} = \frac{exp(\frac{\epsilon z}{2 S(x)})}{exp(\frac{\epsilon (z \cdot e^{\lambda})}{2 S(x)})}$ is at most $\frac{\epsilon}{2}$.
 
