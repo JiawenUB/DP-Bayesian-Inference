@@ -268,6 +268,19 @@ When we set $\lambda \leq \ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta}{2 (n + 1)
 
 \end{proof}
 
+\subsubsection{Privacy Analysis}
+\begin{lem}
+\label{lem_hexpmech_privacy}
+$\hexpmech$ is $(\epsilon, \delta)$-differential privacy.
+\end{lem}
+
+\begin{proof}
+of Lemma \ref{lem_hexpmech_privacy}: For all neighboring $x, y \in D^n$ and all sets $\mathcal{S}$, we need to show that:
+\begin{equation*}
+\underset{z \thicksim \hexpmech(x)}{Pr}[ z \in \mathcal{S}] \leq e^{\epsilon} \underset{z \thicksim \hexpmech(y)}{Pr}[z \in \mathcal{S}] + \delta. 
+\end{equation*}
+\end{proof}
+
 \section{Accuracy Analysis}
 \subsection{Laplace Mechanism}
 Fixing a data set $x$, we already had the accuracy bound based on the $l_1$ norm as:
