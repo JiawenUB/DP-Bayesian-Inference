@@ -183,15 +183,15 @@ e^{\frac{\epsilon}{2}} \underset{r \thicksim \hexpmech(x)}{Pr}[u(r,x) = (\Delta 
 
 \begin{proof}
 
-We denote the normalizer of the probability mass in $\hexpmech(x)$: $\sum_{r' \in \mathcal{R}}exp(\frac{\epsilon u(r',x)}{2 S(x)})$ as $NL_x$:
+We denote the normalizer of the probability mass in $\hexpmech(x)$: $\sum_{r' \in \mathcal{R}}exp(\frac{\epsilon u(r',x)}{2 S(x)})$ as $NL(x)$:
 \begin{equation*}
 \begin{split}
 LHS 
   = \underset{r \thicksim \hexpmech(x)}{Pr}[u(r,x) = \hat{s}]
-& = \frac{exp(\frac{\epsilon \hat{s}}{2 S(x)})}{NL_x}\\
-& = \frac{exp(\frac{\epsilon (\hat{s} + \Delta - \Delta)}{2 S(x)})}{NL_x}\\
-& = \frac{exp(\frac{\epsilon (\hat{s} + \Delta)}{2 S(x)} + \frac{- \epsilon \Delta}{2 S(x)})}{NL_x}\\
-& = \frac{exp(\frac{\epsilon (\hat{s} + \Delta)}{2 S(x)})}{NL_x} \cdot e^{\frac{- \epsilon \Delta}{2 S(x)})}.\\
+& = \frac{exp(\frac{\epsilon \hat{s}}{2 S(x)})}{NL(x)}\\
+& = \frac{exp(\frac{\epsilon (\hat{s} + \Delta - \Delta)}{2 S(x)})}{NL(x)}\\
+& = \frac{exp(\frac{\epsilon (\hat{s} + \Delta)}{2 S(x)} + \frac{- \epsilon \Delta}{2 S(x)})}{NL(x)}\\
+& = \frac{exp(\frac{\epsilon (\hat{s} + \Delta)}{2 S(x)})}{NL(x)} \cdot e^{\frac{- \epsilon \Delta}{2 S(x)})}.\\
 \end{split}
 \end{equation*}
 
@@ -199,8 +199,8 @@ By bounding the $\Delta \geq -S(x)$, we can get:
 
 \begin{equation*}
 \begin{split}
-\frac{exp(\frac{\epsilon (\hat{s} + \Delta)}{2 S(x)})}{NL_x} \cdot e^{\frac{- \epsilon \Delta}{2 S(x)}}
-& \leq \frac{exp(\frac{\epsilon (\hat{s} + \Delta)}{2 S(x)})}{NL_x} \cdot e^{\frac{\epsilon}{2}}\\
+\frac{exp(\frac{\epsilon (\hat{s} + \Delta)}{2 S(x)})}{NL(x)} \cdot e^{\frac{- \epsilon \Delta}{2 S(x)}}
+& \leq \frac{exp(\frac{\epsilon (\hat{s} + \Delta)}{2 S(x)})}{NL(x)} \cdot e^{\frac{\epsilon}{2}}\\
 &  =  e^{\frac{\epsilon}{2}} \underset{z \thicksim \hexpmech(x)}{Pr}[u(r,x) = (\Delta + \hat{s})] \leq RHS\\
 \end{split}
 \end{equation*}
@@ -223,7 +223,7 @@ where the sensitivity in mechanism is still smooth sensitivity as above.
 
 The sensitivity is always greater than 0, and our utility function $-\hlg(\bysinfer(x),r)$ is smaller than zero, i.e., $u(r,x) \leq 0$, we need to consider two cases where $\lambda < 0$, and $\lambda > 0$:
 
-We set the $h(z) = Pr[u(\hexpmech(x)) = z] = 2\frac{exp(\frac{\epsilon z}{2 S(x)})}{NL_x}$.
+We set the $h(z) = Pr[u(\hexpmech(x)) = z] = 2\frac{exp(\frac{\epsilon z}{2 S(x)})}{NL(x)}$.
 
 We first consider $\lambda < 0$. In this case, $1 < e ^ {\lambda}$, so the ratio $\frac{h(z)}{h(e^{\lambda}z)} = \frac{exp(\frac{\epsilon z}{2 S(x)})}{exp(\frac{\epsilon (z \cdot e^{\lambda})}{2 S(x)})}$ is at most $\frac{\epsilon}{2}$.
 
@@ -279,6 +279,20 @@ of Lemma \ref{lem_hexpmech_privacy}: For all neighboring $x, y \in D^n$ and all 
 \begin{equation*}
 \underset{z \thicksim \hexpmech(x)}{Pr}[ z \in \mathcal{S}] \leq e^{\epsilon} \underset{z \thicksim \hexpmech(y)}{Pr}[z \in \mathcal{S}] + \delta. 
 \end{equation*}
+Given that $2\Big( \underset{z \thicksim \hexpmech(x)}{Pr}[ z \in \mathcal{S}]\Big) = \underset{z \thicksim \hexpmech(x)}{Pr}[ u(x,z) \in \mathcal{U}]$, let $\mathcal{U}_1 = \frac{u(y,z) - u(x,z)}{S(x)}$, $\mathcal{U}_2 = \mathcal{U} + \mathcal{U}_1$ and $\mathcal{U}_3 = \mathcal{U}_2 \cdot \frac{S(x)}{S(y)} \cdot \ln(\frac{NL(x)}{NL(y)})$. Then,
+
+\begin{equation*}
+\begin{split}
+2\Big( \underset{z \thicksim \hexpmech(x)}{Pr}[ z \in \mathcal{S}]\Big)
+& = \underset{z \thicksim \hexpmech(x)}{Pr}[ u(x,z) \in \mathcal{U}]\\
+& \leq e^{\epsilon / 2} \cdot \underset{z \thicksim \hexpmech(x)}{Pr}[ u(x,z) \in \mathcal{U}_2]\\
+& \leq e^{\epsilon} \cdot \underset{z \thicksim \hexpmech(x)}{Pr}[ u(x,z) \in \mathcal{U}_3] + e^{\epsilon/2} \cdot \frac{\delta'}{2}\\
+& = e^{\epsilon} \cdot \underset{z \thicksim \hexpmech(y)}{Pr}[ u(y,z) \in \mathcal{U}] + \delta = 2\Big( e^{\epsilon} \cdot \underset{z \thicksim \hexpmech(x)}{Pr}[ z \in \mathcal{S}] + \delta \Big)\\
+\end{split}
+\end{equation*}
+
+
+
 \end{proof}
 
 \section{Accuracy Analysis}
