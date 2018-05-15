@@ -42,6 +42,9 @@ def optimized_multibeta_function(alphas):
 		denominator -= 1.0
 	if denominator < 0.0:
 		denominators.append(math.gamma(1.0 + denominator))
+
+	denominators.sort()
+	nominators.sort()
 	# print nominators
 	# print denominators
 	d_pointer = len(denominators) - 1
@@ -510,15 +513,15 @@ def draw_error_l1(errors, model, filename):
 if __name__ == "__main__":
 	# Tests the functioning of the module
 
-	sample_size = 100
+	sample_size = 200
 	epsilon = 0.8
-	delta = 0.005
-	prior = Dir([2,2,2])
+	delta = 0.00005
+	prior = Dir([2,2,2,2])
 	Bayesian_Model = BayesInferwithDirPrior(prior, sample_size, epsilon, delta)
 
 	Bayesian_Model._experiments(200)
 
-	draw_error(Bayesian_Model._accuracy,Bayesian_Model, "order-3-size-100-runs-200-epsilon-08-hellinger-delta0005-box.png")
+	draw_error(Bayesian_Model._accuracy,Bayesian_Model, "order-4-size-200-runs-200-epsilon-08-hellinger-delta000005-box.png")
 
-	draw_error_l1(Bayesian_Model._accuracy_l1,Bayesian_Model, "order-3-size-100-runs-200-epsilon-08-l1norm-delta0005-box.png")
+	draw_error_l1(Bayesian_Model._accuracy_l1,Bayesian_Model, "order-4-size-200-runs-200-epsilon-08-l1norm-delta000005box.png")
 
