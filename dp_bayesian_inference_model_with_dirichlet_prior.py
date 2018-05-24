@@ -62,7 +62,6 @@ def optimized_multibeta_function(alphas):
 		# print nominators[n_pointer] ,d_pointer
 		r *= nominators[n_pointer] 
 		n_pointer -= 1
-
 	return r
 
 def Hellinger_Distance_Dir(Dir1, Dir2):
@@ -103,6 +102,7 @@ class Dir(object):
 				temp[j] += 1
 			temp[i] -= 1
 		return LS
+
 
 	def _score_sensitivity(self, r):
 		LS = 0.0
@@ -180,8 +180,8 @@ class BayesInferwithDirPrior(object):
 	def _set_SS(self):
 		# print "Calculating Smooth Sensitivity with Hellinger Distance....."
 		# start = time.clock()
-		gamma = 1
-		self._set_LS_Candidates()
+		#gamma = 1
+		#self._set_LS_Candidates()
 		# beta = self._epsilon / (2.0 * len(self._prior._alphas) * (gamma + 1))
 		# self._SS = max([self._LS_Candidates[r] * math.exp(- beta * Optimized_Hellinger_Distance_Dir(self._posterior, r)) for r in self._candidates])
 		# key1 = "(" + str(self._epsilon / 2.0) + "," + str(beta) + ") Admissible Niose and " + str(beta) + "-Smooth Sensitivity (" + str(self._SS) + ")|" + str(self._epsilon) + "-DP"
@@ -198,7 +198,8 @@ class BayesInferwithDirPrior(object):
 		print "Calculating Smooth Sensitivity with Hamming Distance....."
 		start = time.clock()
 		beta = math.log(1 - self._epsilon / (2.0 * math.log(self._delta / (2.0 * (self._sample_size)))))
-		self._SS_Hamming = max(self._LS, max([self._LS_Candidates[r] * math.exp(- beta * Hamming_Distance(self._posterior, r)) for r in self._candidates]))
+		#self._SS_Hamming = max(self._LS, max([self._LS_Candidates[r] * math.exp(- beta * Hamming_Distance(self._posterior, r)) for r in self._candidates]))
+		self._SS_Hamming = self._LS
 		key3 = "Exponential Mechanism with " + str(beta) + " - Bound Smooth Sensitivity (" + str(self._SS_Hamming) + ")|(" + str(self._epsilon) + "," + str(self._delta) + ")-DP"
 		print key3
 		key3 = "ExpoMech of SS"
@@ -513,15 +514,15 @@ def draw_error_l1(errors, model, filename):
 if __name__ == "__main__":
 	# Tests the functioning of the module
 
-	sample_size = 100
+	sample_size = 80
 	epsilon = 0.8
 	delta = 0.00005
-	prior = Dir([2,2,2,2,2])
+	prior = Dir([2,2,2,2])
 	Bayesian_Model = BayesInferwithDirPrior(prior, sample_size, epsilon, delta)
 
-	Bayesian_Model._experiments(200)
+	Bayesian_Model._experiments(10000)
 
-	draw_error(Bayesian_Model._accuracy,Bayesian_Model, "order-5-size-100-runs-200-epsilon-08-hellinger-delta000005-box.png")
+	draw_error(Bayesian_Model._accuracy,Bayesian_Model, "order-4-size-80-runs-10000-epsilon-08-hellinger-delta000005-box.png")
 
-	draw_error_l1(Bayesian_Model._accuracy_l1,Bayesian_Model, "order-5-size-100-runs-200-epsilon-08-l1norm-delta000005box.png")
+	draw_error_l1(Bayesian_Model._accuracy_l1,Bayesian_Model, "order-4-size-80-runs-10000-epsilon-08-l1norm-delta000005box.png")
 
