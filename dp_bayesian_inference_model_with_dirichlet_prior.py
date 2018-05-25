@@ -132,6 +132,9 @@ class BayesInferwithDirPrior(object):
 		self._SS_posterior = self._posterior
 		self._candidate_scores = {}
 		self._candidates = []
+		self._LS_probability = []
+		self._GS_probability = []
+		self._SS_probability = []
 		self._GS = 0.0
 		self._LS_Candidates = {}
 		self._VS = {}
@@ -221,7 +224,15 @@ class BayesInferwithDirPrior(object):
 		key = "Expomech of LS"
 		self._accuracy[key] = []
 		self._accuracy_l1[key] = []
-		self._keys.append(key)		
+		self._keys.append(key)
+		for r in self._candidates:
+			temp = math.exp(self._epsilon * self._candidate_scores[r]/(self._LS))
+			self._LS_probabilities.append(temp)
+			nomalizer += temp
+
+		for i in range(len(probabilities)):
+			self._LS_probabilities[i] = self._LS_probabilities[i]/nomalizer
+
 
 	def _set_GS(self):
 		temp = deepcopy(self._prior._alphas)
@@ -293,15 +304,8 @@ class BayesInferwithDirPrior(object):
 	def _exponentialize_GS(self):
 		probabilities = {}
 		nomalizer = 0.0
-		for r in self._candidates:
-			probabilities[r] = math.exp(self._epsilon * self._candidate_scores[r]/(self._GS))
-			nomalizer += probabilities[r]
-		outpro = random.random()
-		for r in self._candidates:
-			if outpro < 0:
-				return
-			outpro = outpro - probabilities[r]/nomalizer
-			self._exponential_posterior = r
+		self._exponential_posterior = np.random.choice(self._candidates, p=self._GS_probability)
+
 
 	def _exponentialize_LS(self):
 		probabilities = {}
@@ -322,6 +326,10 @@ class BayesInferwithDirPrior(object):
 		for r in self._candidates:
 			probabilities[r] = math.exp(self._epsilon * self._candidate_VS_scores[r]/(1.0))
 			nomalizer += probabilities[r]
+		for r in self._candidates:
+			probabilities[r] = probabilities[r]	/ nomalizer	
+
+		self._exponential_posterior = np.random.choice(self._candidates, p=probabilities.valuse())
 		outpro = random.random()
 		for r in self._candidates:
 			if outpro < 0:
@@ -514,15 +522,15 @@ def draw_error_l1(errors, model, filename):
 if __name__ == "__main__":
 	# Tests the functioning of the module
 
-	sample_size = 80
+	sample_size = 200
 	epsilon = 0.8
 	delta = 0.00005
 	prior = Dir([2,2,2,2])
 	Bayesian_Model = BayesInferwithDirPrior(prior, sample_size, epsilon, delta)
 
-	Bayesian_Model._experiments(10000)
+	Bayesian_Model._experiments(1000)
 
-	draw_error(Bayesian_Model._accuracy,Bayesian_Model, "order-4-size-80-runs-10000-epsilon-08-hellinger-delta000005-box.png")
+	draw_error(Bayesian_Model._accuracy,Bayesian_Model, "order-4-size-200-runs-1000-epsilon-08-hellinger-delta000005-box.png")
 
-	draw_error_l1(Bayesian_Model._accuracy_l1,Bayesian_Model, "order-4-size-80-runs-10000-epsilon-08-l1norm-delta000005box.png")
+	draw_error_l1(Bayesian_Model._accuracy_l1,Bayesian_Model, "order-4-size-200-runs-1000-epsilon-08-l1norm-delta000005box.png")
 
