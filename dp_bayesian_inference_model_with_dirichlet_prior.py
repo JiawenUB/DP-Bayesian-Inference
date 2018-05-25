@@ -211,6 +211,15 @@ class BayesInferwithDirPrior(object):
 		self._keys.append(key3)
 		print str(time.clock() - start) + "seconds."
 
+		for r in self._candidates:
+			temp = math.exp(self._epsilon * self._candidate_scores[r]/(self._SS_Hamming))
+			self._SS_probabilities.append(temp)
+			nomalizer += temp
+
+		for i in range(len(self._SS_probabilities)):
+			self._SS_probabilities[i] = self._SS_probabilities[i]/nomalizer
+
+
 		# beta = 0.0
 		# self._SS_Expon = max(self._LS, max([self._LS_Candidates[r] * math.exp(- beta * Hamming_Distance(self._posterior, r)) for r in self._candidates]))
 		# key2 = "Exponential Mechanism with " + str(beta) + " - Bound Smooth Sensitivity - " + str(self._SS_Expon) + "| Achieving" + str(self._epsilon) + "-DP"
@@ -225,12 +234,13 @@ class BayesInferwithDirPrior(object):
 		self._accuracy[key] = []
 		self._accuracy_l1[key] = []
 		self._keys.append(key)
+
 		for r in self._candidates:
 			temp = math.exp(self._epsilon * self._candidate_scores[r]/(self._LS))
 			self._LS_probabilities.append(temp)
 			nomalizer += temp
 
-		for i in range(len(probabilities)):
+		for i in range(len(self._LS_probabilities)):
 			self._LS_probabilities[i] = self._LS_probabilities[i]/nomalizer
 
 
@@ -245,6 +255,15 @@ class BayesInferwithDirPrior(object):
 		self._accuracy[key] = []
 		self._accuracy_l1[key] = []
 		self._keys.append(key)
+		
+		for r in self._candidates:
+			temp = math.exp(self._epsilon * self._candidate_scores[r]/(self._GS))
+			self._GS_probabilities.append(temp)
+			nomalizer += temp
+
+		for i in range(len(self._GS_probabilities)):
+			self._GS_probabilities[i] = self._GS_probabilities[i]/nomalizer
+
 
 	def _set_VS(self):
 		t = 2 * math.log(len(self._candidates) / 0.8) / self._epsilon
@@ -269,21 +288,21 @@ class BayesInferwithDirPrior(object):
 	# 	self._SS_posterior = Dir(temp)
 	# 	return
 
-	def _Smooth_Sensitivity_Noize_Hamming(self):
-		gamma = 1
-		z = abs(numpy.random.standard_cauchy())
-		alpha = self._epsilon/ (2.0 * (gamma + 1))
-		temp = [a + self._SS_Hamming * z /alpha for a in self._posterior._alphas]
-		self._SS_posterior = Dir(temp)
-		return
+	# def _Smooth_Sensitivity_Noize_Hamming(self):
+	# 	gamma = 1
+	# 	z = abs(numpy.random.standard_cauchy())
+	# 	alpha = self._epsilon/ (2.0 * (gamma + 1))
+	# 	temp = [a + self._SS_Hamming * z /alpha for a in self._posterior._alphas]
+	# 	self._SS_posterior = Dir(temp)
+	# 	return
 
-	def _Smooth_Sensitivity_Laplace_Noize(self):
-		gamma = 1
-		Z = [numpy.random.laplace(0,1) for i in range(len(self._posterior._alphas))]
-		alpha = self._epsilon/ 2.0
-		temp = [a + self._SS_Laplace * z /alpha for a,z in self._posterior._alphas,Z]
-		self._SS_posterior = Dir(temp)
-		return		
+	# def _Smooth_Sensitivity_Laplace_Noize(self):
+	# 	gamma = 1
+	# 	Z = [numpy.random.laplace(0,1) for i in range(len(self._posterior._alphas))]
+	# 	alpha = self._epsilon/ 2.0
+	# 	temp = [a + self._SS_Laplace * z /alpha for a,z in self._posterior._alphas,Z]
+	# 	self._SS_posterior = Dir(temp)
+	# 	return		
 
 
 
@@ -310,15 +329,8 @@ class BayesInferwithDirPrior(object):
 	def _exponentialize_LS(self):
 		probabilities = {}
 		nomalizer = 0.0
-		for r in self._candidates:
-			probabilities[r] = math.exp(self._epsilon * self._candidate_scores[r]/(self._LS))
-			nomalizer += probabilities[r]
-		outpro = random.random()
-		for r in self._candidates:
-			if outpro < 0:
-				return
-			outpro = outpro - probabilities[r]/nomalizer
-			self._exponential_posterior = r
+		self._exponential_posterior = np.random.choice(self._candidates, p=self._LS_probability)
+
 
 	def _exponentialize_VS(self):
 		probabilities = {}
@@ -340,15 +352,17 @@ class BayesInferwithDirPrior(object):
 	def _exponentialize_SS(self):
 		probabilities = {}
 		nomalizer = 0.0
-		for r in self._candidates:
-			probabilities[r] = math.exp(self._epsilon * self._candidate_scores[r]/(self._SS_Hamming))
-			nomalizer += probabilities[r]
-		outpro = random.random()
-		for r in self._candidates:
-			if outpro < 0:
-				return
-			outpro = outpro - probabilities[r]/nomalizer
-			self._exponential_posterior = r
+		self._exponential_posterior = np.random.choice(self._candidates, p=self._SS_probability)
+
+		# for r in self._candidates:
+		# 	probabilities[r] = math.exp(self._epsilon * self._candidate_scores[r]/(self._SS_Hamming))
+		# 	nomalizer += probabilities[r]
+		# outpro = random.random()
+		# for r in self._candidates:
+		# 	if outpro < 0:
+		# 		return
+		# 	outpro = outpro - probabilities[r]/nomalizer
+		# 	self._exponential_posterior = r
 
 	def _propose_test_release(self):
 		return
