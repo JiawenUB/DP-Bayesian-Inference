@@ -493,11 +493,12 @@ if __name__ == "__main__":
 	# 	"(" + str(epsilon) + ", 0) - DP Posterior Using Laplace Mechanism",\
 	# 	"Exponential Mechanism Posterior"])
 	Bayesian_Model._set_bias(0.4)
-	Bayesian_Model._experiments(200)
+	#Bayesian_Model._experiments(200)
 
-	draw_error(Bayesian_Model._accuracy,Bayesian_Model)
+	#draw_error(Bayesian_Model._accuracy,Bayesian_Model)
 	# draw_error_average(Bayesian_Model._average)
-	# print Beta_Distribution(35,35) - Beta_Distribution(36, 34)
+	print Beta_Distribution(100,100) - Beta_Distribution(99, 101)
+	f = Beta_Distribution(100,100) - Beta_Distribution(99, 101)
 	# print Beta_Distribution(35,35) - Beta_Distribution(36, 35)
 	# print Beta_Distribution(35,35) - Beta_Distribution(36, 36)
 
@@ -508,5 +509,16 @@ if __name__ == "__main__":
 	#print Beta_Distribution(80,81) - Beta_Distribution(81, 80)
 	#print Beta_Distribution(500,5) - Beta_Distribution(499, 2)
 	#print math.gamma(45.5), 89.0/2 * math.gamma(89.0/2)
+	a = beta_function_naive(100 + math.log(1./0.05) * math.sqrt(1 - math.pi/4)/2.0, 100 - math.log(1./0.05) * math.sqrt(1 - math.pi/4)/2.0)
+	
+	b = beta_function_naive(100,100)
+
+	c = beta_function_naive(100 + math.log(1./0.05) * math.sqrt(1 - math.pi/4), 100 - math.log(1./0.05) * math.sqrt(1 - math.pi/4))
+
+	d = -math.sqrt(1 - (a/math.sqrt(b * c)))
+
+	e = 199.0 * math.exp(0.8 * d / (2 * f))
+
+	print d,e
 	
 

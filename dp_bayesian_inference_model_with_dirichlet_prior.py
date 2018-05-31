@@ -132,9 +132,9 @@ class BayesInferwithDirPrior(object):
 		self._SS_posterior = self._posterior
 		self._candidate_scores = {}
 		self._candidates = []
-		self._LS_probability = []
-		self._GS_probability = []
-		self._SS_probability = []
+		self._LS_probabilities = []
+		self._GS_probabilities = []
+		self._SS_probabilities = []
 		self._GS = 0.0
 		self._LS_Candidates = {}
 		self._VS = {}
@@ -211,6 +211,9 @@ class BayesInferwithDirPrior(object):
 		self._keys.append(key3)
 		print str(time.clock() - start) + "seconds."
 
+		nomalizer = 0.0
+
+
 		for r in self._candidates:
 			temp = math.exp(self._epsilon * self._candidate_scores[r]/(self._SS_Hamming))
 			self._SS_probabilities.append(temp)
@@ -235,6 +238,8 @@ class BayesInferwithDirPrior(object):
 		self._accuracy_l1[key] = []
 		self._keys.append(key)
 
+		nomalizer = 0.0
+
 		for r in self._candidates:
 			temp = math.exp(self._epsilon * self._candidate_scores[r]/(self._LS))
 			self._LS_probabilities.append(temp)
@@ -255,6 +260,8 @@ class BayesInferwithDirPrior(object):
 		self._accuracy[key] = []
 		self._accuracy_l1[key] = []
 		self._keys.append(key)
+
+		nomalizer = 0.0
 		
 		for r in self._candidates:
 			temp = math.exp(self._epsilon * self._candidate_scores[r]/(self._GS))
@@ -309,6 +316,11 @@ class BayesInferwithDirPrior(object):
 	def _laplace_noize(self):
 		self._laplaced_posterior = Dir([alpha + abs(numpy.random.laplace(0, 2.0/self._epsilon)) for alpha in self._posterior._alphas])
 
+	def _laplace_noize_navie(self):
+		t = numpy.random.laplace(0, 1.0/self._epsilon)
+		self._laplaced_posterior = Dir([self._posterior._alphas[0] + t, self._posterior._alphas[0] - t])
+
+
 	def _laplace_noize_mle(self):
 		while True:
 			flage = True
@@ -322,26 +334,23 @@ class BayesInferwithDirPrior(object):
 
 	def _exponentialize_GS(self):
 		probabilities = {}
-		nomalizer = 0.0
-		self._exponential_posterior = np.random.choice(self._candidates, p=self._GS_probability)
+		self._exponential_posterior = numpy.random.choice(self._candidates, p=self._GS_probabilities)
 
 
 	def _exponentialize_LS(self):
 		probabilities = {}
-		nomalizer = 0.0
-		self._exponential_posterior = np.random.choice(self._candidates, p=self._LS_probability)
+		self._exponential_posterior = numpy.random.choice(self._candidates, p=self._LS_probabilities)
 
 
 	def _exponentialize_VS(self):
 		probabilities = {}
-		nomalizer = 0.0
 		for r in self._candidates:
 			probabilities[r] = math.exp(self._epsilon * self._candidate_VS_scores[r]/(1.0))
 			nomalizer += probabilities[r]
 		for r in self._candidates:
 			probabilities[r] = probabilities[r]	/ nomalizer	
 
-		self._exponential_posterior = np.random.choice(self._candidates, p=probabilities.valuse())
+		self._exponential_posterior = numpy.random.choice(self._candidates, p=probabilities.valuse())
 		outpro = random.random()
 		for r in self._candidates:
 			if outpro < 0:
@@ -352,7 +361,7 @@ class BayesInferwithDirPrior(object):
 	def _exponentialize_SS(self):
 		probabilities = {}
 		nomalizer = 0.0
-		self._exponential_posterior = np.random.choice(self._candidates, p=self._SS_probability)
+		self._exponential_posterior = numpy.random.choice(self._candidates, p=self._SS_probabilities)
 
 		# for r in self._candidates:
 		# 	probabilities[r] = math.exp(self._epsilon * self._candidate_scores[r]/(self._SS_Hamming))
@@ -375,8 +384,8 @@ class BayesInferwithDirPrior(object):
 		self._set_SS()
 		#self._show_all()
 		for i in range(times):
-			self._laplace_noize_mle()
-			self._accuracy[self._keys[0]].append(self._posterior - self._laplaced_posterior)
+			self._laplace_noize_navie()
+			self._accuracy[self._keys[0]].append(Hellinger_Distance_Dir(self._posterior, self._laplaced_posterior))
 			self._laplace_noize()
 			self._accuracy_l1[self._keys[0]].append(L1_Nrom(self._posterior, self._laplaced_posterior))
 			self._exponentialize_GS()
@@ -536,15 +545,37 @@ def draw_error_l1(errors, model, filename):
 if __name__ == "__main__":
 	# Tests the functioning of the module
 
-	sample_size = 200
+	sample_size = 100
 	epsilon = 0.8
 	delta = 0.00005
-	prior = Dir([2,2,2,2])
+	prior = Dir([2,2])
 	Bayesian_Model = BayesInferwithDirPrior(prior, sample_size, epsilon, delta)
 
 	Bayesian_Model._experiments(1000)
 
-	draw_error(Bayesian_Model._accuracy,Bayesian_Model, "order-4-size-200-runs-1000-epsilon-08-hellinger-delta000005-box.png")
+	draw_error(Bayesian_Model._accuracy,Bayesian_Model, "order-2-size-100-runs-1000-epsilon-08-hellinger-delta000005-box.png")
 
-	draw_error_l1(Bayesian_Model._accuracy_l1,Bayesian_Model, "order-4-size-200-runs-1000-epsilon-08-l1norm-delta000005box.png")
+	draw_error_l1(Bayesian_Model._accuracy_l1,Bayesian_Model, "order-2-size-100-runs-1000-epsilon-08-l1norm-delta000005box.png")
+	# print Dir([100,100]) - Dir([99, 101])
+	# f = Dir([100,100]) - Dir([99, 101])
+	# # print Beta_Distribution(35,35) - Beta_Distribution(36, 35)
+	# # print Beta_Distribution(35,35) - Beta_Distribution(36, 36)
 
+	# #print Beta_Distribution(150,1) - Beta_Distribution(149, 2)
+	# #print Beta_Distribution(170,1) - Beta_Distribution(169, 2)
+	# #print Beta_Distribution(51,50) - Beta_Distribution(50, 51)
+	# #print Beta_Distribution(70,71) - Beta_Distribution(71, 70)
+	# #print Beta_Distribution(80,81) - Beta_Distribution(81, 80)
+	# #print Beta_Distribution(500,5) - Beta_Distribution(499, 2)
+	# #print math.gamma(45.5), 89.0/2 * math.gamma(89.0/2)
+	# a = optimized_multibeta_function([100 + math.log(1./0.05) * math.sqrt(1 - math.pi/4)/2.0, 100 - math.log(1./0.05) * math.sqrt(1 - math.pi/4)/2.0])
+	
+	# b = optimized_multibeta_function([100,100])
+
+	# c = optimized_multibeta_function([100 + math.log(1./0.05) * math.sqrt(1 - math.pi/4), 100 - math.log(1./0.05) * math.sqrt(1 - math.pi/4)])
+
+	# d = -math.sqrt(1 - (a/math.sqrt(b * c)))
+
+	# e = 199.0 * math.exp(0.8 * d / (2 * f))
+
+	# print d,e
