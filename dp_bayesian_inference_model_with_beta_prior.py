@@ -120,6 +120,10 @@ class BayesInferwithBetaPrior(object):
 		self._bias = bias
 		self._update_observation()
 
+	def _set_observation(self, alpha, beta):
+		self._posterior = Beta_Distribution(self._prior._alpha + alpha, self._prior._alpha + beta)
+
+
 	def _update_observation(self):
 		self._observation = numpy.random.binomial(1, self._bias, self._sample_size)
 		self._posterior = Beta_Distribution(prior._alpha + numpy.count_nonzero(self._observation == 1),\
@@ -160,7 +164,8 @@ class BayesInferwithBetaPrior(object):
 		print "Calculating Smooth Sensitivity with Hamming Distance....."
 		start = time.clock()
 		beta = math.log(1 - self._epsilon / (2.0 * math.log(self._delta / (2 (n + 1)))))
-		self._SS_Hamming = max([self._LS_Candidates[r] * math.exp(- beta * Hamming_Distance(self._posterior, r)) for r in self._candidates])
+		# self._SS_Hamming = max([self._LS_Candidates[r] * math.exp(- beta * Hamming_Distance(self._posterior, r)) for r in self._candidates])
+		self._SS_Hamming = self._LS
 		key3 = "(" + str(self._epsilon / 2.0) + "," + str(beta) + ") Admissible Niose and " + str(beta) + "-Smooth Sensitivity (" + str(self._SS_Laplace) + ")|(" + str(self._epsilon) + "," + str(self._delta) + ")-DP"
 		self._accuracy[key3] = []
 		self._keys.append(key3)
@@ -342,7 +347,24 @@ class BayesInferwithBetaPrior(object):
 				return
 			outpro = outpro - scores[r]/sum_score
 			self._exponential_posterior = Beta_Distribution(self._prior._alpha + r, self._prior._beta + self._sample_size - r)	
+		
 		return
+
+	def _get_nomalizor():
+		self._set_LS()
+		self._set_SS
+		R = range(self._sample_size + 1)# [(j + 1, i + 1) for i in range(self._sample_size) for j in range(self._sample_size)]
+		scores = {}
+		sum_score = 0.0
+		#delta = math.sqrt( (1 - math.pi/4.0))
+		# print self._posterior._alpha,self._posterior._beta
+		delta = self._SS_Hamming
+		print delta
+		for r in R:
+			scores[r] = math.exp(self._epsilon * self._scores[r]/(delta))
+			# print scores(r)
+			sum_score = sum_score + scores[r]
+		return sum_score
 
 	def _experiments(self, times):
 		self._set_candidate_scores()
@@ -468,10 +490,20 @@ def draw_error(errors, model):
 if __name__ == "__main__":
 	# Tests the functioning of the module
 
-	sample_size = 200
-	epsilon = 1
-	prior = Beta_Distribution(4, 4)
+	sample_size = 98
+	epsilon = 0.8
+	prior = Beta_Distribution(1, 1)
 	Bayesian_Model = BayesInferwithBetaPrior(prior, sample_size, epsilon)
+	Bayesian_Model._set_observation(49,49)
+
+	Bayesian_Model._set_candidate_scores()
+	N = Bayesian_Model._get_nomalizor()
+	c = 0.5
+	p = 99 * math.exp(- 0.8 * 0.5 /(2 * Bayesian_Model._SS_Hamming))/N
+	print N
+
+
+
 
 	# draw_distribution([list(numpy.random.beta(alpha + Bayesian_Model._get_ones(),\
 	# beta + Bayesian_Model._get_zeros(), 1000)), \
@@ -492,33 +524,21 @@ if __name__ == "__main__":
 	# 	[" Bayesian Inferred Posterior","Randomized Response Posterior",\
 	# 	"(" + str(epsilon) + ", 0) - DP Posterior Using Laplace Mechanism",\
 	# 	"Exponential Mechanism Posterior"])
-	Bayesian_Model._set_bias(0.4)
+	# Bayesian_Model._set_bias(0.4)
 	#Bayesian_Model._experiments(200)
 
-	#draw_error(Bayesian_Model._accuracy,Bayesian_Model)
-	# draw_error_average(Bayesian_Model._average)
-	print Beta_Distribution(100,100) - Beta_Distribution(99, 101)
-	f = Beta_Distribution(100,100) - Beta_Distribution(99, 101)
-	# print Beta_Distribution(35,35) - Beta_Distribution(36, 35)
-	# print Beta_Distribution(35,35) - Beta_Distribution(36, 36)
 
-	#print Beta_Distribution(150,1) - Beta_Distribution(149, 2)
-	#print Beta_Distribution(170,1) - Beta_Distribution(169, 2)
-	#print Beta_Distribution(51,50) - Beta_Distribution(50, 51)
-	#print Beta_Distribution(70,71) - Beta_Distribution(71, 70)
-	#print Beta_Distribution(80,81) - Beta_Distribution(81, 80)
-	#print Beta_Distribution(500,5) - Beta_Distribution(499, 2)
-	#print math.gamma(45.5), 89.0/2 * math.gamma(89.0/2)
-	a = beta_function_naive(100 + math.log(1./0.05) * math.sqrt(1 - math.pi/4)/2.0, 100 - math.log(1./0.05) * math.sqrt(1 - math.pi/4)/2.0)
+	# a = beta_function_naive(50 + math.log(1./0.05) * math.sqrt(1 - math.pi/4)/2.0, 50 - math.log(1./0.05) * math.sqrt(1 - math.pi/4)/2.0)
 	
-	b = beta_function_naive(100,100)
+	# b = beta_function_naive(50,50)
 
-	c = beta_function_naive(100 + math.log(1./0.05) * math.sqrt(1 - math.pi/4), 100 - math.log(1./0.05) * math.sqrt(1 - math.pi/4))
+	# c = beta_function_naive(50 + math.log(1./0.05) * math.sqrt(1 - math.pi/4), 50 - math.log(1./0.05) * math.sqrt(1 - math.pi/4))
 
-	d = -math.sqrt(1 - (a/math.sqrt(b * c)))
+	# d = -math.sqrt(1 - (a/math.sqrt(b * c)))
 
-	e = 199.0 * math.exp(0.8 * d / (2 * f))
+	# t = math.exp(- 7.5/math.sqrt(1 - math.pi/4))
 
-	print d,e
+	
+
 	
 
