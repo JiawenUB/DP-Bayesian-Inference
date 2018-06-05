@@ -141,8 +141,8 @@ class BayesInferwithDirPrior(object):
 		self._SS = {}
 		self._LS = 0.0
 		self._SS_Hamming = 0.0
-		self._SS_Expon = 0.0
-		self._SS_Laplace = 0.0
+		# self._SS_Expon = 0.0
+		# self._SS_Laplace = 0.0
 		self._candidate_VS_scores = {}
 		#self._keys = ["Laplace Mechanism | Achieving" + str(self._epsilon) + "-DP"]
 		self._keys = ["LaplaceMech"]
@@ -155,6 +155,19 @@ class BayesInferwithDirPrior(object):
 
 	def _set_observation(self,observation):
 		self._posterior = Dir(observation) + self._prior
+
+	def _get_accuracy_bound(self, c, delta):
+		nominator = 0.0
+		for r in self._candidates:
+			if -self._candidate_scores[r] > c:
+				nominator += math.exp(self._candidate_scores[r] * self._epsilon/ (delta))
+
+		return nominator
+
+	def _get_approximation_accuracy_bound(self, c, delta):
+		return len(self._candidates) * math.exp(- self._epsilon * c/ delta)
+
+
 
 
 	def _update_observation(self):
@@ -226,7 +239,7 @@ class BayesInferwithDirPrior(object):
 		for i in range(len(self._SS_probabilities)):
 			self._SS_probabilities[i] = self._SS_probabilities[i]/nomalizer
 
-
+		return nomalizer
 		# beta = 0.0
 		# self._SS_Expon = max(self._LS, max([self._LS_Candidates[r] * math.exp(- beta * Hamming_Distance(self._posterior, r)) for r in self._candidates]))
 		# key2 = "Exponential Mechanism with " + str(beta) + " - Bound Smooth Sensitivity - " + str(self._SS_Expon) + "| Achieving" + str(self._epsilon) + "-DP"
@@ -252,6 +265,8 @@ class BayesInferwithDirPrior(object):
 		for i in range(len(self._LS_probabilities)):
 			self._LS_probabilities[i] = self._LS_probabilities[i]/nomalizer
 
+		return nomalizer
+
 
 	def _set_GS(self):
 		temp = deepcopy(self._prior._alphas)
@@ -274,6 +289,10 @@ class BayesInferwithDirPrior(object):
 
 		for i in range(len(self._GS_probabilities)):
 			self._GS_probabilities[i] = self._GS_probabilities[i]/nomalizer
+
+		return nomalizer
+
+
 
 
 	def _set_VS(self):
@@ -556,30 +575,22 @@ if __name__ == "__main__":
 	Bayesian_Model = BayesInferwithDirPrior(prior, sample_size, epsilon, delta)
 	Bayesian_Model._set_observation([49,49])
 
-	Bayesian_Model._experiments(1000)
+	c = 0.9
 
-	draw_error(Bayesian_Model._accuracy,Bayesian_Model, "order-2-size-100-runs-1000-epsilon-08-hellinger-delta000005-box.png")
+	Bayesian_Model._set_candidate_scores()
+	Bayesian_Model._set_LS()
+	nomalizer = Bayesian_Model._set_SS()
+	nominator = Bayesian_Model._get_accuracy_bound(c,Bayesian_Model._SS_Hamming)
 
-	draw_error_l1(Bayesian_Model._accuracy_l1,Bayesian_Model, "order-2-size-100-runs-1000-epsilon-08-l1norm-delta000005box.png")
-	# print Dir([100,100]) - Dir([99, 101])
-	# f = Dir([100,100]) - Dir([99, 101])
-	# # print Beta_Distribution(35,35) - Beta_Distribution(36, 35)
-	# # print Beta_Distribution(35,35) - Beta_Distribution(36, 36)
+	print nominator/nomalizer
 
-	# #print Beta_Distribution(150,1) - Beta_Distribution(149, 2)
-	# #print Beta_Distribution(170,1) - Beta_Distribution(169, 2)
-	# #print Beta_Distribution(51,50) - Beta_Distribution(50, 51)
-	# #print Beta_Distribution(70,71) - Beta_Distribution(71, 70)
-	# #print Beta_Distribution(80,81) - Beta_Distribution(81, 80)
-	# #print Beta_Distribution(500,5) - Beta_Distribution(499, 2)
-	# #print math.gamma(45.5), 89.0/2 * math.gamma(89.0/2)
-	# a = optimized_multibeta_function([100 + math.log(1./0.05) * math.sqrt(1 - math.pi/4)/2.0, 100 - math.log(1./0.05) * math.sqrt(1 - math.pi/4)/2.0])
+	print Bayesian_Model._get_approximation_accuracy_bound(c,Bayesian_Model._SS_Hamming)/nomalizer
+
+
+	# Bayesian_Model._experiments(1000)
+
+	# draw_error(Bayesian_Model._accuracy,Bayesian_Model, "order-2-size-100-runs-1000-epsilon-08-hellinger-delta000005-box.png")
+
+	# draw_error_l1(Bayesian_Model._accuracy_l1,Bayesian_Model, "order-2-size-100-runs-1000-epsilon-08-l1norm-delta000005box.png")
 	
-	# b = optimized_multibeta_function([100,100])
-	# c = optimized_multibeta_function([100 + math.log(1./0.05) * math.sqrt(1 - math.pi/4), 100 - math.log(1./0.05) * math.sqrt(1 - math.pi/4)])
 
-	# d = -math.sqrt(1 - (a/math.sqrt(b * c)))
-
-	# e = 199.0 * math.exp(0.8 * d / (2 * f))
-
-	# print d,e
