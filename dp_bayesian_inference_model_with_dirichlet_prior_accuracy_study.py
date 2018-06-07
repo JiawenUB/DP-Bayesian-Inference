@@ -568,25 +568,47 @@ def draw_error_l1(errors, model, filename):
 if __name__ == "__main__":
 	# Tests the functioning of the module
 
-	sample_size = 100
+	sample_size = 498
 	epsilon = 0.8
 	delta = 0.00005
-	prior = Dir([2,2])
+	prior = Dir([1,1])
 	Bayesian_Model = BayesInferwithDirPrior(prior, sample_size, epsilon, delta)
-	Bayesian_Model._set_observation([49,49])
-
-	c = 0.9
+	Bayesian_Model._set_observation([249,249])
 
 	Bayesian_Model._set_candidate_scores()
 	Bayesian_Model._set_LS()
-	nomalizer = Bayesian_Model._set_SS()
-	nominator = Bayesian_Model._get_accuracy_bound(c,Bayesian_Model._SS_Hamming)
+	nomalizer = Bayesian_Model._set_SS()	
+	c = numpy.arange(0.2,1.0,0.01)
 
-	print nominator/nomalizer
+	print nomalizer
 
-	print Bayesian_Model._get_approximation_accuracy_bound(c,Bayesian_Model._SS_Hamming)/nomalizer
+	accurate_bounds = []
 
+	approximate_bounds = []
 
+	for bound in c:
+
+		nominator = Bayesian_Model._get_accuracy_bound(bound,Bayesian_Model._SS_Hamming)
+
+		t = nominator/nomalizer
+
+		accurate_bounds.append(t)
+
+		print t
+
+		t = Bayesian_Model._get_approximation_accuracy_bound(bound,Bayesian_Model._SS_Hamming)/nomalizer
+
+		approximate_bounds.append(t)
+
+		print t
+	plt.plot(c,accurate_bounds, 'ro', label=('Accurate Bound')
+	)
+	plt.plot(c, approximate_bounds, 'g^', label=('Approximate Bound'))
+	plt.xlabel("c")
+	plt.ylabel("Pr[H(BI(x),r) > c]")
+	plt.title("datasize: 498, x: (249, 249), BI(x): beta(250,250), epsilon:0.8")
+	plt.legend()
+	plt.show()
 	# Bayesian_Model._experiments(1000)
 
 	# draw_error(Bayesian_Model._accuracy,Bayesian_Model, "order-2-size-100-runs-1000-epsilon-08-hellinger-delta000005-box.png")
