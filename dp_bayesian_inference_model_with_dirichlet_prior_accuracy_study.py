@@ -577,7 +577,7 @@ def accuracy_study_exponential_mechanism_SS(sample_size,epsilon,delta,prior,obse
 
 	y = numpy.arange(0,40,1)
 
-	t = [math.exp(- (i+1) / (math.sqrt(1 - math.pi/4)/0.8)) for i in y]
+	t = [math.exp(- (i+1) / (1.0/0.8)) for i in y]
 
 	T = [Hellinger_Distance_Dir(Bayesian_Model._posterior, (Bayesian_Model._posterior + Dir([i, - (i)]))) for i in y]
 
