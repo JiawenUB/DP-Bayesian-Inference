@@ -563,22 +563,23 @@ def draw_error_l1(errors, model, filename):
 		box.set(facecolor='lightblue' )
     #plt.show()
 	plt.savefig(filename)
-	return 
+	return
 
-if __name__ == "__main__":
-	# Tests the functioning of the module
 
-	sample_size = 498
-	epsilon = 0.8
-	delta = 0.00005
-	prior = Dir([1,1])
+def accuracy_study_exponential_mechanism_SS(sample_size,epsilon,delta,prior,observation):
 	Bayesian_Model = BayesInferwithDirPrior(prior, sample_size, epsilon, delta)
-	Bayesian_Model._set_observation([249,249])
+	Bayesian_Model._set_observation(observation)
 
 	Bayesian_Model._set_candidate_scores()
 	Bayesian_Model._set_LS()
 	nomalizer = Bayesian_Model._set_SS()	
-	c = numpy.arange(0.2,1.0,0.01)
+	#c = numpy.arange(0.2,1.0,0.01)
+
+	y = numpy.arange(0,40,1)
+
+	t = [math.exp(- (i+1) / (math.sqrt(1 - math.pi/4)/0.8)) for i in y]
+
+	T = [Hellinger_Distance_Dir(Bayesian_Model._posterior, (Bayesian_Model._posterior + Dir([i, - (i)]))) for i in y]
 
 	print nomalizer
 
@@ -586,29 +587,61 @@ if __name__ == "__main__":
 
 	approximate_bounds = []
 
-	for bound in c:
+	for bound in T:
 
 		nominator = Bayesian_Model._get_accuracy_bound(bound,Bayesian_Model._SS_Hamming)
 
-		t = nominator/nomalizer
+		temp = nominator/nomalizer
+		accurate_bounds.append(temp)
+		print temp
 
-		accurate_bounds.append(t)
-
-		print t
-
-		t = Bayesian_Model._get_approximation_accuracy_bound(bound,Bayesian_Model._SS_Hamming)/nomalizer
-
-		approximate_bounds.append(t)
-
-		print t
-	plt.plot(c,accurate_bounds, 'ro', label=('Accurate Bound')
-	)
-	plt.plot(c, approximate_bounds, 'g^', label=('Approximate Bound'))
+		temp = Bayesian_Model._get_approximation_accuracy_bound(bound,Bayesian_Model._SS_Hamming)/nomalizer
+		approximate_bounds.append(temp)
+		print temp
+	
+	plt.plot(T, accurate_bounds, 'ro', label=('ExpMech_SS Accurate Bound'))
+	#plt.plot(T, approximate_bounds, 'g^', label=('Expmech_SS zApproximate Bound'))
+	plt.plot(T, t, 'bs', label=('Laplace Bound'))
 	plt.xlabel("c")
 	plt.ylabel("Pr[H(BI(x),r) > c]")
-	plt.title("datasize: 498, x: (249, 249), BI(x): beta(250,250), epsilon:0.8")
+	plt.title("datasize: "+ str(sample_size) + ", x: "+ str(observation) + ", BI(x): beta"+ str(Bayesian_Model._posterior._alphas) + ", epsilon:0.8")
 	plt.legend()
 	plt.show()
+
+def accuracy_study_laplace(sample_size,epsilon,delta,prior,observation):
+	Bayesian_Model = BayesInferwithDirPrior(prior, sample_size, epsilon, delta)
+	Bayesian_Model._set_observation(observation)
+
+	Bayesian_Model._set_candidate_scores()
+	Bayesian_Model._set_LS()
+	nomalizer = Bayesian_Model._set_SS()	
+
+	y = numpy.arange(0.0,20,0.1)
+
+	t = [math.exp(- i / math.sqrt(1 - math.pi/4)) for i in y]
+
+	T = [Hellinger_Distance_Dir(Bayesian_Model._posterior, (Bayesian_Model._posterior + Dir([i, -i]))) for i in y]
+	
+	plt.plot(T, t, 'ro', label=('Laplace Bound'))
+	plt.xlabel("c")
+	plt.ylabel("Pr[H(BI(x),r) > c]")
+	plt.title("datasize: "+ str(sample_size) + ", x: "+ str(observation) + ", BI(x): beta"+ str(Bayesian_Model._posterior._alphas) + ", epsilon:0.8")
+	plt.legend()
+	plt.show()
+
+
+if __name__ == "__main__":
+
+	sample_size = 98
+	epsilon = 0.8
+	delta = 0.00005
+	prior = Dir([1,1])
+	observation = [49, 49]
+	accuracy_study_exponential_mechanism_SS(sample_size,epsilon,delta,prior,observation)
+	#accuracy_study_laplace(sample_size,epsilon,delta,prior,observation)
+	# Tests the functioning of the module
+
+	#print Dir([50,50]) - Dir([47,53])
 	# Bayesian_Model._experiments(1000)
 
 	# draw_error(Bayesian_Model._accuracy,Bayesian_Model, "order-2-size-100-runs-1000-epsilon-08-hellinger-delta000005-box.png")
