@@ -577,11 +577,13 @@ def accuracy_study_exponential_mechanism_SS(sample_size,epsilon,delta,prior,obse
 
 	y = numpy.arange(0,40,1)
 
-	t = [math.exp(- (i+1) / (1.0/0.8)) for i in y]
+	t = [math.exp(- (i+1) / (1.0/epsilon)) for i in y]
 
 	T = [Hellinger_Distance_Dir(Bayesian_Model._posterior, (Bayesian_Model._posterior + Dir([i, - (i)]))) for i in y]
 
 	print nomalizer
+
+	print Bayesian_Model._SS_Hamming
 
 	accurate_bounds = []
 
@@ -604,7 +606,7 @@ def accuracy_study_exponential_mechanism_SS(sample_size,epsilon,delta,prior,obse
 	plt.plot(T, t, 'bs', label=('Laplace Bound'))
 	plt.xlabel("c")
 	plt.ylabel("Pr[H(BI(x),r) > c]")
-	plt.title("datasize: "+ str(sample_size) + ", x: "+ str(observation) + ", BI(x): beta"+ str(Bayesian_Model._posterior._alphas) + ", epsilon:0.8")
+	plt.title("datasize: "+ str(sample_size) + ", x: "+ str(observation) + ", BI(x): beta"+ str(Bayesian_Model._posterior._alphas) + ", epsilon: "+ str(epsilon))
 	plt.legend()
 	plt.show()
 
