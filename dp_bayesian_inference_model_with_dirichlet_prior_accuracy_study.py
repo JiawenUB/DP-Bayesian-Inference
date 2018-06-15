@@ -575,7 +575,7 @@ def accuracy_study_exponential_mechanism_SS(sample_size,epsilon,delta,prior,obse
 	nomalizer = Bayesian_Model._set_SS()	
 	#c = numpy.arange(0.2,1.0,0.01)
 
-	y = numpy.arange(0,40,1)
+	y = numpy.arange(0,3,1)
 
 	t = [math.exp(- (i+1) / (1.0/epsilon)) for i in y]
 
@@ -610,37 +610,84 @@ def accuracy_study_exponential_mechanism_SS(sample_size,epsilon,delta,prior,obse
 	plt.legend()
 	plt.show()
 
-def accuracy_study_laplace(sample_size,epsilon,delta,prior,observation):
+
+
+def accuracy_study_discrete(sample_size,epsilon,delta,prior,observation):
 	Bayesian_Model = BayesInferwithDirPrior(prior, sample_size, epsilon, delta)
 	Bayesian_Model._set_observation(observation)
 
 	Bayesian_Model._set_candidate_scores()
 	Bayesian_Model._set_LS()
-	nomalizer = Bayesian_Model._set_SS()	
+	nomalizer = Bayesian_Model._set_SS()
 
-	y = numpy.arange(0.0,20,0.1)
+	sorted_scores = sorted(Bayesian_Model._candidate_scores.items(), key=operator.itemgetter(1))
 
-	t = [math.exp(- i / math.sqrt(1 - math.pi/4)) for i in y]
+	Bayesian_Model._SS_probabilities.sort()
+	# print Bayesian_Model._SS_probabilities
 
-	T = [Hellinger_Distance_Dir(Bayesian_Model._posterior, (Bayesian_Model._posterior + Dir([i, -i]))) for i in y]
-	
-	plt.plot(T, t, 'ro', label=('Laplace Bound'))
-	plt.xlabel("c")
-	plt.ylabel("Pr[H(BI(x),r) > c]")
-	plt.title("datasize: "+ str(sample_size) + ", x: "+ str(observation) + ", BI(x): beta"+ str(Bayesian_Model._posterior._alphas) + ", epsilon:0.8")
-	plt.legend()
-	plt.show()
+	i = 0
+	# print sorted_scores
+
+	candidates_classfied_by_steps = []
+
+	while i < len(sorted_scores):
+		j = i
+		candidates_for_print = []
+		candidates_for_classify = []
+		while True:			
+			if (i+1) > len(sorted_scores) or sorted_scores[j][1] != sorted_scores[i][1]:
+				break
+			candidates_for_print.append(sorted_scores[i][0]._alphas)
+			candidates_for_classify.append(sorted_scores[i][0])
+			# print sorted_scores[i]
+			i += 1
+		candidates_classfied_by_steps.append(candidates_for_classify)
+		print "Pr[H(BI(x), r) = " + str(-sorted_scores[j][1]) + " ] = " + str(Bayesian_Model._SS_probabilities[j]*(i - j)) + " (r = " + str(candidates_for_print) +")"
+   
+	# y = numpy.arange(0,4,1)
+	laplace_probabilities = {}
+	for i in range(len(Bayesian_Model._candidates)):
+		r = Bayesian_Model._candidates[i]
+		t = 1.0
+		for j in range(len(r._alphas) - 1):
+			a = abs(r._alphas[j] - Bayesian_Model._posterior._alphas[j])
+			t = t * (math.exp(- (a) / (2.0/epsilon)) - math.exp(- (a + 1) / (2.0/epsilon)))
+		laplace_probabilities[r] = t/4.0
+
+	for class_i in candidates_classfied_by_steps:
+		pro_i = 0.0
+		candidates_for_print = []
+		for c in class_i:
+			#print laplace_probabilities[c]
+			pro_i += laplace_probabilities[c]
+			candidates_for_print.append(c._alphas)
+		print "Pr[H(BI(x), r) = " + str(-Bayesian_Model._candidate_scores[class_i[0]]) + " ] = " + str(pro_i) + " (r = " + str(candidates_for_print) +")"
+
+
+	# T = [Hellinger_Distance_Dir(Bayesian_Model._posterior, (Bayesian_Model._posterior + Dir([i, -i]))) for i in y]
+
+	# print [(4 - i, 4 + i) for i in y]
+	# print t
+	# print T
+
+	# plt.plot(T, t, 'ro', label=('Laplace Bound'))
+	# plt.xlabel("c")
+	# plt.ylabel("Pr[H(BI(x),r) > c]")
+	# plt.title("datasize: "+ str(sample_size) + ", x: "+ str(observation) + ", BI(x): beta"+ str(Bayesian_Model._posterior._alphas) + ", epsilon:0.8")
+	# plt.legend()
+	# plt.show()
 
 
 if __name__ == "__main__":
 
-	sample_size = 98
+	sample_size = 9
 	epsilon = 0.8
 	delta = 0.00005
-	prior = Dir([1,1])
-	observation = [49, 49]
-	accuracy_study_exponential_mechanism_SS(sample_size,epsilon,delta,prior,observation)
-	#accuracy_study_laplace(sample_size,epsilon,delta,prior,observation)
+	prior = Dir([1,1,1])
+	observation = [3, 3, 3]
+	accuracy_study_discrete(sample_size,epsilon,delta,prior,observation)
+	# accuracy_study_exponential_mechanism_SS(sample_size,epsilon,delta,prior,observation)
+	# accuracy_study_laplace(sample_size,epsilon,delta,prior,observation)
 	# Tests the functioning of the module
 
 	#print Dir([50,50]) - Dir([47,53])
