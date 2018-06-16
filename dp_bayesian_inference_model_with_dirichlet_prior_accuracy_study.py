@@ -623,6 +623,7 @@ def accuracy_study_discrete(sample_size,epsilon,delta,prior,observation):
 	nomalizer = Bayesian_Model._set_SS()
 
 	sorted_scores = sorted(Bayesian_Model._candidate_scores.items(), key=operator.itemgetter(1))
+	steps = [-i for i in sorted(list(set(Bayesian_Model._candidate_scores.values())))]
 
 	Bayesian_Model._SS_probabilities.sort()
 	# print Bayesian_Model._SS_probabilities
@@ -631,6 +632,9 @@ def accuracy_study_discrete(sample_size,epsilon,delta,prior,observation):
 	# print sorted_scores
 
 	candidates_classfied_by_steps = []
+
+	probabilities_exp_by_steps = []
+	probabilities_lap_by_steps = []
 
 	while i < len(sorted_scores):
 		j = i
@@ -644,8 +648,8 @@ def accuracy_study_discrete(sample_size,epsilon,delta,prior,observation):
 			# print sorted_scores[i]
 			i += 1
 		candidates_classfied_by_steps.append(candidates_for_classify)
-
-		print "Pr[H(BI(x), r) = " + str(-sorted_scores[j][1]) + " ] = " + str(Bayesian_Model._SS_probabilities[j]*(i - j)) + " (r = " + str(candidates_for_print) +")"
+		probabilities_exp_by_steps.append(Bayesian_Model._SS_probabilities[j]*(i - j))
+		# print "Pr[H(BI(x), r) = " + str(-sorted_scores[j][1]) + " ] = " + str(Bayesian_Model._SS_probabilities[j]*(i - j)) + " (r = " + str(candidates_for_print) +")"
    
 	# y = numpy.arange(0,4,1)
 	laplace_probabilities = {}
@@ -667,9 +671,18 @@ def accuracy_study_discrete(sample_size,epsilon,delta,prior,observation):
 			#print laplace_probabilities[c]
 			pro_i += laplace_probabilities[c]
 			candidates_for_print.append(c._alphas)
-		print "Pr[H(BI(x), r) = " + str(-Bayesian_Model._candidate_scores[class_i[0]]) + " ] = " + str(pro_i) + " (r = " + str(candidates_for_print) +")"
+		probabilities_lap_by_steps.append(pro_i)
+		# print "Pr[H(BI(x), r) = " + str(-Bayesian_Model._candidate_scores[class_i[0]]) + " ] = " + str(pro_i) + " (r = " + str(candidates_for_print) +")"
 
-	
+	plt.plot(steps, probabilities_exp_by_steps, 'ro', label=('Exp Mech'))
+	# plt.plot(T, approximate_bounds, 'g^', label=('Expmech_SS zApproximate Bound'))
+	plt.plot(steps, probabilities_lap_by_steps, 'bs', label=('Laplace Mech'))
+	plt.xlabel("c / (steps from correct answer, in form of Hellinger Distance)")
+	plt.ylabel("Pr[H(BI(x),r) = c]")
+	plt.title("datasize: "+ str(sample_size) + ", x: "+ str(observation) + ", BI(x): beta"+ str(Bayesian_Model._posterior._alphas) + ", epsilon: "+ str(epsilon))
+	plt.legend()
+	plt.grid()
+	plt.show()
 	# T = [Hellinger_Distance_Dir(Bayesian_Model._posterior, (Bayesian_Model._posterior + Dir([i, -i]))) for i in y]
 
 	# print [(4 - i, 4 + i) for i in y]
@@ -690,7 +703,7 @@ if __name__ == "__main__":
 	epsilon = 0.8
 	delta = 0.00005
 	prior = Dir([1,1,1,1])
-	observation = [20, 20, 20, 20]
+	observation = [20,20,20,20]
 	# Bayesian_Model = BayesInferwithDirPrior(prior, sample_size, epsilon, delta)
 
 	accuracy_study_discrete(sample_size,epsilon,delta,prior,observation)
