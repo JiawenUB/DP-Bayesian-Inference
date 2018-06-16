@@ -699,23 +699,23 @@ def accuracy_study_discrete(sample_size,epsilon,delta,prior,observation):
 
 if __name__ == "__main__":
 
-	sample_size = 80
+	sample_size = 98
 	epsilon = 0.8
 	delta = 0.00005
-	prior = Dir([1,1,1,1])
-	observation = [20,20,20,20]
-	# Bayesian_Model = BayesInferwithDirPrior(prior, sample_size, epsilon, delta)
+	prior = Dir([1,1])
+	observation = [49,49]
+	Bayesian_Model = BayesInferwithDirPrior(prior, sample_size, epsilon, delta)
 
-	accuracy_study_discrete(sample_size,epsilon,delta,prior,observation)
+	# accuracy_study_discrete(sample_size,epsilon,delta,prior,observation)
 	# accuracy_study_exponential_mechanism_SS(sample_size,epsilon,delta,prior,observation)
 	# accuracy_study_laplace(sample_size,epsilon,delta,prior,observation)
 	# Tests the functioning of the module
 
 	#print Dir([50,50]) - Dir([47,53])
-	# Bayesian_Model._set_observation(observation)
-	# Bayesian_Model._experiments(1000)
+	Bayesian_Model._set_observation(observation)
+	Bayesian_Model._experiments(10000)
 
-	# draw_error(Bayesian_Model._accuracy,Bayesian_Model, "order-3-size-60-runs-1000-epsilon-08-hellinger-delta000005-observation202020-box.png")
+	draw_error(Bayesian_Model._accuracy,Bayesian_Model, "order-2-size-98-runs-1000-epsilon-08-hellinger-delta000005-observation202020-box.png")
 
 	# draw_error_l1(Bayesian_Model._accuracy_l1,Bayesian_Model, "order-2-size-100-runs-1000-epsilon-08-l1norm-delta000005box.png")
 	
