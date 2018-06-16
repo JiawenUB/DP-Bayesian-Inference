@@ -269,10 +269,12 @@ class BayesInferwithDirPrior(object):
 
 
 	def _set_GS(self):
-		temp = deepcopy(self._prior._alphas)
-		temp[0] += 1
-		temp[1] -= 1
-		self._GS = self._prior - Dir(temp)
+		t1 = [1 for i in range(self._prior._size)]
+		t1[0] += 1
+		t2 = [1 for i in range(self._prior._size)]
+		t2[1] += 1
+		
+		self._GS = Dir(t1) - Dir(t2)
 		key = "Exponential Mechanism with Global Sensitivity - " + str(self._GS) + "| Achieving" + str(self._epsilon) + "-DP"
 		print key
 		key = "ExpoMech of GS"
@@ -337,7 +339,7 @@ class BayesInferwithDirPrior(object):
 
 
 	def _laplace_noize(self):
-		self._laplaced_posterior = Dir([alpha + abs(numpy.random.laplace(0, 2.0/self._epsilon)) for alpha in self._posterior._alphas])
+		self._laplaced_posterior = Dir([alpha + round(abs(numpy.random.laplace(0, 2.0/self._epsilon))) for alpha in self._posterior._alphas])
 
 	def _laplace_noize_navie(self):
 		t = numpy.random.laplace(0, 1.0/self._epsilon)
@@ -407,16 +409,16 @@ class BayesInferwithDirPrior(object):
 		self._set_SS()
 		#self._show_all()
 		for i in range(times):
-			self._laplace_noize_navie()
-			self._accuracy[self._keys[0]].append(Hellinger_Distance_Dir(self._posterior, self._laplaced_posterior))
 			self._laplace_noize()
-			self._accuracy_l1[self._keys[0]].append(L1_Nrom(self._posterior, self._laplaced_posterior))
+			self._accuracy[self._keys[0]].append(Hellinger_Distance_Dir(self._posterior, self._laplaced_posterior))
+			# self._laplace_noize()
+			# self._accuracy_l1[self._keys[0]].append(L1_Nrom(self._posterior, self._laplaced_posterior))
 			self._exponentialize_GS()
-			self._accuracy_l1[self._keys[1]].append(L1_Nrom(self._posterior, self._exponential_posterior))
+			# self._accuracy_l1[self._keys[1]].append(L1_Nrom(self._posterior, self._exponential_posterior))
 			self._accuracy[self._keys[1]].append(self._posterior - self._exponential_posterior)
 			self._exponentialize_LS()
 			self._accuracy[self._keys[2]].append(self._posterior - self._exponential_posterior)
-			self._accuracy_l1[self._keys[2]].append(L1_Nrom(self._posterior, self._exponential_posterior))
+			# self._accuracy_l1[self._keys[2]].append(L1_Nrom(self._posterior, self._exponential_posterior))
 			# self._Smooth_Sensitivity_Noize()
 			# self._accuracy[self._keys[2]].append(self._posterior - self._SS_posterior)
 			# self._Smooth_Sensitivity_Noize_Hamming()
@@ -425,7 +427,7 @@ class BayesInferwithDirPrior(object):
 			# self._accuracy[self._keys[4]].append(self._posterior - self._SS_posterior)
 			self._exponentialize_SS()
 			self._accuracy[self._keys[3]].append(self._posterior - self._exponential_posterior)
-			self._accuracy_l1[self._keys[3]].append(L1_Nrom(self._posterior, self._exponential_posterior))
+			# self._accuracy_l1[self._keys[3]].append(L1_Nrom(self._posterior, self._exponential_posterior))
 
 
 	def _get_bias(self):
@@ -634,7 +636,7 @@ def accuracy_study_discrete(sample_size,epsilon,delta,prior,observation):
 		j = i
 		candidates_for_print = []
 		candidates_for_classify = []
-		while True:			
+		while True:
 			if (i+1) > len(sorted_scores) or sorted_scores[j][1] != sorted_scores[i][1]:
 				break
 			candidates_for_print.append(sorted_scores[i][0]._alphas)
@@ -642,6 +644,7 @@ def accuracy_study_discrete(sample_size,epsilon,delta,prior,observation):
 			# print sorted_scores[i]
 			i += 1
 		candidates_classfied_by_steps.append(candidates_for_classify)
+
 		print "Pr[H(BI(x), r) = " + str(-sorted_scores[j][1]) + " ] = " + str(Bayesian_Model._SS_probabilities[j]*(i - j)) + " (r = " + str(candidates_for_print) +")"
    
 	# y = numpy.arange(0,4,1)
@@ -649,10 +652,13 @@ def accuracy_study_discrete(sample_size,epsilon,delta,prior,observation):
 	for i in range(len(Bayesian_Model._candidates)):
 		r = Bayesian_Model._candidates[i]
 		t = 1.0
+		ylist = []
 		for j in range(len(r._alphas) - 1):
 			a = abs(r._alphas[j] - Bayesian_Model._posterior._alphas[j])
 			t = t * (math.exp(- (a) / (2.0/epsilon)) - math.exp(- (a + 1) / (2.0/epsilon)))
-		laplace_probabilities[r] = t/4.0
+			ylist.append(a)
+		yset = set(ylist)
+		laplace_probabilities[r] = t / (math.gamma(len(yset)) * (2 ** (len(list(filter(lambda a: a != 0, ylist))))))
 
 	for class_i in candidates_classfied_by_steps:
 		pro_i = 0.0
@@ -663,7 +669,7 @@ def accuracy_study_discrete(sample_size,epsilon,delta,prior,observation):
 			candidates_for_print.append(c._alphas)
 		print "Pr[H(BI(x), r) = " + str(-Bayesian_Model._candidate_scores[class_i[0]]) + " ] = " + str(pro_i) + " (r = " + str(candidates_for_print) +")"
 
-
+	
 	# T = [Hellinger_Distance_Dir(Bayesian_Model._posterior, (Bayesian_Model._posterior + Dir([i, -i]))) for i in y]
 
 	# print [(4 - i, 4 + i) for i in y]
@@ -680,20 +686,23 @@ def accuracy_study_discrete(sample_size,epsilon,delta,prior,observation):
 
 if __name__ == "__main__":
 
-	sample_size = 9
+	sample_size = 80
 	epsilon = 0.8
 	delta = 0.00005
-	prior = Dir([1,1,1])
-	observation = [3, 3, 3]
+	prior = Dir([1,1,1,1])
+	observation = [20, 20, 20, 20]
+	# Bayesian_Model = BayesInferwithDirPrior(prior, sample_size, epsilon, delta)
+
 	accuracy_study_discrete(sample_size,epsilon,delta,prior,observation)
 	# accuracy_study_exponential_mechanism_SS(sample_size,epsilon,delta,prior,observation)
 	# accuracy_study_laplace(sample_size,epsilon,delta,prior,observation)
 	# Tests the functioning of the module
 
 	#print Dir([50,50]) - Dir([47,53])
+	# Bayesian_Model._set_observation(observation)
 	# Bayesian_Model._experiments(1000)
 
-	# draw_error(Bayesian_Model._accuracy,Bayesian_Model, "order-2-size-100-runs-1000-epsilon-08-hellinger-delta000005-box.png")
+	# draw_error(Bayesian_Model._accuracy,Bayesian_Model, "order-3-size-60-runs-1000-epsilon-08-hellinger-delta000005-observation202020-box.png")
 
 	# draw_error_l1(Bayesian_Model._accuracy_l1,Bayesian_Model, "order-2-size-100-runs-1000-epsilon-08-l1norm-delta000005box.png")
 	
