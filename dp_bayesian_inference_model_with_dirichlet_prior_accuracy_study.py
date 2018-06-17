@@ -410,7 +410,7 @@ class BayesInferwithDirPrior(object):
 		#self._show_all()
 		for i in range(times):
 			self._laplace_noize()
-			self._accuracy[self._keys[0]].append(Hellinger_Distance_Dir(self._posterior, self._laplaced_posterior))
+			self._accuracy[self._keys[0]].append(self._posterior - self._laplaced_posterior)
 			# self._laplace_noize()
 			# self._accuracy_l1[self._keys[0]].append(L1_Nrom(self._posterior, self._laplaced_posterior))
 			self._exponentialize_GS()
@@ -674,9 +674,9 @@ def accuracy_study_discrete(sample_size,epsilon,delta,prior,observation):
 		probabilities_lap_by_steps.append(pro_i)
 		# print "Pr[H(BI(x), r) = " + str(-Bayesian_Model._candidate_scores[class_i[0]]) + " ] = " + str(pro_i) + " (r = " + str(candidates_for_print) +")"
 #
-	plt.plot(steps[200:], probabilities_exp_by_steps[200:], 'ro', label=('Exp Mech'))
+	plt.plot(steps, probabilities_exp_by_steps, 'ro', label=('Exp Mech'))
 	# plt.plot(T, approximate_bounds, 'g^', label=('Expmech_SS zApproximate Bound'))
-	plt.plot(steps[200:], probabilities_lap_by_steps[200:], 'bs', label=('Laplace Mech'))
+	plt.plot(steps, probabilities_lap_by_steps, 'bs', label=('Laplace Mech'))
 	plt.xlabel("c / (steps from correct answer, in form of Hellinger Distance)")
 	plt.ylabel("Pr[H(BI(x),r) = c]")
 	plt.title("datasize: "+ str(sample_size) + ", x: "+ str(observation) + ", BI(x): beta"+ str(Bayesian_Model._posterior._alphas) + ", epsilon: "+ str(epsilon))
@@ -699,23 +699,23 @@ def accuracy_study_discrete(sample_size,epsilon,delta,prior,observation):
 
 if __name__ == "__main__":
 
-	sample_size = 80
+	sample_size = 500
 	epsilon = 0.8
 	delta = 0.00005
-	prior = Dir([1,1,1,1])
-	observation = [1,1,1,77]
-	# Bayesian_Model = BayesInferwithDirPrior(prior, sample_size, epsilon, delta)
+	prior = Dir([1,1])
+	observation = [100,400]
+	Bayesian_Model = BayesInferwithDirPrior(prior, sample_size, epsilon, delta)
 
-	accuracy_study_discrete(sample_size,epsilon,delta,prior,observation)
+	# accuracy_study_discrete(sample_size,epsilon,delta,prior,observation)
 	# # accuracy_study_exponential_mechanism_SS(sample_size,epsilon,delta,prior,observation)
 	# # accuracy_study_laplace(sample_size,epsilon,delta,prior,observation)
 	# # Tests the functioning of the module
 
 	# #print Dir([50,50]) - Dir([47,53])
-	# Bayesian_Model._set_observation(observation)
-	# Bayesian_Model._experiments(10000)
+	Bayesian_Model._set_observation(observation)
+	Bayesian_Model._experiments(1000)
 
-	# draw_error(Bayesian_Model._accuracy,Bayesian_Model, "order-2-size-98-runs-1000-epsilon-08-hellinger-delta000005-observation202020-box.png")
+	draw_error(Bayesian_Model._accuracy,Bayesian_Model, "order-2-size-500-runs-1000-epsilon-08-hellinger-delta000005-observation202020-box.png")
 
 	# draw_error_l1(Bayesian_Model._accuracy_l1,Bayesian_Model, "order-2-size-100-runs-1000-epsilon-08-l1norm-delta000005box.png")
 	

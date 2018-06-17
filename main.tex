@@ -344,6 +344,8 @@ The formula for computing the local sensitivity is presented in Sec. \ref{subsec
 % \label{fig_data}
 % \end{center}
 % \end{figure*}
+We study the accuracy property of the exponential mechanism with three kind of sensitivity, as well as the Laplace mechanism for comparison. We repeat the experiments for 10000 times and plot their accuracy after every execution. Under different parameters setting, we got two groups of results as in Fig. \ref{fig_beta_hellinger} and Fig. \ref{fig_dirichlet_hellinger}. y-axis is accuracy is measured by Hellinger distance between output $r^*$ and the true inference result $\bysinfer(x)$, $\hlg(r^*, \bysinfer(x))$.
+
 
 \begin{figure*}
 \begin{center}
@@ -356,10 +358,9 @@ The formula for computing the local sensitivity is presented in Sec. \ref{subsec
 \label{fig_beta_hellinger}
 \end{center}
 \end{figure*}
+When prior distribution is $\betad$, under data size $n = 500$ and $300$, we get two experiment results shown in Fig. \ref{fig_beta_hellinger}.
 
-We study the accuracy property of the exponential mechanism with three kind of sensitivity, as well as the Laplace mechanism for comparison. As in Fig. \ref{fig_beta_hellinger}, the two figures shown the accuracy of four algorithms under same configuration. The accuracy is measured by Hellinger distance between output $r^*$ and the true inference result $\bysinfer(x)$, $\hlg(r^*, \bysinfer(x))$.
-
-Then, we extended the $\betad$ to the Bernoulli distribution, got the result in Fig. \ref{fig_dirichlet_hellinger}
+Then, we extended the $\betad$ to the $\dirichlet$ distribution as well as increase the data size, got the result in Fig. \ref{fig_dirichlet_hellinger}.
 \begin{figure*}
 \begin{center}
 \centering
@@ -373,7 +374,10 @@ Then, we extended the $\betad$ to the Bernoulli distribution, got the result in 
 \end{figure*}
 
 
+
+
 \subsection{Accuracy Study Based on $L_1$ Norm}
+\label{subsec_accuracy_l1}
 For comparison, we study the accuracy of these four mechanisms based on $l_1$ norm, with the Dirichlet distribution $\dirichlet(7,4,5)$ and data size $150$, shown in Fig. \ref{fig_dirichlet_hellinger_l1}.
 
 \begin{figure*}
@@ -388,16 +392,29 @@ For comparison, we study the accuracy of these four mechanisms based on $l_1$ no
 \end{center}
 \end{figure*}
 
-\subsection{Accuracy Study in Theory}
-\label{subsec_accuracy_theory}
-We studied the accuracy of our exponential mechanism and Laplace mechanism in theory. By computing the discrete probability of outputting each candidate in two mechanisms separately. We count the probabilities wrt. the steps from correct answer. For example, in the case where the correct posterior distribution is $\betad(5,5)$, the candidate $\betad(4,6)$ and $\betad(6,4)$ are of $1$ steps from $\betad(5,5)$; when correct posterior distribution is $\dirichlet(5,5,5)$, the candidate $\dirichlet(4,5,3)$, $\dirichlet(4,3,5)$, $\dirichlet(5,4,3)$, $\dirichlet(5,3,4)$, $\dirichlet(3,5,4)$ and $\dirichlet(5,5,5)$ are all of $1$ step from $\dirichlet(5,5,5)$. Under the Hellinger distance measurement, if two candidates are of the same steps from correct answer, they also have the same Hellinger distance from correct answer. i.e for every $\hlg(\bysinfer(x), z) = c$, it will have a corresponding steps $step(\hlg(\bysinfer(x), z) = c) = k$.
+From results above, we can obtain some preliminary conclusions: 1) Our exponential mechanism with smooth sensitivity can have similar accuracy as it with local sensitivity. Both of the two exponential mechanisms are do much better than it with global sensitivity. 2) The accuracy of our exponential mechanism is better than laplace mechanism. But the advantages are not significant. So we need to have a further exploration on the accuracy trade-off between Laplace mechanism and our exponential mechanism.
 
-So in order to be more concise and comparable to the experiment results in Sec. \ref{subsec_accuracy_hellinger}, we sum up the probabilities values of candidates whose steps (i.e., the hellinger distance) from the correct answer are the same:
+\subsection{Accuracy Trade-off Between Laplace and Our Exponential Mechanism with Smooth Sensitivity}
+\label{subsec_accuracy_tradeoff}
+Based on accuracy study in Sec. \ref{subsec_accuracy_hellinger} and \ref{subsec_accuracy_l1}, we are going to study the relationship between Laplace mechanism and our exponential mechanism further. We will work on some concrete cases based on accuracy bound and probability formula and then have analysis both in theory and experiments.
+
+\subsubsection{Theory Analysis}
+
+\begin{itemize}
+	\item In our exponential mechanism, the probability of outputting each candidates are calculated as: which is inversely proportional to the size of candidate size. 
+	
+	\item
+\end{itemize}
+
+\subsubsection{Experiment Analysis}
+We studied the accuracy trade-off between our exponential mechanism and Laplace mechanism in experiments. By computing the two mechanisms' discrete probabilities of outputting each candidate separately. Here, we count the probabilities wrt. the steps from correct answer. For example, in the case where the correct posterior distribution is $\betad(5,5)$, the candidate $\betad(4,6)$ and $\betad(6,4)$ are of $1$ steps from $\betad(5,5)$; when correct posterior distribution is $\dirichlet(5,5,5)$, the candidate $\dirichlet(4,5,3)$, $\dirichlet(4,3,5)$, $\dirichlet(5,4,3)$, $\dirichlet(5,3,4)$, $\dirichlet(3,5,4)$ and $\dirichlet(5,5,5)$ are all of $1$ step from $\dirichlet(5,5,5)$. Under the Hellinger distance measurement, if two candidates are of the same steps from correct answer, they also have the same Hellinger distance from correct answer. i.e for every $\hlg(\bysinfer(x), z) = c$, it will have a corresponding steps $step(\hlg(\bysinfer(x), z) = c) = k$.
+
+So in order to be more concise and comparable to the experiment results from Sec. \ref{subsec_accuracy_hellinger}, we sum up the probability values of candidates whose steps (i.e., the hellinger distance) from the correct answer are the same:
 \begin{equation*}
 \underset{z \thicksim \hexpmech(x)}{Pr}[ \hlg(\bysinfer(x), z) = c] = \sum\limits_{\{z| \hlg(\bysinfer(x), z) = c\}}\frac{exp(\frac{- \epsilon c}{S(x)})}{NL_x}
 \end{equation*}
 
-Then we get groups of discrete probabilities wrt. the steps (i.e., Hellinegr distance) from the correct answer, and plot them. Under different settings, we got same results as in Fig. \ref{fig_theory_50_50}, \ref{fig_theory_20_20_20} and \ref{fig_theory_20_20_20_20}. The x-axis is the hellinger distance from correct answer, i.e. steps from correct answer. Since they have the same meaning, here we just use the hellinger distance to label the x-axis. The y-axis is the probability of output candidates with corresponding steps from correct answer.
+Then we got groups of discrete probabilities wrt. the steps (i.e., Hellinegr distance) from the correct answer, and plotted them. Under different settings, we got same results as in Fig. \ref{fig_theory_50_50}, \ref{fig_theory_20_20_20} and \ref{fig_theory_20_20_20_20}. Subfigs (a) are from Sec. \ref{subsec_accuracy_hellinger} shows the average accuracy of these mechanisms by executing them for 10000 times. x-axis is labeled by each mechanism and y-axis is the accuracy of each executing result measured by Hellinegr distance. We name group (a) as experiment results. Subfigs (b) are concrete probabilities of Laplace and our exponential mechanisms' wrt. the steps. x-axis is the hellinger distance from correct answer, i.e. steps from correct answer. Since they have the same meaning, here we just use the hellinger distance to label the x-axis. The y-axis is the probability of output candidates with corresponding steps from correct answer. We name this group (b) as theory computing results.
 
 \begin{figure*}
 \begin{center}
@@ -411,7 +428,7 @@ Then we get groups of discrete probabilities wrt. the steps (i.e., Hellinegr dis
 \end{center}
 \end{figure*}
 
-As shown in Fig. \ref{fig_theory_50_50}, our exponential mechanism is better than Laplace, both in experiments and in theory. In Fig. \ref{fig_theory_50_50} (a), the experiment results shown that the average accuracy of our mechanism is better than Laplace mechanism. In Our exponential mechanism can output good answer with higher probability and output bad answer with lower probability.
+When the data size is small and the order of the prior distribution is low, our exponential mechanism is better than Laplace, both in experiments and in theory. as shown in Fig. \ref{fig_theory_50_50}.  In Fig. \ref{fig_theory_50_50} (a), the experiment results shown that the average accuracy of our mechanism is better than Laplace mechanism. In the mean time, the theory calculation results in Fig. \ref{fig_theory_50_50} (b) shows our exponential mechanism can output good answer with higher probability and output bad answer with lower probability as well.
 
 \begin{figure*}
 \begin{center}
@@ -420,12 +437,12 @@ As shown in Fig. \ref{fig_theory_50_50}, our exponential mechanism is better tha
     \includegraphics[width=0.48\textwidth]{theory_compare_20_20_20.eps}}
   \subfigure[discrete probabilities wrt. hellinger distance]{
     \includegraphics[width=0.48\textwidth]{20_20_20.eps}} 
-\caption{Settings: Dirichlet prior distribution $\dirichlet(1,1,1)$, observed data $x = (20,20,20) $,}
+\caption{Settings: Dirichlet prior distribution $\dirichlet(1,1,1)$, observed data $x = (20,20,20) $}
 \label{fig_theory_20_20_20}
 \end{center}
 \end{figure*}
 
-In Fig. \ref{fig_theory_20_20_20}, we plotted these discrete probabilities under the case (x=(20,20,20)),  I think this plot shows the laplace mech performs better than ExpMech to some extent but not significant.
+In Fig. \ref{fig_theory_20_20_20}, we plotted these discrete probabilities under the case (x=(20,20,20)). Fig. \ref{fig_theory_20_20_20} (a) shows that the  the This plot shows the laplace mech performs better than ExpMech to some extent but not significant.
 
 \begin{figure*}
 \begin{center}
@@ -439,7 +456,24 @@ In Fig. \ref{fig_theory_20_20_20}, we plotted these discrete probabilities under
 \end{center}
 \end{figure*}
 
-In Fig. \ref{fig_theory_20_20_20_20}, we plotted these discrete probabilities under the case ($x=(20,20,20,20)$).  this plot can show clearly that the Laplace Mech are better than Exp Mech when the size is larger and order is higher.  The Laplace can output good answers with much higher probabilities, even though their performances on bad answers are not so obviously.
+In Fig. \ref{fig_theory_20_20_20_20}, we plotted these discrete probabilities under the case ($x=(20,20,20,20)$).  This plot can show clearly that the Laplace Mech are better than Exp Mech when the size is larger and order is higher.  The Laplace can output good answers with much higher probabilities, even though their performances on bad answers are not so obviously.
+
+\begin{figure*}
+\begin{center}
+\centering
+  \subfigure[accuracy measurement based on Hellinger distance]{
+    \includegraphics[width=0.48\textwidth]{theory_compare_1_1_1_77.eps}}
+  \subfigure[discrete probabilities wrt. hellinger distance]{
+    \includegraphics[width=0.48\textwidth]{1_1_1_77.eps}} 
+\caption{Settings: Dirichlet prior distribution $\dirichlet(1,1,1,1)$, observed data $x = (1,1,1,77) $,}
+\label{fig_theory_1_1_1_77}
+\end{center}
+\end{figure*}
+
+We also consider an edge case, In Fig. \ref{fig_theory_1_1_1_77}, we plotted these discrete probabilities under the case ($x=(1,1,1,77)$).  This plot can show clearly that the Laplace Mech are better than Exp Mech when the size is larger and order is higher.  The Laplace can output good answers with much higher probabilities, even though their performances on bad answers are not so obviously.
+
+From these cases, we can have conclusions like: 
+
 \bibliographystyle{plain}
 \bibliography{bayesian.bib}
 
