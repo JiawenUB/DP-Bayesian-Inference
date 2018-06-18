@@ -422,7 +422,7 @@ In this part, we will do theory analysis on the two mechanisms' discrete probabi
 
 	Each candidate will occupy a portion of ``$1$'' as their outputting probability. Supposing candidates within three steps from the correct answer are good answers, the portion occupied by the good answers is decreasing when the size of candidate set increasing. That's to say, the probabilities of outputting good answers are decreasing when the data size and dimension of prior distribution increasing. More specifically, the candidate set size is $\sim n^{m-1}$, which means the probabilities of outputting good answers are decreasing with speed $\sim n^{m-1}$.
 
-	\item However in Laplace mechanism, the probability of producing noise has little relevance with the size of the candidate set. In $m$ dimensional Dirichlet distribution, when the correct posterior distribution is $\dirichlet(\alpha_1, \alpha_2, \cdots, \alpha_m)$, we are adding Laplace noise in this way: $\dirichlet(\alpha_1 + Lap_1, \alpha_2 + Lap_2, \cdots, n - (\alpha_1 + Lap_1 + \alpha_{m-1} + Lap_{m-1}))$ where $Lap_i \sim Floor(Lap(\frac{2}{\epsilon}))$ identical and independently. So we will have a list of noise $L_{noise} = \{|Lap_1|, |Lap_2|,\cdots ,|Lap_{m-1}|\}$ by taking the absolute value of every noise $|Lap_i|$. In order to get the probability of one candidate, we need to have a set $S_{noise}$ obtained from $L_{noise}$ by removing the duplicate values, a list $L_{noise/0}$ by removing the value 0. Then, the probabilities of outputting one candidate in Laplace mechanism can be computed by: 
+	\item However in Laplace mechanism, the probability of producing noise has little relevance with the size of the candidate set. In $m$ dimensional Dirichlet distribution, when the correct posterior distribution is $\dirichlet(\alpha_1, \alpha_2, \cdots, \alpha_m)$, we are adding Laplace noise in this way: $\dirichlet(\alpha_1 + Lap_1, \alpha_2 + Lap_2, \cdots, n - (\alpha_1 + Lap_1 + \alpha_{m-1} + Lap_{m-1}))$ where $Lap_i \sim Floor(Lap(\frac{2}{\epsilon}))$ are identical and independently. So we will have a list of noise $L_{noise} = \{|Lap_1|, |Lap_2|,\cdots ,|Lap_{m-1}|\}$ by taking the absolute value of every noise $|Lap_i|$. In order to get the probability of one candidate, we also need to have a set of noise $S_{noise}$ obtained from $L_{noise}$ by removing its duplicate values and a list $L_{noise/0}$ by removing the value 0 from $L_{noise}$. Then, the probabilities of outputting one candidate in Laplace mechanism can be computed by: 
 
 	\begin{equation*}
 	\begin{split}
@@ -434,14 +434,14 @@ In this part, we will do theory analysis on the two mechanisms' discrete probabi
 	\end{split}
 	\end{equation*}
 
-	By summing up the probability value of candidates whose steps from correct answer are the same, we can finally get the probability wrt. steps from correct answer.
+	By summing up the probability value of candidates whose steps from correct answer are the same, we can finally get the probability wrt. steps from correct answer in Laplace mechanism.
 
-	From analysis above, we can see the probability of output the good answer will not changed a lot as the size of the candidate set increasing. Specifically, we can easily have the two upper bounds: $|S_{noise}| \leq (m-1)$ and $|L_{noise/0}| \leq (m-1)$. As a result, the probabilities of outputting good answers are decreasing with speed upper bounded by $(m-1)! \times 2^{m-1}$. Since $n \gg 2$ and $m$ is usually smaller than $10$, it is easy to see that the decay speed $(m-1)! \times 2^{m-1}$ in Laplace mechanism is much more smaller than $n^{m-1}$ in our exponential mechanism. Moreover, when the steps are small, $0$ for example, $|S_{noise}| = |L_{noise/0}|  = 0$, which means the probability of correct answer will decrease very little no matter how large the candidate set is. 
+	From analysis above, we can see the probabilities of output the good answers will not changed a lot as the size of the candidate set increasing. Specifically, we can easily have two upper bounds: $|S_{noise}| \leq (m-1)$ and $|L_{noise/0}| \leq (m-1)$. From the two upper bounds, we can have that the probabilities of outputting good answers are decreasing with speed upper bounded by $(m-1)! \times 2^{m-1}$. Since $n \gg 2$ and $m$ is usually smaller than $10$, it is easy to see that the decay speed $(m-1)! \times 2^{m-1}$ in Laplace mechanism is much more smaller than $n^{m-1}$ in our exponential mechanism. Moreover, when the steps are small, $0$ for example, $|S_{noise}| = |L_{noise/0}|  = 0$, which means the probability of correct answer will decrease very little no matter how large the candidate set is. 
 
 	\item Then, we do some concrete cases analysis.
 
 	\begin{itemize}
-		\item when the prior is $\betad(1,1)$, the observed data set is $(1,1,0,0,1,1,0,0)$, it is easy to compute the posterior distribution: $\betad(5,5)$, the probability from the two mechanisms are: 
+		\item when the prior is $\betad(1,1)$, the observed data set $x = (1,1,0,0,1,1,0,0)$, it is easy to compute the posterior distribution: $\betad(5,5)$, the probability from the two mechanisms are: 
 
 		\begin{center}
 		 \begin{tabular}{c | c | c} 
@@ -461,7 +461,9 @@ In this part, we will do theory analysis on the two mechanisms' discrete probabi
 		\end{tabular}
 		\end{center}
 
-		\item when the prior is $\dirichlet(1,1,1)$, the observed data set is $(20,20,20)$ (suppose a black box will produce $A$, $B$, $C$ with a certain distribution, after observing this black box continuously for 60 times, we get $20$ times $A$, $20$ times $B$ and $20$ times $C$), we can get the posterior distribution $\dirichlet(21,21,21)$
+		Here, there are only 5 kind of steps from correct answer. Our mechanism in the second column is clearly better than Laplace mechanism in the third column. When the candidates are close to correct answer (for example, $0, 1, 2$ steps from correct answer), our mechanism can output them with higher probabilities than Laplace mechanism. On the other hand, when candidates are far away from correct answer (for example, $3, 4$) steps), our mechanism can output them with lower probabilities.
+
+		\item when the prior is $\dirichlet(1,1,1)$, the observed data set $x = (20,20,20)$ (suppose a black box will produce $A$, $B$, $C$ with a certain distribution, after observing this black box continuously for 60 times, we get $20$ times $A$, $20$ times $B$ and $20$ times $C$), we can get the posterior distribution $\dirichlet(21,21,21)$
 
 		\begin{center}
 		 \begin{tabular}{c | c | c} 
