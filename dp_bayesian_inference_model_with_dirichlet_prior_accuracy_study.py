@@ -649,7 +649,7 @@ def accuracy_study_discrete(sample_size,epsilon,delta,prior,observation):
 			i += 1
 		candidates_classfied_by_steps.append(candidates_for_classify)
 		probabilities_exp_by_steps.append(Bayesian_Model._SS_probabilities[j]*(i - j))
-		# print "Pr[H(BI(x), r) = " + str(-sorted_scores[j][1]) + " ] = " + str(Bayesian_Model._SS_probabilities[j]*(i - j)) + " (r = " + str(candidates_for_print) +")"
+		print "Pr[H(BI(x), r) = " + str(-sorted_scores[j][1]) + " ] = " + str(Bayesian_Model._SS_probabilities[j]*(i - j)) + " (r = " + str(candidates_for_print) +")"
    
 	# y = numpy.arange(0,4,1)
 	laplace_probabilities = {}
@@ -672,7 +672,7 @@ def accuracy_study_discrete(sample_size,epsilon,delta,prior,observation):
 			pro_i += laplace_probabilities[c]
 			candidates_for_print.append(c._alphas)
 		probabilities_lap_by_steps.append(pro_i)
-		# print "Pr[H(BI(x), r) = " + str(-Bayesian_Model._candidate_scores[class_i[0]]) + " ] = " + str(pro_i) + " (r = " + str(candidates_for_print) +")"
+		print "Pr[H(BI(x), r) = " + str(-Bayesian_Model._candidate_scores[class_i[0]]) + " ] = " + str(pro_i) + " (r = " + str(candidates_for_print) +")"
 #
 	plt.plot(steps, probabilities_exp_by_steps, 'ro', label=('Exp Mech'))
 	# plt.plot(T, approximate_bounds, 'g^', label=('Expmech_SS zApproximate Bound'))
@@ -699,23 +699,23 @@ def accuracy_study_discrete(sample_size,epsilon,delta,prior,observation):
 
 if __name__ == "__main__":
 
-	sample_size = 500
+	sample_size = 53
 	epsilon = 0.8
 	delta = 0.00005
-	prior = Dir([1,1])
-	observation = [100,400]
-	Bayesian_Model = BayesInferwithDirPrior(prior, sample_size, epsilon, delta)
+	prior = Dir([1,1,1,1])
+	observation = [1,1,1,50]
+	# Bayesian_Model = BayesInferwithDirPrior(prior, sample_size, epsilon, delta)
 
-	# accuracy_study_discrete(sample_size,epsilon,delta,prior,observation)
+	accuracy_study_discrete(sample_size,epsilon,delta,prior,observation)
 	# # accuracy_study_exponential_mechanism_SS(sample_size,epsilon,delta,prior,observation)
 	# # accuracy_study_laplace(sample_size,epsilon,delta,prior,observation)
 	# # Tests the functioning of the module
 
 	# #print Dir([50,50]) - Dir([47,53])
-	Bayesian_Model._set_observation(observation)
-	Bayesian_Model._experiments(1000)
+	# Bayesian_Model._set_observation(observation)
+	# Bayesian_Model._experiments(1000)
 
-	draw_error(Bayesian_Model._accuracy,Bayesian_Model, "order-2-size-500-runs-1000-epsilon-08-hellinger-delta000005-observation202020-box.png")
+	# draw_error(Bayesian_Model._accuracy,Bayesian_Model, "order-2-size-500-runs-1000-epsilon-08-hellinger-delta000005-observation202020-box.png")
 
 	# draw_error_l1(Bayesian_Model._accuracy_l1,Bayesian_Model, "order-2-size-100-runs-1000-epsilon-08-l1norm-delta000005box.png")
 	
