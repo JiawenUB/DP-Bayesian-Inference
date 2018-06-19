@@ -232,12 +232,14 @@ class BayesInferwithDirPrior(object):
 
 
 		for r in self._candidates:
-			temp = math.exp(self._epsilon * self._candidate_scores[r]/(self._SS_Hamming))
+			temp = math.exp(self._epsilon * self._candidate_scores[r]/(2 * self._SS_Hamming))
 			self._SS_probabilities.append(temp)
+
 			nomalizer += temp
 
 		for i in range(len(self._SS_probabilities)):
 			self._SS_probabilities[i] = self._SS_probabilities[i]/nomalizer
+			# print self._candidates[i]._alphas, self._SS_probabilities[i]
 
 		return nomalizer
 		# beta = 0.0
@@ -654,6 +656,10 @@ def accuracy_study_discrete(sample_size,epsilon,delta,prior,observation):
 def epsilon_study(sample_size,epsilon,delta,prior,x1, x2):
 	x1_probabilities = epsilon_study_discrete_probabilities(sample_size,epsilon,delta,prior,x1)
 	x2_probabilities = epsilon_study_discrete_probabilities(sample_size,epsilon,delta,prior,x2)
+	for key, item in x1_probabilities.items():
+		for k,i in x2_probabilities.items():
+			if key._alphas == k._alphas:
+				print "Pr[ ( M(x1) = " + str(key._alphas) + ") / ( M(x1) = " + str(key._alphas) + ") ] = " + str(math.log(item / i))
 
 
 
@@ -664,37 +670,18 @@ def epsilon_study_discrete_probabilities(sample_size,epsilon,delta,prior,observa
 
 	Bayesian_Model._set_candidate_scores()
 	Bayesian_Model._set_LS()
-	nomalizer = Bayesian_Model._set_SS()
-
-	sorted_scores = sorted(Bayesian_Model._candidate_scores.items(), key=operator.itemgetter(1))
-	steps = [-i for i in sorted(list(set(Bayesian_Model._candidate_scores.values())))]
-
-	Bayesian_Model._SS_probabilities.sort()
+	Bayesian_Model._set_SS()
 	# print Bayesian_Model._SS_probabilities
-
-	i = 0
 	# print sorted_scores
 
-	candidates_classfied_by_steps = []
+	probabilities_exp = {}
 
-	probabilities_exp_by_steps = []
-	probabilities_lap_by_steps = []
-
-	while i < len(sorted_scores):
-		j = i
-		candidates_for_print = []
-		candidates_for_classify = []
-		while True:
-			if (i+1) > len(sorted_scores) or sorted_scores[j][1] != sorted_scores[i][1]:
-				break
-			candidates_for_print.append(sorted_scores[i][0]._alphas)
-			candidates_for_classify.append(sorted_scores[i][0])
-			# print sorted_scores[i]
-			i += 1
-		candidates_classfied_by_steps.append(candidates_for_classify)
-		probabilities_exp_by_steps.append(Bayesian_Model._SS_probabilities[j]*(i - j))
-		print "Pr[H(BI(x), r) = " + str(-sorted_scores[j][1]) + " ] = " + str(Bayesian_Model._SS_probabilities[j]*(i - j)) + " (r = " + str(candidates_for_print) +")"
-	return probabilities_exp_by_steps
+	for i in range(len(Bayesian_Model._candidates)):
+		z = Bayesian_Model._candidates[i]
+		probabilities_exp[z] = Bayesian_Model._SS_probabilities[i]
+		print "Pr[ z = " + str(z._alphas) + " ] = " + str(Bayesian_Model._SS_probabilities[i])
+	
+	return probabilities_exp
 	# y = numpy.arange(0,4,1)
 	# laplace_probabilities = {}
 	# for i in range(len(Bayesian_Model._candidates)):
