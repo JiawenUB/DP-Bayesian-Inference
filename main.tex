@@ -377,8 +377,6 @@ In this section, we do some experiments in order to study the accuracy property 
 % \label{fig_data}
 % \end{center}
 % \end{figure*}
-We first analyzed the accuracy based on the Hellinger distance. By repeating the experiments for 10000 times and plotting the accuracy after each execution, we got two groups of results under different parameters setting as in Fig. \ref{fig_beta_hellinger} and Fig. \ref{fig_dirichlet_hellinger}. X-axis is labeled with different mechanisms. We took four mechanisms in our experiments: our newly designed exponential mechanism with smooth sensitivity named ``ExpoMech of SS'', exponential mechanism with local sensitivity named `` ExpoMech of LS'', exponential mechanism with global sensitivity named `` ExpoMech of GS'' and Laplace mechanism named ``LaplaceMech''. Y-axis is the accuracy measured by Hellinger distance between output $r$ of each execution and the correct inference result $\bysinfer(x)$, $\hlg(r, \bysinfer(x))$.
-
 
 \begin{figure*}
 \begin{center}
@@ -391,9 +389,7 @@ We first analyzed the accuracy based on the Hellinger distance. By repeating the
 \label{fig_beta_hellinger}
 \end{center}
 \end{figure*}
-When prior distribution is $\betad$, under data size $n = 500$ and $300$, we obtained two plots in Fig. \ref{fig_beta_hellinger}. It is shown that our ExpoMech of SS is slightly better than Laplace mechanism and much more better than it with global sensitivity.
 
-To have more experimental results, we then extended the $\betad$ to the $\dirichlet$ distribution as well as increased the data size, plotted in Fig. \ref{fig_dirichlet_hellinger}.
 \begin{figure*}
 \begin{center}
 \centering
@@ -405,6 +401,12 @@ To have more experimental results, we then extended the $\betad$ to the $\dirich
 \label{fig_dirichlet_hellinger}
 \end{center}
 \end{figure*}
+
+We first analyzed the accuracy based on the Hellinger distance. By repeating the experiments for 10000 times and plotting the accuracy after each execution, we got two groups of results under different parameters setting as in Fig. \ref{fig_beta_hellinger} and Fig. \ref{fig_dirichlet_hellinger}. X-axis is labeled with different mechanisms. We took four mechanisms in our experiments: our newly designed exponential mechanism with smooth sensitivity named ``ExpoMech of SS'', exponential mechanism with local sensitivity named `` ExpoMech of LS'', exponential mechanism with global sensitivity named `` ExpoMech of GS'' and Laplace mechanism named ``LaplaceMech''. Y-axis is the accuracy measured by Hellinger distance between output $r$ of each execution and the correct inference result $\bysinfer(x)$, $\hlg(r, \bysinfer(x))$.
+
+When prior distribution is $\betad$, under data size $n = 500$ and $300$, we obtained two plots in Fig. \ref{fig_beta_hellinger}. It is shown that our ExpoMech of SS is slightly better than Laplace mechanism and much more better than it with global sensitivity.
+
+To have more experimental results, we then extended the $\betad$ to the $\dirichlet$ distribution as well as increased the data size, plotted in Fig. \ref{fig_dirichlet_hellinger}.
 
 In both of the two cases, the performances of our exponential mechanism with smooth sensitivity and Laplace mechanism are very close. We can obtain some preliminary conclusions: 
 \begin{enumerate}

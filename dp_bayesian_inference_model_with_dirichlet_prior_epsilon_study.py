@@ -659,7 +659,7 @@ def epsilon_study(sample_size,epsilon,delta,prior,x1, x2):
 	for key, item in x1_probabilities.items():
 		for k,i in x2_probabilities.items():
 			if key._alphas == k._alphas:
-				print "Pr[ ( M(x1) = " + str(key._alphas) + ") / ( M(x1) = " + str(key._alphas) + ") ] = " + str(math.log(item / i))
+				print "Pr[ ( M(x1) = " + str(key._alphas) + ") / ( M(x2) = " + str(key._alphas) + ") ] = exp(" + str(math.log(item / i)) + ")"
 
 
 
