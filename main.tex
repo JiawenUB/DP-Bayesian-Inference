@@ -545,9 +545,9 @@ In this part, we will do theory analysis on the two mechanisms' discrete probabi
 
 
 \subsubsection{Experiment Analysis}
-In this part, we will do some experiment analysis to study the accuracy trade-off between our exponential mechanism and Laplace mechanism. By computing the two mechanisms' discrete probabilities wrt. steps (i.e., Hellinegr distance) from correct answer under different settings, we got groups of results as in Fig. \ref{fig_theory_50_50}, \ref{fig_theory_20_20_20} and \ref{fig_theory_20_20_20_20}. 
+In this part, we will do some experiment analysis to study the accuracy trade-off between our exponential mechanism and Laplace mechanism. By computing the two mechanisms' discrete probabilities wrt. steps (i.e., Hellinegr distance) from correct answer under different settings, we got groups of results as in Fig. \ref{fig_theory_50_50}, \ref{fig_theory_20_20_20}, \ref{fig_theory_20_20_20_20} and \ref{fig_theory_1_1_1_77}. 
 
-Subfigs (a) are from Sec. \ref{subsec_accuracy_hellinger} shows the average accuracy of these mechanisms by executing them for 10000 times. x-axis is labeled with mechanisms and y-axis is the accuracy of every execution outputs measured by Hellinegr distance. Subfigs (b) are concrete probabilities of Laplace and our exponential mechanisms' wrt. the steps. x-axis is the Hellinger distance from correct answer, i.e. steps from correct answer. Since they have the same meaning, here we just use the Hellinger distance to label the x-axis. The y-axis is the probability of output candidates with corresponding steps (i.e. Hellinger distance) from correct answer.
+Subfigs (a) based on Sec. \ref{subsec_accuracy_hellinger} shows the average accuracy of these mechanisms by executing them for 10000 times. The x-axis is labeled with mechanisms and y-axis is the accuracy of every execution outputs measured by Hellinegr distance. Subfigs (b) are concrete probabilities of Laplace and our exponential mechanisms' wrt. the steps. The x-axis is the Hellinger distance from correct answer, i.e. steps from correct answer. Since they have the same meaning, we just use the Hellinger distance to label the x-axis here. The y-axis is the probability of output candidates with corresponding steps (i.e. Hellinger distance) from correct answer.
 
 
 \begin{figure*}
@@ -563,7 +563,7 @@ Subfigs (a) are from Sec. \ref{subsec_accuracy_hellinger} shows the average accu
 \end{figure*}
 
 
-When the data size and the dimension of the prior distribution is small, our exponential mechanism can do better than Laplace, both in experiments and in theory, as shown in Fig. \ref{fig_theory_50_50}. In Fig. \ref{fig_theory_50_50} (a), the experiment results show that the average Hellinger distance of our mechanism's outputs are smaller than Laplace mechanism, i.e., the average accuracy of our mechanism is higher than Laplace mechanism. In the mean time, the theory calculation results in Fig. \ref{fig_theory_50_50} (b) also shows our exponential mechanism can output good answer with higher probability and output bad answer with lower probability as well.
+When the data size and the dimension of the prior distribution is small, our exponential mechanism can do better than Laplace, both in experiments and in theory, as shown in Fig. \ref{fig_theory_50_50}. In Subfig. \ref{fig_theory_50_50}(a), the experiment results show that the average Hellinger distance of our mechanism's outputs are smaller than Laplace mechanism, i.e., the average accuracy of our mechanism is higher than Laplace mechanism. In the mean time, the theory calculation results in Subfig. \ref{fig_theory_50_50}(b) also show that our exponential mechanism can output good answers with higher probabilities and output bad answers with lower probabilities than Laplace mechanism.
 
 
 \begin{figure*}
@@ -579,7 +579,7 @@ When the data size and the dimension of the prior distribution is small, our exp
 \end{figure*}
 
 
-In Fig. \ref{fig_theory_20_20_20}, we plotted the results under the case ($x = (20,20,20)$). SubFig. \ref{fig_theory_20_20_20}(a) shows that the average accuracy of Laplace mechanism is slightly better than our mechanism. Meanwhile, the SubFig. \ref{fig_theory_20_20_20}(b) shows the Laplace mechanism have higher probabilities on some good answers but lower on some other good answers. The advantage is not significant. So, we increase the data size and the dimension to have the next case.
+In Fig. \ref{fig_theory_20_20_20}, we plotted the results under the case ($x = (20,20,20)$). SubFig. \ref{fig_theory_20_20_20}(a) shows that the average accuracy of Laplace mechanism is slightly better than our mechanism. Meanwhile, the SubFig. \ref{fig_theory_20_20_20}(b) shows the Laplace mechanism have higher probabilities on some good answers but lower on some other good answers. The advantage is not significant. So, we increase the data size and the dimension in next case to have a further study.
 
 
 \begin{figure*}
@@ -595,7 +595,7 @@ In Fig. \ref{fig_theory_20_20_20}, we plotted the results under the case ($x = (
 \end{figure*}
 
 
-Here we studied the case when data size $n = 80$ and observed data set $x=(20,20,20,20)$ and plotted these discrete probabilities, shown in Fig. \ref{fig_theory_20_20_20_20}.  In this plot, SubFig. \ref{fig_theory_20_20_20_20}(a) shows that the Laplace Mech are better than Exp Mech very obviously. SubFig (b) shows the Laplace can output most of the good answers with higher probabilities than our exponential mechanism. The advantage in the SubFig. \ref{fig_theory_20_20_20_20}(a) is obvious but still not significant in SubFig. \ref{fig_theory_20_20_20_20}(b). So, we change the variance of the observed data set to have the next case.
+Here we studied the case when data size $n = 80$ and observed data set $x=(20,20,20,20)$ and plotted these discrete probabilities, shown in Fig. \ref{fig_theory_20_20_20_20}.  Subfig. \ref{fig_theory_20_20_20_20}(a) shows that the Laplace mechanism is better than our exponential mechanism very obviously. Subfig \ref{fig_theory_20_20_20_20}(b) shows that the Laplace can output most of the good answers with higher probabilities than our exponential mechanism. The advantage in the SubFig. \ref{fig_theory_20_20_20_20}(a) is obvious but still not significant in SubFig. \ref{fig_theory_20_20_20_20}(b). So, we change the variance of the observed data set in the next case.
 
 
 \begin{figure*}
@@ -611,7 +611,7 @@ Here we studied the case when data size $n = 80$ and observed data set $x=(20,20
 \end{figure*}
 
 
-In Fig. \ref{fig_theory_1_1_1_77}, we considered an edge case where the variance of the observed data set is small: $x=(1,1,1,77)$ and plotted these discrete probabilities. This plot can show clearly that the Laplace mechanism is much better than our exponential mechanism, both in (a) and (b). In SubFig. \ref{fig_theory_1_1_1_77}(b), the average accuracy of Laplace mechanism is conspicuously better than the other three exponential mechanisms. Also, in SubFig. \ref{fig_theory_1_1_1_77}(b), the Laplace mechanism can output good answers with much higher probabilities, even though their performances on bad answers are not so obviously. Moreover, no matter good answers or bad answers, their outputting probabilities are very close in our exponential mechanism. 
+In Fig. \ref{fig_theory_1_1_1_77}, we considered an edge case where the variance of the observed data set is small: $x=(1,1,1,77)$ and plotted these discrete probabilities. This plot can show clearly that the Laplace mechanism is much better than our exponential mechanism, both in (a) and (b). In Subfig. \ref{fig_theory_1_1_1_77}(b), the average accuracy of Laplace mechanism is conspicuously better than the other three exponential mechanisms. Also, in Subfig. \ref{fig_theory_1_1_1_77}(b), the Laplace mechanism can output good answers with much higher probabilities, even though their performances on bad answers are not so obviously. Moreover, no matter good answers or bad answers, their outputting probabilities are very close in our exponential mechanism. 
 
 From the theory and experimental analysis above, we obtained some conclusions
 \begin{enumerate}
