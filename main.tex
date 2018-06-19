@@ -350,7 +350,6 @@ In the three accuracy bounds, we will use the first one mostly in following anal
 
 
 
-
 \section{Experimental Evaluations}
 \subsection{Computation Efficiency}
 The formula for computing the local sensitivity is presented in Sec. \ref{subsec_emls}:$\max\limits_{\{|x,y'| \leq 1; y'\in \mathcal{X}^n\}}\max\limits_{\{r\in R\}} \{\hlg(\bysinfer(x), r) - \hlg(\bysinfer(y'), r)|\}$ can be reduced to $\max\limits_{\{|x,y'| \leq 1;y'\in \mathcal{X}^n\}}\hlg(\bysinfer(x), \bysinfer(y'))|$ by applying the distance triangle property. i.e., the maximum value over $\max\limits_{r \in R}$ always happen when $r = \bysinfer(x)$ itself, where $\Delta_{l}u(x) = \max\limits_{\{|x,y'| \leq 1;y'\in \mathcal{X}^n\}} \{\hlg(\bysinfer(x), \bysinfer(x)) - \hlg(\bysinfer(y'), \bysinfer(x))|\} = \max\limits_{\{|x,y'| \leq 1;y'\in \mathcal{X}^n\}} \{\hlg(\bysinfer(y'), \bysinfer(x))|\}$. We also have some experiments for validating our proposal as in Fig. \ref{fig_efficiency}, where we calculate the $\max\limits_{\{|x,y'| \leq 1;y'\in \mathcal{X}^n\}}$ value for every candidate $r \in R$. It is shown that maximum value taken when  $r = \bysinfer(x)$.
@@ -362,10 +361,10 @@ The formula for computing the local sensitivity is presented in Sec. \ref{subsec
 \caption{Experimental Results for Finding the Local Sensitivity Efficiently}
 \end{figure}
 
-\subsection{Accuracy Study}
+\subsection{Experimental Evaluations on Accuracy}
 In this section, we do some experiments in order to study the accuracy property of these mechanisms, including the exponential mechanism with three kind of sensitivity and the Laplace mechanism.
 
-\subsubsection{Accuracy Study Based on Hellinger Distance}
+\subsubsection{Based on Hellinger Distance}
 \label{subsec_accuracy_hellinger}
 % \begin{figure*}
 % \begin{center}
@@ -415,7 +414,7 @@ In both of the two cases, the performances of our exponential mechanism with smo
 
 So we need to have a further exploration on the accuracy trade-off between Laplace mechanism and our exponential mechanism.
 
-\subsubsection{Accuracy Study Based on $L_1$ Norm}
+\subsubsection{Based on $L_1$ Norm}
 \label{subsec_accuracy_l1}
 In this section, we will study the accuracy of these four mechanisms based on $l_1$ norm, with the Dirichlet distribution $\dirichlet(7,4,5)$ and data size $150$ for comparison, as in Fig. \ref{fig_dirichlet_hellinger_l1}.
 
@@ -434,7 +433,7 @@ In this section, we will study the accuracy of these four mechanisms based on $l
 The results based on $l_1$ norm are actually very similar to results based on Hellinegr distance.
 
 
-\subsection{Accuracy Trade-off Between Laplace and Our Exponential Mechanism with Smooth Sensitivity}
+\subsection{Evaluations on Accuracy Trade-off Between Laplace and Our Exponential Mechanism with Smooth Sensitivity}
 \label{subsec_accuracy_tradeoff}
 Based on accuracy study in Sec. \ref{subsec_accuracy_hellinger} and \ref{subsec_accuracy_l1}, we are going to have a further study on the relationship between Laplace mechanism and our exponential mechanism. We will do analysis both in theory and experiment based on accuracy bound and probability formula, and then study on some concrete cases.
 
