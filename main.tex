@@ -297,27 +297,58 @@ The first inequality holds by the sliding property, since the $\mathcal{U}_1 \ge
 
 \section{Accuracy Analysis}
 \subsection{Laplace Mechanism}
-Fixing a data set $x$, we already had the accuracy bound based on the $l_1$ norm as:
+Fixing a data set $x$, we will sample noise $Lap_i = floor(Y)$ where $Y \sim Lap(\frac{2}{\epsilon})$. Since already had the accuracy bound based on the $l_1$ norm in Laplace mechanism as:
 \begin{equation*}
-Pr[||Lap(\bysinfer(x)) - \bysinfer(x)||_1 \geq |x| \ln (\frac{m}{\gamma}) \frac{2}{\epsilon}] \leq \gamma,
+Pr[|Y| \geq t] = e^{- \frac{t \epsilon}{2}}.
 \end{equation*}
-where $m$ is the order of the Dirichlet distribution. Then we have the accuracy bound based on $\hlg$ distance.
-\begin{equation*}
-\begin{split}
-Pr[||Lap(\bysinfer(x)) - \bysinfer(x)||_1 \geq m \ln (\frac{m}{\gamma}) \frac{2}{\epsilon}] & \leq Pr[m ||Lap(\bysinfer(x)) - \bysinfer(x)||_{\infty} \geq m \ln (\frac{m}{\gamma}) \frac{2}{\epsilon}]\\
-& = Pr[||Lap(\bysinfer(x)) - \bysinfer(x)||_{\infty} \geq \ln (\frac{m}{\gamma}) \frac{2}{\epsilon}]\\
-& = \gamma
-\end{split} 
-\end{equation*}
+
+So we have the probability $Pr[| Lap_i |] = Pr[| Lap_i | \leq |Y| < | Lap_i | + 1] = e^{- \frac{| Lap_i | \epsilon}{2}} - e^{- \frac{(| Lap_i | + 1) \epsilon}{2}}$.
+
+When we are in the case of $m$ dimension Dirichlet distribution, we will add $(m-1)$ i.i.d. Laplace noises $\{| Lap_1 |, | Lap_2 |, \cdots, | Lap_{m-1} |\}$ to the output. Then the probability of each group of noises are calculated as $Pr[\{| Lap_1 |, | Lap_2 |, \cdots, | Lap_{m-1} |\}] = Pr[| Lap_1 | \leq |Y| < | Lap_1 | + 1] \times Pr[| Lap_2 | \leq |Y| < | Lap_2 | + 1] \times \cdots \times Pr[| Lap_{m-1} | \leq |Y| < | Lap_{m-1} | + 1] = (e^{- \frac{| Lap_1 | \epsilon}{2}} - e^{- \frac{(| Lap_1 | + 1) \epsilon}{2}}) \times (e^{- \frac{| Lap_2 | \epsilon}{2}} - e^{- \frac{(| Lap_2 | + 1) \epsilon}{2}}) \times \cdots \times (e^{- \frac{| Lap_{m-1} | \epsilon}{2}} - e^{- \frac{(| Lap_{m-1} | + 1) \epsilon}{2}})$.
+
+% where $m$ is the order of the Dirichlet distribution. Then we have the accuracy bound based on $\hlg$ distance.
+% \begin{equation*}
+% \begin{split}
+% Pr[||Lap(\bysinfer(x)) - \bysinfer(x)||_1 \geq m \ln (\frac{m}{\gamma}) \frac{2}{\epsilon}] & \leq Pr[m ||Lap(\bysinfer(x)) - \bysinfer(x)||_{\infty} \geq m \ln (\frac{m}{\gamma}) \frac{2}{\epsilon}]\\
+% & = Pr[||Lap(\bysinfer(x)) - \bysinfer(x)||_{\infty} \geq \ln (\frac{m}{\gamma}) \frac{2}{\epsilon}]\\
+% & = \gamma
+% \end{split} 
+% \end{equation*}
 
 
 \subsection{Exponential Mechanism with Global Sensitivity}
-
-
-\subsection{Exponential Mechanism with Local Sensitivity}
+Also, from the \cite{dwork2014algorithmic}, we already had the accuracy bound of exponential mechanism with global sensitivity as:
+\begin{equation*}
+\underset{z \thicksim \hexpmech(x)}{Pr}[ \hlg(\bysinfer(x), z) \geq c] \leq  \frac{|R| \exp{(\frac{- \epsilon c}{2 \Delta_g}})}{|R_{OPT}|\exp{(\frac{- \epsilon OPT_{\hlg(\bysinfer(x), z)}(x)}{2 \Delta_g})}},
+\end{equation*}
+where $|R|$ is the size of the candidate set. Since $OPT_{\hlg(\bysinfer(x), z)}(x) = 0$ and $|R_{OPT}| = 1$, we have a simplified accuracy bound here $\underset{z \thicksim \hexpmech(x)}{Pr}[ \hlg(\bysinfer(x), z) \geq c] \leq |R| \exp{(\frac{- \epsilon c}{2 \Delta_g}}),$
 
 
 \subsection{Exponential Mechanism with Smooth Sensitivity}
+We explored three accuracy bound for our exponential mechanism.
+
+First is the tight bound with very accurate calculation.
+\begin{equation*}
+\underset{z \thicksim \hexpmech(x)}{Pr}[ \hlg(\bysinfer(x), z) \geq c] = \sum\limits_{\{z | \hlg(\bysinfer(x), z) \geq c\}} \frac{e^{\frac{- \epsilon \hlg(\bysinfer(x), z)}{S(x)}}}{NL_x}.
+\end{equation*}
+
+In order to be more efficiently, we design the second accuracy bound which is slightly looser than the first one:
+
+\begin{equation*}
+\underset{z \thicksim \hexpmech(x)}{Pr}[ \hlg(\bysinfer(x), z) \geq c] \leq \frac{|R| \exp{(\frac{- \epsilon c}{S(x)}})}{NL_x}.
+\end{equation*}
+
+In the second bound, we still need to calculate the normaliser every time. So we want make further improvements on efficiency like follows:
+
+\begin{equation*}
+\underset{z \thicksim \hexpmech(x)}{Pr}[ \hlg(\bysinfer(x), z) \geq c] \leq \ \frac{|R| \exp{(\frac{- \epsilon c}{S(x)}})}{N(n)},
+\end{equation*}
+where we replace the $NL_x$ with a value only related to the size of the data. We haven't figure out the formula of this $N(n)$.
+
+In the three accuracy bounds, we will use the first one mostly in following analysis.
+
+
+
 
 
 \section{Experimental Evaluations}
@@ -441,6 +472,7 @@ In this part, we will do theory analysis on the two mechanisms' discrete probabi
 	\item Then, we do some concrete cases analysis.
 
 	\begin{itemize}
+
 		\item when the prior is $\betad(1,1)$, the observed data set $x = (1,1,0,0,1,1,0,0)$, it is easy to compute the posterior distribution: $\betad(5,5)$, the probability from the two mechanisms are: 
 
 		\begin{center}
