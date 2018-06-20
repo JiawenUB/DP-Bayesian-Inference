@@ -641,27 +641,38 @@ def accuracy_study_discrete(sample_size,epsilon,delta,prior,observation):
 	plt.legend()
 	plt.grid()
 	plt.show()
-	# T = [Hellinger_Distance_Dir(Bayesian_Model._posterior, (Bayesian_Model._posterior + Dir([i, -i]))) for i in y]
 
-	# print [(4 - i, 4 + i) for i in y]
-	# print t
-	# print T
 
-	# plt.plot(T, t, 'ro', label=('Laplace Bound'))
-	# plt.xlabel("c")
-	# plt.ylabel("Pr[H(BI(x),r) > c]")
-	# plt.title("datasize: "+ str(sample_size) + ", x: "+ str(observation) + ", BI(x): beta"+ str(Bayesian_Model._posterior._alphas) + ", epsilon:0.8")
-	# plt.legend()
-	# plt.show()
+
 def epsilon_study(sample_size,epsilon,delta,prior,x1, x2):
 	x1_probabilities = epsilon_study_discrete_probabilities(sample_size,epsilon,delta,prior,x1)
 	x2_probabilities = epsilon_study_discrete_probabilities(sample_size,epsilon,delta,prior,x2)
+	accuracy_epsilons = {}
 	for key, item in x1_probabilities.items():
 		for k,i in x2_probabilities.items():
 			if key._alphas == k._alphas:
-				print "Pr[ ( M(x1) = " + str(key._alphas) + ") / ( M(x2) = " + str(key._alphas) + ") ] = exp(" + str(math.log(item / i)) + ")"
+				accuracy_epsilons[str(key._alphas)] = math.log(item / i)
 
+	sorted_epsilons = sorted(accuracy_epsilons.items(), key=operator.itemgetter(1))
+	for key,value in sorted_epsilons:
+		print "Pr[ ( M(x1) = " + key + ") / ( M(x2) = " + key + ") ] = exp(" + str(value) + ")"
 
+	y = [value for key, value in sorted_epsilons]
+
+	x = range(len(sorted_epsilons))
+
+	xlabel = [key for key, value in sorted_epsilons]
+	plt.figure(figsize=(15,8))
+	plt.plot(x, y, 'bs-', label=('Exp Mech'))
+	# plt.plot(T, approximate_bounds, 'g^', label=('Expmech_SS zApproximate Bound'))
+	plt.xlabel("z / (candiates)")
+	plt.ylabel("Pr[(Pr[ ( M(x1) = z) / ( M(x2) = z) ])] = exp(y)")
+
+	plt.title("datasize: "+ str(sample_size) + ", x1: "+ str(x1) + ", x2: "+ str(x2) + ", epsilon: "+ str(epsilon))
+	plt.legend()
+	plt.xticks(x,xlabel,rotation=70,fontsize=8)
+	plt.grid()
+	plt.show()
 
 
 def epsilon_study_discrete_probabilities(sample_size,epsilon,delta,prior,observation):
@@ -729,12 +740,12 @@ def epsilon_study_discrete_probabilities(sample_size,epsilon,delta,prior,observa
 
 if __name__ == "__main__":
 
-	sample_size = 4
+	sample_size = 12
 	epsilon = 0.8
 	delta = 0.00005
-	prior = Dir([1,1])
-	x1 = [2,2]
-	x2 = [1,3]
+	prior = Dir([1,1,1])
+	x1 = [4,4,4]
+	x2 = [3,4,5]
 	epsilon_study(sample_size,epsilon,delta,prior,x1, x2)
 
 	# Bayesian_Model = BayesInferwithDirPrior(prior, sample_size, epsilon, delta)
