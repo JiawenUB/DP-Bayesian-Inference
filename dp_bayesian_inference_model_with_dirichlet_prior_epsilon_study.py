@@ -9,6 +9,7 @@ from fractions import Fraction
 import operator
 import time
 from matplotlib.patches import Polygon
+import statistics
 
 
 def L1_Nrom(A, B):
@@ -693,6 +694,43 @@ def epsilon_study_discrete_probabilities(sample_size,epsilon,delta,prior,observa
 		print "Pr[ z = " + str(z._alphas) + " ] = " + str(Bayesian_Model._SS_probabilities[i])
 	
 	return probabilities_exp
+
+def accuracy_VS_epsilon(sample_size,epsilons,delta,prior,observation):
+	exp_accuracy = []
+	lap_accuracy = []
+	exp_accuracy_average = []
+	lap_accuracy_average = []
+
+	for epsilon in epsilons:
+		Bayesian_Model = BayesInferwithDirPrior(prior, sample_size, epsilon, delta)
+		Bayesian_Model._set_observation(observation)
+		Bayesian_Model._experiments(150)
+		exp_accuracy.append(Bayesian_Model._accuracy[Bayesian_Model._keys[3]])
+		lap_accuracy.append(Bayesian_Model._accuracy[Bayesian_Model._keys[0]])
+		exp_accuracy_average.append(statistics.mean(Bayesian_Model._accuracy[Bayesian_Model._keys[3]]))
+		lap_accuracy_average.append(statistics.mean(Bayesian_Model._accuracy[Bayesian_Model._keys[0]]))
+	plt.figure(figsize=(15,8))
+
+	for i in range(len(epsilons)):
+		for a in exp_accuracy[i]:
+			plt.plot(epsilons[i], a, c = 'r', marker = 'o', alpha = 0.6)
+		for b in lap_accuracy[i]:
+			plt.plot(epsilons[i], b, c = 'b', marker = 'o', alpha = 0.6)
+
+	plt.plot(epsilons,exp_accuracy_average, 'ro-', label=('Exp Mech (mean)'))
+	plt.plot(epsilons,lap_accuracy_average, 'bo-', label=('Laplace Mech (mean)'))
+
+	plt.title("datasize: "+ str(sample_size) + ", x: "+ str(observation))
+
+	plt.ylabel("Accuracy/Hellinger Distance")
+	plt.xlabel("epsilon")
+
+	plt.legend()
+	plt.grid()
+	plt.show()
+
+
+	return
 	# y = numpy.arange(0,4,1)
 	# laplace_probabilities = {}
 	# for i in range(len(Bayesian_Model._candidates)):
@@ -740,15 +778,18 @@ def epsilon_study_discrete_probabilities(sample_size,epsilon,delta,prior,observa
 
 if __name__ == "__main__":
 
-	sample_size = 12
-	epsilon = 0.8
+	sample_size = 20
+	epsilon = 4.0
 	delta = 0.00005
-	prior = Dir([1,1,1])
-	x1 = [4,4,4]
-	x2 = [3,4,5]
-	epsilon_study(sample_size,epsilon,delta,prior,x1, x2)
+	prior = Dir([1,1])
+	x1 = [10,10]
+	x2 = [1,2,77]
+	observation = [10,10]
+	epsilons = numpy.arange(0.1, 5, 0.1)
+	accuracy_VS_epsilon(sample_size,epsilons,delta,prior,observation)
+	
+	# epsilon_study(sample_size,epsilon,delta,prior,x1, x2)
 
-	# Bayesian_Model = BayesInferwithDirPrior(prior, sample_size, epsilon, delta)
 
 	# accuracy_study_discrete(sample_size,epsilon,delta,prior,observation)
 	# # accuracy_study_exponential_mechanism_SS(sample_size,epsilon,delta,prior,observation)
@@ -756,10 +797,13 @@ if __name__ == "__main__":
 	# # Tests the functioning of the module
 
 	# #print Dir([50,50]) - Dir([47,53])
+
+	# Bayesian_Model = BayesInferwithDirPrior(prior, sample_size, epsilon, delta)
+
 	# Bayesian_Model._set_observation(observation)
 	# Bayesian_Model._experiments(1000)
 
-	# draw_error(Bayesian_Model._accuracy,Bayesian_Model, "order-2-size-500-runs-1000-epsilon-08-hellinger-delta000005-observation202020-box.png")
+	# draw_error(Bayesian_Model._accuracy,Bayesian_Model, "order-3-size-80-runs-1000-epsilon-4.0-hellinger-delta000005-observation202020-box.png")
 
 	# draw_error_l1(Bayesian_Model._accuracy_l1,Bayesian_Model, "order-2-size-100-runs-1000-epsilon-08-l1norm-delta000005box.png")
 	
