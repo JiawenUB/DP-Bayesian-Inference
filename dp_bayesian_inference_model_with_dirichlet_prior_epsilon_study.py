@@ -713,9 +713,9 @@ def accuracy_VS_epsilon(sample_size,epsilons,delta,prior,observation):
 
 	for i in range(len(epsilons)):
 		for a in exp_accuracy[i]:
-			plt.plot(epsilons[i], a, c = 'r', marker = 'o', alpha = 0.6)
+			plt.plot(epsilons[i], a, c = 'r', marker = 'o', markeredgecolor = 'none', alpha = 0.2)
 		for b in lap_accuracy[i]:
-			plt.plot(epsilons[i], b, c = 'b', marker = 'o', alpha = 0.6)
+			plt.plot(epsilons[i], b, c = 'b', marker = 'o', markeredgecolor = 'none', alpha = 0.2)
 
 	plt.plot(epsilons,exp_accuracy_average, 'ro-', label=('Exp Mech (mean)'))
 	plt.plot(epsilons,lap_accuracy_average, 'bo-', label=('Laplace Mech (mean)'))
@@ -725,7 +725,7 @@ def accuracy_VS_epsilon(sample_size,epsilons,delta,prior,observation):
 	plt.ylabel("Accuracy/Hellinger Distance")
 	plt.xlabel("epsilon")
 
-	plt.legend()
+	plt.legend(loc="best")
 	plt.grid()
 	plt.show()
 
