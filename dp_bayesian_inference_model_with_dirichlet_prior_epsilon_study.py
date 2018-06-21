@@ -778,15 +778,15 @@ def accuracy_VS_epsilon(sample_size,epsilons,delta,prior,observation):
 
 if __name__ == "__main__":
 
-	sample_size = 20
+	sample_size = 60
 	epsilon = 4.0
 	delta = 0.00005
-	prior = Dir([1,1])
+	prior = Dir([1,1,1])
 	x1 = [10,10]
 	x2 = [1,2,77]
-	observation = [10,10]
-	epsilons = numpy.arange(0.1, 5, 0.1)
-	accuracy_VS_epsilon(sample_size,epsilons,delta,prior,observation)
+	observation = [5,5,50]
+	epsilons = numpy.arange(0.1, 8, 0.2)
+	# accuracy_VS_epsilon(sample_size,epsilons,delta,prior,observation)
 	
 	# epsilon_study(sample_size,epsilon,delta,prior,x1, x2)
 
@@ -796,7 +796,7 @@ if __name__ == "__main__":
 	# # accuracy_study_laplace(sample_size,epsilon,delta,prior,observation)
 	# # Tests the functioning of the module
 
-	# #print Dir([50,50]) - Dir([47,53])
+	print Dir([10,10]) - Dir([1,19])
 
 	# Bayesian_Model = BayesInferwithDirPrior(prior, sample_size, epsilon, delta)
 
