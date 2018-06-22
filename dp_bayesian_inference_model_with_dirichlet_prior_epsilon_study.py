@@ -662,6 +662,8 @@ def global_epsilon_study(sample_sizes,epsilon,delta,prior):
 		epsilons.append(epsilon_of_n)
 
 	plt.figure()
+	plt.title("epsilon study wrt. the data size")
+
 	plt.plot(sample_sizes,epsilons, 'bo-', label=('Exp Mech'))
 	plt.xlabel("Data Size")
 	plt.ylabel("maximum epsilon of data size n")
@@ -797,9 +799,9 @@ if __name__ == "__main__":
 	x2 = [2,18]
 	observation = [5,5]
 	epsilons = numpy.arange(0.1, 8, 0.2)
-	sample_sizes = [2,4,6,8,10,12,14,16,18,20,22,24,26]
-	hellinger_vs_l1norm(Dir(observation))
-	# global_epsilon_study(sample_sizes,epsilon,delta,prior)
+	sample_sizes = [2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32]
+	# hellinger_vs_l1norm(Dir(observation))
+	global_epsilon_study(sample_sizes,epsilon,delta,prior)
 
 	# accuracy_VS_epsilon(sample_size,epsilons,delta,prior,observation)
 	
