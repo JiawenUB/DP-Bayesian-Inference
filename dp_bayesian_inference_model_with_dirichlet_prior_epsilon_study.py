@@ -644,10 +644,36 @@ def accuracy_study_discrete(sample_size,epsilon,delta,prior,observation):
 	plt.show()
 
 
+def global_epsilon_study(sample_sizes,epsilon,delta,prior):
+	epsilons = []
+	for n in sample_sizes:
+		Bayesian_Model = BayesInferwithDirPrior(prior, n-2, epsilon, delta)
+		Bayesian_Model._set_candidate_scores()
+		candidates = Bayesian_Model._candidates
+		# print candidates
+		epsilon_of_n = 0.0
+		for c in candidates:
+			temp = deepcopy(c._alphas)
+			temp[0] -= 1
+			temp[1] += 1
+			# print c._alphas, temp
+			epsilon_of_n = max(epsilon_of_n, epsilon_study(sample_size,epsilon,delta,prior,c._alphas,temp))
+		print " Actually epsilon value:" + str(epsilon_of_n)
+		epsilons.append(epsilon_of_n)
+
+	plt.figure()
+	plt.plot(sample_sizes,epsilons, 'bo-', label=('Exp Mech'))
+	plt.xlabel("Data Size")
+	plt.ylabel("maximum epsilon of data size n")
+	plt.legend(loc='best')
+	plt.show()
+
+
 
 def epsilon_study(sample_size,epsilon,delta,prior,x1, x2):
 	x1_probabilities = epsilon_study_discrete_probabilities(sample_size,epsilon,delta,prior,x1)
 	x2_probabilities = epsilon_study_discrete_probabilities(sample_size,epsilon,delta,prior,x2)
+	print x1_probabilities
 	accuracy_epsilons = {}
 	for key, item in x1_probabilities.items():
 		for k,i in x2_probabilities.items():
@@ -655,6 +681,9 @@ def epsilon_study(sample_size,epsilon,delta,prior,x1, x2):
 				accuracy_epsilons[str(key._alphas)] = math.log(item / i)
 
 	sorted_epsilons = sorted(accuracy_epsilons.items(), key=operator.itemgetter(1))
+	# print sorted_epsilons
+	return max(sorted_epsilons[-1][1], abs(sorted_epsilons[0][1]))
+	
 	for key,value in sorted_epsilons:
 		print "Pr[ ( M(x1) = " + key + ") / ( M(x2) = " + key + ") ] = exp(" + str(value) + ")"
 
@@ -691,7 +720,7 @@ def epsilon_study_discrete_probabilities(sample_size,epsilon,delta,prior,observa
 	for i in range(len(Bayesian_Model._candidates)):
 		z = Bayesian_Model._candidates[i]
 		probabilities_exp[z] = Bayesian_Model._SS_probabilities[i]
-		print "Pr[ z = " + str(z._alphas) + " ] = " + str(Bayesian_Model._SS_probabilities[i])
+		# print "Pr[ z = " + str(z._alphas) + " ] = " + str(Bayesian_Model._SS_probabilities[i])
 	
 	return probabilities_exp
 
@@ -778,14 +807,17 @@ def accuracy_VS_epsilon(sample_size,epsilons,delta,prior,observation):
 
 if __name__ == "__main__":
 
-	sample_size = 60
-	epsilon = 4.0
+	sample_size = 20
+	epsilon = 0.8
 	delta = 0.00005
-	prior = Dir([1,1,1])
-	x1 = [10,10]
-	x2 = [1,2,77]
+	prior = Dir([1,1])
+	x1 = [1,19]
+	x2 = [2,18]
 	observation = [5,5,50]
 	epsilons = numpy.arange(0.1, 8, 0.2)
+	sample_sizes = [2,4,6,8,10,12,14,16,18,20,22,24,26]
+	global_epsilon_study(sample_sizes,epsilon,delta,prior)
+
 	# accuracy_VS_epsilon(sample_size,epsilons,delta,prior,observation)
 	
 	# epsilon_study(sample_size,epsilon,delta,prior,x1, x2)
@@ -796,7 +828,7 @@ if __name__ == "__main__":
 	# # accuracy_study_laplace(sample_size,epsilon,delta,prior,observation)
 	# # Tests the functioning of the module
 
-	print Dir([10,10]) - Dir([1,19])
+	# print Dir([10,10]) - Dir([1,19])
 
 	# Bayesian_Model = BayesInferwithDirPrior(prior, sample_size, epsilon, delta)
 
