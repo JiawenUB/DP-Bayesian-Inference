@@ -10,7 +10,7 @@ import operator
 import time
 from matplotlib.patches import Polygon
 import statistics
-
+from decimal import *
 
 def L1_Nrom(A, B):
 	return numpy.sum(abs(numpy.array(A._alphas) - numpy.array(B._alphas)))
@@ -760,50 +760,32 @@ def accuracy_VS_epsilon(sample_size,epsilons,delta,prior,observation):
 
 
 	return
-	# y = numpy.arange(0,4,1)
-	# laplace_probabilities = {}
-	# for i in range(len(Bayesian_Model._candidates)):
-	# 	r = Bayesian_Model._candidates[i]
-	# 	t = 1.0
-	# 	ylist = []
-	# 	for j in range(len(r._alphas) - 1):
-	# 		a = abs(r._alphas[j] - Bayesian_Model._posterior._alphas[j])
-	# 		t = t * (math.exp(- (a) / (2.0/epsilon)) - math.exp(- (a + 1) / (2.0/epsilon)))
-	# 		ylist.append(a)
-	# 	yset = set(ylist)
-	# 	laplace_probabilities[r] = t / (math.gamma(len(yset)) * (2 ** (len(list(filter(lambda a: a != 0, ylist))))))
 
-	# for class_i in candidates_classfied_by_steps:
-	# 	pro_i = 0.0
-	# 	candidates_for_print = []
-	# 	for c in class_i:
-	# 		#print laplace_probabilities[c]
-	# 		pro_i += laplace_probabilities[c]
-	# 		candidates_for_print.append(c._alphas)
-	# 	probabilities_lap_by_steps.append(pro_i)
-	# 	print "Pr[H(BI(x), r) = " + str(-Bayesian_Model._candidate_scores[class_i[0]]) + " ] = " + str(pro_i) + " (r = " + str(candidates_for_print) +")"
+def hellinger_vs_l1norm(base_distribution):
+	l1s = numpy.arange(0.0, 1, 0.01)
+	
+	#l1s = []
+	hellingers = []
+	xstick = []
+	for i in range(100):
+		getcontext().prec = 3
+		label = deepcopy(base_distribution._alphas)
+		label[0] -= Decimal(i) / Decimal(100.0)
+		label[1] += Decimal(i) / Decimal(100.0)
+		label[0] = float(label[0])
+		label[1] = float(label[1])
+		xstick.append(label)
+		hellingers.append(Hellinger_Distance_Dir(base_distribution, Dir(label)))
 
-	# plt.plot(steps, probabilities_exp_by_steps, 'ro', label=('Exp Mech'))
-	# # plt.plot(T, approximate_bounds, 'g^', label=('Expmech_SS zApproximate Bound'))
-	# plt.plot(steps, probabilities_lap_by_steps, 'bs', label=('Laplace Mech'))
-	# plt.xlabel("c / (steps from correct answer, in form of Hellinger Distance)")
-	# plt.ylabel("Pr[H(BI(x),r) = c]")
-	# plt.title("datasize: "+ str(sample_size) + ", x: "+ str(observation) + ", BI(x): beta"+ str(Bayesian_Model._posterior._alphas) + ", epsilon: "+ str(epsilon))
-	# plt.legend()
-	# plt.grid()
-	# plt.show()
-	# T = [Hellinger_Distance_Dir(Bayesian_Model._posterior, (Bayesian_Model._posterior + Dir([i, -i]))) for i in y]
+	plt.figure(figsize=(15,10))
+	plt.plot(l1s, hellingers)
+	plt.ylabel("Hellinger Distance")
+	plt.xlabel("l1 Norm")
+	plt.xticks(l1s,xstick, rotation=70,fontsize=8)
 
-	# print [(4 - i, 4 + i) for i in y]
-	# print t
-	# print T
+	plt.show()
 
-	# plt.plot(T, t, 'ro', label=('Laplace Bound'))
-	# plt.xlabel("c")
-	# plt.ylabel("Pr[H(BI(x),r) > c]")
-	# plt.title("datasize: "+ str(sample_size) + ", x: "+ str(observation) + ", BI(x): beta"+ str(Bayesian_Model._posterior._alphas) + ", epsilon:0.8")
-	# plt.legend()
-	# plt.show()
+
 
 if __name__ == "__main__":
 
@@ -813,10 +795,11 @@ if __name__ == "__main__":
 	prior = Dir([1,1])
 	x1 = [1,19]
 	x2 = [2,18]
-	observation = [5,5,50]
+	observation = [5,5]
 	epsilons = numpy.arange(0.1, 8, 0.2)
 	sample_sizes = [2,4,6,8,10,12,14,16,18,20,22,24,26]
-	global_epsilon_study(sample_sizes,epsilon,delta,prior)
+	hellinger_vs_l1norm(Dir(observation))
+	# global_epsilon_study(sample_sizes,epsilon,delta,prior)
 
 	# accuracy_VS_epsilon(sample_size,epsilons,delta,prior,observation)
 	
