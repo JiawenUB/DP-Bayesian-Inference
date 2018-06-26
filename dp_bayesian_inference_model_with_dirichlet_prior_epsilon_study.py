@@ -799,7 +799,6 @@ def accuracy_VS_epsilon(sample_size,epsilons,delta,prior,observation):
 	plt.grid()
 	plt.show()
 
-
 	return
 
 def hellinger_vs_l1norm(base_distribution):
@@ -832,29 +831,31 @@ def hellinger_vs_l1norm(base_distribution):
 
 	plt.show()
 
-
+def accuracy_VS_datasize(sample_sizes,epsilon,delta,prior):
+	
 
 if __name__ == "__main__":
 
 	sample_size = 12
 	epsilon = 0.8
 	delta = 0.0005
-	prior = Dir([1,1,1,1])
+	prior = Dir([1,1])
 	x1 = [1,19]
 	x2 = [2,18]
-	observation = [3,3,3,3]
+	observation = [3,3]
 	epsilons = numpy.arange(0.1, 2, 0.1)
-	sample_sizes = [300] # [14,18,24,30,36,42,44,46,48]#,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80]
+	sample_sizes = [8,12,18,24,30,36,42,44,46,48]#,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80]
 	# # hellinger_vs_l1norm(Dir(observation))
 	# global_epsilon_study(sample_sizes,epsilon,delta,prior)
 	# Dir([1,17]) - Dir([])
 
-	# accuracy_VS_epsilon(sample_size,epsilons,delta,prior,observation)
+	accuracy_VS_epsilon(sample_size,epsilons,delta,prior,observation)
+
 	
 	# epsilon_study(sample_size,epsilon,delta,prior,x1, x2)
 
 	# print math.floor(-0.6)
-	accuracy_study_discrete(sample_size,epsilon,delta,prior,observation)
+	# accuracy_study_discrete(sample_size,epsilon,delta,prior,observation)
 	# # accuracy_study_exponential_mechanism_SS(sample_size,epsilon,delta,prior,observation)
 	# # accuracy_study_laplace(sample_size,epsilon,delta,prior,observation)
 	# # Tests the functioning of the module
