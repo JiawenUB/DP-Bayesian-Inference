@@ -166,6 +166,7 @@ class BayesInferwithDirPrior(object):
 		self._update_observation()
 
 	def _set_observation(self,observation):
+		self._observation_counts = observation
 		self._posterior = Dir(observation) + self._prior
 
 	def _get_accuracy_bound(self, c, delta):
@@ -553,7 +554,7 @@ def draw_error(errors, model, filename):
 	#ax.set_xlim(0.5, len(errors) + 0.5)
 
 	plt.xticks(range(1, len(errors)+1),title)
-	plt.title('Accuracy')
+	plt.title('Accuracy / data set:' + str(model._observation_counts) + ", posterior: " + str(model._posterior._alphas) + ", epsilon:" + str(model._epsilon))
 	for box in bplot["boxes"]:
 		box.set(color='navy', linewidth=1.5)
 		box.set(facecolor='lightblue')
@@ -589,7 +590,7 @@ def draw_error_l1(errors, model, filename):
 	#ax.set_xlim(0.5, len(errors) + 0.5)
 
 	plt.xticks(range(1, len(errors)+1),title)
-	plt.title('Accuracy')
+	plt.title('Accuracy / data set:' + str(model._observation_counts) + ", posterior: " + str(model._posterior._alphas) + ", epsilon:" + str(model._epsilon))
 	for box in bplot["boxes"]:
 		box.set(color='navy', linewidth=1.5)
 		box.set(facecolor='lightblue' )
@@ -835,13 +836,13 @@ def hellinger_vs_l1norm(base_distribution):
 
 if __name__ == "__main__":
 
-	sample_size = 80
+	sample_size = 60
 	epsilon = 0.8
 	delta = 0.0005
-	prior = Dir([1,1])
+	prior = Dir([1,1,1,1])
 	x1 = [1,19]
 	x2 = [2,18]
-	observation = [40,40]
+	observation = [15,15,15,15]
 	epsilons = numpy.arange(0.1, 2, 0.1)
 	sample_sizes = [300] # [14,18,24,30,36,42,44,46,48]#,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80]
 	# # hellinger_vs_l1norm(Dir(observation))
