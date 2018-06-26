@@ -152,7 +152,7 @@ class BayesInferwithDirPrior(object):
 		self._VS = {}
 		self._SS = {}
 		self._LS = 0.0
-		self._SS_Hamming = 0.0
+		self._SS = 0.0
 		# self._SS_Expon = 0.0
 		# self._SS_Laplace = 0.0
 		self._candidate_VS_scores = {}
@@ -224,17 +224,17 @@ class BayesInferwithDirPrior(object):
 		# print str(time.clock() - start) + "seconds."
 		# print "Calculating Smooth Sensitivity with Hamming Distance....."
 		# start = time.clock()
-		# self._SS_Hamming = max([self._LS_Candidates[r] * math.exp(- beta * Hamming_Distance(self._posterior, r)) for r in self._candidates])
-		# key2 = "(" + str(self._epsilon / 2.0) + "," + str(beta) + ") Admissible Niose and " + str(beta) + "-Smooth Sensitivity (" + str(self._SS_Hamming) + ")|" + str(self._epsilon) + "-DP"
+		# self._SS = max([self._LS_Candidates[r] * math.exp(- beta * Hamming_Distance(self._posterior, r)) for r in self._candidates])
+		# key2 = "(" + str(self._epsilon / 2.0) + "," + str(beta) + ") Admissible Niose and " + str(beta) + "-Smooth Sensitivity (" + str(self._SS) + ")|" + str(self._epsilon) + "-DP"
 		# self._accuracy[key2] = []
 		# self._keys.append(key2)
 		# print str(time.clock() - start) + "seconds."
 		# print "Calculating Smooth Sensitivity with Hamming Distance....."
 		start = time.clock()
 		beta = math.log(1 - self._epsilon / (2.0 * math.log(self._delta / (2.0 * (self._sample_size)))))
-		self._SS_Hamming = max(self._LS, max([self._LS_Candidates[r] * math.exp(- beta * Hamming_Distance(self._posterior, r)) for r in self._candidates]))
-		# self._SS_Hamming = self._LS
-		key3 = "Exponential Mechanism with " + str(beta) + " - Bound Smooth Sensitivity (" + str(self._SS_Hamming) + ")|(" + str(self._epsilon) + "," + str(self._delta) + ")-DP"
+		self._SS = max(self._LS, max([self._LS_Candidates[r] * math.exp(- beta * Hamming_Distance(self._posterior, r)) for r in self._candidates]))
+		# self._SS = self._LS
+		key3 = "Exponential Mechanism with " + str(beta) + " - Bound Smooth Sensitivity (" + str(self._SS) + ")|(" + str(self._epsilon) + "," + str(self._delta) + ")-DP"
 		# print key3
 		key3 = "ExpoMech of SS"
 		self._accuracy[key3] = []
@@ -246,7 +246,7 @@ class BayesInferwithDirPrior(object):
 
 
 		for r in self._candidates:
-			temp = math.exp(self._epsilon * self._candidate_scores[r]/(2 * self._SS_Hamming))
+			temp = math.exp(self._epsilon * self._candidate_scores[r]/(2 * self._SS))
 			self._SS_probabilities.append(temp)
 
 			nomalizer += temp
@@ -340,7 +340,7 @@ class BayesInferwithDirPrior(object):
 	# 	gamma = 1
 	# 	z = abs(numpy.random.standard_cauchy())
 	# 	alpha = self._epsilon/ (2.0 * (gamma + 1))
-	# 	temp = [a + self._SS_Hamming * z /alpha for a in self._posterior._alphas]
+	# 	temp = [a + self._SS * z /alpha for a in self._posterior._alphas]
 	# 	self._SS_posterior = Dir(temp)
 	# 	return
 
@@ -419,7 +419,7 @@ class BayesInferwithDirPrior(object):
 		self._exponential_posterior = numpy.random.choice(self._candidates, p=self._SS_probabilities)
 
 		# for r in self._candidates:
-		# 	probabilities[r] = math.exp(self._epsilon * self._candidate_scores[r]/(self._SS_Hamming))
+		# 	probabilities[r] = math.exp(self._epsilon * self._candidate_scores[r]/(self._SS))
 		# 	nomalizer += probabilities[r]
 		# outpro = random.random()
 		# for r in self._candidates:
@@ -854,20 +854,20 @@ if __name__ == "__main__":
 	# epsilon_study(sample_size,epsilon,delta,prior,x1, x2)
 
 	# print math.floor(-0.6)
-	# accuracy_study_discrete(sample_size,epsilon,delta,prior,observation)
+	accuracy_study_discrete(sample_size,epsilon,delta,prior,observation)
 	# # accuracy_study_exponential_mechanism_SS(sample_size,epsilon,delta,prior,observation)
 	# # accuracy_study_laplace(sample_size,epsilon,delta,prior,observation)
 	# # Tests the functioning of the module
 
 	# print Dir([10,10]) - Dir([1,19])
 
-	Bayesian_Model = BayesInferwithDirPrior(prior, sample_size, epsilon, delta)
+	# Bayesian_Model = BayesInferwithDirPrior(prior, sample_size, epsilon, delta)
 
-	Bayesian_Model._set_observation(observation)
+	# Bayesian_Model._set_observation(observation)
 
-	Bayesian_Model._experiments(1000)
+	# Bayesian_Model._experiments(1000)
 
-	draw_error(Bayesian_Model._accuracy,Bayesian_Model, "order-2-size-30-runs-1000-epsilon-1.2-hellinger-delta000005-observation202020-box.png")
+	# draw_error(Bayesian_Model._accuracy,Bayesian_Model, "order-2-size-30-runs-1000-epsilon-1.2-hellinger-delta000005-observation202020-box.png")
 
 	# draw_error_l1(Bayesian_Model._accuracy_l1,Bayesian_Model, "order-2-size-100-runs-1000-epsilon-08-l1norm-delta000005box.png")
 	
