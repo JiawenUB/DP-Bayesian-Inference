@@ -387,7 +387,8 @@ def accuracy_study_discrete(sample_size,epsilon,delta,prior,observation):
    
 
 
-sample_size = 9
+
+data_size = 9
 epsilon = 0.8
 delta = 0.0005
 
@@ -399,6 +400,6 @@ prior = Dir([1,1,1])
 
 observation = [3,3,3]
 
-accuracy_study_discrete(sample_size,epsilon,delta,prior,observation)
+accuracy_study_discrete(data_size,epsilon,delta,prior,observation)
 	
 

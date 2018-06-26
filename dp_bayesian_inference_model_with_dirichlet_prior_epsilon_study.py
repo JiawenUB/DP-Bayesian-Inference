@@ -628,13 +628,13 @@ def accuracy_study_discrete(sample_size,epsilon,delta,prior,observation):
 	for i in range(len(Bayesian_Model._candidates)):
 		r = Bayesian_Model._candidates[i]
 		t = 1.0
-		ylist = []
+		# ylist = []
 		for j in range(len(r._alphas) - 1):
-			a = abs(r._alphas[j] - Bayesian_Model._posterior._alphas[j])
-			t = t * (math.exp(- (a) / (2.0/epsilon)) - math.exp(- (a + 1) / (2.0/epsilon)))
-			ylist.append(a)
-		yset = set(ylist)
-		laplace_probabilities[r] = t / (math.gamma(len(yset)) * (2 ** (len(list(filter(lambda a: a != 0, ylist))))))
+			a = r._alphas[j] - Bayesian_Model._posterior._alphas[j]
+			t = t * 0.5 * (math.exp(- ((abs(a)) if (a >= 0) else (abs(a) - 1)) / (2.0/epsilon)) - math.exp(- ((abs(a) + 1) if (a >= 0) else (abs(a))) / (2.0/epsilon)))
+		# 	ylist.append(a)
+		# yset = set(ylist)
+		laplace_probabilities[r] = t #/ (math.gamma(len(yset)) * (2 ** (len(list(filter(lambda a: a != 0, ylist))))))
 
 	for class_i in candidates_classfied_by_steps:
 		pro_i = 0.0
@@ -645,7 +645,8 @@ def accuracy_study_discrete(sample_size,epsilon,delta,prior,observation):
 			candidates_for_print.append(c._alphas)
 		probabilities_lap_by_steps.append(pro_i)
 		print "Pr[H(BI(x), r) = " + str(-Bayesian_Model._candidate_scores[class_i[0]]) + " ] = " + str(pro_i) + " (r = " + str(candidates_for_print) +")"
-#
+
+
 	plt.plot(steps, probabilities_exp_by_steps, 'ro', label=('Exp Mech'))
 	# plt.plot(T, approximate_bounds, 'g^', label=('Expmech_SS zApproximate Bound'))
 	plt.plot(steps, probabilities_lap_by_steps, 'bs', label=('Laplace Mech'))
@@ -826,7 +827,7 @@ if __name__ == "__main__":
 	prior = Dir([1,1,1])
 	x1 = [1,19]
 	x2 = [2,18]
-	observation = [3,3,3]
+	observation = [3,3, 3]
 	epsilons = numpy.arange(0.1, 2, 0.1)
 	sample_sizes = [300] # [14,18,24,30,36,42,44,46,48]#,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80]
 	# # hellinger_vs_l1norm(Dir(observation))
