@@ -32,16 +32,19 @@ def optimized_multibeta_function(alphas):
 	for alpha in alphas:
 		denominator = denominator + alpha
 	for alpha in alphas:
+		# print alpha
 		temp = alpha - 1
 		while temp > 0.0:
 			nominators.append(temp)
 			temp -=1.0
-		if temp < 0.0:
+		
+		if temp < 0.0 and temp > -1.0:
+			#print temp
 			nominators.append(math.gamma(1 + temp))
 	while denominator > 0.0:
 		denominators.append(denominator)
 		denominator -= 1.0
-	if denominator < 0.0:
+	if denominator < 0.0 and denominator > -1.0:
 		denominators.append(math.gamma(1.0 + denominator))
 
 	denominators.sort()
@@ -70,6 +73,9 @@ def Hellinger_Distance_Dir(Dir1, Dir2):
 		math.sqrt(multibeta_function(Dir1._alphas) * multibeta_function(Dir2._alphas)))
 
 def Optimized_Hellinger_Distance_Dir(Dir1, Dir2):
+	# print optimized_multibeta_function((numpy.array(Dir1._alphas) + numpy.array(Dir2._alphas)) / 2.0)/ \
+		# math.sqrt(optimized_multibeta_function(Dir1._alphas) * optimized_multibeta_function(Dir2._alphas))
+	# print Dir1._alphas,Dir2._alphas
 	return math.sqrt(1 - optimized_multibeta_function((numpy.array(Dir1._alphas) + numpy.array(Dir2._alphas)) / 2.0)/ \
 		math.sqrt(optimized_multibeta_function(Dir1._alphas) * optimized_multibeta_function(Dir2._alphas)))
 
@@ -94,10 +100,15 @@ class Dir(object):
 	def _hellinger_sensitivity(self,r):
 		LS = 0.0
 		temp = deepcopy(r._alphas)
-		for i in range(0, self._size):
+		for i in range(0, self._size-1):
 			temp[i] += 1
+			# print temp
 			for j in range(i + 1, self._size):
 				temp[j] -= 1
+				# print temp
+				if temp[j]<=0:
+					temp[j] += 1
+					continue
 				LS = max(LS, abs(Dir(temp) - self))
 				# print r._alphas,self._alphas,temp,(r-self),(Dir(temp) - self)
 				temp[j] += 1
@@ -176,12 +187,13 @@ class BayesInferwithDirPrior(object):
 		self._posterior = Dir(self._observation_counts) + self._prior
 
 	def _set_candidate_scores(self):
-		print "Calculating Candidates and Scores....."
+		# print "Calculating Candidates and Scores....."
 		start = time.clock()
 		self._set_candidates([], numpy.sum(self._observation))
+
 		for r in self._candidates:
 			self._candidate_scores[r] = -(self._posterior - r)
-		print str(time.clock() - start) + " seconds."
+		# print str(time.clock() - start) + " seconds."
 
 	def _set_candidates(self, current, rest):
 		if len(current) == len(self._prior._alphas) - 1:
@@ -202,7 +214,7 @@ class BayesInferwithDirPrior(object):
 		# print "Calculating Smooth Sensitivity with Hellinger Distance....."
 		# start = time.clock()
 		#gamma = 1
-		#self._set_LS_Candidates()
+		self._set_LS_Candidates()
 		# beta = self._epsilon / (2.0 * len(self._prior._alphas) * (gamma + 1))
 		# self._SS = max([self._LS_Candidates[r] * math.exp(- beta * Optimized_Hellinger_Distance_Dir(self._posterior, r)) for r in self._candidates])
 		# key1 = "(" + str(self._epsilon / 2.0) + "," + str(beta) + ") Admissible Niose and " + str(beta) + "-Smooth Sensitivity (" + str(self._SS) + ")|" + str(self._epsilon) + "-DP"
@@ -216,24 +228,24 @@ class BayesInferwithDirPrior(object):
 		# self._accuracy[key2] = []
 		# self._keys.append(key2)
 		# print str(time.clock() - start) + "seconds."
-		print "Calculating Smooth Sensitivity with Hamming Distance....."
+		# print "Calculating Smooth Sensitivity with Hamming Distance....."
 		start = time.clock()
 		beta = math.log(1 - self._epsilon / (2.0 * math.log(self._delta / (2.0 * (self._sample_size)))))
-		#self._SS_Hamming = max(self._LS, max([self._LS_Candidates[r] * math.exp(- beta * Hamming_Distance(self._posterior, r)) for r in self._candidates]))
-		self._SS_Hamming = self._LS
+		self._SS_Hamming = max(self._LS, max([self._LS_Candidates[r] * math.exp(- beta * Hamming_Distance(self._posterior, r)) for r in self._candidates]))
+		# self._SS_Hamming = self._LS
 		key3 = "Exponential Mechanism with " + str(beta) + " - Bound Smooth Sensitivity (" + str(self._SS_Hamming) + ")|(" + str(self._epsilon) + "," + str(self._delta) + ")-DP"
-		print key3
+		# print key3
 		key3 = "ExpoMech of SS"
 		self._accuracy[key3] = []
 		self._accuracy_l1[key3] = []
 		self._keys.append(key3)
-		print str(time.clock() - start) + "seconds."
+		# print str(time.clock() - start) + "seconds."
 
 		nomalizer = 0.0
 
 
 		for r in self._candidates:
-			temp = math.exp(self._epsilon * self._candidate_scores[r]/(2 * self._SS_Hamming))
+			temp = math.exp(self._epsilon * self._candidate_scores[r]/(self._SS_Hamming))
 			self._SS_probabilities.append(temp)
 
 			nomalizer += temp
@@ -252,7 +264,7 @@ class BayesInferwithDirPrior(object):
 	def _set_LS(self):
 		self._LS = self._posterior._hellinger_sensitivity(self._posterior)#self._posterior
 		key = "Exponential Mechanism with Local Sensitivity - " + str(self._LS) + "| Non Privacy"
-		print key
+		# print key
 		key = "Expomech of LS"
 		self._accuracy[key] = []
 		self._accuracy_l1[key] = []
@@ -279,7 +291,7 @@ class BayesInferwithDirPrior(object):
 		
 		self._GS = Dir(t1) - Dir(t2)
 		key = "Exponential Mechanism with Global Sensitivity - " + str(self._GS) + "| Achieving" + str(self._epsilon) + "-DP"
-		print key
+		# print key
 		key = "ExpoMech of GS"
 		self._accuracy[key] = []
 		self._accuracy_l1[key] = []
@@ -300,20 +312,20 @@ class BayesInferwithDirPrior(object):
 
 
 
-	def _set_VS(self):
-		t = 2 * math.log(len(self._candidates) / 0.8) / self._epsilon
-		print "Calculating Varying Sensitivity Scores....."
-		start = time.clock()
-		self._set_LS()
-		for r in self._candidates:
-			self._candidate_VS_scores[r] = -max([((-self._candidate_scores[r] + t * self._LS_Candidates[r] - (-self._candidate_scores[i] + t * self._LS_Candidates[i]))/(self._LS_Candidates[r] + self._LS_Candidates[i])) for i in self._candidates])
-		key = "Exponential Mechanism with Varying Sensitivity Scores | Achieving " + str(self._epsilon) + "-DP"
-		print key
-		key = "ExpoMech of VS"
-		self._accuracy[key] = []
-		self._accuracy_l1[key] = []
-		self._keys.append(key)
-		print str(time.clock() - start) + "seconds."
+	# def _set_VS(self):
+	# 	t = 2 * math.log(len(self._candidates) / 0.8) / self._epsilon
+	# 	print "Calculating Varying Sensitivity Scores....."
+	# 	start = time.clock()
+	# 	self._set_LS()
+	# 	for r in self._candidates:
+	# 		self._candidate_VS_scores[r] = -max([((-self._candidate_scores[r] + t * self._LS_Candidates[r] - (-self._candidate_scores[i] + t * self._LS_Candidates[i]))/(self._LS_Candidates[r] + self._LS_Candidates[i])) for i in self._candidates])
+	# 	key = "Exponential Mechanism with Varying Sensitivity Scores | Achieving " + str(self._epsilon) + "-DP"
+	# 	print key
+	# 	key = "ExpoMech of VS"
+	# 	self._accuracy[key] = []
+	# 	self._accuracy_l1[key] = []
+	# 	self._keys.append(key)
+	# 	print str(time.clock() - start) + "seconds."
 
 	# def _Smooth_Sensitivity_Noize(self):
 	# 	gamma = 1
@@ -342,7 +354,7 @@ class BayesInferwithDirPrior(object):
 
 
 	def _laplace_noize(self):
-		self._laplaced_posterior = Dir([alpha + round(abs(numpy.random.laplace(0, 2.0/self._epsilon))) for alpha in self._posterior._alphas])
+		self._laplaced_posterior = Dir([alpha + math.floor(numpy.random.laplace(0, 2.0/self._epsilon)) for alpha in self._posterior._alphas])
 
 	def _laplace_noize_navie(self):
 		t = numpy.random.laplace(0, 1.0/self._epsilon)
@@ -370,21 +382,21 @@ class BayesInferwithDirPrior(object):
 		self._exponential_posterior = numpy.random.choice(self._candidates, p=self._LS_probabilities)
 
 
-	def _exponentialize_VS(self):
-		probabilities = {}
-		for r in self._candidates:
-			probabilities[r] = math.exp(self._epsilon * self._candidate_VS_scores[r]/(1.0))
-			nomalizer += probabilities[r]
-		for r in self._candidates:
-			probabilities[r] = probabilities[r]	/ nomalizer	
+	# def _exponentialize_VS(self):
+	# 	probabilities = {}
+	# 	for r in self._candidates:
+	# 		probabilities[r] = math.exp(self._epsilon * self._candidate_VS_scores[r]/(1.0))
+	# 		nomalizer += probabilities[r]
+	# 	for r in self._candidates:
+	# 		probabilities[r] = probabilities[r]	/ nomalizer	
 
-		self._exponential_posterior = numpy.random.choice(self._candidates, p=probabilities.valuse())
-		outpro = random.random()
-		for r in self._candidates:
-			if outpro < 0:
-				return
-			outpro = outpro - probabilities[r]/nomalizer
-			self._exponential_posterior = r
+	# 	self._exponential_posterior = numpy.random.choice(self._candidates, p=probabilities.valuse())
+	# 	outpro = random.random()
+	# 	for r in self._candidates:
+	# 		if outpro < 0:
+	# 			return
+	# 		outpro = outpro - probabilities[r]/nomalizer
+	# 		self._exponential_posterior = r
 
 	def _exponentialize_SS(self):
 		probabilities = {}
@@ -495,6 +507,7 @@ def draw_error_1(errors, model):
 		plt.ylim(-0.1,1.0)
 		plt.xlim(0.0,len(item)*1.0)
 		plt.grid()
+	plt.show()
 	plt.savefig("beta-GS-SS-LS-size300-runs200-epsilon0-5.png")
 	return 
 
@@ -529,8 +542,8 @@ def draw_error(errors, model, filename):
 	plt.title('Accuracy')
 	for box in bplot["boxes"]:
 		box.set(color='navy', linewidth=1.5)
-		box.set(facecolor='lightblue' )
-    #plt.show()
+		box.set(facecolor='lightblue')
+	plt.show()
 	plt.savefig(filename)
 	return 
 
@@ -566,7 +579,7 @@ def draw_error_l1(errors, model, filename):
 	for box in bplot["boxes"]:
 		box.set(color='navy', linewidth=1.5)
 		box.set(facecolor='lightblue' )
-    #plt.show()
+	plt.show()
 	plt.savefig(filename)
 	return
 
@@ -652,13 +665,18 @@ def global_epsilon_study(sample_sizes,epsilon,delta,prior):
 		candidates = Bayesian_Model._candidates
 		# print candidates
 		epsilon_of_n = 0.0
+		pair_of_n = []
 		for c in candidates:
 			temp = deepcopy(c._alphas)
 			temp[0] -= 1
 			temp[1] += 1
 			# print c._alphas, temp
-			epsilon_of_n = max(epsilon_of_n, epsilon_study(sample_size,epsilon,delta,prior,c._alphas,temp))
-		print " Actually epsilon value:" + str(epsilon_of_n)
+			t = epsilon_study(n,epsilon,delta,prior,c._alphas,temp)
+			if epsilon_of_n < t:
+				epsilon_of_n = t
+				pair_of_n = [c._alphas,temp]
+
+		print " Actually epsilon value:" + str(epsilon_of_n), str(pair_of_n)
 		epsilons.append(epsilon_of_n)
 
 	plt.figure()
@@ -675,7 +693,7 @@ def global_epsilon_study(sample_sizes,epsilon,delta,prior):
 def epsilon_study(sample_size,epsilon,delta,prior,x1, x2):
 	x1_probabilities = epsilon_study_discrete_probabilities(sample_size,epsilon,delta,prior,x1)
 	x2_probabilities = epsilon_study_discrete_probabilities(sample_size,epsilon,delta,prior,x2)
-	print x1_probabilities
+	# print x1_probabilities
 	accuracy_epsilons = {}
 	for key, item in x1_probabilities.items():
 		for k,i in x2_probabilities.items():
@@ -684,6 +702,11 @@ def epsilon_study(sample_size,epsilon,delta,prior,x1, x2):
 
 	sorted_epsilons = sorted(accuracy_epsilons.items(), key=operator.itemgetter(1))
 	# print sorted_epsilons
+	# print x1, x2
+	# if sorted_epsilons[-1][1] > abs(sorted_epsilons[0][1]):
+	# 	print sorted_epsilons[-1]
+	# else:
+	# 	print sorted_epsilons[0]
 	return max(sorted_epsilons[-1][1], abs(sorted_epsilons[0][1]))
 	
 	for key,value in sorted_epsilons:
@@ -764,25 +787,31 @@ def accuracy_VS_epsilon(sample_size,epsilons,delta,prior,observation):
 	return
 
 def hellinger_vs_l1norm(base_distribution):
-	l1s = numpy.arange(0.0, 1, 0.01)
+	l1s = numpy.arange(1, 8, 1)
 	
 	#l1s = []
 	hellingers = []
 	xstick = []
-	for i in range(100):
-		getcontext().prec = 3
+	for i in l1s:
+		# getcontext().prec = 3
 		label = deepcopy(base_distribution._alphas)
-		label[0] -= Decimal(i) / Decimal(100.0)
-		label[1] += Decimal(i) / Decimal(100.0)
-		label[0] = float(label[0])
-		label[1] = float(label[1])
+		label[0] += i
+		label[1] -= i
+		# label[0] -= Decimal(i) / Decimal(100.0)
+		# label[1] += Decimal(i) / Decimal(100.0)
+		# label[0] = float(label[0])
+		# label[1] = float(label[1])
 		xstick.append(label)
-		hellingers.append(Hellinger_Distance_Dir(base_distribution, Dir(label)))
+		hellingers.append(base_distribution - Dir(label))
+		# hellingers.append(Hellinger_Distance_Dir(base_distribution, Dir(label)))
 
 	plt.figure(figsize=(15,10))
-	plt.plot(l1s, hellingers)
+	plt.plot(l1s, hellingers, label="hellinger")
+	plt.plot(l1s,0.2344 * l1s,label='linear')
 	plt.ylabel("Hellinger Distance")
 	plt.xlabel("l1 Norm")
+	plt.legend()
+
 	plt.xticks(l1s,xstick, rotation=70,fontsize=8)
 
 	plt.show()
@@ -791,24 +820,25 @@ def hellinger_vs_l1norm(base_distribution):
 
 if __name__ == "__main__":
 
-	sample_size = 20
+	sample_size = 9
 	epsilon = 0.8
-	delta = 0.00005
-	prior = Dir([1,1])
+	delta = 0.0005
+	prior = Dir([1,1,1])
 	x1 = [1,19]
 	x2 = [2,18]
-	observation = [5,5]
-	epsilons = numpy.arange(0.1, 8, 0.2)
-	sample_sizes = [2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32]
-	# hellinger_vs_l1norm(Dir(observation))
-	global_epsilon_study(sample_sizes,epsilon,delta,prior)
+	observation = [3,3,3]
+	epsilons = numpy.arange(0.1, 2, 0.1)
+	sample_sizes = [300] # [14,18,24,30,36,42,44,46,48]#,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80]
+	# # hellinger_vs_l1norm(Dir(observation))
+	# global_epsilon_study(sample_sizes,epsilon,delta,prior)
+	# Dir([1,17]) - Dir([])
 
 	# accuracy_VS_epsilon(sample_size,epsilons,delta,prior,observation)
 	
 	# epsilon_study(sample_size,epsilon,delta,prior,x1, x2)
 
-
-	# accuracy_study_discrete(sample_size,epsilon,delta,prior,observation)
+	# print math.floor(-0.6)
+	accuracy_study_discrete(sample_size,epsilon,delta,prior,observation)
 	# # accuracy_study_exponential_mechanism_SS(sample_size,epsilon,delta,prior,observation)
 	# # accuracy_study_laplace(sample_size,epsilon,delta,prior,observation)
 	# # Tests the functioning of the module
@@ -818,9 +848,10 @@ if __name__ == "__main__":
 	# Bayesian_Model = BayesInferwithDirPrior(prior, sample_size, epsilon, delta)
 
 	# Bayesian_Model._set_observation(observation)
-	# Bayesian_Model._experiments(1000)
 
-	# draw_error(Bayesian_Model._accuracy,Bayesian_Model, "order-3-size-80-runs-1000-epsilon-4.0-hellinger-delta000005-observation202020-box.png")
+	# Bayesian_Model._experiments(500)
+
+	# draw_error(Bayesian_Model._accuracy,Bayesian_Model, "order-2-size-30-runs-1000-epsilon-1.2-hellinger-delta000005-observation202020-box.png")
 
 	# draw_error_l1(Bayesian_Model._accuracy_l1,Bayesian_Model, "order-2-size-100-runs-1000-epsilon-08-l1norm-delta000005box.png")
 	
