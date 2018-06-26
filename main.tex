@@ -145,7 +145,7 @@ smooth sensitivity.
 \end{equation*}
 where $s_\beta(x)$ is the smooth sensitivity of $\hlg(\bysinfer(x),-)$, calculated by:
 \begin{equation*}
-S_{\beta}(x) = \max(\Delta_{l}\hlg(\bysinfer(x),-), \max_{y \neq x; y \in D^{n}}(\Delta_{l}\hlg(\bysinfer(x),-)\cdot e^{-\beta d(x,y)})),
+S_{\beta}(x) = \max(\Delta_{l}\hlg(\bysinfer(x),-), \max_{y \neq x; y \in D^{n}}(\Delta_{l}\hlg(\bysinfer(y),-)\cdot e^{-\beta d(x,y)})),
 \end{equation*}
 where $d$ is the Hamming distance between two datasets, and $\beta =
 \beta(\epsilon, \delta)$ is a function of $\epsilon$ and $\delta$. 
