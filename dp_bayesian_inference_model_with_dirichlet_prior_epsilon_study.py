@@ -351,9 +351,23 @@ class BayesInferwithDirPrior(object):
 	# 	self._SS_posterior = Dir(temp)
 	# 	return		
 
-
-
 	def _laplace_noize(self):
+		total_noise = 0.0
+		noised_alphas = []
+		for alpha in self._posterior._alphas[:-1]:
+			temp = math.floor(numpy.random.laplace(0, 2.0/self._epsilon))
+			if (alpha + temp) < 1.0:
+				noised_alphas.append(1)
+				total_noise += 1 - alpha
+			else:
+				noised_alphas.append((alpha + temp))
+				total_noise += temp
+		noised_alphas.append(self._posterior._alphas[-1] - total_noise)
+		self._laplaced_posterior = Dir(noised_alphas)
+
+
+	def _laplace_noize_n(self):
+
 		self._laplaced_posterior = Dir([alpha + math.floor(numpy.random.laplace(0, 2.0/self._epsilon)) for alpha in self._posterior._alphas])
 
 	def _laplace_noize_navie(self):
@@ -821,13 +835,13 @@ def hellinger_vs_l1norm(base_distribution):
 
 if __name__ == "__main__":
 
-	sample_size = 9
+	sample_size = 80
 	epsilon = 0.8
 	delta = 0.0005
-	prior = Dir([1,1,1])
+	prior = Dir([1,1])
 	x1 = [1,19]
 	x2 = [2,18]
-	observation = [3,3, 3]
+	observation = [40,40]
 	epsilons = numpy.arange(0.1, 2, 0.1)
 	sample_sizes = [300] # [14,18,24,30,36,42,44,46,48]#,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80]
 	# # hellinger_vs_l1norm(Dir(observation))
@@ -839,20 +853,20 @@ if __name__ == "__main__":
 	# epsilon_study(sample_size,epsilon,delta,prior,x1, x2)
 
 	# print math.floor(-0.6)
-	accuracy_study_discrete(sample_size,epsilon,delta,prior,observation)
+	# accuracy_study_discrete(sample_size,epsilon,delta,prior,observation)
 	# # accuracy_study_exponential_mechanism_SS(sample_size,epsilon,delta,prior,observation)
 	# # accuracy_study_laplace(sample_size,epsilon,delta,prior,observation)
 	# # Tests the functioning of the module
 
 	# print Dir([10,10]) - Dir([1,19])
 
-	# Bayesian_Model = BayesInferwithDirPrior(prior, sample_size, epsilon, delta)
+	Bayesian_Model = BayesInferwithDirPrior(prior, sample_size, epsilon, delta)
 
-	# Bayesian_Model._set_observation(observation)
+	Bayesian_Model._set_observation(observation)
 
-	# Bayesian_Model._experiments(500)
+	Bayesian_Model._experiments(500)
 
-	# draw_error(Bayesian_Model._accuracy,Bayesian_Model, "order-2-size-30-runs-1000-epsilon-1.2-hellinger-delta000005-observation202020-box.png")
+	draw_error(Bayesian_Model._accuracy,Bayesian_Model, "order-2-size-30-runs-1000-epsilon-1.2-hellinger-delta000005-observation202020-box.png")
 
 	# draw_error_l1(Bayesian_Model._accuracy_l1,Bayesian_Model, "order-2-size-100-runs-1000-epsilon-08-l1norm-delta000005box.png")
 	
