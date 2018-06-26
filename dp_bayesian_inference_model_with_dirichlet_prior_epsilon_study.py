@@ -246,7 +246,7 @@ class BayesInferwithDirPrior(object):
 
 
 		for r in self._candidates:
-			temp = math.exp(self._epsilon * self._candidate_scores[r]/(self._SS_Hamming))
+			temp = math.exp(self._epsilon * self._candidate_scores[r]/(2 * self._SS_Hamming))
 			self._SS_probabilities.append(temp)
 
 			nomalizer += temp
@@ -274,7 +274,7 @@ class BayesInferwithDirPrior(object):
 		nomalizer = 0.0
 
 		for r in self._candidates:
-			temp = math.exp(self._epsilon * self._candidate_scores[r]/(self._LS))
+			temp = math.exp(self._epsilon * self._candidate_scores[r]/(2 * self._LS))
 			self._LS_probabilities.append(temp)
 			nomalizer += temp
 
@@ -301,7 +301,7 @@ class BayesInferwithDirPrior(object):
 		nomalizer = 0.0
 		
 		for r in self._candidates:
-			temp = math.exp(self._epsilon * self._candidate_scores[r]/(self._GS))
+			temp = math.exp(self._epsilon * self._candidate_scores[r]/(2 * self._GS))
 			self._GS_probabilities.append(temp)
 			nomalizer += temp
 
@@ -559,7 +559,7 @@ def draw_error(errors, model, filename):
 		box.set(color='navy', linewidth=1.5)
 		box.set(facecolor='lightblue')
 	plt.show()
-	plt.savefig(filename)
+	# plt.savefig(filename)
 	return 
 
 def draw_error_l1(errors, model, filename):
@@ -595,7 +595,7 @@ def draw_error_l1(errors, model, filename):
 		box.set(color='navy', linewidth=1.5)
 		box.set(facecolor='lightblue' )
 	plt.show()
-	plt.savefig(filename)
+	# plt.savefig(filename)
 	return
 
 
@@ -836,13 +836,13 @@ def hellinger_vs_l1norm(base_distribution):
 
 if __name__ == "__main__":
 
-	sample_size = 60
+	sample_size = 12
 	epsilon = 0.8
 	delta = 0.0005
 	prior = Dir([1,1,1,1])
 	x1 = [1,19]
 	x2 = [2,18]
-	observation = [15,15,15,15]
+	observation = [3,3,3,3]
 	epsilons = numpy.arange(0.1, 2, 0.1)
 	sample_sizes = [300] # [14,18,24,30,36,42,44,46,48]#,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80]
 	# # hellinger_vs_l1norm(Dir(observation))
@@ -865,7 +865,7 @@ if __name__ == "__main__":
 
 	Bayesian_Model._set_observation(observation)
 
-	Bayesian_Model._experiments(500)
+	Bayesian_Model._experiments(1000)
 
 	draw_error(Bayesian_Model._accuracy,Bayesian_Model, "order-2-size-30-runs-1000-epsilon-1.2-hellinger-delta000005-observation202020-box.png")
 
