@@ -289,6 +289,7 @@ class BayesInferwithDirPrior(object):
 		self._keys.append(key)
 
 		nomalizer = 0.0
+		# print self._posterior._alphas
 
 		for r in self._candidates:
 			temp = math.exp(self._epsilon * self._candidate_scores[r]/(2 * self._LS))
@@ -869,8 +870,8 @@ def accuracy_VS_datasize(epsilon,delta,prior,observations,mean):
 		Bayesian_Model._experiments(500)
 		data.append(Bayesian_Model._accuracy[Bayesian_Model._keys[3]])
 		data.append(Bayesian_Model._accuracy[Bayesian_Model._keys[0]])
-		xlabel.append(str(sum(observation)) + "/ExpMech")
-		xlabel.append(str(sum(observation)) + "/Laplace")
+		xlabel.append(str(observation) + "/ExpMech")
+		xlabel.append(str(observation) + "/Laplace")
 
 	plt.figure(figsize=(15,12))
 	bplot = plt.boxplot(data, notch=1, widths=0.4, sym='+', vert=2, whis=1.5,patch_artist=True)
@@ -963,26 +964,29 @@ def accuracy_VS_mean(sample_size,epsilon,delta,prior):
 	plt.show()
 	return
 
-def accuracy_VS_dimesion(sample_size,epsilon,delta,priors,mean):
+def accuracy_VS_dimension(sample_sizes, epsilon, delta):
 	data = []
 	xlabel = []
-	for prior in priors:
-		Bayesian_Model = BayesInferwithDirPrior(prior, sample_size, epsilon, delta)
-		Bayesian_Model._set_observation(observation)
-		Bayesian_Model._experiments(500)
-		data.append(Bayesian_Model._accuracy[Bayesian_Model._keys[3]])
-		data.append(Bayesian_Model._accuracy[Bayesian_Model._keys[0]])
-		xlabel.append(str(prior._alphas) + "/ExpMech")
-		xlabel.append(str(prior._alphas) + "/Laplace")
+	for n in sample_sizes:
+		for d in range(2,5):
+			observation = [n for i in range(d)]
+			prior = Dir([1 for i in range(d)])
+			Bayesian_Model = BayesInferwithDirPrior(prior, n*d, epsilon, delta)
+			Bayesian_Model._set_observation(observation)
+			Bayesian_Model._experiments(500)
+			data.append(Bayesian_Model._accuracy[Bayesian_Model._keys[3]])
+			data.append(Bayesian_Model._accuracy[Bayesian_Model._keys[0]])
+			xlabel.append(str(observation) + "/ExpMech")
+			xlabel.append(str(observation) + "/Laplace")
 
 	plt.figure(figsize=(18,10))
 	bplot = plt.boxplot(data, notch=1, widths=0.4, sym='+', vert=2, whis=1.5,patch_artist=True)
-	plt.xlabel("different prior distributions")
+	plt.xlabel("different dimensions")
 	plt.ylabel('Accuracy / Hellinegr Distance')
 	#ax.set_xlim(0.5, len(errors) + 0.5)
 
 	plt.xticks(range(1, len(data)+1),xlabel,rotation=70)
-	plt.title('Accuracy / observation: ' + str(observation) + ", delta: " + str(delta) + ", epsilon:" + str(epsilon) +  ', mean:' + str(mean))
+	plt.title('Accuracy / prior: [1,1,...]' + ", delta: " + str(delta) + ", epsilon:" + str(epsilon) +  ', mean: uniform')
 	for i in range(1, len(bplot["boxes"])/2 + 1):
 		box = bplot["boxes"][2 * (i - 1)]
 		box.set(color='navy', linewidth=1.5)
@@ -1005,14 +1009,16 @@ if __name__ == "__main__":
 	x2 = [2,18]
 	observation = [6,6]
 	epsilons = numpy.arange(0.1, 2, 0.1)
-	sample_sizes = [(3 * i) for i in range(30,60)]#[300] #[8,12,18,24,30,36,42,44,46,48]#,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80]
-	observations =[[i, i, i] for i in range(2,10)]
+	sample_sizes = [i for i in range(7,9)]#[300] #[8,12,18,24,30,36,42,44,46,48]#,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80]
+	observations =[[i, i] for i in range(1,9)]
 	priors = [Dir([(3 * i), (3 * i), (3 * i)]) for i in range(1,20)]
 	mean = [int(1.0/len(prior._alphas) * 100)/100.0 for i in range(len(prior._alphas))]
+	accuracy_VS_dimension(sample_sizes, epsilon, delta)
+
 	# means = [[(i/10.0), (1 - i/10.0)] for i in range(1,10)]
 	# print means
 	# accuracy_VS_prior(sample_size,epsilon,delta,priors,observation,mean)
-	accuracy_VS_mean(sample_size,epsilon,delta,prior)
+	# accuracy_VS_mean(sample_size,epsilon,delta,prior)
 	# accuracy_VS_datasize(epsilon,delta,prior,observations,mean)
 	# # hellinger_vs_l1norm(Dir(observation))
 	# global_epsilon_study(sample_sizes,epsilon,delta,prior)
