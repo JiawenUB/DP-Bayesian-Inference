@@ -998,10 +998,41 @@ def accuracy_VS_dimension(sample_sizes, epsilon, delta):
 	plt.show()
 	return
 
+def accuracy_VS_prior_mean(sample_size,epsilon,delta,priors,observations):
+	data = []
+	xlabel = []
+	for prior in priors:
+		for observation in observations:
+			Bayesian_Model = BayesInferwithDirPrior(prior, sample_size, epsilon, delta)
+			Bayesian_Model._set_observation(observation)
+			Bayesian_Model._experiments(300)
+			data.append(Bayesian_Model._accuracy[Bayesian_Model._keys[3]])
+			data.append(Bayesian_Model._accuracy[Bayesian_Model._keys[0]])
+			xlabel.append(str(prior._alphas) + ", data:" + str(observation) + "/ExpMech")
+			xlabel.append(str(prior._alphas) + ", data:" + str(observation) + "/Laplace")
+
+	plt.figure(figsize=(18,10))
+	bplot = plt.boxplot(data, notch=1, widths=0.4, sym='+', vert=2, whis=1.5,patch_artist=True)
+	plt.xlabel("different prior distributions and different data set means")
+	plt.ylabel('Accuracy / Hellinegr Distance')
+	#ax.set_xlim(0.5, len(errors) + 0.5)
+
+	plt.xticks(range(1, len(data)+1),xlabel,rotation=70)
+	plt.title('Accuracy / observation: ' + str(observation) + ", delta: " + str(delta) + ", epsilon:" + str(epsilon) +  ', mean:' + str(mean))
+	for i in range(1, len(bplot["boxes"])/2 + 1):
+		box = bplot["boxes"][2 * (i - 1)]
+		box.set(color='navy', linewidth=1.5)
+		box.set(facecolor='lightblue' )
+		box = bplot["boxes"][2 * (i - 1) + 1]
+		box.set(color='navy', linewidth=1.5)
+		box.set(facecolor='darkkhaki' )
+	plt.grid()
+	plt.show()
+	return
 
 if __name__ == "__main__":
 
-	sample_size = 8
+	sample_size = 90
 	epsilon = 0.8
 	delta = 0.0005
 	prior = Dir([1,1])
@@ -1010,11 +1041,11 @@ if __name__ == "__main__":
 	observation = [6,6]
 	epsilons = numpy.arange(0.1, 2, 0.1)
 	sample_sizes = [i for i in range(7,9)]#[300] #[8,12,18,24,30,36,42,44,46,48]#,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80]
-	observations =[[i, i] for i in range(1,9)]
-	priors = [Dir([(3 * i), (3 * i), (3 * i)]) for i in range(1,20)]
+	observations =[[45,45],[1,89]]
+	priors = [Dir([(3 * i), (3 * i)]) for i in range(1,15)]
 	mean = [int(1.0/len(prior._alphas) * 100)/100.0 for i in range(len(prior._alphas))]
-	accuracy_VS_dimension(sample_sizes, epsilon, delta)
-
+	# accuracy_VS_dimension(sample_sizes, epsilon, delta)
+	accuracy_VS_prior_mean(sample_size,epsilon,delta,priors,observations)
 	# means = [[(i/10.0), (1 - i/10.0)] for i in range(1,10)]
 	# print means
 	# accuracy_VS_prior(sample_size,epsilon,delta,priors,observation,mean)
