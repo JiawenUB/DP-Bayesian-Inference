@@ -1035,14 +1035,14 @@ if __name__ == "__main__":
 	sample_size = 90
 	epsilon = 0.8
 	delta = 0.0005
-	prior = Dir([1,1])
+	prior = Dir([1,1,1])
 	x1 = [1,19]
 	x2 = [2,18]
 	observation = [6,6]
 	epsilons = numpy.arange(0.1, 2, 0.1)
 	sample_sizes = [i for i in range(7,9)]#[300] #[8,12,18,24,30,36,42,44,46,48]#,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80]
-	observations =[[45,45],[1,89]]
-	priors = [Dir([(3 * i), (3 * i)]) for i in range(1,15)]
+	observations =[[40,40],[1,79]]
+	priors = [Dir([(4 * i), (4 * i)]) for i in range(15,20)]
 	mean = [int(1.0/len(prior._alphas) * 100)/100.0 for i in range(len(prior._alphas))]
 	# accuracy_VS_dimension(sample_sizes, epsilon, delta)
 	accuracy_VS_prior_mean(sample_size,epsilon,delta,priors,observations)
