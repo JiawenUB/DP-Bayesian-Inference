@@ -137,7 +137,9 @@ calibrate the noise to the smooth sensitivity~\cite{nissim2007smooth}. The
 only difference is in the sensitivity part, since now we use the
 smooth sensitivity.
 
-\begin{definition} The mechanism $\hexpmech(x)$ outputs a candidate $r \in \betaset$ with probability
+\begin{definition}
+\label{def_smoo}
+The mechanism $\hexpmech(x)$ outputs a candidate $r \in \betaset$ with probability
 \begin{equation*}
 \underset{z \thicksim \hexpmech(x)}{Pr}[z=r] = \frac
 {exp(\frac{-\epsilon\hlg(\bysinfer(x),r)}{2 S_\beta(x)})}
@@ -297,6 +299,7 @@ The first inequality holds by the sliding property, since the $\mathcal{U}_1 \ge
 
 \section{Accuracy Analysis}
 \subsection{Laplace Mechanism}
+\label{subsec_accuracy_lap}
 Fixing a data set $x$, we will sample noise $Lap_i = floor(Y)$ where $Y \sim Lap(\frac{2}{\epsilon})$. Since already had the accuracy bound based on the $l_1$ norm in Laplace mechanism:
 \begin{equation*}
 Pr[|Y| \geq t] = e^{- \frac{t \epsilon}{2}}.
@@ -317,6 +320,7 @@ When we are in the case of $m$ dimension Dirichlet distribution, we will add $(m
 
 
 \subsection{Exponential Mechanism with Global Sensitivity}
+\label{subsec_accuracy_global}
 Also, according to \cite{dwork2014algorithmic}, we already had the accuracy bound of exponential mechanism with global sensitivity as:
 \begin{equation*}
 \underset{z \thicksim \hexpmech(x)}{Pr}[ \hlg(\bysinfer(x), z) \geq c] \leq  \frac{|R| \exp{(\frac{- \epsilon c}{2 \Delta_g}})}{|R_{OPT}|\exp{(\frac{- \epsilon OPT_{\hlg(\bysinfer(x), z)}(x)}{2 \Delta_g})}},
@@ -325,6 +329,7 @@ where $|R|$ is the size of the candidate set. Since $OPT_{\hlg(\bysinfer(x), z)}
 
 
 \subsection{Exponential Mechanism with Smooth Sensitivity}
+\label{subsec_accuracy_smoo}
 We explored three accuracy bounds for our exponential mechanism with smooth sensitivity.
 
 First is the tight bound with very accurate calculation.
@@ -353,7 +358,7 @@ Within the three accuracy bounds, we will mainly use the first one in following 
 Based on accuracy study above, we are going to have a further study on the accuracy relationship between Laplace mechanism and our exponential mechanism in four aspects: data size, dimensions, prior distribution and data variance.
 
 \subsubsection{Accuracy Analysis wrt. Data Size and Distribution Dimensions}
-In this part, we will analyze the influence of data size on the two mechanisms' discrete probabilities of outputting each candidate separately. In following analysis, we will count the probabilities wrt. the steps from correct answer, in order to be more concise and comparable to the experiment results from Sec. \ref{subsec_accuracy_hellinger}. For example, in the case where the correct posterior distribution is $\betad(5,5)$, the candidate $\betad(4,6)$ and $\betad(6,4)$ are of $1$ steps from $\betad(5,5)$; when correct posterior distribution is $\dirichlet(5,5,5)$, the candidate $\dirichlet(4,5,3)$, $\dirichlet(4,3,5)$, $\dirichlet(5,4,3)$, $\dirichlet(5,3,4)$, $\dirichlet(3,5,4)$ and $\dirichlet(5,5,5)$ are all of $1$ step from $\dirichlet(5,5,5)$. Under the Hellinger distance measurement, if candidates are of the same steps from correct answer, they also have the same Hellinger distance from correct answer. i.e for every $\hlg(\bysinfer(x), z) = c$, it will have a corresponding steps $step(\hlg(\bysinfer(x), z) = c) = k$. This will make the results more clear and observable.
+In this part, we will analyze the influence of data size on the two mechanisms' discrete probabilities of outputting each candidate separately. In following analysis, we will count the probabilities wrt. the steps from correct answer, in order to be more concise. For example, in the case where the correct posterior distribution is $\betad(5,5)$, the candidate $\betad(4,6)$ and $\betad(6,4)$ are of $1$ steps from $\betad(5,5)$; when correct posterior distribution is $\dirichlet(5,5,5)$, the candidate $\dirichlet(4,5,3)$, $\dirichlet(4,3,5)$, $\dirichlet(5,4,3)$, $\dirichlet(5,3,4)$, $\dirichlet(3,5,4)$ and $\dirichlet(5,5,5)$ are all of $1$ step from $\dirichlet(5,5,5)$. Under the Hellinger distance measurement, if candidates are of the same steps from correct answer, they also have the same Hellinger distance from correct answer. i.e for every $\hlg(\bysinfer(x), z) = c$, it will have a corresponding steps $step(\hlg(\bysinfer(x), z) = c) = k$. This will make the results more clear and observable.
 
 
 \begin{itemize}
@@ -457,7 +462,7 @@ In this part, we will analyze the influence of data size on the two mechanisms' 
 \end{itemize}
 
 \subsubsection{Accuracy Analysis wrt. prior distribution}
-We studied the local sensitivity of hellinger distance of different $\betad$ distributions first as in Fig. \ref{fig_sensitivity}, in order to better understand the relationships between accuracy and next two aspects.
+In this part, we firstly study the local sensitivity of Hellinger distance of different $\betad$ distributions as in Fig. \ref{fig_sensitivity}, in order to have a better understanding of the relationships between accuracy and next two aspects.
 
 \begin{figure}[h]
 \centering
@@ -466,7 +471,11 @@ We studied the local sensitivity of hellinger distance of different $\betad$ dis
 \caption{Hellinger distance study}
 \end{figure}
 
+As in Fig. \ref{fig_sensitivity}, the local sensitivity of Hellinger distance will decrease when $\betad$ distribution's two parameters get closer (i.e. more uniform) and larger. In the same time, our smooth sensitivity will also decrease based on the Def. \ref{def_smoo}. From accuracy bound in Sec. \ref{subsec_accuracy_smoo}, the accuracy will be improved when sensitivity go larger. In consequence, when we increase the prior distribution, the smooth sensitivity in our exponential mechanism will decrease, which means our accuracy will be improved. However, the sensitivity of $l_1$ norm in Laplace mechanism is fixed regardless the prior distribution. We will study this trade-off in Sec. \ref{subsubsec_vs_prior}.
+
 \subsubsection{Accuracy Analysis wrt. data variance}
+
+Similar as above, when the data variance is small (i.e. the data are uniform), the parameters of posterior distribution will get more uniform (i.e. closer). Based on Fig. \ref{fig_sensitivity}, the Hellinger distance's sensitivity will get smaller when parameter get closer. As a result, the accuracy will be improved in the same time. We will study this trade-off in Sec. \ref{subsubsec_vs_variance}
 
 
 \begin{figure}[h]
@@ -478,7 +487,7 @@ We studied the local sensitivity of hellinger distance of different $\betad$ dis
 
 
 \section{Experimental Evaluations}
-\label{experiment}
+\label{sec_experiment}
 
 \subsection{Computation Efficiency}
 \label{subsec_effi}
@@ -636,7 +645,7 @@ In consequence, we have a further experiments exploration on the accuracy trade-
 
 
 \subsection{Accuracy Trade-off Evaluation wrt. Different Variables}
-\label{subsubsec_vs_variables}
+\label{subsec_vs_variables}
 
 In this section, we evaluate the accuracy wrt. four variables, including data size, dimension, data variance and prior distribution, and some combinations of these variables. We experiment 1000 times under each value of variables and produce 4-quantile plots for each variable. In following 4-quantile plots, the y-axis is accuracy measured by Hellinger distance, x-axis is different value of variables. The blue boxes in plots represent our exponential mechanism and the next yellow box represents the Laplace mechanism under the same setting.
 
@@ -700,7 +709,7 @@ In Fig. \ref{fig_vs_prior}, we study this variable under setting that observed d
 
 
 \subsubsection{Accuracy Evaluation wrt. Prior Distribution and Data Variance}
-\label{subsec_vs_prior_variance}
+\label{subsubsec_vs_prior_variance}
 
 \begin{figure}[h]
 \centering
