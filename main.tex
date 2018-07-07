@@ -622,6 +622,102 @@ From the theory and experimental analysis above, we obtained some conclusions
 	\item The Laplace mechanism will beat us when the data size and the dimensions of the prior distribution increasing and when the variance of the observed data set is small.
 \end{enumerate}
 
+
+\subsection{Accuracy Evaluation wrt. Different Variables}
+\label{subsubsec_vs_variables}
+
+In this section, we evaluate the accuracy wrt. four variables, including data size, dimension, data variance and prior distribution, and some combinations of these variables. We experiment 1000 times under each value of variables and produce 4-quantile plots for each variable. In following 4-quantile plots, the y-axis is accuracy measured by Hellinger distance, x-axis is different value of variables. The blue boxes in plots represent our exponential mechanism and the next yellow box represents the Laplace mechanism under the same setting.
+
+\subsubsection{Accuracy Evaluation wrt. Datasize}
+\label{subsubsec_vs_datasize}
+
+\begin{figure*}
+\begin{center}
+\centering
+  \subfigure[two dimensions with $\betad (1,1)$ prior distribution]{
+    \includegraphics[width=0.48\textwidth]{accuracy_vs_datasize_1_1.eps}}
+  \subfigure[three dimensions with $\dirichlet (1,1,1)$ prior distribution]{
+    \includegraphics[width=0.48\textwidth]{accuracy_vs_datasize_1_1_1.eps}} 
+\caption{Accuracy measurement based on Hellinger distance wrt. different datasizes. Settings: observed data are uniformly distributed, $\epsilon = 0.8$ and $\delta = 0.0005$}
+\label{fig_vs_datasize}
+\end{center}
+\end{figure*}
+
+In Fig. \ref{fig_vs_datasize}, both of the two plots show that when data size go larger, accuracy of our exponential mechanism are decreasing. In Fig. \ref{fig_vs_datasize}(a), when the data size is smaller than 12, we can beta Laplace mechanism but fail when data size larger than or equal to 12. Same as in Fig. \ref{fig_vs_datasize}(b), we can beat Laplace mechanism when data size is smaller than 15 and fail otherwise.
+
+\subsubsection{Accuracy Evaluation wrt. Dimensions}
+\label{subsubsec_vs_dimension}
+
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=1.0\textwidth]{accuracy_vs_dimension}
+\caption{Accuracy measurement based on Hellinger distance wrt. different dimensions and data size. Settings: observed data are uniformly distributed, $\epsilon = 0.8$ and $\delta = 0.0005$, prior distributions are all $1$ in every dimension}
+\label{fig_vs_dimension}
+\end{figure}
+
+In Fig. \ref{fig_vs_dimension}, x-axis are observed data sets of different size and dimensions. The plot shows that dimensions have similar influence on our exponential mechanism and the Laplace mechanism. Accuracy of two mechanisms both decrease when dimensions go larger. We will be beat by Laplace mechanism when data size increase but will not be affected when dimensions increase. In other words, dimension has little influence on whether we will beat Laplace mechanism.
+
+
+\subsubsection{Accuracy Evaluation wrt. Data variance}
+\label{subsubsec_vs_variance}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=1.0\textwidth]{accuracy_vs_mean_1_1}
+\caption{Accuracy measurement based on Hellinger distance wrt. different data variance. Settings: $\epsilon = 0.8$ and $\delta = 0.0005$, prior distributions are all $1$ in every dimension}
+\label{fig_vs_variance}
+\end{figure}
+
+In Fig. \ref{fig_vs_variance}, x-axis are observed data sets of different variances (or means). We study this variable under two-dimension $\betad$ distribution in order to be concise. It shows that our mechanism's accuracy is better when data variance go smaller, meanwhile Laplace mechanism go worse. We will beat Laplace mechanism when observed data are more uniformly.
+
+
+
+\subsubsection{Accuracy Evaluation wrt. Prior Distribution}
+\label{subsubsec_vs_prior}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=1.0\textwidth]{accuracy_vs_prior_5_5_5}
+\caption{Accuracy measurement based on Hellinger distance wrt. different prior distribution. Settings: $\epsilon = 0.8$ and $\delta = 0.0005$, observed data set is: $[5,5,5]$}
+\label{fig_vs_prior}
+\end{figure}
+
+In Fig. \ref{fig_vs_prior}, we study this variable under setting that observed data set is $[5,5,5]$ because in Fig. \ref{fig_vs_datasize} Laplace mechanism beat us when data size is 15 and uniformly distributed.
+
+
+
+
+
+\subsubsection{Accuracy Evaluation wrt. Prior Distribution and Data Variance}
+\label{subsec_vs_prior_variance}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=1.0\textwidth]{Accuracy_VS_Prior_mean}
+\caption{Experimental Results for Finding the Local Sensitivity Efficiently}
+\label{fig_vs_prior_variance}
+\end{figure}
+
+\subsection{Experiment Evaluations on Privacy}
+\label{subsec_experiment_privacy}
+In order to see our privacy behavior, we study the accurate epsilon under concrete cases in this section. The $(\epsilon, \delta)$ - differential privacy we proved in Sec. \ref{sec_smoo} is just an upper bound, we concrete $\epsilon$ should be smaller than upper bound in our exponential mechanism. We calculate the concrete privacy value in following ways wrt. the data size, and obtain plots in Fig. \ref{fig_privacy}.
+
+\begin{figure*}
+\begin{center}
+\centering
+  \subfigure[data size range from 90 to 180]{
+    \includegraphics[width=0.48\textwidth]{global_epsilon_20_20.eps}}
+  \subfigure[data size range from 90 to 180]{
+    \includegraphics[width=0.48\textwidth]{global_epsilon_20_20(2).eps}} 
+\caption{Concrete privacy calculation under settings that: prior distribution:$[1,1]$, $\epsilon = 0.8$, $\delta = 0.0005$ and observed data are uniformly distributed}
+\label{fig_privacy}
+\end{center}
+\end{figure*}
+
+$\epsilon = $
+
+
 \bibliographystyle{plain}
 \bibliography{bayesian.bib}
 
