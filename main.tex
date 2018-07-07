@@ -683,9 +683,7 @@ In Fig. \ref{fig_vs_variance}, x-axis are observed data sets of different varian
 \label{fig_vs_prior}
 \end{figure}
 
-In Fig. \ref{fig_vs_prior}, we study this variable under setting that observed data set is $[5,5,5]$ because in Fig. \ref{fig_vs_datasize} Laplace mechanism beat us when data size is 15 and uniformly distributed.
-
-
+In Fig. \ref{fig_vs_prior}, we study this variable under setting that observed data set is $[5,5,5]$ because in Fig. \ref{fig_vs_datasize} Laplace mechanism beat us when data size is 15 and uniformly distributed. The plot shows that in the beginning we cannot beat Laplace but when prior distribution grow larger, we perform better and better and beat Laplace mechanism finally.
 
 
 
@@ -698,6 +696,9 @@ In Fig. \ref{fig_vs_prior}, we study this variable under setting that observed d
 \caption{Experimental Results for Finding the Local Sensitivity Efficiently}
 \label{fig_vs_prior_variance}
 \end{figure}
+
+Here, we change the prior distribution and data variance in the same time. As shown in Fig. \ref{fig_vs_prior_variance}, our exponential mechanism do better in uniform data set than in edging data set while Laplace mechanism on the contrary. Moreover, our mechanism is improving continuously and significantly as prior distribution increasing while Laplace mechanism isn't.
+
 
 \subsection{Experiment Evaluations on Privacy}
 \label{subsec_experiment_privacy}
@@ -715,7 +716,7 @@ In order to see our privacy behavior, we study the accurate epsilon under concre
 \end{center}
 \end{figure*}
 
-$\epsilon = $
+$\epsilon = 0.8$ is a privacy upper bound, we can observe that the concrete $\epsilon$ values are smaller than the upper bound. That is to say, we achieved a higher privacy level than expected. In next step, we are going to improve the accuracy using this property.
 
 
 \bibliographystyle{plain}
