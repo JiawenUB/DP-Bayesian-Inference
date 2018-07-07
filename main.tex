@@ -464,7 +464,7 @@ In this part, we will analyze the influence of data size on the two mechanisms' 
 \subsubsection{Accuracy Analysis wrt. prior distribution}
 In this part, we firstly study the local sensitivity of Hellinger distance of different $\betad$ distributions as in Fig. \ref{fig_sensitivity}, in order to have a better understanding of the relationships between accuracy and next two aspects.
 
-\begin{figure}[h]
+\begin{figure}[ht]
 \centering
 \includegraphics[width=0.5\textwidth]{sensitivity}
 \label{fig_sensitivity}
@@ -478,7 +478,7 @@ As in Fig. \ref{fig_sensitivity}, the local sensitivity of Hellinger distance wi
 Similar as above, when the data variance is small (i.e. the data are uniform), the parameters of posterior distribution will get more uniform (i.e. closer). Based on Fig. \ref{fig_sensitivity}, the Hellinger distance's sensitivity will get smaller when parameter get closer. As a result, the accuracy will be improved in the same time. We will study this trade-off in Sec. \ref{subsubsec_vs_variance}
 
 
-\begin{figure}[h]
+\begin{figure}[ht]
 \centering
 \includegraphics[width=1.0\textwidth]{efficiency}
 \label{fig_efficiency}
@@ -670,7 +670,7 @@ In Fig. \ref{fig_vs_datasize}, both of the two plots show that when data size go
 \label{subsubsec_vs_dimension}
 
 
-\begin{figure}[h]
+\begin{figure}[ht]
 \centering
 \includegraphics[width=1.0\textwidth]{accuracy_vs_dimension}
 \caption{Accuracy measurement based on Hellinger distance wrt. different dimensions and data size. Settings: observed data are uniformly distributed, $\epsilon = 0.8$ and $\delta = 0.0005$, prior distributions are all $1$ in every dimension}
@@ -683,7 +683,7 @@ In Fig. \ref{fig_vs_dimension}, x-axis are observed data sets of different size 
 \subsubsection{Accuracy Evaluation wrt. Data variance}
 \label{subsubsec_vs_variance}
 
-\begin{figure}[h]
+\begin{figure}[ht]
 \centering
 \includegraphics[width=1.0\textwidth]{accuracy_vs_mean_1_1}
 \caption{Accuracy measurement based on Hellinger distance wrt. different data variance. Settings: $\epsilon = 0.8$ and $\delta = 0.0005$, prior distributions are all $1$ in every dimension}
@@ -697,7 +697,7 @@ In Fig. \ref{fig_vs_variance}, x-axis are observed data sets of different varian
 \subsubsection{Accuracy Evaluation wrt. Prior Distribution}
 \label{subsubsec_vs_prior}
 
-\begin{figure}[h]
+\begin{figure}[ht]
 \centering
 \includegraphics[width=1.0\textwidth]{accuracy_vs_prior_5_5_5}
 \caption{Accuracy measurement based on Hellinger distance wrt. different prior distribution. Settings: $\epsilon = 0.8$ and $\delta = 0.0005$, observed data set is: $[5,5,5]$}
@@ -711,7 +711,7 @@ In Fig. \ref{fig_vs_prior}, we study this variable under setting that observed d
 \subsubsection{Accuracy Evaluation wrt. Prior Distribution and Data Variance}
 \label{subsubsec_vs_prior_variance}
 
-\begin{figure}[h]
+\begin{figure}[ht]
 \centering
 \includegraphics[width=1.0\textwidth]{Accuracy_VS_Prior_mean}
 \caption{Experimental Results for Finding the Local Sensitivity Efficiently}
