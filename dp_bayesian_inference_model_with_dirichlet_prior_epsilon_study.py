@@ -1037,17 +1037,17 @@ def accuracy_VS_prior_mean(sample_size,epsilon,delta,priors,observations):
 
 if __name__ == "__main__":
 
-	sample_size = 8
+	sample_size = 12
 	epsilon = 0.8
-	delta = 0.00001
-	prior = Dir([1,1])
+	delta = 0.00000001
+	prior = Dir([1,1,1])
 	x1 = [1,19]
 	x2 = [2,18]
 	observation = [5,5,5]
 	epsilons = numpy.arange(0.1, 2, 0.1)
 	sample_sizes = [i for i in range(1,5)]#[300] #[8,12,18,24,30,36,42,44,46,48]#,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80]
-	observations =[[10,10,10],[1,1,28]]
-	priors = [Dir([4*i,4*i,4*i]) for i in range(5,15)]
+	observations =[[4,4,4],[0,0,12]]
+	priors = [Dir([4*i,4*i,4*i]) for i in range(5,20)]
 	mean = [int(1.0/len(prior._alphas) * 100)/100.0 for i in range(len(prior._alphas))]
 	# accuracy_VS_dimension(sample_sizes, epsilon, delta)
 	accuracy_VS_prior_mean(sample_size,epsilon,delta,priors,observations)
