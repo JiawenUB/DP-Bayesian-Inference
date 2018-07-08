@@ -14,7 +14,7 @@
 \input{macros}
 
 \begin{document}
-\title{Template for ACM CCS 2017} % TODO: replace with your title
+\title{Sketch of DP - Bayesian Inference} % TODO: replace with your title
 
 \begin{abstract}
 Your abstract should go here. You will also need to upload a plain-text abstract into the web submission form.
@@ -34,7 +34,7 @@ Your abstract should go here. You will also need to upload a plain-text abstract
 \ccsdesc{Security and privacy~Use https://dl.acm.org/ccs.cfm to generate actual concepts section for your paper}
 % -- end of section to replace with generated code
 
-\keywords{template; formatting; pickling} % TODO: replace with your keywords
+\keywords{differential privacy, Bayesian inference, Hellinger distance} % TODO: replace with your keywords
 
 \maketitle
 
@@ -258,10 +258,10 @@ In this section, we evaluate the accuracy wrt. four variables, including data si
 \begin{center}
 \centering
   \subfigure[two dimensions with $\betad (1,1)$ prior distribution]{
-    \includegraphics[width=0.35\textwidth]{accuracy_vs_datasize_1_1.eps}}
+    \includegraphics[width=0.3\textwidth]{accuracy_vs_datasize_1_1.eps}}
   \subfigure[three dimensions with $\dirichlet (1,1,1)$ prior distribution]{
-    \includegraphics[width=0.35\textwidth]{accuracy_vs_datasize_1_1_1.eps}} 
-\caption{Accuracy measurement based on Hellinger distance wrt. different datasizes. Settings: observed data are uniformly distributed, $\epsilon = 0.8$ and $\delta = 0.0005$}
+    \includegraphics[width=0.3\textwidth]{accuracy_vs_datasize_1_1_1.eps}} 
+\caption{Accuracy measurement based on Hellinger distance wrt. different datasizes. Settings: observed data are uniformly distributed, $\epsilon = 0.8$ and $\delta = 0.00000001$}
 \label{fig_vs_datasize}
 \end{center}
 \end{figure}
@@ -274,8 +274,8 @@ In Fig. \ref{fig_vs_datasize}, both of the two plots show that when data size go
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.5\textwidth]{accuracy_vs_dimension}
-\caption{Accuracy measurement based on Hellinger distance wrt. different dimensions and data size. Settings: observed data are uniformly distributed, $\epsilon = 0.8$ and $\delta = 0.0005$, prior distributions are all $1$ in every dimension}
+\includegraphics[width=0.45\textwidth]{accuracy_vs_dimension}
+\caption{Accuracy measurement based on Hellinger distance wrt. different dimensions and data size. Settings: observed data are uniformly distributed, $\epsilon = 0.8$ and $\delta = 0.00000001$, prior distributions are all $1$ in every dimension}
 \label{fig_vs_dimension}
 \end{figure}
 
@@ -287,8 +287,8 @@ In Fig. \ref{fig_vs_dimension}, x-axis are observed data sets of different size 
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.5\textwidth]{accuracy_vs_mean_1_1}
-\caption{Accuracy measurement based on Hellinger distance wrt. different data variance. Settings: $\epsilon = 0.8$ and $\delta = 0.0005$, prior distributions are all $1$ in every dimension}
+\includegraphics[width=0.45\textwidth]{accuracy_vs_mean_1_1}
+\caption{Accuracy measurement based on Hellinger distance wrt. different data variance. Settings: $\epsilon = 0.8$ and $\delta = 0.00000001$, prior distributions are all $1$ in every dimension}
 \label{fig_vs_variance}
 \end{figure}
 
@@ -301,8 +301,8 @@ In Fig. \ref{fig_vs_variance}, x-axis are observed data sets of different varian
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.5\textwidth]{accuracy_vs_prior_5_5_5}
-\caption{Accuracy measurement based on Hellinger distance wrt. different prior distribution. Settings: $\epsilon = 0.8$ and $\delta = 0.0005$, observed data set is: $[5,5,5]$}
+\includegraphics[width=0.45\textwidth]{accuracy_vs_prior_5_5_5.eps}
+\caption{Accuracy measurement based on Hellinger distance wrt. different prior distribution. Settings: $\epsilon = 0.8$ and $\delta = 0.00000001$, observed data set is: $[5,5,5]$}
 \label{fig_vs_prior}
 \end{figure}
 
@@ -315,8 +315,8 @@ In Fig. \ref{fig_vs_prior}, we study this variable under setting that observed d
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.5\textwidth]{Accuracy_VS_Prior_mean.eps}
-\caption{Accuracy measurement based on Hellinger distance wrt. different prior distribution and data variances. Settings: $\epsilon = 0.8$ and $\delta = 0.0005$, observed data sets are $[10,10,10]$ and $[1,1,28]$ and prior distributions are range from $[20,20,20]$ to $[76,76,76]$}
+\includegraphics[width=0.45\textwidth]{Accuracy_VS_Prior_mean.eps}
+\caption{Accuracy measurement based on Hellinger distance wrt. different prior distribution and data variances. Settings: $\epsilon = 0.8$ and $\delta = 0.00000001$, observed data sets are $[10,10,10]$ and $[1,1,28]$ and prior distributions are range from $[20,20,20]$ to $[76,76,76]$}
 \label{fig_vs_prior_variance}
 \end{figure}
 

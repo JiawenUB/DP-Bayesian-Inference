@@ -873,14 +873,15 @@ def accuracy_VS_datasize(epsilon,delta,prior,observations,mean):
 		xlabel.append(str(observation) + "/ExpMech")
 		xlabel.append(str(observation) + "/Laplace")
 
-	plt.figure(figsize=(15,12))
+	plt.figure(figsize=(12,10))
 	bplot = plt.boxplot(data, notch=1, widths=0.4, sym='+', vert=2, whis=1.5,patch_artist=True)
-	plt.xlabel("different datasize")
-	plt.ylabel('Accuracy / Hellinegr Distance')
+	plt.xlabel("different datasize",fontsize=15)
+	plt.ylabel('Accuracy / Hellinegr Distance',fontsize=15)
 	#ax.set_xlim(0.5, len(errors) + 0.5)
 
-	plt.xticks(range(1, len(data)+1),xlabel,rotation=70)
-	plt.title('Accuracy / prior: ' + str(prior._alphas) + ", delta: " + str(delta) + ", epsilon:" + str(epsilon) +  ', mean:' + str(mean))
+	plt.xticks(range(1, len(data)+1),xlabel,rotation=70,fontsize=12)
+	plt.title("Accuracy VS. Data Size",fontsize=20)
+	print('Accuracy / prior: ' + str(prior._alphas) + ", delta: " + str(delta) + ", epsilon:" + str(epsilon) +  ', mean:' + str(mean))
 	for i in range(1, len(bplot["boxes"])/2 + 1):
 		box = bplot["boxes"][2 * (i - 1)]
 		box.set(color='navy', linewidth=1.5)
@@ -907,12 +908,13 @@ def accuracy_VS_prior(sample_size,epsilon,delta,priors,observation,mean):
 
 	plt.figure(figsize=(18,10))
 	bplot = plt.boxplot(data, notch=1, widths=0.4, sym='+', vert=2, whis=1.5,patch_artist=True)
-	plt.xlabel("different prior distributions")
-	plt.ylabel('Accuracy / Hellinegr Distance')
+	plt.xlabel("different prior distributions",fontsize=15)
+	plt.ylabel('Accuracy / Hellinegr Distance',fontsize=15)
 	#ax.set_xlim(0.5, len(errors) + 0.5)
 
-	plt.xticks(range(1, len(data)+1),xlabel,rotation=70)
-	plt.title('Accuracy / observation: ' + str(observation) + ", delta: " + str(delta) + ", epsilon:" + str(epsilon) +  ', mean:' + str(mean))
+	plt.xticks(range(0, len(data)),xlabel,rotation=70,fontsize=12)
+	plt.title("Accuracy VS. Prior Distribution",fontsize=20)
+	print('Accuracy / observation: ' + str(observation) + ", delta: " + str(delta) + ", epsilon:" + str(epsilon) +  ', mean:' + str(mean))
 	for i in range(1, len(bplot["boxes"])/2 + 1):
 		box = bplot["boxes"][2 * (i - 1)]
 		box.set(color='navy', linewidth=1.5)
@@ -947,12 +949,13 @@ def accuracy_VS_mean(sample_size,epsilon,delta,prior):
 
 	plt.figure(figsize=(18,10))
 	bplot = plt.boxplot(data, notch=1, widths=0.4, sym='+', vert=2, whis=1.5,patch_artist=True)
-	plt.xlabel("different observed data sets")
-	plt.ylabel('Accuracy / Hellinegr Distance')
+	plt.xlabel("different observed data sets",fontsize=16)
+	plt.ylabel('Accuracy / Hellinegr Distance',fontsize=16)
 	#ax.set_xlim(0.5, len(errors) + 0.5)
 
-	plt.xticks(range(1, len(data)+1),xlabel,rotation=70)
-	plt.title('Accuracy / data_size: ' + str(sample_size) +  ', prior:' + str(prior._alphas) + ", delta: " + str(delta) + ", epsilon:" + str(epsilon))
+	plt.xticks(range(1, len(data)+1),xlabel,rotation=70,fontsize=13)
+	plt.title("Accuracy VS. Data Variance",fontsize=20)
+	print 'Accuracy / data_size: ' + str(sample_size) +  ', prior:' + str(prior._alphas) + ", delta: " + str(delta) + ", epsilon:" + str(epsilon)
 	for i in range(1, len(bplot["boxes"])/2 + 1):
 		box = bplot["boxes"][2 * (i - 1)]
 		box.set(color='navy', linewidth=1.5)
@@ -981,12 +984,13 @@ def accuracy_VS_dimension(sample_sizes, epsilon, delta):
 
 	plt.figure(figsize=(18,10))
 	bplot = plt.boxplot(data, notch=1, widths=0.4, sym='+', vert=2, whis=1.5,patch_artist=True)
-	plt.xlabel("different dimensions")
-	plt.ylabel('Accuracy / Hellinegr Distance')
+	plt.xlabel("different dimensions",fontsize=15)
+	plt.ylabel('Accuracy / Hellinegr Distance',fontsize=15)
 	#ax.set_xlim(0.5, len(errors) + 0.5)
 
-	plt.xticks(range(1, len(data)+1),xlabel,rotation=70)
-	plt.title('Accuracy / prior: [1,1,...]' + ", delta: " + str(delta) + ", epsilon:" + str(epsilon) +  ', mean: uniform')
+	plt.xticks(range(1, len(data)+1),xlabel,rotation=70,fontsize=12)
+	plt.title("Accuracy VS. Dimensionality",fontsize=20)
+	print('Accuracy / prior: [1,1,...]' + ", delta: " + str(delta) + ", epsilon:" + str(epsilon) +  ', mean: uniform')
 	for i in range(1, len(bplot["boxes"])/2 + 1):
 		box = bplot["boxes"][2 * (i - 1)]
 		box.set(color='navy', linewidth=1.5)
@@ -1018,7 +1022,8 @@ def accuracy_VS_prior_mean(sample_size,epsilon,delta,priors,observations):
 	#ax.set_xlim(0.5, len(errors) + 0.5)
 
 	plt.xticks(range(1, len(data)+1),xlabel,rotation=70)
-	plt.title('Accuracy / observation: ' + str(observation) + ", delta: " + str(delta) + ", epsilon:" + str(epsilon) +  ', mean:' + str(mean))
+	plt.title("Accuracy VS. Prior Distribution & Data Variance")
+	print ('Accuracy / observation: ' + str(observation) + ", delta: " + str(delta) + ", epsilon:" + str(epsilon) +  ', mean:' + str(mean))
 	for i in range(1, len(bplot["boxes"])/2 + 1):
 		box = bplot["boxes"][2 * (i - 1)]
 		box.set(color='navy', linewidth=1.5)
@@ -1032,17 +1037,17 @@ def accuracy_VS_prior_mean(sample_size,epsilon,delta,priors,observations):
 
 if __name__ == "__main__":
 
-	sample_size = 90
+	sample_size = 8
 	epsilon = 0.8
-	delta = 0.0005
-	prior = Dir([1,1,1])
+	delta = 0.00001
+	prior = Dir([1,1])
 	x1 = [1,19]
 	x2 = [2,18]
-	observation = [6,6]
+	observation = [5,5,5]
 	epsilons = numpy.arange(0.1, 2, 0.1)
-	sample_sizes = [i for i in range(7,9)]#[300] #[8,12,18,24,30,36,42,44,46,48]#,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80]
-	observations =[[40,40],[1,79]]
-	priors = [Dir([(4 * i), (4 * i)]) for i in range(15,20)]
+	sample_sizes = [i for i in range(1,5)]#[300] #[8,12,18,24,30,36,42,44,46,48]#,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80]
+	observations =[[10,10,10],[1,1,28]]
+	priors = [Dir([4*i,4*i,4*i]) for i in range(5,15)]
 	mean = [int(1.0/len(prior._alphas) * 100)/100.0 for i in range(len(prior._alphas))]
 	# accuracy_VS_dimension(sample_sizes, epsilon, delta)
 	accuracy_VS_prior_mean(sample_size,epsilon,delta,priors,observations)
