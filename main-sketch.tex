@@ -25,9 +25,11 @@ We give a inference process based on a concrete example, where we throw an irreg
 
 In the case that $m = 2$, it is reduced to a Beta distribution $\betad(\alpha, \beta)$. The $m$ side dice change into a irregular coin with side $A$ and side $B$. The posterior is computed as $(\alpha + n_1, \beta + n_0)$, where $n_1$ is the appearance time of side $A$ in the observed data set and $n_0$ is the appearance time of the other side.
 
+Then we use mechanisms to protect the inference results to get private posteriors: $\dirichlet(\alphas^*)$. When we measure the distance between true posterior and protected posterior, we will have different result on $l_1$ norm and Hellinger distance. We believe that if the protected posterior is produced based on Hellinger distance, it will have a better accuracy than produced based on the $l_1$ norm.
+
 \section{Baseline Approach - Laplace Mechanism}
 \label{sec_lap}
-Based on the posterior results from Bayesian inference, we calculate the Laplace mechanism updates on posterior and get the private results under Laplace mechanism. In the case of $m$ dimension Dirichlet distribution, we will add $(m-1)$ i.i.d. Laplace noises $\{| Lap_1 |, | Lap_2 |, \cdots, | Lap_{m-1} |\}$ to the output, where $Lap_i = floor(Y)$, $Y \sim Lap(\frac{2}{\epsilon})$. The private posterior then will be $\dirichlet(\alpha_1 + n_1 + , \alpha_2 + n_2, \cdots, \alpha_m + n - (Lap_1 + \cdots + Lap_{m-1}))$.
+Based on the posterior results from Bayesian inference, we calculate the Laplace mechanism updates on posterior and get the private results under Laplace mechanism. In the case of $m$ dimension Dirichlet distribution, we will add $(m-1)$ i.i.d. Laplace noises $\{| Lap_1 |, | Lap_2 |, \cdots, | Lap_{m-1} |\}$ to the output, where $Lap_i = floor(Y)$, $Y \sim Lap(\frac{2}{\epsilon})$. The private posterior then will be $\dirichlet(\alpha_1 + n_1 + | Lap_1 |, \alpha_2 + n_2 + | Lap_2 |, \cdots, \alpha_m + n - (Lap_1 + \cdots + Lap_{m-1}))$.
 
 \section{Our Approach - Exponential Mechanism with Smooth Sensitivity}
 \label{sec_smoo}
@@ -237,7 +239,7 @@ In Fig. \ref{fig_vs_datasize}, both of the two plots show that when data size go
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=1.0\textwidth]{accuracy_vs_dimension}
+\includegraphics[width=0.8\textwidth]{accuracy_vs_dimension}
 \caption{Accuracy measurement based on Hellinger distance wrt. different dimensions and data size. Settings: observed data are uniformly distributed, $\epsilon = 0.8$ and $\delta = 0.0005$, prior distributions are all $1$ in every dimension}
 \label{fig_vs_dimension}
 \end{figure}
@@ -264,7 +266,7 @@ In Fig. \ref{fig_vs_variance}, x-axis are observed data sets of different varian
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=1.0\textwidth]{accuracy_vs_prior_5_5_5}
+\includegraphics[width=0.8\textwidth]{accuracy_vs_prior_5_5_5}
 \caption{Accuracy measurement based on Hellinger distance wrt. different prior distribution. Settings: $\epsilon = 0.8$ and $\delta = 0.0005$, observed data set is: $[5,5,5]$}
 \label{fig_vs_prior}
 \end{figure}
@@ -278,8 +280,8 @@ In Fig. \ref{fig_vs_prior}, we study this variable under setting that observed d
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=1.0\textwidth]{Accuracy_VS_Prior_mean}
-\caption{Experimental Results for Finding the Local Sensitivity Efficiently}
+\includegraphics[width=0.8\textwidth]{Accuracy_VS_Prior_mean.eps}
+\caption{Accuracy measurement based on Hellinger distance wrt. different prior distribution and data variances. Settings: $\epsilon = 0.8$ and $\delta = 0.0005$, observed data sets are $[10,10,10]$ and $[1,1,28]$ and prior distributions are range from $[20,20,20]$ to $[76,76,76]$}
 \label{fig_vs_prior_variance}
 \end{figure}
 
