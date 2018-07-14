@@ -56,14 +56,15 @@ denoted as $\bysinfer(\textbf{x},\pi(\xis))$ taking an observed data set $\textb
 
 In Beta-Bernoulli systems, we take a Beta distribution as prior belief for our parameters and latent variables, $\betad(\alpha, \beta)$, where $\pi(\xi) = \betad(\xi | \alpha, \beta) = \frac{\xi^{\alpha} (1 - \xi)^{\beta}}{B(\alphas)}$, and the Bernoulli distribution as the likelihood for $Pr(\textbf{x} | \xi) = \xi^{\sum\limits_{\mathrm{x_i} \in \textbf{x}}\mathrm{x_i}}(1 - \xi)^{n -\sum\limits_{\mathrm{x_i} \in \textbf{x}}\mathrm{x_i}} $. %We are throwing an irregular coin with side $A$ and side $B$. The posterior is computed as $(\alpha + n_1, \beta + n_0)$, where $n_1$ is the appearance time of side $A$ in the observed data set and $n_0$ is the appearance time of the other side.
 
-This can be extended to Dirichlet distribution of $m$ dimensions $\dirichlet(\alphas)$ where $x$ take value from universe $\mathcal{X}$ of size $m$ (i.e., $\mathcal{X} = \{x_1, \cdots, x_m\}$). $\pi(\xis) = \dirichlet(\xis | \alphas) = \frac{\prod_{i = 1}^{m}\xi_i^{\alpha_i}}{B(\alphas)}$, and the likelihood for $Pr(x | \xis)$ is $\prod\limits_{\xi_i}\xi_i^{\sum\limits_{\mathrm{x_i} = x_i} \mathrm{x_i}}$.
+This can be extended to Dirichlet distribution of $m$ dimensions $\dirichlet(\alphas)$ where $x$ take value from universe $\mathcal{X}$ of size $m$ (i.e., $\mathcal{X} = \{x_1, \cdots, x_m\}$). $\pi(\xis) = \dirichlet(\xis | \alphas) = \frac{\prod_{i = 1}^{m}\xi_i^{\alpha_i}}{B(\alphas)}$, and the likelihood for $Pr(x | \xis)$ is $\prod\limits_{\xi_i \in \xis}\xi_i^{\sum\limits_{\{\mathrm{x}_i|\mathrm{x}_i = x_i\}} \mathrm{x_i}}$.
 
 
 % We give a inference process based on a concrete example, where we throw an irregular $m$ sides dice. We want to infer the probability of getting each side $\xis$. We get a observed data set $\{s_{k_1}, s_{k_2}, \cdots, s_{k_n}\}$ by throwing the dice $n$ times, where $k_i \in \{1,2,\cdots, m\}$ denotes the side we get when we throw the dice the $i^{th}$ time. The posterior distribution is still a Dirichlet distribution with parameters $(\alpha_1 + n_1, \alpha_2 + n_2, \cdots, \alpha_m + n_m)$, where $n_i$ is the appearance time of the side $i$ in total.
 
 % In the case that $m = 2$, it is reduced to a Beta distribution $\betad(\alpha, \beta)$. The $m$ side dice change into a irregular coin with side $A$ and side $B$. The posterior is computed as $(\alpha + n_1, \beta + n_0)$, where $n_1$ is the appearance time of side $A$ in the observed data set and $n_0$ is the appearance time of the other side.
 
-The posterior belief about parameters $\xis$ is inferred from the group of sensitive data. Because it is usually published in form of a distribution, for example, $\betad(\alpha',\beta'), \cdots,$ themselves can relieve a lot of information about sensitive data. So, the sensitive information we want to protect here is the posterior belief, i.e., $Pr(\xis | \textbf{x})$, rather than just a sample drew from it. Then it will be better if we can use a distance over two distributions to measure the accuracy than a distance over values when we are protecting a distribution, for instance, we are using Hellinger distance in our paper. When we measure the accuracy between true posterior and protected posterior using Hellinger distance, it would be better we can have a protection mechanism based on Hellinger distance. However, current mechanisms are mainly based on $l_1$ norm by Laplace mechanism \cite{zhang2016differential}. That's why we design our exponential mechanism over Hellinger distance to protect the whole posterior distribution.
+The posterior belief about parameters $\xis$ is inferred from the group of sensitive data. Because it is usually published in form of a distribution, for example, $\betad(\alpha',\beta'), \cdots,$ itself can relieve a lot of information about sensitive data. So, the sensitive information we want to protect here is the posterior belief, i.e., $Pr(\xis | \textbf{x})$, rather than just a sample drew from it. Then it will be better if we can use a distance over two distributions to measure the accuracy than a distance over values when we are protecting a distribution, for instance, we are using Hellinger distance in our paper. When we measure the accuracy between true posterior and protected posterior using Hellinger distance, it would be better we can have a protection mechanism based on Hellinger distance. However, current mechanisms are mainly based on $l_1$ norm by Laplace mechanism \cite{zhang2016differential}. That's why we design our exponential mechanism over Hellinger distance to protect the whole posterior distribution.
+
 
 \section{Baseline Approach - Laplace Mechanism}
 \label{sec_lap}
@@ -73,14 +74,7 @@ Based on the posterior results from Bayesian inference, we calculate the Laplace
 \label{sec_smoo}
 
 % \subsection{Algorithm Setting up}
-We define a new mechanism $\hexpmech(x)$
-which is similar to the exponential mechanism where we use
-$\mathcal{R}$ as the set $\betaset$ of beta distributions with integer parameters
-summing up to $n+2$, as scoring function we use the Hellinger distance
-from $\bysinfer(x)$, i.e. $\hlg(\bysinfer(x),-)$, and we 
-calibrate the noise to the smooth sensitivity~\cite{nissim2007smooth}. The
-only difference is in the sensitivity part, since now we use the
-smooth sensitivity.
+We define a new mechanism $\hexpmech(x)$ which is similar to the exponential mechanism where we use $\mathcal{R}$ as the set $\betaset$ of beta distributions with integer parameters summing up to $n+2$, as scoring function we use the Hellinger distance from $\bysinfer(x)$, i.e. $\hlg(\bysinfer(x),-)$, and we calibrate the noise to the smooth sensitivity~\cite{nissim2007smooth}. The only difference is in the sensitivity part, since now we use the smooth sensitivity.
 
 \begin{definition}
 \label{def_smoo}
