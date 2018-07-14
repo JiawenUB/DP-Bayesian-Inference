@@ -48,7 +48,7 @@ Our research is based on an observation that under different measurement, mechan
 \section{Technical Problem Statement}
 \label{sec_bayesInfer}
 
-We are studying the Bayesian inference in Beta-Bernoulli systems. So this part we will technically describe our problem under Beta-Bernoulli Bayesian inference systems. Suppose $\pi(\xis)$ is our prior belief about some parameters or latent variables $\xis$. By using a group of observed data $\textbf{x}$ sizing $n$, the likelihood of this group of data is $Pr(\textbf{x} | \xis)$, we produce a posterior distribution:
+We are studying the Bayesian inference in Beta-Bernoulli systems. So this part we will technically describe our problem under Beta-Bernoulli systems of Bayesian inference. Suppose $\pi(\xis)$ is our prior belief about some parameters or latent variables $\xis$. By using a group of observed data $\textbf{x}$ sizing $n$, the likelihood of this group of data is $Pr(\textbf{x} | \xis)$, we produce a posterior distribution:
 \begin{equation*}
 Pr(\xis | \textbf{x}) = \frac{Pr(\textbf{x} | \xis) \pi(\xis)}{Pr(\textbf{x})},
 \end{equation*}
@@ -63,7 +63,7 @@ This can be extended to Dirichlet distribution of $m$ dimensions $\dirichlet(\al
 
 % In the case that $m = 2$, it is reduced to a Beta distribution $\betad(\alpha, \beta)$. The $m$ side dice change into a irregular coin with side $A$ and side $B$. The posterior is computed as $(\alpha + n_1, \beta + n_0)$, where $n_1$ is the appearance time of side $A$ in the observed data set and $n_0$ is the appearance time of the other side.
 
-The sensitive information we want to protect here is the posterior belief, i.e., $Pr(\xis | \textbf{x})$ rather than a sample drew from it.  we use mechanisms to protect the inference results to get private posteriors: $\dirichlet(\alphas^*)$. When we measure the distance between true posterior and protected posterior, we will have different result on $l_1$ norm and Hellinger distance. We believe that if the protected posterior is produced based on Hellinger distance, it will have a better accuracy than produced based on the $l_1$ norm.
+The posterior belief about parameters $\xis$ is inferred from the group of sensitive data. Because it is usually published in form of a distribution, for example, $\betad(\alpha',\beta'), \cdots,$ themselves can relieve a lot of information about sensitive data. So, the sensitive information we want to protect here is the posterior belief, i.e., $Pr(\xis | \textbf{x})$, rather than just a sample drew from it.  we use mechanisms to protect the inference results to get private posteriors: $\dirichlet(\alphas^*)$. When we measure the distance between true posterior and protected posterior, we will have different result on $l_1$ norm and Hellinger distance. We believe that if the protected posterior is produced based on Hellinger distance, it will have a better accuracy than produced based on the $l_1$ norm.
 
 \section{Baseline Approach - Laplace Mechanism}
 \label{sec_lap}
