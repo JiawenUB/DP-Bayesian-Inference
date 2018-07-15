@@ -17,13 +17,28 @@
 \title{Sketch of DP - Bayesian Inference} % TODO: replace with your title
 
 \begin{abstract}
-Bayesian inference is a statistical method which allows to derive a \emph{posterior} distribution over a parameter, starting from a \emph{prior} distribution and observed data. Even the posterior sampling is differentially private itself under some conditions \cite{wang2015privacy,dimitrakakis2014robust}, it can still leak sensitive information of observed data when we release the posterior distribution directly rather than just a sample from it. Many works have focused on making this process differentially private by adding noise on the parameters representing the distributions.
-  % Also,  the sensitivity 
-  % was computed w.r.t. a numeric norm over the space of the numeric parameters
-  % characterizing the output distribution.
-Also, the accuracy was measured using metrics on the space of the numeric parameters representing the posterior distribution, e.g. $\ell_1$-norm \cite{foulds2016theory, zhang2016differential}. 
+Bayesian inference is a statistical method which allows to derive a
+\emph{posterior} distribution over a parameter, starting from a
+\emph{prior} distribution and observed data.  In a setting where the
+data must be protected, different approaches have been taken to make
+this process differentially
+private. \citet{dimitrakakis2014robust}, and \citet{wang2015privacy}, for instance,
+proved that, under specific conditions, sampling from the posterior distribution
+is already differentially private.
+Other works, e.g. \cite{zhang2016differential,foulds2016theory}, 
+designed differentially private mechanisms that output a representation of the
+full posterior distribution. Also,  accuracy of the mechanisms was measured
+using metrics on the space of the numeric parameters of the posterior distribution,
+e.g. $\ell_1$-norm .
 
-We designed a new mechanism for differentially private Bayesian inference where the noise is proportional to a smooth sensitivity computed w.r.t a metric on probability distributions; we also measured the accuracy of the process by using a metric over probability measures. We protect the whole Bayesian inference process with the posterior distribution. We compared the accuracy of this approach with the one based on $\ell_1$-norms. Experimental results show that in some situations the former outperforms the latter.
+In this work we present a new differentially private algorithm to compute the posterior.
+The noise is calibrated w.r.t. a smooth sensitivity computed with
+a metric on probability distributions; we measured the accuracy
+of the process by using a metric over probability measures.
+We compared the accuracy of this approach with the one
+based on $\ell_1$-norm. Experimental results show that
+when the data size is small or when the parameters of the prior
+distribution are large, the former outperforms the latter.
 
 \end{abstract}
 
