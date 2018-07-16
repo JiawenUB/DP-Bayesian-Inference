@@ -152,7 +152,9 @@ the whole posterior distribution.
 
 \section{Baseline Approach - Laplace Mechanism}
 \label{sec_lap}
-Based on the posterior results from Bayesian inference, we calculate the Laplace mechanism updates on posterior and get the private results under Laplace mechanism. In the case of $m$ dimension Dirichlet distribution, we will add $(m-1)$ i.i.d. Laplace noises $\{| Lap_1 |, | Lap_2 |, \cdots, | Lap_{m-1} |\}$ to the output, where $Lap_i = floor(Y)$, $Y \sim Lap(\frac{2}{\epsilon})$. The private posterior then will be $\dirichlet(\alpha_1 + n_1 + | Lap_1 |, \alpha_2 + n_2 + | Lap_2 |, \cdots, \alpha_m + n - (Lap_1 + \cdots + Lap_{m-1}))$.
+Our baseline approach come from the algorithm designed by \citet{zhang2016differential} that adding Laplace noise (\citet{dwork2014algorithmic}) to posterior parameters to preserve privacy. They perturbed $\betad$ distribution updates and truncated at $0$ to rule out invalid $\betad$ parameters to get the protected posteriors. Here we also extend their algorithm to the case of $m$ dimensional Dirichlet distributions, where we add $(m-1)$ i.i.d. Laplace noises $\{Lap_1 , Lap_2, \cdots, Lap_{m-1} \}$ and truncate in the same way. 
+%where $Lap_i = floor(Y)$, $Y \sim Lap(\frac{2}{\epsilon})$. 
+The private posterior then will be $\dirichlet(\alpha_1 + z_1 + Lap_1, \alpha_2 + z_2 + Lap_2, \cdots, \alpha_m + n - (Lap_1 + \cdots + Lap_{m-1}))$.
 
 \section{Our Approach - Exponential Mechanism with Smooth Sensitivity}
 \label{sec_smoo}
