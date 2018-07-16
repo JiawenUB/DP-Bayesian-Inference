@@ -82,7 +82,7 @@ belongs to the same \emph{family} of distributions. In this case we say that the
 is conjugate of the likelihood function. Using conjugate priors simplify calculcations and allows
 for inference to be performed in a recursive fashion over the data.
 In this work we will consider a specific instance of Bayesian inference and one of its generalizations.
-Specifically, we will consider the situation where $\theta$ represents the parameter --informally called \emph{bias})--
+Specifically, we will consider the situation where $\theta$ represents the parameter --informally called \emph{bias}--
 of a Bernoulli distributed random variable, and its immediate generalization where the parameter $\vtheta$ represents
 the the vector of parameters of a categorical distributed random variable.
 In the former case the prior distribution over $\theta\in [0,1]$ is going to be a beta distribution, $\betad(\alpha, \beta)$, with parameters
@@ -100,7 +100,7 @@ From this it can easily be derived that the posterior distribution is:
 \[
   \Pr(\theta|\dataobs)=\betad(\alpha+a,\beta+n-a)
 \]
-In the latter case the prior distribution over $\vtheta\in [0,1]^{k}$ is given by a Dirichelet distribution, $\dirichlet(\vtheta)$, for $k\in\mathbf{N}$,
+In the latter case the prior distribution over $\vtheta\in [0,1]^{k}$ is given by a Dirichelet distribution, $\dirichlet(\vtheta)$, for $k\in\mathbb{N}$,
 and $\valpha\in(\mathbf{R^{+}})^{k}$, with p.d.f:
 \[
   \Pr(\vtheta)\equiv\frac{1}{\mbetaf(\valpha)}\cdot \displaystyle\prod_{i=1}^{k}{\theta_i^{\alpha_i-1}}
@@ -116,19 +116,49 @@ Iverson bracket notation. The posterior distribution over $\vtheta$ turns out to
 \[
   \Pr(\vtheta|\dataobs)=\todo{to type down}\dirichlet(\vtheta+...)
 \]
-\section{Problem Statement}
-% When we try
-% to make this distribution public, sensitive information of the data
-% based on which the posterior drew from can be compromised. So, it is
-% important to protect this posterior distribution. When our protection
-% objective is a distribution rather than a numeric value or vector, it
-% would be better to measure the accuracy by distance over
-% distributions, for instance, Hellinger distance, than by numeric
-% metrics like $\ell_1$-norm.
-This work will show that the same mechanism can
-perform differently when its accuracy is computed w.r.t to a metric
-over probability measures (e.g total variation distance, or Hellinger distance)
-from when the metric (e.g. $\ell_1$-norm) is over the parameters.  
+\section{The Problem and Baseline approach}
+We are interested in designing a mechanism for privately releasing
+\emph{fully} the posterior distributions derived in section \ref{},
+and not a sample from them.  It's worth noticing that the posterior
+distributions are fully characterized by their parameters, and the
+family (beta, Dirichlet) they belong to.  Hence, in case of the
+Beta-Binomial model we are interested in releasing a private version
+of the pair of parameters $(\alpha',\beta')=(\alpha+a,\beta+n-a)$, and
+in the case of the Dirichlet-Multinomial model we are interested in a
+private version of $\vtheta'=(\vtheta+)$.  \cite{} and \cite{} have
+already attacked this problem and their solution consisted in adding
+independent Laplacian noise to the parameters of the posteriors. That
+is, in the case of the Beta-Binomial system the value released would
+be: $(\tilde\alpha,\tilde\beta)$ where $\tilde\alpha\sim Lap(\alpha+a, \frac{2}{\epsilon})$, and
+$\tilde\beta\sim Lap(\beta+n-a, \frac{2}{\epsilon})$.  Where $Lap(\mu,\nu)$
+denotes a Laplacian random variable with mean $\mu$ and scale $\nu$.
+This mechanism is $\epsilon$-differentially private, and the noise is
+calibrated w.r.t to a sensitivity of 2 which is derived by using
+$\ell_1$ norm over the pair of parameters. Indeed, considering two
+adjacent\footnote{Given $\dataobs, \dataobs'\in\{0,1\}^{n}$ we say that $\dataobs$ and $\dataobs'$ are adjacent iff
+$\displaystyle \sum_{i}^{n}\iverson{x_i = x'_i }\leq 1$.} data observations
+$\dataobs, \dataobs'$, that, from a unique prior, give rise to two posterior
+distributions, characterized by the pairs
+$(\alpha',\beta')$ and $(\alpha'',\beta'')$ then
+$|\alpha'-\alpha''|+|\beta'-\beta''|\leq 2$.
+This argument extends similarly to the Dirichelet-Multinomial system.
+
+
+\noindent Also, in previous works, the accuracy has been measured again with respect to
+$\ell_1$ norm. That is, an upper bound has been given to
+\[
+  \Pr[|\alpha - \tilde\alpha| + |\beta - \tilde\beta |\geq \gamma ]
+\]
+where $(\alpha, \beta), (\tilde\alpha,\tilde\beta)$ are as  defined above.
+In this work we will use a metric based on a different norm to compute the sensitivity
+and provide guarantees on the accuracy. In particular we will consider a metric
+over probability measures and not over the parameters that represent them.
+Specifically, we will use the Hellinger distance, which for two beta distributions
+$\betad(\alpha_1, \beta_1), \betad(\alpha_2, \beta_2)$ is defined as
+\[
+  \hellinger()\equiv\todo{to type down}
+\]
+The same change of metric will be applied to the experimental accuracy guarantees.
 \section{Technical Problem Statement}
 \label{sec_bayesInfer}
 The posterior belief about parameters $\xis$ is inferred from the
