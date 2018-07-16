@@ -17,9 +17,29 @@
 \title{Sketch of DP - Bayesian Inference} % TODO: replace with your title
 
 \begin{abstract}
-Bayesian inference is a statistical method which allows to derive a \emph{posterior} distribution over a parameter, starting from a \emph{prior} distribution and observed data.  In a setting where the data must be protected, different approaches have been taken to make this process differentially private. \citet{dimitrakakis2014robust}, and \citet{wang2015privacy}, for instance, proved that, under specific conditions, sampling from the posterior distribution is already differentially private. Other works, e.g. \cite{zhang2016differential,foulds2016theory}, designed differentially private mechanisms that output a representation of the full posterior distribution. Also,  accuracy of the mechanisms was measured using metrics on the space of the numeric parameters of the posterior distribution, e.g. $\ell_1$-norm .
+Bayesian inference is a statistical method which allows to derive a
+\emph{posterior} distribution over a parameter, starting from a
+\emph{prior} distribution and observed data.  In a setting where the
+data must be protected, different approaches have been taken to make
+this process differentially private. \citet{dimitrakakis2014robust},
+and \citet{wang2015privacy}, for instance, proved that, under specific
+conditions, sampling from the posterior distribution is already
+differentially private. Other works,
+e.g. \cite{zhang2016differential,foulds2016theory}, designed
+differentially private mechanisms that output a representation of the
+full posterior distribution. Also, accuracy of the mechanisms was
+measured using metrics on the space of the numeric parameters of the
+posterior distribution, e.g. $\ell_1$-norm .
 
-In this work we present a new differentially private algorithm to compute the posterior. The noise is calibrated w.r.t. a smooth sensitivity computed with a metric on probability distributions; we measured the accuracy of the process by using a metric over probability measures. We compared the accuracy of this approach with the one based on $\ell_1$-norm. Experimental results show that when the data size is small or when the parameters of the prior distribution are large, the former outperforms the latter.
+In this work we present a new differentially private algorithm to
+compute the posterior in a Beta-Binomial system and in Dirichlet-Multinomial system.
+The noise is calibrated w.r.t. a smooth
+sensitivity computed with a metric on probability distributions; we
+measured the accuracy of the process by using a metric over
+probability measures. We compared the accuracy of this approach with
+the one based on $\ell_1$-norm. Experimental results show that when
+the data size is small or when the parameters of the prior
+distribution are large, the former outperforms the latter.
 
 \end{abstract}
 
@@ -45,29 +65,89 @@ In this work we present a new differentially private algorithm to compute the po
 % \input{main-sketch} % TODO: replace with your brilliant paper!
 % \input{macros}
 
-
+\section{Bayesian Inference Background}
+Given a prior belief $\Pr(\theta)$ on some parameter $\theta$,
+and given an observation $\dataobs$,
+the posterior distribution on $\theta$ given $\dataobs$ is computed as:
+\[
+  \Pr(\theta | \dataobs) = \frac{Pr(\dataobs | \theta) \cdot \Pr(\xis)}{\Pr(\dataobs)}
+\]
+where the expression  $\Pr(\dataobs | \theta)$ denotes the \emph{likelihood} of $\theta$ when
+\dataobs~ is observed. Since we consider \dataobs to be fixed the likelihood is a function of $\theta$.
+For the same reason $\Pr(\dataobs)$ is a constant independent of $\theta$.
+Usually in statistics the prior distribution $\Pr(\theta)$ is chosen so that it represents
+the initial belief on $\theta$. That is, when no data has been observed. In practice though,
+prior distributions and likelihood functions are usually chosen so that the posterior
+belongs to the same \emph{family} of distributions. In this case we say that the prior
+is conjugate of the likelihood function. Using conjugate priors simplify calculcations and allows
+for inference to be performed in a recursive fashion over the data.
+In this work we will consider a specific instance of Bayesian inference and one of its generalizations.
+Specifically, we will consider the situation where $\theta$ represents the parameter --informally called \emph{bias})--
+of a Bernoulli distributed random variable, and its immediate generalization where the parameter $\vtheta$ represents
+the the vector of parameters of a categorical distributed random variable.
+In the former case the prior distribution over $\theta\in [0,1]$ is going to be a beta distribution, $\betad(\alpha, \beta)$, with parameters
+$\alpha,\beta\in\mathbb{R}^{+}$, and with p.d.f:
+\[
+  \Pr(\theta)\equiv \frac{\theta^{\alpha} (1- \theta)^{\beta}}{\betaf(\alpha,\beta)}
+\]
+where $\betaf(\cdot,\cdot)$ is the beta function.
+The data $\dataobs$ will be a sequence of $n\in\mathbb{N}$ 0/1 values, that is $\dataobs=\ll x_1,\dots x_n \gg, x_i\in\{0,1\}$, and the likelihood function is:
+\[
+  \Pr(\dataobs | \theta)\equiv \theta^{a}(1-\theta)^{n-a}
+\]
+where $a=\displaystyle\sum_{i=1}^{n}\mathrm{x_i}$.
+From this it can easily be derived that the posterior distribution is:
+\[
+  \Pr(\theta|\dataobs)=\betad(\alpha+a,\beta+n-a)
+\]
+In the latter case the prior distribution over $\vtheta\in [0,1]^{k}$ is given by a Dirichelet distribution, $\dirichlet(\vtheta)$, for $k\in\mathbf{N}$,
+and $\valpha\in(\mathbf{R^{+}})^{k}$, with p.d.f:
+\[
+  \Pr(\vtheta)\equiv\frac{1}{\mbetaf(\valpha)}\cdot \displaystyle\prod_{i=1}^{k}{\theta_i^{\alpha_i-1}}
+\]
+where $\mbetaf(\cdot)$ is the generealised beta function.
+The data $\dataobs$ will be a sequence of $n\in\mathbb{N}$ values coming from a universe $\datauni$, such that $\mid\datauni \mid=k$.
+The likelihood function will be:
+\[
+  \Pr(\dataobs|\vtheta)\equiv \displaystyle\prod_{a\in\datauni}\alpha_{a}^{z_a}
+\todo{to check}\]
+where $z_a=\displaystyle\sum_{i=1}^{n}\iverson{x_i=a}$, where in $\iverson{\cdot}$ we use
+Iverson bracket notation. The posterior distribution over $\vtheta$ turns out to be
+\[
+  \Pr(\vtheta|\dataobs)=\todo{to type down}\dirichlet(\vtheta+...)
+\]
 \section{Problem Statement}
-The posterior belief from Bayesian inference is usually represented by a probabilistic distribution like $\betad(\alpha, \beta)$. When we try to make this distribution public, sensitive information of the data based on which the posterior drew from can be compromised. So, it is important to protect this posterior distribution. When our protection objective is a distribution rather than a numeric value or vector, it would be better to measure the accuracy by distance over distributions, for instance, Hellinger distance, than by numeric metrics like $\ell_1$-norm. Our research is based on the observation that under metrics over distribution, mechanisms usually have different behavior from under metrics over numeric values. If we measure accuracy based on distribution metrics, then mechanisms adding noise according to distribution measurements can out-performs mechanisms' adding noise according to numeric measurements.
-
+% When we try
+% to make this distribution public, sensitive information of the data
+% based on which the posterior drew from can be compromised. So, it is
+% important to protect this posterior distribution. When our protection
+% objective is a distribution rather than a numeric value or vector, it
+% would be better to measure the accuracy by distance over
+% distributions, for instance, Hellinger distance, than by numeric
+% metrics like $\ell_1$-norm.
+This work will show that the same mechanism can
+perform differently when its accuracy is computed w.r.t to a metric
+over probability measures (e.g total variation distance, or Hellinger distance)
+from when the metric (e.g. $\ell_1$-norm) is over the parameters.  
 \section{Technical Problem Statement}
 \label{sec_bayesInfer}
-
-We are studying the Bayesian inference in Beta-Bernoulli systems. So this part we will technically describe our problem under Beta-Bernoulli systems of Bayesian inference. Suppose $\pi(\xis)$ is our prior belief about some parameters or latent variables $\xis$. By using a group of observed data $\textbf{x}$ sizing $n$, the likelihood of this group of data is $Pr(\textbf{x} | \xis)$, we produce a posterior distribution:
-\begin{equation*}
-Pr(\xis | \textbf{x}) = \frac{Pr(\textbf{x} | \xis) \pi(\xis)}{Pr(\textbf{x})},
-\end{equation*}
-denoted as $\bysinfer(\textbf{x},\pi(\xis))$ taking an observed data set $\textbf{x} \in \mathcal{X}^n$ (i.e., $\{0,1\}^n$) and a prior distribution $\pi(\xis)$ as input, outputting a posterior distribution of the parameter $\alphas$. For conciseness, when prior is given, we use $\bysinfer(x)$. $n$ is the size of the observed data size.
-
-In Beta-Bernoulli systems, we take a Beta distribution as prior belief for our parameters and latent variables, $\betad(\alpha, \beta)$, where $\pi(\xi) = \betad(\xi | \alpha, \beta) = \frac{\xi^{\alpha} (1 - \xi)^{\beta}}{B(\alphas)}$, and the Bernoulli distribution as the likelihood for $Pr(\textbf{x} | \xi) = \xi^{\sum\limits_{\mathrm{x_i} \in \textbf{x}}\mathrm{x_i}}(1 - \xi)^{n -\sum\limits_{\mathrm{x_i} \in \textbf{x}}\mathrm{x_i}} $. %We are throwing an irregular coin with side $A$ and side $B$. The posterior is computed as $(\alpha + n_1, \beta + n_0)$, where $n_1$ is the appearance time of side $A$ in the observed data set and $n_0$ is the appearance time of the other side.
-
-This can be extended to Dirichlet distribution of $m$ dimensions $\dirichlet(\alphas)$ where $x$ take value from universe $\mathcal{X}$ of size $m$ (i.e., $\mathcal{X} = \{x_1, \cdots, x_m\}$). $\pi(\xis) = \dirichlet(\xis | \alphas) = \frac{\prod_{i = 1}^{m}\xi_i^{\alpha_i}}{B(\alphas)}$, and the likelihood for $Pr(x | \xis)$ is $\prod\limits_{\xi_i \in \xis}\xi_i^{\sum\limits_{\{\mathrm{x}_i|\mathrm{x}_i = x_i\}} \mathrm{x_i}}$.
-
-
-% We give a inference process based on a concrete example, where we throw an irregular $m$ sides dice. We want to infer the probability of getting each side $\xis$. We get a observed data set $\{s_{k_1}, s_{k_2}, \cdots, s_{k_n}\}$ by throwing the dice $n$ times, where $k_i \in \{1,2,\cdots, m\}$ denotes the side we get when we throw the dice the $i^{th}$ time. The posterior distribution is still a Dirichlet distribution with parameters $(\alpha_1 + n_1, \alpha_2 + n_2, \cdots, \alpha_m + n_m)$, where $n_i$ is the appearance time of the side $i$ in total.
-
-% In the case that $m = 2$, it is reduced to a Beta distribution $\betad(\alpha, \beta)$. The $m$ side dice change into a irregular coin with side $A$ and side $B$. The posterior is computed as $(\alpha + n_1, \beta + n_0)$, where $n_1$ is the appearance time of side $A$ in the observed data set and $n_0$ is the appearance time of the other side.
-
-The posterior belief about parameters $\xis$ is inferred from the group of sensitive data. Because it is usually published in form of a distribution, for example, $\betad(\alpha',\beta'), \cdots,$ itself can relieve a lot of information about sensitive data. So, the sensitive information we want to protect here is the posterior belief, i.e., $Pr(\xis | \textbf{x})$, rather than just a sample drew from it\cite{foulds2016theory}. Then it will be better if we can use a distance over two distributions to measure the accuracy than a distance over just parameters or values when we are protecting a distribution, for instance, Hellinger distance in our paper. When we measure the accuracy between true posterior and protected posterior using Hellinger distance, it would be better we can have a protection mechanism based on Hellinger distance. However, current mechanisms are mainly based on $l_1$ norm by Laplace mechanism \cite{zhang2016differential} \cite{xiao2012bayesian}. That's why we design our exponential mechanism over Hellinger distance to protect the whole posterior distribution.
+The posterior belief about parameters $\xis$ is inferred from the
+group of sensitive data. Because it is usually published in form of a
+distribution, for example, $\betad(\alpha',\beta'), \cdots,$ itself
+can relieve a lot of information about sensitive data. So, the
+sensitive information we want to protect here is the posterior belief,
+i.e., $Pr(\xis | \dataobs)$, rather than just a sample drew from
+it\cite{foulds2016theory}. Then it will be better if we can use a
+distance over two distributions to measure the accuracy than a
+distance over just parameters or values when we are protecting a
+distribution, for instance, Hellinger distance in our paper. When we
+measure the accuracy between true posterior and protected posterior
+using Hellinger distance, it would be better we can have a protection
+mechanism based on Hellinger distance. However, current mechanisms are
+mainly based on $l_1$ norm by Laplace mechanism
+\cite{zhang2016differential} \cite{xiao2012bayesian}. That's why we
+design our exponential mechanism over Hellinger distance to protect
+the whole posterior distribution.
 
 
 \section{Baseline Approach - Laplace Mechanism}
