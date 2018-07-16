@@ -70,10 +70,10 @@ Given a prior belief $\Pr(\theta)$ on some parameter $\theta$,
 and given an observation $\dataobs$,
 the posterior distribution on $\theta$ given $\dataobs$ is computed as:
 \[
-  \Pr(\theta | \dataobs) = \frac{\Pr(\dataobs | \theta) \cdot \Pr(\xis)}{\Pr(\dataobs)}
+  \Pr(\theta | \dataobs) = \frac{\Pr(\dataobs | \theta) \cdot \Pr(\theta)}{\Pr(\dataobs)}
 \]
 where the expression  $\Pr(\dataobs | \theta)$ denotes the \emph{likelihood} of $\theta$ when
-\dataobs~ is observed. Since we consider \dataobs to be fixed the likelihood is a function of $\theta$.
+$\dataobs$ is observed. Since we consider $\dataobs$ to be fixed the likelihood is a function of $\theta$.
 For the same reason $\Pr(\dataobs)$ is a constant independent of $\theta$.
 Usually in statistics the prior distribution $\Pr(\theta)$ is chosen so that it represents
 the initial belief on $\theta$. That is, when no data has been observed. In practice though,
@@ -82,7 +82,7 @@ belongs to the same \emph{family} of distributions. In this case we say that the
 is conjugate of the likelihood function. Using conjugate priors simplify calculcations and allows
 for inference to be performed in a recursive fashion over the data.
 In this work we will consider a specific instance of Bayesian inference and one of its generalizations.
-Specifically, we will consider the situation where $\theta$ represents the parameter --informally called \emph{bias})--
+Specifically, we will consider the situation where $\theta$ represents the parameter --(informally called \emph{bias})--
 of a Bernoulli distributed random variable, and its immediate generalization where the parameter $\vtheta$ represents
 the the vector of parameters of a categorical distributed random variable.
 In the former case the prior distribution over $\theta\in [0,1]$ is going to be a beta distribution, $\betad(\alpha, \beta)$, with parameters
@@ -110,11 +110,11 @@ The data $\dataobs$ will be a sequence of $n\in\mathbb{N}$ values coming from a 
 The likelihood function will be:
 \[
   \Pr(\dataobs|\vtheta)\equiv \displaystyle\prod_{a\in\datauni}\alpha_{a}^{z_a}
-\todo{to check}\]
+\]
 where $z_a=\displaystyle\sum_{i=1}^{n}\iverson{x_i=a}$, where in $\iverson{\cdot}$ we use
 Iverson bracket notation. The posterior distribution over $\vtheta$ turns out to be
 \[
-  \Pr(\vtheta|\dataobs)=\todo{to type down}\dirichlet(\vtheta+...)
+  \Pr(\vtheta|\dataobs)=\dirichlet(\vtheta+\mathbf{z})
 \]
 \section{Problem Statement}
 % When we try
