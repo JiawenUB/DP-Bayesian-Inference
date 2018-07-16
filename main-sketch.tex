@@ -66,6 +66,7 @@ distribution are large, the former outperforms the latter.
 % \input{macros}
 
 \section{Bayesian Inference Background}
+\label{sec_background}
 Given a prior belief $\Pr(\theta)$ on some parameter $\theta$,
 and given an observation $\dataobs$,
 the posterior distribution on $\theta$ given $\dataobs$ is computed as:
@@ -109,29 +110,31 @@ where $\mbetaf(\cdot)$ is the generealised beta function.
 The data $\dataobs$ will be a sequence of $n\in\mathbb{N}$ values coming from a universe $\datauni$, such that $\mid\datauni \mid=k$.
 The likelihood function will be:
 \[
-  \Pr(\dataobs|\vtheta)\equiv \displaystyle\prod_{a_i\in\datauni}\theta_{i}^{\Delta \alpha_i}
+  \Pr(\dataobs|\vtheta)\equiv \displaystyle\prod_{a_i\in\datauni}\theta_{i}^{\Delta \alpha_i},
 \]
 where $\Delta \alpha_i=\displaystyle\sum_{i=1}^{n}\iverson{x_i=a_i}$, where in $\iverson{\cdot}$ we use
 Iverson bracket notation. The posterior distribution over $\vtheta$ turns out to be
 \[
-  \Pr(\vtheta|\dataobs)=\dirichlet(\valpha+\Delta \valpha)
+  \Pr(\vtheta|\dataobs)=\dirichlet(\valpha+\Delta \valpha).
 \]
-where $+$ denotes the 
+%where $+$ denotes the 
+
+
 \section{The Problem and Baseline approach}
 We are interested in designing a mechanism for privately releasing
-\emph{fully} the posterior distributions derived in section \ref{},
+\emph{fully} the posterior distributions derived in section \ref{sec_background},
 and not a sample from them.  It's worth noticing that the posterior
 distributions are fully characterized by their parameters, and the
 family (beta, Dirichlet) they belong to.  Hence, in case of the
 Beta-Binomial model we are interested in releasing a private version
-of the pair of parameters $(\alpha',\beta')=(\alpha+a,\beta+n-a)$, and
+of the pair of parameters $(\alpha',\beta')=(\alpha + \Delta \alpha,\beta + n - \Delta \alpha)$, and
 in the case of the Dirichlet-Multinomial model we are interested in a
-private version of $\vtheta'=(\vtheta+)$.  \cite{} and \cite{} have
+private version of $\valpha'=(\valpha + \Delta \valpha)$.  \cite{} and \cite{} have
 already attacked this problem and their solution consisted in adding
 independent Laplacian noise to the parameters of the posteriors. That
 is, in the case of the Beta-Binomial system the value released would
-be: $(\tilde\alpha,\tilde\beta)$ where $\tilde\alpha\sim Lap(\alpha+a, \frac{2}{\epsilon})$, and
-$\tilde\beta\sim Lap(\beta+n-a, \frac{2}{\epsilon})$.  Where $Lap(\mu,\nu)$
+be: $(\alpha + \Delta \tilde\alpha,\beta + n - \Delta \tilde\alpha)$ where $\Delta \tilde\alpha\sim Lap(\Delta \alpha, \frac{2}{\epsilon})$ with truncating method come from algorithm designed by \citet{zhang2016differential}
+.  Where $Lap(\mu,\nu)$
 denotes a Laplacian random variable with mean $\mu$ and scale $\nu$.
 This mechanism is $\epsilon$-differentially private, and the noise is
 calibrated w.r.t to a sensitivity of 2 which is derived by using
@@ -157,7 +160,7 @@ over probability measures and not over the parameters that represent them.
 Specifically, we will use the Hellinger distance, which for two beta distributions
 $\betad(\alpha_1, \beta_1), \betad(\alpha_2, \beta_2)$ is defined as
 \[
-  \hellinger()\equiv\todo{to type down}
+  \hellinger()\equiv\sqrt{1 - \frac{\betaf(\frac{\alpha_1 + \alpha_2}{2}, \frac{\beta_1 + \beta_2}{2})}{\sqrt{\betaf(\alpha_1,\beta_1)\betaf(\alpha_2,\beta_2)}}}.
 \]
 The same change of metric will be applied to the experimental accuracy guarantees.
 \section{Technical Problem Statement}
