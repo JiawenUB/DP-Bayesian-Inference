@@ -70,7 +70,7 @@ Given a prior belief $\Pr(\theta)$ on some parameter $\theta$,
 and given an observation $\dataobs$,
 the posterior distribution on $\theta$ given $\dataobs$ is computed as:
 \[
-  \Pr(\theta | \dataobs) = \frac{Pr(\dataobs | \theta) \cdot \Pr(\xis)}{\Pr(\dataobs)}
+  \Pr(\theta | \dataobs) = \frac{\Pr(\dataobs | \theta) \cdot \Pr(\xis)}{\Pr(\dataobs)}
 \]
 where the expression  $\Pr(\dataobs | \theta)$ denotes the \emph{likelihood} of $\theta$ when
 \dataobs~ is observed. Since we consider \dataobs to be fixed the likelihood is a function of $\theta$.
