@@ -93,12 +93,12 @@ $\alpha,\beta\in\mathbb{R}^{+}$, and with p.d.f:
 where $\betaf(\cdot,\cdot)$ is the beta function.
 The data $\dataobs$ will be a sequence of $n\in\mathbb{N}$ 0/1 values, that is $\dataobs=\ll x_1,\dots x_n \gg, x_i\in\{0,1\}$, and the likelihood function is:
 \[
-  \Pr(\dataobs | \theta)\equiv \theta^{a}(1-\theta)^{n-a}
+  \Pr(\dataobs | \theta)\equiv \theta^{\Delta \alpha}(1-\theta)^{n - \Delta \alpha}
 \]
-where $a=\displaystyle\sum_{i=1}^{n}\mathrm{x_i}$.
+where $\Delta \alpha = \displaystyle\sum_{i=1}^{n}\mathrm{x_i}$.
 From this it can easily be derived that the posterior distribution is:
 \[
-  \Pr(\theta|\dataobs)=\betad(\alpha+a,\beta+n-a)
+  \Pr(\theta|\dataobs)=\betad(\alpha + \Delta \alpha,\beta + n - \Delta \alpha)
 \]
 In the latter case the prior distribution over $\vtheta\in [0,1]^{k}$ is given by a Dirichelet distribution, $\dirichlet(\vtheta)$, for $k\in\mathbf{N}$,
 and $\valpha\in(\mathbf{R^{+}})^{k}$, with p.d.f:
@@ -109,12 +109,12 @@ where $\mbetaf(\cdot)$ is the generealised beta function.
 The data $\dataobs$ will be a sequence of $n\in\mathbb{N}$ values coming from a universe $\datauni$, such that $\mid\datauni \mid=k$.
 The likelihood function will be:
 \[
-  \Pr(\dataobs|\vtheta)\equiv \displaystyle\prod_{a\in\datauni}\alpha_{a}^{z_a}
+  \Pr(\dataobs|\vtheta)\equiv \displaystyle\prod_{a_i\in\datauni}\theta_{i}^{\Delta \alpha_i}
 \]
-where $z_a=\displaystyle\sum_{i=1}^{n}\iverson{x_i=a}$, where in $\iverson{\cdot}$ we use
+where $\Delta \alpha_i=\displaystyle\sum_{i=1}^{n}\iverson{x_i=a_i}$, where in $\iverson{\cdot}$ we use
 Iverson bracket notation. The posterior distribution over $\vtheta$ turns out to be
 \[
-  \Pr(\vtheta|\dataobs)=\dirichlet(\vtheta+\mathbf{z})
+  \Pr(\vtheta|\dataobs)=\dirichlet(\valpha+\Delta \valpha)
 \]
 \section{Problem Statement}
 % When we try
@@ -154,7 +154,7 @@ the whole posterior distribution.
 \label{sec_lap}
 Our baseline approach come from the algorithm designed by \citet{zhang2016differential} that adding Laplace noise (\citet{dwork2014algorithmic}) to posterior parameters to preserve privacy. They perturbed $\betad$ distribution updates and truncated at $0$ to rule out invalid $\betad$ parameters to get the protected posteriors. Here we also extend their algorithm to the case of $m$ dimensional Dirichlet distributions, where we add $(m-1)$ i.i.d. Laplace noises $\{Lap_1 , Lap_2, \cdots, Lap_{m-1} \}$ and truncate in the same way. 
 %where $Lap_i = floor(Y)$, $Y \sim Lap(\frac{2}{\epsilon})$. 
-The private posterior then will be $\dirichlet(\alpha_1 + z_1 + Lap_1, \alpha_2 + z_2 + Lap_2, \cdots, \alpha_m + n - (Lap_1 + \cdots + Lap_{m-1}))$.
+The private posterior then will be $\dirichlet(\alpha_1 + \Delta \alpha_1 + Lap_1, \alpha_2 + \Delta \alpha_2 + Lap_2, \cdots, \alpha_m + n - (Lap_1 + \cdots + Lap_{m-1}))$.
 
 \section{Our Approach - Exponential Mechanism with Smooth Sensitivity}
 \label{sec_smoo}
