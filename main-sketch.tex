@@ -25,7 +25,7 @@ this process differentially private. \citet{dimitrakakis2014robust},
 and \citet{wang2015privacy}, for instance, proved that, under specific
 conditions, sampling from the posterior distribution is already
 differentially private. Other works,
-e.g. \cite{zhang2016differential,foulds2016theory}, designed
+e.g. \cite{zhang2016differential}, \cite{foulds2016theory}, designed
 differentially private mechanisms that output a representation of the
 full posterior distribution. Also, accuracy of the mechanisms was
 measured using metrics on the space of the numeric parameters of the
@@ -115,9 +115,9 @@ The likelihood function will be:
 where $\Delta \alpha_i=\displaystyle\sum_{i=1}^{n}\iverson{x_i=a_i}$, where in $\iverson{\cdot}$ we use
 Iverson bracket notation. The posterior distribution over $\vtheta$ turns out to be
 \[
-  \Pr(\vtheta|\dataobs)=\dirichlet(\valpha+\Delta \valpha).
+  \Pr(\vtheta|\dataobs)=\dirichlet(\valpha+\Delta \valpha). 
 \]
-%where $+$ denotes the 
+where $+$ denotes the component wise  sum of vectors of reals. 
 
 
 \section{The Problem and Baseline approach}
@@ -129,19 +129,19 @@ family (beta, Dirichlet) they belong to.  Hence, in case of the
 Beta-Binomial model we are interested in releasing a private version
 of the pair of parameters $(\alpha',\beta')=(\alpha + \Delta \alpha,\beta + n - \Delta \alpha)$, and
 in the case of the Dirichlet-Multinomial model we are interested in a
-private version of $\valpha'=(\valpha + \Delta \valpha)$. \todo{ \cite{?} and \cite{?}} have
+private version of $\valpha'=(\valpha + \Delta \valpha)$. \citet{zhang2016differential} and \citet{xiao2012bayesian} have
 already attacked this problem and their solution consisted in adding
 independent Laplacian noise to the parameters of the posteriors. That
 is, in the case of the Beta-Binomial system the value released would
-be: $(\alpha + \Delta \tilde\alpha,\beta + n - \Delta \tilde\alpha)$ where $\Delta \tilde\alpha\sim Lap(\Delta \alpha, \frac{2}{\epsilon})$.
+be: $(\tilde\alpha,\tilde\beta)=(\alpha + \Delta \tilde\alpha,\beta + n - \Delta \tilde\alpha)$ where $\Delta \tilde\alpha\sim Lap(\Delta \alpha, \frac{2}{\epsilon})$, and
 %with truncating method come from algorithm designed by \citet{zhang2016differential}
-Where $Lap(\mu,\nu)$
+where $Lap(\mu,\nu)$
 denotes a Laplacian random variable with mean $\mu$ and scale $\nu$.
 This mechanism is $\epsilon$-differentially private, and the noise is
 calibrated w.r.t to a sensitivity of 2 which is derived by using
 $\ell_1$ norm over the pair of parameters. Indeed, considering two
-adjacent\footnote{Given $\dataobs, \dataobs'\in\{0,1\}^{n}$ we say that $\dataobs$ and $\dataobs'$ are adjacent iff
-$\displaystyle \sum_{i}^{n}\iverson{x_i = x'_i }\leq 1$.} data observations
+adjacent\footnote{Given $\dataobs, \dataobs'\in\{0,1\}^{n}$ we say that $\dataobs$ and $\dataobs'$ are adjacent and we write, $\adj{\dataobs}{\dataobs'}$, iff
+$\displaystyle \sum_{i}^{n}\iverson{x_i = x'_i }\leq 1$ } data observations
 $\dataobs, \dataobs'$, that, from a unique prior, give rise to two posterior
 distributions, characterized by the pairs
 $(\alpha',\beta')$ and $(\alpha'',\beta'')$ then
@@ -220,11 +220,19 @@ The previous mechanism is very similar to the exponential mechanism as defined i
 The difference is that in this mechanism we don't calibrate the noise w.r.t to the global sensitivity of the scoring function but w.r.t to the smooth sensitivity
 -- \citet{nissim2007smooth}-- of $\hellinger(\bysinfer(\dataobs), \cdot)$, which is :
 \[
-   S_{\beta}(\dataobs)=\max_{\dataobs' \neq \dataobs, \dataobs' \in \{0,1\}^{n}}\bigg \{\Delta_{l}\cdot \hellinger(\bysinfer(\dataobs'),-)\cdot e^{-\gamma\cdot d(\dataobs, \dataobs')}\bigg\}
+   S_{\beta}(\dataobs)=\max_{\dataobs' \neq \dataobs, \dataobs' \in \{0,1\}^{n}}\bigg \{\Delta_{l}\bigg (\hellinger(\bysinfer(\dataobs'),-)\bigg )\cdot e^{-\gamma\cdot d(\dataobs, \dataobs')}\bigg\}
  \]
 
-where $d$ is the Hamming distance between two datasets, $\Delta_{l}=????$, and $\gamma =
-\gamma(\epsilon, \delta)$ is a function of $\epsilon$ and $\delta$, to be determined later.
+ where $d$ is the Hamming distance between two datasets,  $\gamma = \gamma(\epsilon, \delta)$ is a function
+ of $\epsilon$ and $\delta$ to be determined later, and where $\Delta_{l}\bigg (\hellinger(\bysinfer(\dataobs'),\cdot)\bigg )$
+ denotes the local sensitivity at $\dataobs'$ (w.r.t $\ell_1$ norm)
+ of the function
+ \[\hellinger \circ \langle (\bysinfer(\dataobs', \cdot), \bysinfer(\cdot, \cdot)\rangle\]
+ that is:
+ \begin{equation*}
+ \max_{\dataobs'' \in \datauni^n:\adj{\dataobs'}{\dataobs''}, r\in \betaset}\lvert \hellinger(\bysinfer(\dataobs'), r) - \hellinger(\bysinfer(\dataobs''), r)\rvert
+\end{equation*}
+Notice that we maximize also over $r$\todo{need to explain why}.
 \subsection{Analysis of the mechanism}
 In what follows, we will use a correspondence between the probability
  $\underset{z \thicksim \hexpmech(x)}{Pr}[z = r]$ of every
