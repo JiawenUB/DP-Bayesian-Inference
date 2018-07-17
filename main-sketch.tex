@@ -470,7 +470,7 @@ In Fig. \ref{fig_vs_prior}, we study this variable under setting that observed d
 % Here, we change the prior distribution and data variance in the same time. As shown in Fig. \ref{fig_vs_prior_variance}, our exponential mechanism do better in uniform data set than in edging data set while Laplace mechanism on the contrary. Moreover, our mechanism is improving continuously and significantly as prior distribution increasing while Laplace mechanism isn't.
 
 
-\section{Conclusions}
+\section{Conclusions and Future Works}
 We can obtain some preliminary conclusions: 
 \begin{enumerate}
 	\item We can beat Laplace mechanism when data size is small.
@@ -478,7 +478,12 @@ We can obtain some preliminary conclusions:
   \item When prior distribution grow larger, we perform better and better and beat Laplace mechanism finally.
 \end{enumerate} 
 
-In consequence, we have a better accuracy in small data size, in larger prior and in uniformly data.
+In conclusion, this mechanism has better accuracy in small data size, larger prior and uniformly data. But this is not enough for application. We will continue our work in following three directions:
+\begin{enumerate}
+  \item For now, we just have a intuitive impression on the accuracy behavior of our mechanism, not a precise formula or bound on it.  When we will beat the baseline mechanism and when not? How much influence will elements in experiment section have on the accuracy? Are there any other important factors we missed? These are three problems w.r.t. the accuracy we are going to explore next.
+  \item The $(\epsilon, \delta)-$dp is a privacy bound of our exponential mechanism $\hexpmech$ and $\hexpmechd$, but not a tight bound. The real privacy in experiments can be smaller than it. This means we can improve our accuracy in a way that increase the privacy bound but still achieve $(\epsilon, \delta)-$dp. 
+  \item Our main idea is that mechanism based on metric over distribution but not numeric. The metric we are using is Hellinger distance here. It is worth to explore other distribution distance metric like KL-divergence and so on.
+\end{enumerate}
 
 
 
