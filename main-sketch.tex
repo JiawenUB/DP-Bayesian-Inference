@@ -140,8 +140,8 @@ denotes a Laplacian random variable with mean $\mu$ and scale $\nu$.
 This mechanism is $\epsilon$-differentially private, and the noise is
 calibrated w.r.t to a sensitivity of 2 which is derived by using
 $\ell_1$ norm over the pair of parameters. Indeed, considering two
-adjacent\footnote{Given $\dataobs, \dataobs'\in\{0,1\}^{n}$ we say that $\dataobs$ and $\dataobs'$ are adjacent and we write, $\adj{\dataobs}{\dataobs'}$, iff
-$\displaystyle \sum_{i}^{n}\iverson{x_i = x'_i }\leq 1$ } data observations
+adjacent\footnote{Given $\dataobs, \dataobs'$  we say that $\dataobs$ and $\dataobs'$ are adjacent and we write, $\adj{\dataobs}{\dataobs'}$, iff\\
+$\displaystyle \sum_{i}^{n}\iverson{x_i = x'_i }\leq 1$. } data observations
 $\dataobs, \dataobs'$, that, from a unique prior, give rise to two posterior
 distributions, characterized by the pairs
 $(\alpha',\beta')$ and $(\alpha'',\beta'')$ then
@@ -213,16 +213,16 @@ given in input a sequence of observations $\dataobs$, $\epsilon>0$ and $\delta>0
 produces an element $r$ in $\betaset$ with probability: 
 
 \begin{equation*}
-\underset{z \thicksim \hexpmech}{\Pr}[z=r] = \frac {exp(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r)}{2\cdot S_\beta(\dataobs)})}
-{\displaystyle\sum_{r\in\betaset} exp(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r)}{2\cdot S_{\beta}(\dataobs)})}
+\underset{z \thicksim \hexpmech}{\Pr}[z=r] = \frac {exp(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r)}{2\cdot S(\dataobs)})}
+{\displaystyle\sum_{r\in\betaset} exp(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r)}{2\cdot S(\dataobs)})}
 \end{equation*}
 this mechanism is based on the basic exponential mechanism \cite{talwar}, with $\betaset$ as range and $\hellinger(\cdot,\cdot)$ as scoring function.
-The difference is that in this mechanism we don't calibrate the noise w.r.t to the global sensitivity of the scoring function but w.r.t to the smooth sensitivity $S_{\beta}(\dataobs)$
+The difference is that in this mechanism we don't calibrate the noise w.r.t to the global sensitivity of the scoring function but w.r.t to the smooth sensitivity $S(\dataobs)$
 -- \citet{nissim2007smooth}-- of $\hellinger(\bysinfer(\dataobs), \cdot)$. The smooth sensitivity is computed as follows:
-\[
-   S_{\beta}(\dataobs)=\max_{\dataobs' \neq \dataobs, \dataobs' \in \{0,1\}^{n}}\bigg \{\Delta_{l}\bigg (\hellinger(\bysinfer(\dataobs'),\cdot)\bigg )\cdot e^{-\gamma\cdot d(\dataobs, \dataobs')}\bigg\}
- \]
-
+\begin{equation}
+  \label{eq:smooth}
+   S(\dataobs)=\max_{\dataobs' \neq \dataobs, \dataobs' \in \{0,1\}^{n}}\bigg \{\Delta_{l}\bigg (\hellinger(\bysinfer(\dataobs'),\cdot)\bigg )\cdot e^{-\gamma\cdot d(\dataobs, \dataobs')}\bigg\}
+\end{equation}
  where $d$ is the Hamming distance between two datasets,  $\gamma = \gamma(\epsilon, \delta)$ is a function
  of $\epsilon$ and $\delta$ to be determined later, and where $\Delta_{l}\bigg (\hellinger(\bysinfer(\dataobs'),\cdot)\bigg )$
  denotes the local sensitivity at $\bysinfer(\dataobs')$, or equivalently at $\dataobs'$ --w.r.t $\ell_1$ norm--of the scoring function used in our mechanism, that is:
@@ -230,8 +230,14 @@ The difference is that in this mechanism we don't calibrate the noise w.r.t to t
  \Delta_{l}\bigg (\hellinger(\bysinfer(\dataobs'),\cdot)\bigg )=\max_{\dataobs'' \in \datauni^n:\adj{\dataobs'}{\dataobs''}, r\in \betaset}\lvert \hellinger(\bysinfer(\dataobs'), r) - \hellinger(\bysinfer(\dataobs''), r)\rvert
 \end{equation*}
 
-
-\subsection{Analysis of the mechanism}
+This mechanism also extends to the Dirichlet-Multinomial system $\dirichlet(\valpha)$ by rewriting the Hellinger distance as:
+\[
+  \hellinger(\dirichlet(\valpha_1), \dirichlet(\valpha_2)) = \sqrt{1 - \frac{\betaf(\frac{\valpha_1 + \valpha_2}{2})}{\betaf(\valpha_1) \betaf(\valpha_2)}},
+\]
+and by replacing the $\betaset$ with set of posterior Dirichlet distributions candidates. Also, the smooth sensitivity $S(x)$ in (\ref{eq:smooth}) will be
+computed by letting $\dataobs'$ range over all the elements in $\datauni^{n}$ adjacent to $\dataobs$.
+Notice that $\betaset$ has $\binom{n + 1}{m - 1}$ elements in this case. We will denote by
+$\hexpmechd$ the mechanism for the Dirichlet-Multinomial system.
 % In what follows, we will use a correspondence between the probability
 %  $\underset{z \thicksim \hexpmech(x)}{Pr}[z = r]$ of every
 %  $r\in\betaset$ and the probability 
@@ -246,17 +252,14 @@ The difference is that in this mechanism we don't calibrate the noise w.r.t to t
 % To see this, it is enough to notice that: $\underset{z \thicksim \hexpmech(x)}{Pr}[z = r]$ is proportional too $\hlg(\bysinfer(x),r)$, i.e., $u(x,z)$. We can derive, if $u(r,x) = u(r',x)$ then $\underset{z \thicksim \hexpmech(x)}{Pr}[z = r] = \underset{z \thicksim \hexpmech(x)}{Pr}[z = r']$. We assume the number of candidates $z \in \mathcal{R}$ that satisfy $u(z,x) = u(r,x)$ is $|r|$, we have  $\underset{z \thicksim \hexpmech(x)}{Pr}[u(z,x) = u(r,x)] = |r| \underset{z \thicksim \hexpmech(x)}{Pr}[z = r]$. Because Hellinger distance  $\hlg(\bysinfer(x),z)$ is axial symmetry, where the $\bysinfer(x)$ is the symmetry axis. It can be infer that $|z| = 2$ for any candidates, apart from the true output, i.e., $\underset{z \thicksim \hexpmech(x)}{Pr}[u(z,x) = u(r,x)] = 2 \underset{z \thicksim \hexpmech(x)}{Pr}[z = r]$. This parameter can be eliminate in both sides in proof.
 
 % In our private Bayesian inference mechanism, we set the $\beta$ as $\ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta}{2 (n + 1)})})$. 
+The following result guarantees that the mechanisms are indeed differentially private.
 
-
-\begin{theorem}
-The mechanism $\hexpmech$ is $(\epsilon,\delta)-$differential privacy by setting $\gamma$ as $\ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta}{2 (n + 1)})})$, deduced from the proof of privacy.
+\begin{theorem}[Privacy] 
+  For  $\gamma=\ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta}{2 (n + 1)})})$, then both
+  $\hexpmech$ and $\hexpmechd$ are $(\epsilon,\delta)$-differentially private.
 \end{theorem}
 
-This mechanism also extends to Dirichlet distribution $\dirichlet(\valpha)$ by rewriting the Hellinger distance as:
-\[
-\hellinger(\dirichlet(\valpha_1), \dirichlet(\valpha_2)) = \sqrt{1 - \frac{\betaf(\frac{\valpha_1 + \valpha_2}{2})}{\betaf(\valpha_1) \betaf(\valpha_2)}},
-\]
-and replacing the $\betaset$ with set of Dirichlet distribution candidates of the same dimension under the same settings. Notice that $\betaset$ has $\binom{n + 1}{m - 1}$ elements when extends to Dirichlet distribution.
+
 
 
 % \subsection{Sliding Property of Exponential Mechanism}
