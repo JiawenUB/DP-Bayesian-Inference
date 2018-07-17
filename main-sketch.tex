@@ -216,7 +216,7 @@ produces an element $r$ in $\betaset$ with probability:
 \underset{z \thicksim \hexpmech}{\Pr}[z=r] = \frac {exp(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r)}{2\cdot S_\beta(\dataobs)})}
 {\displaystyle\sum_{r\in\betaset} exp(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r)}{2\cdot S_{\beta}(\dataobs)})}
 \end{equation*}
-The previous mechanism is very similar to the exponential mechanism as defined in \cite{expmech},  with $\betaset$ as range and $\hellinger(\cdot,\cdot)$ as scoring function.
+this mechanism is based on the basic exponential mechanism, with $\betaset$ as range and $\hellinger(\cdot,\cdot)$ as scoring function.
 The difference is that in this mechanism we don't calibrate the noise w.r.t to the global sensitivity of the scoring function but w.r.t to the smooth sensitivity
 -- \citet{nissim2007smooth}-- of $\hellinger(\bysinfer(\dataobs), \cdot)$, which is :
 \[
@@ -227,12 +227,15 @@ The difference is that in this mechanism we don't calibrate the noise w.r.t to t
  of $\epsilon$ and $\delta$ to be determined later, and where $\Delta_{l}\bigg (\hellinger(\bysinfer(\dataobs'),\cdot)\bigg )$
  denotes the local sensitivity at $\dataobs'$ (w.r.t $\ell_1$ norm)
  of the function
- \[\hellinger \circ \langle (\bysinfer(\dataobs'), \cdot), (\bysinfer(\cdot),\cdot)\rangle\]
+ \[
+ \hellinger \circ \langle (\bysinfer(\dataobs'), \cdot), (\bysinfer(\cdot),\cdot)\rangle,
+ \]
  that is:
  \begin{equation*}
- \max_{\dataobs'' \in \datauni^n:\adj{\dataobs'}{\dataobs''}, r\in \betaset}\lvert \hellinger(\bysinfer(\dataobs'), r) - \hellinger(\bysinfer(\dataobs''), r)\rvert
+ \max_{\dataobs'' \in \datauni^n:\adj{\dataobs'}{\dataobs''}, r\in \betaset}\lvert \hellinger(\bysinfer(\dataobs'), r) - \hellinger(\bysinfer(\dataobs''), r)\rvert.
 \end{equation*}
-Notice that we maximize also over $r$\todo{need to explain why}.
+
+
 \subsection{Analysis of the mechanism}
 In what follows, we will use a correspondence between the probability
  $\underset{z \thicksim \hexpmech(x)}{Pr}[z = r]$ of every
