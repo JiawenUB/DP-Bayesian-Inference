@@ -213,8 +213,8 @@ given in input a sequence of observations $\dataobs$, and $\epsilon>0, \delta>0$
 produces an element $r$ in $\betaset$ with probability: 
 
 \begin{equation*}
-\underset{z \thicksim \hexpmech}{\Pr}[z=r] = \frac {exp(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r)}{2\cdotS_\beta(\dataobs)})}
-{\displaystyle\sum_{r\in\betaset} exp(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r)}{2\cdotS_{\beta}(\dataobs)})}
+\underset{z \thicksim \hexpmech}{\Pr}[z=r] = \frac {exp(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r)}{2\cdot S_\beta(\dataobs)})}
+{\displaystyle\sum_{r\in\betaset} exp(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r)}{2\cdot S_{\beta}(\dataobs)})}
 \end{equation*}
 The previous mechanism is very similar to the exponential mechanism as defined in \cite{expmech},  with $\betaset$ as range and $\hellinger(\cdot,\cdot)$ as scoring function.
 The difference is that in this mechanism we don't calibrate the noise w.r.t to the global sensitivity of the scoring function but w.r.t to the smooth sensitivity
