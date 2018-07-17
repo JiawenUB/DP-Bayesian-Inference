@@ -159,7 +159,7 @@ In this work we will use a metric based on a different norm to compute the sensi
 and provide guarantees on the accuracy. In particular we will consider a metric
 over probability measures and not over the parameters that represent them.
 Specifically, we will use the Hellinger distance $\hellinger(\cdot,\cdot)$, which for two beta distributions
-$\boldsymbol{\beta}_1=\betad(\alpha_1, \beta_1), \boldsymbol{\beta}_2=\betad(\alpha_2, \beta_2)$ is equal to
+$\boldsymbol{\beta}_1=\betad(\alpha_1, \beta_1),$ and $\boldsymbol{\beta}_2=\betad(\alpha_2, \beta_2)$ is equal to
 \[
   \hellinger(\boldsymbol{\beta}_1, \boldsymbol{\beta}_2)\equiv
   \sqrt{1 - \frac{\betaf(\frac{\alpha_1 + \alpha_2}{2}, \frac{\beta_1 + \beta_2}{2})}{\sqrt{\betaf(\alpha_1,\beta_1)\betaf(\alpha_2,\beta_2)}}}
@@ -194,7 +194,8 @@ The same change of metric will be applied to the experimental accuracy guarantee
 
 \section{Our Approach - Exponential Mechanism with Smooth Sensitivity}
 \label{sec_smoo}
-
+Given a prior distribution $\betad(\alpha, \beta)$, depending on the dataset $\dataobs$, the posterior distribution will be one in the following set:
+$$
 % \subsection{Algorithm Setting up}
 We define a new mechanism $\hexpmech(x)$ which is similar to the exponential mechanism where we use $\mathcal{R}$ as the set $\betaset$ of beta distributions with integer parameters summing up to $n+2$, as scoring function we use the Hellinger distance from $\bysinfer(x)$, i.e. $\hlg(\bysinfer(x),-)$, and we calibrate the noise to the smooth sensitivity~\cite{nissim2007smooth}. The only difference is in the sensitivity part, since now we use the smooth sensitivity.
 
