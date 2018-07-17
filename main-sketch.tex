@@ -233,7 +233,7 @@ The difference is that in this mechanism we don't calibrate the noise w.r.t. to 
 
 This mechanism also extends to the Dirichlet-Multinomial system $\dirichlet(\valpha)$ by rewriting the Hellinger distance as:
 \[
-  \hellinger(\dirichlet(\valpha_1), \dirichlet(\valpha_2)) = \sqrt{1 - \frac{\betaf(\frac{\valpha_1 + \valpha_2}{2})}{\betaf(\valpha_1) \betaf(\valpha_2)}},
+  \hellinger(\dirichlet(\valpha_1), \dirichlet(\valpha_2)) = \sqrt{1 - \frac{\betaf(\frac{\valpha_1 + \valpha_2}{2})}{\sqrt{\betaf(\valpha_1) \betaf(\valpha_2)}}},
 \]
 and by replacing the $\betaset$ with set of posterior Dirichlet distributions candidates. Also, the smooth sensitivity $S(\dataobs)$ in (\ref{eq:smooth}) will be
 computed by letting $\dataobs'$ range over all the elements in $\datauni^{n}$ adjacent to $\dataobs$.
@@ -395,7 +395,8 @@ The following result guarantees that the mechanisms are indeed differentially pr
 In this section, we evaluate the accuracy of the mechanisms defined in
 Section (\ref{sec_smoo}) w.r.t. four variables, including data size, dimensions,
 data variance, prior distribution, and some combinations thereof.
-Every plot is an average over 1000 runs.
+Every plot is an average over 1000 runs. In all the experiments we set
+$\epsilon = 0.8$, and $\delta = 0.00000001$.
 
 \noindent In the following whiskers-plots, the y-axis shows the accuracy (or equivalently, the error) of the mechanisms.
 Accuracy is measured using Hellinger distance. The x-axis, instead shows  one of the previously mentioned
@@ -408,7 +409,7 @@ while the yellow box next to it represents the performance of a variation of the
 basic Laplace mechanism presented in Section (\ref{sec:base}) with the same settings: that is $\epsilon, \delta$, data, prior.
 The variation considered performs a post processing on the released parameters so that they
 are consistent. For instance in the case \todo{more info about the truncation}.
-\subsubsection{Evaluation w.r.t. Datasize}
+\paragraph{Increasing data size with balanced datasets}
 \label{subsubsec_vs_datasize}
 
 \begin{figure}[ht]
@@ -418,61 +419,68 @@ are consistent. For instance in the case \todo{more info about the truncation}.
     \includegraphics[width=0.3\textwidth]{accuracy_vs_datasize_1_1.eps}}
   \subfigure[three dimensions with $\dirichlet (1,1,1)$ prior distribution]{
     \includegraphics[width=0.3\textwidth]{accuracy_vs_datasize_1_1_1.eps}} 
-\caption{Accuracy measurement based on Hellinger distance wrt. different datasizes. Settings: observed data are uniformly distributed, $\epsilon = 0.8$ and $\delta = 0.00000001$}
+\caption{Balanced datasets}
 \label{fig_vs_datasize}
 \end{center}
 \end{figure}
 
-In Fig. \ref{fig_vs_datasize} we consider \emph{balanced} datasets of observations.
+In Figure \ref{fig_vs_datasize} we consider \emph{balanced} datasets of observations.
 This means that in the Beta-Binomial setting the datasets will be
 half 1s and half 0s, while int the Dirichelet-Multinomial the data will be
-equally split in all the $k=3$ bins. Fig. \ref{fig_vs_datasize} shows that  when the
+equally split in all the $k=3$ bins. Figure \ref{fig_vs_datasize} shows that  when the
 data size increases, the accuracy of $\hexpmech$ and $\hexpmechd$
-decreases. In Fig. \ref{fig_vs_datasize}(a), when the data size is
-smaller than 12, $\hexpmech$ outperforms the Laplace mechanism but fails to do so
-for bigger datasets. The same happens in as in Fig. \ref{fig_vs_datasize}(b),
-we can beat Laplace mechanism when data size is smaller than 15 and
-fail otherwise.
+decreases. In Figure \ref{fig_vs_datasize}(a), when the data size is
+smaller than 12, $\hexpmech$ can outperform the Laplace mechanism but it fails to do so
+for bigger datasets. The same happens in as in Figure \ref{fig_vs_datasize}(b):
+the Laplace mechanism starts performing better for datasets bigger than 15. 
 
-\subsubsection{Accuracy Evaluation wrt. Dimensions}
+\paragraph{Increasing dimensions and data size with balanced dataset}
 \label{subsubsec_vs_dimension}
-
-
+In Figure  \ref{fig_vs_dimension}, in the x-axis are observed data sets of
+different sizes and different dimensions. The plot shows that increasing the number of dimensions have
+a similar pejorative effect on $\hexpmech, \hexpmechd$, and the Laplace
+mechanism. Fixing the number of dimensions and increasing the data size shows that
+the Laplace mechanism is more accurate then both $\hexpmech$ and $\hexpmechd$. 
+In other words, dimensions have little influence on whether our mechanisms will beat the Laplace
+mechanism.
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.45\textwidth]{accuracy_vs_dimension.eps}
-\caption{Accuracy measurement based on Hellinger distance wrt. different dimensions and data size. Settings: observed data are uniformly distributed, $\epsilon = 0.8$ and $\delta = 0.00000001$, prior distributions are all $1$ in every dimension}
+\caption{Increasing dimensions and data size with balanced dataset. Priors have 1s in every dimension.}
 \label{fig_vs_dimension}
 \end{figure}
 
-In Fig. \ref{fig_vs_dimension}, x-axis are observed data sets of different size and dimensions. The plot shows that dimensions have similar influence on our exponential mechanism and the Laplace mechanism. Accuracy of two mechanisms both decrease when dimensions go larger. We will be beat by Laplace mechanism when data size increase but will not be affected when dimensions increase. In other words, dimension has little influence on whether we will beat Laplace mechanism.
-
-
-\subsubsection{Accuracy Evaluation wrt. Data variance}
+\paragraph{Fixed data size and unbalaced datasets}
 \label{subsubsec_vs_variance}
+In Figure \ref{fig_vs_variance}, in the x-axis we considered different levels
+of balance of the datasets. We  study this variable only under
+two-dimensions $\betad$ distribution in order to be more concise. The plot shows
+that $\hexpmech$ accuracy is better than the one of Laplace when the dataset is balanced.
 
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.45\textwidth]{accuracy_vs_mean_1_1.eps}
-\caption{Accuracy measurement based on Hellinger distance wrt. different data variance. Settings: $\epsilon = 0.8$ and $\delta = 0.00000001$, prior distributions are all $1$ in every dimension}
+\caption{Unbalanced datasets. Prior distributions have 1s in every dimension.}
 \label{fig_vs_variance}
 \end{figure}
 
-In Fig. \ref{fig_vs_variance}, x-axis are observed data sets of different variances (or means). We study this variable under two-dimension $\betad$ distribution in order to be concise. It shows that our mechanism's accuracy is better when data variance go smaller, meanwhile Laplace mechanism go worse. We will beat Laplace mechanism when observed data are more uniformly.
 
 
 
-\subsubsection{Accuracy Evaluation wrt. Prior Distribution}
+\paragraph{Fixed dataset varying balanced priors}
 \label{subsubsec_vs_prior}
-
+In Figure \ref{fig_vs_prior}, we fix the dataset to be $\langle 5,5,5\rangle$.
+We also considered balanced priors with increasing values in their dimensions.
+The plot shows that in the beginning the Laplace mechanism performs better but
+it is outperformed after a while.
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.45\textwidth]{accuracy_vs_prior_5_5_5.eps}
-\caption{Accuracy measurement based on Hellinger distance wrt. different prior distribution. Settings: $\epsilon = 0.8$ and $\delta = 0.00000001$, observed data set is: $[5,5,5]$}
+\caption{Observed data set is: $\langle 5,5,5\rangle$, varying balanced priors}
 \label{fig_vs_prior}
 \end{figure}
 
-In Fig. \ref{fig_vs_prior}, we study this variable under setting that observed data set is $[5,5,5]$ because in Fig. \ref{fig_vs_datasize} Laplace mechanism beat us when data size is 15 and uniformly distributed. The plot shows that in the beginning we cannot beat Laplace but when prior distribution grow larger, we perform better and better and beat Laplace mechanism finally.
+
 
 
 
@@ -486,7 +494,7 @@ In Fig. \ref{fig_vs_prior}, we study this variable under setting that observed d
 % \label{fig_vs_prior_variance}
 % \end{figure}
 
-% Here, we change the prior distribution and data variance in the same time. As shown in Fig. \ref{fig_vs_prior_variance}, our exponential mechanism do better in uniform data set than in edging data set while Laplace mechanism on the contrary. Moreover, our mechanism is improving continuously and significantly as prior distribution increasing while Laplace mechanism isn't.
+% Here, we change the prior distribution and data variance in the same time. As shown in Figure  \ref{fig_vs_prior_variance}, our exponential mechanism do better in uniform data set than in edging data set while Laplace mechanism on the contrary. Moreover, our mechanism is improving continuously and significantly as prior distribution increasing while Laplace mechanism isn't.
 
 
 \section{Conclusions and Future Works}
