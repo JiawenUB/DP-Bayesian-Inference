@@ -96,7 +96,7 @@ The data $\dataobs$ will be a sequence of $n\in\mathbb{N}$ 0/1 values, that is $
 \[
   \Pr(\dataobs | \theta)\equiv \theta^{\Delta \alpha}(1-\theta)^{n - \Delta \alpha}
 \]
-where $\Delta \alpha = \displaystyle\sum_{i=1}^{n}\mathrm{x_i}$.
+where $\Delta \alpha = \displaystyle\sum_{i=1}^{n}x_i$.
 From this it can easily be derived that the posterior distribution is:
 \[
   \Pr(\theta|\dataobs)=\betad(\alpha + \Delta \alpha,\beta + n - \Delta \alpha)
@@ -133,8 +133,9 @@ private version of $\valpha'=(\valpha + \Delta \valpha)$.  \cite{} and \cite{} h
 already attacked this problem and their solution consisted in adding
 independent Laplacian noise to the parameters of the posteriors. That
 is, in the case of the Beta-Binomial system the value released would
-be: $(\alpha + \Delta \tilde\alpha,\beta + n - \Delta \tilde\alpha)$ where $\Delta \tilde\alpha\sim Lap(\Delta \alpha, \frac{2}{\epsilon})$ with truncating method come from algorithm designed by \citet{zhang2016differential}
-.  Where $Lap(\mu,\nu)$
+be: $(\alpha + \Delta \tilde\alpha,\beta + n - \Delta \tilde\alpha)$ where $\Delta \tilde\alpha\sim Lap(\Delta \alpha, \frac{2}{\epsilon})$.
+%with truncating method come from algorithm designed by \citet{zhang2016differential}
+Where $Lap(\mu,\nu)$
 denotes a Laplacian random variable with mean $\mu$ and scale $\nu$.
 This mechanism is $\epsilon$-differentially private, and the noise is
 calibrated w.r.t to a sensitivity of 2 which is derived by using
@@ -149,7 +150,7 @@ This argument extends similarly to the Dirichelet-Multinomial system.
 
 
 \noindent Also, in previous works, the accuracy has been measured again with respect to
-$\ell_1$ norm. That is, an lower bound has been given to
+$\ell_1$ norm. That is, a lower bound has been given to
 \[
   \Pr[|\alpha - \tilde\alpha| + |\beta - \tilde\beta |\geq \gamma ]
 \]
@@ -158,9 +159,10 @@ In this work we will use a metric based on a different norm to compute the sensi
 and provide guarantees on the accuracy. In particular we will consider a metric
 over probability measures and not over the parameters that represent them.
 Specifically, we will use the Hellinger distance, which for two beta distributions
-$\betad(\alpha_1, \beta_1), \betad(\alpha_2, \beta_2)$ is defined as
+$\boldsymbol{\beta}_1=\betad(\alpha_1, \beta_1), \boldsymbol{\beta}_2=\betad(\alpha_2, \beta_2)$ is defined as
 \[
-  \hellinger()\equiv\sqrt{1 - \frac{\betaf(\frac{\alpha_1 + \alpha_2}{2}, \frac{\beta_1 + \beta_2}{2})}{\sqrt{\betaf(\alpha_1,\beta_1)\betaf(\alpha_2,\beta_2)}}}.
+  \hellinger(\boldsymbol{\beta}_1, \boldsymbol{\beta}_2)\equiv
+  \sqrt{1 - \frac{\betaf(\frac{\alpha_1 + \alpha_2}{2}, \frac{\beta_1 + \beta_2}{2})}{\sqrt{\betaf(\alpha_1,\beta_1)\betaf(\alpha_2,\beta_2)}}}
 \]
 The same change of metric will be applied to the experimental accuracy guarantees.
 \section{Technical Problem Statement}
