@@ -121,6 +121,7 @@ where $+$ denotes the component wise  sum of vectors of reals.
 
 
 \section{The Problem and Baseline approach}
+\label{sec:base}
 We are interested in designing a mechanism for privately releasing
 \emph{fully} the posterior distributions derived in section \ref{sec_background},
 and not a sample from them.  It's worth noticing that the posterior
@@ -138,7 +139,7 @@ be: $(\tilde\alpha,\tilde\beta)=(\alpha + \Delta \tilde\alpha,\beta + n - \Delta
 where $Lap(\mu,\nu)$
 denotes a Laplacian random variable with mean $\mu$ and scale $\nu$.
 This mechanism is $\epsilon$-differentially private, and the noise is
-calibrated w.r.t to a sensitivity of 2 which is derived by using
+calibrated w.r.t. to a sensitivity of 2 which is derived by using
 $\ell_1$ norm over the pair of parameters. Indeed, considering two
 adjacent\footnote{Given $\dataobs, \dataobs'$  we say that $\dataobs$ and $\dataobs'$ are adjacent and we write, $\adj{\dataobs}{\dataobs'}$, iff\\
 $\displaystyle \sum_{i}^{n}\iverson{x_i = x'_i }\leq 1$. } data observations
@@ -217,7 +218,7 @@ produces an element $r$ in $\betaset$ with probability:
 {\displaystyle\sum_{r\in\betaset} exp(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r)}{2\cdot S(\dataobs)})}
 \end{equation*}
 this mechanism is based on the basic exponential mechanism \cite{talwar}, with $\betaset$ as range and $\hellinger(\cdot,\cdot)$ as scoring function.
-The difference is that in this mechanism we don't calibrate the noise w.r.t to the global sensitivity of the scoring function but w.r.t to the smooth sensitivity $S(\dataobs)$
+The difference is that in this mechanism we don't calibrate the noise w.r.t. to the global sensitivity of the scoring function but w.r.t. to the smooth sensitivity $S(\dataobs)$
 -- \citet{nissim2007smooth}-- of $\hellinger(\bysinfer(\dataobs), \cdot)$. The smooth sensitivity is computed as follows:
 \begin{equation}
   \label{eq:smooth}
@@ -225,7 +226,7 @@ The difference is that in this mechanism we don't calibrate the noise w.r.t to t
 \end{equation}
  where $d$ is the Hamming distance between two datasets,  $\gamma = \gamma(\epsilon, \delta)$ is a function
  of $\epsilon$ and $\delta$ to be determined later, and where $\Delta_{l}\bigg (\hellinger(\bysinfer(\dataobs'),\cdot)\bigg )$
- denotes the local sensitivity at $\bysinfer(\dataobs')$, or equivalently at $\dataobs'$ --w.r.t $\ell_1$ norm--of the scoring function used in our mechanism, that is:
+ denotes the local sensitivity at $\bysinfer(\dataobs')$, or equivalently at $\dataobs'$ --w.r.t. $\ell_1$ norm--of the scoring function used in our mechanism, that is:
  \begin{equation*}
  \Delta_{l}\bigg (\hellinger(\bysinfer(\dataobs'),\cdot)\bigg )=\max_{\dataobs'' \in \datauni^n:\adj{\dataobs'}{\dataobs''}, r\in \betaset}\lvert \hellinger(\bysinfer(\dataobs'), r) - \hellinger(\bysinfer(\dataobs''), r)\rvert
 \end{equation*}
@@ -255,7 +256,7 @@ $\hexpmechd$ the mechanism for the Dirichlet-Multinomial system.
 The following result guarantees that the mechanisms are indeed differentially private.
 
 \begin{theorem}[Privacy] 
-  For  $\gamma=\ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta}{2 (n + 1)})})$, then both
+  For  $\gamma=\ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta}{2 (n + 1)})})$, both
   $\hexpmech$ and $\hexpmechd$ are $(\epsilon,\delta)$-differentially private.
 \end{theorem}
 
@@ -391,14 +392,23 @@ The following result guarantees that the mechanisms are indeed differentially pr
 
 \section{Preliminary Experimental Results}
 \label{sec_experiment}
+In this section, we evaluate the accuracy of the mechanisms defined in
+Section (\ref{sec_smoo}) w.r.t. four variables, including data size, dimensions,
+data variance, prior distribution, and some combinations thereof.
+Every plot is an average over 1000 runs.
 
-
-\subsection{Accuracy Trade-off Evaluation wrt. Different Variables}
-\label{subsec_vs_variables}
-
-In this section, we evaluate the accuracy wrt. four variables, including data size, dimension, data variance and prior distribution, and some combinations of these variables. We experiment 1000 times under each value of variables and produce 4-quantile plots for each variable. In following 4-quantile plots, the y-axis is accuracy measured by Hellinger distance, x-axis is different value of variables. The blue boxes in plots represent our exponential mechanism and the next yellow box represents the Laplace mechanism under the same setting.
-
-\subsubsection{Accuracy Evaluation wrt. Datasize}
+\noindent In the following whiskers-plots, the y-axis shows the accuracy (or equivalently, the error) of the mechanisms.
+Accuracy is measured using Hellinger distance. The x-axis, instead shows  one of the previously mentioned
+independent variables --or a combination thereof.
+The boxes extend from the lower to the upper quartile values of the data, with a line at the median. A notch on the box around the median
+is also drawn to give a rough guide to the significance of difference of medians;
+The whiskers extend from the box to show the range of the data. 
+A blue box in the plots represents the exponential mechanism behaviour,
+while the yellow box next to it represents the performance of a variation of the
+basic Laplace mechanism presented in Section (\ref{sec:base}) with the same settings: that is $\epsilon, \delta$, data, prior.
+The variation considered performs a post processing on the released parameters so that they
+are consistent. For instance in the case \todo{more info about the truncation}.
+\subsubsection{Evaluation w.r.t. Datasize}
 \label{subsubsec_vs_datasize}
 
 \begin{figure}[ht]
@@ -413,7 +423,16 @@ In this section, we evaluate the accuracy wrt. four variables, including data si
 \end{center}
 \end{figure}
 
-In Fig. \ref{fig_vs_datasize}, both of the two plots show that when data size go larger, accuracy of our exponential mechanism are decreasing. In Fig. \ref{fig_vs_datasize}(a), when the data size is smaller than 12, we can beta Laplace mechanism but fail when data size larger than or equal to 12. Same as in Fig. \ref{fig_vs_datasize}(b), we can beat Laplace mechanism when data size is smaller than 15 and fail otherwise.
+In Fig. \ref{fig_vs_datasize} we consider \emph{balanced} datasets of observations.
+This means that in the Beta-Binomial setting the datasets will be
+half 1s and half 0s, while int the Dirichelet-Multinomial the data will be
+equally split in all the $k=3$ bins. Fig. \ref{fig_vs_datasize} shows that  when the
+data size increases, the accuracy of $\hexpemech$ and $\expmechd$
+decreases. In Fig. \ref{fig_vs_datasize}(a), when the data size is
+smaller than 12, $\hexpmech$ outperforms the Laplace mechanism but fails to do so
+for bigger datasets. The same happens in as in Fig. \ref{fig_vs_datasize}(b),
+we can beat Laplace mechanism when data size is smaller than 15 and
+fail otherwise.
 
 \subsubsection{Accuracy Evaluation wrt. Dimensions}
 \label{subsubsec_vs_dimension}
