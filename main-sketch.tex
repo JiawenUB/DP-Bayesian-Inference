@@ -216,7 +216,7 @@ produces an element $r$ in $\betaset$ with probability:
 \underset{z \thicksim \hexpmech}{\Pr}[z=r] = \frac {exp(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r)}{2\cdot S_\beta(\dataobs)})}
 {\displaystyle\sum_{r\in\betaset} exp(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r)}{2\cdot S_{\beta}(\dataobs)})}
 \end{equation*}
-this mechanism is based on the basic exponential mechanism, with $\betaset$ as range and $\hellinger(\cdot,\cdot)$ as scoring function.
+this mechanism is based on the basic exponential mechanism \cite{talwar}, with $\betaset$ as range and $\hellinger(\cdot,\cdot)$ as scoring function.
 The difference is that in this mechanism we don't calibrate the noise w.r.t to the global sensitivity of the scoring function but w.r.t to the smooth sensitivity
 -- \citet{nissim2007smooth}-- of $\hellinger(\bysinfer(\dataobs), \cdot)$, which is :
 \[
@@ -225,16 +225,11 @@ The difference is that in this mechanism we don't calibrate the noise w.r.t to t
 
  where $d$ is the Hamming distance between two datasets,  $\gamma = \gamma(\epsilon, \delta)$ is a function
  of $\epsilon$ and $\delta$ to be determined later, and where $\Delta_{l}\bigg (\hellinger(\bysinfer(\dataobs'),\cdot)\bigg )$
- denotes the local sensitivity at $\dataobs'$ (w.r.t $\ell_1$ norm)
- of the function
- \[
- \hellinger \circ \langle (\bysinfer(\dataobs'), \cdot), (\bysinfer(\cdot),\cdot)\rangle,
- \]
- that is:
+ denotes the local sensitivity at $\bysinfer(\dataobs')$, or equivalently at $\dataobs'$ --w.r.t $\ell_1$ norm--
+ of the scoring function used in our mechanism, that is:
  \begin{equation*}
- \max_{\dataobs'' \in \datauni^n:\adj{\dataobs'}{\dataobs''}, r\in \betaset}\lvert \hellinger(\bysinfer(\dataobs'), r) - \hellinger(\bysinfer(\dataobs''), r)\rvert.
+ \Delta_{l}\bigg (\hellinger(\bysinfer(\dataobs'),\cdot)\bigg )=\max_{\dataobs'' \in \datauni^n:\adj{\dataobs'}{\dataobs''}, r\in \betaset}\lvert \hellinger(\bysinfer(\dataobs'), r) - \hellinger(\bysinfer(\dataobs''), r)\rvert
 \end{equation*}
-
 
 \subsection{Analysis of the mechanism}
 In what follows, we will use a correspondence between the probability
