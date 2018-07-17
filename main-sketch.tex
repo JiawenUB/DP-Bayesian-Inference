@@ -202,7 +202,7 @@ we define the follwing set:
   \betaset\equiv\{\betad(\alpha',\beta')\mid \alpha'=\alpha+\Delta\alpha, \beta'=\beta+n-\Delta\alpha\}
 \]
 where $\Delta\alpha$ is as defined in Section \ref{sec_background}.
-Notice that $\betaset$ has $n+2$ elements, and the Bayesian Inference
+Notice that $\betaset$ has $n + 1$ elements, and the Bayesian Inference
 process will produce an element from $\betaset$ that we denote by
 $\bysinfer(\dataobs)$ -- we don't explicitely parametrize the result by the
 prior,  which from now on we consider fixed and we denote it by $\bprior$.
@@ -225,30 +225,38 @@ The difference is that in this mechanism we don't calibrate the noise w.r.t to t
 
  where $d$ is the Hamming distance between two datasets,  $\gamma = \gamma(\epsilon, \delta)$ is a function
  of $\epsilon$ and $\delta$ to be determined later, and where $\Delta_{l}\bigg (\hellinger(\bysinfer(\dataobs'),\cdot)\bigg )$
- denotes the local sensitivity at $\bysinfer(\dataobs')$, or equivalently at $\dataobs'$ --w.r.t $\ell_1$ norm--
- of the scoring function used in our mechanism, that is:
+ denotes the local sensitivity at $\bysinfer(\dataobs')$, or equivalently at $\dataobs'$ --w.r.t $\ell_1$ norm--of the scoring function used in our mechanism, that is:
  \begin{equation*}
  \Delta_{l}\bigg (\hellinger(\bysinfer(\dataobs'),\cdot)\bigg )=\max_{\dataobs'' \in \datauni^n:\adj{\dataobs'}{\dataobs''}, r\in \betaset}\lvert \hellinger(\bysinfer(\dataobs'), r) - \hellinger(\bysinfer(\dataobs''), r)\rvert
 \end{equation*}
 
+
 \subsection{Analysis of the mechanism}
-In what follows, we will use a correspondence between the probability
- $\underset{z \thicksim \hexpmech(x)}{Pr}[z = r]$ of every
- $r\in\betaset$ and the probability 
- $\underset{z \thicksim \hexpmech(x)}{Pr}[\hlg(\bysinfer(x),z) =
- \hlg(\bysinfer(x),r)]$ for the utility score for $r$. In particular, for every
- $r\in\betaset$ we have:
-$$
-\underset{z \thicksim \hexpmech(x)}{Pr}[z = r]=
-\frac{1}{2}\Big (\underset{z \thicksim \hexpmech(x)}{Pr}[\hlg(\bysinfer(x),z) =
- \hlg(\bysinfer(x),r)]\Big )
-$$
-To see this, it is enough to notice that: $\underset{z \thicksim \hexpmech(x)}{Pr}[z = r]$ is proportional too $\hlg(\bysinfer(x),r)$, i.e., $u(x,z)$. We can derive, if $u(r,x) = u(r',x)$ then $\underset{z \thicksim \hexpmech(x)}{Pr}[z = r] = \underset{z \thicksim \hexpmech(x)}{Pr}[z = r']$. We assume the number of candidates $z \in \mathcal{R}$ that satisfy $u(z,x) = u(r,x)$ is $|r|$, we have  $\underset{z \thicksim \hexpmech(x)}{Pr}[u(z,x) = u(r,x)] = |r| \underset{z \thicksim \hexpmech(x)}{Pr}[z = r]$. Because Hellinger distance  $\hlg(\bysinfer(x),z)$ is axial symmetry, where the $\bysinfer(x)$ is the symmetry axis. It can be infer that $|z| = 2$ for any candidates, apart from the true output, i.e., $\underset{z \thicksim \hexpmech(x)}{Pr}[u(z,x) = u(r,x)] = 2 \underset{z \thicksim \hexpmech(x)}{Pr}[z = r]$. This parameter can be eliminate in both sides in proof.
+% In what follows, we will use a correspondence between the probability
+%  $\underset{z \thicksim \hexpmech(x)}{Pr}[z = r]$ of every
+%  $r\in\betaset$ and the probability 
+%  $\underset{z \thicksim \hexpmech(x)}{Pr}[\hlg(\bysinfer(x),z) =
+%  \hlg(\bysinfer(x),r)]$ for the utility score for $r$. In particular, for every
+%  $r\in\betaset$ we have:
+% $$
+% \underset{z \thicksim \hexpmech(x)}{Pr}[z = r]=
+% \frac{1}{2}\Big (\underset{z \thicksim \hexpmech(x)}{Pr}[\hlg(\bysinfer(x),z) =
+%  \hlg(\bysinfer(x),r)]\Big )
+% $$
+% To see this, it is enough to notice that: $\underset{z \thicksim \hexpmech(x)}{Pr}[z = r]$ is proportional too $\hlg(\bysinfer(x),r)$, i.e., $u(x,z)$. We can derive, if $u(r,x) = u(r',x)$ then $\underset{z \thicksim \hexpmech(x)}{Pr}[z = r] = \underset{z \thicksim \hexpmech(x)}{Pr}[z = r']$. We assume the number of candidates $z \in \mathcal{R}$ that satisfy $u(z,x) = u(r,x)$ is $|r|$, we have  $\underset{z \thicksim \hexpmech(x)}{Pr}[u(z,x) = u(r,x)] = |r| \underset{z \thicksim \hexpmech(x)}{Pr}[z = r]$. Because Hellinger distance  $\hlg(\bysinfer(x),z)$ is axial symmetry, where the $\bysinfer(x)$ is the symmetry axis. It can be infer that $|z| = 2$ for any candidates, apart from the true output, i.e., $\underset{z \thicksim \hexpmech(x)}{Pr}[u(z,x) = u(r,x)] = 2 \underset{z \thicksim \hexpmech(x)}{Pr}[z = r]$. This parameter can be eliminate in both sides in proof.
 
-In our private Bayesian inference mechanism, we set the $\beta$ as $\ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta}{2 (n + 1)})})$. 
+% In our private Bayesian inference mechanism, we set the $\beta$ as $\ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta}{2 (n + 1)})})$. 
 
 
+\begin{theorem}
+The mechanism $\hexpmech$ is $(\epsilon,\delta)-$differential privacy by setting $\gamma$ as $\ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta}{2 (n + 1)})})$, deduced from the proof of privacy.
+\end{theorem}
 
+This mechanism also extends to Dirichlet distribution $\dirichlet(\valpha)$ by rewriting the Hellinger distance as:
+\[
+\hellinger(\dirichlet(\valpha_1), \dirichlet(\valpha_2)) = \sqrt{1 - \frac{\betaf(\frac{\valpha_1 + \valpha_2}{2})}{\betaf(\valpha_1) \betaf(\valpha_2)}},
+\]
+and replacing the $\betaset$ with set of Dirichlet distribution candidates of the same dimension under the same settings. Notice that $\betaset$ has $\binom{n + 1}{m - 1}$ elements when extends to Dirichlet distribution.
 
 
 % \subsection{Sliding Property of Exponential Mechanism}
