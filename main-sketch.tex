@@ -227,7 +227,7 @@ The difference is that in this mechanism we don't calibrate the noise w.r.t to t
  of $\epsilon$ and $\delta$ to be determined later, and where $\Delta_{l}\bigg (\hellinger(\bysinfer(\dataobs'),\cdot)\bigg )$
  denotes the local sensitivity at $\dataobs'$ (w.r.t $\ell_1$ norm)
  of the function
- \[\hellinger \circ \langle (\bysinfer(\dataobs'), \bysinfer(\cdot)\rangle\]
+ \[\hellinger \circ \langle (\bysinfer(\dataobs'), \cdot), (\bysinfer(\cdot),\cdot)\rangle\]
  that is:
  \begin{equation*}
  \max_{\dataobs'' \in \datauni^n:\adj{\dataobs'}{\dataobs''}, r\in \betaset}\lvert \hellinger(\bysinfer(\dataobs'), r) - \hellinger(\bysinfer(\dataobs''), r)\rvert
