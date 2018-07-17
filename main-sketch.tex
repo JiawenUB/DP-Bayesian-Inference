@@ -188,34 +188,44 @@ The same change of metric will be applied to the experimental accuracy guarantee
 
 % \section{Baseline Approach - Laplace Mechanism}
 % \label{sec_lap}
-% Our baseline approach come from the algorithm designed by \citet{zhang2016differential} that adding Laplace noise (\citet{dwork2014algorithmic}) to posterior parameters to preserve privacy. They perturbed the parameter updates of $\betad$ distribution from Bayesian inference and truncated to rule out invalid $\betad$ parameters to get the protected posteriors. Furthermore, we extend their algorithm to the case of $m$ dimensional Dirichlet distributions, where we add $(m-1)$ i.i.d. Laplace noises $\{Lap_1 , Lap_2, \cdots, Lap_{m-1} \}$ and truncate in the same way. 
+% Our baseline approach come from the algorithm designed by \citet{zhang2016differential} that adding Laplace noise (\citet{dwork2014algorithmic}) to posterior parameters to preserve privacy. They perturbed the parameter updates of $\betad$ distribution from Bayesian inference and truncated to rule out invalid $\betad$ parameters to get the protected posteriors.
+% Furthermore, we extend their algorithm to the case of $m$ dimensional Dirichlet distributions, where we add $(m-1)$ i.i.d. Laplace noises $\{Lap_1 , Lap_2, \cdots, Lap_{m-1} \}$ and truncate in the same way. 
 % %where $Lap_i = floor(Y)$, $Y \sim Lap(\frac{2}{\epsilon})$. 
 % The private posterior is $\dirichlet(\valpha + \Delta \valpha')$, where $\Delta \valpha'$ is the perturbed parameter updates.
 
 \section{Our Approach - Exponential Mechanism with Smooth Sensitivity}
 \label{sec_smoo}
-Given a prior distribution $\betad(\alpha, \beta)$, depending on the dataset $\dataobs$, the posterior distribution will be one in the following set:
-$$
-% \subsection{Algorithm Setting up}
-We define a new mechanism $\hexpmech(x)$ which is similar to the exponential mechanism where we use $\mathcal{R}$ as the set $\betaset$ of beta distributions with integer parameters summing up to $n+2$, as scoring function we use the Hellinger distance from $\bysinfer(x)$, i.e. $\hlg(\bysinfer(x),-)$, and we calibrate the noise to the smooth sensitivity~\cite{nissim2007smooth}. The only difference is in the sensitivity part, since now we use the smooth sensitivity.
+Given a prior distribution $\bprior=\betad(\alpha, \beta)$ and a sequence of $n$ observations $\dataobs\in\{0,1\}^n$,
+we define the follwing set:
 
-\begin{definition}
-\label{def_smoo}
-The mechanism $\hexpmech(x)$ outputs a candidate $r \in \betaset$ with probability
+\[
+  \betaset\equiv\{\betad(\alpha',\beta')\mid \alpha'=\alpha+\Delta\alpha, \beta'=\beta+n-\Delta\alpha\}
+\]
+where $\Delta\alpha$ is as defined in Section \ref{sec_background}.
+Notice that $\betaset$ has $n+2$ elements, and the Bayesian Inference
+process will produce an element from $\betaset$ that we denote by
+$\bysinfer(\dataobs)$ -- we don't explicitely parametrize the result by the
+prior,  which from now on we consider fixed and we denote it by $\bprior$.
+
+
+We can now define the mechanism $\hexpmech$ which,
+given in input a sequence of observations $\dataobs$, and $\epsilon>0, \delta>0$,
+produces an element $r$ in $\betaset$ with probability: 
+
 \begin{equation*}
-\underset{z \thicksim \hexpmech(x)}{Pr}[z=r] = \frac
-{exp(\frac{-\epsilon\hlg(\bysinfer(x),r)}{2 S_\beta(x)})}
-{\Sigma_{r' \in R}\ exp(\frac{-\epsilon \hlg(\bysinfer(x),r')}{2 S_\beta(x)})},
+\underset{z \thicksim \hexpmech}{\Pr}[z=r] = \frac {exp(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r)}{2\cdotS_\beta(\dataobs)})}
+{\displaystyle\sum_{r\in\betaset} exp(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r)}{2\cdotS_{\beta}(\dataobs)})}
 \end{equation*}
-where $s_\beta(x)$ is the smooth sensitivity of $\hlg(\bysinfer(x),-)$, calculated by:
-\begin{equation*}
-S_{\beta}(x) = \max(\Delta_{l}\hlg(\bysinfer(x),-), \max_{y \neq x; y \in D^{n}}(\Delta_{l}\hlg(\bysinfer(y),-)\cdot e^{-\beta d(x,y)})),
-\end{equation*}
-where $d$ is the Hamming distance between two datasets, and $\beta =
-\beta(\epsilon, \delta)$ is a function of $\epsilon$ and $\delta$. 
-\end{definition}
+The previous mechanism is very similar to the exponential mechanism as defined in \cite{expmech},  with $\betaset$ as range and $\hellinger(\cdot,\cdot)$ as scoring function.
+The difference is that in this mechanism we don't calibrate the noise w.r.t to the global sensitivity of the scoring function but w.r.t to the smooth sensitivity
+-- \citet{nissim2007smooth}-- of $\hellinger(\bysinfer(\dataobs), \cdot)$, which is :
+\[
+   S_{\beta}(\dataobs)=\max_{\dataobs' \neq \dataobs, \dataobs' \in \{0,1\}^{n}}\bigg \{\Delta_{l}\cdot \hellinger(\bysinfer(\dataobs'),-)\cdot e^{-\gamma\cdot d(\dataobs, \dataobs')}\bigg\}
+ \]
 
-
+where $d$ is the Hamming distance between two datasets, $\Delta_{l}=????$, and $\gamma =
+\gamma(\epsilon, \delta)$ is a function of $\epsilon$ and $\delta$, to be determined later.
+\subsection{Analysis of the mechanism}
 In what follows, we will use a correspondence between the probability
  $\underset{z \thicksim \hexpmech(x)}{Pr}[z = r]$ of every
  $r\in\betaset$ and the probability 
