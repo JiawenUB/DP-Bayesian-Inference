@@ -220,14 +220,14 @@ The previous mechanism is very similar to the exponential mechanism as defined i
 The difference is that in this mechanism we don't calibrate the noise w.r.t to the global sensitivity of the scoring function but w.r.t to the smooth sensitivity
 -- \citet{nissim2007smooth}-- of $\hellinger(\bysinfer(\dataobs), \cdot)$, which is :
 \[
-   S_{\beta}(\dataobs)=\max_{\dataobs' \neq \dataobs, \dataobs' \in \{0,1\}^{n}}\bigg \{\Delta_{l}\bigg (\hellinger(\bysinfer(\dataobs'),-)\bigg )\cdot e^{-\gamma\cdot d(\dataobs, \dataobs')}\bigg\}
+   S_{\beta}(\dataobs)=\max_{\dataobs' \neq \dataobs, \dataobs' \in \{0,1\}^{n}}\bigg \{\Delta_{l}\bigg (\hellinger(\bysinfer(\dataobs'),\cdot)\bigg )\cdot e^{-\gamma\cdot d(\dataobs, \dataobs')}\bigg\}
  \]
 
  where $d$ is the Hamming distance between two datasets,  $\gamma = \gamma(\epsilon, \delta)$ is a function
  of $\epsilon$ and $\delta$ to be determined later, and where $\Delta_{l}\bigg (\hellinger(\bysinfer(\dataobs'),\cdot)\bigg )$
  denotes the local sensitivity at $\dataobs'$ (w.r.t $\ell_1$ norm)
  of the function
- \[\hellinger \circ \langle (\bysinfer(\dataobs', \cdot), \bysinfer(\cdot, \cdot)\rangle\]
+ \[\hellinger \circ \langle (\bysinfer(\dataobs'), \bysinfer(\cdot)\rangle\]
  that is:
  \begin{equation*}
  \max_{\dataobs'' \in \datauni^n:\adj{\dataobs'}{\dataobs''}, r\in \betaset}\lvert \hellinger(\bysinfer(\dataobs'), r) - \hellinger(\bysinfer(\dataobs''), r)\rvert
