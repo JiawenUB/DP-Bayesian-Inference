@@ -29,7 +29,7 @@ e.g. \cite{zhang2016differential}, \cite{foulds2016theory}, designed
 differentially private mechanisms that output a representation of the
 full posterior distribution. Also, accuracy of the mechanisms was
 measured using metrics on the space of the numeric parameters of the
-posterior distribution, e.g. $\ell_1$-norm .
+posterior distribution, e.g. $\ell_1$-norm.
 
 In this work we present a new differentially private algorithm to
 compute the posterior in a Beta-Binomial system and in Dirichlet-Multinomial system.
@@ -37,7 +37,7 @@ The noise is calibrated w.r.t. a smooth
 sensitivity computed with a metric on probability distributions; we
 measured the accuracy of the process by using a metric over
 probability measures. We compared the accuracy of this approach with
-the one based on $\ell_1$-norm. Experimental results show that when
+the ones based on $\ell_1$-norm. Experimental results show that when
 the data size is small or when the parameters of the prior
 distribution are large, the former outperforms the latter.
 
@@ -92,7 +92,7 @@ $\alpha,\beta\in\mathbb{R}^{+}$, and with p.d.f:
   \Pr(\theta)\equiv \frac{\theta^{\alpha} (1- \theta)^{\beta}}{\betaf(\alpha,\beta)}
 \]
 where $\betaf(\cdot,\cdot)$ is the beta function.
-The data $\dataobs$ will be a sequence of $n\in\mathbb{N}$ 0/1 values, that is $\dataobs=\ll x_1,\dots x_n \gg, x_i\in\{0,1\}$, and the likelihood function is:
+The data $\dataobs$ will be a sequence of $n\in\mathbb{N}$ binary values, that is $\dataobs=\langle x_1,\dots x_n \rangle, x_i\in\{0,1\}$, and the likelihood function is:
 \[
   \Pr(\dataobs | \theta)\equiv \theta^{\Delta \alpha}(1-\theta)^{n - \Delta \alpha}
 \]
@@ -112,8 +112,8 @@ The likelihood function will be:
 \[
   \Pr(\dataobs|\vtheta)\equiv \displaystyle\prod_{a_i\in\datauni}\theta_{i}^{\Delta \alpha_i},
 \]
-where $\Delta \alpha_i=\displaystyle\sum_{i=1}^{n}\iverson{x_i=a_i}$, where in $\iverson{\cdot}$ we use
-Iverson bracket notation. The posterior distribution over $\vtheta$ turns out to be
+with $\Delta \alpha_i=\displaystyle\sum_{j=1}^{n}\iverson{x_j=a_i}$, where in $\iverson{\cdot}$ we use
+Iverson bracket notation. Denoting by $\Delta\valpha$ the vector $\langle  \Delta\alpha_1,\dots \Delta\alpha_k \rangle$ the posterior distribution over $\vtheta$ turns out to be
 \[
   \Pr(\vtheta|\dataobs)=\dirichlet(\valpha+\Delta \valpha). 
 \]
@@ -150,7 +150,7 @@ This argument extends similarly to the Dirichelet-Multinomial system.
 
 
 \noindent Also, in previous works, the accuracy has been measured again with respect to
-$\ell_1$ norm. That is, a lower bound has been given to
+$\ell_1$ norm. That is, an upper bound has been given to
 \[
   \Pr[|\alpha - \tilde\alpha| + |\beta - \tilde\beta |\geq \gamma ]
 \]
@@ -158,10 +158,10 @@ where $(\alpha, \beta), (\tilde\alpha,\tilde\beta)$ are as  defined above.
 In this work we will use a metric based on a different norm to compute the sensitivity
 and provide guarantees on the accuracy. In particular we will consider a metric
 over probability measures and not over the parameters that represent them.
-Specifically, we will use the Hellinger distance $\hellinger(\cdot,\cdot)$, which for two beta distributions
-$\boldsymbol{\beta}_1=\betad(\alpha_1, \beta_1),$ and $\boldsymbol{\beta}_2=\betad(\alpha_2, \beta_2)$ is equal to
+Specifically, we will use the Hellinger distance $\hellinger(\cdot,\cdot)$. Given two beta distributions
+$\boldsymbol{\beta}_1=\betad(\alpha_1, \beta_1),$ and $\boldsymbol{\beta}_2=\betad(\alpha_2, \beta_2)$ the following equality holds 
 \[
-  \hellinger(\boldsymbol{\beta}_1, \boldsymbol{\beta}_2)\equiv
+  \hellinger(\boldsymbol{\beta}_1, \boldsymbol{\beta}_2)=
   \sqrt{1 - \frac{\betaf(\frac{\alpha_1 + \alpha_2}{2}, \frac{\beta_1 + \beta_2}{2})}{\sqrt{\betaf(\alpha_1,\beta_1)\betaf(\alpha_2,\beta_2)}}}
 \]
 The same change of metric will be applied to the experimental accuracy guarantees.
@@ -209,7 +209,7 @@ prior,  which from now on we consider fixed and we denote it by $\bprior$.
 
 
 We can now define the mechanism $\hexpmech$ which,
-given in input a sequence of observations $\dataobs$, and $\epsilon>0, \delta>0$,
+given in input a sequence of observations $\dataobs$, $\epsilon>0$ and $\delta>0$,
 produces an element $r$ in $\betaset$ with probability: 
 
 \begin{equation*}
@@ -217,8 +217,8 @@ produces an element $r$ in $\betaset$ with probability:
 {\displaystyle\sum_{r\in\betaset} exp(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r)}{2\cdot S_{\beta}(\dataobs)})}
 \end{equation*}
 this mechanism is based on the basic exponential mechanism \cite{talwar}, with $\betaset$ as range and $\hellinger(\cdot,\cdot)$ as scoring function.
-The difference is that in this mechanism we don't calibrate the noise w.r.t to the global sensitivity of the scoring function but w.r.t to the smooth sensitivity
--- \citet{nissim2007smooth}-- of $\hellinger(\bysinfer(\dataobs), \cdot)$, which is :
+The difference is that in this mechanism we don't calibrate the noise w.r.t to the global sensitivity of the scoring function but w.r.t to the smooth sensitivity $S_{\beta}(\dataobs)$
+-- \citet{nissim2007smooth}-- of $\hellinger(\bysinfer(\dataobs), \cdot)$. The smooth sensitivity is computed as follows:
 \[
    S_{\beta}(\dataobs)=\max_{\dataobs' \neq \dataobs, \dataobs' \in \{0,1\}^{n}}\bigg \{\Delta_{l}\bigg (\hellinger(\bysinfer(\dataobs'),\cdot)\bigg )\cdot e^{-\gamma\cdot d(\dataobs, \dataobs')}\bigg\}
  \]
