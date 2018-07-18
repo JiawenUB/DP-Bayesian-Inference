@@ -284,6 +284,7 @@ $\hexpmechd$ the mechanism for the Dirichlet-Multinomial system.
 The following result guarantees that the mechanisms are indeed differentially private.
 
 \begin{theorem}[Privacy] 
+\label{thm:privacy}
   For  $\gamma=\ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta}{2 (n + 1)})})$, both
   $\hexpmech$ and $\hexpmechd$ are $(\epsilon,\delta)$-differentially private.
 \end{theorem}
@@ -526,34 +527,33 @@ it is outperformed after a while.
 
 
 \section{Conclusions and Future Works}
-We can obtain some preliminary conclusions:
+From what we have seen in the previous sections 
+we can obtain some preliminary conclusions. That is,
+the probabiliy measure approach outperforms the $\ell_1$-norm approach in the following cases: 
 \begin{enumerate}
-  \item We can beat Laplace mechanism when data size is small.
-  \item We will beat Laplace mechanism when observed data are more
-balanced.
-  \item When prior distribution grow larger, we perform better and
-better and beat Laplace mechanism finally.
+  \item When the data size is small
+  \item When the observed data is balanced
+  \item When priors parameters increase (eventually).
 \end{enumerate}
 
-In conclusion, our mechanism has better accuracy in small data size,
-larger prior and balanced data. But this is not enough for
-application. We will continue our work in following three aspects:
+These results although very motivating, are still not enough for real world applications.
+Hence, we will continue our work in the follwoing directions:
 \begin{enumerate}
-  \item For now, we just have a intuitive impression on the accuracy
-behavior of our mechanism, not a precise formula or bound on it.  When
-will we beat the baseline mechanism and when will not? How much
-influence will elements in Sec. \ref{sec_experiment} have on the
-accuracy? Are there any other important factors we missed? These are
-three problems w.r.t. the accuracy we are going to explore next.
-  \item The $(\epsilon, \delta)-$dp is a privacy bound of our
-exponential mechanism $\hexpmech$ and $\hexpmechd$, but not a tight
-bound. The real privacy in experiments can be smaller than it. This
-means we can improve our accuracy in a way that increase the privacy
-bound but still achieve $(\epsilon, \delta)-$dp.
-  \item Our main idea is to have a mechanism based on metric over
-distribution but not numeric. The metric we are using is Hellinger
-distance here. It is worth to explore other distribution distance
-metric, for example, KL-divergence.
+  \item For now, we just have a intuitive idea on the accuracy
+    behavior of our mechanisms, and not a precise formula or bound on it.
+    When do our mechanisms perform better than the baseline mechanism and when they don't?
+    How much influence will elements in Section \ref{sec_experiment} have on the
+    accuracy? Are there any other important factors we missed? These are
+    all questions w.r.t. the accuracy that we are going to explore next, and in a more
+    principled and formal way.
+\item  Theorem \ref{thm:privacy} provides an upper bound to the  privacy loss for
+  $\hexpmech$ and $\hexpmechd$ but  not necessarily a tight one.
+  Indeed, experiments have shown that the actual privacy loss in the experiments can be smaller than $\epsilon$.
+  This means that we could improve accuracy, by adding less noise --
+  that is noise proportional to a higher value of $\epsilon$-- but still achieve $(\epsilon, \delta)$-dp.
+\item The choice of the Hellinger distance might seem quite ad-hoc. Hence,
+  it is worth exploring other distances over distributions. An interesting class
+  of probability metrics is the family of  $f$-divergences \cite{??}.
 \end{enumerate}
 
 
