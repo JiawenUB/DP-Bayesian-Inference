@@ -64,11 +64,31 @@ distribution are large, the former outperforms the latter.
 
 % \input{main-sketch} % TODO: replace with your brilliant paper!
 % \input{macros}
-\section{Introduction}
+\section{An informal motivation}
 \label{sec_intro}
-When we publish a posterior belief inferred from a sensitive data set in form of a
-distribution, itself can relieve a lot of information about data set. So, we need to noise the posterior belief in order to protect the data set before release it. To be precise, distances over two distributions are used to measure the accuracy rather than distances over just parameters or values when we are noising distributions, for instance, Hellinger distance in our paper. Then we have this intuition that when measuring the accuracy between true posterior belief and noised one
-using metrics over distribution (Hellinegr distance), a mechanism based on the same distance can outperforms it based on other distance, $\ell_1$-norm for example. However, current mechanisms are mainly based on $l_1$ norm \cite{zhang2016differential,xiao2012bayesian} regardless of the accuracy metric. That's why we design our exponential mechanism based on a metric over distribution -- for specific, Hellinger distance.
+Publishing the posterior distribution inferred from a sensitive dataset can
+leak information about individuals on the dataset.
+So, we need to noise the posterior belief in order to
+protect the data set before releasing it. The question of how much noise to add
+is usually answered with an $\epsilon$, and a sensitivity value.
+Sensitivity can be computed in many different ways based on which metric space
+is imposed on the output set of the mechanism, and yet in literature (\cite{zhang2016differential,xiao2012bayesian} )
+only metrics over the numeric parameters, e.g. $\ell_1$ norm, are used.
+Another approach, which we will explore here, is to impose a metric over probability measures.
+An orthogonal question is that of how to measure the accuracy. Again,
+that can be answered in different ways based on the metric imposed on the output space, and yet again
+only in few works \todo{cite: I Think in one paper Dimitrakakis uses KL divergence to measure accuracy }
+distances over probability measures have been used for these purposes.
+
+
+The main motivation for this work is to check whether
+an approach based on probability measures can outperform
+in term of accuracy approaches based on metric over
+the numeric parameters of the distributions.
+
+That's why we design a variation of the exponential mechanism basing its scoring function
+on the Hellinger distance, and we also base on the same metric
+the experiments used to measure the accuracy.
 
 \section{Bayesian Inference Background}
 \label{sec_background}
