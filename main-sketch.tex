@@ -81,15 +81,12 @@ only in few works \todo{cite: I Think in one paper Dimitrakakis uses KL divergen
 distances over probability measures have been used for these purposes.
 
 
-The main motivation for this work is to check whether
+The question that this work aims at answering is whether
 an approach based on probability measures can outperform
 in term of accuracy approaches based on metric over
 the numeric parameters of the distributions.
 
-That's why we design a variation of the exponential mechanism basing its scoring function
-on the Hellinger distance, and we also base on the same metric
-the experiments used to measure the accuracy.
-
+We will see that in some cases this can happen.
 \section{Bayesian Inference Background}
 \label{sec_background}
 Given a prior belief $\Pr(\theta)$ on some parameter $\theta$,
@@ -184,7 +181,13 @@ where $(\alpha, \beta), (\tilde\alpha,\tilde\beta)$ are as  defined above.
 In this work we will use a metric based on a different norm to compute the sensitivity
 and provide guarantees on the accuracy. In particular we will consider a metric
 over probability measures and not over the parameters that represent them.
-Specifically, we will use the Hellinger distance $\hellinger(\cdot,\cdot)$. Given two beta distributions
+Specifically, we will use the Hellinger distance $\hellinger(\cdot,\cdot)$.
+The choice of Hellinger distance was dictated by two facts, first of all it simplifies
+calculations in the case of the probabilistic models considered here
+and second of all it also provides straightforwardly bounds for
+the total variation distance, which represents also the maximum advantage
+an unbounded adversary can have in distingishing two distributions. 
+Given two beta distributions
 $\boldsymbol{\beta}_1=\betad(\alpha_1, \beta_1),$ and $\boldsymbol{\beta}_2=\betad(\alpha_2, \beta_2)$ the following equality holds 
 \[
   \hellinger(\boldsymbol{\beta}_1, \boldsymbol{\beta}_2)=
@@ -523,18 +526,34 @@ it is outperformed after a while.
 
 
 \section{Conclusions and Future Works}
-We can obtain some preliminary conclusions: 
+We can obtain some preliminary conclusions:
 \begin{enumerate}
   \item We can beat Laplace mechanism when data size is small.
-  \item We will beat Laplace mechanism when observed data are more balanced.
-  \item When prior distribution grow larger, we perform better and better and beat Laplace mechanism finally.
-\end{enumerate} 
+  \item We will beat Laplace mechanism when observed data are more
+balanced.
+  \item When prior distribution grow larger, we perform better and
+better and beat Laplace mechanism finally.
+\end{enumerate}
 
-In conclusion, our mechanism has better accuracy in small data size, larger prior and balanced data. But this is not enough for application. We will continue our work in following three aspects:
+In conclusion, our mechanism has better accuracy in small data size,
+larger prior and balanced data. But this is not enough for
+application. We will continue our work in following three aspects:
 \begin{enumerate}
-  \item For now, we just have a intuitive impression on the accuracy behavior of our mechanism, not a precise formula or bound on it.  When will we beat the baseline mechanism and when will not? How much influence will elements in Sec. \ref{sec_experiment} have on the accuracy? Are there any other important factors we missed? These are three problems w.r.t. the accuracy we are going to explore next.
-  \item The $(\epsilon, \delta)-$dp is a privacy bound of our exponential mechanism $\hexpmech$ and $\hexpmechd$, but not a tight bound. The real privacy in experiments can be smaller than it. This means we can improve our accuracy in a way that increase the privacy bound but still achieve $(\epsilon, \delta)-$dp. 
-  \item Our main idea is to have a mechanism based on metric over distribution but not numeric. The metric we are using is Hellinger distance here. It is worth to explore other distribution distance metric, for example, KL-divergence.
+  \item For now, we just have a intuitive impression on the accuracy
+behavior of our mechanism, not a precise formula or bound on it.  When
+will we beat the baseline mechanism and when will not? How much
+influence will elements in Sec. \ref{sec_experiment} have on the
+accuracy? Are there any other important factors we missed? These are
+three problems w.r.t. the accuracy we are going to explore next.
+  \item The $(\epsilon, \delta)-$dp is a privacy bound of our
+exponential mechanism $\hexpmech$ and $\hexpmechd$, but not a tight
+bound. The real privacy in experiments can be smaller than it. This
+means we can improve our accuracy in a way that increase the privacy
+bound but still achieve $(\epsilon, \delta)-$dp.
+  \item Our main idea is to have a mechanism based on metric over
+distribution but not numeric. The metric we are using is Hellinger
+distance here. It is worth to explore other distribution distance
+metric, for example, KL-divergence.
 \end{enumerate}
 
 
