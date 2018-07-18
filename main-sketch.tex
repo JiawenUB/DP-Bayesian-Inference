@@ -435,7 +435,7 @@ A blue box in the plots represents the exponential mechanism behaviour,
 while the yellow box next to it represents the performance of a variation of the
 basic Laplace mechanism presented in Section (\ref{sec:base}) with the same settings: that is $\epsilon, \delta$, data, prior.
 The variation considered performs a post processing on the released parameters so that they
-are consistent. For instance in the case when noise is greater than $n$ we will truncate to $n$ to rule out invalid values.
+are consistent. For instance  when  the sum of the noised parameters is greater than $n$ we will truncate them so that they sum up to $n$.
 \paragraph{Increasing data size with balanced datasets}
 \label{subsubsec_vs_datasize}
 
