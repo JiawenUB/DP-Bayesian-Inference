@@ -192,6 +192,7 @@ class BayesInferwithDirPrior(object):
 		self._keys = ["LaplaceMech"]
 		self._accuracy = {self._keys[0]:[]}
 		self._accuracy_l1 = {self._keys[0]:[]}
+		self._accuracy_mean = {self._keys[0]:[]}
 	
 	def _set_bias(self, bias):
 		self._bias = bias
@@ -1051,9 +1052,12 @@ def accuracy_VS_prior_mean(sample_size,epsilon,delta,priors,observations):
 	plt.show()
 	return
 
+def gen_datasets(v, n):
+	return [int(n * i) for i in v]
+
 if __name__ == "__main__":
 
-	sample_size = 12
+	datasize = 12
 	epsilon = 0.8
 	delta = 0.00000001
 	prior = Dir([40,40])
@@ -1061,11 +1065,10 @@ if __name__ == "__main__":
 	x2 = [2,18]
 	observation = [5,5,5]
 	epsilons = numpy.arange(0.1, 2, 0.1)
-	sample_sizes = [i for i in range(1,5)]#[300] #[8,12,18,24,30,36,42,44,46,48]#,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80]
-	datarange = [1,2,3,5,7,10,15,20,25,30,35,40,45,50,60,70,80,90,100,110,120,130,140,150,160,170]
-	observations =[[i*2,i*2] for i in range(950,1000)]
+	datasizes = [i for i in range(1,5)]#[300] #[8,12,18,24,30,36,42,44,46,48]#,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80]
+	percentage = [0.5,0.5]
+	observations =gen_datasets(percentage, datasize)
 	priors = [Dir([4*i,4*i,4*i]) for i in range(5,20)]
-	mean = [int(1.0/len(prior._alphas) * 100)/100.0 for i in range(len(prior._alphas))]
 	# print Optimized_Hellinger_Distance_Dir(Dir([250,250]),Dir([249, 249]))
 	# accuracy_VS_dimension(sample_sizes, epsilon, delta)
 	# accuracy_VS_prior_mean(sample_size,epsilon,delta,priors,observations)
