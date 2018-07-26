@@ -192,7 +192,7 @@ class BayesInferwithDirPrior(object):
 		self._keys = ["LaplaceMech"]
 		self._accuracy = {self._keys[0]:[]}
 		self._accuracy_l1 = {self._keys[0]:[]}
-		self._accuracy_mean = {self._keys[0]:[]}
+		self._accuracy_mean = {}
 	
 	def _set_bias(self, bias):
 		self._bias = bias
@@ -487,11 +487,11 @@ class BayesInferwithDirPrior(object):
 			self._accuracy[self._keys[0]].append(self._posterior - self._laplaced_posterior)
 			# self._laplace_noize()
 			# self._accuracy_l1[self._keys[0]].append(L1_Nrom(self._posterior, self._laplaced_posterior))
-			self._exponentialize_GS()
+			# self._exponentialize_GS()
 			# self._accuracy_l1[self._keys[1]].append(L1_Nrom(self._posterior, self._exponential_posterior))
-			self._accuracy[self._keys[1]].append(self._posterior - self._exponential_posterior)
-			self._exponentialize_LS()
-			self._accuracy[self._keys[2]].append(self._posterior - self._exponential_posterior)
+			# self._accuracy[self._keys[1]].append(self._posterior - self._exponential_posterior)
+			# self._exponentialize_LS()
+			# self._accuracy[self._keys[2]].append(self._posterior - self._exponential_posterior)
 			# self._accuracy_l1[self._keys[2]].append(L1_Nrom(self._posterior, self._exponential_posterior))
 			# self._Smooth_Sensitivity_Noize()
 			# self._accuracy[self._keys[2]].append(self._posterior - self._SS_posterior)
@@ -502,6 +502,9 @@ class BayesInferwithDirPrior(object):
 			self._exponentialize_SS()
 			self._accuracy[self._keys[3]].append(self._posterior - self._exponential_posterior)
 			# self._accuracy_l1[self._keys[3]].append(L1_Nrom(self._posterior, self._exponential_posterior))
+		for key,item in self._accuracy.items():
+			self._accuracy_mean[key] = sum(item)*1.0/(1 if len(item) == 0 else len(item))
+
 
 
 	def _get_bias(self):
@@ -549,26 +552,7 @@ class BayesInferwithDirPrior(object):
 		self._show_exponential()
 
 
-def draw_error_1(errors, model):
-	plt.subplots(nrows=len(errors), ncols=1, figsize=(18, len(errors) * 5.0))
-	plt.tight_layout(pad=2, h_pad=4, w_pad=2, rect=None)
-	rows = 1
-	for key,item in errors.items():
-		plt.subplot(len(errors), 1, rows)
-		x = numpy.arange(0, len(item), 1)
-		plt.axhline(y=numpy.mean(item), color='r', linestyle = '--', alpha = 0.8, label = "average error",linewidth=3)
-		plt.scatter(x, numpy.array(item), s = 40, c = 'b', marker = 'o', alpha = 0.7, edgecolors='white', label = " error")
-		plt.ylabel('Hellinger Distance')
-		plt.xlabel('Runs (Bias = ' + str(model._bias) + ')')
-		plt.title(key + ' (Data Size = ' + str(model._sample_size) + ', Global epsilon = ' + str(model._epsilon) + ')')
-		plt.legend(loc="best")
-		rows = rows + 1
-		plt.ylim(-0.1,1.0)
-		plt.xlim(0.0,len(item)*1.0)
-		plt.grid()
-	plt.show()
-	plt.savefig("beta-GS-SS-LS-size300-runs200-epsilon0-5.png")
-	return 
+
 
 def draw_error(errors, model, filename):
 	# plt.subplots(nrows=len(errors), ncols=1, figsize=(18, len(errors) * 5.0))
@@ -579,18 +563,7 @@ def draw_error(errors, model, filename):
 	for key,item in errors.items():
 		data.append(item)
 		title.append(key)
-		# plt.subplot(len(errors), 1, rows)
-		# x = numpy.arange(0, len(item), 1)
-		# plt.axhline(y=numpy.mean(item), color='r', linestyle = '--', alpha = 0.8, label = "average error",linewidth=3)
-		# plt.scatter(x, numpy.array(item), s = 40, c = 'b', marker = 'o', alpha = 0.7, edgecolors='white', label = " error")
-		# plt.ylabel('Hellinger Distance')
-		# plt.xlabel('Runs (Bias = ' + str(model._bias) + ')')
-		# plt.title(key + ' (Data Size = ' + str(model._sample_size) + ', Global epsilon = ' + str(model._epsilon) + ')')
-		# plt.legend(loc="best")
-		# rows = rows + 1
-		# plt.ylim(-0.1,1.0)
-		# plt.xlim(0.0,len(item)*1.0)
-		# plt.grid()
+
 	fig, ax = plt.subplots()
 	bplot = plt.boxplot(data, notch=1, widths=0.4, sym='+', vert=2, whis=1.5,patch_artist=True)
 	plt.xlabel("different mechanisms")
@@ -616,17 +589,6 @@ def draw_error_l1(errors, model, filename):
 		data.append(item)
 		title.append(key)
 		# plt.subplot(len(errors), 1, rows)
-		# x = numpy.arange(0, len(item), 1)
-		# plt.axhline(y=numpy.mean(item), color='r', linestyle = '--', alpha = 0.8, label = "average error",linewidth=3)
-		# plt.scatter(x, numpy.array(item), s = 40, c = 'b', marker = 'o', alpha = 0.7, edgecolors='white', label = " error")
-		# plt.ylabel('Hellinger Distance')
-		# plt.xlabel('Runs (Bias = ' + str(model._bias) + ')')
-		# plt.title(key + ' (Data Size = ' + str(model._sample_size) + ', Global epsilon = ' + str(model._epsilon) + ')')
-		# plt.legend(loc="best")
-		# rows = rows + 1
-		# plt.ylim(-0.1,1.0)
-		# plt.xlim(0.0,len(item)*1.0)
-		# plt.grid()
 	fig, ax = plt.subplots()
 	bplot = plt.boxplot(data, notch=1, widths=0.4, sym='+', vert=2, whis=1.5,patch_artist=True)
 	plt.xlabel("different mechanisms")
@@ -878,27 +840,29 @@ def hellinger_vs_l1norm(base_distribution):
 
 	plt.show()
 
-def accuracy_VS_datasize(epsilon,delta,prior,observations,mean):
-	data = []
-	xlabel = []
-	for observation in observations:
-		Bayesian_Model = BayesInferwithDirPrior(prior, sum(observation), epsilon, delta)
-		Bayesian_Model._set_observation(observation)
-		Bayesian_Model._experiments(1000)
-		data.append(Bayesian_Model._accuracy[Bayesian_Model._keys[3]])
-		data.append(Bayesian_Model._accuracy[Bayesian_Model._keys[0]])
-		xlabel.append(str(observation) + "/ExpMech")
-		xlabel.append(str(observation) + "/Laplace")
 
+def plot_mean_error(x,y_list,xlabel,ylabel,title):
+	plt.figure(figsize=(12,10))
+	i = 0
+	for y in y_list:
+		plt.plot(x,y,'^',label=ylabel[i])
+		i += 1
+
+	plt.xticks(x,xlabel,rotation=70,fontsize=12)
+	plt.title(title,fontsize=20)	
+	plt.grid()
+	plt.legend()
+	plt.show()
+
+def plot_error_box(data, xlabel,xstick,title):
 	plt.figure(figsize=(12,10))
 	bplot = plt.boxplot(data, notch=1, widths=0.4, sym='+', vert=2, whis=1.5,patch_artist=True)
-	plt.xlabel("different datasize",fontsize=15)
+	plt.xlabel(xlabel,fontsize=15)
 	plt.ylabel('Accuracy / Hellinegr Distance',fontsize=15)
 	#ax.set_xlim(0.5, len(errors) + 0.5)
 
-	plt.xticks(range(0, len(data)),xlabel,rotation=70,fontsize=12)
-	plt.title("Accuracy VS. Data Size",fontsize=20)
-	print('Accuracy / prior: ' + str(prior._alphas) + ", delta: " + str(delta) + ", epsilon:" + str(epsilon) +  ', mean:' + str(mean))
+	plt.xticks(range(0, len(data)),xstick,rotation=70,fontsize=12)
+	plt.title(title,fontsize=20)
 	for i in range(1, len(bplot["boxes"])/2 + 1):
 		box = bplot["boxes"][2 * (i - 1)]
 		box.set(color='navy', linewidth=1.5)
@@ -909,7 +873,29 @@ def accuracy_VS_datasize(epsilon,delta,prior,observations,mean):
 	plt.grid()
 	plt.show()
 
+
+def accuracy_VS_datasize(epsilon,delta,prior,observations,datasizes):
+	data = []
+	xstick = []
+	mean_error = [[],[]]
+	for observation in observations:
+		Bayesian_Model = BayesInferwithDirPrior(prior, sum(observation), epsilon, delta)
+		Bayesian_Model._set_observation(observation)
+		Bayesian_Model._experiments(1000)
+		data.append(Bayesian_Model._accuracy[Bayesian_Model._keys[3]])
+		data.append(Bayesian_Model._accuracy[Bayesian_Model._keys[0]])
+		mean_error[0].append(Bayesian_Model._accuracy_mean[Bayesian_Model._keys[3]])
+		mean_error[1].append(Bayesian_Model._accuracy_mean[Bayesian_Model._keys[0]])
+		xstick.append(str(observation) + "/ExpMech")
+		xstick.append(str(observation) + "/Laplace")
+	print('Accuracy / prior: ' + str(prior._alphas) + ", delta: " + str(delta) + ", epsilon:" + str(epsilon))
+
+	plot_mean_error(range(0,len(observations)),mean_error,datasizes,["ExpMech","LaplaceMech"],"Mean Accuracy VS. Data Size")
+	# plot_error_box(data,"Different Datasizes",xstick,"Accuracy VS. Data Size")
 	return
+
+
+
 
 def accuracy_VS_prior(sample_size,epsilon,delta,priors,observation,mean):
 	data = []
@@ -1052,22 +1038,25 @@ def accuracy_VS_prior_mean(sample_size,epsilon,delta,priors,observations):
 	plt.show()
 	return
 
-def gen_datasets(v, n):
+def gen_dataset(v, n):
 	return [int(n * i) for i in v]
+
+def gen_datasets(v, n_list):
+	return [gen_dataset(v,n) for n in n_list]
 
 if __name__ == "__main__":
 
-	datasize = 12
+	datasize = 300
 	epsilon = 0.8
 	delta = 0.00000001
-	prior = Dir([40,40])
+	prior = Dir([1,1])
 	x1 = [1,19]
 	x2 = [2,18]
 	observation = [5,5,5]
 	epsilons = numpy.arange(0.1, 2, 0.1)
-	datasizes = [i for i in range(1,5)]#[300] #[8,12,18,24,30,36,42,44,46,48]#,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80]
-	percentage = [0.5,0.5]
-	observations =gen_datasets(percentage, datasize)
+	datasizes = [i for i in range(9000,10000)]#[300] #[8,12,18,24,30,36,42,44,46,48]#,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80]
+	percentage = [0.1,0.9]
+	datasets = gen_datasets(percentage, datasizes)
 	priors = [Dir([4*i,4*i,4*i]) for i in range(5,20)]
 	# print Optimized_Hellinger_Distance_Dir(Dir([250,250]),Dir([249, 249]))
 	# accuracy_VS_dimension(sample_sizes, epsilon, delta)
@@ -1076,7 +1065,7 @@ if __name__ == "__main__":
 	# print means
 	# accuracy_VS_prior(sample_size,epsilon,delta,priors,observation,mean)
 	# accuracy_VS_mean(sample_size,epsilon,delta,prior)
-	accuracy_VS_datasize(epsilon,delta,prior,observations,mean)
+	accuracy_VS_datasize(epsilon,delta,prior,datasets,datasizes)
 	# # hellinger_vs_l1norm(Dir(observation))
 	# global_epsilon_study(sample_sizes,epsilon,delta,prior)
 	# Dir([1,17]) - Dir([])
