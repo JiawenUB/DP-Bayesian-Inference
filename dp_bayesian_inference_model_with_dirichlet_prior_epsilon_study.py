@@ -11,6 +11,21 @@ import time
 from matplotlib.patches import Polygon
 import statistics
 from decimal import *
+from scipy.special import gammaln
+
+def gen_betaln (alphas):
+        numerator=0.0
+        for alpha in alphas:
+	        numerator = numerator + gammaln(alpha)
+                
+        return(numerator/math.log(float(sum(alphas))))
+
+
+def opt_hellinger2(alphas, betas):
+        z=gen_betaln(numpy.divide(numpy.sum([alphas, betas], axis=0), 2.0))-0.5*(gen_betaln(alphas) + gen_betaln(betas))
+        return (math.sqrt(1-math.exp(z)))
+
+
 
 def L1_Nrom(A, B):
 	return numpy.sum(abs(numpy.array(A._alphas) - numpy.array(B._alphas)))
@@ -89,7 +104,8 @@ class Dir(object):
 		self._size = len(alphas)
 
 	def __sub__(self, other):
-		return Optimized_Hellinger_Distance_Dir(self, other)
+		return opt_hellinger2(self._alphas, other._alphas)
+		# return Optimized_Hellinger_Distance_Dir(self, other)
 
 	def _minus(self,other):
 		self._alphas = list(numpy.array(self._alphas) - numpy.array(other._alphas))
@@ -867,7 +883,7 @@ def accuracy_VS_datasize(epsilon,delta,prior,observations,mean):
 	for observation in observations:
 		Bayesian_Model = BayesInferwithDirPrior(prior, sum(observation), epsilon, delta)
 		Bayesian_Model._set_observation(observation)
-		Bayesian_Model._experiments(500)
+		Bayesian_Model._experiments(1000)
 		data.append(Bayesian_Model._accuracy[Bayesian_Model._keys[3]])
 		data.append(Bayesian_Model._accuracy[Bayesian_Model._keys[0]])
 		xlabel.append(str(observation) + "/ExpMech")
@@ -879,7 +895,7 @@ def accuracy_VS_datasize(epsilon,delta,prior,observations,mean):
 	plt.ylabel('Accuracy / Hellinegr Distance',fontsize=15)
 	#ax.set_xlim(0.5, len(errors) + 0.5)
 
-	plt.xticks(range(1, len(data)+1),xlabel,rotation=70,fontsize=12)
+	plt.xticks(range(0, len(data)),xlabel,rotation=70,fontsize=12)
 	plt.title("Accuracy VS. Data Size",fontsize=20)
 	print('Accuracy / prior: ' + str(prior._alphas) + ", delta: " + str(delta) + ", epsilon:" + str(epsilon) +  ', mean:' + str(mean))
 	for i in range(1, len(bplot["boxes"])/2 + 1):
@@ -1040,22 +1056,24 @@ if __name__ == "__main__":
 	sample_size = 12
 	epsilon = 0.8
 	delta = 0.00000001
-	prior = Dir([1,1,1])
+	prior = Dir([40,40])
 	x1 = [1,19]
 	x2 = [2,18]
 	observation = [5,5,5]
 	epsilons = numpy.arange(0.1, 2, 0.1)
 	sample_sizes = [i for i in range(1,5)]#[300] #[8,12,18,24,30,36,42,44,46,48]#,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80]
-	observations =[[4,4,4],[0,0,12]]
+	datarange = [1,2,3,5,7,10,15,20,25,30,35,40,45,50,60,70,80,90,100,110,120,130,140,150,160,170]
+	observations =[[i*2,i*2] for i in range(950,1000)]
 	priors = [Dir([4*i,4*i,4*i]) for i in range(5,20)]
 	mean = [int(1.0/len(prior._alphas) * 100)/100.0 for i in range(len(prior._alphas))]
+	# print Optimized_Hellinger_Distance_Dir(Dir([250,250]),Dir([249, 249]))
 	# accuracy_VS_dimension(sample_sizes, epsilon, delta)
-	accuracy_VS_prior_mean(sample_size,epsilon,delta,priors,observations)
+	# accuracy_VS_prior_mean(sample_size,epsilon,delta,priors,observations)
 	# means = [[(i/10.0), (1 - i/10.0)] for i in range(1,10)]
 	# print means
 	# accuracy_VS_prior(sample_size,epsilon,delta,priors,observation,mean)
 	# accuracy_VS_mean(sample_size,epsilon,delta,prior)
-	# accuracy_VS_datasize(epsilon,delta,prior,observations,mean)
+	accuracy_VS_datasize(epsilon,delta,prior,observations,mean)
 	# # hellinger_vs_l1norm(Dir(observation))
 	# global_epsilon_study(sample_sizes,epsilon,delta,prior)
 	# Dir([1,17]) - Dir([])

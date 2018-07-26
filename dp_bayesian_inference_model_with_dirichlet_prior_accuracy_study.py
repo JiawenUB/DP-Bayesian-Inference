@@ -9,6 +9,7 @@ from fractions import Fraction
 import operator
 import time
 from matplotlib.patches import Polygon
+from scipy.special import gammaln
 
 def gen_betaln (alphas):
         numerator=0.0
@@ -717,8 +718,8 @@ if __name__ == "__main__":
 	prior = Dir([1,1,1,1])
 	observation = [1,1,1,50]
 	# Bayesian_Model = BayesInferwithDirPrior(prior, sample_size, epsilon, delta)
-
-	accuracy_study_discrete(sample_size,epsilon,delta,prior,observation)
+	print opt_hellinger2([3000,2999], [2999,3000])
+	# accuracy_study_discrete(sample_size,epsilon,delta,prior,observation)
 	# # accuracy_study_exponential_mechanism_SS(sample_size,epsilon,delta,prior,observation)
 	# # accuracy_study_laplace(sample_size,epsilon,delta,prior,observation)
 	# # Tests the functioning of the module
