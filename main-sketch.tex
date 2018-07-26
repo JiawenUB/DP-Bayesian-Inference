@@ -13,9 +13,38 @@
 %%\ccsPaper{9999} % TODO: replace with your paper number once obtained
 \input{macros}
 
+
+
 \begin{document}
 \title{Tailoring Differentially Private Bayesian Inference to Distance Between Distributions}%Towards a probability measure approach for Differential Privacy in Bayesian inference} % TODO: replace with your title
 \subtitle{Extended Abstract}
+
+\author{Gian Pietro Farina}
+\affiliation{%
+  \institution{University at Buffalo, SUNY}
+}
+\email{gianpiet@buffalo.edu}
+
+\author{Jiawen Liu}
+\affiliation{%
+  \institution{University at Buffalo, SUNY}
+}
+\email{jliu223@buffalo.edu}
+
+\author{Marco Gaboardi}
+\affiliation{%
+  \institution{University at Buffalo, SUNY}
+}
+\email{gaboardi@buffalo.edu}
+
+\author{Mark Bun}
+\affiliation{%
+  \institution{Princeton University}
+}
+\email{mbun@cs.princeton.edu}
+
+
+
 \begin{abstract}
 Bayesian inference is a statistical method which allows one to derive a
 \emph{posterior} distribution over a parameter, starting from a
@@ -61,24 +90,24 @@ We apply the exponential mechanism to the smooth sensitivity of a metric on prob
 \label{sec_intro}
 Publishing the posterior distribution inferred from a sensitive dataset can
 leak information about individuals on the dataset.
-So, we need to noise the posterior belief in order to
-protect the data set before releasing it. The question of how much noise to add
-is usually answered with an $\epsilon$, and a sensitivity value.
+Differential privacy enables release of an approximate posterios distribution through the introduction of random noise. The amount of the noise that must be introduced depends on the privacy parameter $\epsilon$ and the sensitivity of the inference to small changes in the data set.%So, we need to noise the posterior belief in order to protect the data set before releasing it. The question of how much noise to add is usually answered with an $\epsilon$, and a sensitivity value.
 Sensitivity can be computed in many different ways based on which metric space
-is imposed on the output set of the mechanism, and yet in literature (\cite{zhang2016differential,xiao2012bayesian} )
-only metrics over the numeric parameters, e.g. $\ell_1$ norm, are used.
-Another approach, which we will explore here, is to impose a metric over probability measures.
-An orthogonal question is that of how to measure the accuracy. Again,
-that can be answered in different ways based on the metric imposed on the output space, and yet again
+is imposed on the output set of the mechanism. In the literature on private Bayesian inference (\cite{zhang2016differential,xiao2012bayesian}), it is only measured with respect to the vector of numbers parameterizing the output distribution using e.g. The $\ell_1$ norm.
+%metrics over the numeric parameters, e.g. $\ell_1$ norm, are used.
+%Another approach, which we will explore here, is to impose a metric over probability measures.
+A more natural approach which we explore here, is to measure sensitivity with respect to a metric on the space of inferred probability distributions.
+A re-loved question is that of how to measure accuracy. Again,
+this can be answered in different ways based on the metric imposed on the output space, and yet again
 only in few works in literature (e.g. \cite{zhang2016differential})
-distances over probability measures have been used for these purposes.
+distances between probability measures have been used for these purposes.
 
 
 The question that this work aims at answering is whether
-an approach based on probability measures can outperform
-in term of accuracy approaches based on metric over
+an approach based on probability metrics can improve on the accuracy of approaches based on metrics over
 the numeric parameters of the distributions. 
 We will see that in some cases this can happen.
+
+
 \section{Bayesian Inference Background}
 \label{sec_background}
 Given a prior belief $\Pr(\theta)$ on some parameter $\theta$,
@@ -86,26 +115,24 @@ and an observation $\dataobs$, the posterior distribution on $\theta$ given $\da
 \[
   \Pr(\theta | \dataobs) = \frac{\Pr(\dataobs | \theta) \cdot \Pr(\theta)}{\Pr(\dataobs)}
 \]
-where the expression  $\Pr(\dataobs | \theta)$ denotes the \emph{likelihood} of $\theta$ when
-$\dataobs$ is observed. Since we consider $\dataobs$ to be fixed the likelihood is a function of $\theta$.
+where the expression  $\Pr(\dataobs | \theta)$ denotes the \emph{likelihood} of observing $\dataobs$ under a value of $\theta$. Since we consider $\dataobs$ to be fixed, the likelihood is a function of $\theta$.
 For the same reason $\Pr(\dataobs)$ is a constant independent of $\theta$.
 Usually in statistics the prior distribution $\Pr(\theta)$ is chosen so that it represents
-the initial belief on $\theta$. That is, when no data has been observed. In practice though,
+the initial belief on $\theta$, that is, when no data has been observed. In practice though,
 prior distributions and likelihood functions are usually chosen so that the posterior
 belongs to the same \emph{family} of distributions. In this case we say that the prior
-is conjugate of the likelihood function. Using conjugate priors simplify calculcations and allows
-for inference to be performed in a recursive fashion over the data.
+is conjugate to the likelihood function. Use of a conjugate prior simplifies calculcations and allows for inference to be performed in a recursive fashion over the data.
 In this work we will consider a specific instance of Bayesian inference and one of its generalizations.
 Specifically, we will consider the situation where $\theta$ represents the parameter --informally called \emph{bias}--
 of a Bernoulli distributed random variable, and its immediate generalization where the parameter $\vtheta$ represents
-the the vector of parameters of a categorical distributed random variable.
-In the former case the prior distribution over $\theta\in [0,1]$ is going to be a beta distribution, $\betad(\alpha, \beta)$, with parameters
+the vector of parameters of a conjugate distributed random variable.
+In the former case, the prior distribution over $\theta\in [0,1]$ is going to be a beta distribution, $\betad(\alpha, \beta)$, with parameters
 $\alpha,\beta\in\mathbb{R}^{+}$, and with p.d.f:
 \[
   \Pr(\theta)\equiv \frac{\theta^{\alpha} (1- \theta)^{\beta}}{\betaf(\alpha,\beta)}
 \]
 where $\betaf(\cdot,\cdot)$ is the beta function.
-The data $\dataobs$ will be a sequence of $n\in\mathbb{N}$ binary values, that is $\dataobs=\langle x_1,\dots x_n \rangle, x_i\in\{0,1\}$, and the likelihood function is:
+The data $\dataobs$ will be a sequence of $n\in\mathbb{N}$ binary values, that is $\dataobs= (x_1,\dots x_n), x_i\in\{0,1\}$, and the likelihood function is:
 \[
   \Pr(\dataobs | \theta)\equiv \theta^{\Delta \alpha}(1-\theta)^{n - \Delta \alpha}
 \]
@@ -115,42 +142,27 @@ From this it can easily be derived that the posterior distribution is:
   \Pr(\theta|\dataobs)=\betad(\alpha + \Delta \alpha,\beta + n - \Delta \alpha)
 \]
 In the latter case the prior distribution over $\vtheta\in [0,1]^{k}$ is given by a Dirichelet distribution, $\dirichlet(\valpha)$, for $k\in\mathbb{N}$,
-and $\valpha\in(\mathbf{R^{+}})^{k}$, with p.d.f:
+and $\valpha\in(\mathbb{R}^{+})^{k}$, with p.d.f:
 \[
   \Pr(\vtheta)\equiv\frac{1}{\mbetaf(\valpha)}\cdot \displaystyle\prod_{i=1}^{k}{\theta_i^{\alpha_i-1}}
 \]
-where $\mbetaf(\cdot)$ is the generealised beta function.
+where $\mbetaf(\cdot)$ is the generalized beta function.
 The data $\dataobs$ will be a sequence of $n\in\mathbb{N}$ values coming from a universe $\datauni$, such that $\mid\datauni \mid=k$.
 The likelihood function will be:
 \[
   \Pr(\dataobs|\vtheta)\equiv \displaystyle\prod_{a_i\in\datauni}\theta_{i}^{\Delta \alpha_i},
 \]
-with $\Delta \alpha_i=\displaystyle\sum_{j=1}^{n}\iverson{x_j=a_i}$, where in $\iverson{\cdot}$ we use
-Iverson bracket notation. Denoting by $\Delta\valpha$ the vector $\langle  \Delta\alpha_1,\dots \Delta\alpha_k \rangle$ the posterior distribution over $\vtheta$ turns out to be
+with $\Delta \alpha_i=\displaystyle\sum_{j=1}^{n}\iverson{x_j=a_i}$, where $\iverson{\cdot}$represents Iverson bracket notation. Denoting by $\Delta\valpha$ the vector $(\Delta\alpha_1,\dots \Delta\alpha_k)$ the posterior distribution over $\vtheta$ turns out to be
 \[
   \Pr(\vtheta|\dataobs)=\dirichlet(\valpha+\Delta \valpha). 
 \]
-where $+$ denotes the component wise  sum of vectors of reals. 
+where $+$ denotes the component wise sum of vectors of reals. 
 
 
 \section{The Problem and Baseline approach}
 \label{sec:base}
-We are interested in designing a mechanism for privately releasing
-\emph{fully} the posterior distributions derived in section \ref{sec_background},
-and not a sample from them.  It's worth noticing that the posterior
-distributions are fully characterized by their parameters, and the
-family (beta, Dirichlet) they belong to.  Hence, in case of the
-Beta-Binomial model we are interested in releasing a private version
-of the pair of parameters $(\alpha',\beta')=(\alpha + \Delta \alpha,\beta + n - \Delta \alpha)$, and
-in the case of the Dirichlet-Multinomial model we are interested in a
-private version of $\valpha'=(\valpha + \Delta \valpha)$. \citet{zhang2016differential} and \citet{xiao2012bayesian} have
-already attacked this problem and their solution consisted in adding
-independent Laplacian noise to the parameters of the posteriors. That
-is, in the case of the Beta-Binomial system the value released would
-be: $(\tilde\alpha,\tilde\beta)=(\alpha + \Delta \tilde\alpha,\beta + n - \Delta \tilde\alpha)$ where $\Delta \tilde\alpha\sim Lap(\Delta \alpha, \frac{2}{\epsilon})$, and
-%with truncating method come from algorithm designed by \citet{zhang2016differential}
-where $Lap(\mu,\nu)$
-denotes a Laplacian random variable with mean $\mu$ and scale $\nu$.
+We are interested in designing a mechanism for privately releasing the full posterior distributions derived in section \ref{sec_background}, as opposed to just sampling from them.  It's worth noticing that the posterior distributions are fully characterized by their parameters, and the family (beta, Dirichlet) they belong to. Hence, in case of the Beta-Binomial model we are interested in releasing a private version of the pair of parameters $(\alpha',\beta')=(\alpha + \Delta \alpha,\beta + n - \Delta \alpha)$, and
+in the case of the Dirichlet-Multinomial model we are interested in a private version of $\valpha'=(\valpha + \Delta \valpha)$. \citet{zhang2016differential} and \citet{xiao2012bayesian} have already attacked this problem by adding independent Laplacian noise to the parameters of the posteriors. That is, in the case of the Beta-Binomial system, the value released would  be: $(\tilde\alpha,\tilde\beta)=(\alpha + \tilde{\Delta \alpha},\beta + n - \tilde{\Delta \alpha})$ where $\tilde{\Delta \alpha}\sim Lap(\Delta \alpha, \frac{2}{\epsilon})$, and where $Lap(\mu,\nu)$ denotes a Laplace random variable with mean $\mu$ and scale $\nu$.
 This mechanism is $\epsilon$-differentially private, and the noise is
 calibrated w.r.t. to a sensitivity of 2 which is derived by using
 $\ell_1$ norm over the pair of parameters. Indeed, considering two
@@ -162,9 +174,7 @@ $(\alpha',\beta')$ and $(\alpha'',\beta'')$ then
 $|\alpha'-\alpha''|+|\beta'-\beta''|\leq 2$.
 This argument extends similarly to the Dirichelet-Multinomial system.
 
-
-\noindent Also, in previous works, the accuracy has been measured again with respect to
-$\ell_1$ norm. That is, an upper bound has been given to
+\noindent Also, in previous works, the accuracy of the posterior was measured again with respect to $\ell_1$ norm. That is, an upper bound was given on
 \[
   \Pr[|\alpha - \tilde\alpha| + |\beta - \tilde\beta |\geq \gamma ]
 \]
@@ -173,10 +183,9 @@ In this work we will use a metric based on a different norm to compute the sensi
 and provide guarantees on the accuracy. In particular we will consider a metric
 over probability measures and not over the parameters that represent them.
 Specifically, we will use the Hellinger distance $\hellinger(\cdot,\cdot)$.
-The choice of Hellinger distance was dictated by two facts, first of all it simplifies
+Our choice to use Hellinger distance is motivated by two facts, first of all it simplifies
 calculations in the case of the probabilistic models considered here
-and second of all it also provides straightforwardly bounds for
-the total variation distance, which represents also the maximum advantage
+and second of all it also automatically yields bounds on the total variation distance, which represents also the maximum advantage
 an unbounded adversary can have in distingishing two distributions. 
 Given two beta distributions
 $\boldsymbol{\beta}_1=\betad(\alpha_1, \beta_1),$ and $\boldsymbol{\beta}_2=\betad(\alpha_2, \beta_2)$ the following equality holds 
@@ -215,49 +224,37 @@ The same change of metric will be applied to the experimental accuracy guarantee
 
 \section{Our Approach - Exponential Mechanism with Smooth Sensitivity}
 \label{sec_smoo}
-Given a prior distribution $\bprior=\betad(\alpha, \beta)$ and a sequence of $n$ observations $\dataobs\in\{0,1\}^n$,
-we define the follwing set:
+Given a prior distribution $\bprior=\betad(\alpha, \beta)$ and a sequence of $n$ observations $\dataobs\in\{0,1\}^n$, we define the follwing set:
 
 \[
   \betaset\equiv\{\betad(\alpha',\beta')\mid \alpha'=\alpha+\Delta\alpha, \beta'=\beta+n-\Delta\alpha\}
 \]
-where $\Delta\alpha$ is as defined in Section \ref{sec_background}.
-Notice that $\betaset$ has $n + 1$ elements, and the Bayesian Inference
-process will produce an element from $\betaset$ that we denote by
-$\bysinfer(\dataobs)$ -- we don't explicitely parametrize the result by the
-prior,  which from now on we consider fixed and we denote it by $\bprior$.
+
+where $\Delta\alpha$ is as defined in Section \ref{sec_background}. Notice that $\betaset$ has $n + 1$ elements, and the Bayesian Inference process will produce an element from $\betaset$ that we denote by $\bysinfer(\dataobs)$ -- we don't explicitely parametrize the result by the prior,  which from now on we consider fixed and we denote it by $\bprior$.
 
 
-We can now define the mechanism $\hexpmech$ which,
-given in input a sequence of observations $\dataobs$, $\epsilon>0$ and $\delta>0$,
-produces an element $r$ in $\betaset$ with probability: 
+We can now define the mechanism $\hexpmech$ which, given in input a sequence of observations $\dataobs$ and parameters $\epsilon>0$ and $\delta>0$, produces an element $r$ in $\betaset$ with probability: 
 
 \begin{equation*}
-\underset{z \thicksim \hexpmech}{\Pr}[z=r] = \frac {exp(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r)}{2\cdot S(\dataobs)})}
-{\displaystyle\sum_{r\in\betaset} exp(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r)}{2\cdot S(\dataobs)})}
+\underset{z \thicksim \hexpmech}{\Pr}[z=r] = \frac {exp\big(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r)}{2\cdot S(\dataobs)}\big)}
+{\displaystyle\sum_{r\in\betaset} exp\Big(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r)}{2\cdot S(\dataobs)}\Big)}.
 \end{equation*}
-this mechanism is based on the basic exponential mechanism \cite{talwar}, with $\betaset$ as range and $\hellinger(\cdot,\cdot)$ as scoring function.
-The difference is that in this mechanism we don't calibrate the noise w.r.t. to the global sensitivity of the scoring function but w.r.t. to the smooth sensitivity $S(\dataobs)$
--- \citet{nissim2007smooth}-- of $\hellinger(\bysinfer(\dataobs), \cdot)$. The smooth sensitivity is computed as follows:
+
+This mechanism is based on the basic exponential mechanism \cite{talwar}, with $\betaset$ as the range and $\hellinger(\cdot,\cdot)$ as the scoring function. The difference is that in this mechanism we don't calibrate the noise w.r.t. to the global sensitivity of the scoring function but w.r.t. to the smooth sensitivity $S(\dataobs)$ -- defined by \citet{nissim2007smooth}-- of $\hellinger(\bysinfer(\dataobs), \cdot)$. The smooth sensitivity is computed as follows:
 \begin{equation}
   \label{eq:smooth}
-   S(\dataobs)=\max_{\dataobs' \neq \dataobs, \dataobs' \in \{0,1\}^{n}}\bigg \{\Delta_{l}\bigg (\hellinger(\bysinfer(\dataobs'),\cdot)\bigg )\cdot e^{-\gamma\cdot d(\dataobs, \dataobs')}\bigg\}
+   S(\dataobs)=\max_{\dataobs' \neq \dataobs, \dataobs' \in \{0,1\}^{n}}\bigg \{\Delta_{l}\bigg (\hellinger(\bysinfer(\dataobs'),\cdot)\bigg )\cdot e^{-\gamma\cdot d(\dataobs, \dataobs')}\bigg\},
 \end{equation}
- where $d$ is the Hamming distance between two datasets,  $\gamma = \gamma(\epsilon, \delta)$ is a function
- of $\epsilon$ and $\delta$ to be determined later, and where $\Delta_{l}\bigg (\hellinger(\bysinfer(\dataobs'),\cdot)\bigg )$
- denotes the local sensitivity at $\bysinfer(\dataobs')$, or equivalently at $\dataobs'$ --w.r.t. $\ell_1$ norm--of the scoring function used in our mechanism, that is:
- \begin{equation*}
- \Delta_{l}\bigg (\hellinger(\bysinfer(\dataobs'),\cdot)\bigg )=\max_{\dataobs'' \in \datauni^n:\adj{\dataobs'}{\dataobs''}, r\in \betaset}\lvert \hellinger(\bysinfer(\dataobs'), r) - \hellinger(\bysinfer(\dataobs''), r)\rvert
+where $d$ is the Hamming distance between two datasets,  $\gamma = \gamma(\epsilon, \delta)$ is a function of $\epsilon$ and $\delta$ to be determined later, and where $\Delta_{l}\bigg (\hellinger(\bysinfer(\dataobs'),\cdot)\bigg )$ denotes the local sensitivity at $\bysinfer(\dataobs')$, or equivalently at $\dataobs'$, the scoring function used in our mechanism. That is:
+\begin{equation*}
+\Delta_{l}\bigg (\hellinger(\bysinfer(\dataobs'),\cdot)\bigg )=\max_{\dataobs'' \in \datauni^n:\adj{\dataobs'}{\dataobs''}, r\in \betaset}\lvert \hellinger(\bysinfer(\dataobs'), r) - \hellinger(\bysinfer(\dataobs''), r)\rvert.
 \end{equation*}
 
 This mechanism also extends to the Dirichlet-Multinomial system $\dirichlet(\valpha)$ by rewriting the Hellinger distance as:
 \[
   \hellinger(\dirichlet(\valpha_1), \dirichlet(\valpha_2)) = \sqrt{1 - \frac{\betaf(\frac{\valpha_1 + \valpha_2}{2})}{\sqrt{\betaf(\valpha_1) \betaf(\valpha_2)}}},
 \]
-and by replacing the $\betaset$ with set of posterior Dirichlet distributions candidates. Also, the smooth sensitivity $S(\dataobs)$ in (\ref{eq:smooth}) will be
-computed by letting $\dataobs'$ range over all the elements in $\datauni^{n}$ adjacent to $\dataobs$.
-Notice that $\betaset$ has $\binom{n + 1}{m - 1}$ elements in this case. We will denote by
-$\hexpmechd$ the mechanism for the Dirichlet-Multinomial system.
+and by replacing the $\betaset$ with set of posterior Dirichlet distributions candidates. Also, the smooth sensitivity $S(\dataobs)$ in (\ref{eq:smooth}) will be computed by letting $\dataobs'$ range over all the elements in $\datauni^{n}$ adjacent to $\dataobs$. Notice that $\betaset$ has $\binom{n + 1}{m - 1}$ elements in this case. We will denote by $\hexpmechd$ the mechanism for the Dirichlet-Multinomial system.
 % In what follows, we will use a correspondence between the probability
 %  $\underset{z \thicksim \hexpmech(x)}{Pr}[z = r]$ of every
 %  $r\in\betaset$ and the probability 
@@ -416,19 +413,11 @@ In this section, we evaluate the accuracy of the mechanisms defined in
 Section (\ref{sec_smoo}) w.r.t. four variables, including data size, dimensions,
 data variance, prior distribution, and some combinations thereof.
 Every plot is an average over 1000 runs. In all the experiments we set
-$\epsilon = 0.8$, and $\delta = 0.00000001$.
+$\epsilon = 0.8$, and $\delta = 10^{-8}$.
 
 \noindent In the following whiskers-plots, the y-axis shows the accuracy (or equivalently, the error) of the mechanisms.
-Accuracy is measured using Hellinger distance. The x-axis, instead shows  one of the previously mentioned
-independent variables --or a combination thereof.
-The boxes extend from the lower to the upper quartile values of the data, with a line at the median. A notch on the box around the median
-is also drawn to give a rough guide to the significance of difference of medians;
-The whiskers extend from the box to show the range of the data. 
-A blue box in the plots represents the exponential mechanism behaviour,
-while the yellow box next to it represents the performance of a variation of the
-basic Laplace mechanism presented in Section (\ref{sec:base}) with the same settings: that is $\epsilon, \delta$, data, prior.
-The variation considered performs a post processing on the released parameters so that they
-are consistent. For instance  when  the sum of the noised parameters is greater than $n$ we will truncate them so that they sum up to $n$.
+Accuracy is measured using Hellinger distance. The x-axis, instead shows  one of the previously mentioned independent variables --or a combination thereof. The boxes extend from the lower to the upper quartile values of the data, with a line at the median. A notch on the box around the median is also drawn to give a rough guide to the significance of difference of medians; The whiskers extend from the box to show the range of the data. A blue box in the plots represents our newly designed exponential mechanism behavior, while the yellow box next to it represents the performance of a variation of the basic Laplace mechanism presented in Section (\ref{sec:base}) with the same settings: that is $\epsilon, \delta$, data, prior. The variation considered performs a post processing on the released parameters so that they are consistent. For instance  when  the sum of the noised parameters is greater than $n$ we will truncate them so that they sum up to $n$.
+
 \paragraph{Increasing data size with balanced datasets}
 \label{subsubsec_vs_datasize}
 
@@ -444,10 +433,7 @@ are consistent. For instance  when  the sum of the noised parameters is greater 
 \end{center}
 \end{figure}
 
-In Figure \ref{fig_vs_datasize} we consider \emph{balanced} datasets of observations.
-This means that in the Beta-Binomial setting the datasets will be
-half 1s and half 0s, while int the Dirichelet-Multinomial the data will be
-equally split in all the $k=3$ bins. Figure \ref{fig_vs_datasize} shows that  when the
+In Figure \ref{fig_vs_datasize} we consider \emph{balanced} datasets of observations. This means that in the Beta-Binomial setting the datasets will be half 1s and half 0s, while int the Dirichelet-Multinomial the data will be equally split in all the $k=3$ bins. Figure \ref{fig_vs_datasize} shows that  when the
 data size increases, the accuracy of $\hexpmech$ and $\hexpmechd$
 decreases. In Figure \ref{fig_vs_datasize}(a), when the data size is
 smaller than 12, $\hexpmech$ can outperform the Laplace mechanism but it fails to do so
@@ -456,13 +442,8 @@ the Laplace mechanism starts performing better for datasets bigger than 15.
 
 \paragraph{Increasing dimensions and data size with balanced dataset}
 \label{subsubsec_vs_dimension}
-In Figure  \ref{fig_vs_dimension}, in the x-axis are observed data sets of
-different sizes and different dimensions. The plot shows that increasing the number of dimensions have
-a similar pejorative effect on $\hexpmech, \hexpmechd$, and the Laplace
-mechanism. Fixing the number of dimensions and increasing the data size shows that
-the Laplace mechanism is more accurate then both $\hexpmech$ and $\hexpmechd$. 
-In other words, dimensions have little influence on whether our mechanisms will beat the Laplace
-mechanism.
+In Figure  \ref{fig_vs_dimension}, in the x-axis are observed data sets of different sizes and different dimensions. The plot shows that increasing the number of dimensions has a similar pejorative effect on $\hexpmech, \hexpmechd$, and the Laplace mechanism. Fixing the number of dimensions and increasing the data size shows that the Laplace mechanism is more accurate then both $\hexpmech$ and $\hexpmechd$. In other words, dimensions have little influence on whether our mechanisms will beat the Laplace mechanism.
+
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.45\textwidth]{accuracy_vs_dimension.eps}
@@ -472,10 +453,7 @@ mechanism.
 
 \paragraph{Fixed data size and unbalaced datasets}
 \label{subsubsec_vs_variance}
-In Figure \ref{fig_vs_variance}, in the x-axis we considered different levels
-of balance of the datasets. We  study this variable only under
-two-dimensions $\betad$ distribution in order to be more concise. The plot shows
-that $\hexpmech$ accuracy is better than the one of Laplace when the dataset is balanced.
+In Figure \ref{fig_vs_variance}, in the x-axis we considered different levels of balance of the datasets. We  study this variable only under the two-dimensional $\betad$ distribution in order to be more concise. The plot shows that $\hexpmech$ accuracy is better than the one of Laplace when the dataset is balanced.
 
 \begin{figure}[ht]
 \centering
@@ -518,33 +496,19 @@ it is outperformed after a while.
 
 
 \section{Conclusions and Future Works}
-From what we have seen in the previous sections 
-we can obtain some preliminary conclusions. That is,
-the probabiliy measure approach outperforms the $\ell_1$-norm approach in the following cases: 
+From what we have seen in the previous sections we can obtain some preliminary conclusions. That is, the probabiliy measure approach outperforms the $\ell_1$-norm approach in the following cases: 
 \begin{enumerate}
   \item When the data size is small
   \item When the observed data is balanced
   \item When priors parameters increase (eventually).
 \end{enumerate}
 
-These results although very motivating, are still not enough for real world applications.
-Hence, we will continue our work in the follwoing directions:
+These results although very motivating, are still not enough for real world applications. Hence, we will continue our work in the follwoing directions:
 \begin{enumerate}
-  \item For now, we just have a intuitive idea on the accuracy
-    behavior of our mechanisms, and not a precise formula or bound on it.
-    When do our mechanisms perform better than the baseline mechanism and when they don't?
-    How much influence will elements in Section \ref{sec_experiment} have on the
-    accuracy? Are there any other important factors we missed? These are
-    all questions w.r.t. the accuracy that we are going to explore next, and in a more
-    principled and formal way.
-\item  Theorem \ref{thm:privacy} provides an upper bound to the  privacy loss for
-  $\hexpmech$ and $\hexpmechd$ but  not necessarily a tight one.
-  Indeed, experiments have shown that the actual privacy loss in the experiments can be smaller than $\epsilon$.
-  This means that we could improve accuracy, by adding less noise --
-  that is noise proportional to a higher value of $\epsilon$-- but still achieve $(\epsilon, \delta)$-dp.
-\item The choice of the Hellinger distance might seem quite ad-hoc. Hence,
-  it is worth exploring other distances over distributions. An interesting class
-  of probability metrics is the family of  $f$-divergences \cite{CIT-004}.
+  \item  For now, we just have a intuitive idea on the accuracy behavior of our mechanisms, and not a precise formula or bound on it. When do our mechanisms perform better than the baseline mechanism and when they don't? How much influence will elements in Section \ref{sec_experiment} have on the accuracy? Are there any other important factors we missed? These are all questions w.r.t. the accuracy that we are going to explore next, and in a more principled and formal way.
+\item  Theorem \ref{thm:privacy} provides an upper bound on the  privacy loss for
+  $\hexpmech$ and $\hexpmechd$ but  not necessarily a tight one. Indeed, experiments have shown that the actual privacy loss in the experiments can be smaller than $\epsilon$. This means that we could improve accuracy, by adding less noise -- that is noise proportional to a higher value of $\epsilon$-- but still achieve $(\epsilon, \delta)$-dp.
+\item The choice of the Hellinger distance might seem quite ad-hoc. Hence, it is worth exploring other distances over distributions. An interesting class of probability metrics is the family of  $f$-divergences \cite{CIT-004}.
 \end{enumerate}
 
 
