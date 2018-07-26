@@ -1,4 +1,4 @@
-\documentclass[sigconf, anonymous]{acmart}
+\documentclass[sigconf]{acmart}
 
 \fancyhf{} % Remove fancy page headers 
 % \fancyhead[C]{Anonymous submission \#9999 to ACM CCS 2017} % TODO: replace 9999 with your paper number
@@ -14,32 +14,25 @@
 \input{macros}
 
 \begin{document}
-\title{Towards a probability measure approach for Differential Privacy in Bayesian inference} % TODO: replace with your title
+\title{Tailoring Differentially Private Bayesian Inference to Distance Between Distributions}%Towards a probability measure approach for Differential Privacy in Bayesian inference} % TODO: replace with your title
 \subtitle{Extended Abstract}
 \begin{abstract}
-Bayesian inference is a statistical method which allows to derive a
+Bayesian inference is a statistical method which allows one to derive a
 \emph{posterior} distribution over a parameter, starting from a
-\emph{prior} distribution and observed data.  In a setting where the
-data must be protected, different approaches have been taken to make
+\emph{prior} distribution and observed data.  Settings where sensitive individual information is , different approaches have been taken to make
 this process differentially private. \citet{dimitrakakis2014robust},
 and \citet{wang2015privacy}, for instance, proved that, under specific
 conditions, sampling from the posterior distribution is already
 differentially private. Other works,
-e.g. \cite{zhang2016differential}, \cite{foulds2016theory}, designed
+e.g., \cite{zhang2016differential}, \cite{foulds2016theory}, designed
 differentially private mechanisms that output a representation of the
-full posterior distribution. Also, accuracy of the mechanisms was
+full posterior distribution. Also, accuracy of these mechanisms was
 measured using metrics on the space of the numeric parameters of the
-posterior distribution, e.g. $\ell_1$-norm.
+posterior distribution, e.g., the $\ell_1$-norm.
 
 In this work we present a new differentially private algorithm to
-compute the posterior in a Beta-Binomial system and in Dirichlet-Multinomial system.
-The noise is calibrated w.r.t. a smooth
-sensitivity computed with a metric on probability distributions; we
-measured the accuracy of the process by using a metric over
-probability measures. We compared the accuracy of this approach with
-the ones based on $\ell_1$-norm. Experimental results show that when
-the data size is small or when the parameters of the prior
-distribution are large, the former outperforms the latter.
+compute the posterior in a Beta-Binomial system and in a Dirichlet-Multinomial system.
+We apply the exponential mechanism to the smooth sensitivity of a metric on probability distributions; we measured the accuracy of the process by using the same metric. We compared the accuracy of this approach with the ones based on $\ell_1$-norm. Experimental results show that when the data size is small or when the parameters of the prior distribution are large, the former outperforms the latter.
 
 \end{abstract}
 
