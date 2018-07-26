@@ -10,6 +10,18 @@ import operator
 import time
 from matplotlib.patches import Polygon
 
+def gen_betaln (alphas):
+        numerator=0.0
+        for alpha in alphas:
+	        numerator = numerator + gammaln(alpha)
+                
+        return(numerator/math.log(float(sum(alphas))))
+
+
+def opt_hellinger2(alphas, betas):
+        z=gen_betaln(numpy.divide(numpy.sum([alphas, betas], axis=0), 2.0))-0.5*(gen_betaln(alphas) + gen_betaln(betas))
+        return (math.sqrt(1-math.exp(z)))
+
 
 def L1_Nrom(A, B):
 	return numpy.sum(abs(numpy.array(A._alphas) - numpy.array(B._alphas)))
