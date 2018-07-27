@@ -412,7 +412,7 @@ class BayesInferwithDirPrior(object):
 
 	def _laplace_noize_n(self):
 
-		self._laplaced_posterior = Dir([alpha + math.floor(numpy.random.laplace(0, 2.0/self._epsilon)) for alpha in self._posterior._alphas])
+		self._laplaced_posterior = Dir([alpha + math.floor(numpy.random.laplace(0, 1.0/self._epsilon)) for alpha in self._posterior._alphas])
 
 	def _laplace_noize_navie(self):
 		t = numpy.random.laplace(0, 1.0/self._epsilon)
@@ -884,7 +884,7 @@ def accuracy_VS_datasize(epsilon,delta,prior,observations,datasizes):
 	for observation in observations:
 		Bayesian_Model = BayesInferwithDirPrior(prior, sum(observation), epsilon, delta)
 		Bayesian_Model._set_observation(observation)
-		Bayesian_Model._experiments(2000)
+		Bayesian_Model._experiments(10000)
 		data.append(Bayesian_Model._accuracy[Bayesian_Model._keys[3]])
 		data.append(Bayesian_Model._accuracy[Bayesian_Model._keys[0]])
 		mean_error[0].append(Bayesian_Model._accuracy_mean[Bayesian_Model._keys[3]])
@@ -1051,11 +1051,11 @@ if __name__ == "__main__":
 	x2 = [2,18]
 	observation = [5,5,5]
 	epsilons = numpy.arange(0.1, 2, 0.1)
-	datasizes = [i*100 for i in range(30,80)]#[300] #[8,12,18,24,30,36,42,44,46,48]#,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80]
-	percentage = [0.5,0.5]
+	datasizes = [i*200 for i in range(70,100)]#[300] #[8,12,18,24,30,36,42,44,46,48]#,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80]
+	percentage = [0.1,0.9]
 	datasets = gen_datasets(percentage, datasizes)
 	priors = [Dir([4*i,4*i,4*i]) for i in range(5,20)]
-	# print Optimized_Hellinger_Distance_Dir(Dir([250,250]),Dir([249, 249]))
+	# print opt_hellinger2([20000,20000],[19999, 19999])
 	# accuracy_VS_dimension(sample_sizes, epsilon, delta)
 	# accuracy_VS_prior_mean(sample_size,epsilon,delta,priors,observations)
 	# means = [[(i/10.0), (1 - i/10.0)] for i in range(1,10)]
