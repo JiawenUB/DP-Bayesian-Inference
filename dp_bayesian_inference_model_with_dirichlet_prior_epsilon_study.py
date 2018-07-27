@@ -841,15 +841,18 @@ def hellinger_vs_l1norm(base_distribution):
 	plt.show()
 
 
-def plot_mean_error(x,y_list,xlabel,ylabel,title):
+def plot_mean_error(x,y_list,xstick,xlabel,title):
 	plt.figure(figsize=(12,10))
 	i = 0
-	for y in y_list:
-		plt.plot(x,y,'^',label=ylabel[i])
-		i += 1
+	ylabel=['Our ExpMech',"Laplace Mechanism"]
+	
+	plt.plot(x,y_list[0],'r^',label=ylabel[0])
+	plt.plot(x,y_list[1],'bs',label=ylabel[1])
 
-	plt.xticks(x,xlabel,rotation=70,fontsize=12)
-	plt.title(title,fontsize=20)	
+	plt.xticks(x,xstick,rotation=70,fontsize=12)
+	plt.title(title,fontsize=20)
+	plt.xlabel(xlabel,fontsize=15)	
+	plt.ylabel('Mean Error / Hellinegr Distance ',fontsize=15)
 	plt.grid()
 	plt.legend()
 	plt.show()
@@ -881,7 +884,7 @@ def accuracy_VS_datasize(epsilon,delta,prior,observations,datasizes):
 	for observation in observations:
 		Bayesian_Model = BayesInferwithDirPrior(prior, sum(observation), epsilon, delta)
 		Bayesian_Model._set_observation(observation)
-		Bayesian_Model._experiments(1000)
+		Bayesian_Model._experiments(2000)
 		data.append(Bayesian_Model._accuracy[Bayesian_Model._keys[3]])
 		data.append(Bayesian_Model._accuracy[Bayesian_Model._keys[0]])
 		mean_error[0].append(Bayesian_Model._accuracy_mean[Bayesian_Model._keys[3]])
@@ -890,43 +893,37 @@ def accuracy_VS_datasize(epsilon,delta,prior,observations,datasizes):
 		xstick.append(str(observation) + "/Laplace")
 	print('Accuracy / prior: ' + str(prior._alphas) + ", delta: " + str(delta) + ", epsilon:" + str(epsilon))
 
-	plot_mean_error(range(0,len(observations)),mean_error,datasizes,["ExpMech","LaplaceMech"],"Mean Accuracy VS. Data Size")
+	plot_mean_error(range(0,len(observations)),mean_error,datasizes,"Different Data sizes","Mean Error VS. Data Size")
 	# plot_error_box(data,"Different Datasizes",xstick,"Accuracy VS. Data Size")
 	return
 
 
 
 
-def accuracy_VS_prior(sample_size,epsilon,delta,priors,observation,mean):
+def accuracy_VS_prior(sample_size,epsilon,delta,priors,observation):
 	data = []
-	xlabel = []
+	xstick = []
+	xstick_mean = []
+	mean_error = [[],[]]
 	for prior in priors:
 		Bayesian_Model = BayesInferwithDirPrior(prior, sample_size, epsilon, delta)
 		Bayesian_Model._set_observation(observation)
 		Bayesian_Model._experiments(500)
 		data.append(Bayesian_Model._accuracy[Bayesian_Model._keys[3]])
 		data.append(Bayesian_Model._accuracy[Bayesian_Model._keys[0]])
-		xlabel.append(str(prior._alphas) + "/ExpMech")
-		xlabel.append(str(prior._alphas) + "/Laplace")
+		mean_error[0].append(Bayesian_Model._accuracy_mean[Bayesian_Model._keys[3]])
+		mean_error[1].append(Bayesian_Model._accuracy_mean[Bayesian_Model._keys[0]])
+		xstick_mean.append(str(prior._alphas))
 
-	plt.figure(figsize=(18,10))
-	bplot = plt.boxplot(data, notch=1, widths=0.4, sym='+', vert=2, whis=1.5,patch_artist=True)
-	plt.xlabel("different prior distributions",fontsize=15)
-	plt.ylabel('Accuracy / Hellinegr Distance',fontsize=15)
-	#ax.set_xlim(0.5, len(errors) + 0.5)
+		xstick.append(str(prior._alphas) + "/ExpMech")
+		xstick.append(str(prior._alphas) + "/Laplace")
 
-	plt.xticks(range(0, len(data)),xlabel,rotation=70,fontsize=12)
-	plt.title("Accuracy VS. Prior Distribution",fontsize=20)
-	print('Accuracy / observation: ' + str(observation) + ", delta: " + str(delta) + ", epsilon:" + str(epsilon) +  ', mean:' + str(mean))
-	for i in range(1, len(bplot["boxes"])/2 + 1):
-		box = bplot["boxes"][2 * (i - 1)]
-		box.set(color='navy', linewidth=1.5)
-		box.set(facecolor='lightblue' )
-		box = bplot["boxes"][2 * (i - 1) + 1]
-		box.set(color='navy', linewidth=1.5)
-		box.set(facecolor='darkkhaki' )
-	plt.grid()
-	plt.show()
+	print('Accuracy / observation: ' + str(observation) + ", delta: " + str(delta) + ", epsilon:" + str(epsilon))
+	
+	# plot_mean_error(range(0,len(priors)),mean_error,xstick_mean,"Different Prior Distributions","Mean Accuracy VS. Prior Distribution")
+	
+	plot_error_box(data,"Different Prior Distributions",xstick,"Accuracy VS. Prior Distribution")
+
 	return
 
 def accuracy_VS_mean(sample_size,epsilon,delta,prior):
@@ -1046,7 +1043,7 @@ def gen_datasets(v, n_list):
 
 if __name__ == "__main__":
 
-	datasize = 300
+	datasize = 3000
 	epsilon = 0.8
 	delta = 0.00000001
 	prior = Dir([1,1])
@@ -1054,8 +1051,8 @@ if __name__ == "__main__":
 	x2 = [2,18]
 	observation = [5,5,5]
 	epsilons = numpy.arange(0.1, 2, 0.1)
-	datasizes = [i for i in range(9000,10000)]#[300] #[8,12,18,24,30,36,42,44,46,48]#,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80]
-	percentage = [0.1,0.9]
+	datasizes = [i*100 for i in range(30,80)]#[300] #[8,12,18,24,30,36,42,44,46,48]#,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80]
+	percentage = [0.5,0.5]
 	datasets = gen_datasets(percentage, datasizes)
 	priors = [Dir([4*i,4*i,4*i]) for i in range(5,20)]
 	# print Optimized_Hellinger_Distance_Dir(Dir([250,250]),Dir([249, 249]))
