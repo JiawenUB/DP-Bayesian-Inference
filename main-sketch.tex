@@ -504,7 +504,7 @@ up to $n$.
   \subfigure[Data set sizing from $14000$ to $20000$]{
     \includegraphics[width=0.45\textwidth]{accuracy_vs_datasize_20000.eps}
   \label{subsubsec_vs_datasize1b}} 
-\caption{With prior $\betad(1,1)$. Unbalanced datasets of mean $(0.1,0.9)$ and parameters $\epsilon = 0.8$ and $\delta = 10^{-8}$}
+\caption{Increasing data size with fixed prior $\betad(1,1)$. Unbalanced datasets of mean $(0.1,0.9)$ and parameters $\epsilon = 0.8$ and $\delta = 10^{-8}$}
 \label{fig_vs_datasize}
 \end{center}
 \end{figure}
@@ -534,10 +534,13 @@ increases, the average errors of
 $\hexpmech$, $\hexpmechd$, and Laplace decrease. For small datasets,
 i.e with size less 650 in the case of Beta-Binomial systems,
 the Laplace mechanisms outperforms the exponential mechanisms,
-but for bigger datasets, that is, bigger than 650, or as in Figure \ref{subsubsec_vs_datasize1b} where
-we considered datasets of the order of 15 thousands elements,
-the exponential mechanisms outperforms the Laplacian mechanism.
-Similar experimental results were obtainted for the Dirichelet-Multinomial system.
+but for bigger data sets, that is, bigger than 650, or as in Figure \ref{subsubsec_vs_datasize1b} where
+we considered data sets of the order of 15 thousands elements,
+the exponential mechanisms outperforms the Laplace mechanism.
+Similar experimental results were obtained for the Dirichlet-Multinomial system.
+
+
+
 \paragraph{Increasing dimensions and data size with balanced dataset}
 \label{subsubsec_vs_dimension}
 In Figure \ref{fig_vs_dimension}, in the x-axis are observed data sets
@@ -555,6 +558,7 @@ mechanisms will beat the Laplace mechanism.
 \caption{Increasing dimensions and data size with balanced dataset. Priors have 1s in every dimension.}
 \label{fig_vs_dimension}
 \end{figure}
+
 
 \paragraph{Fixed data size and unbalaced datasets}
 \label{subsubsec_vs_variance}
@@ -607,9 +611,8 @@ it is outperformed after a while.
 \section{Conclusions and Future Works}
 From what we have seen in the previous sections we can obtain some preliminary conclusions. That is, the probabiliy measure approach outperforms the $\ell_1$-norm approach in the following cases: 
 \begin{enumerate}
-  \item When the data size is small
-  \item When the observed data is balanced
-  \item When priors parameters increase (eventually).
+  \item When the data size is small, data is balanced and priors parameters increase
+  \item When the data size is large
 \end{enumerate}
 
 These results although very motivating, are still not enough for real world applications. Hence, we will continue our work in the follwoing directions:

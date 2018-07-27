@@ -884,7 +884,7 @@ def accuracy_VS_datasize(epsilon,delta,prior,observations,datasizes):
 	for observation in observations:
 		Bayesian_Model = BayesInferwithDirPrior(prior, sum(observation), epsilon, delta)
 		Bayesian_Model._set_observation(observation)
-		Bayesian_Model._experiments(10000)
+		Bayesian_Model._experiments(2000)
 		data.append(Bayesian_Model._accuracy[Bayesian_Model._keys[3]])
 		data.append(Bayesian_Model._accuracy[Bayesian_Model._keys[0]])
 		mean_error[0].append(Bayesian_Model._accuracy_mean[Bayesian_Model._keys[3]])
@@ -1046,13 +1046,13 @@ if __name__ == "__main__":
 	datasize = 3000
 	epsilon = 0.8
 	delta = 0.00000001
-	prior = Dir([1,1])
+	prior = Dir([1,1,1])
 	x1 = [1,19]
 	x2 = [2,18]
 	observation = [5,5,5]
 	epsilons = numpy.arange(0.1, 2, 0.1)
-	datasizes = [i*100 for i in range(30,80)]#[300] #[8,12,18,24,30,36,42,44,46,48]#,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80]
-	percentage = [0.1,0.9]
+	datasizes = [i*100 for i in range(10,21a)]#[300] #[8,12,18,24,30,36,42,44,46,48]#,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80]
+	percentage = [0.2,0.3,0.5]
 	datasets = gen_datasets(percentage, datasizes)
 	priors = [Dir([4*i,4*i,4*i]) for i in range(5,20)]
 	# print opt_hellinger2([20000,20000],[19999, 19999])
