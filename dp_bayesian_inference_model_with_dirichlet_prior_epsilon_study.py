@@ -1051,7 +1051,7 @@ if __name__ == "__main__":
 	x2 = [2,18]
 	observation = [5,5,5]
 	epsilons = numpy.arange(0.1, 2, 0.1)
-	datasizes = [i*200 for i in range(70,100)]#[300] #[8,12,18,24,30,36,42,44,46,48]#,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80]
+	datasizes = [i*100 for i in range(30,80)]#[300] #[8,12,18,24,30,36,42,44,46,48]#,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80]
 	percentage = [0.1,0.9]
 	datasets = gen_datasets(percentage, datasizes)
 	priors = [Dir([4*i,4*i,4*i]) for i in range(5,20)]
