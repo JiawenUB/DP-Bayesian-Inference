@@ -504,16 +504,31 @@ up to $n$.
   \subfigure[Data set sizing from $14000$ to $20000$]{
     \includegraphics[width=0.45\textwidth]{accuracy_vs_datasize_20000.eps}
   \label{subsubsec_vs_datasize1b}} 
-\caption{With $\betad(1,1)$ prior distribution, Unbalanced datasets of mean $(0.1,0.9)$ and parameters $\epsilon = 0.8$ and $\delta = 10^{-8}$}
+\caption{With prior $\betad(1,1)$. Unbalanced datasets of mean $(0.1,0.9)$ and parameters $\epsilon = 0.8$ and $\delta = 10^{-8}$}
 \label{fig_vs_datasize}
 \end{center}
 \end{figure}
 
-In Figures \ref{fig_vs_datasize} and \ref{fig_vs_datasize_dir} we consider \emph{balanced} datasets
+\begin{figure}[ht]
+\begin{center}
+\centering
+  \subfigure[Data set sizing from $300$ to $800$ ]{
+
+    \label{subsubsec_vs_datasize1adir}
+  }
+  \subfigure[Data set sizing from $14000$ to $20000$]{
+    
+  \label{subsubsec_vs_datasize1bdir}} 
+\caption{With $\betad(1,1)$ prior distribution, Unbalanced datasets of mean $(0.2,0.3, 0.5)$ and parameters $\epsilon = 0.8$ and $\delta = 10^{-8}$}
+\label{fig_vs_datasize_dir}
+\end{center}
+\end{figure}
+
+In Figures \ref{fig_vs_datasize} and \ref{fig_vs_datasize_dir} we consider \emph{unbalanced} datasets
 of observations. This means that in the Beta-Binomial setting (Figure \ref{subsubsec_vs_datasize1a},
-and \ref{subsubsec_vs_datasize1b}) the datasets will be half 1s and half 0s, while int the
-Dirichelet-Multinomial (Figure  \ref{fig_vs_datasize_dir1a} and \ref{fig_vs_datasize_dir1b})
-the data will be equally split in all the $k=3$ bins.
+and \ref{subsubsec_vs_datasize1b}) the datasets will consist of 10\% 1s and the rest 0s, while for the
+Dirichelet-Multinomial (Figure  \ref{subsubsec_vs_datasize1adir} and \ref{subsubsec_vs_datasize1bdir})
+the data will be split in the $k=3$ bins with perecentages of: 20\%, 30\% and 50\%.
 The results show that when the data size
 increases, the average errors of
 $\hexpmech$, $\hexpmechd$, and Laplace decrease. For small datasets,
@@ -522,6 +537,7 @@ the Laplace mechanisms outperforms the exponential mechanisms,
 but for bigger datasets, that is, bigger than 650, or as in Figure \ref{subsubsec_vs_datasize1b} where
 we considered datasets of the order of 15 thousands elements,
 the exponential mechanisms outperforms the Laplacian mechanism.
+Similar experimental results were obtainted for the Dirichelet-Multinomial system.
 \paragraph{Increasing dimensions and data size with balanced dataset}
 \label{subsubsec_vs_dimension}
 In Figure \ref{fig_vs_dimension}, in the x-axis are observed data sets
