@@ -498,26 +498,30 @@ up to $n$.
 \begin{center}
 \centering
   \subfigure[Data set sizing from $300$ to $800$ ]{
-    \includegraphics[width=0.45\textwidth]{accuracy_vs_datasize_800.eps}}
+    \includegraphics[width=0.45\textwidth]{accuracy_vs_datasize_800.eps}
+    \label{subsubsec_vs_datasize1a}
+  }
   \subfigure[Data set sizing from $14000$ to $20000$]{
-    \includegraphics[width=0.45\textwidth]{accuracy_vs_datasize_20000.eps}} 
+    \includegraphics[width=0.45\textwidth]{accuracy_vs_datasize_20000.eps}
+  \label{subsubsec_vs_datasize1b}} 
 \caption{With $\betad(1,1)$ prior distribution, Unbalanced datasets of mean $(0.1,0.9)$ and parameters $\epsilon = 0.8$ and $\delta = 10^{-8}$}
 \label{fig_vs_datasize}
 \end{center}
 \end{figure}
 
-In Figure \ref{fig_vs_datasize} we consider \emph{balanced} datasets
-of observations. This means that in the Beta-Binomial setting the
-datasets will be half 1s and half 0s, while int the
-Dirichelet-Multinomial the data will be equally split in all the $k=3$
-bins. Figure \ref{fig_vs_datasize} shows that when the data size
-increases, the accuracy of $\hexpmech$ and $\hexpmechd$ decreases. In
-Figure \ref{fig_vs_datasize}(a), when the data size is smaller than
-12, $\hexpmech$ can outperform the Laplace mechanism but it fails to
-do so for bigger datasets. The same happens in as in Figure
-\ref{fig_vs_datasize}(b): the Laplace mechanism starts performing
-better for datasets bigger than 15.
-
+In Figures \ref{fig_vs_datasize} and \ref{fig_vs_datasize_dir} we consider \emph{balanced} datasets
+of observations. This means that in the Beta-Binomial setting (Figure \ref{subsubsec_vs_datasize1a},
+and \ref{subsubsec_vs_datasize1b}) the datasets will be half 1s and half 0s, while int the
+Dirichelet-Multinomial (Figure  \ref{fig_vs_datasize_dir1a} and \ref{fig_vs_datasize_dir1b})
+the data will be equally split in all the $k=3$ bins.
+The results show that when the data size
+increases, the average errors of
+$\hexpmech$, $\hexpmechd$, and Laplace decrease. For small datasets,
+i.e with size less 650 in the case of Beta-Binomial systems,
+the Laplace mechanisms outperforms the exponential mechanisms,
+but for bigger datasets, that is, bigger than 650, or as in Figure \ref{subsubsec_vs_datasize1b} where
+we considered datasets of the order of 15 thousands elements,
+the exponential mechanisms outperforms the Laplacian mechanism.
 \paragraph{Increasing dimensions and data size with balanced dataset}
 \label{subsubsec_vs_dimension}
 In Figure \ref{fig_vs_dimension}, in the x-axis are observed data sets
