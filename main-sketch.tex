@@ -47,30 +47,33 @@
 \email{jliu223@buffalo.edu}
 
 \begin{abstract} Bayesian inference is a statistical method which
-allows one to derive a \emph{posterior} distribution over a parameter,
-starting from a \emph{prior} distribution and observed data. Settings
-where sensitive individual information is involved, different
-approaches have been taken to make this process differentially
-private. \citet{dimitrakakis2014robust}, and \citet{wang2015privacy},
-for instance, proved that, under specific conditions, sampling from
-the posterior distribution is already differentially private. Other
-works, e.g., \cite{zhang2016differential}, \cite{foulds2016theory},
+allows one to derive a \emph{posterior} distribution,
+starting from a \emph{prior} distribution and observed data. Several
+approaches have been explored in order to make this process differentially
+private. For example, \citet{dimitrakakis2014robust}, and
+\citet{wang2015privacy} proved that, under specific conditions, sampling from
+the posterior distribution is already differentially private. \citet{zhang2016differential}, \citet{foulds2016theory},
 designed differentially private mechanisms that output a
-representation of the full posterior distribution. Also, accuracy of
-these mechanisms was measured using metrics on the space of the
-numeric parameters of the posterior distribution, e.g., the
-$\ell_1$-norm.
+representation of the full posterior distribution. 
 
-In this work we present a new differentially private algorithm to
-compute the posterior in a Beta-Binomial system and in a
-Dirichlet-Multinomial system. We apply the exponential mechanism to
-the smooth sensitivity of a metric on probability distributions; we
-measured the accuracy of the process by using the same metric. We
-compared the accuracy of this approach with the ones based on
-$\ell_1$-norm. Experimental results show that when the data size is
-small or when the parameters of the prior distribution are large, the
-former outperforms the latter.
+When the output of a differentially private mechanism is a probability
+distribution, accuracy is naturally measured by means of
+\emph{probabilistic distances} measuring how far this distribution is
+from the original one. Some classical examples are total variation distance,
+Hellinger distance, $\chi^2$-distance, KL-divergence, etc.
 
+In this work, we design a mechanism for
+bayesian inference exploring the idea of calibrating noise using the
+same probabilistic distance we want to measure accuracy with. 
+We focus on two discrete models, the Beta-Binomial and the
+Dirichlet-Multinomial models, and one probability distance, Hellinger distance. 
+Our mechanism can be understood as a version of  the exponential mechanism
+where the noise is calibrated to the smooth sensitivity of the
+utility function, rather than to its global sensitivity. In our
+setting, the utility function is the probability distance we want to
+use to measure accuracy. To show the usefulness of this mechanism we
+show an experimental analysis comparing it with an approach based on
+the Laplace mechanism.
 \end{abstract}
 
 
@@ -95,13 +98,14 @@ former outperforms the latter.
 \section{An informal motivation}
 \label{sec_intro}
 Publishing the posterior distribution inferred from a sensitive dataset can
-leak information about individuals on the dataset.
-Hence, in order to protect the dataset, random noise is added to the posterior belief before releasing it.
-The amount of the noise that must be introduced
+leak information about the individuals in the dataset.
+In order to guarantee differential privacy and to protect the
+individuals' data we can add noise to the posterior before releasing it.
+The amount of the noise that we need to  introduced
 depends on the privacy parameter $\epsilon$ and the sensitivity of the inference to
 small changes in the data set. 
 Sensitivity can be computed in many different ways based on which metric space
-is imposed on the output set of the mechanism. In the literature on private Bayesian
+we consider on the output set of the mechanism. In the literature on private Bayesian
 inference (\cite{zhang2016differential,xiao2012bayesian}), it is only measured with
 respect to the vector of numbers parametrizing the output distribution using, e.g. the $\ell_1$ norm.
 A more natural approach which we explore here, is to measure sensitivity with respect to a metric on the space of inferred probability distributions.
