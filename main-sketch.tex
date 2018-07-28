@@ -472,9 +472,10 @@ data variance, prior distribution, and some combinations thereof.
 Every plot is an average over 1000 runs. In all the experiments we set
 $\epsilon = 0.8$, and $\delta = 10^{-8}$.
 
-\noindent In the following whiskers-plots, the y-axis shows the
-accuracy (or equivalently, the error) of the mechanisms.  Accuracy is
-measured using Hellinger distance. The x-axis, instead shows one of
+\noindent In the following some of the plots show
+mean error as a function of the datasize while others
+are whiskers-plots where the y-axis shows the average
+accuracy (or equivalently, the error) of the mechanisms, and the x-axis, instead shows one of
 the previously mentioned independent variables --or a combination
 thereof. The boxes extend from the lower to the upper quartile values
 of the data, with a line at the median. A notch on the box around the
@@ -494,7 +495,7 @@ up to $n$.
 \paragraph{Increasing data size with balanced datasets}
 \label{subsubsec_vs_datasize}
 
-\begin{figure}[ht]
+\begin{figure}[H]
 \begin{center}
 \centering
   \subfigure[Data set size from $300$ to $800$ ]{
@@ -541,39 +542,39 @@ Similar experimental results were obtained for the Dirichlet-Multinomial system.
 
 
 
-\paragraph{Increasing dimensions and data size with balanced dataset}
-\label{subsubsec_vs_dimension}
-In Figure \ref{fig_vs_dimension}, in the x-axis are observed data sets
-of different sizes and different dimensions. The plot shows that
-increasing the number of dimensions has a similar pejorative effect on
-$\hexpmech, \hexpmechd$, and the Laplace mechanism. Fixing the number
-of dimensions and increasing the data size shows that the Laplace
-mechanism is more accurate then both $\hexpmech$ and $\hexpmechd$. In
-other words, dimensions have little influence on whether our
-mechanisms will beat the Laplace mechanism.
+% \paragraph{Increasing dimensions and data size with balanced dataset}
+% \label{subsubsec_vs_dimension}
+% In Figure \ref{fig_vs_dimension}, in the x-axis are observed data sets
+% of different sizes and different dimensions. The plot shows that
+% increasing the number of dimensions has a similar pejorative effect on
+% $\hexpmech, \hexpmechd$, and the Laplace mechanism. Fixing the number
+% of dimensions and increasing the data size shows that the Laplace
+% mechanism is more accurate then both $\hexpmech$ and $\hexpmechd$. In
+% other words, dimensions have little influence on whether our
+% mechanisms will beat the Laplace mechanism.
 
-\begin{figure}[ht]
-\centering
-\includegraphics[width=0.45\textwidth]{accuracy_vs_dimension.eps}
-\caption{Increasing dimensions and data size with balanced dataset. Priors have 1s in every dimension.}
-\label{fig_vs_dimension}
-\end{figure}
+% \begin{figure}[ht]
+% \centering
+% \includegraphics[width=0.45\textwidth]{accuracy_vs_dimension.eps}
+% \caption{Increasing dimensions and data size with balanced dataset. Priors have 1s in every dimension.}
+% \label{fig_vs_dimension}
+% \end{figure}
 
 
-\paragraph{Fixed data size and unbalaced datasets}
-\label{subsubsec_vs_variance}
-In Figure \ref{fig_vs_variance}, in the x-axis we considered different
-levels of balance of the datasets. We study this variable only under
-the two-dimensional $\betad$ distribution in order to be more
-concise. The plot shows that $\hexpmech$ accuracy is better than the
-one of Laplace when the dataset is balanced.
+% \paragraph{Fixed data size and unbalaced datasets}
+% \label{subsubsec_vs_variance}
+% In Figure \ref{fig_vs_variance}, in the x-axis we considered different
+% levels of balance of the datasets. We study this variable only under
+% the two-dimensional $\betad$ distribution in order to be more
+% concise. The plot shows that $\hexpmech$ accuracy is better than the
+% one of Laplace when the dataset is balanced.
 
-\begin{figure}[ht]
-\centering
-\includegraphics[width=0.45\textwidth]{accuracy_vs_mean_1_1.eps}
-\caption{Unbalanced datasets. Prior distributions have 1s in every dimension.}
-\label{fig_vs_variance}
-\end{figure}
+% \begin{figure}[ht]
+% \centering
+% \includegraphics[width=0.45\textwidth]{accuracy_vs_mean_1_1.eps}
+% \caption{Unbalanced datasets. Prior distributions have 1s in every dimension.}
+% \label{fig_vs_variance}
+% \end{figure}
 
 
 
@@ -584,10 +585,10 @@ In Figure \ref{fig_vs_prior}, we fix the dataset to be $\langle 5,5,5\rangle$.
 We also considered balanced priors with increasing values in their dimensions.
 The plot shows that in the beginning the Laplace mechanism performs better but
 it is outperformed after a while.
-\begin{figure}[ht]
+\begin{figure}[H]
 \centering
 \includegraphics[width=0.45\textwidth]{accuracy_vs_prior_5_5_5.eps}
-\caption{Observed data set is: $\langle 5,5,5\rangle$, varying balanced priors}
+\caption{Observed data set is: $(5,5,5)$, varying balanced priors}
 \label{fig_vs_prior}
 \end{figure}
 
