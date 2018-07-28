@@ -1038,12 +1038,13 @@ def accuracy_VS_prior_mean(sample_size,epsilon,delta,priors,observations):
 def gen_dataset(v, n):
 	return [int(n * i) for i in v]
 
-def gen_datasets(v, n_list):
-	return [gen_dataset(v,n) for n in n_list]
+# def gen_datasets(v, n_list):
+# 	return [gen_dataset(v,n) for n in n_list]
 
 def gen_datasets(v, r, step):
+	datasizes = [i*step for i in range(r[0]/step,r[1]/step)]
 
-	return gen_datasets(v, [i*step for i in range(r[0],r[1])])
+	return [gen_dataset(v,n) for n in datasizes]
 
 if __name__ == "__main__":
 
