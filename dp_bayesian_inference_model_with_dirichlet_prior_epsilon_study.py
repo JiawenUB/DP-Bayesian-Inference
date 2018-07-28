@@ -1038,13 +1038,15 @@ def accuracy_VS_prior_mean(sample_size,epsilon,delta,priors,observations):
 def gen_dataset(v, n):
 	return [int(n * i) for i in v]
 
-# def gen_datasets(v, n_list):
-# 	return [gen_dataset(v,n) for n in n_list]
+def gen_datasets(v, n_list):
+	return [gen_dataset(v,n) for n in n_list]
 
-def gen_datasets(v, r, step):
-	datasizes = [i*step for i in range(r[0]/step,r[1]/step)]
+# def gen_datasets(v, n):
+# 	datasizes = 
+# 	return [gen_dataset(v,n) for n in datasizes]
 
-	return [gen_dataset(v,n) for n in datasizes]
+def gen_datasizes(r, step):
+	return [i*step for i in range(r[0]/step,r[1]/step + 1)]
 
 if __name__ == "__main__":
 
@@ -1056,9 +1058,9 @@ if __name__ == "__main__":
 	x2 = [2,18]
 	observation = [5,5,5]
 	epsilons = numpy.arange(0.1, 2, 0.1)
-	# datasizes = [i*100 for i in range(10,21)]#[300] #[8,12,18,24,30,36,42,44,46,48]#,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80]
+	datasizes = gen_datasizes((2000,3000),100)#[300] #[8,12,18,24,30,36,42,44,46,48]#,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80]
 	percentage = [0.2,0.3,0.5]
-	datasets = gen_datasets(percentage, (10,21), 100)
+	datasets = gen_datasets(percentage, datasizes)
 	priors = [Dir([4*i,4*i,4*i]) for i in range(5,20)]
 	# print opt_hellinger2([20000,20000],[19999, 19999])
 	# accuracy_VS_dimension(sample_sizes, epsilon, delta)
