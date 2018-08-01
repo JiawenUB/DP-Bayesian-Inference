@@ -512,76 +512,76 @@ Similar as above, when the data variance is small (i.e. the data are uniform), t
 \label{subsec_effi}
 The formula for computing the local sensitivity presented in Sec. \ref{subsec_emls}:$\max\limits_{\{|x,y'| \leq 1; y'\in \mathcal{X}^n\}}\max\limits_{\{r\in R\}} \{\hlg(\bysinfer(x), r) - \hlg(\bysinfer(y'), r)|\}$ can be reduced to $\max\limits_{\{|x,y'| \leq 1;y'\in \mathcal{X}^n\}}\hlg(\bysinfer(x), \bysinfer(y'))|$ by applying the distance triangle property. i.e., the maximum value over $\max\limits_{r \in R}$ always happen when $r = \bysinfer(x)$ itself, where $\Delta_{l}u(x) = \max\limits_{\{|x,y'| \leq 1;y'\in \mathcal{X}^n\}} \{\hlg(\bysinfer(x), \bysinfer(x)) - \hlg(\bysinfer(y'), \bysinfer(x))|\} = \max\limits_{\{|x,y'| \leq 1;y'\in \mathcal{X}^n\}} \{\hlg(\bysinfer(y'), \bysinfer(x))|\}$. We also have some experiments for validating our proposal as in Fig. \ref{fig_efficiency}, where we calculate the $\max\limits_{\{|x,y'| \leq 1;y'\in \mathcal{X}^n\}}$ value for every candidate $r \in R$. It is shown that maximum value taken when  $r = \bysinfer(x)$.
 
-\subsection{Experimental Evaluations on Accuracy}
-\label{subsec_experiment_accuracy}
+% \subsection{Experimental Evaluations on Accuracy}
+% \label{subsec_experiment_accuracy}
 
-\begin{figure*}
-\begin{center}
-\centering
-  \subfigure[Data size $n = 500$ with global $\epsilon = 0.5$]{
-    \includegraphics[width=0.45\textwidth]{accuracy_box_2.eps}}
-  \subfigure[Data size $n = 300$ with global $\epsilon = 0.5$]{
-    \includegraphics[width=0.45\textwidth]{accuracy_box_1.eps}} 
-\caption{The experimental results of accuracy of algorithms with Beta prior distribution $\betad(7,4)$ based on Hellinger distance}
-\label{fig_beta_hellinger}
-\end{center}
-\end{figure*}
-
-\begin{figure*}
-\begin{center}
-\centering
-  \subfigure[Data size $n = 100$, the exponential mechanism with global sensitivity 0.239992747797 is 0.8 -DP, with local sensitivity 0.08 is Non-Private and with 0.0699407108115 - bound smooth sensitivity 0.09 is (0.8,0.8)-DP]{
-    \includegraphics[width=0.45\textwidth]{accuracy_dirichlet_hellinger_1.eps}}
-  \subfigure[Data size $n = 120$, the exponential mechanism with global sensitivity 0.239992747797 is 0.8 -DP, with local sensitivity 0.0945 is Non-Private, with 0.0677791100173 - bound smooth sensitivity 0.096 is (0.8,0.8)-DP]{
-    \includegraphics[width=0.45\textwidth]{accuracy_dirichlet_hellinger_2.eps}} 
-\caption{The experimental results of accuracy of algorithms with Dirichlet prior distribution $\dirichlet(7, 4, 5)$ based on Hellinger distance}
-\label{fig_dirichlet_hellinger}
-\end{center}
-\end{figure*}
-
-\begin{figure*}
-\begin{center}
-\centering
-  \subfigure[accuracy measurement based on Hellinger distance]{
-    \includegraphics[width=0.45\textwidth]{accuracy_compare_dirichlet_hellinger.eps}}
-  \subfigure[accuracy measurement based on $l_1$ norm]{
-    \includegraphics[width=0.45\textwidth]{accuracy_compare_dirichlet_l1.eps}} 
-\caption{The experimental results of accuracy of algorithms with Dirichlet prior distribution $\dirichlet(7, 4, 5)$ based on Hellinger distance and $l_1$  norm, where data size $n = 150$, the exponential mechanism with global sensitivity 0.239992747797 is 0.8 -DP, with local sensitivity 0.0945 is Non-Private, with 0.0677791100173 - bound smooth sensitivity 0.096 is (0.8,0.8)-DP}
-\label{fig_dirichlet_hellinger_l1}
-\end{center}
-\end{figure*}
-
-In this section, we do some experiments in order to study the accuracy property of these mechanisms, including the exponential mechanism with three kinds of sensitivity and the Laplace mechanism.
 % \begin{figure*}
 % \begin{center}
 % \centering
+%   \subfigure[Data size $n = 500$ with global $\epsilon = 0.5$]{
+%     \includegraphics[width=0.45\textwidth]{accuracy_box_2.eps}}
 %   \subfigure[Data size $n = 300$ with global $\epsilon = 0.5$]{
-%     \includegraphics[width=0.48\textwidth]{accuracy_1.eps}}
-%   \subfigure[Data size $n = 200$ with global $\epsilon = 0.8$]{
-%     \includegraphics[width=0.48\textwidth]{accuracy_2.eps}} 
-% \caption{The experimental results of accuracy of four algorithms}
-% \label{fig_data}
+%     \includegraphics[width=0.45\textwidth]{accuracy_box_1.eps}} 
+% \caption{The experimental results of accuracy of algorithms with Beta prior distribution $\betad(7,4)$ based on Hellinger distance}
+% \label{fig_beta_hellinger}
 % \end{center}
 % \end{figure*}
 
-We first analyzed the accuracy based on the Hellinger distance. By repeating the experiments for 10000 times and plotting the accuracy of each execution, we got two groups of results under different parameters setting as in Fig. \ref{fig_beta_hellinger} and Fig. \ref{fig_dirichlet_hellinger}. X-axis is labeled with different mechanisms. We took four mechanisms in our experiments: our newly designed exponential mechanism with smooth sensitivity named ``ExpoMech of SS'', exponential mechanism with local sensitivity named `` ExpoMech of LS'', exponential mechanism with global sensitivity named `` ExpoMech of GS'' and Laplace mechanism named ``LaplaceMech''. Y-axis is the accuracy measured by Hellinger distance between output $z$ of each execution and the correct inference result $\bysinfer(x)$, $\hlg(z, \bysinfer(x))$.
+% \begin{figure*}
+% \begin{center}
+% \centering
+%   \subfigure[Data size $n = 100$, the exponential mechanism with global sensitivity 0.239992747797 is 0.8 -DP, with local sensitivity 0.08 is Non-Private and with 0.0699407108115 - bound smooth sensitivity 0.09 is (0.8,0.8)-DP]{
+%     \includegraphics[width=0.45\textwidth]{accuracy_dirichlet_hellinger_1.eps}}
+%   \subfigure[Data size $n = 120$, the exponential mechanism with global sensitivity 0.239992747797 is 0.8 -DP, with local sensitivity 0.0945 is Non-Private, with 0.0677791100173 - bound smooth sensitivity 0.096 is (0.8,0.8)-DP]{
+%     \includegraphics[width=0.45\textwidth]{accuracy_dirichlet_hellinger_2.eps}} 
+% \caption{The experimental results of accuracy of algorithms with Dirichlet prior distribution $\dirichlet(7, 4, 5)$ based on Hellinger distance}
+% \label{fig_dirichlet_hellinger}
+% \end{center}
+% \end{figure*}
 
-When prior distribution is $\betad$, under data size $n = 500$ and $300$, we obtained two plots in Fig. \ref{fig_beta_hellinger}. It is shown that our ExpoMech of SS is slightly better than Laplace mechanism and much more better than it with global sensitivity.
+% \begin{figure*}
+% \begin{center}
+% \centering
+%   \subfigure[accuracy measurement based on Hellinger distance]{
+%     \includegraphics[width=0.45\textwidth]{accuracy_compare_dirichlet_hellinger.eps}}
+%   \subfigure[accuracy measurement based on $l_1$ norm]{
+%     \includegraphics[width=0.45\textwidth]{accuracy_compare_dirichlet_l1.eps}} 
+% \caption{The experimental results of accuracy of algorithms with Dirichlet prior distribution $\dirichlet(7, 4, 5)$ based on Hellinger distance and $l_1$  norm, where data size $n = 150$, the exponential mechanism with global sensitivity 0.239992747797 is 0.8 -DP, with local sensitivity 0.0945 is Non-Private, with 0.0677791100173 - bound smooth sensitivity 0.096 is (0.8,0.8)-DP}
+% \label{fig_dirichlet_hellinger_l1}
+% \end{center}
+% \end{figure*}
 
-To have more experimental results, we then extended the $\betad$ to the Dirichlet distribution $\dirichlet$ as well as increased the data size, plotted in Fig. \ref{fig_dirichlet_hellinger}.
+% In this section, we do some experiments in order to study the accuracy property of these mechanisms, including the exponential mechanism with three kinds of sensitivity and the Laplace mechanism.
+% % \begin{figure*}
+% % \begin{center}
+% % \centering
+% %   \subfigure[Data size $n = 300$ with global $\epsilon = 0.5$]{
+% %     \includegraphics[width=0.48\textwidth]{accuracy_1.eps}}
+% %   \subfigure[Data size $n = 200$ with global $\epsilon = 0.8$]{
+% %     \includegraphics[width=0.48\textwidth]{accuracy_2.eps}} 
+% % \caption{The experimental results of accuracy of four algorithms}
+% % \label{fig_data}
+% % \end{center}
+% % \end{figure*}
 
-Then, we study the accuracy of these four mechanisms based on $l_1$ norm, with the Dirichlet distribution $\dirichlet(7,4,5)$ and data size $150$ for comparison, as in Fig. \ref{fig_dirichlet_hellinger_l1}.
+% We first analyzed the accuracy based on the Hellinger distance. By repeating the experiments for 10000 times and plotting the accuracy of each execution, we got two groups of results under different parameters setting as in Fig. \ref{fig_beta_hellinger} and Fig. \ref{fig_dirichlet_hellinger}. X-axis is labeled with different mechanisms. We took four mechanisms in our experiments: our newly designed exponential mechanism with smooth sensitivity named ``ExpoMech of SS'', exponential mechanism with local sensitivity named `` ExpoMech of LS'', exponential mechanism with global sensitivity named `` ExpoMech of GS'' and Laplace mechanism named ``LaplaceMech''. Y-axis is the accuracy measured by Hellinger distance between output $z$ of each execution and the correct inference result $\bysinfer(x)$, $\hlg(z, \bysinfer(x))$.
 
-The results based on $l_1$ norm are actually very similar to results based on Hellinegr distance.
+% When prior distribution is $\betad$, under data size $n = 500$ and $300$, we obtained two plots in Fig. \ref{fig_beta_hellinger}. It is shown that our ExpoMech of SS is slightly better than Laplace mechanism and much more better than it with global sensitivity.
+
+% To have more experimental results, we then extended the $\betad$ to the Dirichlet distribution $\dirichlet$ as well as increased the data size, plotted in Fig. \ref{fig_dirichlet_hellinger}.
+
+% Then, we study the accuracy of these four mechanisms based on $l_1$ norm, with the Dirichlet distribution $\dirichlet(7,4,5)$ and data size $150$ for comparison, as in Fig. \ref{fig_dirichlet_hellinger_l1}.
+
+% The results based on $l_1$ norm are actually very similar to results based on Hellinegr distance.
 
 
-In both of the two cases, the performances of our exponential mechanism with smooth sensitivity and Laplace mechanism are very close. We can obtain some preliminary conclusions: 
-\begin{enumerate}
-	\item Our exponential mechanism with smooth sensitivity can have similar accuracy as it with local sensitivity. Both of the two exponential mechanisms are do much better than it with global sensitivity.
-	\item The accuracy of our exponential mechanism is better than Laplace mechanism. But the advantages are not significant.
-\end{enumerate} 
+% In both of the two cases, the performances of our exponential mechanism with smooth sensitivity and Laplace mechanism are very close. We can obtain some preliminary conclusions: 
+% \begin{enumerate}
+% 	\item Our exponential mechanism with smooth sensitivity can have similar accuracy as it with local sensitivity. Both of the two exponential mechanisms are do much better than it with global sensitivity.
+% 	\item The accuracy of our exponential mechanism is better than Laplace mechanism. But the advantages are not significant.
+% \end{enumerate} 
 
-In consequence, we have a further experiments exploration on the accuracy trade-off between Laplace mechanism and our exponential mechanism in next section.
+% In consequence, we have a further experiments exploration on the accuracy trade-off between Laplace mechanism and our exponential mechanism in next section.
 
 
 % \subsubsection{Experiment Analysis}
@@ -671,61 +671,72 @@ In this section, we evaluate the accuracy wrt. four variables, including data si
 \subsubsection{Accuracy Evaluation wrt. Datasize}
 \label{subsubsec_vs_datasize}
 
-\begin{figure}[ht]
+\begin{figure}[H]
 \begin{center}
 \centering
-  \subfigure[two dimensions with $\betad (1,1)$ prior distribution]{
-    \includegraphics[width=0.3\textwidth]{accuracy_vs_datasize_1_1.eps}}
-  \subfigure[three dimensions with $\dirichlet (1,1,1)$ prior distribution]{
-    \includegraphics[width=0.3\textwidth]{accuracy_vs_datasize_1_1_1.eps}} 
-\caption{Balanced datasets}
+  \subfigure[Data set size from $300$ to $800$ ]{
+    \includegraphics[width=0.45\textwidth]{accuracy_vs_datasize_800.eps}
+    \label{subsubsec_vs_datasize1a}
+  }
+  \subfigure[Data set size from $14000$ to $20000$]{
+    \includegraphics[width=0.45\textwidth]{accuracy_vs_datasize_20000.eps}
+  \label{subsubsec_vs_datasize1b}} 
+\caption{Increasing data size with fixed prior $\betad(1,1)$. Unbalanced datasets of mean $(0.1,0.9)$ and parameters $\epsilon = 0.8$ and $\delta = 10^{-8}$}
 \label{fig_vs_datasize}
 \end{center}
 \end{figure}
 
-In Figure \ref{fig_vs_datasize} we consider \emph{balanced} datasets of observations.
-This means that in the Beta-Binomial setting the datasets will be
-half 1s and half 0s, while int the Dirichelet-Multinomial the data will be
-equally split in all the $k=3$ bins. Figure \ref{fig_vs_datasize} shows that  when the
-data size increases, the accuracy of $\hexpmech$ and $\hexpmechd$
-decreases. In Figure \ref{fig_vs_datasize}(a), when the data size is
-smaller than 12, $\hexpmech$ can outperform the Laplace mechanism but it fails to do so
-for bigger datasets. The same happens in as in Figure \ref{fig_vs_datasize}(b):
-the Laplace mechanism starts performing better for datasets bigger than 15. 
-
-
-\subsubsection{Accuracy Evaluation wrt. Dimensions}
-\label{subsubsec_vs_dimension}
-
-In Figure  \ref{fig_vs_dimension}, in the x-axis are observed data sets of
-different sizes and different dimensions. The plot shows that increasing the number of dimensions have
-a similar pejorative effect on $\hexpmech, \hexpmechd$, and the Laplace
-mechanism. Fixing the number of dimensions and increasing the data size shows that
-the Laplace mechanism is more accurate then both $\hexpmech$ and $\hexpmechd$. 
-In other words, dimensions have little influence on whether our mechanisms will beat the Laplace
-mechanism.
 \begin{figure}[ht]
+\begin{center}
 \centering
-\includegraphics[width=0.45\textwidth]{accuracy_vs_dimension.eps}
-\caption{Increasing dimensions and data size with balanced dataset. Priors have 1s in every dimension.}
-\label{fig_vs_dimension}
+  % \subfigure[Data set size from $300$ to $800$ ]{
+  %   \includegraphics[width=0.45\textwidth]{accuracy_vs_datasize_300_dirichlet.eps}
+  %   \label{subsubsec_vs_datasize1adir}
+  % }
+  \subfigure[Data set size from $14000$ to $20000$]{
+     \includegraphics[width=0.45\textwidth]{accuracy_vs_datasize_1k_dirichlet.eps}   
+  \label{subsubsec_vs_datasize1bdir}
+  } 
+\caption{Increasing data size with fixed $\dirichlet(1,1,1)$ prior distribution, Unbalanced datasets of mean $(0.2,0.3, 0.5)$ and parameters $\epsilon = 0.8$ and $\delta = 10^{-8}$}
+\label{fig_vs_datasize_dir}
+\end{center}
 \end{figure}
 
+In Figures \ref{fig_vs_datasize} and \ref{fig_vs_datasize_dir} we consider \emph{unbalanced} datasets
+of observations. This means that in the Beta-Binomial setting (Figure \ref{subsubsec_vs_datasize1a},
+and \ref{subsubsec_vs_datasize1b}) the datasets will consist of 10\% 1s and the rest 0s, while for the
+Dirichelet-Multinomial (Figure  \ref{subsubsec_vs_datasize1adir} and \ref{subsubsec_vs_datasize1bdir})
+the data will be split in the $k=3$ bins with perecentages of: 20\%, 30\% and 50\%.
+The results show that when the data size
+increases, the average errors of
+$\hexpmech$, $\hexpmechd$, and Laplace decrease. For small datasets,
+i.e with size less 650 in the case of Beta-Binomial systems,
+the Laplace mechanisms outperforms the exponential mechanisms,
+but for bigger data sets, that is, bigger than 650, or as in Figure \ref{subsubsec_vs_datasize1b} where
+we considered data sets of the order of 15 thousands elements,
+the exponential mechanisms outperforms the Laplace mechanism.
+Similar experimental tendencies were obtained for the Dirichlet-Multinomial system ( (Figure  \ref{subsubsec_vs_datasize1adir} and \ref{subsubsec_vs_datasize1bdir})),
+but we were not able to perform experiments with higher dimensions (4 or more) or, big datasets, e.g. $10^4$ elements, due to
+too high run time of the algorithm.
 
-\subsubsection{Accuracy Evaluation wrt. Data variance}
-\label{subsubsec_vs_variance}
 
-In Figure \ref{fig_vs_variance}, in the x-axis we considered different levels
-of balance of the datasets. We  study this variable only under
-two-dimensions $\betad$ distribution in order to be more concise. The plot shows
-that $\hexpmech$ accuracy is better than the one of Laplace when the dataset is balanced.
 
-\begin{figure}[ht]
-\centering
-\includegraphics[width=0.45\textwidth]{accuracy_vs_mean_1_1.eps}
-\caption{Unbalanced datasets. Prior distributions have 1s in every dimension.}
-\label{fig_vs_variance}
-\end{figure}
+
+
+% \subsubsection{Accuracy Evaluation wrt. Data variance}
+% \label{subsubsec_vs_variance}
+
+% In Figure \ref{fig_vs_variance}, in the x-axis we considered different levels
+% of balance of the datasets. We  study this variable only under
+% two-dimensions $\betad$ distribution in order to be more concise. The plot shows
+% that $\hexpmech$ accuracy is better than the one of Laplace when the dataset is balanced.
+
+% \begin{figure}[ht]
+% \centering
+% \includegraphics[width=0.45\textwidth]{accuracy_vs_mean_1_1.eps}
+% \caption{Unbalanced datasets. Prior distributions have 1s in every dimension.}
+% \label{fig_vs_variance}
+% \end{figure}
 
 
 
