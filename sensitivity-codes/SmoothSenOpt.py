@@ -49,9 +49,9 @@ def plot_ss(ss,xstick,title):
 	return
 
 if __name__ == "__main__":
-	percentage = [0.5,0.5]
-	datasize = 50
-	prior = dirichlet([1,1])
+	percentage = [0.3,0.3,0.4]
+	datasize = 10
+	prior = dirichlet([1,1,1])
 
 	smooth_sensitivity_study(prior,datasize,0.8,0.00000001,percentage)
 
