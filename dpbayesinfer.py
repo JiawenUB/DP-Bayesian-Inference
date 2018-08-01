@@ -31,6 +31,7 @@ class BayesInferwithDirPrior(object):
 		self._observation_counts = numpy.sum(self._observation, 0)
 		self._posterior = dirichlet(self._observation_counts) + self._prior
 		self._laplaced_posterior = self._posterior
+		self._laplaced_zhang_posterior = self._posterior
 		self._exponential_posterior = self._posterior
 		self._SS_posterior = self._posterior
 		self._candidate_scores = {}
@@ -255,9 +256,11 @@ class BayesInferwithDirPrior(object):
 		self._laplaced_posterior = dirichlet([self._posterior._alphas[0] + t, self._posterior._alphas[0] - t])
 
 	def _laplace_noize_zhang(self):
-		noised = [i + round(numpy.random.laplace(0, 2.0/self._epsilon)) for i in range(self._prior._alphas)]
-		noised = [self._sample_size if i > self._sample_size for i in noised]
-		noised = [0 if i < 0 for i in noised]
+		noised = [i + numpy.random.laplace(0, 2.0/self._epsilon) for i in self._posterior._alphas]
+		noised = [self._sample_size if i > self._sample_size else i for i in noised]
+		noised = [0 if i < 0 else i for i in noised]
+		self._laplaced_zhang_posterior = dirichlet(noised) + self._prior
+
 
 
 	# def _laplace_noize_mle(self):
@@ -321,6 +324,9 @@ class BayesInferwithDirPrior(object):
 		self._set_GS()
 		self._set_LS()
 		self._set_SS()
+		self._keys.append('Laplace_zhang')
+		self._accuracy['Laplace_zhang'] = []
+		self._accuracy_mean['Laplace_zhang'] = []
 		#self._show_all()
 		for i in range(times):
 			self._laplace_noize()
@@ -342,6 +348,8 @@ class BayesInferwithDirPrior(object):
 			# self._accuracy[self._keys[4]].append(self._posterior - self._SS_posterior)
 			self._exponentialize_SS()
 			self._accuracy[self._keys[3]].append(self._posterior - self._exponential_posterior)
+			self._laplace_noize_zhang()
+			self._accuracy[self._keys[4]].append(self._posterior - self._laplaced_zhang_posterior)
 			# self._accuracy_l1[self._keys[3]].append(L1_Nrom(self._posterior, self._exponential_posterior))
 		for key,item in self._accuracy.items():
 			self._accuracy_mean[key] = sum(item)*1.0/(1 if len(item) == 0 else len(item))

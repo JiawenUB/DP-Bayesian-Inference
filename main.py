@@ -13,7 +13,7 @@ import statistics
 from decimal import *
 from scipy.special import gammaln
 from dirichlet import dirichlet
-from bayesinfermodel import BayesInferwithDirPrior
+from dpbayesinfer import BayesInferwithDirPrior
 
 
 def draw_error(errors, model, filename):
@@ -306,10 +306,10 @@ def hellinger_vs_l1norm(base_distribution):
 def plot_mean_error(x,y_list,xstick,xlabel,title):
 	plt.figure(figsize=(12,10))
 	i = 0
-	ylabel=['Our ExpMech',"Laplace Mechanism"]
+	ylabel=['Our ExpMech',"Laplace Mechanism", "Laplace Mech of Zhang"]
 	
-	plt.plot(x,y_list[0],'r^',label=ylabel[0])
-	plt.plot(x,y_list[1],'bs',label=ylabel[1])
+	for i in range(3):
+		plt.plot(x,y_list[i],'^',label=ylabel[i])
 
 	plt.xticks(x,xstick,rotation=70,fontsize=12)
 	plt.title(title,fontsize=20)
@@ -342,17 +342,20 @@ def plot_error_box(data, xlabel,xstick,title):
 def accuracy_VS_datasize(epsilon,delta,prior,observations,datasizes):
 	data = []
 	xstick = []
-	mean_error = [[],[]]
+	mean_error = [[],[],[]]
 	for observation in observations:
 		Bayesian_Model = BayesInferwithDirPrior(prior, sum(observation), epsilon, delta)
 		Bayesian_Model._set_observation(observation)
-		Bayesian_Model._experiments(100)
-		data.append(Bayesian_Model._accuracy[Bayesian_Model._keys[3]])
-		data.append(Bayesian_Model._accuracy[Bayesian_Model._keys[0]])
+		Bayesian_Model._experiments(10000)
 		mean_error[0].append(Bayesian_Model._accuracy_mean[Bayesian_Model._keys[3]])
 		mean_error[1].append(Bayesian_Model._accuracy_mean[Bayesian_Model._keys[0]])
-		xstick.append(str(observation) + "/ExpMech")
-		xstick.append(str(observation) + "/Laplace")
+		mean_error[2].append(Bayesian_Model._accuracy_mean[Bayesian_Model._keys[4]])
+		# data.append(Bayesian_Model._accuracy[Bayesian_Model._keys[3]])
+		# data.append(Bayesian_Model._accuracy[Bayesian_Model._keys[0]])
+		# data.append(Bayesian_Model._accuracy[Bayesian_Model._keys[4]])
+		# xstick.append(str(observation) + "/ExpMech")
+		# xstick.append(str(observation) + "/Laplace")
+		# xstick.append(str(observation) + "/Laplace_Zhang")
 	print('Accuracy / prior: ' + str(prior._alphas) + ", delta: " + str(delta) + ", epsilon:" + str(epsilon))
 
 	plot_mean_error(range(0,len(observations)),mean_error,datasizes,"Different Data sizes","Mean Error VS. Data Size")
@@ -520,7 +523,7 @@ if __name__ == "__main__":
 	x2 = [2,18]
 	observation = [5,5,5]
 	epsilons = numpy.arange(0.1, 2, 0.1)
-	datasizes = gen_datasizes((20,30),10)#[300] #[8,12,18,24,30,36,42,44,46,48]#,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80]
+	datasizes = gen_datasizes((1000,2000),50)#[300] #[8,12,18,24,30,36,42,44,46,48]#,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80]
 	percentage = [0.2,0.8]
 	datasets = gen_datasets(percentage, datasizes)
 	priors = [dirichlet([4*i,4*i,4*i]) for i in range(5,20)]
