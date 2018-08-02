@@ -100,7 +100,7 @@ class BayesInferwithDirPrior(object):
 
 	def _set_LS_Candidates(self):
 		for r in self._candidates:
-			self._LS_Candidates[r] = r._hellinger_sensitivity(r)
+			self._LS_Candidates[r] = r._hellinger_sensitivity()
 
 	def _set_SS(self):
 		self._set_LS_Candidates()
@@ -133,7 +133,7 @@ class BayesInferwithDirPrior(object):
 		# self._keys.append(key2)
 
 	def _set_LS(self):
-		self._LS = self._posterior._hellinger_sensitivity(self._posterior)#self._posterior
+		self._LS = self._posterior._hellinger_sensitivity()#self._posterior
 
 		key = "Exponential Mechanism with Local Sensitivity - " + str(self._LS) + "| Non Privacy"
 		# print key
