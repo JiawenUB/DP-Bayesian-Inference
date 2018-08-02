@@ -19,6 +19,37 @@ def Hamming_Distance(dirichlet1, dirichlet2):
 	temp = [abs(a - b) for a,b in zip(dirichlet1._alphas,dirichlet2._alphas)]
 	return sum(temp)
 
+def smooth_sensitivity_study2(prior, sample_size, epsilon, delta, percentage):
+	Bayesian_Model = BayesInferwithDirPrior(prior, sample_size, epsilon,delta)
+	Bayesian_Model._set_observation([sample_size*i for i in percentage])
+
+	Bayesian_Model._set_candidate_scores()
+	Bayesian_Model._set_LS_Candidates()
+	x = [(c._minus(Bayesian_Model._prior)) for c in Bayesian_Model._candidates]
+	beta = math.log(1 - epsilon / (2.0 * math.log(delta / (2.0 * (sample_size)))))
+
+	for t in x:
+		Bayesian_Model._set_observation(t._alphas)
+		# Bayesian_Model._set_candidate_scores()
+		# Bayesian_Model._set_LS_Candidates()
+		max_value = 0.0
+		max_y = ''
+		max_y_list = []
+		for c in Bayesian_Model._candidates:
+			temp = Bayesian_Model._LS_Candidates[c] * math.exp(- beta * Hamming_Distance(Bayesian_Model._posterior, c))
+			if max_value < temp:
+				max_y = c._alphas
+				max_value = temp
+
+		for c in Bayesian_Model._candidates:
+			temp = Bayesian_Model._LS_Candidates[c] * math.exp(- beta * Hamming_Distance(Bayesian_Model._posterior, c))
+			if max_value == temp:
+				max_y_list.append(str(c._alphas))
+
+		print "when data set x = "+str(t._alphas) + ", the max value takes at y = " + str(max_y_list)
+
+
+
 def smooth_sensitivity_study(prior, sample_size, epsilon, delta, percentage):
 	Bayesian_Model = BayesInferwithDirPrior(prior, sample_size, epsilon,delta)
 	Bayesian_Model._set_observation([sample_size*i for i in percentage])
@@ -53,5 +84,5 @@ if __name__ == "__main__":
 	datasize = 10
 	prior = dirichlet([1,1,1])
 
-	smooth_sensitivity_study(prior,datasize,0.8,0.00000001,percentage)
+	smooth_sensitivity_study2(prior,datasize,0.8,0.00000001,percentage)
 
