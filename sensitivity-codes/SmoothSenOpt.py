@@ -17,7 +17,7 @@ from dpbayesinfer import BayesInferwithDirPrior
 
 def Hamming_Distance(c1, c2):
 	temp = [abs(a - b) for a,b in zip(c1,c2)]
-	return sum(temp)
+	return sum(temp)/2
 
 
 def smooth_sensitivity_study2(prior, sample_size, epsilon, delta, percentage):
