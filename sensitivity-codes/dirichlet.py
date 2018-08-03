@@ -107,8 +107,9 @@ class dirichlet(object):
 	def show(self):
 		print "Dirichlet("+str(self._alphas) + ")"
 
-	def _hellinger_sensitivity(self,r):
+	def _hellinger_sensitivity(self):
 		LS = 0.0
+		r = deepcopy(self)
 		temp = deepcopy(r._alphas)
 		for i in range(0, self._size-1):
 			temp[i] += 1

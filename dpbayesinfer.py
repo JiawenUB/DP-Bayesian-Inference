@@ -15,8 +15,8 @@ from dirichlet import dirichlet
 from scipy.special import gammaln
 
 
-def Hamming_Distance(dirichlet1, dirichlet2):
-	temp = [abs(a - b) for a,b in zip(dirichlet1._alphas,dirichlet2._alphas)]
+def Hamming_Distance(c1, c2):
+	temp = [abs(a - b) for a,b in zip(c1,c2)]
 	return sum(temp)
 
 
@@ -106,7 +106,7 @@ class BayesInferwithDirPrior(object):
 		self._set_LS_Candidates()
 		start = time.clock()
 		beta = math.log(1 - self._epsilon / (2.0 * math.log(self._delta / (2.0 * (self._sample_size)))))
-		self._SS = max(self._LS, max([self._LS_Candidates[r] * math.exp(- beta * Hamming_Distance(self._posterior, r)) for r in self._candidates]))
+		self._SS = max(self._LS, max([self._LS_Candidates[r] * math.exp(- beta * Hamming_Distance(self._observation_counts, [r._alphas[i] - self._prior._alphas[i] for i in range(self._prior._size)])) for r in self._candidates]))
 		key3 = "Exponential Mechanism with " + str(beta) + " - Bound Smooth Sensitivity (" + str(self._SS) + ")|(" + str(self._epsilon) + "," + str(self._delta) + ")-DP"
 		key3 = "ExpoMech of SS"
 		self._accuracy[key3] = []

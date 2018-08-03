@@ -15,8 +15,8 @@ from scipy.special import gammaln
 from dirichlet import dirichlet
 from dpbayesinfer import BayesInferwithDirPrior
 
-def Hamming_Distance(dirichlet1, dirichlet2):
-	temp = [abs(a - b) for a,b in zip(dirichlet1._alphas,dirichlet2._alphas)]
+def Hamming_Distance(c1, c2):
+	temp = [abs(a - b) for a,b in zip(c1,c2)]
 	return sum(temp)
 
 
@@ -48,16 +48,16 @@ def smooth_sensitivity_study2(prior, sample_size, epsilon, delta, percentage):
 		max_value = 0.0
 		max_y = ''
 		max_y_list = []
-		for c in Bayesian_Model._candidates:
-			temp = Bayesian_Model._LS_Candidates[c] * math.exp(- beta * Hamming_Distance(Bayesian_Model._posterior, c))
+		for r in Bayesian_Model._candidates:
+			temp = Bayesian_Model._LS_Candidates[r] * math.exp(- beta * Hamming_Distance(Bayesian_Model._observation_counts, [r._alphas[i] - prior._alphas[i] for i in range(prior._size)]))
 			if max_value < temp:
-				max_y = c._alphas
+				max_y = r._alphas
 				max_value = temp
 
-		for c in Bayesian_Model._candidates:
-			temp = Bayesian_Model._LS_Candidates[c] * math.exp(- beta * Hamming_Distance(Bayesian_Model._posterior, c))
+		for r in Bayesian_Model._candidates:
+			temp = Bayesian_Model._LS_Candidates[r] * math.exp(- beta * Hamming_Distance(Bayesian_Model._observation_counts, [r._alphas[i] - prior._alphas[i] for i in range(prior._size)]))
 			if max_value == temp:
-				max_y_list.append(str(c._alphas))
+				max_y_list.append(str(r._alphas))
 
 		print "when data set x = "+str(t._alphas) + ", the max value takes at y = " + str(max_y_list)
 
@@ -72,7 +72,7 @@ def smooth_sensitivity_study(prior, sample_size, epsilon, delta, percentage):
 
 	xstick = [str((c._minus(Bayesian_Model._prior))._alphas) for c in Bayesian_Model._candidates]
 	beta = math.log(1 - epsilon / (2.0 * math.log(delta / (2.0 * (sample_size)))))
-	y=[Bayesian_Model._LS_Candidates[r] * math.exp(- beta * opt_hellinger(Bayesian_Model._posterior._alphas, r._alphas)) for r in Bayesian_Model._candidates]
+	y=[Bayesian_Model._LS_Candidates[r] * math.exp(- beta * opt_hellinger(Bayesian_Model._observation_counts, [r._alphas[i] - prior._alphas[i] for i in range(prior._size)])) for r in Bayesian_Model._candidates]
 
 
 	plot_ss(y,xstick,'Smooth Sensitivity Study w.r.t. x :' + str([sample_size*i for i in percentage]))
