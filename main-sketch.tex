@@ -293,9 +293,11 @@ $\hellinger(\bysinfer(\dataobs), \cdot)$. The smooth sensitivity is
 computed as follows:
 \begin{equation}
   \label{eq:smooth}
-   S(\dataobs)=\max_{\dataobs' \neq \dataobs, \dataobs' \in \{0,1\}^{n}}\bigg \{\Delta_{l}\bigg (\hellinger(\bysinfer(\dataobs'),\cdot)\bigg )\cdot e^{-\gamma\cdot d(\dataobs, \dataobs')}\bigg\},
+   S(\dataobs)=\max_{\dataobs' \in \{0,1\}^{n}}\bigg \{\Delta_{l}\bigg (\hellinger(\bysinfer(\dataobs'),\cdot)\bigg )\cdot e^{-\gamma\cdot d(C(\dataobs), C(\dataobs'))}\bigg\},
 \end{equation}
-where $d$ is the Hamming distance between two datasets, $\gamma =
+where $d$ is the $\frac{1}{2}\cdot \ell_1$ distance between two datasets,
+$C$ takes a datasets and maps it to its histogram,
+$\gamma =
 \gamma(\epsilon, \delta)$ is a function of $\epsilon$ and $\delta$ to
 be determined later, and where $\Delta_{l}\bigg
 (\hellinger(\bysinfer(\dataobs'),\cdot)\bigg )$ denotes the local
