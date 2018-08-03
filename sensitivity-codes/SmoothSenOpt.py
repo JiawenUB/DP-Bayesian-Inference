@@ -20,18 +20,6 @@ def Hamming_Distance(c1, c2):
 	return sum(temp)
 
 
-def gen_betaln (alphas):
-        numerator=0.0
-        for alpha in alphas:
-	        numerator = numerator + gammaln(alpha)
-                
-        return(numerator/math.log(float(sum(alphas))))
-
-
-def opt_hellinger(alphas, betas):
-        z=gen_betaln(numpy.divide(numpy.sum([alphas, betas], axis=0), 2.0))-0.5*(gen_betaln(alphas) + gen_betaln(betas))
-        return (math.sqrt(1-math.exp(z)))
-
 def smooth_sensitivity_study2(prior, sample_size, epsilon, delta, percentage):
 	Bayesian_Model = BayesInferwithDirPrior(prior, sample_size, epsilon,delta)
 	Bayesian_Model._set_observation([sample_size*i for i in percentage])
@@ -72,7 +60,7 @@ def smooth_sensitivity_study(prior, sample_size, epsilon, delta, percentage):
 
 	xstick = [str((c._minus(Bayesian_Model._prior))._alphas) for c in Bayesian_Model._candidates]
 	beta = math.log(1 - epsilon / (2.0 * math.log(delta / (2.0 * (sample_size)))))
-	y=[Bayesian_Model._LS_Candidates[r] * math.exp(- beta * opt_hellinger(Bayesian_Model._observation_counts, [r._alphas[i] - prior._alphas[i] for i in range(prior._size)])) for r in Bayesian_Model._candidates]
+	y=[Bayesian_Model._LS_Candidates[r] * math.exp(- beta * Hamming_Distance(Bayesian_Model._observation_counts, [r._alphas[i] - prior._alphas[i] for i in range(prior._size)])) for r in Bayesian_Model._candidates]
 
 
 	plot_ss(y,xstick,'Smooth Sensitivity Study w.r.t. x :' + str([sample_size*i for i in percentage]))

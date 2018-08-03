@@ -15,16 +15,17 @@ from scipy.special import gammaln
 
 
 def gen_betaln (alphas):
-        numerator=0.0
-        for alpha in alphas:
-	        numerator = numerator + gammaln(alpha)
-                
-        return(numerator/math.log(float(sum(alphas))))
+	numerator=0.0
+	for alpha in alphas:
+		numerator = numerator + gammaln(alpha)
+	return(numerator/math.log(float(sum(alphas))))
 
 
-def opt_hellinger(alphas, betas):
-        z=gen_betaln(numpy.divide(numpy.sum([alphas, betas], axis=0), 2.0))-0.5*(gen_betaln(alphas) + gen_betaln(betas))
-        return (math.sqrt(1-math.exp(z)))
+def opt_hellinger(dirichlet1, dirichlet2):
+	alphas = deepcopy(dirichlet1._alphas)
+	betas = deepcopy(dirichlet2._alphas)
+	z=gen_betaln(numpy.divide(numpy.sum([alphas, betas], axis=0), 2.0))-0.5*(gen_betaln(alphas) + gen_betaln(betas))
+	return (math.sqrt(1-math.exp(z)))
 
 
 
@@ -94,7 +95,7 @@ class dirichlet(object):
 		self._size = len(alphas)
 
 	def __sub__(self, other):
-		return opt_hellinger(self._alphas, other._alphas)
+		return opt_hellinger(self, other)
 		# return Optimized_Hellinger_Distance_Dir(self, other)
 
 	def _minus(self,other):
