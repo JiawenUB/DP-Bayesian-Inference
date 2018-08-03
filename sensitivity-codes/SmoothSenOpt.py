@@ -84,5 +84,5 @@ if __name__ == "__main__":
 	datasize = 10
 	prior = dirichlet([1,1,1])
 
-	smooth_sensitivity_study2(prior,datasize,0.8,0.00000001,percentage)
+	smooth_sensitivity_study(prior,datasize,0.8,0.00000001,percentage)
 
