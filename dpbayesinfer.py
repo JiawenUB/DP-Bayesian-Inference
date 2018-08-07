@@ -228,20 +228,19 @@ class BayesInferwithDirPrior(object):
 		noised_alphas = []
 		rest = self._sample_size
 		for i in range(self._prior._size - 1):
-			alpha = self._posterior._alphas[i]
-			temp = math.floor(numpy.random.laplace(0, 2.0/self._epsilon))
-			if temp < - self._observation_counts[i]:
+			t = self._observation_counts[i] + math.floor(numpy.random.laplace(0, 2.0/self._epsilon))
+			if t < 0:
 				noised_alphas.append(0)
 				rest -= 0
-			elif (self._observation_counts[i] + temp) > rest:
+			elif t > rest:
 				noised_alphas.append(rest)
 				rest -= rest
 				for j in range(i+1,self._prior._size - 1):
 					noised_alphas.append(0)
 				break
 			else:
-				noised_alphas.append((self._observation_counts[i] + temp))
-				rest -= (self._observation_counts[i] + temp)
+				noised_alphas.append(t)
+				rest -= t
 		noised_alphas.append(rest)
 		self._laplaced_posterior = dirichlet(noised_alphas) + self._prior
 
@@ -256,7 +255,7 @@ class BayesInferwithDirPrior(object):
 		self._laplaced_posterior = dirichlet([self._posterior._alphas[0] + t, self._posterior._alphas[0] - t])
 
 	def _laplace_noize_zhang(self):
-		noised = [i + numpy.random.laplace(0, 2.0/self._epsilon) for i in self._posterior._alphas]
+		noised = [i + numpy.random.laplace(0, 2.0/self._epsilon) for i in self._observation_counts]
 		noised = [self._sample_size if i > self._sample_size else i for i in noised]
 		noised = [0 if i < 0 else i for i in noised]
 		self._laplaced_zhang_posterior = dirichlet(noised) + self._prior
