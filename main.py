@@ -98,7 +98,7 @@ def accuracy_study_discrete(sample_size,epsilon,delta,prior,observation):
 		while True:
 			if (i+1) > len(sorted_scores) or sorted_scores[j][1] != sorted_scores[i][1]:
 				break
-			candidates_for_print.append(sorted_scores[i][0]._alphas)
+			# candidates_for_print.append(sorted_scores[i][0]._alphas)
 			candidates_for_classify.append(sorted_scores[i][0])
 			# print sorted_scores[i]
 			i += 1
@@ -125,7 +125,7 @@ def accuracy_study_discrete(sample_size,epsilon,delta,prior,observation):
 		for c in class_i:
 			#print laplace_probabilities[c]
 			pro_i += laplace_probabilities[c]
-			candidates_for_print.append(c._alphas)
+			# candidates_for_print.append(c._alphas)
 		probabilities_lap_by_steps.append(pro_i)
 		
 		# print "Laplace: Pr[H(BI(x), r) = " + str(-Bayesian_Model._candidate_scores[class_i[0]]) + " ] = " + str(pro_i) + " (r = " + str(candidates_for_print) +")"
@@ -521,13 +521,13 @@ def gen_datasizes(r, step):
 
 if __name__ == "__main__":
 
-	datasize = 400
-	epsilon = 1.0
+	datasize = 3000
+	epsilon = 2.0
 	delta = 0.00000001
-	prior = dirichlet([5000,5000,5000,5000])
+	prior = dirichlet([10000,10000,10000])
 	x1 = [1,19]
 	x2 = [2,18]
-	observation = [100,100,100,100]
+	observation = [1000,1000,1000]
 	epsilons = numpy.arange(0.1, 2, 0.1)
 	datasizes = gen_datasizes((7000,10000),1000)#[300] #[8,12,18,24,30,36,42,44,46,48]#,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80]
 	percentage = [0.3,0.3,0.4]
