@@ -104,7 +104,7 @@ def accuracy_study_discrete(sample_size,epsilon,delta,prior,observation):
 			i += 1
 		candidates_classfied_by_steps.append(candidates_for_classify)
 		probabilities_exp_by_steps.append(Bayesian_Model._SS_probabilities[j]*(i - j))
-		print "Pr[H(BI(x), r) = " + str(-sorted_scores[j][1]) + " ] = " + str(Bayesian_Model._SS_probabilities[j]*(i - j)) + " (r = " + str(candidates_for_print) +")"
+		# print "ExpMech: Pr[H(BI(x), r) = " + str(-sorted_scores[j][1]) + " ] = " + str(Bayesian_Model._SS_probabilities[j]*(i - j)) + " (r = " + str(candidates_for_print) +")"
    
 	# y = numpy.arange(0,4,1)
 	laplace_probabilities = {}
@@ -127,18 +127,23 @@ def accuracy_study_discrete(sample_size,epsilon,delta,prior,observation):
 			pro_i += laplace_probabilities[c]
 			candidates_for_print.append(c._alphas)
 		probabilities_lap_by_steps.append(pro_i)
-		print "Pr[H(BI(x), r) = " + str(-Bayesian_Model._candidate_scores[class_i[0]]) + " ] = " + str(pro_i) + " (r = " + str(candidates_for_print) +")"
+		
+		# print "Laplace: Pr[H(BI(x), r) = " + str(-Bayesian_Model._candidate_scores[class_i[0]]) + " ] = " + str(pro_i) + " (r = " + str(candidates_for_print) +")"
+	print "ExpMech: Pr[H(BI(x), r) = 0.0 ] = " + str(probabilities_exp_by_steps[-1])
+	print "Laplace: Pr[H(BI(x), r) = 0.0 ] = " + str(probabilities_lap_by_steps[-1])
 
 
-	plt.plot(steps, probabilities_exp_by_steps, 'ro', label=('Exp Mech'))
+
+	plt.plot(steps[-100:], probabilities_exp_by_steps[-100:], 'ro', label=('Exp Mech'))
 	# plt.plot(T, approximate_bounds, 'g^', label=('Expmech_SS zApproximate Bound'))
-	plt.plot(steps, probabilities_lap_by_steps, 'bs', label=('Laplace Mech'))
+	plt.plot(steps[-100:], probabilities_lap_by_steps[-100:], 'b^', label=('Laplace Mech'))
 	plt.xlabel("c / (steps from correct answer, in form of Hellinger Distance)")
 	plt.ylabel("Pr[H(BI(x),r) = c]")
 	plt.title("datasize: "+ str(sample_size) + ", x: "+ str(observation) + ", BI(x): beta"+ str(Bayesian_Model._posterior._alphas) + ", epsilon: "+ str(epsilon))
 	plt.legend()
 	plt.grid()
 	plt.show()
+
 
 
 def global_epsilon_study(sample_sizes,epsilon,delta,prior):
@@ -205,7 +210,7 @@ def epsilon_study(sample_size,epsilon,delta,prior,x1, x2):
 
 	xlabel = [key for key, value in sorted_epsilons]
 	plt.figure(figsize=(15,8))
-	plt.plot(x, y, 'bs-', label=('Exp Mech'))
+	plt.plot(x[0:5], y[0:5], 'bs-', label=('Exp Mech'))
 	# plt.plot(T, approximate_bounds, 'g^', label=('Expmech_SS zApproximate Bound'))
 	plt.xlabel("z / (candiates)")
 	plt.ylabel("Pr[(Pr[ ( M(x1) = z) / ( M(x2) = z) ])] = exp(y)")
@@ -516,13 +521,13 @@ def gen_datasizes(r, step):
 
 if __name__ == "__main__":
 
-	datasize = 3000
-	epsilon = 0.8
+	datasize = 400
+	epsilon = 1.0
 	delta = 0.00000001
-	prior = dirichlet([1,1,1])
+	prior = dirichlet([5000,5000,5000,5000])
 	x1 = [1,19]
 	x2 = [2,18]
-	observation = [5,5]
+	observation = [100,100,100,100]
 	epsilons = numpy.arange(0.1, 2, 0.1)
 	datasizes = gen_datasizes((7000,10000),1000)#[300] #[8,12,18,24,30,36,42,44,46,48]#,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80]
 	percentage = [0.3,0.3,0.4]
@@ -535,7 +540,7 @@ if __name__ == "__main__":
 	# print means
 	# accuracy_VS_prior(sample_size,epsilon,delta,priors,observation,mean)
 	# accuracy_VS_mean(sample_size,epsilon,delta,prior)
-	accuracy_VS_datasize(epsilon,delta,prior,datasets,datasizes)
+	# accuracy_VS_datasize(epsilon,delta,prior,datasets,datasizes)
 	# # hellinger_vs_l1norm(Dir(observation))
 	# global_epsilon_study(sample_sizes,epsilon,delta,prior)
 	# Dir([1,17]) - Dir([])
@@ -550,7 +555,7 @@ if __name__ == "__main__":
 	# epsilon_study(sample_size,epsilon,delta,prior,x1, x2)
 
 	# print math.floor(-0.6)
-	# accuracy_study_discrete(sample_size,epsilon,delta,prior,observation)
+	accuracy_study_discrete(datasize,epsilon,delta,prior,observation)
 	# # accuracy_study_exponential_mechanism_SS(sample_size,epsilon,delta,prior,observation)
 	# # accuracy_study_laplace(sample_size,epsilon,delta,prior,observation)
 	# # Tests the functioning of the module
