@@ -1,3 +1,5 @@
+2 dimensional
+
 datasize = 10000
 epsilon = 1.0
 delta = 0.00000001
@@ -58,7 +60,16 @@ Laplace: Pr[H(BI(x), r) = 0.0 ] = 0.432332358382
 
 
 
+3 dimensional:
 
+
+datasize = 1200
+epsilon = 1.0
+delta = 0.00000001
+prior = dirichlet([3000,3000,3000])
+observation = [400,400,400]
+ExpMech: Pr[H(BI(x), r) = 0.0 ] = 0.0343282075033
+Laplace: Pr[H(BI(x), r) = 0.0 ] = 0.0387045304365
 
 
 datasize = 1800
