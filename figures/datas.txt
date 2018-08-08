@@ -1,0 +1,44 @@
+datasize = 100000
+epsilon = 2.0
+delta = 0.00000001
+prior = dirichlet([10000,10000])
+observation = [50000,50000]
+
+ExpMech: Pr[H(BI(x), r) = 0.0 ] = 0.462116234016
+Laplace: Pr[H(BI(x), r) = 0.0 ] = 0.432332358382
+
+datasize = 100000
+epsilon = 2.0
+delta = 0.00000001
+prior = dirichlet([1,1])
+observation = [50000,50000]
+
+ExpMech: Pr[H(BI(x), r) = 0.0 ] = 0.462117814239
+Laplace: Pr[H(BI(x), r) = 0.0 ] = 0.432332358382
+
+datasize = 100000
+epsilon = 1.0
+delta = 0.00000001
+prior = dirichlet([1,1])
+observation = [50000,50000]
+ExpMech: Pr[H(BI(x), r) = 0.0 ] = 0.244918709378
+Laplace: Pr[H(BI(x), r) = 0.0 ] = 0.316060279414
+
+
+datasize = 100000
+epsilon = 1.0
+delta = 0.00000001
+prior = dirichlet([100000,100000])
+observation = [50000,50000]
+
+ExpMech: Pr[H(BI(x), r) = 0.0 ] = 0.244958620579
+Laplace: Pr[H(BI(x), r) = 0.0 ] = 0.316060279414
+
+datasize = 1800
+epsilon = 1.0
+delta = 0.00000001
+prior = dirichlet([8000,8000,8000])
+observation = [600,600,600]
+
+ExpMech: Pr[H(BI(x), r) = 0.0 ] = 0.0343322743712
+Laplace: Pr[H(BI(x), r) = 0.0 ] = 0.0387045304365
