@@ -114,7 +114,7 @@ def accuracy_study_discrete(sample_size,epsilon,delta,prior,observation):
 		# ylist = []
 		for j in range(len(r._alphas) - 1):
 			a = r._alphas[j] - Bayesian_Model._posterior._alphas[j]
-			t = t * 0.5 * (math.exp(- ((abs(a)) if (a >= 0) else (abs(a) - 1)) / (2.0/epsilon)) - math.exp(- ((abs(a) + 1) if (a >= 0) else (abs(a))) / (2.0/epsilon)))
+			t = t * 0.5 * (math.exp(- ((abs(a)) if (a >= 0) else (abs(a) - 1)) / (1.0/epsilon)) - math.exp(- ((abs(a) + 1) if (a >= 0) else (abs(a))) / (1.0/epsilon)))
 		# 	ylist.append(a)
 		# yset = set(ylist)
 		laplace_probabilities[r] = t #/ (math.gamma(len(yset)) * (2 ** (len(list(filter(lambda a: a != 0, ylist))))))
@@ -521,11 +521,11 @@ def gen_datasizes(r, step):
 
 if __name__ == "__main__":
 
-	datasize = 1500
-	epsilon = 1.5
+	datasize = 1000000
+	epsilon = 1.0
 	delta = 0.00000001
-	prior = dirichlet([1,1,1])
-	observation = [500,500,500]
+	prior = dirichlet([1,1])
+	observation = [500000, 500000]
 	epsilons = numpy.arange(0.1, 2, 0.1)
 	datasizes = gen_datasizes((7000,10000),1000)#[300] #[8,12,18,24,30,36,42,44,46,48]#,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80]
 	percentage = [0.3,0.3,0.4]

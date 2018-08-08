@@ -249,6 +249,9 @@ class BayesInferwithDirPrior(object):
 
 		self._laplaced_posterior = dirichlet([alpha + math.floor(numpy.random.laplace(0, 1.0/self._epsilon)) for alpha in self._posterior._alphas])
 
+	def _laplace_fourier(self):
+		
+		return
 
 	def _laplace_noize_navie(self):
 		t = numpy.random.laplace(0, 1.0/self._epsilon)
