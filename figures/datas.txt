@@ -42,3 +42,32 @@ observation = [600,600,600]
 
 ExpMech: Pr[H(BI(x), r) = 0.0 ] = 0.0343322743712
 Laplace: Pr[H(BI(x), r) = 0.0 ] = 0.0387045304365
+
+	datasize = 3000
+	epsilon = 2
+	delta = 0.00000001
+	prior = dirichlet([1,1,1])
+	observation = [1000,1000,1000]
+ExpMech: Pr[H(BI(x), r) = 0.0 ] = 0.134003912009
+Laplace: Pr[H(BI(x), r) = 0.0 ] = 0.0998941002234
+
+
+	datasize = 1500
+	epsilon = 2
+	delta = 0.00000001
+	prior = dirichlet([1,1,1])
+	observation = [500,500,500]
+
+ExpMech: Pr[H(BI(x), r) = 0.0 ] = 0.133978220448
+Laplace: Pr[H(BI(x), r) = 0.0 ] = 0.0998941002234
+
+
+
+	datasize = 1500
+	epsilon = 1.5
+	delta = 0.00000001
+	prior = dirichlet([1,1,1])
+	observation = [500,500,500]
+
+ExpMech: Pr[H(BI(x), r) = 0.0 ] = 0.0765546566358
+Laplace: Pr[H(BI(x), r) = 0.0 ] = 0.0695992636666
