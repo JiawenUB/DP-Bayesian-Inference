@@ -98,13 +98,13 @@ def accuracy_study_discrete(sample_size,epsilon,delta,prior,observation):
 		while True:
 			if (i+1) > len(sorted_scores) or sorted_scores[j][1] != sorted_scores[i][1]:
 				break
-			# candidates_for_print.append(sorted_scores[i][0]._alphas)
+			candidates_for_print.append(sorted_scores[i][0]._alphas)
 			candidates_for_classify.append(sorted_scores[i][0])
 			# print sorted_scores[i]
 			i += 1
 		candidates_classfied_by_steps.append(candidates_for_classify)
 		probabilities_exp_by_steps.append(Bayesian_Model._SS_probabilities[j]*(i - j))
-		# print "ExpMech: Pr[H(BI(x), r) = " + str(-sorted_scores[j][1]) + " ] = " + str(Bayesian_Model._SS_probabilities[j]*(i - j)) + " (r = " + str(candidates_for_print) +")"
+		print "ExpMech: Pr[H(BI(x), r) = " + str(-sorted_scores[j][1]) + " ] = " + str(Bayesian_Model._SS_probabilities[j]*(i - j)) + " (r = " + str(candidates_for_print) +")"
    
 	# y = numpy.arange(0,4,1)
 	laplace_probabilities = {}
@@ -125,18 +125,18 @@ def accuracy_study_discrete(sample_size,epsilon,delta,prior,observation):
 		for c in class_i:
 			#print laplace_probabilities[c]
 			pro_i += laplace_probabilities[c]
-			# candidates_for_print.append(c._alphas)
+			candidates_for_print.append(c._alphas)
 		probabilities_lap_by_steps.append(pro_i)
 		
-		# print "Laplace: Pr[H(BI(x), r) = " + str(-Bayesian_Model._candidate_scores[class_i[0]]) + " ] = " + str(pro_i) + " (r = " + str(candidates_for_print) +")"
+		print "Laplace: Pr[H(BI(x), r) = " + str(-Bayesian_Model._candidate_scores[class_i[0]]) + " ] = " + str(pro_i) + " (r = " + str(candidates_for_print) +")"
 	print "ExpMech: Pr[H(BI(x), r) = 0.0 ] = " + str(probabilities_exp_by_steps[-1])
 	print "Laplace: Pr[H(BI(x), r) = 0.0 ] = " + str(probabilities_lap_by_steps[-1])
 
 
 
-	plt.plot(steps[-30:], probabilities_exp_by_steps[-30:], 'ro', label=('Exp Mech'))
+	plt.plot(steps[-100:], probabilities_exp_by_steps[-100:], 'ro', label=('Exp Mech'))
 	# plt.plot(T, approximate_bounds, 'g^', label=('Expmech_SS zApproximate Bound'))
-	plt.plot(steps[-30:], probabilities_lap_by_steps[-30:], 'b^', label=('Laplace Mech'))
+	plt.plot(steps[-100:], probabilities_lap_by_steps[-100:], 'b^', label=('Laplace Mech'))
 	plt.xlabel("c / (steps from correct answer, in form of Hellinger Distance)")
 	plt.ylabel("Pr[H(BI(x),r) = c]")
 	plt.title("datasize: "+ str(sample_size) + ", x: "+ str(observation) + ", BI(x): beta"+ str(Bayesian_Model._posterior._alphas) + ", epsilon: "+ str(epsilon))
@@ -159,8 +159,12 @@ def global_epsilon_study(sample_sizes,epsilon,delta,prior):
 		pair_of_n = []
 		for c in candidates:
 			temp = deepcopy(c._alphas)
-			temp[0] -= 1
-			temp[1] += 1
+			if temp[0] == 0:
+				temp[0] += 1
+				temp[1] -= 1
+			else:
+				temp[0] -= 1
+				temp[1] += 1
 			# print c._alphas, temp
 			t = epsilon_study(n,epsilon,delta,prior,c._alphas,temp)
 			if epsilon_of_n < t:
@@ -188,9 +192,8 @@ def epsilon_study(sample_size,epsilon,delta,prior,x1, x2):
 	# print x1_probabilities
 	accuracy_epsilons = {}
 	for key, item in x1_probabilities.items():
-		for k,i in x2_probabilities.items():
-			if key._alphas == k._alphas:
-				accuracy_epsilons[str(key._alphas)] = math.log(item / i)
+		i = x2_probabilities[key]
+		accuracy_epsilons[key] = math.log(item / i)
 
 	sorted_epsilons = sorted(accuracy_epsilons.items(), key=operator.itemgetter(1))
 	# print sorted_epsilons
@@ -199,8 +202,8 @@ def epsilon_study(sample_size,epsilon,delta,prior,x1, x2):
 	# 	print sorted_epsilons[-1]
 	# else:
 	# 	print sorted_epsilons[0]
+	# print max(sorted_epsilons[-1][1], abs(sorted_epsilons[0][1]))
 	return max(sorted_epsilons[-1][1], abs(sorted_epsilons[0][1]))
-	
 	for key,value in sorted_epsilons:
 		print "Pr[ ( M(x1) = " + key + ") / ( M(x2) = " + key + ") ] = exp(" + str(value) + ")"
 
@@ -210,7 +213,7 @@ def epsilon_study(sample_size,epsilon,delta,prior,x1, x2):
 
 	xlabel = [key for key, value in sorted_epsilons]
 	plt.figure(figsize=(15,8))
-	plt.plot(x[0:5], y[0:5], 'bs-', label=('Exp Mech'))
+	plt.plot(x, y, 'bs-', label=('Exp Mech'))
 	# plt.plot(T, approximate_bounds, 'g^', label=('Expmech_SS zApproximate Bound'))
 	plt.xlabel("z / (candiates)")
 	plt.ylabel("Pr[(Pr[ ( M(x1) = z) / ( M(x2) = z) ])] = exp(y)")
@@ -236,7 +239,7 @@ def epsilon_study_discrete_probabilities(sample_size,epsilon,delta,prior,observa
 
 	for i in range(len(Bayesian_Model._candidates)):
 		z = Bayesian_Model._candidates[i]
-		probabilities_exp[z] = Bayesian_Model._SS_probabilities[i]
+		probabilities_exp[str(z._alphas)] = Bayesian_Model._SS_probabilities[i]
 		# print "Pr[ z = " + str(z._alphas) + " ] = " + str(Bayesian_Model._SS_probabilities[i])
 	
 	return probabilities_exp
@@ -521,13 +524,15 @@ def gen_datasizes(r, step):
 
 if __name__ == "__main__":
 
-	datasize = 1200
-	epsilon = 1.0
+	datasize = 500
+	epsilon = 0.8
 	delta = 0.00000001
-	prior = dirichlet([3000,3000,3000])
-	observation = [400,400,400]
+	prior = dirichlet([1,1])
+	observation = [20,20,20]
+	x1 = [1,499]
+	x2 = [0,500]
 	epsilons = numpy.arange(0.1, 2, 0.1)
-	datasizes = gen_datasizes((7000,10000),1000)#[300] #[8,12,18,24,30,36,42,44,46,48]#,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80]
+	datasizes = gen_datasizes((200,500),10)#[300] #[8,12,18,24,30,36,42,44,46,48]#,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80]
 	percentage = [0.3,0.3,0.4]
 	datasets = gen_datasets(percentage, datasizes)
 	priors = [dirichlet([4*i,4*i,4*i]) for i in range(5,20)]
@@ -540,7 +545,7 @@ if __name__ == "__main__":
 	# accuracy_VS_mean(sample_size,epsilon,delta,prior)
 	# accuracy_VS_datasize(epsilon,delta,prior,datasets,datasizes)
 	# # hellinger_vs_l1norm(Dir(observation))
-	# global_epsilon_study(sample_sizes,epsilon,delta,prior)
+	global_epsilon_study(datasizes,epsilon,delta,prior)
 	# Dir([1,17]) - Dir([])
 	# d0 = dirichlet([6,6])
 	# d1 = dirichlet([10,2])
@@ -550,10 +555,10 @@ if __name__ == "__main__":
 	# accuracy_VS_epsilon(sample_size,epsilons,delta,prior,observation)
 
 	
-	# epsilon_study(sample_size,epsilon,delta,prior,x1, x2)
+	# epsilon_study(datasize,epsilon,delta,prior,x1, x2)
 
 	# print math.floor(-0.6)
-	accuracy_study_discrete(datasize,epsilon,delta,prior,observation)
+	# accuracy_study_discrete(datasize,epsilon,delta,prior,observation)
 	# # accuracy_study_exponential_mechanism_SS(sample_size,epsilon,delta,prior,observation)
 	# # accuracy_study_laplace(sample_size,epsilon,delta,prior,observation)
 	# # Tests the functioning of the module

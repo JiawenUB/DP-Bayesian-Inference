@@ -110,3 +110,5 @@ observation = [500,500,500]
 
 ExpMech: Pr[H(BI(x), r) = 0.0 ] = 0.0765546566358
 Laplace: Pr[H(BI(x), r) = 0.0 ] = 0.0695992636666
+
+
