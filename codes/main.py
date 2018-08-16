@@ -532,7 +532,7 @@ if __name__ == "__main__":
 	x1 = [1,499]
 	x2 = [0,500]
 	epsilons = numpy.arange(0.1, 2, 0.1)
-	datasizes = gen_datasizes((200,500),10)#[300] #[8,12,18,24,30,36,42,44,46,48]#,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80]
+	datasizes = gen_datasizes((10000,20000),10000)#[300] #[8,12,18,24,30,36,42,44,46,48]#,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80]
 	percentage = [0.3,0.3,0.4]
 	datasets = gen_datasets(percentage, datasizes)
 	priors = [dirichlet([4*i,4*i,4*i]) for i in range(5,20)]
