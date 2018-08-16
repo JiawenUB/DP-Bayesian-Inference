@@ -17,7 +17,7 @@ from dpbayesinfer import BayesInferwithDirPrior
 
 def Hamming_Distance(c1, c2):
 	temp = [abs(a - b) for a,b in zip(c1,c2)]
-	return sum(temp)/2
+	return sum(temp)/2.0
 
 
 def smooth_sensitivity_study2(prior, sample_size, epsilon, delta, percentage):
@@ -63,27 +63,60 @@ def smooth_sensitivity_study(prior, sample_size, epsilon, delta, percentage):
 	y=[Bayesian_Model._LS_Candidates[r] * math.exp(- beta * Hamming_Distance(Bayesian_Model._observation_counts, [r._alphas[i] - prior._alphas[i] for i in range(prior._size)])) for r in Bayesian_Model._candidates]
 
 
-	plot_ss(y,xstick,'Smooth Sensitivity Study w.r.t. x :' + str([sample_size*i for i in percentage]))
+	plot_ss(y,xstick,'Smooth Sensitivity Study w.r.t. x :' + str([sample_size*i for i in percentage]), r"$\Delta_l(H(BI(x'),-))e^{- \gamma *d(x,x')}$")
 
 
-def plot_ss(ss,xstick,title):
-	plt.figure(figsize=(12,10))
+def plot_ss(ss,xstick,title,yaxis):
+	plt.figure(figsize=(12,8))
 	plt.plot(range(len(ss)),ss,'r^')
 
 	plt.xticks(range(len(ss)),xstick,rotation=70,fontsize=12)
 	plt.title(title,fontsize=20)
-	plt.xlabel(r"$y$",fontsize=25)	
-	plt.ylabel(r"$\Delta_l(H(BI(y),-))e^{- \gamma *d(x,y)}$",fontsize=15)
+	plt.xlabel(r"$x'$",fontsize=25)	
+	plt.ylabel(yaxis,fontsize=20)
 	plt.grid()
 	plt.legend()
 	plt.show()
 
 	return
 
+def ss_exponentiate_component_study(prior, sample_size, epsilon, delta, percentage):
+	Bayesian_Model = BayesInferwithDirPrior(prior, sample_size, epsilon,delta)
+	Bayesian_Model._set_observation([sample_size*i for i in percentage])
+
+	Bayesian_Model._set_candidate_scores()
+
+	xstick = [str((c._minus(Bayesian_Model._prior))._alphas) for c in Bayesian_Model._candidates]
+	beta = math.log(1 - epsilon / (2.0 * math.log(delta / (2.0 * (sample_size)))))
+	y=[math.exp(- beta * Hamming_Distance(Bayesian_Model._observation_counts, [r._alphas[i] - prior._alphas[i] for i in range(prior._size)])) for r in Bayesian_Model._candidates]
+
+
+	plot_ss(y,xstick,'Exponentiate Component of Smooth Sensitivity w.r.t. x :' + str([sample_size*i for i in percentage]),r"$e^{- \gamma *d(x,x')}$")
+
+	return
+
+def ss_ls_component_study(prior, sample_size, epsilon, delta, percentage):
+	Bayesian_Model = BayesInferwithDirPrior(prior, sample_size, epsilon,delta)
+	Bayesian_Model._set_observation([sample_size*i for i in percentage])
+
+	Bayesian_Model._set_candidate_scores()
+	Bayesian_Model._set_LS_Candidates()
+
+	xstick = [str((c._minus(Bayesian_Model._prior))._alphas) for c in Bayesian_Model._candidates]
+	beta = math.log(1 - epsilon / (2.0 * math.log(delta / (2.0 * (sample_size)))))
+	y=[Bayesian_Model._LS_Candidates[r] for r in Bayesian_Model._candidates]
+
+
+	plot_ss(y,xstick,'Local Sensitivity Component of Smooth Sensitivity w.r.t. x :' + str([sample_size*i for i in percentage]),r"$\Delta_l(H(BI(x'),-))}$")
+
+	return
+
+
 if __name__ == "__main__":
-	percentage = [0.1,0.9]
-	datasize = 10
+	percentage = [0.02,0.98]
+	datasize = 50
 	prior = dirichlet([1,1])
 
-	smooth_sensitivity_study(prior,datasize,0.8,0.00000001,percentage)
+	ss_exponentiate_component_study(prior,datasize,0.8,0.00000001,percentage)
 
+	# ss_ls_component_study(prior,datasize,0.8,0.00000001,percentage)
