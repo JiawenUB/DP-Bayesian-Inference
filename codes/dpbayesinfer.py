@@ -17,7 +17,7 @@ from scipy.special import gammaln
 
 def Hamming_Distance(c1, c2):
 	temp = [abs(a - b) for a,b in zip(c1,c2)]
-	return sum(temp)/2
+	return sum(temp)/2.0
 
 
 class BayesInferwithDirPrior(object):
