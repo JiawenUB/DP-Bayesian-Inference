@@ -66,7 +66,7 @@ def smooth_sensitivity_study(prior, sample_size, epsilon, delta, percentage):
 
 	y=[Bayesian_Model._LS_Candidates[r] * math.exp(- beta * Hamming_Distance(observation, r._alphas)) for r in Bayesian_Model._candidates]
 
-	plot_ss(y,xstick,'Smooth Sensitivity Study w.r.t. x :' + str([sample_size*i for i in percentage]) + r'; $\epsilon = $' + str(epsilon), r"$\Delta_l(H(BI(x'),-))e^{- \gamma *d(x,x')}$")
+	plot_ss(y,xstick,'Smooth Sensitivity Study w.r.t. x :' + str([sample_size*i for i in percentage]) + r'; $\epsilon = $' + str(epsilon) + r'; $\delta:$' + str(delta), r"$\Delta_l(H(BI(x'),-))e^{- \gamma *d(x,x')}$")
 
 
 
@@ -101,7 +101,7 @@ def ss_exponentiate_component_study(prior, sample_size, epsilon, delta, percenta
 	y=[math.exp(- beta * Hamming_Distance(observation, r._alphas)) for r in Bayesian_Model._candidates]
 
 
-	plot_ss(y,xstick,'Exponentiate Component of Smooth Sensitivity w.r.t. x :' + str([sample_size*i for i in percentage]) + r'; $\epsilon:$' + str(epsilon), r"$e^{- \gamma *d(x,x')}$")
+	plot_ss(y,xstick,'Exponentiate Component of Smooth Sensitivity w.r.t. x :' + str([sample_size*i for i in percentage]) + r'; $\epsilon:$' + str(epsilon) + r'; $\delta:$' + str(delta), r"$e^{- \gamma *d(x,x')}$")
 
 	return
 
@@ -118,22 +118,22 @@ def ss_ls_component_study(prior, sample_size, epsilon, delta, percentage):
 	y=[Bayesian_Model._LS_Candidates[r] for r in Bayesian_Model._candidates]
 
 
-	plot_ss(y,xstick,'Local Sensitivity Component of Smooth Sensitivity w.r.t. x :' + str([sample_size*i for i in percentage]) + r'; $\epsilon:$' + str(epsilon), r"$\Delta_l(H(BI(x'),-))}$")
+	plot_ss(y,xstick,'Local Sensitivity Component of Smooth Sensitivity w.r.t. x :' + str([sample_size*i for i in percentage]) + r'; $\epsilon:$' + str(epsilon) + r'; $\delta:$' + str(delta), r"$\Delta_l(H(BI(x'),-))}$")
 
 	return
 
 
 if __name__ == "__main__":
-	percentage = [0.1,0.1,0.8]
-	datasize = 10
-	prior = dirichlet([1,1,1])
+	percentage = [0.5,0.5]
+	datasize = 50
+	prior = dirichlet([1,1])
 
 	# ss_exponentiate_component_study(prior, datasize, 1, 0.00000001, percentage)
 
 	# ss_ls_component_study(prior, datasize, 1.0, 0.00000001, percentage)
 
-	# smooth_sensitivity_study(prior,datasize, 1, 0.00000001, percentage)
+	smooth_sensitivity_study(prior,datasize, 1.0, 0.01, percentage)
 	
-	smooth_sensitivity_study2(prior,datasize,1,0.00000001, percentage)
+	# smooth_sensitivity_study2(prior,datasize,3,0.00000001, percentage)
 
 
