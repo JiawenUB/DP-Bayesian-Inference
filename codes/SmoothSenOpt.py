@@ -124,7 +124,7 @@ def ss_ls_component_study(prior, sample_size, epsilon, delta, percentage):
 
 
 if __name__ == "__main__":
-	percentage = [0.3,0.7]
+	percentage = [0.1,0.9]
 	datasize = 50
 	prior = dirichlet([1,1])
 

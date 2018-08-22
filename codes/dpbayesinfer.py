@@ -102,6 +102,34 @@ class BayesInferwithDirPrior(object):
 		for r in self._candidates:
 			self._LS_Candidates[r] = r._hellinger_sensitivity()
 
+	def _set_SS_opt(self):
+		self._set_LS_Candidates()
+		start = time.clock()
+		beta = math.log(1 - self._epsilon / (2.0 * math.log(self._delta / (2.0 * (self._sample_size)))))
+		for i in range(n):
+			extrem_values = []
+		self._SS = max(self._LS, max([self._LS_Candidates[r] * math.exp(- beta * Hamming_Distance(self._observation_counts, [r._alphas[i] - self._prior._alphas[i] for i in range(self._prior._size)])) for r in self._candidates]))
+		key3 = "Exponential Mechanism with " + str(beta) + " - Bound Smooth Sensitivity (" + str(self._SS) + ")|(" + str(self._epsilon) + "," + str(self._delta) + ")-DP"
+		key3 = "ExpoMech of SS"
+		self._accuracy[key3] = []
+		self._accuracy_l1[key3] = []
+		self._keys.append(key3)
+		nomalizer = 0.0
+
+
+		for r in self._candidates:
+			temp = math.exp(self._epsilon * self._candidate_scores[r]/(2 * self._SS))
+			self._SS_probabilities.append(temp)
+			nomalizer += temp
+
+		for i in range(len(self._SS_probabilities)):
+			self._SS_probabilities[i] = self._SS_probabilities[i]/nomalizer
+			# print self._candidates[i]._alphas, self._SS_probabilities[i]
+
+		return nomalizer
+
+
+
 	def _set_SS(self):
 		self._set_LS_Candidates()
 		start = time.clock()
