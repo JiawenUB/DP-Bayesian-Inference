@@ -352,7 +352,7 @@ def accuracy_VS_datasize(epsilon,delta,prior,observations,datasizes):
 	for observation in observations:
 		Bayesian_Model = BayesInferwithDirPrior(prior, sum(observation), epsilon, delta)
 		Bayesian_Model._set_observation(observation)
-		Bayesian_Model._experiments(5000)
+		Bayesian_Model._experiments(500)
 		mean_error[0].append(Bayesian_Model._accuracy_mean[Bayesian_Model._keys[3]])
 		mean_error[1].append(Bayesian_Model._accuracy_mean[Bayesian_Model._keys[0]])
 		mean_error[2].append(Bayesian_Model._accuracy_mean[Bayesian_Model._keys[4]])
@@ -366,7 +366,7 @@ def accuracy_VS_datasize(epsilon,delta,prior,observations,datasizes):
 
 	plot_mean_error(range(0,len(observations)),mean_error,datasizes, 
 		 "Different Data sizes",
-		['Our ExpMech',"LapMech (sensitivity = 2)", "LapMech (sensitivity = 3)"],
+		['Our ExpMech',"LapMech (sensitivity = 2)", "LapMech (sensitivity = 4)"],
 		"Mean Error VS. Data Size")
 	# plot_error_box(data,"Different Datasizes",xstick,"Accuracy VS. Data Size")
 	return
@@ -527,13 +527,13 @@ if __name__ == "__main__":
 	datasize = 500
 	epsilon = 1.0
 	delta = 0.00000001
-	prior = dirichlet([1,1,1])
+	prior = dirichlet([1,1,1,1])
 	observation = [20,20]
 	x1 = [1,499]
 	x2 = [0,500]
 	epsilons = numpy.arange(0.1, 2, 0.1)
-	datasizes = gen_datasizes((100,500),20)#[300] #[8,12,18,24,30,36,42,44,46,48]#,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80]
-	percentage = [0.3,0.3,0.3]
+	datasizes = gen_datasizes((100,300),50)#[300] #[8,12,18,24,30,36,42,44,46,48]#,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80]
+	percentage = [0.25,0.25,0.25,0.25]
 	datasets = gen_datasets(percentage, datasizes)
 	priors = [dirichlet([4*i,4*i,4*i]) for i in range(5,20)]
 	# accuracy_VS_dimension(sample_sizes, epsilon, delta)

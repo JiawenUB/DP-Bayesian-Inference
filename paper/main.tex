@@ -207,41 +207,44 @@ The same change of metric will be applied to the experimental accuracy guarantee
 
 \section{Algorithm Setting up}
 \label{sec_setup}
-For now, we already have a prior distribution $\pi(\xis)$, an observed data set $x$.
+Given a prior distribution $\bprior=\betad(\alpha, \beta)$ and a sequence of $n$ observations $\dataobs\in\{0,1\}^n$, we define the follwing set:
 
-\subsection{Baseline Approach - Laplace Mechanism}
+\[
+  \betaset\equiv\{\betad(\alpha',\beta')\mid \alpha'=\alpha+\Delta\alpha, \beta'=\beta+n-\Delta\alpha\}
+\]
+
+where $\Delta\alpha$ is as defined in Section
+\ref{sec_background}. Notice that $\betaset$ has $n + 1$ elements, and
+the Bayesian Inference process will produce an element from $\betaset$
+that we denote by $\bysinfer(\dataobs)$ -- we don't explicitely
+parametrize the result by the prior, which from now on we consider
+fixed and we denote it by $\bprior$.
+
+\subsection{Baseline Approach} 
+
+
+\subsubsection{Laplace Mechanism}
 \label{subsec_lap}
 
-\subsection{Exponential Mechanism with Global Sensitivity}
+\subsubsection{Exponential Mechanism}
 \label{subsec_emgs}
 
 % \subsubsection{Mechanism Set up}
 
-In exponential mechanism, candidate set $\mathcal{R}$ can be obtained by enumerating $y \in \mathcal{X}^n$, i.e.
+Exponential mechanism $\expmech{}{x}$ samples a element from the candidate set $\betaset = \{r_1, r_2, \cdots r_n\}$ with probability proportional to $exp(\frac{\epsilon u(x,r)}{2 GS})$:
 \begin{equation*}
-\mathcal{R} = \{\bysinfer(y)\ |\ y \in \mathcal{X}^n\}.
+\underset{z \thicksim \expmech{}{x}}{Pr}[z=r] = \frac
+{exp(\frac{\epsilon u(x,r)}{2 GS(x)})}
+{\Sigma_{r' \in \mathcal{R}}\ exp(\frac{\epsilon u(x,r')}{2 GS})},
+\end{equation*}
+where $u(x,r)$ is the Hellinger scoring function over candidates, $\hellinger(\bysinfer(\dataobs), r)$, and $GS(x)$ is the global sensitivity calculated by:
+\begin{equation*}
+GS = 
+\max_{\{|\dataobs,\dataobs'| \leq 1;\dataobs,\dataobs'\in \mathcal{X}^n\}}\max_{\{r\in \mathcal{R}\}}
+|\hellinger(\bysinfer(\dataobs), r) - \hellinger(\bysinfer(\dataobs'), r)|
 \end{equation*}
 
-Hellinger distance $\hlg$ is used here to score these candidates. The utility function:
-\begin{equation}
-\label{equ_utility}
-u(x,r) = -\hlg(\bysinfer(x), r); r \in \mathcal{R}.
-\end{equation}
-
-Exponential mechanism with global sensitivity selects and outputs a candidate $r \in \mathcal{R}$ with probability proportional to $exp(\frac{\epsilon u(x,r)}{2 \Delta_{g}u})$:
-\begin{equation*}
-P[r] = \frac
-{exp(\frac{\epsilon u(x,r)}{2 \Delta_{g}u})}
-{\Sigma_{r' \in \mathcal{R}}\ exp(\frac{\epsilon u(x,r')}{2 \Delta_{g}u})},
-\end{equation*}
-where global sensitivity is calculated by:
-\begin{equation*}
-\Delta_{g}u = 
-\max_{\{|x',y'| \leq 1;x',y'\in \mathcal{X}^n\}}\max_{\{r\in \mathcal{R}\}}
-|\hlg(\bysinfer(x'), r) - \hlg(\bysinfer(y'), r)|
-\end{equation*}
-
-The basic exponential mechanism is $\epsilon -$differential privacy\cite{dwork2014algorithmic}.
+Exponential mechanism is $\epsilon -$differential privacy\cite{dwork2014algorithmic}.
 
 % We use probability proportional to $exp(\frac{\epsilon u(x,r)}{\Delta_{g}u})$ rather than $exp(\frac{\epsilon u(x,r)}{2 \Delta_{g}u})$. Since $\hlg$ is monotonic, i.e. our utility function is monotonic. 
 
@@ -288,71 +291,74 @@ The basic exponential mechanism is $\epsilon -$differential privacy\cite{dwork20
 % Then, $\frac{P[\privinfer(x,u,R) = r]}{P[\privinfer(y,u,R) = r]} \geq exp(-\epsilon)$ can be obtained by symmetry.
 
 
-\subsection{Exponential Mechanism with Local Sensitivity}
+\subsubsection{Exponential Mechanism with Local Sensitivity}
 \label{subsec_emls}
 % \subsubsection{Mechanism Set up}
-Exponential mechanism with local sensitivity share the same candidate set and utility function as it with global sensitivity. This outputs a candidate $r \in \mathcal{R}$ with probability proportional to $exp(\frac{\epsilon u(x,r)}{2 \Delta_{l}u})$:
+Exponential mechanism with local sensitivity $\expmech{local}{x}$ share the same candidate set and utility function as it with global sensitivity. This outputs a candidate $r \in \mathcal{R}$ with probability proportional to $exp(\frac{\epsilon u(x,r)}{2 LS(x)})$:
 \begin{equation*}
-P[r] = \frac
-{exp(\frac{\epsilon u(x,r)}{2 \Delta_{l}u})}
-{\Sigma_{r' \in \mathcal{R}}\ exp(\frac{\epsilon u(x,r')}{2 \Delta_{l}u})},
+\underset{z \thicksim \expmech{local}{x}}{\Pr}[z=r] = \frac
+{exp(\frac{\epsilon u(x,r)}{2 LS(x)})}
+{\Sigma_{r' \in \mathcal{R}}\ exp(\frac{\epsilon u(x,r')}{2 LS(x)})},
 \end{equation*}
 
 where local sensitivity is calculated by:
 
 \begin{equation*}
-\Delta_{l}u(x) = 
-\max_{\{|x,y'| \leq 1;y'\in \mathcal{X}^n\}}\max_{\{r\in \mathcal{R}\}}.
-\hlg(\bysinfer(x), r) - \hlg(\bysinfer(y'), r)|
+LS(\dataobs)=\max_{\dataobs' \in \datauni^n:\adj{\dataobs}{\dataobs'}, r\in \mathcal{R}}\lvert \hellinger(\bysinfer(\dataobs'), r) - \hellinger(\bysinfer(\dataobs'), r)\rvert.
 \end{equation*}
 
-The exponential mechanism with local sensitivity is non differential privacy\cite{dwork2014algorithmic}.
+The exponential mechanism with local sensitivity is non-differential privacy\cite{dwork2014algorithmic}.
 
 
-\subsection{Exponential Mechanism with Smooth Sensitivity}
+\subsection{Our Approach - Exponential Mechanism with Smooth Sensitivity}
 \label{sec_smoo}
 
-\subsubsection{Algorithm Setting up}
-We define a new mechanism $\hexpmech(x)$
-which is similar to the exponential mechanism where we use
-$\mathcal{R}$ as the set $\betaset$ of beta distributions with integer parameters
-summing up to $n+2$, as scoring function we use the Hellinger distance
-from $\bysinfer(x)$, i.e. $\hlg(\bysinfer(x),-)$, and we 
-calibrate the noise to the smooth sensitivity~\cite{nissim2007smooth}. The
-only difference is in the sensitivity part, since now we use the
-smooth sensitivity.
+\subsubsection{Setting up}
 
 \begin{definition}
 \label{def_smoo}
 The mechanism $\hexpmech(x)$ outputs a candidate $r \in \betaset$ with probability
 \begin{equation*}
-\underset{z \thicksim \hexpmech(x)}{Pr}[z=r] = \frac
-{exp(\frac{-\epsilon\hlg(\bysinfer(x),r)}{2 S_\beta(x)})}
-{\Sigma_{r' \in R}\ exp(\frac{-\epsilon \hlg(\bysinfer(x),r')}{2 S_\beta(x)})},
+\underset{z \thicksim \hexpmech}{\Pr}[z=r] = \frac {exp\big(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r)}{2\cdot S(\dataobs)}\big)}
+{\displaystyle\sum_{r\in\betaset} exp\Big(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r)}{2\cdot S(\dataobs)}\Big)}.
 \end{equation*}
-where $s_\beta(x)$ is the smooth sensitivity of $\hlg(\bysinfer(x),-)$, calculated by:
-\begin{equation*}
-S_{\beta}(x) = \max(\Delta_{l}\hlg(\bysinfer(x),-), \max_{y \neq x; y \in D^{n}}(\Delta_{l}\hlg(\bysinfer(y),-)\cdot e^{-\beta d(x,y)})),
-\end{equation*}
+where $S_\beta(x)$ is the smooth sensitivity of $\hlg(\bysinfer(x),-)$, calculated by:
+
+\begin{equation}
+  \label{eq:smooth}
+   S(\dataobs)=\max_{\dataobs' \in \{0,1\}^{n}}\bigg \{LS(\dataobs') \cdot e^{-\gamma\cdot d(\dataobs,\dataobs')}\bigg\},
+\end{equation}
 where $d$ is the Hamming distance between two datasets, and $\beta =
 \beta(\epsilon, \delta)$ is a function of $\epsilon$ and $\delta$. 
 \end{definition}
 
+This mechanism is based on the basic exponential mechanism
+\cite{talwar}, with $\betaset$ as the range and
+$\hellinger(\cdot,\cdot)$ as the scoring function. The difference is
+that in this mechanism we don't calibrate the noise w.r.t. to the
+global sensitivity of the scoring function but w.r.t. to the smooth
+sensitivity $S(\dataobs)$ -- defined by \citet{nissim2007smooth}-- of
+$\hellinger(\bysinfer(\dataobs), \cdot)$.
 
-In what follows, we will use a correspondence between the probability
- $\underset{z \thicksim \hexpmech(x)}{Pr}[z = r]$ of every
- $r\in\betaset$ and the probability 
- $\underset{z \thicksim \hexpmech(x)}{Pr}[\hlg(\bysinfer(x),z) =
- \hlg(\bysinfer(x),r)]$ for the utility score for $r$. In particular, for every
- $r\in\betaset$ we have:
-$$
-\underset{z \thicksim \hexpmech(x)}{Pr}[z = r]=
-\frac{1}{2}\Big (\underset{z \thicksim \hexpmech(x)}{Pr}[\hlg(\bysinfer(x),z) =
- \hlg(\bysinfer(x),r)]\Big )
-$$
-To see this, it is enough to notice that: $\underset{z \thicksim \hexpmech(x)}{Pr}[z = r]$ is proportional too $\hlg(\bysinfer(x),r)$, i.e., $u(x,z)$. We can derive, if $u(r,x) = u(r',x)$ then $\underset{z \thicksim \hexpmech(x)}{Pr}[z = r] = \underset{z \thicksim \hexpmech(x)}{Pr}[z = r']$. We assume the number of candidates $z \in \mathcal{R}$ that satisfy $u(z,x) = u(r,x)$ is $|r|$, we have  $\underset{z \thicksim \hexpmech(x)}{Pr}[u(z,x) = u(r,x)] = |r| \underset{z \thicksim \hexpmech(x)}{Pr}[z = r]$. Because Hellinger distance  $\hlg(\bysinfer(x),z)$ is axial symmetry, where the $\bysinfer(x)$ is the symmetry axis. It can be infer that $|z| = 2$ for any candidates, apart from the true output, i.e., $\underset{z \thicksim \hexpmech(x)}{Pr}[u(z,x) = u(r,x)] = 2 \underset{z \thicksim \hexpmech(x)}{Pr}[z = r]$. This parameter can be eliminate in both sides in proof.
+$\gamma = \gamma(\epsilon, \delta)$ is a function of $\epsilon$ and $\delta$ to
+be determined later, and where $LS(\dataobs')$ denotes the local
+sensitivity at $\bysinfer(\dataobs')$, or equivalently at $\dataobs'$,
+of the scoring function used in our mechanism.
 
-In our private Bayesian inference mechanism, we set the $\beta$ as $\ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta}{2 (n + 1)})})$. 
+This mechanism also extends to the Dirichlet-Multinomial system $\dirichlet(\valpha)$ by rewriting the Hellinger distance as:
+\[
+  \hellinger(\dirichlet(\valpha_1), \dirichlet(\valpha_2)) = \sqrt{1 - \frac{\betaf(\frac{\valpha_1 + \valpha_2}{2})}{\sqrt{\betaf(\valpha_1) \betaf(\valpha_2)}}},
+\]
+and by replacing the $\betaset$ with set of posterior Dirichlet
+distributions candidates. Also, the smooth sensitivity $S(\dataobs)$
+in (\ref{eq:smooth}) will be computed by letting $\dataobs'$ range
+over all the elements in $\datauni^{n}$ adjacent to $\dataobs$. Notice
+that $\betaset$ has $\binom{n + 1}{m - 1}$ elements in this case. We
+will denote by $\hexpmechd$ the mechanism for the
+Dirichlet-Multinomial system.
+
+
+By setting the $\gamma$ as $\ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta}{2 (n + 1)})})$, $\hexpmech$ is $(\epsilon, \delta) -$differentially private.
 
 
 \subsubsection{Sliding Property of Exponential Mechanism}
@@ -369,6 +375,21 @@ e^{\frac{\epsilon}{2}} \underset{r \thicksim \hexpmech(x)}{Pr}[u(r,x) = (\Delta 
 \end{lem}
 
 \begin{proof}
+
+In what follows, we will use a correspondence between the probability
+ $\underset{z \thicksim \hexpmech(x)}{Pr}[z = r]$ of every
+ $r\in\betaset$ and the probability 
+ $\underset{z \thicksim \hexpmech(x)}{Pr}[\hlg(\bysinfer(x),z) =
+ \hlg(\bysinfer(x),r)]$ for the utility score for $r$. In particular, for every
+ $r\in\betaset$ we have:
+
+$$
+\underset{z \thicksim \hexpmech(x)}{Pr}[z = r]=
+\frac{1}{2}\Big (\underset{z \thicksim \hexpmech(x)}{Pr}[\hlg(\bysinfer(x),z) =
+ \hlg(\bysinfer(x),r)]\Big )
+$$
+
+To see this, it is enough to notice that: $\underset{z \thicksim \hexpmech(x)}{Pr}[z = r]$ is proportional too $\hlg(\bysinfer(x),r)$, i.e., $u(x,z)$. We can derive, if $u(r,x) = u(r',x)$ then $\underset{z \thicksim \hexpmech(x)}{Pr}[z = r] = \underset{z \thicksim \hexpmech(x)}{Pr}[z = r']$. We assume the number of candidates $z \in \mathcal{R}$ that satisfy $u(z,x) = u(r,x)$ is $|r|$, we have  $\underset{z \thicksim \hexpmech(x)}{Pr}[u(z,x) = u(r,x)] = |r| \underset{z \thicksim \hexpmech(x)}{Pr}[z = r]$. Because Hellinger distance  $\hlg(\bysinfer(x),z)$ is axial symmetry, where the $\bysinfer(x)$ is the symmetry axis. It can be infer that $|z| = 2$ for any candidates, apart from the true output, i.e., $\underset{z \thicksim \hexpmech(x)}{Pr}[u(z,x) = u(r,x)] = 2 \underset{z \thicksim \hexpmech(x)}{Pr}[z = r]$. This parameter can be eliminate in both sides in proof.
 
 We denote the normalizer of the probability mass in $\hexpmech(x)$: $\sum_{r' \in \mathcal{R}}exp(\frac{\epsilon u(r',x)}{2 S(x)})$ as $NL(x)$:
 \begin{equation*}
