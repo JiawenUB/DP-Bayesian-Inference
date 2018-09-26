@@ -251,11 +251,11 @@ class BayesInferwithDirPrior(object):
 	# 	self._SS_posterior = dirichlet(temp)
 	# 	return		
 
-	def _laplace_noize(self):
+	def _laplace_noize(self, sensitivity = 2.0):
 		noised_alphas = []
 		rest = self._sample_size
 		for i in range(self._prior._size - 1):
-			t = self._observation_counts[i] + math.floor(numpy.random.laplace(0, 2.0/self._epsilon))
+			t = self._observation_counts[i] + math.floor(numpy.random.laplace(0, sensitivity/self._epsilon))
 			if t < 0:
 				noised_alphas.append(0)
 				rest -= 0
@@ -272,9 +272,9 @@ class BayesInferwithDirPrior(object):
 		self._laplaced_posterior = dirichlet(noised_alphas) + self._prior
 
 
-	def _laplace_noize_ours(self):
+	# def _laplace_noize_ours(self):
 
-		self._laplaced_posterior = dirichlet([alpha + math.floor(numpy.random.laplace(0, 1.0/self._epsilon)) for alpha in self._posterior._alphas])
+	# 	self._laplaced_posterior = dirichlet([alpha + math.floor(numpy.random.laplace(0, 1.0/self._epsilon)) for alpha in self._posterior._alphas])
 
 	def _laplace_fourier(self):
 		
@@ -354,12 +354,12 @@ class BayesInferwithDirPrior(object):
 		self._set_GS()
 		self._set_LS()
 		self._set_SS()
-		self._keys.append('Laplace_zhang')
-		self._accuracy['Laplace_zhang'] = []
-		self._accuracy_mean['Laplace_zhang'] = []
+		self._keys.append('Laplace_s2')
+		self._accuracy['Laplace_s2'] = []
+		self._accuracy_mean['Laplace_s2'] = []
 		#self._show_all()
 		for i in range(times):
-			self._laplace_noize()
+			self._laplace_noize(sensitivity = 2.0)
 			# print self._laplaced_posterior._alphas
 			self._accuracy[self._keys[0]].append(self._posterior - self._laplaced_posterior)
 			# self._laplace_noize()
@@ -378,9 +378,13 @@ class BayesInferwithDirPrior(object):
 			# self._accuracy[self._keys[4]].append(self._posterior - self._SS_posterior)
 			self._exponentialize_SS()
 			self._accuracy[self._keys[3]].append(self._posterior - self._exponential_posterior)
-			self._laplace_noize_zhang()
-			self._accuracy[self._keys[4]].append(self._posterior - self._laplaced_zhang_posterior)
-			# self._accuracy_l1[self._keys[3]].append(L1_Nrom(self._posterior, self._exponential_posterior))
+			self._laplace_noize(sensitivity = 3.0)
+			# print self._laplaced_posterior._alphas
+			self._accuracy[self._keys[4]].append(self._posterior - self._laplaced_posterior)
+			
+			# self._laplace_noize_zhang()
+			# self._accuracy[self._keys[4]].append(self._posterior - self._laplaced_zhang_posterior)
+			# # self._accuracy_l1[self._keys[3]].append(L1_Nrom(self._posterior, self._exponential_posterior))
 		for key,item in self._accuracy.items():
 			self._accuracy_mean[key] = sum(item)*1.0/(1 if len(item) == 0 else len(item))
 

@@ -311,22 +311,6 @@ def hellinger_vs_l1norm(base_distribution):
 	plt.show()
 
 
-def plot_mean_error(x,y_list,xstick,xlabel,title):
-	plt.figure(figsize=(12,10))
-	i = 0
-	ylabel=['Our ExpMech',"Laplace Mechanism", "Laplace Mech of Zhang"]
-	
-	for i in range(3):
-		plt.plot(x,y_list[i],'^',label=ylabel[i])
-
-	plt.xticks(x,xstick,rotation=70,fontsize=12)
-	plt.title(title,fontsize=20)
-	plt.xlabel(xlabel,fontsize=15)	
-	plt.ylabel('Mean Error / Hellinegr Distance ',fontsize=15)
-	plt.grid()
-	plt.legend()
-	plt.show()
-
 def plot_error_box(data, xlabel,xstick,title):
 	plt.figure(figsize=(12,10))
 	bplot = plt.boxplot(data, notch=1, widths=0.4, sym='+', vert=2, whis=1.5,patch_artist=True)
@@ -346,16 +330,29 @@ def plot_error_box(data, xlabel,xstick,title):
 	plt.grid()
 	plt.show()
 
+def plot_mean_error(x,y_list,xstick,xlabel, ylabel, title):
+	plt.figure(figsize=(12,10))
+	i = 0	
+	for i in range(3):
+		plt.plot(x,y_list[i],'^',label=ylabel[i])
+
+	plt.xticks(x,xstick,rotation=70,fontsize=12)
+	plt.title(title,fontsize=20)
+	plt.xlabel(xlabel,fontsize=15)	
+	plt.ylabel('Average Hellinger Distance ',fontsize=15)
+	plt.grid()
+	plt.legend()
+	plt.show()
+
 
 def accuracy_VS_datasize(epsilon,delta,prior,observations,datasizes):
 	data = []
 	xstick = []
 	mean_error = [[],[],[]]
 	for observation in observations:
-		print str(observations)
 		Bayesian_Model = BayesInferwithDirPrior(prior, sum(observation), epsilon, delta)
 		Bayesian_Model._set_observation(observation)
-		Bayesian_Model._experiments(3000)
+		Bayesian_Model._experiments(1000)
 		mean_error[0].append(Bayesian_Model._accuracy_mean[Bayesian_Model._keys[3]])
 		mean_error[1].append(Bayesian_Model._accuracy_mean[Bayesian_Model._keys[0]])
 		mean_error[2].append(Bayesian_Model._accuracy_mean[Bayesian_Model._keys[4]])
@@ -367,7 +364,10 @@ def accuracy_VS_datasize(epsilon,delta,prior,observations,datasizes):
 		# xstick.append(str(observation) + "/Laplace_Zhang")
 	print('Accuracy / prior: ' + str(prior._alphas) + ", delta: " + str(delta) + ", epsilon:" + str(epsilon))
 
-	plot_mean_error(range(0,len(observations)),mean_error,datasizes,"Different Data sizes","Mean Error VS. Data Size")
+	plot_mean_error(range(0,len(observations)),mean_error,datasizes, 
+		 "Different Data sizes",
+		['Our ExpMech',"LapMech (sensitivity = 2)", "LapMech (sensitivity = 3)"],
+		"Mean Error VS. Data Size")
 	# plot_error_box(data,"Different Datasizes",xstick,"Accuracy VS. Data Size")
 	return
 
@@ -525,54 +525,32 @@ def gen_datasizes(r, step):
 if __name__ == "__main__":
 
 	datasize = 500
-	epsilon = 0.8
+	epsilon = 1.0
 	delta = 0.00000001
-	prior = dirichlet([1,1])
-	observation = [20,20,20]
+	prior = dirichlet([1,1,1])
+	observation = [20,20]
 	x1 = [1,499]
 	x2 = [0,500]
 	epsilons = numpy.arange(0.1, 2, 0.1)
-	datasizes = gen_datasizes((10000,20000),10000)#[300] #[8,12,18,24,30,36,42,44,46,48]#,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80]
-	percentage = [0.3,0.3,0.4]
+	datasizes = gen_datasizes((200,500),20)#[300] #[8,12,18,24,30,36,42,44,46,48]#,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80]
+	percentage = [0.3,0.3,0.3]
 	datasets = gen_datasets(percentage, datasizes)
 	priors = [dirichlet([4*i,4*i,4*i]) for i in range(5,20)]
-	# print opt_hellinger2([20000,20000],[19999, 19999])
 	# accuracy_VS_dimension(sample_sizes, epsilon, delta)
 	# accuracy_VS_prior_mean(sample_size,epsilon,delta,priors,observations)
-	# means = [[(i/10.0), (1 - i/10.0)] for i in range(1,10)]
-	# print means
 	# accuracy_VS_prior(sample_size,epsilon,delta,priors,observation,mean)
 	# accuracy_VS_mean(sample_size,epsilon,delta,prior)
-	# accuracy_VS_datasize(epsilon,delta,prior,datasets,datasizes)
-	# # hellinger_vs_l1norm(Dir(observation))
-	global_epsilon_study(datasizes,epsilon,delta,prior)
-	# Dir([1,17]) - Dir([])
-	# d0 = dirichlet([6,6])
-	# d1 = dirichlet([10,2])
-	# print d0._hellinger_sensitivity()
-	# print d1._hellinger_sensitivity()
-
+	accuracy_VS_datasize(epsilon,delta,prior,datasets,datasizes)
+	# hellinger_vs_l1norm(Dir(observation))
+	# global_epsilon_study(datasizes,epsilon,delta,prior)
 	# accuracy_VS_epsilon(sample_size,epsilons,delta,prior,observation)
 
 	
 	# epsilon_study(datasize,epsilon,delta,prior,x1, x2)
 
-	# print math.floor(-0.6)
 	# accuracy_study_discrete(datasize,epsilon,delta,prior,observation)
 	# # accuracy_study_exponential_mechanism_SS(sample_size,epsilon,delta,prior,observation)
 	# # accuracy_study_laplace(sample_size,epsilon,delta,prior,observation)
-	# # Tests the functioning of the module
 
-	# print Dir([10,10]) - Dir([1,19])
-
-	# Bayesian_Model = BayesInferwithDirPrior(prior, sample_size, epsilon, delta)
-
-	# Bayesian_Model._set_observation(observation)
-
-	# Bayesian_Model._experiments(1000)
-
-	# draw_error(Bayesian_Model._accuracy,Bayesian_Model, "order-2-size-30-runs-1000-epsilon-1.2-hellinger-delta000005-observation202020-box.png")
-
-	# draw_error_l1(Bayesian_Model._accuracy_l1,Bayesian_Model, "order-2-size-100-runs-1000-epsilon-08-l1norm-delta000005box.png")
 	
 
