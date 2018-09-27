@@ -352,7 +352,10 @@ def accuracy_VS_datasize(epsilon,delta,prior,observations,datasizes):
 	for observation in observations:
 		Bayesian_Model = BayesInferwithDirPrior(prior, sum(observation), epsilon, delta)
 		Bayesian_Model._set_observation(observation)
+		print("start" + str(observation))
 		Bayesian_Model._experiments(500)
+		print("finished" + str(observation))
+
 		mean_error[0].append(Bayesian_Model._accuracy_mean[Bayesian_Model._keys[3]])
 		mean_error[1].append(Bayesian_Model._accuracy_mean[Bayesian_Model._keys[0]])
 		mean_error[2].append(Bayesian_Model._accuracy_mean[Bayesian_Model._keys[4]])
