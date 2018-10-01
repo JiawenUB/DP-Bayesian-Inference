@@ -367,6 +367,8 @@ class BayesInferwithDirPrior(object):
 		self._accuracy['Laplace_s2'] = []
 		self._accuracy_mean['Laplace_s2'] = []
 		#self._show_all()
+		data_records = []
+		t0 = time.time()
 		for i in range(times):
 			self._laplace_noize(sensitivity = 2.0)
 			# print self._laplaced_posterior._alphas
@@ -390,12 +392,19 @@ class BayesInferwithDirPrior(object):
 			self._laplace_noize(sensitivity = 3.0)
 			# print self._laplaced_posterior._alphas
 			self._accuracy[self._keys[4]].append(self._posterior - self._laplaced_posterior)
-			
+		for i in self._keys:
+			f = open("dimension_" + str(self._prior._size) +"datasize" + str(self._sample_size) + i + ".txt", "w")
+			f.write('Accuracy / observation: ' + str(self._observation_counts) + ", delta: " + str(self._delta) + ", epsilon:" + str(self._epsilon))
+			f.write(str(self._accuracy[i]))
+			f.close()
+		t1 = time.time()
+		print("sample " +str(times) + " times:" +str(t1 - t0))
+	
 			# self._laplace_noize_zhang()
 			# self._accuracy[self._keys[4]].append(self._posterior - self._laplaced_zhang_posterior)
 			# # self._accuracy_l1[self._keys[3]].append(L1_Nrom(self._posterior, self._exponential_posterior))
-		for key,item in self._accuracy.items():
-			self._accuracy_mean[key] = sum(item)*1.0/(1 if len(item) == 0 else len(item))
+		# for key,item in self._accuracy.items():
+		# 	self._accuracy_mean[key] = sum(item)*1.0/(1 if len(item) == 0 else len(item))
 
 
 
@@ -442,3 +451,5 @@ class BayesInferwithDirPrior(object):
 		self._show_observation()
 		self._show_laplaced()
 		self._show_exponential()
+
+

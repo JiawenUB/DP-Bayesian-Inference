@@ -1,0 +1,210 @@
+start[30, 30, 40]
+global sensitivity0.0029559135437
+local sensitivity0.00386619567871
+smooth sensitivity1.97611904144
+sample 3000 times:17.5664200783
+finished[30, 30, 40]
+median: 0.335264638639, 0.108502496669, 0.158086453514
+different
+start[36, 36, 48]
+global sensitivity0.00469899177551
+local sensitivity0.00652694702148
+smooth sensitivity2.84776115417
+sample 3000 times:23.9998481274
+finished[36, 36, 48]
+median: 0.296078044048, 0.0971462595352, 0.141704262503
+different
+start[42, 42, 56]
+global sensitivity0.0053379535675
+local sensitivity0.00687599182129
+smooth sensitivity3.91471195221
+sample 3000 times:32.077903986
+finished[42, 42, 56]
+median: 0.251033797575, 0.0868283063259, 0.129239828393
+different
+start[48, 48, 64]
+global sensitivity0.00734210014343
+local sensitivity0.0110220909119
+smooth sensitivity5.08130502701
+sample 3000 times:41.843089819
+finished[48, 48, 64]
+median: 0.219370736854, 0.0827296091425, 0.118159033335
+different
+start[54, 54, 72]
+global sensitivity0.00926184654236
+local sensitivity0.0112638473511
+smooth sensitivity6.38625383377
+sample 3000 times:53.0889670849
+finished[54, 54, 72]
+median: 0.180614580439, 0.0772404324578, 0.111312963335
+different
+start[60, 60, 80]
+global sensitivity0.0119609832764
+local sensitivity0.0134429931641
+smooth sensitivity7.91014885902
+sample 3000 times:64.8769898415
+finished[60, 60, 80]
+median: 0.158529042421, 0.070560315276, 0.110377021463
+different
+start[66, 66, 88]
+global sensitivity0.0134918689728
+local sensitivity0.0167238712311
+smooth sensitivity9.51892209053
+sample 3000 times:77.8472070694
+finished[66, 66, 88]
+median: 0.13911999554, 0.0667604904471, 0.0981330239915
+different
+start[72, 72, 96]
+global sensitivity0.0178110599518
+local sensitivity0.018875837326
+smooth sensitivity11.3590648174
+sample 3000 times:92.695084095
+finished[72, 72, 96]
+median: 0.119150640144, 0.0641990745456, 0.0939284843542
+different
+start[78, 78, 104]
+global sensitivity0.0209209918976
+local sensitivity0.0221140384674
+smooth sensitivity13.7576828003
+sample 3000 times:107.157907963
+finished[78, 78, 104]
+median: 0.104757713152, 0.0612341680273, 0.0896119487765
+different
+start[84, 84, 112]
+global sensitivity0.0241219997406
+local sensitivity0.0244770050049
+smooth sensitivity15.0766420364
+sample 3000 times:123.387631893
+finished[84, 84, 112]
+median: 0.0913820646164, 0.0586166927762, 0.0857990285792
+different
+start[90, 90, 120]
+global sensitivity0.025997877121
+local sensitivity0.0276260375977
+smooth sensitivity17.2691469193
+sample 3000 times:141.572216988
+finished[90, 90, 120]
+median: 0.0824005708271, 0.0562849047648, 0.0824005708271
+different
+start[96, 96, 128]
+global sensitivity0.0291478633881
+local sensitivity0.0320980548859
+smooth sensitivity19.7752890587
+sample 3000 times:160.865278959
+finished[96, 96, 128]
+median: 0.0725206765994, 0.0556794821854, 0.0793478854374
+different
+start[102, 102, 136]
+global sensitivity0.0333411693573
+local sensitivity0.0352427959442
+smooth sensitivity23.5176038742
+sample 3000 times:182.875264883
+finished[102, 102, 136]
+median: 0.0700286551314, 0.0522985880425, 0.0762166749185
+different
+start[108, 108, 144]
+global sensitivity0.0403168201447
+local sensitivity0.0426769256592
+smooth sensitivity26.2014541626
+sample 3000 times:204.904880047
+finished[108, 108, 144]
+median: 0.0655862500955, 0.051651845095, 0.0740753241954
+different
+start[114, 114, 152]
+global sensitivity0.0453021526337
+local sensitivity0.0435919761658
+smooth sensitivity29.2005589008
+sample 3000 times:228.607158184
+finished[114, 114, 152]
+median: 0.0652330330658, 0.0486511832687, 0.0684647092269
+different
+start[120, 120, 160]
+global sensitivity0.0497620105743
+local sensitivity0.0500938892365
+smooth sensitivity32.2447319031
+sample 3000 times:253.581176996
+finished[120, 120, 160]
+median: 0.0627212593847, 0.0472323767157, 0.0696665624902
+different
+start[126, 126, 168]
+global sensitivity0.0501070022583
+local sensitivity0.0525059700012
+smooth sensitivity36.2058382034
+sample 3000 times:280.116454124
+finished[126, 126, 168]
+median: 0.0609860612235, 0.0462227283199, 0.0674520835227
+different
+start[132, 132, 176]
+global sensitivity0.056939125061
+local sensitivity0.0565979480743
+smooth sensitivity39.3929560184
+sample 3000 times:305.851662159
+finished[132, 132, 176]
+median: 0.0603661541918, 0.0449867123987, 0.0659124423735
+different
+start[138, 138, 184]
+global sensitivity0.064610004425
+local sensitivity0.0620999336243
+smooth sensitivity43.0344619751
+sample 3000 times:333.412000179
+finished[138, 138, 184]
+median: 0.0578799912416, 0.0450545766857, 0.0640033390922
+different
+start[144, 144, 192]
+global sensitivity0.0699348449707
+local sensitivity0.0694420337677
+smooth sensitivity45.808246851
+sample 3000 times:365.876406908
+finished[144, 144, 192]
+median: 0.0569212157617, 0.0437512684135, 0.0624524552052
+different
+start[150, 150, 200]
+global sensitivity0.0791201591492
+local sensitivity0.0742909908295
+smooth sensitivity51.0006158352
+sample 3000 times:394.662475824
+finished[150, 150, 200]
+median: 0.0555859291725, 0.0417640352457, 0.0610010648988
+different
+start[156, 156, 208]
+global sensitivity0.0860860347748
+local sensitivity0.081924200058
+smooth sensitivity54.9127421379
+sample 3000 times:429.149909973
+finished[156, 156, 208]
+median: 0.0539469861674, 0.0408241057167, 0.0598292469224
+different
+start[162, 162, 216]
+global sensitivity0.0863969326019
+local sensitivity0.0857410430908
+smooth sensitivity58.4283030033
+sample 3000 times:460.34465003
+finished[162, 162, 216]
+median: 0.0527919646434, 0.0397378897964, 0.0585372255438
+different
+start[168, 168, 224]
+global sensitivity0.0987758636475
+local sensitivity0.0939919948578
+smooth sensitivity63.7007961273
+sample 3000 times:497.106621981
+finished[168, 168, 224]
+median: 0.0517028031265, 0.0391075589971, 0.057234866937
+different
+start[174, 174, 232]
+global sensitivity0.101183891296
+local sensitivity0.101917982101
+smooth sensitivity66.6649370193
+sample 3000 times:531.445003033
+finished[174, 174, 232]
+median: 0.0509992910818, 0.0383210393119, 0.0561692659804
+different
+start[180, 180, 240]
+global sensitivity0.111629962921
+local sensitivity0.1040828228
+smooth sensitivity73.1215970516
+sample 3000 times:568.031841993
+finished[180, 180, 240]
+median: 0.0496991068849, 0.0375767578496, 0.0550806966157
+different
+Accuracy / prior: [1, 1, 1], delta: 1e-08, epsilon:1.0
+objc[68674]: Class FIFinderSyncExtensionHost is implemented in both /System/Library/PrivateFrameworks/FinderKit.framework/Versions/A/FinderKit (0x7fffa3be7c90) and /System/Library/PrivateFrameworks/FileProvider.framework/OverrideBundles/FinderSyncCollaborationFileProviderOverride.bundle/Contents/MacOS/FinderSyncCollaborationFileProviderOverride (0x11f83acd8). One of the two will be used. Which one is undefined.
