@@ -131,6 +131,8 @@ class BayesInferwithDirPrior(object):
 
 
 	def _set_SS(self):
+
+		t0 = time.time()
 		self._set_LS_Candidates()
 		start = time.clock()
 		beta = math.log(1 - self._epsilon / (2.0 * math.log(self._delta / (2.0 * (self._sample_size)))))
@@ -151,7 +153,8 @@ class BayesInferwithDirPrior(object):
 		for i in range(len(self._SS_probabilities)):
 			self._SS_probabilities[i] = self._SS_probabilities[i]/nomalizer
 			# print self._candidates[i]._alphas, self._SS_probabilities[i]
-
+		t1 = time.time()
+		print("smooth sensitivity"+str(t1 - t0))
 		return nomalizer
 		# beta = 0.0
 		# self._SS_Expon = max(self._LS, max([self._LS_Candidates[r] * math.exp(- beta * Hamming_Distance(self._posterior, r)) for r in self._candidates]))
@@ -160,6 +163,7 @@ class BayesInferwithDirPrior(object):
 		# self._keys.append(key2)
 
 	def _set_LS(self):
+		t0 = time.time()
 		self._LS = self._posterior._hellinger_sensitivity()#self._posterior
 
 		key = "Exponential Mechanism with Local Sensitivity - " + str(self._LS) + "| Non Privacy"
@@ -179,11 +183,15 @@ class BayesInferwithDirPrior(object):
 
 		for i in range(len(self._LS_probabilities)):
 			self._LS_probabilities[i] = self._LS_probabilities[i]/nomalizer
-
+		t1 = time.time()
+		print("local sensitivity"+str(t1 - t0))
 		return nomalizer
 
 
+
+
 	def _set_GS(self):
+		t0 = time.time()
 		t1 = [1 for i in range(self._prior._size)]
 		t1[0] += 1
 		t2 = [1 for i in range(self._prior._size)]
@@ -206,7 +214,8 @@ class BayesInferwithDirPrior(object):
 
 		for i in range(len(self._GS_probabilities)):
 			self._GS_probabilities[i] = self._GS_probabilities[i]/nomalizer
-
+		t1 = time.time()
+		print("global sensitivity"+str(t1 - t0))
 		return nomalizer
 
 
