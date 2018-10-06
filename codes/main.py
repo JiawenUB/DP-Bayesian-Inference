@@ -569,33 +569,26 @@ def gen_datasizes(r, step):
 	return [i*step for i in range(r[0]/step,r[1]/step + 1)]
 
 
-def percentile_plot(folders, percentiles):
-	for  folder in folders:
-		for filename in os.listdir(folder):
-			
-
-	return	
 
 if __name__ == "__main__":
 
 	datasize = 500
 	epsilon = 1.0
 	delta = 0.00000001
-	prior = dirichlet([1,1,1,1])
+	prior = dirichlet([1,1])
 	observation = [20,20]
 	x1 = [1,499]
 	x2 = [0,500]
 	epsilons = numpy.arange(0.1, 2, 0.1)
 	datasizes = gen_datasizes((100,600),50)#[300] #[8,12,18,24,30,36,42,44,46,48]#,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80]
-	percentage = [0.25,0.25,0.25,0.25]
-# >>>>>>> parent of 74d4cbc... updata datas
-# 	datasets = gen_datasets(percentage, datasizes)
+	percentage = [0.5,0.5]
+	datasets = gen_datasets(percentage, datasizes)
 # 	priors = [dirichlet([4*i,4*i,4*i]) for i in range(5,20)]
 	# accuracy_VS_dimension(sample_sizes, epsilon, delta)
 	# accuracy_VS_prior_mean(sample_size,epsilon,delta,priors,observations)
 	# accuracy_VS_prior(sample_size,epsilon,delta,priors,observation,mean)
 	# accuracy_VS_mean(sample_size,epsilon,delta,prior)
-	# accuracy_VS_datasize(epsilon,delta,prior,datasets,datasizes)
+	accuracy_VS_datasize(epsilon,delta,prior,datasets,datasizes)
 	# hellinger_vs_l1norm(Dir(observation))
 	# global_epsilon_study(datasizes,epsilon,delta,prior)
 	# accuracy_VS_epsilon(sample_size,epsilons,delta,prior,observation)
