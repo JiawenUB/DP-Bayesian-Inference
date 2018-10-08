@@ -107,15 +107,15 @@ Jiawen Liu$^{*}$
 
 \begin{block}{Objectives}
 \begin{columns} % Subdivide the first main column
-\begin{column}{.6\textwidth}
-\noindent Design a mechanism that achieve differential privacy by scaling to a metric between distribution.
+\begin{column}{.65\textwidth}
+\noindent Design a differentially private Bayesian inference mechanism by scaling to a metric between distribution.
 \begin{enumerate}
-\item A differentially private bayesian mechanism,
-\item Calibrating mechanism noise by the same probabilistic distance we want to measure accuracy with.
-\item Applying smooth sensitivity in mechanism to achieve better accuracy.
+\item A differentially private Bayesian mechanism,
+\item Calibrating mechanism noise by the same probabilistic metric we want to measure accuracy with.
+\item Applying smooth sensitivity in mechanism to achieve better accuracy. This is motivated by the Fig. \ref{fig_sensitivity} that local sensitivity is very steep in edge but very smooth in center part.
 \end{enumerate}
 \end{column}
-\begin{column}{.4\textwidth}
+\begin{column}{.3\textwidth}
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.5\textwidth]{poster_0.eps}
@@ -143,15 +143,14 @@ Jiawen Liu$^{*}$
 % The first subdivided column within the first main column
 % \begin{columns} % Subdivide the first main column
 % \begin{column}{.54\textwidth} % The first subdivided column within the first main column
-Conjugate prior distribution, $\betad(\alpha, \beta)$, with hyper parameters $\alpha,\beta\in\mathbb{R}^{+}$;
+Conjugate prior distribution, $\betad(\alpha, \beta)$, with hyperparameters $\alpha,\beta\in\mathbb{R}^{+}$;
+\begin{itemize}
+  \item[-] Observed data set $\dataobs$: $\dataobs= (x_1,\dots x_n), x_i\in\{0,1\}$, $n\in\mathbb{N}$;
 
-Observed data set $\dataobs$: $\dataobs= (x_1,\dots x_n), x_i\in\{0,1\}$, $n\in\mathbb{N}$;
+  \item[-] Bernoulli likelihood function: $\Pr(\dataobs | \theta)\equiv \theta^{\Delta \alpha}(1-\theta)^{n - \Delta \alpha}$, where $\Delta \alpha = \displaystyle\sum_{i=1}^{n}x_i$;
 
-Bernoulli likelihood function: $\Pr(\dataobs | \theta)\equiv \theta^{\Delta \alpha}(1-\theta)^{n - \Delta \alpha}$, where $\Delta \alpha = \displaystyle\sum_{i=1}^{n}x_i$;
-
-Posterior distribution derived: 
-$\Pr(\theta|\dataobs)=\betad(\alpha + \Delta \alpha,\beta + n - \Delta \alpha)$.
-
+  \item[-] Posterior distribution derived: $\Pr(\theta|\dataobs)=\betad(\alpha + \Delta \alpha,\beta + n - \Delta \alpha)$.
+\end{itemize}
 \end{block}
 % and with p.d.f:
 
@@ -166,7 +165,7 @@ $\Pr(\theta|\dataobs)=\betad(\alpha + \Delta \alpha,\beta + n - \Delta \alpha)$.
 \begin{block}{Differentially private Bayesian inference}
 Release a private version of posterior distribution $(\tilde\alpha,\tilde\beta)=(\alpha +  \widetilde{\Delta \alpha},\beta + n - \widetilde{\Delta \alpha})$.
 
-In a baseline approach, we sample noise from $Lap(\mu,\nu)$ mechanism, i.e., $\widetilde{\Delta \alpha}\sim Lap(\Delta \alpha, \frac{2}{\epsilon})$,
+In a baseline approach, we sample noise from $Lap(\mu,\nu)$ mechanism, i.e., $\widetilde{\Delta \alpha}\sim Lap(\Delta \alpha, \frac{2}{\epsilon})$.
 
 \end{block}
 
@@ -186,18 +185,18 @@ $
 {exp\Big(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r)}{2\cdot S(\dataobs)}\Big)}
 {\displaystyle\sum_{r\in\betaset} exp\Big(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r)}{2\cdot S(\dataobs)}\Big)}
 $,
-(given in input an observations $\dataobs$, parameters $\epsilon>0$ and $\delta>0$).
+given in input an observations $\dataobs$, parameters $\epsilon>0$ and $\delta>0$.
 
 \begin{itemize}
-  \item[-] $\betaset$, the candidates set defined as $\{\betad(\alpha',\beta')\mid \alpha'=\alpha+\Delta\alpha, \beta'=\beta+n-\Delta\alpha\}$, given the prior distribution $\bprior=\betad(\alpha, \beta)$ and observed data set size $n$.
+  \item[-] $\betaset$, the candidates set defined as $\{\betad(\alpha',\beta')\mid \alpha'=\alpha+\Delta\alpha, \beta'=\beta+n-\Delta\alpha\}$, given the prior distribution $\bprior=\betad(\alpha, \beta)$ and observed data set size $n$;
 
-  \item[-] $-\hellinger(\bysinfer(\dataobs),r)$, the scoring function instantiated by Hellinegr distance.
+  \item[-] $-\hellinger(\bysinfer(\dataobs),r)$, the scoring function instantiated by Hellinegr distance;
 
   \item[-] $S(\dataobs)$, the smooth sensitivity:
   $
   S(\dataobs)=\max_{\dataobs' \in \{0,1\}^{n}}\bigg \{LS(\dataobs') \cdot e^{-\gamma\cdot d(\dataobs,\dataobs')}\bigg\}
   $,
-  where
+  where:
   \begin{itemize}
    \item $d$: Hamming distance between two datasets, 
 
