@@ -451,6 +451,7 @@ INPUT ./poster_0-eps-converted-to.pdf
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/public/cm/cmss17.tfm
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/public/cm/cmss17.tfm
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/public/cm/cmss17.tfm
+INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/public/cm/cmss17.tfm
 INPUT poster_1.eps
 INPUT ./poster_1.eps
 INPUT ./poster_1.eps
@@ -460,7 +461,6 @@ INPUT ./poster_1.eps
 INPUT ./poster_1-eps-converted-to.pdf
 INPUT ./poster_1-eps-converted-to.pdf
 INPUT ./poster_1-eps-converted-to.pdf
-INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/public/cm/cmss17.tfm
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/public/cm/cmssbx10.tfm
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/public/cm/cmssbx10.tfm
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/public/cm/cmssbx10.tfm
