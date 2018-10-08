@@ -105,13 +105,11 @@ Jiawen Liu$^{*}$
 %----------------------------------------------------------------------------------------
 
 \begin{block}{Objectives}
-\noindent Design a tool for differentially private probabilistic
-programming featuring:
+\noindent Design a mechanism that achieve differential privacy by scaling to a metric between distribution.
 \begin{enumerate}
-\item programming constructs to describe bayesian models and perform probabilistic inference,
-\item programming constructs useful to ensure differential privacy,
-\item type-checking as a method to ensure that the actual programs are
-  differentially private.
+\item A differentially private bayesian mechanism,
+\item Calibrating mechanism noise by the same probabilistic distance we want to measure accuracy with.
+\item Applying smooth sensitivity in mechanism to achieve better accuracy.
 \end{enumerate}
 
 \end{block}
@@ -214,14 +212,18 @@ of the scoring function used in our mechanism. That is:
 \begin{figure}[H]
 \begin{center}
 \centering
-  \subfigure[Data set size from $300$ to $800$ ]{
-    \includegraphics[width=0.39\textwidth]{poster_1.eps}
+  \subfigure[\footnotesize{2-dimensional, data size $\in [100,500]$}]{
+    \includegraphics[width=0.328\textwidth]{poster_1.eps}
     \label{fig_1}
   }
-  \subfigure[Data set size from $14000$ to $20000$]{
-    \includegraphics[width=0.352\textwidth]{poster_2.eps}
+  \subfigure[\footnotesize{3-dimensional, data size $\in [100,500]$} ]{
+    \includegraphics[width=0.297\textwidth]{poster_2.eps}
   \label{subsubsec_vs_datasize1b}} 
-\caption{Increasing data size with fixed prior $\betad(1,1)$. Unbalanced datasets of mean $(0.1,0.9)$ and parameters $\epsilon = 0.8$ and $\delta = 10^{-8}$}
+  \subfigure[\footnotesize{4-dimensional, data size $\in [100,600]$}]{
+    \includegraphics[width=0.29\textwidth]{poster_3.eps}
+    \label{subsubsec_vs_datasize1a}
+  }
+  \caption{Increasing data size with unit prior $\betad(1,1), \betad(1,1,1)$ and $\betad(1,1,1,1)$, balanced datasets and parameters $\epsilon = 0.8$ and $\delta = 10^{-8}$}
 \label{fig_vs_datasize}
 \end{center}
 \end{figure}
@@ -229,14 +231,16 @@ of the scoring function used in our mechanism. That is:
 \begin{figure}[H]
 \begin{center}
 \centering
-  \subfigure[Data set size from $300$ to $800$ ]{
-    \includegraphics[width=0.372\textwidth]{poster_3.eps}
-    \label{subsubsec_vs_datasize1a}
-  }
-  \subfigure[Data set size from $14000$ to $20000$]{
-    \includegraphics[width=0.32\textwidth]{poster_4.eps}
+  \subfigure[2-dimensional]{
+    \includegraphics[width=0.31\textwidth]{poster_4.eps}
+  \label{subsubsec_vs_datasize1b}}
+  \subfigure[3-dimensional]{
+    \includegraphics[width=0.31\textwidth]{poster_5.eps}
   \label{subsubsec_vs_datasize1b}} 
-\caption{Increasing data size with fixed prior $\betad(1,1)$. Unbalanced datasets of mean $(0.1,0.9)$ and parameters $\epsilon = 0.8$ and $\delta = 10^{-8}$}
+  \subfigure[4-dimensional]{
+    \includegraphics[width=0.31\textwidth]{poster_6.eps}
+  \label{subsubsec_vs_datasize1b}} 
+\caption{The concrete outputting probabilities under different dimensions with data set of size $600$ ,unit prior $\betad(1,1), \betad(1,1,1)$ and $\betad(1,1,1,1)$, balanced datasets and parameters $\epsilon = 0.8$ and $\delta = 10^{-8}$}
 \label{fig_vs_datasize}
 \end{center}
 \end{figure}
