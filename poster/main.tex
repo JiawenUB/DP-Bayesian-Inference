@@ -145,14 +145,12 @@ Jiawen Liu$^{*}$
 % \begin{column}{.54\textwidth} % The first subdivided column within the first main column
 Conjugate prior distribution, $\betad(\alpha, \beta)$, with hyper parameters $\alpha,\beta\in\mathbb{R}^{+}$;
 
-Observed data set $\dataobs$: $\dataobs= (x_1,\dots x_n), x_i\in\{0,1\}$, $n\in\mathbb{N}$
+Observed data set $\dataobs$: $\dataobs= (x_1,\dots x_n), x_i\in\{0,1\}$, $n\in\mathbb{N}$;
 
-Bernoulli likelihood function:
-  $\Pr(\dataobs | \theta)\equiv \theta^{\Delta \alpha}(1-\theta)^{n - \Delta \alpha}$
-where $\Delta \alpha = \displaystyle\sum_{i=1}^{n}x_i$;
+Bernoulli likelihood function: $\Pr(\dataobs | \theta)\equiv \theta^{\Delta \alpha}(1-\theta)^{n - \Delta \alpha}$, where $\Delta \alpha = \displaystyle\sum_{i=1}^{n}x_i$;
 
 Posterior distribution derived: 
-$\Pr(\theta|\dataobs)=\betad(\alpha + \Delta \alpha,\beta + n - \Delta \alpha)$
+$\Pr(\theta|\dataobs)=\betad(\alpha + \Delta \alpha,\beta + n - \Delta \alpha)$.
 
 \end{block}
 % and with p.d.f:
@@ -179,26 +177,32 @@ In a baseline approach, we sample noise from $Lap(\mu,\nu)$ mechanism, i.e., $\w
 
 \begin{block}{Smoothed Hellinger Distance based Exponential Mechanism}
 
-Our approach defines the mechanism $\hexpmech$: given in input an observations $\dataobs$, parameters $\epsilon>0$ and $\delta>0$, produces an element $r$ in $\betaset$ with probability:
-$\underset{z \thicksim \hexpmech}{\Pr}[z=r] = \frac {exp\big(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r)}{2\cdot S(\dataobs)}\big)}
-{\displaystyle\sum_{r\in\betaset} exp\Big(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r)}{2\cdot S(\dataobs)}\Big)}.$
+Our approach defines the mechanism $\hexpmech$:
 
-The smooth sensitivity is
-computed as follows:
-\begin{equation*}
-  \label{eq:smooth}
-   S(\dataobs)=\max_{\dataobs' \in \{0,1\}^{n}}\bigg \{\Delta_{l}\bigg (\hellinger(\bysinfer(\dataobs'),\cdot)\bigg )\cdot e^{-\gamma\cdot d(C(\dataobs), C(\dataobs'))}\bigg\},
-\end{equation*}
-where $d$ is the Hamming distance between two datasets,
+Producing an element $r$ in $\betaset$ with:
+$
+\underset{z \thicksim \hexpmech}{\Pr}[z=r] = 
+\frac 
+{exp\big(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r)}{2\cdot S(\dataobs)}\big)}
+{\displaystyle\sum_{r\in\betaset} exp\Big(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r)}{2\cdot S(\dataobs)}\Big)}
+$,
+(given in input an observations $\dataobs$, parameters $\epsilon>0$ and $\delta>0$).
+
+$\betaset$ is the candidates set defined as $ \betaset\equiv\{\betad(\alpha',\beta')\mid \alpha'=\alpha+\Delta\alpha, \beta'=\beta+n-\Delta\alpha\}$, given the prior distribution $\bprior=\betad(\alpha, \beta)$ and observed data set size $n$.
+ 
+
+The scoring function is instantiated by Hellinegr distance between two beta distributions, and $S(\dataobs)$ is the smooth sensitivity computed as:
+$
+S(\dataobs)=\max_{\dataobs' \in \{0,1\}^{n}}\bigg \{LS(\dataobs') \cdot e^{-\gamma\cdot d(\dataobs,\dataobs')}\bigg\}
+$,
+where $d$: Hamming distance between two datasets, 
+
+$LS(\dataobs')$ denotes the local sensitivity at $\bysinfer(\dataobs')$:
+$
+LS(\dataobs)=\max_{\dataobs' \in \datauni^n:\adj{\dataobs}{\dataobs'}, r\in \mathcal{R}}\lvert \hellinger(\bysinfer(\dataobs'), r) - \hellinger(\bysinfer(\dataobs'), r)\rvert
+$ and 
 $\gamma =
-\gamma(\epsilon, \delta)$ is a function of $\epsilon$ and $\delta$ to
-be determined later, and where $\Delta_{l}\bigg
-(\hellinger(\bysinfer(\dataobs'),\cdot)\bigg )$ denotes the local
-sensitivity at $\bysinfer(\dataobs')$, or equivalently at $\dataobs'$,
-of the scoring function used in our mechanism. That is:
-\begin{equation*}
-\Delta_{l}\bigg (\hellinger(\bysinfer(\dataobs'),\cdot)\bigg )=\max_{\dataobs'' \in \datauni^n:\adj{\dataobs'}{\dataobs''}, r\in \betaset}\lvert \hellinger(\bysinfer(\dataobs'), r) - \hellinger(\bysinfer(\dataobs''), r)\rvert.
-\end{equation*}
+\ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta}{2 (n + 1)})})$ to ensure the $(\epsilon,\delta)$-differentially private.
 
 
 \end{block}
