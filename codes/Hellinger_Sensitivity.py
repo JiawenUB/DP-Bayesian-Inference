@@ -46,7 +46,7 @@ if __name__ == "__main__":
 	sensitivities = generate_sensitivities()
 
 	fig = plt.figure()
-	ax = fig.gca(projection='3d')
+	ax = plt.axes(projection='3d')
 	# x = numpy.arange(1, 81, 1)
 	# y = numpy.arange(1, 81, 1)
 	# x, y = numpy.meshgrid(x,y)
@@ -58,12 +58,13 @@ if __name__ == "__main__":
 		y = y + range(1, 81)
 		z = z + sensitivities[i - 1]
 
-	#surf = ax.plot_surface(x, y, numpy.array(sensitivities), cmap=cm.coolwarm, linewidth=0, antialiased=False)
-	#fig.colorbar(surf, shrink=0.5, aspect=5)
+	# surf = ax.plot_surface(x, y, z, cmap=cm.coolwarm, linewidth=0, antialiased=False)
+	# fig.colorbar(surf, shrink=0.5, aspect=5)
 	ax.scatter(x, y, z)
-	ax.set_xlabel('Alpha')
-	ax.set_ylabel('Beta')
-	ax.set_zlabel('Hellinger(beta(a+1, b), Beta(a, b+1))')
+	ax.set_xlabel(r'$\alpha$')
+	ax.set_ylabel(r'$\beta$')
+	ax.set_zlabel(r'$\mathcal{H}(\mathsf{beta}(\alpha+1, b), \mathsf{beta}(\alpha, \beta+1))$')
+	ax.set_title("Local sensitivity")
 	plt.show()
 
 

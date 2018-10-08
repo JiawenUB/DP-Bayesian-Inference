@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  8 OCT 2018 13:33
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  8 OCT 2018 13:52
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1653,21 +1653,21 @@ LaTeX Font Warning: Font shape `OT1/cmtt/bx/n' in size <17.415> not available
 (Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 93.
 
 Package epstopdf Info: Source file: <poster_0.eps>
-(epstopdf)                    date: 2018-10-05 18:23:13
-(epstopdf)                    size: 155320 bytes
+(epstopdf)                    date: 2018-10-08 13:50:32
+(epstopdf)                    size: 7788307 bytes
 (epstopdf)             Output file: <poster_0-eps-converted-to.pdf>
-(epstopdf)                    date: 2018-10-08 10:47:10
-(epstopdf)                    size: 76172 bytes
+(epstopdf)                    date: 2018-10-08 13:51:00
+(epstopdf)                    size: 192155 bytes
 (epstopdf)             Command: <repstopdf --outfile=poster_0-eps-converted-to.
 pdf poster_0.eps>
 (epstopdf)             \includegraphics on input line 373.
 Package epstopdf Info: Output file is already uptodate.
-<poster_0-eps-converted-to.pdf, id=14, 803.0pt x 602.25pt>
+<poster_0-eps-converted-to.pdf, id=14, 441.65pt x 378.41376pt>
 File: poster_0-eps-converted-to.pdf Graphic file (type pdf)
 
 <use poster_0-eps-converted-to.pdf>
 Package pdftex.def Info: poster_0-eps-converted-to.pdf used on input line 373.
-(pdftex.def)             Requested size: 408.90614pt x 306.68394pt.
+(pdftex.def)             Requested size: 327.11778pt x 280.29317pt.
 Package epstopdf Info: Source file: <poster_1.eps>
 (epstopdf)                    date: 2018-10-06 00:26:46
 (epstopdf)                    size: 21965843 bytes
@@ -1891,7 +1891,7 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 Here is how much of TeX's memory you used:
  30803 strings out of 492995
  604371 string characters out of 6132704
- 741634 words of memory out of 5000000
+ 741774 words of memory out of 5000000
  33757 multiletter control sequences out of 15000+600000
  49447 words of font info for 172 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -1907,7 +1907,7 @@ usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pf
 b></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm1
 0.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfso1728.
 pfb>
-Output written on main.pdf (1 page, 928996 bytes).
+Output written on main.pdf (1 page, 1044682 bytes).
 PDF statistics:
  104 PDF objects out of 1000 (max. 8388607)
  71 compressed objects within 1 object stream
