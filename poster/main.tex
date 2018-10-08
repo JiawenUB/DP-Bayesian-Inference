@@ -30,6 +30,8 @@
 %\usetheme{Icy}
 \usetheme{I6pd2} % Use the I6pd2 theme supplied with this template
 
+\setbeamercolor{background canvas}{bg=white!20}
+
 \usepackage[english]{babel} % English language/hyphenation
 
 \usepackage{amsmath,amsthm,amssymb,latexsym} % For including math equations, theorems, symbols, etc
@@ -90,27 +92,46 @@ Jiawen Liu$^{*}$
 
 \begin{document}
 
-\addtobeamertemplate{block end}{}{\vspace*{2ex}} % White space under blocks
-
+\addtobeamertemplate{block end}{}{\vspace*{1ex}} % White space under blocks
 \begin{frame}[t] % The whole poster is enclosed in one beamer frame
 
 \begin{columns}[t] % The whole poster consists of two major columns, each of which can be subdivided further with another \begin{columns} block - the [t] argument aligns each column's content to the top
 
-\begin{column}{.02\textwidth}\end{column} % Empty spacer column
+\begin{column}{.015\textwidth}\end{column} % Empty spacer column
 
-\begin{column}{.465\textwidth} % The first column
+\begin{column}{.485\textwidth} % The first column
 
 %----------------------------------------------------------------------------------------
 %	OBJECTIVES
 %----------------------------------------------------------------------------------------
 
 \begin{block}{Objectives}
+\begin{columns} % Subdivide the first main column
+\begin{column}{.6\textwidth}
 \noindent Design a mechanism that achieve differential privacy by scaling to a metric between distribution.
 \begin{enumerate}
 \item A differentially private bayesian mechanism,
 \item Calibrating mechanism noise by the same probabilistic distance we want to measure accuracy with.
 \item Applying smooth sensitivity in mechanism to achieve better accuracy.
 \end{enumerate}
+\end{column}
+\begin{column}{.4\textwidth}
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.5\textwidth]{poster_0.eps}
+\caption{Hellinger Sensitivity}
+\label{fig_sensitivity}
+\end{figure}
+% \vspace{.1cm}
+\end{column}
+\end{columns}
+
+% \noindent Design a mechanism that achieve differential privacy by scaling to a metric between distribution.
+% \begin{enumerate}
+% \item A differentially private bayesian mechanism,
+% \item Calibrating mechanism noise by the same probabilistic distance we want to measure accuracy with.
+% \item Applying smooth sensitivity in mechanism to achieve better accuracy.
+% \end{enumerate}
 
 \end{block}
 
@@ -122,41 +143,32 @@ Jiawen Liu$^{*}$
 % The first subdivided column within the first main column
 % \begin{columns} % Subdivide the first main column
 % \begin{column}{.54\textwidth} % The first subdivided column within the first main column
-beta
-distribution, $\betad(\alpha, \beta)$, with parameters
-$\alpha,\beta\in\mathbb{R}^{+}$, and with p.d.f:
+Conjugate prior distribution, $\betad(\alpha, \beta)$, with hyper parameters $\alpha,\beta\in\mathbb{R}^{+}$;
 
-\[
-  \Pr(\theta)\equiv \frac{\theta^{\alpha} (1- \theta)^{\beta}}{\betaf(\alpha,\beta)}
-\]
-where $\betaf(\cdot,\cdot)$ is the beta function.
-The data $\dataobs$ will be a sequence of $n\in\mathbb{N}$ binary values, that is $\dataobs= (x_1,\dots x_n), x_i\in\{0,1\}$, and the likelihood function is:
-\[
-  \Pr(\dataobs | \theta)\equiv \theta^{\Delta \alpha}(1-\theta)^{n - \Delta \alpha}
-\]
-where $\Delta \alpha = \displaystyle\sum_{i=1}^{n}x_i$.
-From this it can easily be derived that the posterior distribution is:
-\[
-  \Pr(\theta|\dataobs)=\betad(\alpha + \Delta \alpha,\beta + n - \Delta \alpha)
-\]
+Observed data set $\dataobs$: $\dataobs= (x_1,\dots x_n), x_i\in\{0,1\}$, $n\in\mathbb{N}$
+
+Bernoulli likelihood function:
+  $\Pr(\dataobs | \theta)\equiv \theta^{\Delta \alpha}(1-\theta)^{n - \Delta \alpha}$
+where $\Delta \alpha = \displaystyle\sum_{i=1}^{n}x_i$;
+
+Posterior distribution derived: 
+$\Pr(\theta|\dataobs)=\betad(\alpha + \Delta \alpha,\beta + n - \Delta \alpha)$
+
 \end{block}
+% and with p.d.f:
 
+% \[
+%   \Pr(\theta)\equiv \frac{\theta^{\alpha} (1- \theta)^{\beta}}{\betaf(\alpha,\beta)}
+% \]
+% where $\betaf(\cdot,\cdot)$ is the beta function.
 %----------------------------------------------------------------------------------------
 %	MATERIALS
 %----------------------------------------------------------------------------------------
 
 \begin{block}{Differentially private Bayesian inference}
-% We are interested in the 
-% situation where: we have some  private data $\vec{x}$, some public data
-% $\vec{y}$, a set of parameter $\theta$, and a public prior $p(\theta)$
-% on $\theta$. We want to compute the public posterior distribution $p(\theta\
-% |\ \vec{x}, \vec{y})$ in a differentially private way. This
-% corresponds to make sure that
-% for given values $\epsilon$ and $\delta$, and for every $\vec{x}$ and $\vec{x'}$ 
-% differing in one element we have
-Release a private version of posterior distribution $(\tilde\alpha,\tilde\beta)=(\alpha +  \widetilde{\Delta \alpha},\beta + n - \widetilde{\Delta \alpha})$
-where $\widetilde{\Delta \alpha}\sim Lap(\Delta \alpha, \frac{2}{\epsilon})$,
-and where $Lap(\mu,\nu)$ denotes a Laplace random variable with mean $\mu$ and scale $\nu$.
+Release a private version of posterior distribution $(\tilde\alpha,\tilde\beta)=(\alpha +  \widetilde{\Delta \alpha},\beta + n - \widetilde{\Delta \alpha})$.
+
+In a baseline approach, we sample noise from $Lap(\mu,\nu)$ mechanism, i.e., $\widetilde{\Delta \alpha}\sim Lap(\Delta \alpha, \frac{2}{\epsilon})$,
 
 \end{block}
 
@@ -165,23 +177,18 @@ and where $Lap(\mu,\nu)$ denotes a Laplace random variable with mean $\mu$ and s
 %----------------------------------------------------------------------------------------
 
 
-\begin{block}{Our Approach - Exponential Mechanism with Smooth Sensitivity}
+\begin{block}{Smoothed Hellinger Distance based Exponential Mechanism}
 
-define the mechanism $\hexpmech$ which, given in input a
-sequence of observations $\dataobs$ and parameters $\epsilon>0$ and
-$\delta>0$, produces an element $r$ in $\betaset$ with probability:
-
-\begin{equation*}
-\underset{z \thicksim \hexpmech}{\Pr}[z=r] = \frac {exp\big(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r)}{2\cdot S(\dataobs)}\big)}
-{\displaystyle\sum_{r\in\betaset} exp\Big(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r)}{2\cdot S(\dataobs)}\Big)}.
-\end{equation*}
+Our approach defines the mechanism $\hexpmech$: given in input an observations $\dataobs$, parameters $\epsilon>0$ and $\delta>0$, produces an element $r$ in $\betaset$ with probability:
+$\underset{z \thicksim \hexpmech}{\Pr}[z=r] = \frac {exp\big(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r)}{2\cdot S(\dataobs)}\big)}
+{\displaystyle\sum_{r\in\betaset} exp\Big(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r)}{2\cdot S(\dataobs)}\Big)}.$
 
 The smooth sensitivity is
 computed as follows:
-\begin{equation}
+\begin{equation*}
   \label{eq:smooth}
    S(\dataobs)=\max_{\dataobs' \in \{0,1\}^{n}}\bigg \{\Delta_{l}\bigg (\hellinger(\bysinfer(\dataobs'),\cdot)\bigg )\cdot e^{-\gamma\cdot d(C(\dataobs), C(\dataobs'))}\bigg\},
-\end{equation}
+\end{equation*}
 where $d$ is the Hamming distance between two datasets,
 $\gamma =
 \gamma(\epsilon, \delta)$ is a function of $\epsilon$ and $\delta$ to
@@ -199,9 +206,9 @@ of the scoring function used in our mechanism. That is:
 
 \end{column} % End of the first column
 
-\begin{column}{.03\textwidth}\end{column} % Empty spacer column
+\begin{column}{.01\textwidth}\end{column} % Empty spacer column
  
-\begin{column}{.465\textwidth} % The second column
+\begin{column}{.485\textwidth} % The second column
 
 
 
@@ -253,24 +260,24 @@ of the scoring function used in our mechanism. That is:
 %----------------------------------------------------------------------------------------
 
 
-\begin{block}{Conclusion and Future Work}
+\begin{block}{Conclusion}
 
 \begin{itemize}
   \item Our the probabiliy measure approach outperforms the $\ell_1$-norm approach when the Laplace noise cannot recognize the data to be protected is histogram and data size grow large.
 
   \item 
-  \begin{enumerate}
-    \item  The accuracy that we are going to explore next, and in a more principled and formal way.
+  % \begin{enumerate}
+  %   \item  The accuracy that we are going to explore next, and in a more principled and formal way.
     
-    \item  Experiments have shown that the actual privacy loss
-  in the experiments can be smaller than $\epsilon$. This means that we
-  could improve accuracy, by adding less noise but still achieve
-  $(\epsilon, \delta)$-dp.
+  %   \item  Experiments have shown that the actual privacy loss
+  % in the experiments can be smaller than $\epsilon$. This means that we
+  % could improve accuracy, by adding less noise but still achieve
+  % $(\epsilon, \delta)$-dp.
 
-    \item The choice of the Hellinger distance might seem quite ad-hoc. Hence, it is worth exploring other distances over distributions. An interesting class of probability metrics is the family of $f$-divergences \cite{CIT-004}.
+  %   \item The choice of the Hellinger distance might seem quite ad-hoc. Hence, it is worth exploring other distances over distributions. An interesting class of probability metrics is the family of $f$-divergences \cite{CIT-004}.
 
-    \item Other application of our scheme are going to be explored.
-  \end{enumerate}
+  %   \item Other application of our scheme are going to be explored.
+  % \end{enumerate}
 \end{itemize}
 %\vspace{8mm}
 %\vspace{8mm}
@@ -343,7 +350,7 @@ of the scoring function used in our mechanism. That is:
 
 \end{column} % End of the second column
 
-\begin{column}{.015\textwidth}\end{column} % Empty spacer column
+\begin{column}{.01\textwidth}\end{column} % Empty spacer column
 
 \end{columns} % End of all the columns in the poster
 
