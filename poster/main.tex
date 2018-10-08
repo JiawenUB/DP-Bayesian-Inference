@@ -183,7 +183,7 @@ Producing an element $r$ in $\betaset$ with:
 $
 \underset{z \thicksim \hexpmech}{\Pr}[z=r] = 
 \frac 
-{exp\big(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r)}{2\cdot S(\dataobs)}\big)}
+{exp\Big(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r)}{2\cdot S(\dataobs)}\Big)}
 {\displaystyle\sum_{r\in\betaset} exp\Big(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r)}{2\cdot S(\dataobs)}\Big)}
 $,
 (given in input an observations $\dataobs$, parameters $\epsilon>0$ and $\delta>0$).
@@ -226,10 +226,10 @@ $,
 
 
 
-\begin{block}{Some Experimental Results}
-Two groups of experimental results both with unit prior $\betad(1,1), \betad(1,1,1)$ and $\betad(1,1,1,1)$, balanced datasets and parameters $\epsilon = 1.0$ and $\delta = 10^{-8}$.
+\begin{block}{Preliminary Experimental Results}
+% Two groups of experimental results both with unit prior $\betad(1,1), \betad(1,1,1)$ and $\betad(1,1,1,1)$, balanced datasets and parameters $\epsilon = 1.0$ and $\delta = 10^{-8}$.
 
-Fig. \ref{fig_sampling} gives the average Hellinger distance between the sampled results and true posterior, by sampling for $10k$ times under each data size configuration. In baseline approach (i.e., Laplace mechanism), it is enough to add noise with sensitivity $1$ in 2-dimensional and $2$ in higher dimensional by equivalent to histogram case, which gives us the red points in plots. Without the knowledge of equivalence, Laplace usually add noise with sensitivity scale to dimensions, giving us green points. 
+Fig. \ref{fig_sampling} gives the average Hellinger distance between the sampled results and true posterior, by sampling for $10k$ times under each data size configuration. In baseline approach (i.e., Laplace mechanism), it is enough to add noise with sensitivity $1$ in 2-dimensional and $2$ in higher dimensional by their equivalence to histogram, giving us the red points in plots. Without the knowledge of equivalence, Laplace usually add noise with sensitivity scale to dimensions, giving us green points. Points in blue are our smoothed Hellinger distance based exponential mechanism.
 
 \begin{figure}[H]
 \begin{center}
@@ -251,7 +251,7 @@ Fig. \ref{fig_sampling} gives the average Hellinger distance between the sampled
 \end{center}
 \end{figure}
 
-Fig. \ref{fig_concrete_prob} give us the concrete probability of outputting candidates with certain distance.
+Fig. \ref{fig_concrete_prob} gives us the concrete probabilities of outputting candidates with certain Hellinegr distance from the correct posterior in 2, 3 and 4 dimensional respectively.
 \begin{figure}[H]
 \begin{center}
 \centering
@@ -271,7 +271,7 @@ Fig. \ref{fig_concrete_prob} give us the concrete probability of outputting cand
 \label{fig_concrete_prob}
 \end{center}
 \end{figure}
-
+\scriptsize{Two groups of experiments both with unit prior $\betad(1,1), \betad(1,1,1)$ and $\betad(1,1,1,1)$, balanced datasets and parameters $\epsilon = 1.0$ and $\delta = 10^{-8}$.}
 \end{block}
 
 
@@ -283,9 +283,7 @@ Fig. \ref{fig_concrete_prob} give us the concrete probability of outputting cand
 \begin{block}{Conclusion}
 
 \begin{itemize}
-  \item Our the probabiliy measure approach outperforms the $\ell_1$-norm approach when the Laplace noise cannot recognize the data to be protected is histogram and data size grow large.
-
-  \item 
+  \item The smoothed Hellinger distance based exponential mechanism outperforms the $\ell_1$-norm approach when data size growing under the case that Laplace noise doesn't have knowledge of the implicit histogram equivalence.
   % \begin{enumerate}
   %   \item  The accuracy that we are going to explore next, and in a more principled and formal way.
     
