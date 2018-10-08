@@ -188,21 +188,28 @@ $
 $,
 (given in input an observations $\dataobs$, parameters $\epsilon>0$ and $\delta>0$).
 
-$\betaset$ is the candidates set defined as $ \betaset\equiv\{\betad(\alpha',\beta')\mid \alpha'=\alpha+\Delta\alpha, \beta'=\beta+n-\Delta\alpha\}$, given the prior distribution $\bprior=\betad(\alpha, \beta)$ and observed data set size $n$.
- 
+\begin{itemize}
+  \item[-] $\betaset$, the candidates set defined as $\{\betad(\alpha',\beta')\mid \alpha'=\alpha+\Delta\alpha, \beta'=\beta+n-\Delta\alpha\}$, given the prior distribution $\bprior=\betad(\alpha, \beta)$ and observed data set size $n$.
 
-The scoring function is instantiated by Hellinegr distance between two beta distributions, and $S(\dataobs)$ is the smooth sensitivity computed as:
-$
-S(\dataobs)=\max_{\dataobs' \in \{0,1\}^{n}}\bigg \{LS(\dataobs') \cdot e^{-\gamma\cdot d(\dataobs,\dataobs')}\bigg\}
-$,
-where $d$: Hamming distance between two datasets, 
+  \item[-] $-\hellinger(\bysinfer(\dataobs),r)$, the scoring function instantiated by Hellinegr distance.
 
-$LS(\dataobs')$ denotes the local sensitivity at $\bysinfer(\dataobs')$:
-$
-LS(\dataobs)=\max_{\dataobs' \in \datauni^n:\adj{\dataobs}{\dataobs'}, r\in \mathcal{R}}\lvert \hellinger(\bysinfer(\dataobs'), r) - \hellinger(\bysinfer(\dataobs'), r)\rvert
-$ and 
-$\gamma =
-\ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta}{2 (n + 1)})})$ to ensure the $(\epsilon,\delta)$-differentially private.
+  \item[-] $S(\dataobs)$, the smooth sensitivity:
+  $
+  S(\dataobs)=\max_{\dataobs' \in \{0,1\}^{n}}\bigg \{LS(\dataobs') \cdot e^{-\gamma\cdot d(\dataobs,\dataobs')}\bigg\}
+  $,
+  where
+  \begin{itemize}
+   \item $d$: Hamming distance between two datasets, 
+
+   \item $LS(\dataobs')$, local sensitivity at $\dataobs'$:
+   $
+   LS(\dataobs)=\max\limits_{\dataobs' \in \datauni^n:\adj{\dataobs}{\dataobs'}, r\in \mathcal{R}}\lvert \hellinger(\bysinfer(\dataobs), r) - \hellinger(\bysinfer(\dataobs'), r)\rvert
+   $,
+
+   \item $\gamma =
+   \ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta}{2 (n + 1)})})$ to ensure the $(\epsilon,\delta)$-differentially private.
+ \end{itemize}
+\end{itemize}
 
 
 \end{block}
@@ -220,39 +227,48 @@ $\gamma =
 
 
 \begin{block}{Some Experimental Results}
+Two groups of experimental results both with unit prior $\betad(1,1), \betad(1,1,1)$ and $\betad(1,1,1,1)$, balanced datasets and parameters $\epsilon = 1.0$ and $\delta = 10^{-8}$.
+
+Fig. \ref{fig_sampling} gives the average Hellinger distance between the sampled results and true posterior, by sampling for $10k$ times under each data size configuration. In baseline approach (i.e., Laplace mechanism), it is enough to add noise with sensitivity $1$ in 2-dimensional and $2$ in higher dimensional by equivalent to histogram case, which gives us the red points in plots. Without the knowledge of equivalence, Laplace usually add noise with sensitivity scale to dimensions, giving us green points. 
+
 \begin{figure}[H]
 \begin{center}
 \centering
   \subfigure[\footnotesize{2-dimensional, data size $\in [100,500]$}]{
     \includegraphics[width=0.328\textwidth]{poster_1.eps}
-    \label{fig_1}
+    \label{subfig_sampling_2d}
   }
   \subfigure[\footnotesize{3-dimensional, data size $\in [100,500]$} ]{
     \includegraphics[width=0.297\textwidth]{poster_2.eps}
-  \label{subsubsec_vs_datasize1b}} 
+  \label{subfig_sampling_3d}
+  } 
   \subfigure[\footnotesize{4-dimensional, data size $\in [100,600]$}]{
     \includegraphics[width=0.29\textwidth]{poster_3.eps}
-    \label{subsubsec_vs_datasize1a}
+    \label{subfig_sampling_4d}
   }
-  \caption{Increasing data size with unit prior $\betad(1,1), \betad(1,1,1)$ and $\betad(1,1,1,1)$, balanced datasets and parameters $\epsilon = 0.8$ and $\delta = 10^{-8}$}
-\label{fig_vs_datasize}
+  \caption{Increasing data size}
+\label{fig_sampling}
 \end{center}
 \end{figure}
 
+Fig. \ref{fig_concrete_prob} give us the concrete probability of outputting candidates with certain distance.
 \begin{figure}[H]
 \begin{center}
 \centering
   \subfigure[2-dimensional]{
     \includegraphics[width=0.31\textwidth]{poster_4.eps}
-  \label{subsubsec_vs_datasize1b}}
+  \label{fig_concrete_prob_2d}
+  }
   \subfigure[3-dimensional]{
     \includegraphics[width=0.31\textwidth]{poster_5.eps}
-  \label{subsubsec_vs_datasize1b}} 
+  \label{fig_concrete_prob_3d}
+  } 
   \subfigure[4-dimensional]{
     \includegraphics[width=0.31\textwidth]{poster_6.eps}
-  \label{subsubsec_vs_datasize1b}} 
-\caption{The concrete outputting probabilities under different dimensions with data set of size $600$ ,unit prior $\betad(1,1), \betad(1,1,1)$ and $\betad(1,1,1,1)$, balanced datasets and parameters $\epsilon = 0.8$ and $\delta = 10^{-8}$}
-\label{fig_vs_datasize}
+  \label{fig_concrete_prob_4d}
+  } 
+\caption{The concrete outputting probabilities under different dimensions with data set of size $600$}
+\label{fig_concrete_prob}
 \end{center}
 \end{figure}
 
