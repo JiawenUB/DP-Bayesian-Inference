@@ -165,22 +165,19 @@ Jiawen Liu$^{*}$
 %----------------------------------------------------------------------------------------
 
 \begin{block}{Differentially Private Bayesian Inference and Motivation}
-Release a private version of posterior distribution $(\tilde\alpha,\tilde\beta)=(\alpha +  \widetilde{\Delta \alpha},\beta + n - \widetilde{\Delta \alpha})$.
 \begin{columns} % Subdivide the first main column
 \begin{column}{.69\textwidth}
+In a baseline approach, we release a private version of posterior $\betad (\tilde\alpha,\tilde\beta)=(\alpha +  \widetilde{\Delta \alpha},\beta + n - \widetilde{\Delta \alpha})$ by sampling noise from $Lap(\mu,\nu)$ with mean $\mu$ and scale $\nu$, i.e., $\widetilde{\Delta \alpha}\sim Lap(\Delta \alpha, \frac{2}{\epsilon})$. This gives us motivation of following two contributions:
 \begin{enumerate}
-
-  \item In a baseline approach, we sample noise from $Lap(\mu,\nu)$ mechanism, i.e., $\widetilde{\Delta \alpha}\sim Lap(\Delta \alpha, \frac{2}{\epsilon})$.
-  Explain parameters of baseline approach...
-  \item Calibrating the noise w.r.t sensitivity of the (Hellinger distance).
-  \item Applying smooth sensitivity in mechanism to achieve better accuracy.
-        (Fig. \ref{fig_sensitivity} shows that local sensitivity of Hellinger distance is very steep and much higher in the edges but very smooth in central part).
+  \item Calibrating the noise w.r.t sensitivity of the accuracy metric (Hellinger distance), v.s. the $\ell_1$ norm in baseline approach.
+  \item Applying smooth sensitivity in mechanism v.s. global sensitivity.
+        (Global sensitivity of Hellinger distance over $\betad$ distribution takes value at point $(0,0)$ as in Fig. \ref{fig_sensitivity}. But we can improve because it's very smooth and low in central part).
 \end{enumerate}
 \end{column}
 \begin{column}{.28\textwidth}
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.85\textwidth]{poster_0.eps}
+\includegraphics[width=0.9\textwidth]{poster_0.eps}
 \caption{\footnotesize{Local sensitivity of Hellinger}}
 \label{fig_sensitivity}
 \end{figure}
@@ -197,15 +194,15 @@ Release a private version of posterior distribution $(\tilde\alpha,\tilde\beta)=
 
 \begin{block}{Smoothed Hellinger Distance Based Exponential Mechanism}
 
-Our approach defines the mechanism $\hexpmech$, which outputs  an element $r$ in $\betaset$ with probaiblity:
-$
+We define the mechanism $\hexpmech$ which produces an element $r$ in $\betaset$ with probaiblity:
+\[
 \underset{z \thicksim \hexpmech}{\Pr}[z=r] = 
 \frac 
-{exp\Big(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r)}{2\cdot S(\dataobs)}\Big)}
-{\displaystyle\sum_{r\in\betaset} exp\Big(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r)}{2\cdot S(\dataobs)}\Big)}
-$
+{\exp \Big(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r)}{2\cdot S(\dataobs)}\Big)}
+{\sum_{r\in\betaset} \exp \Big(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r)}{2\cdot S(\dataobs)}\Big)}
+\]
 
-given in input an observations $\dataobs$, parameters $\epsilon>0$ and $\delta>0$.
+given in input an observations $\dataobs$, parameters $\epsilon>0$ and $\delta>0$, where:
 
 \begin{itemize}
   \item[-] $\betaset$, the candidates set defined as $\{\betad(\alpha',\beta')\mid \alpha'=\alpha+\Delta\alpha, \beta'=\beta+n-\Delta\alpha\}$, given the prior distribution $\bprior=\betad(\alpha, \beta)$ and observed data set size $n$.
@@ -214,11 +211,11 @@ given in input an observations $\dataobs$, parameters $\epsilon>0$ and $\delta>0
 
   \item[-] $S(\dataobs)$, the smooth sensitivity:
   $
-  S(\dataobs)=\max_{\dataobs' \in \{0,1\}^{n}}\bigg \{LS(\dataobs') \cdot e^{-\gamma\cdot d(\dataobs,\dataobs')}\bigg\}
+  S(\dataobs)=\max_{\dataobs' \in \{0,1\}^{n}}\big\{ LS(\dataobs') \cdot e^{-\gamma\cdot d(\dataobs,\dataobs')}\big\}
   $,
   where:
   \begin{itemize}
-   \item $d$: Hamming distance between two datasets, 
+   \item $d$: Hamming distance between two data sets,
 
    \item $LS(\dataobs')$, local sensitivity at $\dataobs'$:
    $
@@ -251,20 +248,20 @@ given in input an observations $\dataobs$, parameters $\epsilon>0$ and $\delta>0
   In the baseline approach (i.e., Laplace mechanism), it is enough to add noise with sensitivity $1$ in 2 dimensions and $2$ in higher dimensions since it's equivalent to histogram
   (Should explain better).
   giving us the red points in plots. Without the knowledge of equivalence, Laplace usually add noise with sensitivity scale to dimensions, giving us green points.
-  Points in blue are given by the $M_B...$.
+  Points in blue are given by the $\hexpmech$.
 
 \begin{figure}[H]
 \begin{center}
 \centering
-  \subfigure[\footnotesize{2-dimensional, data size $\in [100,500]$}]{
+  \subfigure[\footnotesize{2 dimensions, data size $\in [100,500]$}]{
     \includegraphics[width=0.328\textwidth]{poster_1.eps}
     \label{subfig_sampling_2d}
   }
-  \subfigure[\footnotesize{3-dimensional, data size $\in [100,500]$} ]{
+  \subfigure[\footnotesize{3 dimensions, data size $\in [100,500]$} ]{
     \includegraphics[width=0.297\textwidth]{poster_2.eps}
   \label{subfig_sampling_3d}
   } 
-  \subfigure[\footnotesize{4-dimensional, data size $\in [100,600]$}]{
+  \subfigure[\footnotesize{4 dimensions, data size $\in [100,600]$}]{
     \includegraphics[width=0.29\textwidth]{poster_3.eps}
     \label{subfig_sampling_4d}
   }
@@ -277,15 +274,15 @@ Fig. \ref{fig_concrete_prob} gives us the concrete probabilities of outputting c
 \begin{figure}[H]
 \begin{center}
 \centering
-  \subfigure[2-dimensional]{
+  \subfigure[2 dimensions]{
     \includegraphics[width=0.31\textwidth]{poster_4.eps}
   \label{fig_concrete_prob_2d}
   }
-  \subfigure[3-dimensional]{
+  \subfigure[3 dimensions]{
     \includegraphics[width=0.31\textwidth]{poster_5.eps}
   \label{fig_concrete_prob_3d}
   } 
-  \subfigure[4-dimensional]{
+  \subfigure[4 dimensions]{
     \includegraphics[width=0.31\textwidth]{poster_6.eps}
   \label{fig_concrete_prob_4d}
   } 
