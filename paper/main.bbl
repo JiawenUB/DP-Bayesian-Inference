@@ -1,0 +1,15 @@
+\begin{thebibliography}{1}
+
+\bibitem{dwork2014algorithmic}
+Cynthia Dwork, Aaron Roth, et~al.
+\newblock The algorithmic foundations of differential privacy.
+\newblock {\em Foundations and Trends{\textregistered} in Theoretical Computer
+  Science}, 9(3--4):211--407, 2014.
+
+\bibitem{nissim2007smooth}
+Kobbi Nissim, Sofya Raskhodnikova, and Adam Smith.
+\newblock Smooth sensitivity and sampling in private data analysis.
+\newblock In {\em Proceedings of the thirty-ninth annual ACM symposium on
+  Theory of computing}, pages 75--84. ACM, 2007.
+
+\end{thebibliography}
