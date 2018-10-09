@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  9 OCT 2018 15:36
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  9 OCT 2018 16:03
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1697,12 +1697,12 @@ Package epstopdf Info: Source file: <poster_1.eps>
 pdf poster_1.eps>
 (epstopdf)             \includegraphics on input line 395.
 Package epstopdf Info: Output file is already uptodate.
-<poster_1-eps-converted-to.pdf, id=16, 910.40125pt x 517.935pt>
+<poster_1-eps-converted-to.pdf, id=17, 910.40125pt x 517.935pt>
 File: poster_1-eps-converted-to.pdf Graphic file (type pdf)
 
 <use poster_1-eps-converted-to.pdf>
 Package pdftex.def Info: poster_1-eps-converted-to.pdf used on input line 395.
-(pdftex.def)             Requested size: 450.82056pt x 256.47739pt.
+(pdftex.def)             Requested size: 457.6785pt x 260.3815pt.
 Package epstopdf Info: Source file: <poster_2.eps>
 (epstopdf)                    date: 2018-10-06 00:20:04
 (epstopdf)                    size: 21382169 bytes
@@ -1714,12 +1714,12 @@ pdf poster_2.eps>
 (epstopdf)             \includegraphics on input line 395.
 Package epstopdf Info: Output file is already uptodate.
 
-<poster_2-eps-converted-to.pdf, id=17, 854.19125pt x 538.01pt>
+<poster_2-eps-converted-to.pdf, id=18, 854.19125pt x 538.01pt>
 File: poster_2-eps-converted-to.pdf Graphic file (type pdf)
 
 <use poster_2-eps-converted-to.pdf>
 Package pdftex.def Info: poster_2-eps-converted-to.pdf used on input line 395.
-(pdftex.def)             Requested size: 408.20483pt x 257.10075pt.
+(pdftex.def)             Requested size: 415.08376pt x 261.4353pt.
 Package epstopdf Info: Source file: <poster_3.eps>
 (epstopdf)                    date: 2018-10-06 00:26:52
 (epstopdf)                    size: 25552469 bytes
@@ -1731,17 +1731,17 @@ pdf poster_3.eps>
 (epstopdf)             \includegraphics on input line 395.
 Package epstopdf Info: Output file is already uptodate.
 
-<poster_3-eps-converted-to.pdf, id=18, 922.44624pt x 595.22375pt>
+<poster_3-eps-converted-to.pdf, id=19, 922.44624pt x 595.22375pt>
 File: poster_3-eps-converted-to.pdf Graphic file (type pdf)
 
 <use poster_3-eps-converted-to.pdf>
 Package pdftex.def Info: poster_3-eps-converted-to.pdf used on input line 395.
-(pdftex.def)             Requested size: 398.57855pt x 257.18552pt.
+(pdftex.def)             Requested size: 405.45746pt x 261.62679pt.
 Package epstopdf Info: Source file: <poster_4.eps>
 (epstopdf)                    date: 2018-10-09 20:57:30
 (epstopdf)                    size: 1872672 bytes
 (epstopdf)             Output file: <poster_4-eps-converted-to.pdf>
-(epstopdf)                    date: 2018-10-09 15:35:40
+(epstopdf)                    date: 2018-10-09 16:02:52
 (epstopdf)                    size: 57382 bytes
 (epstopdf)             Command: <repstopdf --outfile=poster_4-eps-converted-to.
 pdf poster_4.eps>
@@ -1750,10 +1750,10 @@ runsystem(repstopdf --outfile=poster_4-eps-converted-to.pdf poster_4.eps)...exe
 cuted safely (allowed).
 
 Package epstopdf Info: Result file: <poster_4-eps-converted-to.pdf>
-(epstopdf)                    date: 2018-10-09 15:36:14
+(epstopdf)                    date: 2018-10-09 16:03:30
 (epstopdf)                    size: 57382 bytes.
 
-<poster_4-eps-converted-to.pdf, id=20, 462.72874pt x 347.2975pt>
+<poster_4-eps-converted-to.pdf, id=21, 462.72874pt x 347.2975pt>
 File: poster_4-eps-converted-to.pdf Graphic file (type pdf)
 
 <use poster_4-eps-converted-to.pdf>
@@ -1763,7 +1763,7 @@ Package epstopdf Info: Source file: <poster_5.eps>
 (epstopdf)                    date: 2018-10-09 20:57:30
 (epstopdf)                    size: 1872672 bytes
 (epstopdf)             Output file: <poster_5-eps-converted-to.pdf>
-(epstopdf)                    date: 2018-10-09 15:35:40
+(epstopdf)                    date: 2018-10-09 16:02:53
 (epstopdf)                    size: 81792 bytes
 (epstopdf)             Command: <repstopdf --outfile=poster_5-eps-converted-to.
 pdf poster_5.eps>
@@ -1772,10 +1772,10 @@ runsystem(repstopdf --outfile=poster_5-eps-converted-to.pdf poster_5.eps)...exe
 cuted safely (allowed).
 
 Package epstopdf Info: Result file: <poster_5-eps-converted-to.pdf>
-(epstopdf)                    date: 2018-10-09 15:36:14
+(epstopdf)                    date: 2018-10-09 16:03:31
 (epstopdf)                    size: 81792 bytes.
 
-<poster_5-eps-converted-to.pdf, id=21, 462.72874pt x 347.2975pt>
+<poster_5-eps-converted-to.pdf, id=22, 462.72874pt x 347.2975pt>
 File: poster_5-eps-converted-to.pdf Graphic file (type pdf)
 
 <use poster_5-eps-converted-to.pdf>
@@ -1785,7 +1785,7 @@ Package epstopdf Info: Source file: <poster_6.eps>
 (epstopdf)                    date: 2018-10-09 20:57:32
 (epstopdf)                    size: 1872672 bytes
 (epstopdf)             Output file: <poster_6-eps-converted-to.pdf>
-(epstopdf)                    date: 2018-10-09 15:35:41
+(epstopdf)                    date: 2018-10-09 16:02:53
 (epstopdf)                    size: 89825 bytes
 (epstopdf)             Command: <repstopdf --outfile=poster_6-eps-converted-to.
 pdf poster_6.eps>
@@ -1794,10 +1794,10 @@ runsystem(repstopdf --outfile=poster_6-eps-converted-to.pdf poster_6.eps)...exe
 cuted safely (allowed).
 
 Package epstopdf Info: Result file: <poster_6-eps-converted-to.pdf>
-(epstopdf)                    date: 2018-10-09 15:36:15
+(epstopdf)                    date: 2018-10-09 16:03:31
 (epstopdf)                    size: 89825 bytes.
 
-<poster_6-eps-converted-to.pdf, id=22, 462.72874pt x 347.2975pt>
+<poster_6-eps-converted-to.pdf, id=23, 462.72874pt x 347.2975pt>
 File: poster_6-eps-converted-to.pdf Graphic file (type pdf)
 
 <use poster_6-eps-converted-to.pdf>
@@ -1826,27 +1826,10 @@ LaTeX Font Warning: Font shape `U/stmry/b/n' in size <29.04> not available
 LaTeX Font Warning: Font shape `U/stmry/b/n' in size <20.3279> not available
 (Font)              size <20.74> substituted on input line 395.
 
-LaTeX Font Info:    Calculating math sizes for size <20.16> on input line 395.
-
-LaTeX Font Warning: Font shape `OT1/cmtt/bx/n' in size <20.16> not available
-(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 395.
-
-
-LaTeX Font Warning: Font shape `OT1/cmtt/bx/n' in size <14.11194> not available
-
-(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 395.
-
-
-LaTeX Font Warning: Font shape `OT1/cmtt/bx/n' in size <10.08> not available
-(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 395.
-
-
-LaTeX Font Warning: Font shape `U/stmry/b/n' in size <20.16> not available
-(Font)              size <20.74> substituted on input line 395.
-
 (./main.bbl
 
-Package natbib Warning: Empty `thebibliography' environment on input line 3.
+LaTeX Font Warning: Font shape `OT1/cmss/m/it' in size <29.04> not available
+(Font)              Font shape `OT1/cmss/m/sl' tried instead on input line 6.
 
 )
 Overfull \hbox (2.21655pt too wide) detected at line 395
@@ -1904,11 +1887,11 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
  ) 
 Here is how much of TeX's memory you used:
- 30808 strings out of 492995
- 604526 string characters out of 6132704
- 744740 words of memory out of 5000000
- 33762 multiletter control sequences out of 15000+600000
- 49447 words of font info for 172 fonts, out of 8000000 for 9000
+ 30777 strings out of 492995
+ 603967 string characters out of 6132704
+ 747323 words of memory out of 5000000
+ 33731 multiletter control sequences out of 15000+600000
+ 41692 words of font info for 144 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  56i,19n,68p,10430b,1448s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}
@@ -1917,15 +1900,16 @@ Here is how much of TeX's memory you used:
 /usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb><
 /usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmss17.pfb></
 usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb><
+/usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi17.pfb><
 /usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></
 usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pf
 b></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm1
 0.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfso1728.
 pfb>
-Output written on main.pdf (1 page, 1093139 bytes).
+Output written on main.pdf (1 page, 1104682 bytes).
 PDF statistics:
- 104 PDF objects out of 1000 (max. 8388607)
- 71 compressed objects within 1 object stream
- 13 named destinations out of 1000 (max. 500000)
+ 110 PDF objects out of 1000 (max. 8388607)
+ 76 compressed objects within 1 object stream
+ 14 named destinations out of 1000 (max. 500000)
  78 words of extra memory for PDF output out of 10000 (max. 10000000)
 

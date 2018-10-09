@@ -141,7 +141,7 @@ Jiawen Liu$^{*}$
 %	INTRODUCTION
 %----------------------------------------------------------------------------------------
             
-\begin{block}{Bayesian inference: Beta-Binomial model}
+\begin{block}{Bayesian inference ($\bysinfer$): Beta-Binomial model}
 % The first subdivided column within the first main column
 % \begin{columns} % Subdivide the first main column
 % \begin{column}{.54\textwidth} % The first subdivided column within the first main column
@@ -164,7 +164,7 @@ Jiawen Liu$^{*}$
 %	MATERIALS
 %----------------------------------------------------------------------------------------
 
-\begin{block}{Differentially Private Bayesian Inference and Motivation}
+\begin{block}{Differentially Private Bayesian Inference and Motivations}
 Releasing a differentially private posterior $\betad (\tilde\alpha,\tilde\beta)=(\alpha +  \widetilde{\Delta \alpha},\beta + n - \widetilde{\Delta \alpha})$.
 \begin{columns} % Subdivide the first main column
 \begin{column}{.69\textwidth}
@@ -208,7 +208,7 @@ given in input an observations $\dataobs$, parameters $\epsilon>0$ and $\delta>0
 
   \item[-] $-\hellinger(\bysinfer(\dataobs),r)$ denotes the scoring function based on the Hellinger distance.
 
-  \item[-] $S(\dataobs)$, the smooth sensitivity:
+  \item[-] $S(\dataobs)$, the smooth sensitivity\cite{nissim2007smooth}:
   $
   S(\dataobs)=\max_{\dataobs' \in \{0,1\}^{n}}\big\{ LS(\dataobs') \cdot e^{-\gamma\cdot d(\dataobs,\dataobs')}\big\}
   $,
@@ -244,27 +244,27 @@ given in input an observations $\dataobs$, parameters $\epsilon>0$ and $\delta>0
 % Two groups of experimental results both with unit prior $\betad(1,1), \betad(1,1,1)$ and $\betad(1,1,1,1)$, balanced datasets and parameters $\epsilon = 1.0$ and $\delta = 10^{-8}$.
 
   Fig. \ref{fig_sampling} gives the average Hellinger distance between the sampled results and true posterior, by sampling for $10k$ times under each data size configuration.
-  In the baseline approach, it is enough to add noise with sensitivity $1$ in 2 dimensions and $2$ in higher dimensions since it's equivalent to histogram
-  (Should explain better).
-  giving us the red points in plots. Without the knowledge of equivalence, Laplace usually add noise with sensitivity scale to dimensions, giving us green points.
+  In the baseline approach (LapMech), it is enough to add noise with sensitivity $1$ in 2 dimensions and $2$ in higher dimensions since it's equivalent to histogram
+  (Posteriors of adjacent data sets differ only in two dimensions),
+  giving us the red points in plots. Without knowing equivalence, LapMech adds noise scaled to sensitivity proportional to dimensionality, giving us green points.
   Points in blue are given by the $\hexpmech$.
 
 \begin{figure}[H]
 \begin{center}
 \centering
   \subfigure[\footnotesize{2 dimensions, data size $\in [100,500]$}]{
-    \includegraphics[width=0.328\textwidth]{poster_1.eps}
+    \includegraphics[width=0.333\textwidth]{poster_1.eps}
     \label{subfig_sampling_2d}
   }
   \subfigure[\footnotesize{3 dimensions, data size $\in [100,500]$} ]{
-    \includegraphics[width=0.297\textwidth]{poster_2.eps}
+    \includegraphics[width=0.302\textwidth]{poster_2.eps}
   \label{subfig_sampling_3d}
   } 
   \subfigure[\footnotesize{4 dimensions, data size $\in [100,600]$}]{
-    \includegraphics[width=0.29\textwidth]{poster_3.eps}
+    \includegraphics[width=0.295\textwidth]{poster_3.eps}
     \label{subfig_sampling_4d}
   }
-  \caption{Increasing data size}
+  \caption{Average accuracy by increasing data set size}
 \label{fig_sampling}
 \end{center}
 \end{figure}
@@ -289,7 +289,7 @@ Fig. \ref{fig_concrete_prob} gives us the concrete probabilities of outputting c
 \label{fig_concrete_prob}
 \end{center}
 \end{figure}
-\scriptsize{Two groups of experiments both with unit prior $\betad(1,1), \betad(1,1,1)$ and $\betad(1,1,1,1)$, balanced datasets and parameters $\epsilon = 1.0$ and $\delta = 10^{-8}$.}
+\footnotesize{Experiments above are with unit prior $\betad(1,1), \betad(1,1,1)$ and $\betad(1,1,1,1)$, balanced datasets, $\epsilon = 1.0$ and $\delta = 10^{-8}$.}
 \end{block}
 
 
@@ -301,9 +301,9 @@ Fig. \ref{fig_concrete_prob} gives us the concrete probabilities of outputting c
 \begin{block}{Conclusion}
 
 \begin{itemize}
-\item The smoothed Hellinger distance based exponential mechanism outperforms the asymptotically the baseline 
+  \item The smoothed Hellinger distance based exponential mechanism outperforms asymptotically the baseline 
   approach  when the latter uses a sensitivity proportional to dimensionality.
-  (when can this happen?)
+  \item From experimental results, the outperformance happens when the data size is greater than $400$ .
   % \begin{enumerate}
   %   \item  The accuracy that we are going to explore next, and in a more principled and formal way.
     
