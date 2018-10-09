@@ -63,8 +63,7 @@ if __name__ == "__main__":
 	ax.scatter(x, y, z)
 	ax.set_xlabel(r'$\alpha$')
 	ax.set_ylabel(r'$\beta$')
-	ax.set_zlabel(r'$\mathcal{H}(\mathsf{beta}(\alpha+1, b), \mathsf{beta}(\alpha, \beta+1))$')
-	ax.set_title("Local sensitivity")
+	ax.set_zlabel(r'$\mathcal{H}(\mathsf{beta}(\alpha+1, \beta), \mathsf{beta}(\alpha, \beta+1))$')
 	plt.show()
 
 
