@@ -106,27 +106,27 @@ Jiawen Liu$^{*}$
 %----------------------------------------------------------------------------------------
 
 \begin{block}{Objectives}
-\begin{columns} % Subdivide the first main column
-\begin{column}{.69\textwidth}
+% \begin{columns} % Subdivide the first main column
+% \begin{column}{.69\textwidth}
 \begin{enumerate}
 \item Designing a differentially private Bayesian inference mechanism.
 \item Measuring accuracy with a metric over distributions (Hellinger distance).
-\item Calibrating the noise w.r.t sensitivity of the (Hellinger distance).
-\item Applying smooth sensitivity in mechanism to achieve better accuracy.
-        (Fig. \ref{fig_sensitivity} shows that local sensitivity of Hellinger distance is very steep and much higher in the edges but very smooth in central part).
+% \item Calibrating the noise w.r.t sensitivity of the (Hellinger distance).
+% \item Applying smooth sensitivity in mechanism to achieve better accuracy.
+%         (Fig. \ref{fig_sensitivity} shows that local sensitivity of Hellinger distance is very steep and much higher in the edges but very smooth in central part).
 \end{enumerate}
-\end{column}
-\begin{column}{.28\textwidth}
-\begin{figure}[ht]
-\centering
-\includegraphics[width=0.85\textwidth]{poster_0.eps}
-say something about beta...
-\caption{\footnotesize{Local sensitivity of Hellinger}}
-\label{fig_sensitivity}
-\end{figure}
+% \end{column}
+% \begin{column}{.28\textwidth}
+% \begin{figure}[ht]
+% \centering
+% \includegraphics[width=0.85\textwidth]{poster_0.eps}
+% say something about beta...
+% \caption{\footnotesize{Local sensitivity of Hellinger}}
+% \label{fig_sensitivity}
+% \end{figure}
 % \vspace{.1cm}
-\end{column}
-\end{columns}
+% \end{column}
+% \end{columns}
 
 % \noindent Design a mechanism that achieve differential privacy by scaling to a metric between distribution.
 % \begin{enumerate}
@@ -164,11 +164,30 @@ say something about beta...
 %	MATERIALS
 %----------------------------------------------------------------------------------------
 
-\begin{block}{Differentially Private Bayesian inference}
+\begin{block}{Differentially Private Bayesian Inference and Motivation}
 Release a private version of posterior distribution $(\tilde\alpha,\tilde\beta)=(\alpha +  \widetilde{\Delta \alpha},\beta + n - \widetilde{\Delta \alpha})$.
+\begin{columns} % Subdivide the first main column
+\begin{column}{.69\textwidth}
+\begin{enumerate}
 
-In a baseline approach, we sample noise from $Lap(\mu,\nu)$ mechanism, i.e., $\widetilde{\Delta \alpha}\sim Lap(\Delta \alpha, \frac{2}{\epsilon})$.
-Explain parameters of baseline approach...
+  \item In a baseline approach, we sample noise from $Lap(\mu,\nu)$ mechanism, i.e., $\widetilde{\Delta \alpha}\sim Lap(\Delta \alpha, \frac{2}{\epsilon})$.
+  Explain parameters of baseline approach...
+  \item Calibrating the noise w.r.t sensitivity of the (Hellinger distance).
+  \item Applying smooth sensitivity in mechanism to achieve better accuracy.
+        (Fig. \ref{fig_sensitivity} shows that local sensitivity of Hellinger distance is very steep and much higher in the edges but very smooth in central part).
+\end{enumerate}
+\end{column}
+\begin{column}{.28\textwidth}
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.85\textwidth]{poster_0.eps}
+\caption{\footnotesize{Local sensitivity of Hellinger}}
+\label{fig_sensitivity}
+\end{figure}
+% \vspace{.1cm}
+\end{column}
+\end{columns}
+
 \end{block}
 
 %----------------------------------------------------------------------------------------

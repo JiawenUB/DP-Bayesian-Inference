@@ -439,6 +439,8 @@ INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/public/sansmathaccent/mathker
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/public/sansmathaccent/mathkerncmssxi17.tfm
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/public/cm/cmtt12.tfm
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/public/cm/cmtt12.tfm
+INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/public/cm/cmss17.tfm
+INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/public/cm/cmss17.tfm
 INPUT poster_0.eps
 INPUT ./poster_0.eps
 INPUT ./poster_0.eps
@@ -448,8 +450,6 @@ INPUT ./poster_0.eps
 INPUT ./poster_0-eps-converted-to.pdf
 INPUT ./poster_0-eps-converted-to.pdf
 INPUT ./poster_0-eps-converted-to.pdf
-INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/public/cm/cmss17.tfm
-INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/public/cm/cmss17.tfm
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/public/cm/cmss17.tfm
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/public/cm/cmss17.tfm
 INPUT poster_1.eps
