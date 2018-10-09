@@ -109,8 +109,8 @@ Jiawen Liu$^{*}$
 % \begin{columns} % Subdivide the first main column
 % \begin{column}{.69\textwidth}
 \begin{enumerate}
-\item Designing a differentially private Bayesian inference mechanism.
-\item Measuring accuracy with a metric over distributions (Hellinger distance).
+\item Designing a differentially private ($\mathsf{dp}$) Bayesian inference mechanism.
+\item Measuring accuracy with a metric over distributions (Hellinger distance ($\hellinger$)).
 % \item Calibrating the noise w.r.t sensitivity of the (Hellinger distance).
 % \item Applying smooth sensitivity in mechanism to achieve better accuracy.
 %         (Fig. \ref{fig_sensitivity} shows that local sensitivity of Hellinger distance is very steep and much higher in the edges but very smooth in central part).
@@ -165,20 +165,19 @@ Jiawen Liu$^{*}$
 %----------------------------------------------------------------------------------------
 
 \begin{block}{Differentially Private Bayesian Inference and Motivation}
+Releasing a differentially private posterior $\betad (\tilde\alpha,\tilde\beta)=(\alpha +  \widetilde{\Delta \alpha},\beta + n - \widetilde{\Delta \alpha})$.
 \begin{columns} % Subdivide the first main column
 \begin{column}{.69\textwidth}
-In a baseline approach, we release a private version of posterior $\betad (\tilde\alpha,\tilde\beta)=(\alpha +  \widetilde{\Delta \alpha},\beta + n - \widetilde{\Delta \alpha})$ by sampling noise from $Lap(\mu,\nu)$ with mean $\mu$ and scale $\nu$, i.e., $\widetilde{\Delta \alpha}\sim Lap(\Delta \alpha, \frac{2}{\epsilon})$. This gives us motivation of following two contributions:
 \begin{enumerate}
-  \item Calibrating the noise w.r.t sensitivity of the accuracy metric (Hellinger distance), v.s. the $\ell_1$ norm in baseline approach.
-  \item Applying smooth sensitivity in mechanism v.s. global sensitivity.
-        (Global sensitivity of Hellinger distance over $\betad$ distribution takes value at point $(0,0)$ as in Fig. \ref{fig_sensitivity}. But we can improve because it's very smooth and low in central part).
+  \item  Baseline approach samples noise from $\mathsf{Lap}(\Delta \alpha, \frac{1}{\epsilon})$ with mean $\Delta \alpha$ and scale $\frac{1}{\epsilon}$. But noise here is scaled to sensitivity $1$ over $\ell_1$ norm. Motivated by this, we calibrate the noise w.r.t sensitivity of the accuracy metric ($\hellinger$) (v.s. the $\ell_1$ norm in baseline approach).
+  \item Global sensitivity of $\hellinger$ over $\betad$ distributions takes value at edge ($(0,0)$ point) as in Fig. \ref{fig_sensitivity}. But it's very smooth when move away from edge. Motivated by this, we apply smooth sensitivity in mechanism (v.s. global sensitivity) to improve accuracy.
 \end{enumerate}
 \end{column}
 \begin{column}{.28\textwidth}
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.9\textwidth]{poster_0.eps}
-\caption{\footnotesize{Local sensitivity of Hellinger}}
+\caption{\footnotesize{Sensitivities of $\hellinger$ over $\betad$}}
 \label{fig_sensitivity}
 \end{figure}
 % \vspace{.1cm}
@@ -245,7 +244,7 @@ given in input an observations $\dataobs$, parameters $\epsilon>0$ and $\delta>0
 % Two groups of experimental results both with unit prior $\betad(1,1), \betad(1,1,1)$ and $\betad(1,1,1,1)$, balanced datasets and parameters $\epsilon = 1.0$ and $\delta = 10^{-8}$.
 
   Fig. \ref{fig_sampling} gives the average Hellinger distance between the sampled results and true posterior, by sampling for $10k$ times under each data size configuration.
-  In the baseline approach (i.e., Laplace mechanism), it is enough to add noise with sensitivity $1$ in 2 dimensions and $2$ in higher dimensions since it's equivalent to histogram
+  In the baseline approach, it is enough to add noise with sensitivity $1$ in 2 dimensions and $2$ in higher dimensions since it's equivalent to histogram
   (Should explain better).
   giving us the red points in plots. Without the knowledge of equivalence, Laplace usually add noise with sensitivity scale to dimensions, giving us green points.
   Points in blue are given by the $\hexpmech$.
