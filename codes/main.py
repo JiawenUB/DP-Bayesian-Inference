@@ -168,7 +168,7 @@ def row_discrete_probabilities(sample_size,epsilon,delta,prior,observation):
 
 	plt.plot(steps[-100:], probabilities_lap_2_by_steps[-100:], 'g', label=('LapMech (sensitivity = 2)'))
 
-	plt.xlabel("c / (steps from correct answer, in form of Hellinger Distance)")
+	plt.xlabel("c / Hellinger distance from true posterior")
 	plt.ylabel("Pr[H(BI(x),r) = c]")
 	plt.title("Discrete Probabilities")
 	plt.legend()
@@ -583,7 +583,7 @@ def gen_priors(r, step, d):
 
 if __name__ == "__main__":
 
-	datasize = 100
+	datasize = 600
 	epsilon = 1.0
 	delta = 0.00000001
 	prior = dirichlet([1,1])
@@ -594,7 +594,7 @@ if __name__ == "__main__":
 	datasizes = gen_datasizes((600,600),50)#[300] #[8,12,18,24,30,36,42,44,46,48]#,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80]
 	percentage = [0.5,0.5]
 	datasets = gen_datasets(percentage, datasizes)
-	priors = [dirichlet([1,1])] + gen_priors([5,20], 5, 2) + gen_priors([40,100], 20, 2) + gen_priors([150,300], 50, 2)
+	priors = [dirichlet([1,1])] + gen_priors([5,20], 5, 2) + gen_priors([40,100], 20, 2) + gen_priors([150,300], 50, 2) + gen_priors([400,400], 50, 2)
 	# accuracy_VS_prior_mean(sample_size,epsilon,delta,priors,observations)
 	accuracy_VS_prior(datasize,epsilon,delta,priors,observation)
 	# accuracy_VS_mean(sample_size,epsilon,delta,prior)

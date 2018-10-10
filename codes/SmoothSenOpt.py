@@ -75,10 +75,10 @@ def plot_ss(ss,xstick,title,yaxis):
 
 	plt.plot(range(len(ss)),ss,'r^')
 
-	plt.xticks(range(len(ss)),xstick,rotation=70,fontsize=12)
+	# plt.xticks(range(len(ss)),xstick,rotation=70,fontsize=7)
 	plt.title(title,fontsize=20)
-	plt.xlabel(r"$x'$",fontsize=25)	
-	plt.ylabel(yaxis,fontsize=20)
+	plt.xlabel(r"$\alpha$",fontsize=25)	
+	plt.ylabel(yaxis,fontsize=15)
 	plt.grid()
 	plt.legend()
 	plt.show()
@@ -113,24 +113,24 @@ def ss_ls_component_study(prior, sample_size, epsilon, delta, percentage):
 	Bayesian_Model._set_candidate_scores()
 	Bayesian_Model._set_LS_Candidates()
 
-	xstick = [str((c._minus(Bayesian_Model._prior))._alphas) for c in Bayesian_Model._candidates]
+	xstick = [str(c._alphas) for c in Bayesian_Model._candidates]
 	beta = math.log(1 - epsilon / (2.0 * math.log(delta / (2.0 * (sample_size)))))
 	y=[Bayesian_Model._LS_Candidates[r] for r in Bayesian_Model._candidates]
 
 
-	plot_ss(y,xstick,'Local Sensitivity Component of Smooth Sensitivity w.r.t. x :' + str([sample_size*i for i in percentage]) + r'; $\epsilon:$' + str(epsilon) + r'; $\delta:$' + str(delta), r"$\Delta_l(H(BI(x'),-))}$")
+	plot_ss(y[1:-1],xstick,"", r"$\mathcal{H}(\mathsf{beta}(\alpha + 1, 100 - \alpha), \mathsf{beta}(\alpha, 101 - \alpha))$")
 
 	return
 
 
 if __name__ == "__main__":
-	percentage = [0.3,0.3,0.4]
-	datasize = 10
-	prior = dirichlet([1,1,1])
+	percentage = [0.5,0.5]
+	datasize = 100
+	prior = dirichlet([1,1])
 
-	ss_exponentiate_component_study(prior, datasize, 0.1, 0.00000001, percentage)
+	# ss_exponentiate_component_study(prior, datasize, 0.1, 0.00000001, percentage)
 
-	# ss_ls_component_study(prior, datasize, 1.0, 0.00000001, percentage)
+	ss_ls_component_study(prior, datasize, 1.0, 0.00000001, percentage)
 
 	# smooth_sensitivity_study(prior,datasize, 1.0, 0.00000001, percentage)
 	
