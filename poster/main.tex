@@ -243,9 +243,9 @@ given in input an observations $\dataobs$, parameters $\epsilon>0$ and $\delta>0
 \begin{block}{Preliminary Experimental Results}
 % Two groups of experimental results both with unit prior $\betad(1,1), \betad(1,1,1)$ and $\betad(1,1,1,1)$, balanced datasets and parameters $\epsilon = 1.0$ and $\delta = 10^{-8}$.
 
-  Fig. \ref{fig_sampling} gives the average Hellinger distance between the sampled results and true posterior, by sampling for $10k$ times under each data size configuration.
-  In the baseline approach (LapMech), it is enough to add noise with sensitivity $1$ in 2 dimensions and $2$ in higher dimensions since it's equivalent to histogram
-  (Posteriors of adjacent data sets differ only in two dimensions),
+  Fig. \ref{fig_sampling} and Fig. \ref{subfig_prior} gives the average and 4-quantile of Hellinger distance between the sampled results and true posterior, by sampling for $10k$ times under each data size or prior distribution configuration.
+  In the baseline approach (LapMech {\small with noises being postprocessed to the closest integer}), it is enough to add noise with sensitivity $1$ in 2 dimensions and $2$ in higher dimensions since it's equivalent to histogram
+  (posteriors of adjacent data sets differ only in two dimensions),
   giving us the red points in plots. Without knowing equivalence, LapMech adds noise scaled to sensitivity proportional to dimensionality, giving us green points.
   Points in blue are given by the $\hexpmech$.
 
@@ -269,27 +269,27 @@ given in input an observations $\dataobs$, parameters $\epsilon>0$ and $\delta>0
 \end{center}
 \end{figure}
 
-Fig. \ref{fig_concrete_prob} gives us the concrete probabilities of outputting candidates with certain Hellinegr distance from the correct posterior in 2, 3 and 4 dimensions respectively.
+Fig. \ref{subfig_concrete_prob_2d} and \ref{subfig_concrete_prob_3d} gives us the concrete probabilities of outputting candidates with certain Hellinegr distance from the correct posterior in 2 and 3 respectively.
 \begin{figure}[H]
 \begin{center}
 \centering
+   \subfigure[2 dimensions with data size $100$]{
+    \includegraphics[width=0.317\textwidth]{poster_6.eps}
+  \label{subfig_prior}
+  }
   \subfigure[2 dimensions]{
     \includegraphics[width=0.31\textwidth]{poster_4.eps}
-  \label{fig_concrete_prob_2d}
+  \label{subfig_concrete_prob_2d}
   }
   \subfigure[3 dimensions]{
     \includegraphics[width=0.31\textwidth]{poster_5.eps}
-  \label{fig_concrete_prob_3d}
-  } 
-  \subfigure[4 dimensions]{
-    \includegraphics[width=0.31\textwidth]{poster_6.eps}
-  \label{fig_concrete_prob_4d}
+  \label{subfig_concrete_prob_3d}
   } 
 \caption{The concrete outputting probabilities under different dimensions with data set of size $600$}
 \label{fig_concrete_prob}
 \end{center}
 \end{figure}
-\footnotesize{Experiments above are with unit prior $\betad(1,1), \betad(1,1,1)$ and $\betad(1,1,1,1)$, balanced datasets, $\epsilon = 1.0$ and $\delta = 10^{-8}$.}
+\scriptsize{Experiments above are with unit prior $\betad(1,1), \betad(1,1,1)$ and $\betad(1,1,1,1)$ (except Fig. \ref{subfig_prior}) , balanced datasets, $\epsilon = 1.0$ and $\delta = 10^{-8}$.}
 \end{block}
 
 
