@@ -1,12 +1,12 @@
 # Fdb version 3
-["bibtex main"] 1539114881 "main.aux" "main.bbl" "main" 1539115412
+["bibtex main"] 1539114881 "main.aux" "main.bbl" "main" 1539140853
   "/usr/local/texlive/2017/texmf-dist/bibtex/bst/base/unsrt.bst" 1480098433 18030 1376b4b231b50c66211e47e42eda2875 ""
   "bayesian.bib" 1538778193 2763 2aab54d6fc4cf2609ba4f2a236993efa ""
   "main.aux" 1539115412 3944 5a6c178baf0b2d4e81d64a84f1f314a8 ""
   (generated)
-  "main.blg"
   "main.bbl"
-["pdflatex"] 1539115409 "main.tex" "main.pdf" "main" 1539115412
+  "main.blg"
+["pdflatex"] 1539115409 "main.tex" "main.pdf" "main" 1539140853
   "/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1480098666 2971 def0b6c1f0b107b3b936def894055589 ""
   "/usr/local/texlive/2017/texmf-dist/fonts/map/fontname/texfonts.map" 1480098670 3287 e6b82fe08f5336d4d5ebc73fb1152e87 ""
   "/usr/local/texlive/2017/texmf-dist/fonts/tfm/jknappen/ec/ecso1728.tfm" 1480098696 3584 703e04bf0552e7f9a5ddd3f46d081320 ""
@@ -256,9 +256,9 @@
   "tangocolors.sty" 1507312083 2141 61df698f50c023c26043862485d39f0e ""
   (generated)
   "main.pdf"
-  "main.nav"
-  "main.out"
-  "main.snm"
-  "main.log"
-  "main.toc"
   "main.aux"
+  "main.toc"
+  "main.snm"
+  "main.out"
+  "main.nav"
+  "main.log"
