@@ -474,7 +474,7 @@ def accuracy_VS_prior(sample_size,epsilon,delta,priors,observation):
 	for prior in priors:
 		Bayesian_Model = BayesInferwithDirPrior(prior, sample_size, epsilon, delta)
 		Bayesian_Model._set_observation(observation)
-		Bayesian_Model._experiments(3000)
+		Bayesian_Model._experiments(1000)
 		data.append(Bayesian_Model._accuracy[Bayesian_Model._keys[3]])
 		data.append(Bayesian_Model._accuracy[Bayesian_Model._keys[0]])
 		data.append(Bayesian_Model._accuracy[Bayesian_Model._keys[4]])

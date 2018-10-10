@@ -269,7 +269,7 @@ given in input an observations $\dataobs$, parameters $\epsilon>0$ and $\delta>0
 \end{center}
 \end{figure}
 
-Fig. \ref{subfig_concrete_prob_2d} and \ref{subfig_concrete_prob_3d} gives us the concrete probabilities of outputting candidates with certain Hellinegr distance from the correct posterior in 2 and 3 respectively.
+Fig. \ref{subfig_concrete_prob_2d} and \ref{subfig_concrete_prob_3d} give us the discrete probabilities. On the x-axis: the distance of a potential output r from the true answer and on y-axis the probability of r being output by the mechanisms.
 \begin{figure}[H]
 \begin{center}
 \centering
@@ -285,7 +285,7 @@ Fig. \ref{subfig_concrete_prob_2d} and \ref{subfig_concrete_prob_3d} gives us th
     \includegraphics[width=0.31\textwidth]{poster_5.eps}
   \label{subfig_concrete_prob_3d}
   } 
-\caption{The concrete outputting probabilities under different dimensions with data set of size $600$}
+\caption{4-quantile and discrete probability plots}
 \label{fig_concrete_prob}
 \end{center}
 \end{figure}
@@ -301,9 +301,9 @@ Fig. \ref{subfig_concrete_prob_2d} and \ref{subfig_concrete_prob_3d} gives us th
 \begin{block}{Conclusion}
 
 \begin{itemize}
-  \item The smoothed Hellinger distance based exponential mechanism outperforms asymptotically the baseline 
+  \item[-] The smoothed Hellinger distance based exponential mechanism outperforms asymptotically the baseline 
   approach  when the latter uses a sensitivity proportional to dimensionality.
-  \item From experimental results, the outperformance happens when the data size is greater than $400$ .
+  \item[-] From experimental results, the outperformance happens when the data size is greater than $400$ .
   % \begin{enumerate}
   %   \item  The accuracy that we are going to explore next, and in a more principled and formal way.
     
