@@ -247,11 +247,11 @@ if __name__ == "__main__":
 #############################################################################
 #SETTING UP THE PARAMETERS
 #############################################################################
-	datasize = 600
+	datasize = 1000
 	epsilon = 1.0
 	delta = 0.00000001
-	prior = dirichlet([1,1,1])
-	dataset = [200,200,200]
+	prior = dirichlet([1,1])
+	dataset = [500,500]
 
 #############################################################################
 #SETTING UP THE PARAMETERS WHEN DOING GROUPS EXPERIMENTS
