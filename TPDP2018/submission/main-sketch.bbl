@@ -1,0 +1,139 @@
+%%% -*-BibTeX-*-
+%%% Do NOT edit. File created by BibTeX with style
+%%% ACM-Reference-Format-Journals [18-Jan-2012].
+
+\begin{thebibliography}{00}
+
+%%% ====================================================================
+%%% NOTE TO THE USER: you can override these defaults by providing
+%%% customized versions of any of these macros before the \bibliography
+%%% command.  Each of them MUST provide its own final punctuation,
+%%% except for \shownote{}, \showDOI{}, and \showURL{}.  The latter two
+%%% do not use final punctuation, in order to avoid confusing it with
+%%% the Web address.
+%%%
+%%% To suppress output of a particular field, define its macro to expand
+%%% to an empty string, or better, \unskip, like this:
+%%%
+%%% \newcommand{\showDOI}[1]{\unskip}   % LaTeX syntax
+%%%
+%%% \def \showDOI #1{\unskip}           % plain TeX syntax
+%%%
+%%% ====================================================================
+
+\ifx \showCODEN    \undefined \def \showCODEN     #1{\unskip}     \fi
+\ifx \showDOI      \undefined \def \showDOI       #1{#1}\fi
+\ifx \showISBNx    \undefined \def \showISBNx     #1{\unskip}     \fi
+\ifx \showISBNxiii \undefined \def \showISBNxiii  #1{\unskip}     \fi
+\ifx \showISSN     \undefined \def \showISSN      #1{\unskip}     \fi
+\ifx \showLCCN     \undefined \def \showLCCN      #1{\unskip}     \fi
+\ifx \shownote     \undefined \def \shownote      #1{#1}          \fi
+\ifx \showarticletitle \undefined \def \showarticletitle #1{#1}   \fi
+\ifx \showURL      \undefined \def \showURL       {\relax}        \fi
+% The following commands are used for tagged output and should be
+% invisible to TeX
+\providecommand\bibfield[2]{#2}
+\providecommand\bibinfo[2]{#2}
+\providecommand\natexlab[1]{#1}
+\providecommand\showeprint[2][]{arXiv:#2}
+
+\bibitem[\protect\citeauthoryear{Csisz{\'a}r and Shields}{Csisz{\'a}r and
+  Shields}{2004}]%
+        {CIT-004}
+\bibfield{author}{\bibinfo{person}{I. Csisz{\'a}r} {and} \bibinfo{person}{P.C.
+  Shields}.} \bibinfo{year}{2004}\natexlab{}.
+\newblock \showarticletitle{Information Theory and Statistics: A Tutorial}.
+\newblock \bibinfo{journal}{{\em Foundations and Trends® in Communications and
+  Information Theory\/}} \bibinfo{volume}{1}, \bibinfo{number}{4}
+  (\bibinfo{year}{2004}), \bibinfo{pages}{417--528}.
+\newblock
+\showISSN{1567-2190}
+\showDOI{%
+\url{https://doi.org/10.1561/0100000004}}
+
+
+\bibitem[\protect\citeauthoryear{Dimitrakakis, Nelson, Mitrokotsa, and
+  Rubinstein}{Dimitrakakis et~al\mbox{.}}{2014}]%
+        {dimitrakakis2014robust}
+\bibfield{author}{\bibinfo{person}{Christos Dimitrakakis},
+  \bibinfo{person}{Blaine Nelson}, \bibinfo{person}{Aikaterini Mitrokotsa},
+  {and} \bibinfo{person}{Benjamin~IP Rubinstein}.}
+  \bibinfo{year}{2014}\natexlab{}.
+\newblock \showarticletitle{Robust and private Bayesian inference}. In
+  \bibinfo{booktitle}{{\em International Conference on Algorithmic Learning
+  Theory}}. Springer, \bibinfo{pages}{291--305}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Foulds, Geumlek, Welling, and
+  Chaudhuri}{Foulds et~al\mbox{.}}{2016}]%
+        {foulds2016theory}
+\bibfield{author}{\bibinfo{person}{James Foulds}, \bibinfo{person}{Joseph
+  Geumlek}, \bibinfo{person}{Max Welling}, {and} \bibinfo{person}{Kamalika
+  Chaudhuri}.} \bibinfo{year}{2016}\natexlab{}.
+\newblock \showarticletitle{On the theory and practice of privacy-preserving
+  Bayesian data analysis}.
+\newblock \bibinfo{journal}{{\em arXiv preprint arXiv:1603.07294\/}}
+  (\bibinfo{year}{2016}).
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{McSherry and Talwar}{McSherry and
+  Talwar}{2007}]%
+        {talwar}
+\bibfield{author}{\bibinfo{person}{Frank McSherry} {and} \bibinfo{person}{Kunal
+  Talwar}.} \bibinfo{year}{2007}\natexlab{}.
+\newblock \showarticletitle{Mechanism Design via Differential Privacy}, In
+  \bibinfo{booktitle}{Annual IEEE Symposium on Foundations of Computer Science
+  (FOCS)}.
+\newblock
+\showURL{%
+\url{https://www.microsoft.com/en-us/research/publication/mechanism-design-via-differential-privacy/}}
+
+
+\bibitem[\protect\citeauthoryear{Nissim, Raskhodnikova, and Smith}{Nissim
+  et~al\mbox{.}}{2007}]%
+        {nissim2007smooth}
+\bibfield{author}{\bibinfo{person}{Kobbi Nissim}, \bibinfo{person}{Sofya
+  Raskhodnikova}, {and} \bibinfo{person}{Adam Smith}.}
+  \bibinfo{year}{2007}\natexlab{}.
+\newblock \showarticletitle{Smooth sensitivity and sampling in private data
+  analysis}. In \bibinfo{booktitle}{{\em Proceedings of the thirty-ninth annual
+  ACM symposium on Theory of computing}}. ACM, \bibinfo{pages}{75--84}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Wang, Fienberg, and Smola}{Wang
+  et~al\mbox{.}}{2015}]%
+        {wang2015privacy}
+\bibfield{author}{\bibinfo{person}{Yu-Xiang Wang}, \bibinfo{person}{Stephen
+  Fienberg}, {and} \bibinfo{person}{Alex Smola}.}
+  \bibinfo{year}{2015}\natexlab{}.
+\newblock \showarticletitle{Privacy for free: Posterior sampling and stochastic
+  gradient monte carlo}. In \bibinfo{booktitle}{{\em International Conference
+  on Machine Learning}}. \bibinfo{pages}{2493--2502}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Xiao and Xiong}{Xiao and Xiong}{2012}]%
+        {xiao2012bayesian}
+\bibfield{author}{\bibinfo{person}{Yonghui Xiao} {and} \bibinfo{person}{Li
+  Xiong}.} \bibinfo{year}{2012}\natexlab{}.
+\newblock \showarticletitle{Bayesian inference under differential privacy}.
+\newblock \bibinfo{journal}{{\em arXiv preprint arXiv:1203.0617\/}}
+  (\bibinfo{year}{2012}).
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Zhang, Rubinstein, Dimitrakakis,
+  et~al\mbox{.}}{Zhang et~al\mbox{.}}{2016}]%
+        {zhang2016differential}
+\bibfield{author}{\bibinfo{person}{Zuhe Zhang}, \bibinfo{person}{Benjamin~IP
+  Rubinstein}, \bibinfo{person}{Christos Dimitrakakis}, {et~al\mbox{.}}}
+  \bibinfo{year}{2016}\natexlab{}.
+\newblock \showarticletitle{On the Differential Privacy of Bayesian
+  Inference.}. In \bibinfo{booktitle}{{\em AAAI}}. \bibinfo{pages}{2365--2371}.
+\newblock
+
+
+\end{thebibliography}
