@@ -17,6 +17,8 @@ from dpbayesinfer import BayesInferwithDirPrior
 
 
 def row_discrete_probabilities(sample_size,epsilon,delta,prior,observation):
+
+
 	Bayesian_Model = BayesInferwithDirPrior(prior, sample_size, epsilon, delta)
 	Bayesian_Model._set_observation(observation)
 
@@ -85,8 +87,22 @@ def row_discrete_probabilities(sample_size,epsilon,delta,prior,observation):
 #############################################################################
 #CALCULATE the Laplace prob within the same bin
 #############################################################################
+	
+	#############################################################################
+	#SENSITIVITY SETTING
+	#############################################################################
+	def sensitivity_setting(dimension):
+		if dimension = 2:
+			return (1.0,2.0)
+		else:
+			return (2.0,dimension*1.0)
 
-	# y = numpy.arange(0,4,1)
+	sensitivity = sensitivity_setting(len(prior._alphas))
+	
+	#############################################################################
+	#CALCULATING THE LAPLACE PROB
+	#############################################################################
+	
 	laplace_probabilities_1 = {}
 	laplace_probabilities_2 = {}
 	p1 = 0.0
@@ -98,8 +114,8 @@ def row_discrete_probabilities(sample_size,epsilon,delta,prior,observation):
 		# ylist = []
 		for j in range(len(r._alphas) - 1):
 			a = r._alphas[j] - Bayesian_Model._posterior._alphas[j]
-			t1 = t1 * 0.5 * (math.exp(- ((abs(a)) if (a >= 0) else (abs(a) - 1)) / (2.0/epsilon)) - math.exp(- ((abs(a) + 1) if (a >= 0) else (abs(a))) / (2.0/epsilon)))
-			t2 = t2 * 0.5 * (math.exp(- ((abs(a)) if (a >= 0) else (abs(a) - 1)) / (3.0/epsilon)) - math.exp(- ((abs(a) + 1) if (a >= 0) else (abs(a))) / (3.0/epsilon)))
+			t1 = t1 * 0.5 * (math.exp(- ((abs(a)) if (a >= 0) else (abs(a) - 1)) / (sensitivity[0]/epsilon)) - math.exp(- ((abs(a) + 1) if (a >= 0) else (abs(a))) / (sensitivity[0]/epsilon)))
+			t2 = t2 * 0.5 * (math.exp(- ((abs(a)) if (a >= 0) else (abs(a) - 1)) / (sensitivity[1]/epsilon)) - math.exp(- ((abs(a) + 1) if (a >= 0) else (abs(a))) / (sensitivity[1]/epsilon)))
 		p1 += t1
 		p2 += t2
 
@@ -132,19 +148,35 @@ def row_discrete_probabilities(sample_size,epsilon,delta,prior,observation):
 #PLOT the prob within the same bin
 #############################################################################
 
-	plt.figure()
-	plt.plot(steps[-100:], probabilities_exp_by_steps[-100:], 'b', label=(r'$\mathcal{M}^{B}_{\mathcal{H}}$'))
-	# plt.plot(T, approximate_bounds, 'g^', label=('Expmech_SS zApproximate Bound'))
-	plt.plot(steps[-100:], probabilities_lap_1_by_steps[-100:], 'r', label=('LapMech (sensitivity = 1)'))
+	#############################################################################
+	#LABELS SETTING
+	#############################################################################
 
-	plt.plot(steps[-100:], probabilities_lap_2_by_steps[-100:], 'g', label=('LapMech (sensitivity = 2)'))
+	def label_setting():
+		return [r'$\mathcal{M}^{B}_{\mathcal{H}}$', 'LapMech (sensitivity = ' + str(sensitivity[0]) + ')', 'LapMech (sensitivity = ' + str(sensitivity[1]) + ')']
+
+	labels = label_setting()
+
+	#############################################################################
+	#PLOTTING
+	#############################################################################
+
+	plt.figure()
+	plt.plot(steps, probabilities_exp_by_steps, 'b', label=(labels[0]))
+
+	plt.plot(steps, probabilities_lap_1_by_steps, 'r', label=(labels[1]))
+
+	plt.plot(steps, probabilities_lap_2_by_steps, 'g', label=(labels[2]))
+
+	#############################################################################
+	#PLOT FEATURE SETTING
+	#############################################################################
 
 	plt.xlabel("c / Hellinger distance from true posterior")
 	plt.ylabel("Pr[H(BI(x),r) = c]")
 	plt.title("Discrete Probabilities")
 	plt.legend()
 	plt.grid()
-	# plt.savefig("data_"+ str(observation) + "_prior_"+ str(Bayesian_Model._prior._alphas) + "_epsilon_"+ str(epsilon) + "_line.png")
 	plt.show()
 
 
@@ -172,7 +204,6 @@ def discrete_probabilities_from_file(filenames,labels,savename):
 #############################################################################
 #PLOT the prob within the same bin
 #############################################################################
-
 
 	plt.figure()
 	colors = ["b","r","g"]
@@ -205,11 +236,11 @@ if __name__ == "__main__":
 #############################################################################
 #SETTING UP THE PARAMETERS
 #############################################################################
-	datasize = 15
+	datasize = 150
 	epsilon = 1.0
 	delta = 0.00000001
 	prior = dirichlet([1,1,1])
-	dataset = [5,5,5]
+	dataset = [50,50,50]
 
 #############################################################################
 #SETTING UP THE PARAMETERS WHEN DOING GROUPS EXPERIMENTS

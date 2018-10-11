@@ -70,7 +70,6 @@ def plot_mean_error(x,y_list,xstick,xlabel, ylabel, title):
 
 def accuracy_VS_datasize(epsilon,delta,prior,observations,datasizes):
 	data = []
-	xstick = []
 	mean_error = [[],[],[]]
 	for i in range(len(datasizes)):
 		observation = observations[i]
@@ -79,7 +78,6 @@ def accuracy_VS_datasize(epsilon,delta,prior,observations,datasizes):
 		print("start" + str(observation))
 		Bayesian_Model._experiments(3000)
 		print("finished" + str(observation))
-
 		# mean_error[0].append(Bayesian_Model._accuracy_mean[Bayesian_Model._keys[3]])
 		# mean_error[1].append(Bayesian_Model._accuracy_mean[Bayesian_Model._keys[0]])
 		# mean_error[2].append(Bayesian_Model._accuracy_mean[Bayesian_Model._keys[4]])
@@ -89,21 +87,10 @@ def accuracy_VS_datasize(epsilon,delta,prior,observations,datasizes):
 		a = statistics.median(Bayesian_Model._accuracy[Bayesian_Model._keys[3]])
 		b = statistics.median(Bayesian_Model._accuracy[Bayesian_Model._keys[0]])
 		c = statistics.median(Bayesian_Model._accuracy[Bayesian_Model._keys[4]])
-		# print("median: " + str(a) + ", " + str(b) + ", " + str(c))
-		# if a == b:
-		# 	print("the same")
-		# else:
-		# 	print("different")
-		# xstick.append(str(datasizes[i]))
-		# xstick.append(str(datasizes[i]))
-		# xstick.append(str(datasizes[i]))
+
 	print('Accuracy / prior: ' + str(prior._alphas) + ", delta: " 
 		+ str(delta) + ", epsilon:" + str(epsilon))
 
-	# plot_mean_error(range(0,len(observations)),mean_error,datasizes, 
-	# 	 "Different Data sizes",
-	# 	['Our ExpMech',"LapMech (sensitivity = 2)", "LapMech (sensitivity = 4)"],
-	# 	"Mean Error VS. Data Size")
 	plot_error_box(data,"Different Datasizes",datasizes,"Accuracy VS. Data Size",
 		[r'$\mathcal{M}^{B}_{\mathcal{H}}$',"LapMech (sensitivity = 2)", "LapMech (sensitivity = 3)"],
 		['lightblue', 'navy', 'red'])
@@ -117,8 +104,6 @@ def accuracy_VS_datasize(epsilon,delta,prior,observations,datasizes):
 
 def accuracy_VS_prior(sample_size,epsilon,delta,priors,observation):
 	data = []
-	xstick = []
-	xstick_mean = []
 	mean_error = [[],[],[]]
 	for prior in priors:
 		Bayesian_Model = BayesInferwithDirPrior(prior, sample_size, epsilon, delta)
@@ -130,11 +115,6 @@ def accuracy_VS_prior(sample_size,epsilon,delta,priors,observation):
 		mean_error[0].append(Bayesian_Model._accuracy_mean[Bayesian_Model._keys[3]])
 		mean_error[1].append(Bayesian_Model._accuracy_mean[Bayesian_Model._keys[0]])
 		mean_error[2].append(Bayesian_Model._accuracy_mean[Bayesian_Model._keys[4]])
-
-		# xstick_mean.append(str(prior._alphas))
-
-		# xstick.append(str(prior._alphas) + "/ExpMech")
-		# xstick.append(str(prior._alphas) + "/Laplace")
 
 	print('Accuracy / observation: ' + str(observation) + ", delta: " + str(delta) + ", epsilon:" + str(epsilon))
 		
@@ -172,6 +152,10 @@ def accuracy_VS_mean(sample_size,epsilon,delta,prior):
 
 	return
 
+#############################################################################
+#SAMPLING UNDER DIFFERENT PRIORS 
+#############################################################################
+
 def accuracy_VS_dimension(sample_sizes, epsilon, delta):
 	data = []
 	xstick = []
@@ -187,11 +171,15 @@ def accuracy_VS_dimension(sample_sizes, epsilon, delta):
 			xstick.append(str(observation) + "/ExpMech")
 			xstick.append(str(observation) + "/Laplace")
 
-	#ax.set_xlim(0.5, len(errors) + 0.5)
 
 	plot_error_box(data,"Different Prior Distributions",xstick,"Accuracy VS. Prior Distribution")
 
 	return
+
+#############################################################################
+#SAMPLING UNDER DIFFERENT PRIORS 
+#############################################################################
+
 
 def accuracy_VS_prior_mean(sample_size,epsilon,delta,priors,observations):
 	data = []
@@ -216,10 +204,6 @@ def gen_dataset(v, n):
 def gen_datasets(v, n_list):
 	return [gen_dataset(v,n) for n in n_list]
 
-# def gen_datasets(v, n):
-# 	datasizes = 
-# 	return [gen_dataset(v,n) for n in datasizes]
-
 def gen_datasizes(r, step):
 	return [i*step for i in range(r[0]/step,r[1]/step + 1)]
 
@@ -229,35 +213,56 @@ def gen_priors(r, step, d):
 
 if __name__ == "__main__":
 
-	datasize = 100
+#############################################################################
+#SETTING UP THE PARAMETERS
+#############################################################################
+
+	datasize = 150
 	epsilon = 1.0
 	delta = 0.00000001
-	prior = dirichlet([1,1])
-	dataset = [50,50]
-	x1 = [1,499]
-	x2 = [0,500]
+	prior = dirichlet([1,1,1])
+	dataset = [50,50,50]
+#############################################################################
+#SETTING UP THE PARAMETERS WHEN DOING GROUPS EXPERIMENTS
+#############################################################################
+
 	epsilons = numpy.arange(0.1, 2, 0.1)
 	datasizes = gen_datasizes((600,600),50)#[300] #[8,12,18,24,30,36,42,44,46,48]#,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80]
 	percentage = [0.5,0.5]
 	datasets = gen_datasets(percentage, datasizes)
 	priors = [dirichlet([1,1])] + gen_priors([5,20], 5, 2) + gen_priors([40,100], 20, 2) + gen_priors([150,300], 50, 2) + gen_priors([400,400], 50, 2)
-	# accuracy_VS_prior_mean(sample_size,epsilon,delta,priors,observations)
-	accuracy_VS_prior(datasize,epsilon,delta,priors,dataset)
-	# accuracy_VS_mean(sample_size,epsilon,delta,prior)
+	
+#############################################################################
+#DOING PLOTS OF ACCURACY V.S. THE DATA SIZE
+#############################################################################
+	
 	# accuracy_VS_datasize(epsilon,delta,prior,datasets,datasizes)
-	# hellinger_vs_l1norm(Dir(observation))
-	# global_epsilon_study(datasizes,epsilon,delta,prior)
+
+#############################################################################
+#DOING PLOTS OF ACCURACY V.S. THE PRIOR
+#############################################################################
+
+	# accuracy_VS_prior(datasize,epsilon,delta,priors,dataset)
+
+#############################################################################
+#DOING PLOTS OF ACCURACY V.S. THE PRIOR AND MEAN
+#############################################################################
+
+	# accuracy_VS_prior_mean(sample_size,epsilon,delta,priors,observations)
+
+#############################################################################
+#DOING PLOTS OF ACCURACY V.S. THE MEAN
+#############################################################################
+
+	# accuracy_VS_mean(sample_size,epsilon,delta,prior)
+
+#############################################################################
+#DOING PLOTS OF ACCURACY V.S. THE EPSILON
+#############################################################################
+
 	# accuracy_VS_epsilon(sample_size,epsilons,delta,prior,observation)
 
 
-	# epsilon_study(datasize,epsilon,delta,prior,x1, x2)
-	# row_discrete_probabilities(datasize,epsilon,delta,prior,observation)
-
-
-
-	
-	# # accuracy_study_exponential_mechanism_SS(sample_size,epsilon,delta,prior,observation)
-	# # accuracy_study_laplace(sample_size,epsilon,delta,prior,observation)
 
 	
 
