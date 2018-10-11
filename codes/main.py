@@ -498,7 +498,7 @@ def accuracy_VS_prior(sample_size,epsilon,delta,priors,observation):
 	plot_error_box(data,r"Different Priors on $\theta$",[r"$\mathsf{beta}$" + str(i._alphas) for i in priors],
 		"Accuracy VS. Prior Distribution",
 		[r'$\mathcal{M}^{B}_{\mathcal{H}}$',"LapMech (sensitivity = 1)", "LapMech (sensitivity = 2)"],
-		['lightblue', 'navy', 'red'])
+		['navy', 'red', 'green'])
 	return
 
 def accuracy_VS_mean(sample_size,epsilon,delta,prior):
