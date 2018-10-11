@@ -147,24 +147,24 @@ def row_discrete_probabilities(sample_size,epsilon,delta,prior,observation):
 	f_lap_1.close()
 	f_lap_2.close()	
 
-	plt.figure()
-	plt.plot(steps[-100:], probabilities_exp_by_steps[-100:], 'ro', label=(r'$\mathcal{M}^{B}_{\mathcal{H}}$'))
-	# plt.plot(T, approximate_bounds, 'g^', label=('Expmech_SS zApproximate Bound'))
-	plt.plot(steps[-100:], probabilities_lap_1_by_steps[-100:], 'b^', label=('LapMech (sensitivity = 1)'))
+	# plt.figure()
+	# plt.plot(steps[-100:], probabilities_exp_by_steps[-100:], 'ro', label=(r'$\mathcal{M}^{B}_{\mathcal{H}}$'))
+	# # plt.plot(T, approximate_bounds, 'g^', label=('Expmech_SS zApproximate Bound'))
+	# plt.plot(steps[-100:], probabilities_lap_1_by_steps[-100:], 'b^', label=('LapMech (sensitivity = 1)'))
 
-	plt.plot(steps[-100:], probabilities_lap_2_by_steps[-100:], 'gv', label=('LapMech (sensitivity = 2)'))
+	# plt.plot(steps[-100:], probabilities_lap_2_by_steps[-100:], 'gv', label=('LapMech (sensitivity = 2)'))
 
-	plt.xlabel("c / (steps from correct answer, in form of Hellinger Distance)")
-	plt.ylabel("Pr[H(BI(x),r) = c]")
-	plt.title("Discrete Probabilities")
-	plt.legend()
-	plt.grid()
-	plt.savefig("data_"+ str(observation) + "_prior_"+ str(Bayesian_Model._prior._alphas) + "_epsilon_"+ str(epsilon) + "_scatter.png")
+	# plt.xlabel("c / (steps from correct answer, in form of Hellinger Distance)")
+	# plt.ylabel("Pr[H(BI(x),r) = c]")
+	# plt.title("Discrete Probabilities")
+	# plt.legend()
+	# plt.grid()
+	# plt.savefig("data_"+ str(observation) + "_prior_"+ str(Bayesian_Model._prior._alphas) + "_epsilon_"+ str(epsilon) + "_scatter.png")
 	# plt.show()
 	plt.figure()
-	plt.plot(steps[-100:], probabilities_exp_by_steps[-100:], 'r', label=(r'$\mathcal{M}^{B}_{\mathcal{H}}$'))
+	plt.plot(steps[-100:], probabilities_exp_by_steps[-100:], 'b', label=(r'$\mathcal{M}^{B}_{\mathcal{H}}$'))
 	# plt.plot(T, approximate_bounds, 'g^', label=('Expmech_SS zApproximate Bound'))
-	plt.plot(steps[-100:], probabilities_lap_1_by_steps[-100:], 'b', label=('LapMech (sensitivity = 1)'))
+	plt.plot(steps[-100:], probabilities_lap_1_by_steps[-100:], 'r', label=('LapMech (sensitivity = 1)'))
 
 	plt.plot(steps[-100:], probabilities_lap_2_by_steps[-100:], 'g', label=('LapMech (sensitivity = 2)'))
 
@@ -173,8 +173,8 @@ def row_discrete_probabilities(sample_size,epsilon,delta,prior,observation):
 	plt.title("Discrete Probabilities")
 	plt.legend()
 	plt.grid()
-	plt.savefig("data_"+ str(observation) + "_prior_"+ str(Bayesian_Model._prior._alphas) + "_epsilon_"+ str(epsilon) + "_line.png")
-	# plt.show()
+	# plt.savefig("data_"+ str(observation) + "_prior_"+ str(Bayesian_Model._prior._alphas) + "_epsilon_"+ str(epsilon) + "_line.png")
+	plt.show()
 
 
 
@@ -193,20 +193,20 @@ def discrete_probabilities_from_file(filenames,labels,savename):
 		probabilities_by_steps.append(prob)
 		steps = s
 
-	plt.figure()
-	colors = ["ro","b^","gv"]
-	for i in range(len(filenames)):
-		plt.plot(steps[-100:], probabilities_by_steps[i][-100:], colors[i], label=(labels[i]))
-		# plt.plot(T, approximate_bounds, 'g^', label=('Expmech_SS zApproximate Bound'))
-	plt.xlabel("c / (steps from correct answer, in form of Hellinger Distance)")
-	plt.ylabel("Pr[H(BI(x),r) = c]")
-	plt.title("Discrete Probabilities")
-	plt.legend()
-	plt.grid()
-	plt.savefig(savename + "_scatter.png")
+	# plt.figure()
+	# colors = ["ro","b^","gv"]
+	# for i in range(len(filenames)):
+	# 	plt.plot(steps[-100:], probabilities_by_steps[i][-100:], colors[i], label=(labels[i]))
+	# 	# plt.plot(T, approximate_bounds, 'g^', label=('Expmech_SS zApproximate Bound'))
+	# plt.xlabel("c / (steps from correct answer, in form of Hellinger Distance)")
+	# plt.ylabel("Pr[H(BI(x),r) = c]")
+	# plt.title("Discrete Probabilities")
+	# plt.legend()
+	# plt.grid()
+	# plt.savefig(savename + "_scatter.png")
 		# plt.show()
 	plt.figure()
-	colors = ["r","b","g"]
+	colors = ["b","r","g"]
 
 	for i in range(len(filenames)):
 		plt.plot(steps[-100:], probabilities_by_steps[i][-100:], colors[i], label=(labels[i]))
@@ -216,7 +216,7 @@ def discrete_probabilities_from_file(filenames,labels,savename):
 	plt.title("Discrete Probabilities")
 	plt.legend()
 	plt.grid()
-	plt.savefig(savename + "_line.png")
+	plt.show()
 
 
 
@@ -583,11 +583,11 @@ def gen_priors(r, step, d):
 
 if __name__ == "__main__":
 
-	datasize = 100
+	datasize = 600
 	epsilon = 1.0
 	delta = 0.00000001
 	prior = dirichlet([1,1])
-	observation = [50,50]
+	dataset = [300,300]
 	x1 = [1,499]
 	x2 = [0,500]
 	epsilons = numpy.arange(0.1, 2, 0.1)
@@ -596,7 +596,7 @@ if __name__ == "__main__":
 	datasets = gen_datasets(percentage, datasizes)
 	priors = [dirichlet([1,1])] + gen_priors([5,20], 5, 2) + gen_priors([40,100], 20, 2) + gen_priors([150,300], 50, 2) + gen_priors([400,400], 50, 2)
 	# accuracy_VS_prior_mean(sample_size,epsilon,delta,priors,observations)
-	accuracy_VS_prior(datasize,epsilon,delta,priors,observation)
+	# accuracy_VS_prior(datasize,epsilon,delta,priors,observation)
 	# accuracy_VS_mean(sample_size,epsilon,delta,prior)
 	# accuracy_VS_datasize(epsilon,delta,prior,datasets,datasizes)
 	# hellinger_vs_l1norm(Dir(observation))
@@ -605,13 +605,14 @@ if __name__ == "__main__":
 	# for i in range(len(datasizes)):
 	# 	row_discrete_probabilities(datasizes[i],epsilon,delta,prior,datasets[i])
 
+	# row_discrete_probabilities(datasize,epsilon,delta,prior,dataset)
 	# discrete_probabilities_from_file(
-	# 	["datas/discrete_prob_4/exp/data_[150, 150, 150, 150]_exp.txt",
-	# 	"datas/discrete_prob_4/lap2/data_[150, 150, 150, 150]_lap_sensitivity2.txt", 
-	# 	"datas/discrete_prob_4/lap3/data_[150, 150, 150, 150]_lap_sensitivity4.txt"],
+	# 	["datas/discrete_prob_3/exp/data_[198, 198, 204]_exp.txt",
+	# 	"datas/discrete_prob_3/lap2/data_[198, 198, 204]_lap_sensitivity2.txt", 
+	# 	"datas/discrete_prob_3/lap3/data_[198, 198, 204]_lap_sensitivity3.txt"],
 	# 	[r'$\mathcal{M}^{B}_{\mathcal{H}}$',
 	# 	"LapMech (sensitivity = 2)",
-	# 	"LapMech (sensitivity = 4)"],
+	# 	"LapMech (sensitivity = 3)"],
 	# 	"poster_5")
 
 	# epsilon_study(datasize,epsilon,delta,prior,x1, x2)

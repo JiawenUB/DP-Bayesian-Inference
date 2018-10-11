@@ -110,7 +110,7 @@ Jiawen Liu$^{*}$
 % \begin{column}{.69\textwidth}
 \begin{enumerate}
 \item Designing a differentially private Bayesian inference mechanism.
-\item Measuring accuracy with a metric over distributions (Hellinger distance ($\hellinger$)), $f$-divergence, etc.
+\item Measuring accuracy with a metric over distributions (Hellinger distance ($\hellinger$), $f$-divergence, etc.).
 % \item Calibrating the noise w.r.t sensitivity of the (Hellinger distance).
 % \item Applying smooth sensitivity in mechanism to achieve better accuracy.
 %         (Fig. \ref{fig_sensitivity} shows that local sensitivity of Hellinger distance is very steep and much higher in the edges but very smooth in central part).
@@ -169,8 +169,8 @@ Releasing a differentially private posterior $\betad (\tilde\alpha,\tilde\beta)=
 \begin{columns} % Subdivide the first main column
 \begin{column}{.69\textwidth}
 \begin{enumerate}
-  \item  Baseline approach is Laplace mechanism (LapMech) with sensitivity proportional to $\ell_1$ norm. But we measure results by a different metric and sensitivity grows linear with the dimension. Motivated by this, we calibrate the noise w.r.t sensitivity of the accuracy metric ($\hellinger$). %(v.s. the $\ell_1$ norm in baseline approach).} \todo{} % \todo{give formula of hellinger Distance, give the Dirichlet distribution, no need to formal expression, Laplace with mean and scale in 2 dimension.}
-  \item Maximum sensitivity of $\hellinger$ over $\betad$ distributions achieve value at edge as in Fig. \ref{fig_sensitivity}. But it's very low when move away from edge. Motivated by this, we apply smooth sensitivity in mechanism to improve accuracy.
+  \item  Baseline approach is Laplace mechanism (LapMech) with sensitivity proportional to $\ell_1$ norm. But this sensitivity grows linear with the dimension, also we measure results by a different metric. Motivated by this, we calibrate the noise w.r.t sensitivity of the accuracy metric ($\hellinger$). %(v.s. the $\ell_1$ norm in baseline approach).} \todo{} % \todo{give formula of hellinger Distance, give the Dirichlet distribution, no need to formal expression, Laplace with mean and scale in 2 dimension.}
+  \item Maximum sensitivity of $\hellinger$ over $\betad$ distributions achieves at edges as in Fig. \ref{fig_sensitivity}. But it's very low when move away from edge. Motivated by this, we apply smooth sensitivity in mechanism to improve accuracy.
   %{sensitivity is maximize when plot of hellinger distance of alpha and beta variance between adjacent data bases, of varying }
 \end{enumerate}
 \end{column}
@@ -246,8 +246,8 @@ given in input an observations $\dataobs$, parameters $\epsilon>0$ and $\delta>0
 Experiments are on three mechanisms and plotted as follows:
 \begin{itemize}
   \item[-] Green: Baseline approach. (noises being postprocessed to floor value) %adds noise scaled to sensitivity proportional to dimensionality,
-  \item[-] Red: LapMech adding noise with sensitivity $1$ in 2 dimensions and $2$ in higher dimensions, since it's equivalent to histogram problem 
-  (posteriors of adjacent data differ only in two dimensions).
+  \item[-] Red: LapMech with sensitivity $1$ in 2 dimensions and $2$ in higher dimensions, since it's equivalent to histogram problem 
+  (posteriors of adjacent data sets differ only in two dimensions).
   \item[-] Blue: $\hexpmech$.
 \end{itemize}
   Fig. \ref{fig_sampling} and Fig. \ref{subfig_prior} give us the average and 4-quantile of Hellinger distance between the sampled results and true posterior, by sampling for $10k$ times under each data size or prior configuration.
@@ -280,11 +280,11 @@ Fig. \ref{subfig_concrete_prob_2d} and \ref{subfig_concrete_prob_3d} give us the
     \includegraphics[width=0.31\textwidth]{poster_4.eps}
   \label{subfig_prior}
   }
-  \subfigure[2 dimensions]{
+  \subfigure[2 dimensions with data size $600$]{
     \includegraphics[width=0.311\textwidth]{poster_5.eps}
   \label{subfig_concrete_prob_2d}
   }
-  \subfigure[3 dimensions]{
+  \subfigure[3 dimensions with data size $600$]{
     \includegraphics[width=0.311\textwidth]{poster_6.eps}
   \label{subfig_concrete_prob_3d}
   } 
@@ -305,8 +305,8 @@ Fig. \ref{subfig_concrete_prob_2d} and \ref{subfig_concrete_prob_3d} give us the
 
 \begin{itemize}
   \item[-] The smoothed Hellinger distance based exponential mechanism outperforms asymptotically the baseline 
-  approach  when the latter uses a sensitivity proportional to dimensionality.
-  \item[-] From experimental results, the outperformance happens when the data size is greater than $400$ .
+  approach when the latter uses a sensitivity proportional to dimensionality.
+  \item[-] Under the same data set size, $\hexpmech$ can outperform LapMech by increasing the prior.
   % \begin{enumerate}
   %   \item  The accuracy that we are going to explore next, and in a more principled and formal way.
     
