@@ -207,12 +207,13 @@ where:
 
 
 
-  \begin{block}{Preliminary Experimental Results}
-    Experiments are on three mechanisms and plotted as follows:
+  \begin{block}{Preliminary experimental results}
+    Experiments are about three mechanisms and plotted as follows:
 \begin{itemize}
   \item[-] {\textbf{\color{green}{Green}}}: Baseline approach. %adds noise scaled to sensitivity proportional to dimensionality,
-  \item[-] {\textbf{\color{red}{Red}}}: Improved baseline approach with sensitivity $1$ in 2 dimensions and $2$ in higher dimensions, since it's equivalent to histogram problem 
-  (posteriors of adjacent data sets differ only in two dimensions).
+  \item[-] {\textbf{\color{red}{Red}}}: Improved baseline approach with sensitivity 1 in 2 dimensions and 2 in higher dimensions.
+    Indeed: the number of elements in every bin always sums up to $n$ and hence $||\bysinfer(x)-\bysinfer(x')||_1\leq 2$, when $\adj{x}{x'}$.
+    
   \item[-] {\textbf{\color{blue}{Blue}}}: $\hexpmech$.
 \end{itemize}
 % In Fig. \ref{subfig_concrete_prob_2d} and \ref{subfig_concrete_prob_3d} we plot on the x-axis the Hellinger distance from the true posterior and on the y-axis the
@@ -275,9 +276,8 @@ where:
 \begin{block}{Conclusion}
 
 \begin{itemize}
-  \item[-] The $\hexpmech$ outperforms asymptotically the baseline 
-  approach but not the improved one.
-  \item[-] By increasing the prior, $\hexpmech$ can outperform LapMech under small data set size.
+  \item[-]  $\hexpmech$ outperforms the baseline approach but not the improved one.
+  \item[-] By increasing the prior, $\hexpmech$ can outperform both the baseline approach and the improved one.
   % \begin{enumerate}
   %   \item  The accuracy that we are going to explore next, and in a more principled and formal way.
     
