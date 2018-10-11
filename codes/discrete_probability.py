@@ -193,10 +193,6 @@ def gen_dataset(v, n):
 def gen_datasets(v, n_list):
 	return [gen_dataset(v,n) for n in n_list]
 
-# def gen_datasets(v, n):
-# 	datasizes = 
-# 	return [gen_dataset(v,n) for n in datasizes]
-
 def gen_datasizes(r, step):
 	return [i*step for i in range(r[0]/step,r[1]/step + 1)]
 
@@ -206,19 +202,42 @@ def gen_priors(r, step, d):
 
 if __name__ == "__main__":
 
-	datasize = 3
+#############################################################################
+#SETTING UP THE PARAMETERS
+#############################################################################
+	datasize = 15
 	epsilon = 1.0
 	delta = 0.00000001
 	prior = dirichlet([1,1,1])
-	dataset = [1,1,1]
-	datasizes = gen_datasizes((600,600),50)#[300] #[8,12,18,24,30,36,42,44,46,48]#,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80]
+	dataset = [5,5,5]
+
+#############################################################################
+#SETTING UP THE PARAMETERS WHEN DOING GROUPS EXPERIMENTS
+#############################################################################
+	
+	datasizes = gen_datasizes((600,600),50)
 	percentage = [0.5,0.5]
 	datasets = gen_datasets(percentage, datasizes)
 	priors = [dirichlet([1,1])] + gen_priors([5,20], 5, 2) + gen_priors([40,100], 20, 2) + gen_priors([150,300], 50, 2) + gen_priors([400,400], 50, 2)
+
+#############################################################################
+#DO PLOTS BY COMPUTING THE PROBABILITIES FOR GROUP EXPERIMENTS
+#############################################################################
+
+
 	# for i in range(len(datasizes)):
 	# 	row_discrete_probabilities(datasizes[i],epsilon,delta,prior,datasets[i])
 
+#############################################################################
+#DO PLOTS BY COMPUTING THE PROBABILITIES
+#############################################################################
+
 	row_discrete_probabilities(datasize,epsilon,delta,prior,dataset)
+
+#############################################################################
+#DO PLOTS BY READING THE PROB FROM FILES
+#############################################################################
+
 	# discrete_probabilities_from_file(
 	# 	["datas/discrete_prob/data_[1, 1, 1]_exp.txt",
 	# 	"datas/discrete_prob/data_[1, 1, 1]_lap_sensitivity2.txt", 
