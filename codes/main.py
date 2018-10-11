@@ -583,7 +583,7 @@ def gen_priors(r, step, d):
 
 if __name__ == "__main__":
 
-	datasize = 600
+	datasize = 100
 	epsilon = 1.0
 	delta = 0.00000001
 	prior = dirichlet([1,1])

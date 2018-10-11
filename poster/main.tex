@@ -169,9 +169,9 @@ Releasing a differentially private posterior $\betad (\tilde\alpha,\tilde\beta)=
 \begin{columns} % Subdivide the first main column
 \begin{column}{.69\textwidth}
 \begin{enumerate}
-  \item  \todo{Baseline approach samples noise from $\mathsf{Lap}(\Delta \alpha, \frac{1}{\epsilon})$ with mean $\Delta \alpha$ and scale $\frac{1}{\epsilon}$. But noise here is proportional to $\ell_1$ norm. Motivated by this, we calibrate the noise w.r.t sensitivity of the accuracy metric ($\hellinger$) (v.s. the $\ell_1$ norm in baseline approach).} \todo{grows linear with the dimension.} \todo{give formula of hellinger Distance, give the Dirichlet distribution, no need to formal expression, Laplace with mean and scale in 2 dimension.}
-  \item Global sensitivity of $\hellinger$ over $\betad$ distributions takes value at edge ($(0,0)$ point) as in Fig. \ref{fig_sensitivity}. But it's very low when move away from edge. Motivated by this, we apply smooth sensitivity in mechanism (v.s. global sensitivity) to improve accuracy.
-  {sensitivity is maximize when plot of hellinger distance of alpha and beta variance between adjacent data bases, of varying }
+  \item  Baseline approach samples noise from $\mathsf{Lap}(\Delta \alpha, \frac{1}{\epsilon})$ with mean $\Delta \alpha$ and scale $\frac{1}{\epsilon}$. But noise here is proportional to $\ell_1$ norm, which grows linear with the dimension.. Motivated by this, we calibrate the noise w.r.t sensitivity of the accuracy metric ($\hellinger$). %(v.s. the $\ell_1$ norm in baseline approach).} \todo{} % \todo{give formula of hellinger Distance, give the Dirichlet distribution, no need to formal expression, Laplace with mean and scale in 2 dimension.}
+  \item Maximum sensitivity of $\hellinger$ over $\betad$ distributions achieve value at edge as in Fig. \ref{fig_sensitivity}. But it's very low when move away from edge. Motivated by this, we apply smooth sensitivity in mechanism (v.s. global sensitivity) to improve accuracy.
+  %{sensitivity is maximize when plot of hellinger distance of alpha and beta variance between adjacent data bases, of varying }
 \end{enumerate}
 \end{column}
 \begin{column}{.28\textwidth}
@@ -275,7 +275,7 @@ Fig. \ref{subfig_concrete_prob_2d} and \ref{subfig_concrete_prob_3d} give us the
 \begin{center}
 \centering
    \subfigure[2 dimensions with data size $100$]{
-    \includegraphics[width=0.317\textwidth]{poster_4.eps}
+    \includegraphics[width=0.304\textwidth]{poster_4.eps}
   \label{subfig_prior}
   }
   \subfigure[2 dimensions]{
