@@ -62,24 +62,13 @@
 \title{\LARGE Tailoring Differentially Private Bayesian Inference to Distance Between Distributions} % Poster title
 
 \author{Mark Bun$^\dag$,
-%Imdea Software\\[-3mm]
-%\texttt{gjbarthe@gmail.com} \\
-%\And 
 Gian Pietro Farina$^{*}$,
-%University of Dundee\\[-3mm] 
-%\texttt{g.p.farina@dundee.ac.uk} \\
-%\And
 Marco Gaboardi$^{*}$,
-%University of Dundee\\[-3mm] 
-%\texttt{m.gaboardi@dundee.ac.uk} \\
-%\And
 Jiawen Liu$^{*}$
-%Imdea Software
-%\texttt{pierre-yves@strub.nu} \\
 }
 
 
-\institute{$^\dag$Princeton University, $^{*}$University at Buffalo, SUNY} % Institution(s)
+\institute{$^{\dag}$Princeton University, $^{*}$University at Buffalo, SUNY} % Institution(s)
 
 %----------------------------------------------------------------------------------------
 %	FOOTER TEXT
@@ -111,49 +100,26 @@ Jiawen Liu$^{*}$
 % \begin{column}{.69\textwidth}
 \begin{enumerate}
 \item Design a differentially private Bayesian inference mechanism.
-\item Improve accuracy by calibrating noise to a metric over distributions (Hellinger distance ($\hellinger$), $f$-divergence, etc.).
-% Measuring accuracy with a metric over distributions (Hellinger distance ($\hellinger$), $f$-divergence, etc.).
-% \item Calibrating the noise w.r.t sensitivity of the (Hellinger distance).
-% \item Applying smooth sensitivity in mechanism to achieve better accuracy.
-%         (Fig. \ref{fig_sensitivity} shows that local sensitivity of Hellinger distance is very steep and much higher in the edges but very smooth in central part).
+\item Improve accuracy by calibrating noise  to the sensitivity of a
+         metric over distributions (e.g. Hellinger distance ($\hellinger$), $f$-divergences, etc\dots).
 \end{enumerate}
-% \end{column}
-% \begin{column}{.28\textwidth}
-% \begin{figure}[ht]
-% \centering
-% \includegraphics[width=0.85\textwidth]{poster_0.eps}
-% say something about beta...
-% \caption{\footnotesize{Local sensitivity of Hellinger}}
-% \label{fig_sensitivity}
-% \end{figure}
-% \vspace{.1cm}
-% \end{column}
-% \end{columns}
-
-% \noindent Design a mechanism that achieve differential privacy by scaling to a metric between distribution.
-% \begin{enumerate}
-% \item A differentially private bayesian mechanism,
-% \item Calibrating mechanism noise by the same probabilistic distance we want to measure accuracy with.
-% \item Applying smooth sensitivity in mechanism to achieve better accuracy.
-% \end{enumerate}
-
 \end{block}
 
 %----------------------------------------------------------------------------------------
 %	INTRODUCTION
 %----------------------------------------------------------------------------------------
             
-\begin{block}{Bayesian inference ($\bysinfer$) (A Beta-Binomial model example):}
+\begin{block}{Bayesian inference ($\bysinfer$), the Beta-Binomial model example:}
 % The first subdivided column within the first main column
 % \begin{columns} % Subdivide the first main column
 % \begin{column}{.54\textwidth} % The first subdivided column within the first main column
 %The prior $\betad(\alpha, \beta)$, with hyperparameters $\alpha,\beta\in\mathbb{R}^{+}$ is conjugate to the likelihood function.
 \begin{itemize}
-  \item[-] Prior on $\theta: \betad(\alpha, \beta), \alpha,\beta\in\mathbb{R}^{+}$, observed data set $\dataobs= (x_1,\dots, x_n)\in\{0,1\}^{n}, n\in\mathbb{N}$.
+  \item  Prior on {\small $\theta: \mathbb{P}_{\theta}= \betad(\alpha, \beta), \alpha,\beta\in\mathbb{R}^{+}$, observed data $\dataobs= (x_1,\dots, x_n)\in\{0,1\}^{n}, n\in\mathbb{N}$.}
 
-  \item[-] Likelihood function: $\mathbb{L}_{\dataobs | \theta}= \theta^{\Delta \alpha}(1-\theta)^{n - \Delta \alpha}$, where $\Delta \alpha = \displaystyle\sum_{i=1}^{n}x_i$;
+  \item  Likelihood function: {\small $\mathbb{L}_{\theta|\dataobs }= \theta^{\Delta \alpha}(1-\theta)^{n - \Delta \alpha}$, where $\Delta \alpha = \displaystyle\sum_{i=1}^{n}x_i$.}
 
-  \item[-] Posterior distribution over $\theta$: $\mathbb{P}_{\theta|\dataobs}=\betad(\alpha + \Delta \alpha,\beta + n - \Delta \alpha)$.
+  \item Posterior on {\small $\theta$: $\bysinfer(x)\equiv\mathbb{P}_{\theta|\dataobs}=\betad(\alpha + \Delta \alpha,\beta + n - \Delta \alpha)\propto\mathbb{L}_{\theta|\dataobs }\cdot \mathbb{P}_{\theta}$.}
 \end{itemize}
 \end{block}
 % and with p.d.f:
@@ -166,21 +132,34 @@ Jiawen Liu$^{*}$
 %	MATERIALS
 %----------------------------------------------------------------------------------------
 
-\begin{block}{Differentially Private Bayesian Inference and Motivations}
-Releasing a differentially private posterior $\betad (\tilde\alpha,\tilde\beta)=(\alpha +  \widetilde{\Delta \alpha},\beta + n - \widetilde{\Delta \alpha})$.
+\begin{block}{Differentially private Bayesian inference and motivations}
 \begin{columns} % Subdivide the first main column
 \begin{column}{.69\textwidth}
 \begin{enumerate}
-  \item  Baseline approach is Laplace mechanism (LapMech) with sensitivity proportional to $\ell_1$ norm. But this sensitivity grows linear with the dimension, also we measure results by a different metric. Motivated by this, we calibrate the noise w.r.t sensitivity of the accuracy metric ($\hellinger$). %(v.s. the $\ell_1$ norm in baseline approach).} \todo{} % \todo{give formula of hellinger Distance, give the Dirichlet distribution, no need to formal expression, Laplace with mean and scale in 2 dimension.}
-  \item Maximum sensitivity of $\hellinger$ over $\betad$ distributions is attained at edges as in Fig. \ref{fig_sensitivity}. But local sensitivity is very smooth and much smaller when move away from edge. Motivated by this, we apply smooth sensitivity in mechanism to improve accuracy.
-  %{sensitivity is maximize when plot of hellinger distance of alpha and beta variance between adjacent data bases, of varying }
+\item  Baseline approach: 
+  \begin{itemize}
+  \item Release $\betad(\alpha +  \lfloor\widetilde{\Delta \alpha}\rfloor^n_0,\beta + n - \lfloor\widetilde{\Delta \alpha}\rfloor^n_0)$,
+  \item $\widetilde{\Delta \alpha}\sim \lap{\Delta\alpha}{\frac{S}{\epsilon}}$
+  \item \todo{$S\propto ||\cdot ||_{1}$}.
+  \item Measure accuracy with a metric over distributions, e.g. $\hellinger$.
+  \end{itemize}
+  {\color{red}{But $S$ grows linearly with the dimension: too noisy when we generalize to Dirichlet-Multinomial ({\small$\dirichlet(\cdot)$}) model}}. 
+\item Another approach:
+  \begin{itemize}
+    \item Calibrate  noise w.r.t \emph{global} sensitivity of $\hellinger$: {\color{red}{but global sensitivity is still too big.}}
+    \item Fig. \ref{fig_sensitivity} shows that there is a gap between global and local sensitivity of $\hellinger$.
+    \end{itemize}
+  \item A better approach:
+    \begin{itemize}
+      \item \large{Calibrate noise w.r.t. the \emph{smooth} sensitivity of $\hellinger$.}
+    \end{itemize}
 \end{enumerate}
 \end{column}
 \begin{column}{.28\textwidth}
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.9\textwidth]{poster_0.eps}
-\caption{\footnotesize{Sensitivities of $\hellinger$ over $\betad$}}
+\caption{\footnotesize{Sensitivity of $\hellinger$. There is a gap between Global and Local sensitivity.}}
 \label{fig_sensitivity}
 \end{figure}
 % \vspace{.1cm}
@@ -194,40 +173,24 @@ Releasing a differentially private posterior $\betad (\tilde\alpha,\tilde\beta)=
 %----------------------------------------------------------------------------------------
 
 
-\begin{block}{Smoothed Hellinger Distance Based Exponential Mechanism}
+\begin{block}{Our approach: smoothed Hellinger distance based exponential mechanism}
 
-We define the mechanism $\hexpmech$ which produces an element $r$ in $\betaset$ with probaiblity:
+We define the mechanism $\hexpmech$ which produces an element $r$ in $\betaset$ with probability:
 \[
-% \underset{z \thicksim \hexpmech}{\Pr}[z=r] = 
 \mathbb{P}_{r \thicksim \hexpmech} =
 \frac 
 {\exp \Big(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r)}{2\cdot S(\dataobs)}\Big)}
 {\sum_{r\in\betaset} \exp \Big(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r)}{2\cdot S(\dataobs)}\Big)}
 \]
-
-given as input an observations $\dataobs$, parameters $\epsilon>0$ and $\delta>0$, where:
-
+where:
 \begin{itemize}
-  \item[-] $\betaset$: the set of candidates defined as $\{\betad(\alpha',\beta')\mid \alpha'=\alpha+\Delta\alpha, \beta'=\beta+n-\Delta\alpha\}$, given the prior distribution $\bprior=\betad(\alpha, \beta)$ and observed data set size $n$.
+ \small{ \item  $\betaset\equiv\{\betad(\alpha',\beta')\mid \alpha'=\alpha+\Delta\alpha, \beta'=\beta+n-\Delta\alpha\}$. With prior distribution $\bprior=\betad(\alpha, \beta)$.}
+  \item \small{$-\hellinger(\bysinfer(\dataobs),r)$ denotes the scoring function.}
 
-  \item[-] $-\hellinger(\bysinfer(\dataobs),r)$ denotes the scoring function based on the Hellinger distance.
-
-  \item[-] $S(\dataobs)$ is the smooth sensitivity\cite{nissim2007smooth}:
-  $
-  S(\dataobs)=\max_{\dataobs' \in \{0,1\}^{n}}\big\{ LS(\dataobs') \cdot e^{-\gamma\cdot d(\dataobs,\dataobs')}\big\}
-  $,
-  where:
-  \begin{itemize}
-   \item $d$ denotes the Hamming distance between two data sets,
-
-   \item $LS(\dataobs')$ is local sensitivity at $\dataobs'$:
-   $
-   LS(\dataobs)=\max\limits_{\dataobs' \in \datauni^n:\adj{\dataobs}{\dataobs'}, r\in \mathcal{R}}\lvert \hellinger(\bysinfer(\dataobs), r) - \hellinger(\bysinfer(\dataobs'), r)\rvert
-   $,
-
-   \item $\gamma =   \ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta}{2 (n + 1)})})$ to ensure $(\epsilon,\delta)$-differential privacy.
+  \item \small{$S(\dataobs)\equiv \max_{\dataobs' \in \{0,1\}^{n}}\big\{ LS(\dataobs') \cdot e^{-\gamma\cdot d(\dataobs,\dataobs')}\big\}$: smooth sensitivity\cite{nissim2007smooth}}, $d$ is the
+    Hamming distance.
+   \item \small{$LS(\dataobs')\equiv\max\limits_{y\in \datauni^n:\adj{y}{\dataobs'}, r\in \mathcal{R}}\lvert \hellinger(\bysinfer(y), r) - \hellinger(\bysinfer(\dataobs'), r)\rvert$ is the local sensitivity of $\dataobs',\gamma =   \ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta}{2 (n + 1)})})$}.
  \end{itemize}
-\end{itemize}
 
 
 \end{block}
@@ -244,20 +207,42 @@ given as input an observations $\dataobs$, parameters $\epsilon>0$ and $\delta>0
 
 
 
-\begin{block}{Preliminary Experimental Results}
-% Two groups of experimental results both with unit prior $\betad(1,1), \betad(1,1,1)$ and $\betad(1,1,1,1)$, balanced datasets and parameters $\epsilon = 1.0$ and $\delta = 10^{-8}$.
-Experiments are on three mechanisms and plotted as follows:
+  \begin{block}{Preliminary Experimental Results}
+    Experiments are on three mechanisms and plotted as follows:
 \begin{itemize}
-  \item[-] \textbf{Green}: Baseline approach. (noises being postprocessed to floor value) %adds noise scaled to sensitivity proportional to dimensionality,
-  \item[-] \textbf{Red}: LapMech with sensitivity $1$ in 2 dimensions and $2$ in higher dimensions, since it's equivalent to histogram problem 
+  \item[-] {\textbf{\color{green}{Green}}}: Baseline approach. %adds noise scaled to sensitivity proportional to dimensionality,
+  \item[-] {\textbf{\color{red}{Red}}}: Improved baseline approach with sensitivity $1$ in 2 dimensions and $2$ in higher dimensions, since it's equivalent to histogram problem 
   (posteriors of adjacent data sets differ only in two dimensions).
-  \item[-] \textbf{Blue}: $\hexpmech$.
+  \item[-] {\textbf{\color{blue}{Blue}}}: $\hexpmech$.
 \end{itemize}
-  Fig. \ref{fig_sampling} and Fig. \ref{subfig_prior} give us the average and 4-quantile of Hellinger distance between the sampled results and true posterior, by sampling $10000$ times under each data size or prior configuration.
-
+% In Fig. \ref{subfig_concrete_prob_2d} and \ref{subfig_concrete_prob_3d} we plot on the x-axis the Hellinger distance from the true posterior and on the y-axis the
+% probability of the distributions with that distance under the different mechanisms. In Fig. \ref{subfig_prior} we present the influence of the prior on the accuracy of the three mechanisms,
+% by showing the quartiles of the experimental distribution of the Hellinger distance.
 \begin{figure}[H]
 \begin{center}
 \centering
+  \subfigure[2 dimensions with data size $600$]{
+    \includegraphics[width=0.31\textwidth]{poster_5.eps}
+  \label{subfig_concrete_prob_2d}
+  }
+  \subfigure[3 dimensions with data size $600$]{
+    \includegraphics[width=0.31\textwidth]{poster_6.eps}
+  \label{subfig_concrete_prob_3d}
+  } 
+\subfigure[2 dimensions with data size $100$]{
+    \includegraphics[width=0.313\textwidth]{poster_4.eps}
+  \label{subfig_prior}
+  }
+
+% \caption{4-quantile and discrete probability plots}
+% \label{fig_concrete_prob}
+% \end{center}
+% \end{figure}
+% % Two groups of experimental results both with unit prior $\betad(1,1), \betad(1,1,1)$ and $\betad(1,1,1,1)$, balanced datasets and parameters $\epsilon = 1.0$ and $\delta = 10^{-8}$.
+%   Fig. \ref{fig_sampling} and Fig. \ref{subfig_prior} give us the average and 4-quantile of Hellinger distance between the sampled results and true posterior.
+% \begin{figure}[H]
+% \begin{center}
+% \centering
   \subfigure[\footnotesize{2 dimensions, data size $\in [100,500]$}]{
     \includegraphics[width=0.333\textwidth]{poster_1.eps}
     \label{subfig_sampling_2d}
@@ -270,32 +255,15 @@ Experiments are on three mechanisms and plotted as follows:
     \includegraphics[width=0.295\textwidth]{poster_3.eps}
     \label{subfig_sampling_4d}
   }
-  \caption{Average accuracy by increasing data set size}
+  \caption{Priors are $\betad(1,1), \dirichlet(1,1,1)$ and $\dirichlet(1,1,1,1)$ (except for Figure \ref{subfig_prior}) ,
+    balanced datasets, $\epsilon = 1.0$ and $\delta = 10^{-8}$. }
 \label{fig_sampling}
 \end{center}
+
+
 \end{figure}
 
-Fig. \ref{subfig_concrete_prob_2d} and \ref{subfig_concrete_prob_3d} give us the discrete probabilities. On the x-axis: the distance of a potential output r from the true answer and on y-axis the probability of r being output by the mechanisms.
-\begin{figure}[H]
-\begin{center}
-\centering
-   \subfigure[2 dimensions with data size $100$]{
-    \includegraphics[width=0.313\textwidth]{poster_4.eps}
-  \label{subfig_prior}
-  }
-  \subfigure[2 dimensions with data size $600$]{
-    \includegraphics[width=0.31\textwidth]{poster_5.eps}
-  \label{subfig_concrete_prob_2d}
-  }
-  \subfigure[3 dimensions with data size $600$]{
-    \includegraphics[width=0.31\textwidth]{poster_6.eps}
-  \label{subfig_concrete_prob_3d}
-  } 
-\caption{4-quantile and discrete probability plots}
-\label{fig_concrete_prob}
-\end{center}
-\end{figure}
-\scriptsize{Experiments above are with unit prior $\betad(1,1), \betad(1,1,1)$ and $\betad(1,1,1,1)$ (except Fig. \ref{subfig_prior}) , balanced datasets, $\epsilon = 1.0$ and $\delta = 10^{-8}$.}
+
 \end{block}
 
 
