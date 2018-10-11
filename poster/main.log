@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  10 OCT 2018 22:35
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  10 OCT 2018 22:52
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1375,69 +1375,69 @@ LaTeX Font Info:    Overwriting symbol font `stmry' in version `bold'
 )
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 78.
+(hyperref)                removing `math shift' on input line 79.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `superscript' on input line 78.
+(hyperref)                removing `superscript' on input line 79.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 78.
+(hyperref)                removing `math shift' on input line 79.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 78.
+(hyperref)                removing `math shift' on input line 79.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `superscript' on input line 78.
+(hyperref)                removing `superscript' on input line 79.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 78.
+(hyperref)                removing `math shift' on input line 79.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 78.
+(hyperref)                removing `math shift' on input line 79.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `superscript' on input line 78.
+(hyperref)                removing `superscript' on input line 79.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 78.
+(hyperref)                removing `math shift' on input line 79.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 78.
+(hyperref)                removing `math shift' on input line 79.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `superscript' on input line 78.
+(hyperref)                removing `superscript' on input line 79.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 78.
+(hyperref)                removing `math shift' on input line 79.
 
 (./main.aux)
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 93.
-LaTeX Font Info:    ... okay on input line 93.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 93.
-LaTeX Font Info:    ... okay on input line 93.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 93.
-LaTeX Font Info:    ... okay on input line 93.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 93.
-LaTeX Font Info:    ... okay on input line 93.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 93.
-LaTeX Font Info:    ... okay on input line 93.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 93.
-LaTeX Font Info:    ... okay on input line 93.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 93.
-LaTeX Font Info:    ... okay on input line 93.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 94.
+LaTeX Font Info:    ... okay on input line 94.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 94.
+LaTeX Font Info:    ... okay on input line 94.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 94.
+LaTeX Font Info:    ... okay on input line 94.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 94.
+LaTeX Font Info:    ... okay on input line 94.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 94.
+LaTeX Font Info:    ... okay on input line 94.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 94.
+LaTeX Font Info:    ... okay on input line 94.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 94.
+LaTeX Font Info:    ... okay on input line 94.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -1505,7 +1505,7 @@ e
 ))
 ABD: EveryShipout initializing macros
 \AtBeginShipoutBox=\box89
-Package hyperref Info: Link coloring OFF on input line 93.
+Package hyperref Info: Link coloring OFF on input line 94.
 
 (/usr/local/texlive/2017/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
@@ -1515,66 +1515,66 @@ Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
 \c@section@level=\count343
 )
-LaTeX Info: Redefining \ref on input line 93.
-LaTeX Info: Redefining \pageref on input line 93.
-LaTeX Info: Redefining \nameref on input line 93.
+LaTeX Info: Redefining \ref on input line 94.
+LaTeX Info: Redefining \pageref on input line 94.
+LaTeX Info: Redefining \nameref on input line 94.
 
 (./main.out) (./main.out)
 \@outlinefile=\write5
 \openout5 = `main.out'.
 
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  OT1/cmr/m/n --> OT1/cmss/m/n on input line 93.
+(Font)                  OT1/cmr/m/n --> OT1/cmss/m/n on input line 94.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  OT1/cmr/bx/n --> OT1/cmss/bx/n on input line 93.
+(Font)                  OT1/cmr/bx/n --> OT1/cmss/bx/n on input line 94.
 \symnumbers=\mathgroup8
 \sympureletters=\mathgroup9
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `normal'
-(Font)                  OT1/cmss/m/n --> OT1/cmr/m/n on input line 93.
-LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 93.
+(Font)                  OT1/cmss/m/n --> OT1/cmr/m/n on input line 94.
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 94.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
-(Font)                  OT1/cmr/bx/n --> OT1/cmss/bx/n on input line 93.
+(Font)                  OT1/cmr/bx/n --> OT1/cmss/bx/n on input line 94.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
-(Font)                  OT1/cmr/bx/n --> OT1/cmss/bx/n on input line 93.
-LaTeX Font Info:    Redeclaring math alphabet \mathsf on input line 93.
+(Font)                  OT1/cmr/bx/n --> OT1/cmss/bx/n on input line 94.
+LaTeX Font Info:    Redeclaring math alphabet \mathsf on input line 94.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/cmss/m/n --> OT1/cmss/m/n on input line 93.
+(Font)                  OT1/cmss/m/n --> OT1/cmss/m/n on input line 94.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/cmss/bx/n --> OT1/cmss/m/n on input line 93.
-LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 93.
+(Font)                  OT1/cmss/bx/n --> OT1/cmss/m/n on input line 94.
+LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 94.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
-(Font)                  OT1/cmr/m/it --> OT1/cmss/m/it on input line 93.
+(Font)                  OT1/cmr/m/it --> OT1/cmss/m/it on input line 94.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  OT1/cmr/bx/it --> OT1/cmss/m/it on input line 93.
-LaTeX Font Info:    Redeclaring math alphabet \mathtt on input line 93.
+(Font)                  OT1/cmr/bx/it --> OT1/cmss/m/it on input line 94.
+LaTeX Font Info:    Redeclaring math alphabet \mathtt on input line 94.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
-(Font)                  OT1/cmtt/m/n --> OT1/cmtt/m/n on input line 93.
+(Font)                  OT1/cmtt/m/n --> OT1/cmtt/m/n on input line 94.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/cmtt/m/n --> OT1/cmtt/m/n on input line 93.
+(Font)                  OT1/cmtt/m/n --> OT1/cmtt/m/n on input line 94.
 LaTeX Font Info:    Overwriting symbol font `numbers' in version `bold'
-(Font)                  OT1/cmss/m/n --> OT1/cmss/bx/n on input line 93.
+(Font)                  OT1/cmss/m/n --> OT1/cmss/bx/n on input line 94.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
-(Font)                  OT1/cmss/m/it --> OT1/cmss/bx/it on input line 93.
+(Font)                  OT1/cmss/m/it --> OT1/cmss/bx/it on input line 94.
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `bold'
-(Font)                  OT1/cmss/bx/n --> OT1/cmr/bx/n on input line 93.
+(Font)                  OT1/cmss/bx/n --> OT1/cmr/bx/n on input line 94.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
-(Font)                  OT1/cmss/bx/n --> OT1/cmss/bx/n on input line 93.
+(Font)                  OT1/cmss/bx/n --> OT1/cmss/bx/n on input line 94.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/cmss/m/n --> OT1/cmss/bx/n on input line 93.
+(Font)                  OT1/cmss/m/n --> OT1/cmss/bx/n on input line 94.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  OT1/cmss/m/it --> OT1/cmss/bx/it on input line 93.
+(Font)                  OT1/cmss/m/it --> OT1/cmss/bx/it on input line 94.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/cmtt/m/n --> OT1/cmtt/bx/n on input line 93.
-LaTeX Font Info:    Redeclaring symbol font `pureletters' on input line 93.
+(Font)                  OT1/cmtt/m/n --> OT1/cmtt/bx/n on input line 94.
+LaTeX Font Info:    Redeclaring symbol font `pureletters' on input line 94.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `normal'
 (Font)                  OT1/cmss/m/it --> OT1/mathkerncmss/m/sl on input line 9
-3.
+4.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
 (Font)                  OT1/cmss/bx/it --> OT1/mathkerncmss/m/sl on input line 
-93.
+94.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
 (Font)                  OT1/mathkerncmss/m/sl --> OT1/mathkerncmss/bx/sl on inp
-ut line 93.
+ut line 94.
 
 (/usr/local/texlive/2017/texmf-dist/tex/latex/beamer/translator/dicts/translato
 r-basic-dictionary/translator-basic-dictionary-English.dict
@@ -1600,97 +1600,106 @@ Dictionary: translator-numbers-dictionary, Language: English
 r-theorem-dictionary/translator-theorem-dictionary-English.dict
 Dictionary: translator-theorem-dictionary, Language: English 
 )
-LaTeX Info: Redefining \includegraphics on input line 93.
+LaTeX Info: Redefining \includegraphics on input line 94.
 
 (/usr/local/texlive/2017/texmf-dist/tex/latex/siunitx/siunitx-abbreviations.cfg
 File: siunitx-abbreviations.cfg 2017/05/19 v2.7g siunitx: Abbreviated units
 ) (./main.nav)
-LaTeX Font Info:    Calculating math sizes for size <41.8> on input line 93.
-LaTeX Font Info:    Try loading font information for U+stmry on input line 93.
- (/usr/local/texlive/2017/texmf-dist/tex/latex/stmaryrd/Ustmry.fd)
+LaTeX Font Info:    Try loading font information for OMS+cmtt on input line 94.
+
+LaTeX Font Info:    No file OMScmtt.fd. on input line 94.
+
+
+LaTeX Font Warning: Font shape `OMS/cmtt/m/n' undefined
+(Font)              using `OMS/cmsy/m/n' instead
+(Font)              for symbol `textbraceleft' on input line 94.
+
+LaTeX Font Info:    Calculating math sizes for size <41.8> on input line 94.
+LaTeX Font Info:    Try loading font information for U+stmry on input line 94.
+(/usr/local/texlive/2017/texmf-dist/tex/latex/stmaryrd/Ustmry.fd)
 
 LaTeX Font Warning: Font shape `U/stmry/b/n' undefined
-(Font)              using `U/stmry/m/n' instead on input line 93.
+(Font)              using `U/stmry/m/n' instead on input line 94.
 
 
 LaTeX Font Warning: Font shape `U/stmry/m/n' in size <41.8> not available
-(Font)              size <24.88> substituted on input line 93.
+(Font)              size <24.88> substituted on input line 94.
 
 
 LaTeX Font Warning: Font shape `U/stmry/b/n' in size <29.25987> not available
-(Font)              size <24.88> substituted on input line 93.
+(Font)              size <24.88> substituted on input line 94.
 
 LaTeX Font Info:    Try loading font information for OT1+mathkerncmss on input 
-line 93.
+line 94.
 
 (/usr/local/texlive/2017/texmf-dist/tex/latex/sansmathaccent/ot1mathkerncmss.fd
 File: ot1mathkerncmss.fd 2013/03/27 Fontinst v1.933 font definitions for OT1/ma
 thkerncmss.
 )
 \c__siunitx_mathsf_int=\count344
-LaTeX Font Info:    Calculating math sizes for size <34.83> on input line 93.
+LaTeX Font Info:    Calculating math sizes for size <34.83> on input line 94.
 
 
 LaTeX Font Warning: Font shape `U/stmry/b/n' in size <34.83> not available
-(Font)              size <24.88> substituted on input line 93.
+(Font)              size <24.88> substituted on input line 94.
 
 
 LaTeX Font Warning: Font shape `U/stmry/b/n' in size <24.38089> not available
-(Font)              size <24.88> substituted on input line 93.
+(Font)              size <24.88> substituted on input line 94.
 
 \c__siunitx_mathtt_int=\count345
 
 LaTeX Font Warning: Font shape `OT1/cmtt/bx/n' in size <34.83> not available
-(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 93.
+(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 94.
 
 
 LaTeX Font Warning: Font shape `OT1/cmtt/bx/n' in size <24.38089> not available
 
-(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 93.
+(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 94.
 
 
 LaTeX Font Warning: Font shape `OT1/cmtt/bx/n' in size <17.415> not available
-(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 93.
+(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 94.
 
 Package epstopdf Info: Source file: <poster_0.eps>
 (epstopdf)                    date: 2018-10-11 01:18:52
 (epstopdf)                    size: 12608947 bytes
 (epstopdf)             Output file: <poster_0-eps-converted-to.pdf>
-(epstopdf)                    date: 2018-10-10 22:35:28
+(epstopdf)                    date: 2018-10-10 22:52:18
 (epstopdf)                    size: 72540 bytes
 (epstopdf)             Command: <repstopdf --outfile=poster_0-eps-converted-to.
 pdf poster_0.eps>
-(epstopdf)             \includegraphics on input line 399.
+(epstopdf)             \includegraphics on input line 400.
 runsystem(repstopdf --outfile=poster_0-eps-converted-to.pdf poster_0.eps)...exe
 cuted safely (allowed).
 
 Package epstopdf Info: Result file: <poster_0-eps-converted-to.pdf>
-(epstopdf)                    date: 2018-10-10 22:35:37
+(epstopdf)                    date: 2018-10-10 22:52:32
 (epstopdf)                    size: 72540 bytes.
 <poster_0-eps-converted-to.pdf, id=14, 574.145pt x 471.7625pt>
 File: poster_0-eps-converted-to.pdf Graphic file (type pdf)
 
 <use poster_0-eps-converted-to.pdf>
-Package pdftex.def Info: poster_0-eps-converted-to.pdf used on input line 399.
+Package pdftex.def Info: poster_0-eps-converted-to.pdf used on input line 400.
 (pdftex.def)             Requested size: 346.35516pt x 284.60016pt.
-LaTeX Font Info:    Calculating math sizes for size <24.19> on input line 399.
+LaTeX Font Info:    Calculating math sizes for size <24.19> on input line 400.
 
 
 LaTeX Font Warning: Font shape `OT1/cmtt/bx/n' in size <24.19> not available
-(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 399.
+(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 400.
 
 
 LaTeX Font Warning: Font shape `OT1/cmtt/bx/n' in size <16.93292> not available
 
-(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 399.
+(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 400.
 
 
 LaTeX Font Warning: Font shape `OT1/cmtt/bx/n' in size <12.095> not available
-(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 399.
+(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 400.
 
 
 LaTeX Font Warning: Font shape `U/stmry/b/n' in size <24.19> not available
-(Font)              size <24.88> substituted on input line 399.
+(Font)              size <24.88> substituted on input line 400.
 
 Package epstopdf Info: Source file: <poster_1.eps>
 (epstopdf)                    date: 2018-10-06 00:26:46
@@ -1700,13 +1709,13 @@ Package epstopdf Info: Source file: <poster_1.eps>
 (epstopdf)                    size: 212029 bytes
 (epstopdf)             Command: <repstopdf --outfile=poster_1-eps-converted-to.
 pdf poster_1.eps>
-(epstopdf)             \includegraphics on input line 399.
+(epstopdf)             \includegraphics on input line 400.
 Package epstopdf Info: Output file is already uptodate.
 <poster_1-eps-converted-to.pdf, id=18, 910.40125pt x 517.935pt>
 File: poster_1-eps-converted-to.pdf Graphic file (type pdf)
 
 <use poster_1-eps-converted-to.pdf>
-Package pdftex.def Info: poster_1-eps-converted-to.pdf used on input line 399.
+Package pdftex.def Info: poster_1-eps-converted-to.pdf used on input line 400.
 (pdftex.def)             Requested size: 457.6785pt x 260.3815pt.
 Package epstopdf Info: Source file: <poster_2.eps>
 (epstopdf)                    date: 2018-10-06 00:20:04
@@ -1716,14 +1725,14 @@ Package epstopdf Info: Source file: <poster_2.eps>
 (epstopdf)                    size: 181412 bytes
 (epstopdf)             Command: <repstopdf --outfile=poster_2-eps-converted-to.
 pdf poster_2.eps>
-(epstopdf)             \includegraphics on input line 399.
+(epstopdf)             \includegraphics on input line 400.
 Package epstopdf Info: Output file is already uptodate.
 
 <poster_2-eps-converted-to.pdf, id=19, 854.19125pt x 538.01pt>
 File: poster_2-eps-converted-to.pdf Graphic file (type pdf)
 
 <use poster_2-eps-converted-to.pdf>
-Package pdftex.def Info: poster_2-eps-converted-to.pdf used on input line 399.
+Package pdftex.def Info: poster_2-eps-converted-to.pdf used on input line 400.
 (pdftex.def)             Requested size: 415.08376pt x 261.4353pt.
 Package epstopdf Info: Source file: <poster_3.eps>
 (epstopdf)                    date: 2018-10-06 00:26:52
@@ -1733,14 +1742,14 @@ Package epstopdf Info: Source file: <poster_3.eps>
 (epstopdf)                    size: 148456 bytes
 (epstopdf)             Command: <repstopdf --outfile=poster_3-eps-converted-to.
 pdf poster_3.eps>
-(epstopdf)             \includegraphics on input line 399.
+(epstopdf)             \includegraphics on input line 400.
 Package epstopdf Info: Output file is already uptodate.
 
 <poster_3-eps-converted-to.pdf, id=20, 922.44624pt x 595.22375pt>
 File: poster_3-eps-converted-to.pdf Graphic file (type pdf)
 
 <use poster_3-eps-converted-to.pdf>
-Package pdftex.def Info: poster_3-eps-converted-to.pdf used on input line 399.
+Package pdftex.def Info: poster_3-eps-converted-to.pdf used on input line 400.
 (pdftex.def)             Requested size: 405.45746pt x 261.62679pt.
 Package epstopdf Info: Source file: <poster_4.eps>
 (epstopdf)                    date: 2018-10-10 22:31:48
@@ -1750,77 +1759,77 @@ Package epstopdf Info: Source file: <poster_4.eps>
 (epstopdf)                    size: 172640 bytes
 (epstopdf)             Command: <repstopdf --outfile=poster_4-eps-converted-to.
 pdf poster_4.eps>
-(epstopdf)             \includegraphics on input line 399.
+(epstopdf)             \includegraphics on input line 400.
 Package epstopdf Info: Output file is already uptodate.
 
 <poster_4-eps-converted-to.pdf, id=23, 594.22pt x 441.65pt>
 File: poster_4-eps-converted-to.pdf Graphic file (type pdf)
 
 <use poster_4-eps-converted-to.pdf>
-Package pdftex.def Info: poster_4-eps-converted-to.pdf used on input line 399.
+Package pdftex.def Info: poster_4-eps-converted-to.pdf used on input line 400.
 (pdftex.def)             Requested size: 430.20477pt x 319.76012pt.
 Package epstopdf Info: Source file: <poster_5.eps>
 (epstopdf)                    date: 2018-10-11 04:12:32
 (epstopdf)                    size: 7473166 bytes
 (epstopdf)             Output file: <poster_5-eps-converted-to.pdf>
-(epstopdf)                    date: 2018-10-10 22:35:29
+(epstopdf)                    date: 2018-10-10 22:52:19
 (epstopdf)                    size: 110763 bytes
 (epstopdf)             Command: <repstopdf --outfile=poster_5-eps-converted-to.
 pdf poster_5.eps>
-(epstopdf)             \includegraphics on input line 399.
+(epstopdf)             \includegraphics on input line 400.
 runsystem(repstopdf --outfile=poster_5-eps-converted-to.pdf poster_5.eps)...exe
 cuted safely (allowed).
 
 Package epstopdf Info: Result file: <poster_5-eps-converted-to.pdf>
-(epstopdf)                    date: 2018-10-10 22:35:38
+(epstopdf)                    date: 2018-10-10 22:52:33
 (epstopdf)                    size: 110763 bytes.
 
 <poster_5-eps-converted-to.pdf, id=24, 462.72874pt x 347.2975pt>
 File: poster_5-eps-converted-to.pdf Graphic file (type pdf)
 
 <use poster_5-eps-converted-to.pdf>
-Package pdftex.def Info: poster_5-eps-converted-to.pdf used on input line 399.
+Package pdftex.def Info: poster_5-eps-converted-to.pdf used on input line 400.
 (pdftex.def)             Requested size: 426.07324pt x 319.78784pt.
 Package epstopdf Info: Source file: <poster_6.eps>
 (epstopdf)                    date: 2018-10-11 04:12:32
 (epstopdf)                    size: 7473166 bytes
 (epstopdf)             Output file: <poster_6-eps-converted-to.pdf>
-(epstopdf)                    date: 2018-10-10 22:35:30
+(epstopdf)                    date: 2018-10-10 22:52:20
 (epstopdf)                    size: 159245 bytes
 (epstopdf)             Command: <repstopdf --outfile=poster_6-eps-converted-to.
 pdf poster_6.eps>
-(epstopdf)             \includegraphics on input line 399.
+(epstopdf)             \includegraphics on input line 400.
 runsystem(repstopdf --outfile=poster_6-eps-converted-to.pdf poster_6.eps)...exe
 cuted safely (allowed).
 
 Package epstopdf Info: Result file: <poster_6-eps-converted-to.pdf>
-(epstopdf)                    date: 2018-10-10 22:35:39
+(epstopdf)                    date: 2018-10-10 22:52:34
 (epstopdf)                    size: 159245 bytes.
 
 <poster_6-eps-converted-to.pdf, id=25, 462.72874pt x 347.2975pt>
 File: poster_6-eps-converted-to.pdf Graphic file (type pdf)
 
 <use poster_6-eps-converted-to.pdf>
-Package pdftex.def Info: poster_6-eps-converted-to.pdf used on input line 399.
+Package pdftex.def Info: poster_6-eps-converted-to.pdf used on input line 400.
 (pdftex.def)             Requested size: 426.07324pt x 319.78784pt.
-LaTeX Font Info:    Calculating math sizes for size <20.16> on input line 399.
+LaTeX Font Info:    Calculating math sizes for size <20.16> on input line 400.
 
 
 LaTeX Font Warning: Font shape `OT1/cmtt/bx/n' in size <20.16> not available
-(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 399.
+(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 400.
 
 
 LaTeX Font Warning: Font shape `OT1/cmtt/bx/n' in size <14.11194> not available
 
-(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 399.
+(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 400.
 
 
 LaTeX Font Warning: Font shape `OT1/cmtt/bx/n' in size <10.08> not available
-(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 399.
+(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 400.
 
 
 LaTeX Font Warning: Font shape `U/stmry/b/n' in size <20.16> not available
-(Font)              size <20.74> substituted on input line 399.
+(Font)              size <20.74> substituted on input line 400.
 
 (./main.bbl
 
@@ -1828,27 +1837,27 @@ LaTeX Font Warning: Font shape `OT1/cmss/m/it' in size <29.04> not available
 (Font)              Font shape `OT1/cmss/m/sl' tried instead on input line 6.
 
 )
-Overfull \hbox (2.21655pt too wide) detected at line 399
+Overfull \hbox (2.21655pt too wide) detected at line 400
 [][][] [][][][][][][][][] [][][][][][][][][] [][][][][][][][][] [][][][][][][][
 ][] [][][][][][][] 
  []
 
 
 LaTeX Font Warning: Font shape `OT1/cmtt/bx/n' in size <41.8> not available
-(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 399.
+(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 400.
 
 
 LaTeX Font Warning: Font shape `OT1/cmtt/bx/n' in size <29.25987> not available
 
-(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 399.
+(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 400.
 
 
 LaTeX Font Warning: Font shape `OT1/cmtt/bx/n' in size <20.9> not available
-(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 399.
+(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 400.
 
 
 LaTeX Font Warning: Font shape `U/stmry/b/n' in size <41.8> not available
-(Font)              size <24.88> substituted on input line 399.
+(Font)              size <24.88> substituted on input line 400.
 
 [1{/usr/local/texlive/2017/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
 
@@ -1865,12 +1874,12 @@ rted-to.pdf> <./poster_5-eps-converted-to.pdf> <./poster_6-eps-converted-to.pdf
 \tf@snm=\write8
 \openout8 = `main.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 401.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 401.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 402.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 402.
 
 (./main.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 401.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 401.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 402.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 402.
 Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
 
@@ -1883,11 +1892,11 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
  ) 
 Here is how much of TeX's memory you used:
- 30781 strings out of 492995
- 603993 string characters out of 6132704
- 748161 words of memory out of 5000000
- 33733 multiletter control sequences out of 15000+600000
- 42186 words of font info for 146 fonts, out of 8000000 for 9000
+ 30789 strings out of 492995
+ 604098 string characters out of 6132704
+ 748173 words of memory out of 5000000
+ 33739 multiletter control sequences out of 15000+600000
+ 42443 words of font info for 147 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  56i,19n,68p,10430b,1448s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}
@@ -1897,14 +1906,14 @@ Here is how much of TeX's memory you used:
 /usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmss17.pfb></
 usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb><
 /usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi17.pfb><
-/usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></
-usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pf
-b></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfso1728.pfb>
-
-Output written on main.pdf (1 page, 1138193 bytes).
+/usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></
+usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></u
+sr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb
+></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfso1728.pfb>
+Output written on main.pdf (1 page, 1146116 bytes).
 PDF statistics:
- 109 PDF objects out of 1000 (max. 8388607)
- 76 compressed objects within 1 object stream
+ 113 PDF objects out of 1000 (max. 8388607)
+ 79 compressed objects within 1 object stream
  14 named destinations out of 1000 (max. 500000)
  78 words of extra memory for PDF output out of 10000 (max. 10000000)
 
