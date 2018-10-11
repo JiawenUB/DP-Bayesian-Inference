@@ -141,7 +141,7 @@ Jiawen Liu$^{*}$
 %	INTRODUCTION
 %----------------------------------------------------------------------------------------
             
-\begin{block}{Bayesian inference ($\bysinfer$): Example: Beta-Binomial model}
+\begin{block}{Bayesian inference ($\bysinfer$) (A Beta-Binomial model example):}
 % The first subdivided column within the first main column
 % \begin{columns} % Subdivide the first main column
 % \begin{column}{.54\textwidth} % The first subdivided column within the first main column
@@ -196,7 +196,8 @@ Releasing a differentially private posterior $\betad (\tilde\alpha,\tilde\beta)=
 
 We define the mechanism $\hexpmech$ which produces an element $r$ in $\betaset$ with probaiblity:
 \[
-\underset{z \thicksim \hexpmech}{\Pr}[z=r] = 
+% \underset{z \thicksim \hexpmech}{\Pr}[z=r] = 
+\mathbb{P}_{r \thicksim \hexpmech} =
 \frac 
 {\exp \Big(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r)}{2\cdot S(\dataobs)}\Big)}
 {\sum_{r\in\betaset} \exp \Big(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r)}{2\cdot S(\dataobs)}\Big)}
@@ -245,10 +246,10 @@ given in input an observations $\dataobs$, parameters $\epsilon>0$ and $\delta>0
 % Two groups of experimental results both with unit prior $\betad(1,1), \betad(1,1,1)$ and $\betad(1,1,1,1)$, balanced datasets and parameters $\epsilon = 1.0$ and $\delta = 10^{-8}$.
 Experiments are on three mechanisms and plotted as follows:
 \begin{itemize}
-  \item[-] Green: Baseline approach. (noises being postprocessed to floor value) %adds noise scaled to sensitivity proportional to dimensionality,
-  \item[-] Red: LapMech with sensitivity $1$ in 2 dimensions and $2$ in higher dimensions, since it's equivalent to histogram problem 
+  \item[-] \textbf{Green}: Baseline approach. (noises being postprocessed to floor value) %adds noise scaled to sensitivity proportional to dimensionality,
+  \item[-] \textbf{Red}: LapMech with sensitivity $1$ in 2 dimensions and $2$ in higher dimensions, since it's equivalent to histogram problem 
   (posteriors of adjacent data sets differ only in two dimensions).
-  \item[-] Blue: $\hexpmech$.
+  \item[-] \textbf{Blue}: $\hexpmech$.
 \end{itemize}
   Fig. \ref{fig_sampling} and Fig. \ref{subfig_prior} give us the average and 4-quantile of Hellinger distance between the sampled results and true posterior, by sampling for $10k$ times under each data size or prior configuration.
 
@@ -277,15 +278,15 @@ Fig. \ref{subfig_concrete_prob_2d} and \ref{subfig_concrete_prob_3d} give us the
 \begin{center}
 \centering
    \subfigure[2 dimensions with data size $100$]{
-    \includegraphics[width=0.31\textwidth]{poster_4.eps}
+    \includegraphics[width=0.313\textwidth]{poster_4.eps}
   \label{subfig_prior}
   }
   \subfigure[2 dimensions with data size $600$]{
-    \includegraphics[width=0.311\textwidth]{poster_5.eps}
+    \includegraphics[width=0.31\textwidth]{poster_5.eps}
   \label{subfig_concrete_prob_2d}
   }
   \subfigure[3 dimensions with data size $600$]{
-    \includegraphics[width=0.311\textwidth]{poster_6.eps}
+    \includegraphics[width=0.31\textwidth]{poster_6.eps}
   \label{subfig_concrete_prob_3d}
   } 
 \caption{4-quantile and discrete probability plots}

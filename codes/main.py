@@ -388,7 +388,7 @@ def hellinger_vs_l1norm(base_distribution):
 def plot_error_box(data, xlabel, xstick, title, legends, colors):
 	l = len(legends)
 	plt.figure(figsize=(0.5*len(data),9))
-	medianprops = dict(linestyle='--', linewidth=3.0, color='green')
+	medianprops = dict(linestyle='--', linewidth=3.0, color='lightblue')
 	# meanlineprops = dict(linestyle='--', linewidth=2.5, color='purple')
 	bplot = plt.boxplot(data, notch=1, widths=0.4, sym='+', vert=2, whis=1.5, patch_artist=True, medianprops=medianprops)#, meanprops=meanlineprops, meanline=True,showmeans=True)
 	plt.xlabel(xlabel,fontsize=15)
@@ -583,11 +583,11 @@ def gen_priors(r, step, d):
 
 if __name__ == "__main__":
 
-	datasize = 600
+	datasize = 100
 	epsilon = 1.0
 	delta = 0.00000001
 	prior = dirichlet([1,1])
-	dataset = [300,300]
+	dataset = [50,50]
 	x1 = [1,499]
 	x2 = [0,500]
 	epsilons = numpy.arange(0.1, 2, 0.1)
@@ -596,7 +596,7 @@ if __name__ == "__main__":
 	datasets = gen_datasets(percentage, datasizes)
 	priors = [dirichlet([1,1])] + gen_priors([5,20], 5, 2) + gen_priors([40,100], 20, 2) + gen_priors([150,300], 50, 2) + gen_priors([400,400], 50, 2)
 	# accuracy_VS_prior_mean(sample_size,epsilon,delta,priors,observations)
-	# accuracy_VS_prior(datasize,epsilon,delta,priors,observation)
+	accuracy_VS_prior(datasize,epsilon,delta,priors,dataset)
 	# accuracy_VS_mean(sample_size,epsilon,delta,prior)
 	# accuracy_VS_datasize(epsilon,delta,prior,datasets,datasizes)
 	# hellinger_vs_l1norm(Dir(observation))
