@@ -66,11 +66,11 @@ def smooth_sensitivity_study(prior, sample_size, epsilon, delta, percentage):
 
 	y=[Bayesian_Model._LS_Candidates[r] * math.exp(- beta * Hamming_Distance(observation, r._alphas)) for r in Bayesian_Model._candidates]
 
-	plot_ss(y,xstick,'Smooth Sensitivity Study w.r.t. x :' + str([sample_size*i for i in percentage]) + r'; $\epsilon = $' + str(epsilon) + r'; $\delta:$' + str(delta), r"$\Delta_l(H(BI(x'),-))e^{- \gamma *d(x,x')}$")
+	scatter_plot(y,xstick,'Smooth Sensitivity Study w.r.t. x :' + str([sample_size*i for i in percentage]) + r'; $\epsilon = $' + str(epsilon) + r'; $\delta:$' + str(delta), r"$\Delta_l(H(BI(x'),-))e^{- \gamma *d(x,x')}$")
 
 
 
-def plot_ss(ss,xstick,title,yaxis):
+def scatter_plot(ss,xstick,title,yaxis):
 	plt.figure(figsize=(12,6))
 
 	plt.plot(range(len(ss)),ss,'r^')
@@ -101,7 +101,7 @@ def ss_exponentiate_component_study(prior, sample_size, epsilon, delta, percenta
 	y=[math.exp(- beta * Hamming_Distance(observation, r._alphas)) for r in Bayesian_Model._candidates]
 
 
-	plot_ss(y,xstick,'Exponentiate Component of Smooth Sensitivity w.r.t. x :' + str([sample_size*i for i in percentage]) + r'; $\epsilon:$' + str(epsilon) + r'; $\delta:$' + str(delta), r"$e^{- \gamma *d(x,x')}$")
+	scatter_plot(y,xstick,'Exponentiate Component of Smooth Sensitivity w.r.t. x :' + str([sample_size*i for i in percentage]) + r'; $\epsilon:$' + str(epsilon) + r'; $\delta:$' + str(delta), r"$e^{- \gamma *d(x,x')}$")
 
 	return
 
@@ -118,7 +118,7 @@ def ss_ls_component_study(prior, sample_size, epsilon, delta, percentage):
 	y=[Bayesian_Model._LS_Candidates[r] for r in Bayesian_Model._candidates]
 
 
-	plot_ss(y[1:-1],xstick,"", r"$\mathcal{H}(\mathsf{beta}(\alpha + 1, 100 - \alpha), \mathsf{beta}(\alpha, 101 - \alpha))$")
+	scatter_plot(y[1:-1],xstick,"", r"$\mathcal{H}(\mathsf{beta}(\alpha + 1, 100 - \alpha), \mathsf{beta}(\alpha, 101 - \alpha))$")
 
 	return
 
