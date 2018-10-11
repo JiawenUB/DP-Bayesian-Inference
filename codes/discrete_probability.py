@@ -16,6 +16,10 @@ from dirichlet import dirichlet
 from dpbayesinfer import BayesInferwithDirPrior
 
 
+#############################################################################
+#CALCULATING THE DISCRETE PROBABILITIES
+#############################################################################
+
 def row_discrete_probabilities(sample_size,epsilon,delta,prior,observation):
 
 
@@ -31,7 +35,7 @@ def row_discrete_probabilities(sample_size,epsilon,delta,prior,observation):
 #############################################################################
 
 	for i in Bayesian_Model._candidates:
-		Bayesian_Model._candidate_scores[i] = round(Bayesian_Model._candidate_scores[i], 6)
+		Bayesian_Model._candidate_scores[i] = round(Bayesian_Model._candidate_scores[i], 7)
 
 #############################################################################
 #SORT the scores and put them into bins
@@ -91,8 +95,9 @@ def row_discrete_probabilities(sample_size,epsilon,delta,prior,observation):
 	#############################################################################
 	#SENSITIVITY SETTING
 	#############################################################################
+	
 	def sensitivity_setting(dimension):
-		if dimension = 2:
+		if dimension == 2:
 			return (1.0,2.0)
 		else:
 			return (2.0,dimension*1.0)
@@ -121,6 +126,7 @@ def row_discrete_probabilities(sample_size,epsilon,delta,prior,observation):
 
 		laplace_probabilities_1[r] = t1 #/ (math.gamma(len(yset)) * (2 ** (len(list(filter(lambda a: a != 0, ylist))))))
 		laplace_probabilities_2[r] = t2 #/ (math.gamma(len(yset)) * (2 ** (len(list(filter(lambda a: a != 0, ylist))))))
+	
 	#############################################################################
 	#SUM UP the tail Laplace prob
 	#############################################################################
@@ -174,7 +180,7 @@ def row_discrete_probabilities(sample_size,epsilon,delta,prior,observation):
 
 	plt.xlabel("c / Hellinger distance from true posterior")
 	plt.ylabel("Pr[H(BI(x),r) = c]")
-	plt.title("Discrete Probabilities")
+	plt.title("Discrete Probabilities", fontsize=15)
 	plt.legend()
 	plt.grid()
 	plt.show()
@@ -236,11 +242,11 @@ if __name__ == "__main__":
 #############################################################################
 #SETTING UP THE PARAMETERS
 #############################################################################
-	datasize = 150
+	datasize = 300
 	epsilon = 1.0
 	delta = 0.00000001
 	prior = dirichlet([1,1,1])
-	dataset = [50,50,50]
+	dataset = [100,100,100]
 
 #############################################################################
 #SETTING UP THE PARAMETERS WHEN DOING GROUPS EXPERIMENTS
