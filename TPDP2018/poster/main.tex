@@ -110,8 +110,9 @@ Jiawen Liu$^{*}$
 % \begin{columns} % Subdivide the first main column
 % \begin{column}{.69\textwidth}
 \begin{enumerate}
-\item Designing a differentially private Bayesian inference mechanism.
-\item Measuring accuracy with a metric over distributions (Hellinger distance ($\hellinger$), $f$-divergence, etc.).
+\item Design a differentially private Bayesian inference mechanism.
+\item Improve accuracy by calibrating noise to a metric over distributions (Hellinger distance ($\hellinger$), $f$-divergence, etc.).
+% Measuring accuracy with a metric over distributions (Hellinger distance ($\hellinger$), $f$-divergence, etc.).
 % \item Calibrating the noise w.r.t sensitivity of the (Hellinger distance).
 % \item Applying smooth sensitivity in mechanism to achieve better accuracy.
 %         (Fig. \ref{fig_sensitivity} shows that local sensitivity of Hellinger distance is very steep and much higher in the edges but very smooth in central part).
@@ -148,11 +149,11 @@ Jiawen Liu$^{*}$
 % \begin{column}{.54\textwidth} % The first subdivided column within the first main column
 %The prior $\betad(\alpha, \beta)$, with hyperparameters $\alpha,\beta\in\mathbb{R}^{+}$ is conjugate to the likelihood function.
 \begin{itemize}
-  \item[-] Prior on $\theta: \betad(\alpha, \beta), \alpha,\beta\in\mathbb{R}^{+}$, observed data set $\dataobs= (x_1,\dots x_n)\in\{0,1\}^{n}, n\in\mathbb{N}$.
+  \item[-] Prior on $\theta: \betad(\alpha, \beta), \alpha,\beta\in\mathbb{R}^{+}$, observed data set $\dataobs= (x_1,\dots, x_n)\in\{0,1\}^{n}, n\in\mathbb{N}$.
 
   \item[-] Likelihood function: $\mathbb{L}_{\dataobs | \theta}= \theta^{\Delta \alpha}(1-\theta)^{n - \Delta \alpha}$, where $\Delta \alpha = \displaystyle\sum_{i=1}^{n}x_i$;
 
-  \item[-] Posterior distribution over theta: $\mathbb{P}_{\theta|\dataobs}=\betad(\alpha + \Delta \alpha,\beta + n - \Delta \alpha)$.
+  \item[-] Posterior distribution over $\theta$: $\mathbb{P}_{\theta|\dataobs}=\betad(\alpha + \Delta \alpha,\beta + n - \Delta \alpha)$.
 \end{itemize}
 \end{block}
 % and with p.d.f:
@@ -171,7 +172,7 @@ Releasing a differentially private posterior $\betad (\tilde\alpha,\tilde\beta)=
 \begin{column}{.69\textwidth}
 \begin{enumerate}
   \item  Baseline approach is Laplace mechanism (LapMech) with sensitivity proportional to $\ell_1$ norm. But this sensitivity grows linear with the dimension, also we measure results by a different metric. Motivated by this, we calibrate the noise w.r.t sensitivity of the accuracy metric ($\hellinger$). %(v.s. the $\ell_1$ norm in baseline approach).} \todo{} % \todo{give formula of hellinger Distance, give the Dirichlet distribution, no need to formal expression, Laplace with mean and scale in 2 dimension.}
-  \item Maximum sensitivity of $\hellinger$ over $\betad$ distributions achieves at edges as in Fig. \ref{fig_sensitivity}. But it's very low when move away from edge. Motivated by this, we apply smooth sensitivity in mechanism to improve accuracy.
+  \item Maximum sensitivity of $\hellinger$ over $\betad$ distributions is attained at edges as in Fig. \ref{fig_sensitivity}. But local sensitivity is very smooth and much smaller when move away from edge. Motivated by this, we apply smooth sensitivity in mechanism to improve accuracy.
   %{sensitivity is maximize when plot of hellinger distance of alpha and beta variance between adjacent data bases, of varying }
 \end{enumerate}
 \end{column}
@@ -204,10 +205,10 @@ We define the mechanism $\hexpmech$ which produces an element $r$ in $\betaset$ 
 {\sum_{r\in\betaset} \exp \Big(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r)}{2\cdot S(\dataobs)}\Big)}
 \]
 
-given in input an observations $\dataobs$, parameters $\epsilon>0$ and $\delta>0$, where:
+given as input an observations $\dataobs$, parameters $\epsilon>0$ and $\delta>0$, where:
 
 \begin{itemize}
-  \item[-] $\betaset$, the candidates set defined as $\{\betad(\alpha',\beta')\mid \alpha'=\alpha+\Delta\alpha, \beta'=\beta+n-\Delta\alpha\}$, given the prior distribution $\bprior=\betad(\alpha, \beta)$ and observed data set size $n$.
+  \item[-] $\betaset$ is the set of candidates, defined as $\{\betad(\alpha',\beta')\mid \alpha'=\alpha+\Delta\alpha, \beta'=\beta+n-\Delta\alpha\}$, given the prior distribution $\bprior=\betad(\alpha, \beta)$ and observed data set size $n$.
 
   \item[-] $-\hellinger(\bysinfer(\dataobs),r)$ denotes the scoring function based on the Hellinger distance.
 
@@ -224,7 +225,7 @@ given in input an observations $\dataobs$, parameters $\epsilon>0$ and $\delta>0
    LS(\dataobs)=\max\limits_{\dataobs' \in \datauni^n:\adj{\dataobs}{\dataobs'}, r\in \mathcal{R}}\lvert \hellinger(\bysinfer(\dataobs), r) - \hellinger(\bysinfer(\dataobs'), r)\rvert
    $,
 
-   \item $\gamma =   \ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta}{2 (n + 1)})})$ to ensure the $(\epsilon,\delta)$-differentially private.
+   \item $\gamma =   \ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta}{2 (n + 1)})})$ to ensure $(\epsilon,\delta)$-differential privacy.
  \end{itemize}
 \end{itemize}
 
@@ -252,7 +253,7 @@ Experiments are on three mechanisms and plotted as follows:
   (posteriors of adjacent data sets differ only in two dimensions).
   \item[-] \textbf{Blue}: $\hexpmech$.
 \end{itemize}
-  Fig. \ref{fig_sampling} and Fig. \ref{subfig_prior} give us the average and 4-quantile of Hellinger distance between the sampled results and true posterior, by sampling for $10k$ times under each data size or prior configuration.
+  Fig. \ref{fig_sampling} and Fig. \ref{subfig_prior} give us the average and 4-quantile of Hellinger distance between the sampled results and true posterior, by sampling for $10,000$ times under each data size or prior configuration.
 
 \begin{figure}[H]
 \begin{center}

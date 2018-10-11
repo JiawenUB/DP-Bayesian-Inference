@@ -1,4 +1,4 @@
-PWD /Users/jiawenliu/Documents/GitHub/DP-Bayesian-Inference/poster
+PWD /Users/jiawenliu/Documents/GitHub/DP-Bayesian-Inference/TPDP2018/poster
 INPUT /usr/local/texlive/2017/texmf.cnf
 INPUT /usr/local/texlive/2017/texmf-dist/web2c/texmf.cnf
 INPUT /usr/local/texlive/2017/texmf-var/web2c/pdftex/pdflatex.fmt
@@ -451,8 +451,6 @@ INPUT ./poster_0.eps
 INPUT ./poster_0-eps-converted-to.pdf
 INPUT ./poster_0-eps-converted-to.pdf
 INPUT ./poster_0-eps-converted-to.pdf
-INPUT ./poster_0-eps-converted-to.pdf
-INPUT ./poster_0-eps-converted-to.pdf
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/public/cm/cmss17.tfm
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/public/cm/cmss17.tfm
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/public/cm/cmssbx10.tfm
@@ -519,6 +517,8 @@ INPUT ./poster_4.eps
 INPUT ./poster_4-eps-converted-to.pdf
 INPUT ./poster_4-eps-converted-to.pdf
 INPUT ./poster_4-eps-converted-to.pdf
+INPUT ./poster_4-eps-converted-to.pdf
+INPUT ./poster_4-eps-converted-to.pdf
 INPUT poster_5.eps
 INPUT ./poster_5.eps
 INPUT ./poster_5.eps
@@ -528,16 +528,12 @@ INPUT ./poster_5.eps
 INPUT ./poster_5-eps-converted-to.pdf
 INPUT ./poster_5-eps-converted-to.pdf
 INPUT ./poster_5-eps-converted-to.pdf
-INPUT ./poster_5-eps-converted-to.pdf
-INPUT ./poster_5-eps-converted-to.pdf
 INPUT poster_6.eps
 INPUT ./poster_6.eps
 INPUT ./poster_6.eps
 INPUT ./poster_6-eps-converted-to.pdf
 INPUT ./poster_6-eps-converted-to.pdf
 INPUT ./poster_6.eps
-INPUT ./poster_6-eps-converted-to.pdf
-INPUT ./poster_6-eps-converted-to.pdf
 INPUT ./poster_6-eps-converted-to.pdf
 INPUT ./poster_6-eps-converted-to.pdf
 INPUT ./poster_6-eps-converted-to.pdf

@@ -28,12 +28,12 @@ def plot_error_box(data, xlabel, xstick, title, legends, colors):
 	# meanlineprops = dict(linestyle='--', linewidth=2.5, color='purple')
 	bplot = plt.boxplot(data, notch=1, widths=0.4, sym='+', vert=2, whis=1.5, patch_artist=True, medianprops=medianprops)#, meanprops=meanlineprops, meanline=True,showmeans=True)
 	plt.xlabel(xlabel,fontsize=15)
-	plt.ylabel('Hellinegr Distance',fontsize=15)
+	plt.ylabel('Hellinger Distance',fontsize=15)
 	#ax.set_xlim(0.5, len(errors) + 0.5)
 
 
 	plt.xticks([i*l + (l+1)/2.0 for i in range(len(xstick))],xstick,rotation=40,fontsize=12)
-	plt.title(title,fontsize=20)
+	plt.title(title,fontsize=15)
 
 	for i in range(1, len(bplot["boxes"])/l + 1):
 		for j in range(l):
@@ -217,11 +217,11 @@ if __name__ == "__main__":
 #SETTING UP THE PARAMETERS
 #############################################################################
 
-	datasize = 150
+	datasize = 100
 	epsilon = 1.0
 	delta = 0.00000001
-	prior = dirichlet([1,1,1])
-	dataset = [50,50,50]
+	prior = dirichlet([1,1])
+	dataset = [50,50]
 #############################################################################
 #SETTING UP THE PARAMETERS WHEN DOING GROUPS EXPERIMENTS
 #############################################################################
@@ -242,7 +242,7 @@ if __name__ == "__main__":
 #DOING PLOTS OF ACCURACY V.S. THE PRIOR
 #############################################################################
 
-	# accuracy_VS_prior(datasize,epsilon,delta,priors,dataset)
+	accuracy_VS_prior(datasize,epsilon,delta,priors,dataset)
 
 #############################################################################
 #DOING PLOTS OF ACCURACY V.S. THE PRIOR AND MEAN
