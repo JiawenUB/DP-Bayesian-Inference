@@ -98,18 +98,18 @@ Jiawen Liu$^{*}$
 \begin{block}{Objectives}
 % \begin{columns} % Subdivide the first main column
 % \begin{column}{.69\textwidth}
-\begin{enumerate}
+\begin{itemize}
 \item Design a differentially private Bayesian inference mechanism.
 \item Improve accuracy by calibrating noise  to the sensitivity of a
          metric over distributions (e.g. Hellinger distance ($\hellinger$), $f$-divergences, etc\dots).
-\end{enumerate}
+\end{itemize}
 \end{block}
 
 %----------------------------------------------------------------------------------------
 %	INTRODUCTION
 %----------------------------------------------------------------------------------------
             
-\begin{block}{Bayesian inference ($\bysinfer$), the Beta-Binomial model example:}
+\begin{block}{An example of Bayesian inference: the Beta-Binomial model}
 % The first subdivided column within the first main column
 % \begin{columns} % Subdivide the first main column
 % \begin{column}{.54\textwidth} % The first subdivided column within the first main column
@@ -132,10 +132,11 @@ Jiawen Liu$^{*}$
 %	MATERIALS
 %----------------------------------------------------------------------------------------
 
-\begin{block}{Differentially private Bayesian inference and motivations}
+\begin{block}{Differentially private Bayesian inference}
 \begin{columns} % Subdivide the first main column
-\begin{column}{.69\textwidth}
-\begin{enumerate}
+  \begin{column}{.69\textwidth}
+    \vspace{-3cm}
+\begin{itemize}
 \item  Baseline approach: 
   \begin{itemize}
   \item Release $\betad(\alpha +  \lfloor\widetilde{\Delta \alpha}\rfloor^n_0,\beta + n - \lfloor\widetilde{\Delta \alpha}\rfloor^n_0)$,
@@ -143,17 +144,8 @@ Jiawen Liu$^{*}$
   \item \todo{$S\propto ||\cdot ||_{1}$}.
   \item Measure accuracy with a metric over distributions, e.g. $\hellinger$.
   \end{itemize}
-  {\color{red}{But $S$ grows linearly with the dimension: too noisy when we generalize to Dirichlet-Multinomial ({\small$\dirichlet(\cdot)$}) model}}. 
-\item Another approach:
-  \begin{itemize}
-    \item Calibrate  noise w.r.t \emph{global} sensitivity of $\hellinger$: {\color{red}{but global sensitivity is still too big.}}
-    \item Fig. \ref{fig_sensitivity} shows that there is a gap between global and local sensitivity of $\hellinger$.
-    \end{itemize}
-  \item A better approach:
-    \begin{itemize}
-      \item \large{Calibrate noise w.r.t. the \emph{smooth} sensitivity of $\hellinger$.}
-    \end{itemize}
-\end{enumerate}
+  \end{itemize}
+  {\color{red}{But $S$ grows linearly with the dimension: too noisy when we generalize to Dirichlet-Multinomial ({\small$\dirichlet(\cdot)$}) model}}.
 \end{column}
 \begin{column}{.28\textwidth}
 \begin{figure}[ht]
@@ -165,6 +157,18 @@ Jiawen Liu$^{*}$
 % \vspace{.1cm}
 \end{column}
 \end{columns}
+    \vspace{-1cm}
+\begin{itemize}
+\item Another approach:
+  \begin{itemize}
+    \item Calibrate  noise w.r.t \emph{global} sensitivity of $\hellinger$: {\color{red}{but global sensitivity is still too big.}}
+    \item Fig. \ref{fig_sensitivity} shows that there is a gap between global and local sensitivity of $\hellinger$.
+    \end{itemize}
+  \item A better approach:
+    \begin{itemize}
+      \item \large{Calibrate noise w.r.t. the \emph{smooth} sensitivity of $\hellinger$.}
+    \end{itemize}
+\end{itemize}
 
 \end{block}
 
@@ -182,7 +186,6 @@ We define the mechanism $\hexpmech$ which produces an element $r$ in $\betaset$ 
 {\exp \Big(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r)}{2\cdot S(\dataobs)}\Big)}
 {\sum_{r\in\betaset} \exp \Big(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r)}{2\cdot S(\dataobs)}\Big)}
 \]
-where:
 \begin{itemize}
  \small{ \item  $\betaset\equiv\{\betad(\alpha',\beta')\mid \alpha'=\alpha+\Delta\alpha, \beta'=\beta+n-\Delta\alpha\}$. With prior distribution $\bprior=\betad(\alpha, \beta)$.}
   \item \small{$-\hellinger(\bysinfer(\dataobs),r)$ denotes the scoring function.}
@@ -210,11 +213,12 @@ where:
   \begin{block}{Preliminary experimental results}
     Experiments are about three mechanisms and plotted as follows:
 \begin{itemize}
-  \item[-] {\textbf{\color{green}{Green}}}: Baseline approach. %adds noise scaled to sensitivity proportional to dimensionality,
-  \item[-] {\textbf{\color{red}{Red}}}: Improved baseline approach with sensitivity 1 in 2 dimensions and 2 in higher dimensions.
+  \item {\textbf{\color{green}{Green}}}: Baseline approach. %adds noise scaled to sensitivity proportional to dimensionality,
+  \item {\textbf{\color{red}{Red}}}: Improved baseline approach with sensitivity 1 in 2 dimensions and 2 in higher dimensions.
     Indeed: the number of elements in every bin always sums up to $n$ and hence $||\bysinfer(x)-\bysinfer(x')||_1\leq 2$, when $\adj{x}{x'}$.
     
-  \item[-] {\textbf{\color{blue}{Blue}}}: $\hexpmech$.
+  \item {\textbf{\color{blue}{Blue}}}: $\hexpmech$. The fact that there is only one candidate distribution which achieves the highest score and different
+    distributions which achieve a sub-optimal score explains the (highest) peaks in Fig.  \ref{subfig_concrete_prob_2d} (and Fig. \ref{subfig_concrete_prob_3d}).
 \end{itemize}
 % In Fig. \ref{subfig_concrete_prob_2d} and \ref{subfig_concrete_prob_3d} we plot on the x-axis the Hellinger distance from the true posterior and on the y-axis the
 % probability of the distributions with that distance under the different mechanisms. In Fig. \ref{subfig_prior} we present the influence of the prior on the accuracy of the three mechanisms,
@@ -276,9 +280,9 @@ where:
 \begin{block}{Conclusion}
 
 \begin{itemize}
-  \item[-]  $\hexpmech$ outperforms the baseline approach but not the improved one.
-  \item[-] By increasing the prior, $\hexpmech$ can outperform both the baseline approach and the improved one.
-  % \begin{enumerate}
+  \item  $\hexpmech$ outperforms the baseline approach but not the improved one.
+  \item By increasing the prior parameters, $\hexpmech$ can outperform both the baseline approach and the improved one.
+  % \begin{itemize}
   %   \item  The accuracy that we are going to explore next, and in a more principled and formal way.
     
   %   \item  Experiments have shown that the actual privacy loss
@@ -289,7 +293,7 @@ where:
   %   \item The choice of the Hellinger distance might seem quite ad-hoc. Hence, it is worth exploring other distances over distributions. An interesting class of probability metrics is the family of $f$-divergences \cite{CIT-004}.
 
   %   \item Other application of our scheme are going to be explored.
-  % \end{enumerate}
+  % \end{itemize}
 \end{itemize}
 %\vspace{8mm}
 %\vspace{8mm}
