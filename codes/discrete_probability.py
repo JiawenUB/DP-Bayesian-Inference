@@ -224,6 +224,11 @@ def discrete_probabilities_from_file(filenames,labels,savename):
 	plt.grid()
 	plt.show()
 
+
+#############################################################################
+#GENERATING DATA SIZE AND CONRRESPONDING PARAMETER
+#############################################################################
+
 def gen_dataset(v, n):
 	return [int(n * i) for i in v]
 
@@ -260,7 +265,6 @@ if __name__ == "__main__":
 #############################################################################
 #DO PLOTS BY COMPUTING THE PROBABILITIES FOR GROUP EXPERIMENTS
 #############################################################################
-
 
 	# for i in range(len(datasizes)):
 	# 	row_discrete_probabilities(datasizes[i],epsilon,delta,prior,datasets[i])

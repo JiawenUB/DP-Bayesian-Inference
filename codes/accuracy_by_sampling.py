@@ -197,6 +197,10 @@ def accuracy_VS_prior_mean(sample_size,epsilon,delta,priors,observations):
 	plot_error_box(data,"Different Prior Distributions",xstick,"Accuracy VS. Prior Distribution")
 
 	return
+	
+#############################################################################
+#GENERATING DATA SIZE AND CONRRESPONDING PARAMETER
+#############################################################################
 
 def gen_dataset(v, n):
 	return [int(n * i) for i in v]
