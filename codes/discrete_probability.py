@@ -16,35 +16,38 @@ from dirichlet import dirichlet
 from dpbayesinfer import BayesInferwithDirPrior
 
 
+def LAPLACE_CDF(interval, scale):
+	if interval[0] >= 0.0:
+		return (1 - 0.5 * math.exp( (-interval[1]*1.0/scale))) - (1 - 0.5 * math.exp( (-interval[0]/scale)))
+	else:
+		return (0.5 * math.exp( (interval[1]*1.0/scale))) - (0.5 * math.exp( (interval[0]/scale)))
+
 #############################################################################
 #CALCULATING THE DISCRETE PROBABILITIES
 #############################################################################
 
 def row_discrete_probabilities(sample_size,epsilon,delta,prior,observation):
 
-
 	Bayesian_Model = BayesInferwithDirPrior(prior, sample_size, epsilon, delta)
 	Bayesian_Model._set_observation(observation)
 
 	Bayesian_Model._set_candidate_scores()
 	Bayesian_Model._set_LS()
-	nomalizer = Bayesian_Model._set_SS()
+	Bayesian_Model._set_SS()
+
 
 #############################################################################
-#ROUND the scores 
+#SPLIT THE BINS
 #############################################################################
-
-	for i in Bayesian_Model._candidates:
-		Bayesian_Model._candidate_scores[i] = round(Bayesian_Model._candidate_scores[i], 7)
-
-#############################################################################
-#SORT the scores and put them into bins
-#############################################################################
-
-	sorted_scores = sorted(Bayesian_Model._candidate_scores.items(), key=operator.itemgetter(1))
-	steps = [-i for i in sorted(list(set(Bayesian_Model._candidate_scores.values())))]
-
-	Bayesian_Model._SS_probabilities.sort()
+	
+	Candidate_bins_by_step = {}
+	for r in Bayesian_Model._candidates:
+		if str(sorted(r._alphas)) not in Candidate_bins_by_step.keys():
+			Candidate_bins_by_step[str(sorted(r._alphas))] = []
+			for c in Bayesian_Model._candidates:
+				if set(c._alphas) == set(r._alphas):
+					Candidate_bins_by_step[str(sorted(r._alphas))].append(c)
+			
 
 
 #############################################################################
@@ -53,40 +56,57 @@ def row_discrete_probabilities(sample_size,epsilon,delta,prior,observation):
 
 	i = 0
 
-	candidates_classfied_by_steps = []
-
-	probabilities_exp_by_steps = []
-	probabilities_lap_1_by_steps = []
-	probabilities_lap_2_by_steps = []
 
 	#############################################################################
 	#WRITE data into file
 	#############################################################################
 
 	f_exp = open("datas/discrete_prob/data_" + str(observation) +"_exp.txt", "w")
-	f_lap_1 = open("datas/discrete_prob/data_" + str(observation) +"_lap_sensitivity2.txt", "w")
-	f_lap_2 = open("datas/discrete_prob/data_" + str(observation) +"_lap_sensitivity3.txt", "w")
 
-	f_exp.write("Candidates_of_the_same_steps, Hellinger Distance, Probabilities \n")
-	f_lap_1.write("Candidates_of_the_same_steps, Hellinger Distance, Probabilities \n")
-	f_lap_2.write("Candidates_of_the_same_steps, Hellinger Distance, Probabilities \n")
+	f_exp.write("Candidates_of_the_same_steps&Hellinger Distance&Probabilities \n")
 
 
-	while i < len(sorted_scores):
-		j = i
-		candidates_for_print = []
-		candidates_for_classify = []
-		while True:
-			if (i+1) > len(sorted_scores) or sorted_scores[j][1] != sorted_scores[i][1]:
-				break
-			candidates_for_print.append(sorted_scores[i][0]._alphas)
-			candidates_for_classify.append(sorted_scores[i][0])
-			# print sorted_scores[i]
-			i += 1
-		candidates_classfied_by_steps.append(candidates_for_classify)
-		probabilities_exp_by_steps.append(Bayesian_Model._SS_probabilities[j]*(i - j))
-		f_exp.write(str(candidates_for_print) + "&" + str(-sorted_scores[j][1]) + "&" + str(Bayesian_Model._SS_probabilities[j]*(i - j)) + "\n")
+	probability_distance_pairs_in_exp =[]
+
+	nomalizer = 0.0
+
+	#############################################################################
+	#CALCULATING THE UNOMARLIZED PROBABILITY OF EACH BIN
+	#############################################################################
+
+	for key,item in Candidate_bins_by_step.items():
+		# print key, len(item)
+		#THE HELLINGER DISTANCE OF THIS BIN
+		distance = -Bayesian_Model._candidate_scores[item[0]]
+		
+		#THE PROBABILITY OF THIS BIN
+		prob = (len(item) * math.exp(epsilon * Bayesian_Model._candidate_scores[item[0]]/(2 * Bayesian_Model._SS)))
+
+		probability_distance_pairs_in_exp.append((distance, prob, [i._alphas for i in item]))
+
+		nomalizer += prob
+
+	#############################################################################
+	#NOMARLIZING PROBABILITY
+	#############################################################################
+
+	probability_distance_pairs_in_exp = [(t[0],t[1]/nomalizer,t[2]) for t in probability_distance_pairs_in_exp]
+
+#############################################################################
+#SORT AND SPLIT THE PROBABILITY FROM PAIRSTHE #WRITE DATAS INTO FILE
+#############################################################################
+	probability_distance_pairs_in_exp.sort()
+	# print probability_distance_pairs_in_exp
+
+	for triple in probability_distance_pairs_in_exp:
+		#WRITE DATAS INTO FILE
+		f_exp.write(str(triple[2]) + "&" + str(triple[0]) + "&" + str(triple[1]/nomalizer) + "\n")
+	
 	f_exp.close()
+
+	t, exp, _ = zip(*probability_distance_pairs_in_exp)
+
+
 
 #############################################################################
 #CALCULATE the Laplace prob within the same bin
@@ -96,6 +116,11 @@ def row_discrete_probabilities(sample_size,epsilon,delta,prior,observation):
 	#SENSITIVITY SETTING
 	#############################################################################
 	
+	f_lap_1 = open("datas/discrete_prob/data_" + str(observation) +"_lap_sensitivity2.txt", "w")
+	f_lap_2 = open("datas/discrete_prob/data_" + str(observation) +"_lap_sensitivity3.txt", "w")
+	f_lap_1.write("Candidates_of_the_same_steps, Hellinger Distance, Probabilities \n")
+	f_lap_2.write("Candidates_of_the_same_steps, Hellinger Distance, Probabilities \n")
+
 	def sensitivity_setting(dimension):
 		if dimension == 2:
 			return (1.0,2.0)
@@ -108,47 +133,52 @@ def row_discrete_probabilities(sample_size,epsilon,delta,prior,observation):
 	#CALCULATING THE LAPLACE PROB
 	#############################################################################
 	
-	laplace_probabilities_1 = {}
-	laplace_probabilities_2 = {}
-	p1 = 0.0
-	p2 = 0.0
-	for i in range(len(Bayesian_Model._candidates)-1):
-		r = Bayesian_Model._candidates[i]
-		t1 = 1.0
-		t2 = 1.0
-		# ylist = []
-		for j in range(len(r._alphas) - 1):
-			a = r._alphas[j] - Bayesian_Model._posterior._alphas[j]
-			t1 = t1 * 0.5 * (math.exp(- ((abs(a)) if (a >= 0) else (abs(a) - 1)) / (sensitivity[0]/epsilon)) - math.exp(- ((abs(a) + 1) if (a >= 0) else (abs(a))) / (sensitivity[0]/epsilon)))
-			t2 = t2 * 0.5 * (math.exp(- ((abs(a)) if (a >= 0) else (abs(a) - 1)) / (sensitivity[1]/epsilon)) - math.exp(- ((abs(a) + 1) if (a >= 0) else (abs(a))) / (sensitivity[1]/epsilon)))
-		p1 += t1
-		p2 += t2
-
-		laplace_probabilities_1[r] = t1 #/ (math.gamma(len(yset)) * (2 ** (len(list(filter(lambda a: a != 0, ylist))))))
-		laplace_probabilities_2[r] = t2 #/ (math.gamma(len(yset)) * (2 ** (len(list(filter(lambda a: a != 0, ylist))))))
+	probability_distance_pairs_in_lap_1 = []
+	probability_distance_pairs_in_lap_2 = []
+	for key,item in Candidate_bins_by_step.items():
+		p1 = 0.0
+		p2 = 0.0
+		for r in item:
+			t1 = 1.0
+			t2 = 1.0
+			#THE LAPLACE PROBABILITY OF THIS BIN
+			for j in range(len(r._alphas) - 1):
+				a = r._alphas[j] - Bayesian_Model._posterior._alphas[j]
+				t1 = t1 * LAPLACE_CDF((a,a+1), sensitivity[0]/epsilon)
+				t2 = t2 * LAPLACE_CDF((a,a+1), sensitivity[1]/epsilon)
+			p1 += t1
+			p2 += t2
+		probability_distance_pairs_in_lap_1.append((-Bayesian_Model._candidate_scores[item[0]],p1,[i._alphas for i in item]))
+		probability_distance_pairs_in_lap_2.append((-Bayesian_Model._candidate_scores[item[0]],p2,[i._alphas for i in item]))
 	
-	#############################################################################
-	#SUM UP the tail Laplace prob
-	#############################################################################
 
-	laplace_probabilities_1[Bayesian_Model._candidates[-1]] = 1 - p1 
-	laplace_probabilities_2[Bayesian_Model._candidates[-1]] = 1 - p2
 
-	for class_i in candidates_classfied_by_steps:
-		pro_i_1 = 0.0
-		pro_i_2 = 0.0
-		candidates_for_print = []
-		for c in class_i:
-			#print laplace_probabilities[c]
-			pro_i_1 += laplace_probabilities_1[c]
-			pro_i_2 += laplace_probabilities_2[c]
-			candidates_for_print.append(c._alphas)
-		probabilities_lap_1_by_steps.append(pro_i_1)
-		probabilities_lap_2_by_steps.append(pro_i_2)
-		f_lap_1.write(str(candidates_for_print) + "&" + str(-Bayesian_Model._candidate_scores[class_i[0]]) +"&" + str(pro_i_1) + "\n")
-		f_lap_2.write(str(candidates_for_print) + "&" + str(-Bayesian_Model._candidate_scores[class_i[0]]) +"&" + str(pro_i_2) + "\n")
+#############################################################################
+#SORT AND SPLIT THE PROBABILITY FROM BINS WRITEINTO FILE
+#############################################################################
+	probability_distance_pairs_in_lap_1.sort()
+	probability_distance_pairs_in_lap_2.sort()
+
+	for i in range(len(probability_distance_pairs_in_lap_1)):
+		e1 = probability_distance_pairs_in_lap_1[i]
+		e2 = probability_distance_pairs_in_lap_2[i]
+		f_lap_1.write(str(e1[2]) + "&" + str(e1[0]) +"&" + str(e1[1]) + "\n")
+		f_lap_2.write(str(e2[2]) + "&" + str(e2[0]) +"&" + str(e2[1]) + "\n")
+
 	f_lap_1.close()
 	f_lap_2.close()	
+
+	t, lap1, _ = zip(*(probability_distance_pairs_in_lap_1))
+	t, lap2, _ = zip(*(probability_distance_pairs_in_lap_2))
+
+#############################################################################
+#TAIL PROBABILITY
+#############################################################################
+	lap1 = list(lap1)
+	lap2 = list(lap2)
+
+	lap1[-1] = 1.0 - sum(lap1[:-1])
+	lap2[-1] = 1.0 - sum(lap2[:-1])
 
 #############################################################################
 #PLOT the prob within the same bin
@@ -164,15 +194,22 @@ def row_discrete_probabilities(sample_size,epsilon,delta,prior,observation):
 	labels = label_setting()
 
 	#############################################################################
+	#STEP SETTING
+	#############################################################################
+
+	step = t
+
+
+	#############################################################################
 	#PLOTTING
 	#############################################################################
 
 	plt.figure()
-	plt.plot(steps, probabilities_exp_by_steps, 'b', label=(labels[0]))
+	plt.plot(step, exp, 'b', label=(labels[0]))
 
-	plt.plot(steps, probabilities_lap_1_by_steps, 'r', label=(labels[1]))
+	plt.plot(step, lap1, 'r', label=(labels[1]))
 
-	plt.plot(steps, probabilities_lap_2_by_steps, 'g', label=(labels[2]))
+	plt.plot(step, lap2, 'g', label=(labels[2]))
 
 	#############################################################################
 	#PLOT FEATURE SETTING
@@ -247,11 +284,11 @@ if __name__ == "__main__":
 #############################################################################
 #SETTING UP THE PARAMETERS
 #############################################################################
-	datasize = 1000
+	datasize = 300
 	epsilon = 1.0
 	delta = 0.00000001
-	prior = dirichlet([1,1])
-	dataset = [500,500]
+	prior = dirichlet([1,1,1])
+	dataset = [100,100,100]
 
 #############################################################################
 #SETTING UP THE PARAMETERS WHEN DOING GROUPS EXPERIMENTS

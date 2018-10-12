@@ -142,9 +142,16 @@ class BayesInferwithDirPrior(object):
 		self._accuracy[key3] = []
 		self._accuracy_l1[key3] = []
 		self._keys.append(key3)
-		nomalizer = 0.0
+		t1 = time.time()
+		print("smooth sensitivity"+str(t1 - t0))
 
+		# beta = 0.0
+		# self._SS_Expon = max(self._LS, max([self._LS_Candidates[r] * math.exp(- beta * Hamming_Distance(self._posterior, r)) for r in self._candidates]))
+		# key2 = "Exponential Mechanism with " + str(beta) + " - Bound Smooth Sensitivity - " + str(self._SS_Expon) + "| Achieving" + str(self._epsilon) + "-DP"
+		# self._accuracy[key2] = []
+		# self._keys.append(key2)
 
+	def _set_SS_probabilities(self):
 		for r in self._candidates:
 			temp = math.exp(self._epsilon * self._candidate_scores[r]/(2 * self._SS))
 			self._SS_probabilities.append(temp)
@@ -153,14 +160,8 @@ class BayesInferwithDirPrior(object):
 		for i in range(len(self._SS_probabilities)):
 			self._SS_probabilities[i] = self._SS_probabilities[i]/nomalizer
 			# print self._candidates[i]._alphas, self._SS_probabilities[i]
-		t1 = time.time()
-		print("smooth sensitivity"+str(t1 - t0))
 		return nomalizer
-		# beta = 0.0
-		# self._SS_Expon = max(self._LS, max([self._LS_Candidates[r] * math.exp(- beta * Hamming_Distance(self._posterior, r)) for r in self._candidates]))
-		# key2 = "Exponential Mechanism with " + str(beta) + " - Bound Smooth Sensitivity - " + str(self._SS_Expon) + "| Achieving" + str(self._epsilon) + "-DP"
-		# self._accuracy[key2] = []
-		# self._keys.append(key2)
+
 
 	def _set_LS(self):
 		t0 = time.time()
@@ -363,6 +364,7 @@ class BayesInferwithDirPrior(object):
 		self._set_GS()
 		self._set_LS()
 		self._set_SS()
+		self._set_SS_probabilities
 		self._keys.append('Laplace_s2')
 		self._accuracy['Laplace_s2'] = []
 		self._accuracy_mean['Laplace_s2'] = []
