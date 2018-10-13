@@ -54,12 +54,12 @@ def row_discrete_probabilities(sample_size,epsilon,delta,prior,observation):
 
 		parameters_in_bin = []
 
-		while set(sorted_scores[flage][0]._alphas) == set(sorted_scores[counter][0]._alphas):
+		while set(sorted_scores[flage][0]._alphas) == set(sorted_scores[counter][0]._alphas) and counter < len(sorted_scores):
 			Candidate_bins_by_step[str(sorted(sorted_scores[flage][0]._alphas))].append(sorted_scores[counter][0])
 			counter += 1
 			parameters_in_bin.append(sorted_scores[counter][0]._alphas)
 
-		prob = (len(item) * math.exp(epsilon * Bayesian_Model._candidate_scores[sorted_scores[flage][0]]/(2 * Bayesian_Model._SS)))
+		prob = (len(parameters_in_bin) * math.exp(epsilon * Bayesian_Model._candidate_scores[sorted_scores[flage][0]]/(2 * Bayesian_Model._SS)))
 
 		probability_distance_pairs_in_exp.append((-sorted_scores[flage][1], prob, parameters_in_bin))
 
@@ -84,9 +84,6 @@ def row_discrete_probabilities(sample_size,epsilon,delta,prior,observation):
 #############################################################################
 #SUM UP the prob within the same bin
 #############################################################################
-
-	i = 0
-
 
 	#############################################################################
 	#WRITE data into file
