@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  12 OCT 2018 20:13
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  12 OCT 2018 20:22
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1798,7 +1798,7 @@ Package epstopdf Info: Output file is already uptodate.
 File: poster_6-eps-converted-to.pdf Graphic file (type pdf)
  <use poster_6-eps-converted-to.pdf>
 Package pdftex.def Info: poster_6-eps-converted-to.pdf used on input line 370.
-(pdftex.def)             Requested size: 430.20477pt x 322.88794pt.
+(pdftex.def)             Requested size: 426.07324pt x 319.78784pt.
 Package epstopdf Info: Source file: <poster_4.eps>
 (epstopdf)                    date: 2018-10-12 20:08:15
 (epstopdf)                    size: 15016332 bytes
@@ -1815,7 +1815,7 @@ File: poster_4-eps-converted-to.pdf Graphic file (type pdf)
 
 <use poster_4-eps-converted-to.pdf>
 Package pdftex.def Info: poster_4-eps-converted-to.pdf used on input line 370.
-(pdftex.def)             Requested size: 430.20477pt x 267.60825pt.
+(pdftex.def)             Requested size: 431.56798pt x 268.46211pt.
 Package epstopdf Info: Source file: <poster_2.eps>
 (epstopdf)                    date: 2018-10-06 00:20:04
 (epstopdf)                    size: 21382169 bytes
@@ -1832,7 +1832,7 @@ File: poster_2-eps-converted-to.pdf Graphic file (type pdf)
 
 <use poster_2-eps-converted-to.pdf>
 Package pdftex.def Info: poster_2-eps-converted-to.pdf used on input line 370.
-(pdftex.def)             Requested size: 415.08376pt x 261.4353pt.
+(pdftex.def)             Requested size: 426.07324pt x 268.35579pt.
 Package epstopdf Info: Source file: <poster_3.eps>
 (epstopdf)                    date: 2018-10-06 00:26:52
 (epstopdf)                    size: 25552469 bytes
@@ -1849,7 +1849,7 @@ File: poster_3-eps-converted-to.pdf Graphic file (type pdf)
 
 <use poster_3-eps-converted-to.pdf>
 Package pdftex.def Info: poster_3-eps-converted-to.pdf used on input line 370.
-(pdftex.def)             Requested size: 405.45746pt x 261.62679pt.
+(pdftex.def)             Requested size: 417.83112pt x 269.6102pt.
  (./main.bbl
 
 LaTeX Font Warning: Font shape `OT1/cmss/m/it' in size <29.04> not available
@@ -1904,7 +1904,7 @@ LaTeX Warning: There were multiply-defined labels.
 Here is how much of TeX's memory you used:
  30777 strings out of 492995
  603724 string characters out of 6132704
- 745676 words of memory out of 5000000
+ 745660 words of memory out of 5000000
  33729 multiletter control sequences out of 15000+600000
  45740 words of font info for 152 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -1923,7 +1923,7 @@ sr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb
 .pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfso1200.p
 fb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfso1728.pfb
 >
-Output written on main.pdf (1 page, 970330 bytes).
+Output written on main.pdf (1 page, 970333 bytes).
 PDF statistics:
  113 PDF objects out of 1000 (max. 8388607)
  78 compressed objects within 1 object stream
