@@ -22,6 +22,7 @@ def LAPLACE_CDF(interval, scale):
 	else:
 		return (0.5 * math.exp( (interval[1]*1.0/scale))) - (0.5 * math.exp( (interval[0]/scale)))
 
+
 #############################################################################
 #CALCULATING THE DISCRETE PROBABILITIES
 #############################################################################
@@ -269,11 +270,14 @@ def discrete_probabilities_from_file(filenames,labels,savename):
 def gen_dataset(v, n):
 	return [int(n * i) for i in v]
 
+
 def gen_datasets(v, n_list):
 	return [gen_dataset(v,n) for n in n_list]
 
+
 def gen_datasizes(r, step):
 	return [i*step for i in range(r[0]/step,r[1]/step + 1)]
+
 
 def gen_priors(r, step, d):
 	return [dirichlet([step*i for j in range(d)]) for i in range(r[0]/step,r[1]/step + 1)]
@@ -284,11 +288,11 @@ if __name__ == "__main__":
 #############################################################################
 #SETTING UP THE PARAMETERS
 #############################################################################
-	datasize = 300
+	datasize = 100000
 	epsilon = 1.0
 	delta = 0.00000001
-	prior = dirichlet([1,1,1])
-	dataset = [100,100,100]
+	prior = dirichlet([1,1])
+	dataset = [50000,50000]
 
 #############################################################################
 #SETTING UP THE PARAMETERS WHEN DOING GROUPS EXPERIMENTS

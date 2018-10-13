@@ -152,6 +152,7 @@ class BayesInferwithDirPrior(object):
 		# self._keys.append(key2)
 
 	def _set_SS_probabilities(self):
+		nomalizer = 0.0
 		for r in self._candidates:
 			temp = math.exp(self._epsilon * self._candidate_scores[r]/(2 * self._SS))
 			self._SS_probabilities.append(temp)
@@ -364,13 +365,13 @@ class BayesInferwithDirPrior(object):
 		self._set_GS()
 		self._set_LS()
 		self._set_SS()
-		self._set_SS_probabilities
+		self._set_SS_probabilities()
 		self._keys.append('Laplace_s2')
 		self._accuracy['Laplace_s2'] = []
 		self._accuracy_mean['Laplace_s2'] = []
 		#self._show_all()
 		for i in range(times):
-			self._laplace_noize(sensitivity = 2.0)
+			self._laplace_noize(sensitivity = 1.0)
 			# print self._laplaced_posterior._alphas
 			self._accuracy[self._keys[0]].append(self._posterior - self._laplaced_posterior)
 			# self._laplace_noize()
@@ -389,7 +390,7 @@ class BayesInferwithDirPrior(object):
 			# self._accuracy[self._keys[4]].append(self._posterior - self._SS_posterior)
 			self._exponentialize_SS()
 			self._accuracy[self._keys[3]].append(self._posterior - self._exponential_posterior)
-			self._laplace_noize(sensitivity = 3.0)
+			self._laplace_noize(sensitivity = 2.0)
 			# print self._laplaced_posterior._alphas
 			self._accuracy[self._keys[4]].append(self._posterior - self._laplaced_posterior)
 			

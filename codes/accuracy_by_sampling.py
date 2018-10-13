@@ -26,7 +26,7 @@ def plot_error_box(data, xlabel, xstick, title, legends, colors):
 	plt.figure(figsize=(0.5*len(data),9))
 	medianprops = dict(linestyle='--', linewidth=3.0, color='lightblue')
 	# meanlineprops = dict(linestyle='--', linewidth=2.5, color='purple')
-	bplot = plt.boxplot(data, notch=1, widths=0.4, sym='+', vert=2, whis=1.5, patch_artist=True, medianprops=medianprops)#, meanprops=meanlineprops, meanline=True,showmeans=True)
+	bplot = plt.boxplot(data, notch=1, widths=0.4, sym='+', showfliers=False, vert=2, whis=1.2, patch_artist=True, medianprops=medianprops)#, meanprops=meanlineprops, meanline=True,showmeans=True)
 	plt.xlabel(xlabel,fontsize=15)
 	plt.ylabel('Hellinger Distance',fontsize=15)
 	#ax.set_xlim(0.5, len(errors) + 0.5)
@@ -76,7 +76,7 @@ def accuracy_VS_datasize(epsilon,delta,prior,observations,datasizes):
 		Bayesian_Model = BayesInferwithDirPrior(prior, sum(observation), epsilon, delta)
 		Bayesian_Model._set_observation(observation)
 		print("start" + str(observation))
-		Bayesian_Model._experiments(3000)
+		Bayesian_Model._experiments(10000)
 		print("finished" + str(observation))
 		# mean_error[0].append(Bayesian_Model._accuracy_mean[Bayesian_Model._keys[3]])
 		# mean_error[1].append(Bayesian_Model._accuracy_mean[Bayesian_Model._keys[0]])
@@ -234,7 +234,7 @@ if __name__ == "__main__":
 	datasizes = gen_datasizes((600,600),50)#[300] #[8,12,18,24,30,36,42,44,46,48]#,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80]
 	percentage = [0.5,0.5]
 	datasets = gen_datasets(percentage, datasizes)
-	priors = [dirichlet([1,1])] + gen_priors([5,20], 5, 2) + gen_priors([40,100], 20, 2) + gen_priors([150,300], 50, 2) + gen_priors([400,400], 50, 2)
+	priors = gen_priors([20,50], 10, 2) + gen_priors([100,200], 50, 2) + gen_priors([200,500], 100, 2) + gen_priors([600,2000], 200, 2)
 	
 #############################################################################
 #DOING PLOTS OF ACCURACY V.S. THE DATA SIZE

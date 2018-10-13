@@ -140,12 +140,13 @@ Jiawen Liu$^{*}$
 \item  Baseline approach: 
   \begin{itemize}
   \item Release $\betad(\alpha +  \lfloor\widetilde{\Delta \alpha}\rfloor^n_0,\beta + n - \lfloor\widetilde{\Delta \alpha}\rfloor^n_0)$,
-  \item $\widetilde{\Delta \alpha}\sim \lap{\Delta\alpha}{\frac{S}{\epsilon}}$
-  \item \todo{$S\propto ||\cdot ||_{1}$}.
+  \item $\widetilde{\Delta \alpha}\sim \lap{\Delta\alpha}{\frac{\Delta \bysinfer}{\epsilon}}$
+  % \item \todo{$S\propto ||\cdot ||_{1}$}.
+  \item $\Delta \bysinfer \equiv \max\limits_{\dataobs, \dataobs' \in \{0,1\}^{n}, ||\dataobs - \dataobs'||_1 \leq 1} ||\bysinfer(\dataobs) - \bysinfer(\dataobs')||_1$
   \item Measure accuracy with a metric over distributions, e.g. $\hellinger$.
   \end{itemize}
   \end{itemize}
-  {\color{red}{But $S$ grows linearly with the dimension: too noisy when we generalize to Dirichlet-Multinomial ({\small$\dirichlet(\cdot)$}) model}}.
+  {\color{red}{But $\Delta \bysinfer$ grows linearly with the dimension: too noisy when we generalize to Dirichlet-Multinomial ({\small$\dirichlet(\cdot)$}) model}}.
 \end{column}
 \begin{column}{.28\textwidth}
 \begin{figure}[ht]
@@ -214,8 +215,8 @@ We define the mechanism $\hexpmech$ which produces an element $r$ in $\betaset$ 
     Experiments are about three mechanisms and plotted as follows:
 \begin{itemize}
   \item {\textbf{\color{green}{Green}}}: Baseline approach. %adds noise scaled to sensitivity proportional to dimensionality,
-  \item {\textbf{\color{red}{Red}}}: Improved baseline approach with sensitivity 1 in 2 dimensions and 2 in higher dimensions.
-    Indeed: the number of elements in every bin always sums up to $n$ and hence $||\bysinfer(x)-\bysinfer(x')||_1\leq 2$, when $\adj{x}{x'}$.
+  \item {\textbf{\color{red}{Red}}}: Improved approach by using sensitivity 1 in 2 dimensions and 2 in higher dimensions.
+    Indeed: we can see the output of the Bayesian inference as a histogram, so the $||\bysinfer(\dataobs)-\bysinfer(\dataobs')||_1 \leq 2$.
     
   \item {\textbf{\color{blue}{Blue}}}: $\hexpmech$. The fact that there is only one candidate distribution which achieves the highest score and different
     distributions which achieve a sub-optimal score explains the (highest) peaks in Fig.  \ref{subfig_concrete_prob_2d} (and Fig. \ref{subfig_concrete_prob_3d}).
@@ -235,22 +236,18 @@ We define the mechanism $\hexpmech$ which produces an element $r$ in $\betaset$ 
   \label{subfig_concrete_prob_3d}
   } 
 \subfigure[2 dimensions with data size $100$]{
-    \includegraphics[width=0.313\textwidth]{poster_4.eps}
+    \includegraphics[width=0.313\textwidth]{poster_6.eps}
   \label{subfig_prior}
   }
 
-% \caption{4-quantile and discrete probability plots}
-% \label{fig_concrete_prob}
-% \end{center}
-% \end{figure}
-% % Two groups of experimental results both with unit prior $\betad(1,1), \betad(1,1,1)$ and $\betad(1,1,1,1)$, balanced datasets and parameters $\epsilon = 1.0$ and $\delta = 10^{-8}$.
-%   Fig. \ref{fig_sampling} and Fig. \ref{subfig_prior} give us the average and 4-quantile of Hellinger distance between the sampled results and true posterior.
-% \begin{figure}[H]
-% \begin{center}
-% \centering
-  \subfigure[\footnotesize{2 dimensions, data size $\in [100,500]$}]{
-    \includegraphics[width=0.333\textwidth]{poster_1.eps}
-    \label{subfig_sampling_2d}
+  % \subfigure[\footnotesize{2 dimensions, data size $\in [100,500]$}]{
+  %   \includegraphics[width=0.333\textwidth]{poster_1.eps}
+  %   \label{subfig_sampling_2d}
+  % }
+
+  \subfigure[2 dimensions with data size $100$]{
+    \includegraphics[width=0.313\textwidth]{poster_4.eps}
+  \label{subfig_prior}
   }
   \subfigure[\footnotesize{3 dimensions, data size $\in [100,500]$} ]{
     \includegraphics[width=0.302\textwidth]{poster_2.eps}
@@ -281,7 +278,7 @@ We define the mechanism $\hexpmech$ which produces an element $r$ in $\betaset$ 
 
 \begin{itemize}
   \item  $\hexpmech$ outperforms the baseline approach but not the improved one.
-  \item By increasing the prior parameters, $\hexpmech$ can outperform both the baseline approach and the improved one.
+  \item By increasing the priors parameter, we can be comparable to the improved one.
   % \begin{itemize}
   %   \item  The accuracy that we are going to explore next, and in a more principled and formal way.
     
