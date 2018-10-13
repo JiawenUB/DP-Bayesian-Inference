@@ -56,8 +56,8 @@ def row_discrete_probabilities(sample_size,epsilon,delta,prior,observation):
 
 		while set(sorted_scores[flage][0]._alphas) == set(sorted_scores[counter][0]._alphas) and counter < len(sorted_scores):
 			Candidate_bins_by_step[str(sorted(sorted_scores[flage][0]._alphas))].append(sorted_scores[counter][0])
-			counter += 1
 			parameters_in_bin.append(sorted_scores[counter][0]._alphas)
+			counter += 1
 
 		prob = (len(parameters_in_bin) * math.exp(epsilon * Bayesian_Model._candidate_scores[sorted_scores[flage][0]]/(2 * Bayesian_Model._SS)))
 
