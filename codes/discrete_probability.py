@@ -54,7 +54,7 @@ def row_discrete_probabilities(sample_size,epsilon,delta,prior,observation):
 
 		parameters_in_bin = []
 
-		while set(sorted_scores[flage][0]._alphas) == set(sorted_scores[counter][0]._alphas) and counter < len(sorted_scores):
+		while counter < len(sorted_scores) and set(sorted_scores[flage][0]._alphas) == set(sorted_scores[counter][0]._alphas):
 			Candidate_bins_by_step[str(sorted(sorted_scores[flage][0]._alphas))].append(sorted_scores[counter][0])
 			parameters_in_bin.append(sorted_scores[counter][0]._alphas)
 			counter += 1
