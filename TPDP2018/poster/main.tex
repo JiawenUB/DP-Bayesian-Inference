@@ -25,6 +25,25 @@
 \input{macros}
 
 \usepackage[orientation=landscape,size=custom,width=101.6,height=76.2,scale=1.4]{beamerposter}
+\makeatletter
+\providecommand*{\diff}%
+{\@ifnextchar^{\DIfF}{\DIfF^{}}}
+\def\DIfF^#1{%
+\mathop{\mathrm{\mathstrut d}}%
+\nolimits^{#1}\gobblespace}
+\def\gobblespace{%
+\futurelet\diffarg\opspace}
+\def\opspace{%
+\let\DiffSpace\!%
+\ifx\diffarg(%
+\let\DiffSpace\relax
+\else
+\ifx\diffarg[%
+\let\DiffSpace\relax
+\else
+\ifx\diffarg\{%
+\let\DiffSpace\relax
+\fi\fi\fi\DiffSpace}
 %\usepackage[orientation=portrait,size=a0,scale=1.4]{beamerposter} % Use the beamerposter package for laying out the poster with a portrait orientation and an a0 paper size
 \usepackage{proof}
 %\usetheme{Icy}
@@ -135,18 +154,18 @@ Jiawen Liu$^{*}$
 \begin{block}{Differentially private Bayesian inference}
 \begin{columns} % Subdivide the first main column
   \begin{column}{.69\textwidth}
-    \vspace{-3cm}
+    \vspace{-2.0cm}
 \begin{itemize}
 \item  Baseline approach: 
   \begin{itemize}
-  \item Release $\betad(\alpha +  \lfloor\widetilde{\Delta \alpha}\rfloor^n_0,\beta + n - \lfloor\widetilde{\Delta \alpha}\rfloor^n_0)$,
-  \item $\widetilde{\Delta \alpha}\sim \lap{\Delta\alpha}{\frac{\Delta \bysinfer}{\epsilon}}$
+  \item Release $\betad(\alpha +  \lfloor\widetilde{\Delta \alpha}\rfloor^n_0,\beta + n - \lfloor\widetilde{\Delta \alpha}\rfloor^n_0)$.
+  \item $\widetilde{\Delta \alpha}\sim \lap{\Delta\alpha}{\frac{\Delta \bysinfer}{\epsilon}}$.
   % \item \todo{$S\propto ||\cdot ||_{1}$}.
-  \item $\Delta \bysinfer \equiv \max\limits_{\dataobs, \dataobs' \in \{0,1\}^{n}, ||\dataobs - \dataobs'||_1 \leq 1} ||\bysinfer(\dataobs) - \bysinfer(\dataobs')||_1$
-  \item Measure accuracy with a metric over distributions, e.g. $\hellinger$.
+  \item $\Delta \bysinfer \equiv \max\limits_{\dataobs, \dataobs' \in \{0,1\}^{n}, ||\dataobs - \dataobs'||_1 \leq 1} ||\bysinfer(\dataobs) - \bysinfer(\dataobs')||_1$.
+  \item Measure accuracy with a metric over distributions. E.g. $\hellinger(f,g)^2\equiv 1- \int(\sqrt{f(x){g(x)}}\diff x)$ ($f,g$ densities).
   \end{itemize}
   \end{itemize}
-  {\color{red}{But $\Delta \bysinfer$ grows linearly with the dimension: too noisy when we generalize to Dirichlet-Multinomial ({\small$\dirichlet(\cdot)$}) model}}.
+  {\color{blue}{But $\Delta \bysinfer$ grows linearly with the dimension: too noisy when we generalize to Dirichlet-Multinomial ({\small$\dirichlet(\cdot)$}) model}}.
 \end{column}
 \begin{column}{.28\textwidth}
 \begin{figure}[ht]
@@ -162,10 +181,10 @@ Jiawen Liu$^{*}$
 \begin{itemize}
 \item Another approach:
   \begin{itemize}
-    \item Calibrate  noise w.r.t \emph{global} sensitivity of $\hellinger$: {\color{red}{but global sensitivity is still too big.}}
+    \item Calibrate  noise w.r.t \emph{global} sensitivity of $\hellinger$: {\color{blue}{but global sensitivity is still too big.}}
     \item Fig. \ref{fig_sensitivity} shows that there is a gap between global and local sensitivity of $\hellinger$.
     \end{itemize}
-  \item A better approach:
+  \item A different approach:
     \begin{itemize}
       \item \large{Calibrate noise w.r.t. the \emph{smooth} sensitivity of $\hellinger$.}
     \end{itemize}
@@ -216,7 +235,7 @@ We define the mechanism $\hexpmech$ which produces an element $r$ in $\betaset$ 
 \begin{itemize}
   \item {\textbf{\color{green}{Green}}}: Baseline approach. %adds noise scaled to sensitivity proportional to dimensionality,
   \item {\textbf{\color{red}{Red}}}: Improved approach by using sensitivity 1 in 2 dimensions and 2 in higher dimensions.
-    Indeed: we can see the output of the Bayesian inference as a histogram, so the $||\bysinfer(\dataobs)-\bysinfer(\dataobs')||_1 \leq 2$.
+    Indeed: we can see the output of the Bayesian inference as a histogram, and $||\bysinfer(\dataobs)-\bysinfer(\dataobs')||_1 \leq 2$.
     
   \item {\textbf{\color{blue}{Blue}}}: $\hexpmech$. The fact that there is only one candidate distribution which achieves the highest score and different
     distributions which achieve a sub-optimal score explains the (highest) peaks in Fig.  \ref{subfig_concrete_prob_2d} (and Fig. \ref{subfig_concrete_prob_3d}).
@@ -277,8 +296,8 @@ We define the mechanism $\hexpmech$ which produces an element $r$ in $\betaset$ 
 \begin{block}{Conclusion}
 
 \begin{itemize}
-  \item  $\hexpmech$ outperforms the baseline approach but not the improved one.
-  \item By increasing the priors parameter, we can be comparable to the improved one.
+  \item  $\hexpmech$ outperforms the baseline approach but not the improved one, for priors with small parameters.
+  \item When the prior parameters increase $\hexpmech$ is comparable with the improved baseline approach.
   % \begin{itemize}
   %   \item  The accuracy that we are going to explore next, and in a more principled and formal way.
     
