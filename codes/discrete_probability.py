@@ -42,6 +42,36 @@ def row_discrete_probabilities(sample_size,epsilon,delta,prior,observation):
 #############################################################################
 	
 	Candidate_bins_by_step = {}
+	probability_distance_pairs_in_exp =[]
+
+	nomalizer = 0.0
+
+	sorted_scores = sorted(Bayesian_Model._candidate_scores.items(), key=operator.itemgetter(1))
+	counter = 0
+	while counter < len(sorted_scores):
+		flage = counter
+		Candidate_bins_by_step[str(sorted(sorted_scores[flage][0]._alphas))] = []
+
+		parameters_in_bin = []
+
+		while set(sorted_scores[flage][0]._alphas) == set(sorted_scores[counter][0]._alphas):
+			Candidate_bins_by_step[str(sorted(sorted_scores[flage][0]._alphas))].append(sorted_scores[counter][0])
+			counter += 1
+			parameters_in_bin.append(sorted_scores[counter][0]._alphas)
+
+		prob = (len(item) * math.exp(epsilon * Bayesian_Model._candidate_scores[sorted_scores[flage][0]]/(2 * Bayesian_Model._SS)))
+
+		probability_distance_pairs_in_exp.append((-sorted_scores[flage][1], prob, parameters_in_bin))
+
+		nomalizer += prob
+
+
+
+#############################################################################
+#SPLIT THE BINS
+#############################################################################
+	
+	Candidate_bins_by_step = {}
 	for r in Bayesian_Model._candidates:
 		if str(sorted(r._alphas)) not in Candidate_bins_by_step.keys():
 			Candidate_bins_by_step[str(sorted(r._alphas))] = []
@@ -62,18 +92,13 @@ def row_discrete_probabilities(sample_size,epsilon,delta,prior,observation):
 	#WRITE data into file
 	#############################################################################
 
-	f_exp = open("datas/discrete_prob/data_" + str(observation) +"_exp.txt", "w")
-
-	f_exp.write("Candidates_of_the_same_steps&Hellinger Distance&Probabilities \n")
-
+	#############################################################################
+	#CALCULATING THE UNOMARLIZED PROBABILITY OF EACH BIN
+	#############################################################################
 
 	probability_distance_pairs_in_exp =[]
 
 	nomalizer = 0.0
-
-	#############################################################################
-	#CALCULATING THE UNOMARLIZED PROBABILITY OF EACH BIN
-	#############################################################################
 
 	for key,item in Candidate_bins_by_step.items():
 		# print key, len(item)
@@ -93,20 +118,26 @@ def row_discrete_probabilities(sample_size,epsilon,delta,prior,observation):
 
 	probability_distance_pairs_in_exp = [(t[0],t[1]/nomalizer,t[2]) for t in probability_distance_pairs_in_exp]
 
+	probability_distance_pairs_in_exp.sort()
+
 #############################################################################
 #SORT AND SPLIT THE PROBABILITY FROM PAIRSTHE #WRITE DATAS INTO FILE
 #############################################################################
-	probability_distance_pairs_in_exp.sort()
-	# print probability_distance_pairs_in_exp
+
+	f_exp = open("datas/discrete_prob/data_" + str(observation) +"_exp.txt", "w")
+
+	f_exp.write("Candidates_of_the_same_steps&Hellinger Distance&Probabilities \n")
+
+
 
 	for triple in probability_distance_pairs_in_exp:
 		#WRITE DATAS INTO FILE
-		f_exp.write(str(triple[2]) + "&" + str(triple[0]) + "&" + str(triple[1]/nomalizer) + "\n")
+		f_exp.write(str(triple[2]) + "&" + str(triple[0]) + "&" + str(triple[1]) + "\n")
 	
 	f_exp.close()
 
-	t, exp, _ = zip(*probability_distance_pairs_in_exp)
 
+	t, exp, _ = zip(*probability_distance_pairs_in_exp)
 
 
 #############################################################################
