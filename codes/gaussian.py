@@ -20,7 +20,8 @@ class gaussian(object):
 		self._variance = variance
 
 	def _hellinger(self, other):
-		return math.sqrt(1.0 - math.sqrt(2.0 * other._variance * self._variance / (other._variance ** 2 + self._variance ** 2)) * math.exp( - 0.25 * ( self._mean - other._mean) ** 2 / (other._variance ** 2 + self._variance ** 2)))
+		return math.sqrt(1 - math.sqrt( 2 * math.sqrt(self._variance * other._variance) / (self._variance + other._variance)) 
+			* math.exp(- 0.25 * (self._mean - other._mean) ** 2 / (self._variance + other._variance)))
 
 
 	def __sub__(self, other):
@@ -39,4 +40,14 @@ class gaussian(object):
 
 	def _hellinger_sensitivity(self):
 		return
+
+	def _adjacent(self, n):
+		adjacents = []
+		if self._mean - 1.0 / (1.0 + n) > 0.0:
+			adjacents.append(gaussian(self._mean - 1.0 / (1.0 + n), self._variance))
+
+		if self._mean + 1.0 / (1.0 + n) < 1.0:
+			adjacents.append(gaussian(self._mean + 1.0 / (1.0 + n), self._variance))
+		
+		return adjacents
 
