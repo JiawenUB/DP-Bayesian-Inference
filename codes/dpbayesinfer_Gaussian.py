@@ -87,7 +87,7 @@ class DP_Bayesian_Inference_Gaussian(object):
 
 	def _set_global_sensitivity(self):
 		n = self._infer_model._datasize
-		# print [self._local_sensitivity(x) for x in self._candidates]
+		print "LOCAL SENSITIVITIES:" + str([self._local_sensitivity(x) for x in self._candidates])
 		self._global_sensitivity_expmech = max([self._local_sensitivity(x) for x in self._candidates])
 		print "GLOBAL SENSITIVITY: " + str(self._global_sensitivity_expmech)
 
