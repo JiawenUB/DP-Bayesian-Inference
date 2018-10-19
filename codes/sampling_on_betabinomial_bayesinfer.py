@@ -13,7 +13,7 @@ import statistics
 from decimal import *
 from scipy.special import gammaln
 from dirichlet import dirichlet
-from dpbayesinfer import BayesInferwithDirPrior
+from dpbayesinfer_Betabinomial import BayesInferwithDirPrior
 
 
 

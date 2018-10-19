@@ -30,6 +30,7 @@ class Bayesian_Inference_Gaussian(object):
 
 	def _update_model(self, data):
 		self._data = data
+		self._datasize = len(data)
 		self._update_posterior()
 		return
 
@@ -56,21 +57,26 @@ class DP_Bayesian_Inference_Gaussian(object):
 		self._infer_model = Bayesian_Inference_Gaussian
 		self._global_sensitivity_expmech = 0.0
 		self._candidates = []
+		self._probabilities = []
 		self._epsilon = epsilon
 		self._delta = delta
 		self._smooth_sensitivity_expmech = 0.0
 		self._private_posterior_exp_global = gaussian(0,1.0)
 		self._private_posterior_exp_SS = gaussian(0,1.0)
+		self._l1_sensitivity = 1.0/(1.0 + self._infer_model._datasize)
 
 	def _update_model_setting(self):
 		self._set_candidates()
 		self._set_global_sensitivity()
+		self._set_exponential_mechanism_prob()
+		self._l1_sensitivity = 1.0/(1.0 + self._infer_model._datasize)
 
 
 
 #####################################ENUMERATE ALL POSSIBLE CANDIDATES#######################################################################################
 	def _set_candidates(self):
 		n = self._infer_model._datasize
+		self._candidates = []
 		for r in range(n):
 			self._candidates.append(gaussian((r/ (1.0 + n)), self._infer_model._posterior._variance))
 		return
@@ -87,27 +93,27 @@ class DP_Bayesian_Inference_Gaussian(object):
 
 	def _set_global_sensitivity(self):
 		n = self._infer_model._datasize
-		print "LOCAL SENSITIVITIES:" + str([self._local_sensitivity(x) for x in self._candidates])
 		self._global_sensitivity_expmech = max([self._local_sensitivity(x) for x in self._candidates])
 		print "GLOBAL SENSITIVITY: " + str(self._global_sensitivity_expmech)
+#####################################THE EXPONENTIAL MECHANISM BASED ON GLOBAL SENSITIVITY####################################################################
 
-	def _exponential_mechanism(self):
+	def _set_exponential_mechanism_prob(self):
 		probabilities = []
 		for r in self._candidates:
 			probabilities.append(math.exp(- self._epsilon * (self._infer_model._posterior - r) / (2 * self._global_sensitivity_expmech)))
 
-		probabilities = numpy.array(probabilities)/sum(probabilities)
+		self._probabilities = numpy.array(probabilities)/sum(probabilities)		
+		return
 
-		r = numpy.random.choice(self._candidates, p=probabilities)
+	def _exponential_mechanism(self):
+		r = numpy.random.choice(self._candidates, p=self._probabilities)
 		self._private_posterior_exp_global = gaussian(r._mean, r._variance)
 		return 	self._private_posterior_exp_global
 
 ####################################THE BASELINE APPROACH -- LAPLACE MECHANISM####################################################################
 
 	def _laplace_mechanism(self):
-
-
-		return 	gaussian()
+		return 	gaussian(self._infer_model._posterior._mean + numpy.random.laplace(0, self._l1_sensitivity/self._epsilon), self._infer_model._posterior._variance)
 
 
 #########################THE EXPONENTIAL MECHANISM BASED ON SMOOTH SENSITIVITY####################################################################

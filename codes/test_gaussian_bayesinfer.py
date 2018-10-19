@@ -37,6 +37,9 @@ if __name__ == "__main__":
 
 	for i in range(100):
 		r = DP_model._exponential_mechanism()
-		print "EXP RESULT: GAUSSIAN(" + str( (r._mean, r._variance)) + " DISTANCE: " + str(r - DP_model._infer_model._posterior)
+		print "EXPONENTIAL MECHANISM RESULT: GAUSSIAN(" + str( (r._mean, r._variance)) + " DISTANCE: " + str(r - DP_model._infer_model._posterior)
 
-	
+
+	for i in range(100):
+		r = DP_model._laplace_mechanism()
+		print "LAPLACE MECHANISM RESULT: GAUSSIAN(" + str( (r._mean, r._variance)) + " DISTANCE: " + str(r - DP_model._infer_model._posterior)
