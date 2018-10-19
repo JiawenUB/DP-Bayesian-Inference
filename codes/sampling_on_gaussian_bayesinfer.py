@@ -101,11 +101,11 @@ def sampling_experiments(prior, datas, known_variance, epsilon, delta, rounds):
 		results.append(exp_results_for_one_datasize)
 		results.append(lap_results_for_one_datasize)
 
-	plot_mean_error([len(data) for data in datas], [exp_results, lap_results],
-		[len(data) for data in datas], "Different Data size", ["Exp Mechanism", "Lap Mech"],
-		"")
-	# plot_error_box(results, "Different Data sizes", [len(data) for data in datas], 
-	# 	"", ["Exponential Mechanism", "Laplace Mech"], ['navy', 'red'])
+	# plot_mean_error([len(data) for data in datas], [exp_results, lap_results],
+	# 	[len(data) for data in datas], "Different Data size", ["Exp Mechanism", "Lap Mech"],
+	# 	"")
+	plot_error_box(results, "Different Data sizes", [len(data) for data in datas], 
+		"", ["Exponential Mechanism", "Laplace Mech"], ['navy', 'red'])
 
 
 if __name__ == "__main__":
@@ -117,7 +117,7 @@ if __name__ == "__main__":
 	known_variance = 1.0
 	data = gen_data(datasize, 0.1)
 	rounds = 1000
-	datas = gen_datas([1999, 2999],[0.1 for i in range(2)])#[9,19,29,39,49,99,199,299],[0.1 for i in range(8)])
+	datas = gen_datas([199, 299, 399, 499, 599, 699],[0.1 for i in range(6)])#[9,19,29,39,49,99,199,299],[0.1 for i in range(8)])
 
 
 	sampling_experiments(prior, datas, known_variance, epsilon, delta, rounds)

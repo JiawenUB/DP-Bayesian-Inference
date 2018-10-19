@@ -234,7 +234,7 @@ if __name__ == "__main__":
 	datasizes = gen_datasizes((600,600),50)#[300] #[8,12,18,24,30,36,42,44,46,48]#,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80]
 	percentage = [0.5,0.5]
 	datasets = gen_datasets(percentage, datasizes)
-	priors = gen_priors([20,50], 10, 2) + gen_priors([100,200], 50, 2) + gen_priors([200,500], 100, 2) + gen_priors([600,2000], 200, 2)
+	priors = gen_priors([20,50], 10, 2) + gen_priors([100,200], 50, 2)# + gen_priors([200,500], 100, 2) + gen_priors([600,2000], 200, 2)
 	
 #############################################################################
 #DOING PLOTS OF ACCURACY V.S. THE DATA SIZE
