@@ -209,8 +209,8 @@ The same change of metric will be applied to the experimental accuracy guarantee
 
 
 
-\section{Algorithm Setting up}
-\label{sec_setup}
+\section{Mechanisms Introduction}
+\label{sec_mechs}
 Given a prior distribution $\bprior=\betad(\alpha, \beta)$ and a sequence of $n$ observations $\dataobs\in\{0,1\}^n$, we define the follwing set:
 
 \[
@@ -224,11 +224,11 @@ that we denote by $\bysinfer(\dataobs)$ -- we don't explicitely
 parametrize the result by the prior, which from now on we consider
 fixed and we denote it by $\bprior$.
 
-\subsection{Baseline Approaches} 
+\subsection{Baseline Approaches}
+\label{subsec_baselines}
 
 
 \subsubsection{Exponential Mechanism}
-
 Exponential mechanism $\expmech{}{x}{u}{\candidateset}$ samples a element from the candidate set $\candidateset = \{r_1, r_2, \cdots r_n\}$ with probability proportional to $exp(\frac{\epsilon u(x,r)}{2 GS})$:
 \begin{equation*}
 \underset{z \thicksim \expmech{}{x}{u}{\candidateset} }{Pr}[z=r] = \frac
@@ -282,7 +282,7 @@ y using sensitivity 1 in 2 dimensions and 2 in higher dimensions.
 
 
 \subsection{Our approach: smoothed Hellinger distance based exponential mechanism}
-\label{sec_smoo}
+\label{subsec_hexpmech}
 
 \subsubsection{Setting up}
 
@@ -581,10 +581,10 @@ The formula for computing the local sensitivity presented in Sec. \ref{subsec_em
 \label{subsec_vs_variables}
 
 In this section, we evaluate the accuracy of the mechanisms defined in
-Section (\ref{sec_smoo}) w.r.t. four variables, including data size, dimensions,
+Section (\ref{sec_mechs}) w.r.t. four variables, including data size, dimensions,
 data variance, prior distribution, and some combinations thereof.
 Every plot is an average over 1000 runs. In all the experiments we set
-$\epsilon = 0.8$, and $\delta = 10^{-8}$.
+$\epsilon = 1.0$, and $\delta = 10^{-8}$.
 
 \noindent In the following some of the plots show
 mean error as a function of the datasize while one
@@ -598,7 +598,7 @@ range of the data. A blue box in the plots represents our newly
 designed exponential mechanism's behavior-- where the sensitivity is calibrated
 w.r.t Hellinger distance-- while the yellow box next to
 it represents the performance of a variation of the basic Laplace
-mechanism presented in Section (\ref{sec:base}) with the same
+mechanism presented in Section (\ref{subsec_baselines}) with the same
 settings: that is $\epsilon, \delta$, data, prior. The variation
 considered performs a postprocessing on the released parameters so
 that they are consistent. For instance when the sum of the noised
@@ -611,75 +611,61 @@ up to $n$.
 \begin{figure}[H]
 \begin{center}
 \centering
-  \subfigure[Data set size from $300$ to $800$ ]{
-    \includegraphics[width=0.45\textwidth]{sampling_2d.eps}
-    \label{subsubsec_vs_datasize1a}
-  }
-\caption{Increasing data size with fixed prior $\betad(1,1)$. Unbalanced datasets of mean $(0.1,0.9)$ and parameters $\epsilon = 0.8$ and $\delta = 10^{-8}$}
-\label{fig_vs_datasize}
+    \includegraphics[width=0.48\textwidth]{sampling_2d.eps}
+\caption{Increasing data size with prior $\betad(1,1)$, balanced datasets and parameters $\epsilon = 1.0$ and $\delta = 10^{-8}$}
+\label{fig_vs_datasize_2d}
 \end{center}
 \end{figure}
 
 \begin{figure}[ht]
 \begin{center}
 \centering
-  \subfigure[Data set size from $14000$ to $20000$]{
-     \includegraphics[width=0.45\textwidth]{sampling_3d.eps}   
-  \label{subsubsec_vs_datasize1bdir}
-  } 
-\caption{Increasing data size with fixed $\dirichlet(1,1,1)$ prior distribution, Unbalanced datasets of mean $(0.2,0.3, 0.5)$ and parameters $\epsilon = 0.8$ and $\delta = 10^{-8}$}
-\label{fig_vs_datasize_dir}
+     \includegraphics[width=0.48\textwidth]{sampling_3d.eps}   
+\caption{Increasing data size with $\dirichlet(1,1,1)$ prior distribution, balanced datasets and parameters $\epsilon = 1.0$ and $\delta = 10^{-8}$}
+\label{fig_vs_datasize_3d}
 \end{center}
 \end{figure}
 
 \begin{figure}[ht]
 \begin{center}
 \centering
-  \subfigure[Data set size from $14000$ to $20000$]{
-     \includegraphics[width=0.45\textwidth]{sampling_4d.eps}   
-  \label{subsubsec_vs_datasize1bdir}
-  } 
-\caption{Increasing data size with fixed $\dirichlet(1,1,1)$ prior distribution, Unbalanced datasets of mean $(0.2,0.3, 0.5)$ and parameters $\epsilon = 0.8$ and $\delta = 10^{-8}$}
-\label{fig_vs_datasize_dir}
+     \includegraphics[width=0.48\textwidth]{sampling_4d.eps}    
+\caption{Increasing data size with $\dirichlet(1,1,1,1)$ prior distribution, Unbalanced datasets and parameters $\epsilon = 1.0$ and $\delta = 10^{-8}$}
+\label{fig_vs_datasize_4d}
 \end{center}
 \end{figure}
 
-In Figures \ref{fig_vs_datasize} and \ref{fig_vs_datasize_dir} we consider \emph{unbalanced} datasets
-of observations. This means that in the Beta-Binomial setting (Figure \ref{subsubsec_vs_datasize1a},
-and \ref{subsubsec_vs_datasize1b}) the datasets will consist of 10\% 1s and the rest 0s, while for the
-Dirichelet-Multinomial (Figure  \ref{subsubsec_vs_datasize1adir} and \ref{subsubsec_vs_datasize1bdir})
-the data will be split in the $k=3$ bins with perecentages of: 20\%, 30\% and 50\%.
-The results show that when the data size
-increases, the average errors of
-$\hexpmech$, $\hexpmechd$, and Laplace decrease. For small datasets,
-i.e with size less 650 in the case of Beta-Binomial systems,
-the Laplace mechanisms outperforms the exponential mechanisms,
-but for bigger data sets, that is, bigger than 650, or as in Figure \ref{subsubsec_vs_datasize1b} where
+In Figures \ref{fig_vs_datasize_2d}, \ref{fig_vs_datasize_3d} and \ref{fig_vs_datasize_4d} we consider \emph{balanced} data sets
+of observations. This means that in the Beta-Binomial setting the datasets will consist of 50\% 1s and the rest 0s, while for the
+Dirichelet-Multinomial (Figure  \ref{fig_vs_datasize_3d} and \ref{fig_vs_datasize_4d})
+the data will be split in the $k=3$ bins with perecentages of: 33\%, 33\% and 34\% in 3 dimensionality and 25\%, 25\%, 25\% and 25\% in 4 dimensionality.
+The results show that when the data size increases, the average errors of
+$\hexpmech$, Laplace mechanism and decrease. For small datasets,
+i.e with size less $300$ in the case of Beta-Binomial models,
+both the baseline Laplace mechanisms and improved Laplace mechanism outperform $\hexpmech$.
+But for bigger data sets, that is, bigger than $300$, or as in Figure \ref{fig_vs_datasize_2d} where
 we considered data sets of the order of 15 thousands elements,
-the exponential mechanisms outperforms the Laplace mechanism.
-Similar experimental tendencies were obtained for the Dirichlet-Multinomial system ( (Figure  \ref{subsubsec_vs_datasize1adir} and \ref{subsubsec_vs_datasize1bdir})),
-but we were not able to perform experiments with higher dimensions (4 or more) or, big datasets, e.g. $10^4$ elements, due to
-too high run time of the algorithm.
+the $\hexpmech$ outperforms the baseline Laplace mechanism, and asymptotically approaches the improved baseline Laplace mechanism.
+Similar experimental tendencies were obtained for the Dirichlet-Multinomial system (Figure \ref{fig_vs_datasize_3d} and \ref{fig_vs_datasize_4d}).
 
 
 
 
 \paragraph{Fixed dataset varying balanced priors}
 \label{subsubsec_vs_prior}
-In Figure \ref{fig_vs_prior}, we fix the dataset to be $\langle 5,5,5\rangle$.
-We also considered balanced priors with increasing values in their dimensions.
+In Figure \ref{fig_vs_prior}, we fix the data set to be $(50,50)$, and the parameters the same as before: $\epsilon = 1.0$ and $\delta = 10^{-8}$ . We studied the accuracy under different priors, where the priors considered  are also balanced.
 The plot shows that in the beginning the Laplace mechanism performs better but
 it is outperformed after a while.
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.45\textwidth]{sampling_prior.eps}
-\caption{Observed data set is: $(5,5,5)$, varying balanced priors}
+\includegraphics[width=0.48\textwidth]{sampling_prior.eps}
+\caption{Observed data set is: $(50,50)$, varying balanced priors}
 \label{fig_vs_prior}
 \end{figure}
 
-\subsection{Experiment Evaluations on Privacy}
+\subsection{Experiment Evaluations on Privacy Loss}
 \label{subsec_experiment_privacy}
-In order to see our privacy behavior, we study the accurate epsilon under concrete cases in this section. The $(\epsilon, \delta)$ - differential privacy we proved in Sec. \ref{sec_smoo} is just an upper bound, we concrete $\epsilon$ should be smaller than upper bound in our exponential mechanism. We calculate the concrete privacy value in following ways wrt. the data size, and obtain plots in Fig. \ref{fig_privacy}.
+In order to see our privacy behavior, we study the accurate epsilon under concrete cases in this section. The $(\epsilon, \delta)$ - differential privacy we proved in Sec. \ref{subsec_hexpmech} is just an upper bound, we concrete $\epsilon$ should be smaller than upper bound in our exponential mechanism. We calculate the concrete privacy value in following ways wrt. the data size, and obtain plots in Fig. \ref{fig_privacy}.
 
 \begin{figure*}
 \begin{center}
@@ -688,7 +674,7 @@ In order to see our privacy behavior, we study the accurate epsilon under concre
     \includegraphics[width=0.21\textwidth]{global_epsilon_20_20.eps}}
   \subfigure[data size range from 90 to 180]{
     \includegraphics[width=0.21\textwidth]{global_epsilon_20_20(2).eps}} 
-\caption{Concrete privacy calculation under settings that: prior distribution:$[1,1]$, $\epsilon = 0.8$, $\delta = 0.0005$ and observed data are uniformly distributed}
+\caption{Concrete privacy calculation under settings that: prior distribution:$[1,1]$, $\epsilon = 1.0$, $\delta = 0.0005$ and observed data are uniformly distributed}
 \label{fig_privacy}
 \end{center}
 \end{figure*}

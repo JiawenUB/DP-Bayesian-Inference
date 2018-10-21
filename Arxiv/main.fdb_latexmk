@@ -1,12 +1,12 @@
 # Fdb version 3
-["bibtex main"] 1540147623 "main.aux" "main.bbl" "main" 1540147652
+["bibtex main"] 1540149504 "main.aux" "main.bbl" "main" 1540150009
   "./ACM-Reference-Format.bst" 1538778193 93993 94d2174e63fb9cd866ec1d0b392ce46c ""
   "bayesian.bib" 1538778193 2763 2aab54d6fc4cf2609ba4f2a236993efa ""
-  "main.aux" 1540147651 11519 0d64a0081e7611bcb84fa8f23503917f ""
+  "main.aux" 1540150009 10513 6105ca9a5e1f05b0264f78c932827f50 ""
   (generated)
   "main.blg"
   "main.bbl"
-["pdflatex"] 1540147650 "main.tex" "main.pdf" "main" 1540147652
+["pdflatex"] 1540150007 "main.tex" "main.pdf" "main" 1540150009
   "/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/base/8r.enc" 1480098666 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/libertine/lbtn_25tcsq.enc" 1490133665 2921 8ca0eb0831f9bc5da080d3697cfe67bf ""
   "/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/libertine/lbtn_76gpa5.enc" 1490133665 2933 9ad527ce78d7c5fa0a642dead095f172 ""
@@ -312,10 +312,10 @@
   "global_epsilon_20_20(2).eps" 1538778193 58566 aaf4308f720f1729272163d35b2bd1f5 ""
   "global_epsilon_20_20.eps" 1538778193 45264 2cc830f39d1ad5bf8f36c9df65929000 ""
   "macros.tex" 1540142674 2581 fd3799777bebba6b56ab90ab637d19b2 ""
-  "main.aux" 1540147651 11519 0d64a0081e7611bcb84fa8f23503917f ""
-  "main.bbl" 1540147623 5908 4eb2fa80ca6188654c8931fc694efa8c "bibtex main"
-  "main.out" 1540147651 4222 3dd5ba27dc36a35e9aff710646b03119 ""
-  "main.tex" 1540147650 36151 456302a28bcc7172c6258e92a4514562 ""
+  "main.aux" 1540150009 10513 6105ca9a5e1f05b0264f78c932827f50 ""
+  "main.bbl" 1540149504 5908 4eb2fa80ca6188654c8931fc694efa8c "bibtex main"
+  "main.out" 1540150009 4262 42824a37f6bd26cadc6b7ac839fca547 ""
+  "main.tex" 1540149998 35840 250d8477f75d1e946670e5630b5c5460 ""
   "sampling_2d.eps" 1538800006 21965843 40d55083c9cb8f5144a4dc57365a68f6 ""
   "sampling_3d.eps" 1538799604 21382169 af98be27d359a097344438505215d8ad ""
   "sampling_4d.eps" 1538800012 25552469 b3621363c6cdfca200240f664ac1c8c9 ""
@@ -323,7 +323,7 @@
   "theory_2d.eps" 1539266532 7473166 eed600375e31ea9466cae0eb36b478ed ""
   "theory_3d.eps" 1539266823 7473166 25417ac3dbd2f28d7795159b806b8af0 ""
   (generated)
-  "main.pdf"
-  "main.out"
   "main.log"
+  "main.out"
+  "main.pdf"
   "main.aux"

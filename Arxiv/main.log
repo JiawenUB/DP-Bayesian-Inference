@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  21 OCT 2018 14:47
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  21 OCT 2018 15:26
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1517,23 +1517,14 @@ Package: accents 2006/05/12 v1.3 Math Accent Tools
 \cc@code=\count299
 \cc@group=\count300
 \cc@skewchar=\count301
-) (./main.aux
-
-LaTeX Warning: Label `subsubsec_vs_datasize1bdir' multiply defined.
-
-
-LaTeX Warning: Label `sub@subsubsec_vs_datasize1bdir' multiply defined.
-
-
-LaTeX Warning: Label `fig_vs_datasize_dir' multiply defined.
-
-)
+) (./main.aux)
 \openout1 = `main.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/nxlmi/m/it on input line 17.
 LaTeX Font Info:    Try loading font information for OML+nxlmi on input line 17
 .
- (/usr/local/texlive/2017/texmf-dist/tex/latex/newtx/omlnxlmi.fd
+
+(/usr/local/texlive/2017/texmf-dist/tex/latex/newtx/omlnxlmi.fd
 File: omlnxlmi.fd 2013/11/19 Fontinst v1.933 font definitions for OML/nxlmi.
 )
 LaTeX Font Info:    ... okay on input line 17.
@@ -2053,7 +2044,7 @@ Package epstopdf Info: Source file: <sampling_2d.eps>
 (epstopdf)                    size: 212029 bytes
 (epstopdf)             Command: <repstopdf --outfile=sampling_2d-eps-converted-
 to.pdf sampling_2d.eps>
-(epstopdf)             \includegraphics on input line 617.
+(epstopdf)             \includegraphics on input line 614.
 Package epstopdf Info: Output file is already uptodate.
 
 <sampling_2d-eps-converted-to.pdf, id=188, 910.40125pt x 517.935pt>
@@ -2061,8 +2052,13 @@ File: sampling_2d-eps-converted-to.pdf Graphic file (type pdf)
 
 <use sampling_2d-eps-converted-to.pdf>
 Package pdftex.def Info: sampling_2d-eps-converted-to.pdf used on input line 61
-7.
-(pdftex.def)             Requested size: 227.83119pt x 129.60986pt.
+4.
+(pdftex.def)             Requested size: 243.01942pt x 138.2558pt.
+
+Overfull \hbox (1.87193pt too wide) in paragraph at lines 614--615
+ [] 
+ []
+
 Package epstopdf Info: Source file: <sampling_3d.eps>
 (epstopdf)                    date: 2018-10-06 00:20:04
 (epstopdf)                    size: 21382169 bytes
@@ -2071,16 +2067,20 @@ Package epstopdf Info: Source file: <sampling_3d.eps>
 (epstopdf)                    size: 181412 bytes
 (epstopdf)             Command: <repstopdf --outfile=sampling_3d-eps-converted-
 to.pdf sampling_3d.eps>
-(epstopdf)             \includegraphics on input line 629.
+(epstopdf)             \includegraphics on input line 623.
 Package epstopdf Info: Output file is already uptodate.
-
 <sampling_3d-eps-converted-to.pdf, id=189, 854.19125pt x 538.01pt>
 File: sampling_3d-eps-converted-to.pdf Graphic file (type pdf)
 
 <use sampling_3d-eps-converted-to.pdf>
 Package pdftex.def Info: sampling_3d-eps-converted-to.pdf used on input line 62
-9.
-(pdftex.def)             Requested size: 227.83119pt x 143.49141pt.
+3.
+(pdftex.def)             Requested size: 243.01942pt x 153.06352pt.
+
+Overfull \hbox (1.87193pt too wide) in paragraph at lines 623--624
+ [] 
+ []
+
 Package epstopdf Info: Source file: <sampling_4d.eps>
 (epstopdf)                    date: 2018-10-06 00:26:52
 (epstopdf)                    size: 25552469 bytes
@@ -2089,32 +2089,19 @@ Package epstopdf Info: Source file: <sampling_4d.eps>
 (epstopdf)                    size: 148456 bytes
 (epstopdf)             Command: <repstopdf --outfile=sampling_4d-eps-converted-
 to.pdf sampling_4d.eps>
-(epstopdf)             \includegraphics on input line 641.
+(epstopdf)             \includegraphics on input line 632.
 Package epstopdf Info: Output file is already uptodate.
-
 <sampling_4d-eps-converted-to.pdf, id=190, 922.44624pt x 595.22375pt>
 File: sampling_4d-eps-converted-to.pdf Graphic file (type pdf)
 
 <use sampling_4d-eps-converted-to.pdf>
-Package pdftex.def Info: sampling_4d-eps-converted-to.pdf used on input line 64
-1.
-(pdftex.def)             Requested size: 227.83119pt x 147.00726pt.
+Package pdftex.def Info: sampling_4d-eps-converted-to.pdf used on input line 63
+2.
+(pdftex.def)             Requested size: 243.01942pt x 156.80714pt.
 
-
-LaTeX Warning: Reference `subsubsec_vs_datasize1b' on page 5 undefined on input
- line 649.
-
-
-LaTeX Warning: Reference `subsubsec_vs_datasize1adir' on page 5 undefined on in
-put line 650.
-
-
-LaTeX Warning: Reference `subsubsec_vs_datasize1b' on page 5 undefined on input
- line 657.
-
-
-LaTeX Warning: Reference `subsubsec_vs_datasize1adir' on page 5 undefined on in
-put line 660.
+Overfull \hbox (1.87193pt too wide) in paragraph at lines 632--633
+ [] 
+ []
 
 [5.5 <./efficiency-eps-converted-to.pdf> <./theory_2d-eps-converted-to.pdf> <./
 theory_3d-eps-converted-to.pdf> <./sampling_2d-eps-converted-to.pdf>]
@@ -2126,18 +2113,23 @@ Package epstopdf Info: Source file: <sampling_prior.eps>
 (epstopdf)                    size: 199764 bytes
 (epstopdf)             Command: <repstopdf --outfile=sampling_prior-eps-convert
 ed-to.pdf sampling_prior.eps>
-(epstopdf)             \includegraphics on input line 675.
+(epstopdf)             \includegraphics on input line 661.
 Package epstopdf Info: Output file is already uptodate.
 
-<sampling_prior-eps-converted-to.pdf, id=222, 719.68875pt x 447.6725pt>
+<sampling_prior-eps-converted-to.pdf, id=224, 719.68875pt x 447.6725pt>
 File: sampling_prior-eps-converted-to.pdf Graphic file (type pdf)
 
 <use sampling_prior-eps-converted-to.pdf>
 Package pdftex.def Info: sampling_prior-eps-converted-to.pdf used on input line
- 675.
-(pdftex.def)             Requested size: 227.83119pt x 141.72116pt.
+ 661.
+(pdftex.def)             Requested size: 243.01942pt x 151.16833pt.
 
-Underfull \vbox (badness 7722) has occurred while \output is active []
+Overfull \hbox (1.87193pt too wide) in paragraph at lines 661--662
+ [][] 
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
 Package epstopdf Info: Source file: <global_epsilon_20_20.eps>
 (epstopdf)                    date: 2018-10-05 18:23:13
@@ -2148,15 +2140,15 @@ Package epstopdf Info: Source file: <global_epsilon_20_20.eps>
 (epstopdf)                    size: 46904 bytes
 (epstopdf)             Command: <repstopdf --outfile=global_epsilon_20_20-eps-c
 onverted-to.pdf global_epsilon_20_20.eps>
-(epstopdf)             \includegraphics on input line 688.
+(epstopdf)             \includegraphics on input line 674.
 Package epstopdf Info: Output file is already uptodate.
 
-<global_epsilon_20_20-eps-converted-to.pdf, id=225, 803.0pt x 602.25pt>
+<global_epsilon_20_20-eps-converted-to.pdf, id=227, 803.0pt x 602.25pt>
 File: global_epsilon_20_20-eps-converted-to.pdf Graphic file (type pdf)
 
 <use global_epsilon_20_20-eps-converted-to.pdf>
 Package pdftex.def Info: global_epsilon_20_20-eps-converted-to.pdf used on inpu
-t line 688.
+t line 674.
 (pdftex.def)             Requested size: 106.32535pt x 79.738pt.
 Package epstopdf Info: Source file: <global_epsilon_20_20(2).eps>
 (epstopdf)                    date: 2018-10-05 18:23:13
@@ -2167,15 +2159,15 @@ df>
 (epstopdf)                    size: 49025 bytes
 (epstopdf)             Command: <repstopdf --outfile=global_epsilon_20_20(2)-ep
 s-converted-to.pdf global_epsilon_20_20(2).eps>
-(epstopdf)             \includegraphics on input line 690.
+(epstopdf)             \includegraphics on input line 676.
 Package epstopdf Info: Output file is already uptodate.
 
-<global_epsilon_20_20(2)-eps-converted-to.pdf, id=226, 803.0pt x 602.25pt>
+<global_epsilon_20_20(2)-eps-converted-to.pdf, id=228, 803.0pt x 602.25pt>
 File: global_epsilon_20_20(2)-eps-converted-to.pdf Graphic file (type pdf)
 
 <use global_epsilon_20_20(2)-eps-converted-to.pdf>
 Package pdftex.def Info: global_epsilon_20_20(2)-eps-converted-to.pdf used on i
-nput line 690.
+nput line 676.
 (pdftex.def)             Requested size: 106.32535pt x 79.738pt.
  (./main.bbl
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/it' will be
@@ -2209,13 +2201,13 @@ o-sium on Foun-da-tions of Com-
 ) [6.6 <./sampling_3d-eps-converted-to.pdf> <./sampling_4d-eps-converted-to.pdf
 > <./sampling_prior-eps-converted-to.pdf>] [7.7 <./global_epsilon_20_20-eps-con
 verted-to.pdf> <./global_epsilon_20_20(2)-eps-converted-to.pdf>]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 702.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 702.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 688.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 688.
  (./main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 702.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 702.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 688.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 688.
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 3DD5BA27DC36A35E9AFF710646B03119;4222.
+(rerunfilecheck)             Checksum: 42824A37F6BD26CADC6B7AC839FCA547;4262.
 
 
 LaTeX Font Warning: Size substitutions with differences
@@ -2227,17 +2219,14 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
 LaTeX Warning: There were undefined references.
 
-
-LaTeX Warning: There were multiply-defined labels.
-
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 702.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 688.
  ) 
 Here is how much of TeX's memory you used:
- 30583 strings out of 492995
- 537666 string characters out of 6132704
- 635825 words of memory out of 5000000
- 33009 multiletter control sequences out of 15000+600000
- 210909 words of font info for 426 fonts, out of 8000000 for 9000
+ 30585 strings out of 492995
+ 537729 string characters out of 6132704
+ 636756 words of memory out of 5000000
+ 33005 multiletter control sequences out of 15000+600000
+ 211826 words of font info for 432 fonts, out of 8000000 for 9000
  1302 hyphenation exceptions out of 8191
  60i,20n,94p,10430b,853s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/libertine/lbtn_u7qtuy.enc
@@ -2272,10 +2261,10 @@ onts/type1/public/newtx/txsys.pfb></usr/local/texlive/2017/texmf-dist/fonts/typ
 e1/public/newtx/zxlr.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public
 /newtx/zxlri.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/newtx/z
 xlzi.pfb>
-Output written on main.pdf (7 pages, 2655823 bytes).
+Output written on main.pdf (7 pages, 2655006 bytes).
 PDF statistics:
  392 PDF objects out of 1000 (max. 8388607)
  308 compressed objects within 4 object streams
- 66 named destinations out of 1000 (max. 500000)
+ 63 named destinations out of 1000 (max. 500000)
  56042 words of extra memory for PDF output out of 61914 (max. 10000000)
 
