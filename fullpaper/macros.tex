@@ -12,6 +12,12 @@
 % \usepackage{natbib} % Required to change bibliography style to APA
 \usepackage{datetime}
 \usepackage{xspace}
+\usepackage[english]{babel} % English language/hyphenation
+\usepackage{proof}
+\usepackage{booktabs} % Top and bottom rules for tables
+
+\usepackage{stmaryrd}
+\usepackage{amsmath,amsthm,amssymb,latexsym} 
 % \usepackage{mathabx}
 % \usepackage{subfigure}
 % \usepackage{caption}
@@ -38,7 +44,7 @@
 \newcommand{\valpha}{\boldsymbol{\alpha}}
 \newcommand{\expmech}[2]{\mathcal{M}_E^{#1}({#2})}
 \newcommand{\sexpmech}{\mathcal{M}_E^S}
-\newcommand{\hexpmech}{\mathcal{M}^{B}_{\hellinger}}
+\newcommand{\hexpmech}{\mathcal{M}_{\hellinger}}
 \newcommand{\hexpmechd}{\mathcal{M}^{D}_{\hellinger}}
 \newcommand{\privinfer}{\mathsf{PrivInfer}}
 \newcommand{\hlg}{\mathsf{H}}
@@ -66,4 +72,5 @@
 % \theoremstyle{remark}
 % \newtheorem*{rem}{Remark}
 % \newtheorem*{note}{Note}
+\newcommand{\lap}[2]{\mathcal{L}(#1, #2)}
 \newcommand{\todo}[1]{{\color{red}\textbf{[[ #1 ]]}}}

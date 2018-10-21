@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  10 OCT 2018 23:13
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  21 OCT 2018 11:40
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**main-sketch.tex
-(./main-sketch.tex
+**main.tex
+(./main.tex
 LaTeX2e <2017-04-15>
 Babel <3.10> and hyphenation patterns for 84 language(s) loaded.
 (./acmart.cls
@@ -1249,9 +1249,8 @@ Package: accents 2006/05/12 v1.3 Math Accent Tools
 \cc@code=\count298
 \cc@group=\count299
 \cc@skewchar=\count300
-)
-(./main-sketch.aux)
-\openout1 = `main-sketch.aux'.
+) (./main.aux)
+\openout1 = `main.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/nxlmi/m/it on input line 19.
 LaTeX Font Info:    Try loading font information for OML+nxlmi on input line 19
@@ -1379,9 +1378,9 @@ LaTeX Info: Redefining \ref on input line 19.
 LaTeX Info: Redefining \pageref on input line 19.
 LaTeX Info: Redefining \nameref on input line 19.
 
-(./main-sketch.out) (./main-sketch.out)
+(./main.out) (./main.out)
 \@outlinefile=\write4
-\openout4 = `main-sketch.out'.
+\openout4 = `main.out'.
 
 
 (/usr/local/texlive/2017/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
@@ -1675,7 +1674,7 @@ File: accuracy_vs_prior_5_5_5-eps-converted-to.pdf Graphic file (type pdf)
 Package pdftex.def Info: accuracy_vs_prior_5_5_5-eps-converted-to.pdf used on i
 nput line 597.
 (pdftex.def)             Requested size: 227.83119pt x 137.59618pt.
- (./main-sketch.bbl
+ (./main.bbl
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/it' will be
 (Font)              scaled to size 7.0pt on input line 47.
 
@@ -1693,10 +1692,10 @@ o-sium on Foun-da-tions of Com-
 ) [4.4 <./accuracy_vs_prior_5_5_5-eps-converted-to.pdf>]
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 654.
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 654.
- (./main-sketch.aux)
+ (./main.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 654.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 654.
-Package rerunfilecheck Info: File `main-sketch.out' has not changed.
+Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: 3AA954ADA56B7DE24A913ACC539DF685;1595.
 
 
@@ -1706,12 +1705,12 @@ Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 654.
  ) 
 Here is how much of TeX's memory you used:
  29712 strings out of 492995
- 524070 string characters out of 6132704
- 614206 words of memory out of 5000000
+ 523965 string characters out of 6132704
+ 614164 words of memory out of 5000000
  32288 multiletter control sequences out of 15000+600000
  193775 words of font info for 358 fonts, out of 8000000 for 9000
  1302 hyphenation exceptions out of 8191
- 60i,12n,94p,10437b,807s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 60i,12n,94p,10430b,807s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/newtx/libertinealt.enc}{/
 usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/libertine/lbtn_ncsllp.enc}{/u
 sr/local/texlive/2017/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/local/texliv
@@ -1738,7 +1737,7 @@ t/fonts/type1/public/newtx/txsys.pfb></usr/local/texlive/2017/texmf-dist/fonts/
 type1/public/newtx/zxlr.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/pub
 lic/newtx/zxlri.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/newt
 x/zxlzi.pfb>
-Output written on main-sketch.pdf (4 pages, 1321382 bytes).
+Output written on main.pdf (4 pages, 1321382 bytes).
 PDF statistics:
  254 PDF objects out of 1000 (max. 8388607)
  195 compressed objects within 2 object streams

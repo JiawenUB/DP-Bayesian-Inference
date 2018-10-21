@@ -117,7 +117,7 @@ if __name__ == "__main__":
 	known_variance = 1.0
 	data = gen_data(datasize, 0.1)
 	rounds = 1000
-	datas = gen_datas([199, 299, 399, 499, 599, 699],[0.1 for i in range(6)])#[9,19,29,39,49,99,199,299],[0.1 for i in range(8)])
+	datas = gen_datas([9, 99, 199, 299, 399, 499, 599, 699, 999],[0.1 for i in range(9)])#[9,19,29,39,49,99,199,299],[0.1 for i in range(8)])
 
 
 	sampling_experiments(prior, datas, known_variance, epsilon, delta, rounds)

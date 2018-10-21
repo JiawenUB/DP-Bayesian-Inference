@@ -223,9 +223,6 @@ fixed and we denote it by $\bprior$.
 \subsection{Baseline Approaches} 
 
 
-\subsubsection{Laplace Mechanism}
-
-
 \subsubsection{Exponential Mechanism}
 
 Exponential mechanism $\expmech{}{x}$ samples a element from the candidate set $\betaset = \{r_1, r_2, \cdots r_n\}$ with probability proportional to $exp(\frac{\epsilon u(x,r)}{2 GS})$:
@@ -242,50 +239,6 @@ GS =
 \end{equation*}
 
 Exponential mechanism is $\epsilon -$differential privacy\cite{dwork2014algorithmic}.
-
-% We use probability proportional to $exp(\frac{\epsilon u(x,r)}{\Delta_{g}u})$ rather than $exp(\frac{\epsilon u(x,r)}{2 \Delta_{g}u})$. Since $\hlg$ is monotonic, i.e. our utility function is monotonic. 
-
-% \subsubsection{Security Analysis}
-% It can be proved that exponential mechanism with global sensitivity is $\epsilon$-differentially private. We denote the $\bysinfer$ with privacy mechanism as $\privinfer$. For adjacent data set $||x,y||_1 = 1$:
-% \begin{equation*}
-% \begin{split}
-% \frac{P[\privinfer(x,u,R) = r]}{P[\privinfer(y,u,R) = r]}
-% & =\frac
-% {\frac
-% {exp(\frac{\epsilon u(x,r)}{2 \Delta_{g}u})}
-% {\Sigma_{r' \in R}\ exp(\frac{\epsilon u(x,r')}{2 \Delta_{g}u})}}
-% {\frac
-% {exp(\frac{\epsilon u(y,r)}{2 \Delta_{g}u})}
-% {\Sigma_{r' \in R}\ exp(\frac{\epsilon u(y,r')}{2 \Delta_{g}u})}} \\
-% & = \left(\frac
-% {exp(\frac{\epsilon u(x,r)}{2 \Delta_{g}u})}
-% {exp(\frac{\epsilon u(y,r)}{2 \Delta_{g}u})}
-% \right)
-% \cdot
-% \left(\frac
-% {\sum\limits_{r' \in R}\ exp(\frac{\epsilon u(y,r')}{2 \Delta_{g}u})}
-% {\sum\limits_{r' \in R}\ exp(\frac{\epsilon u(x,r')}{2 \Delta_{g}u})}
-% \right)\\
-% & = exp\left(\frac
-% {\epsilon (u(x,r) - u(y,r))}
-% {2 \Delta_{g}u}
-% \right)
-% \cdot
-% \left(\frac
-% {\sum\limits_{r' \in R}\ exp(\frac{\epsilon u(y,r')}{2 \Delta_{g}u})}
-% {\sum\limits_{r' \in R}\ exp(\frac{\epsilon u(x,r')}{2 \Delta_{g}u})}
-% \right)\\
-% & \leq
-% exp(\frac{\epsilon}{2}) \cdot exp(\frac{\epsilon}{2}) \cdot
-% \left(\frac
-% {\sum\limits_{r' \in R}\ exp(\frac{\epsilon u(x,r')}{2 \Delta_{g}u})}
-% {\sum\limits_{r' \in R}\ exp(\frac{\epsilon u(x,r')}{2 \Delta_{g}u})}
-% \right)\\
-% & = exp(\epsilon).
-% \end{split}
-% \end{equation*}
-
-% Then, $\frac{P[\privinfer(x,u,R) = r]}{P[\privinfer(y,u,R) = r]} \geq exp(-\epsilon)$ can be obtained by symmetry.
 
 
 \subsubsection{Exponential Mechanism with Local Sensitivity}
@@ -307,7 +260,24 @@ LS(\dataobs)=\max_{\dataobs' \in \datauni^n:\adj{\dataobs}{\dataobs'}, r\in \mat
 The exponential mechanism with local sensitivity is non-differential privacy\cite{dwork2014algorithmic}.
 
 
-\subsection{Our Approach - Exponential Mechanism with Smooth Sensitivity}
+
+\subsubsection{Laplace Mechanism}
+\begin{itemize}
+  \item Release $\betad(\alpha +  \lfloor\widetilde{\Delta \alpha}\rfloor^n_0,\beta + n - \lfloor\widetilde{\Delta \alpha}\rfloor^n_0)$.
+  \item $\widetilde{\Delta \alpha}\sim \lap{\Delta\alpha}{\frac{\Delta \bysinfer}{\epsilon}}$.
+  % \item \todo{$S\propto ||\cdot ||_{1}$}.
+  \item $\Delta \bysinfer \equiv \max\limits_{\dataobs, \dataobs' \in \{0,1\}^{n}, ||\dataobs - \dataobs'||_1 \leq 1} ||\bysinfer(\dataobs) - \bysinfer(\dataobs')||_1$.
+  \end{itemize}
+
+
+
+\subsubsection{Improved Baseline Approach}
+
+y using sensitivity 1 in 2 dimensions and 2 in higher dimensions.
+    Indeed: we can see the output of the Bayesian inference as a histogram, and $||\bysinfer(\dataobs)-\bysinfer(\dataobs')||_1 \leq 2$.
+
+
+\subsection{Our approach: smoothed Hellinger distance based exponential mechanism}
 \label{sec_smoo}
 
 \subsubsection{Setting up}
@@ -358,7 +328,7 @@ Dirichlet-Multinomial system.
 By setting the $\gamma$ as $\ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta}{2 (n + 1)})})$, $\hexpmech$ is $(\epsilon, \delta) -$differentially private.
 
 
-\subsubsection{Sliding Property of Exponential Mechanism}
+\subsubsection{Sliding Property of $\hexpmech$}
 \begin{lem}
 Consider the exponential mechanism  $\sexpmech(x,u,\mathcal{R})$
 calibrated on the smooth sensitivity. Let $\lambda = f(\epsilon,
@@ -412,7 +382,9 @@ By bounding the $\Delta \geq -S(x)$, we can get:
 
 \end{proof}
 
-\subsubsection{Dilation Property of Exponential Mechanism}
+
+
+\subsubsection{Dilation Property of $\hexpmech$}
 \begin{lem}
 for any exponential mechanism $\hexpmech(x)$, $\lambda < |\beta|$, $\epsilon$, $|\delta| < 1$ and $\beta \leq \ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta}{2 (n + 1)})})$, the dilation property holds:
 
