@@ -72,7 +72,7 @@ the Laplace mechanism.
 
 
 \section{Motivation}
-\label{sec_intro}
+\label{sec_moti}
 Publishing the posterior distribution inferred from a sensitive dataset can
 leak information about the individuals in the dataset.
 In order to guarantee differential privacy and to protect the
@@ -293,7 +293,7 @@ The mechanism $\hexpmech(x)$ outputs a candidate $r \in \candidateset$ with prob
 \underset{z \thicksim \hexpmech}{\Pr}[z=r] = \frac {exp\big(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r)}{2\cdot S(\dataobs)}\big)}
 {\displaystyle\sum_{r\in\candidateset} exp\Big(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r)}{2\cdot S(\dataobs)}\Big)}.
 \end{equation*}
-where $S_\beta(x)$ is the smooth sensitivity of $\hlg(\bysinfer(x),-)$, calculated by:
+where $S_\beta(x)$ is the smooth sensitivity of $\hellinger(\bysinfer(x),-)$, calculated by:
 
 \begin{equation}
   \label{eq:smooth}
@@ -351,17 +351,17 @@ e^{\frac{\epsilon}{2}} \underset{r \thicksim \hexpmech(x)}{Pr}[u(r,x) = (\Delta 
 In what follows, we will use a correspondence between the probability
  $\underset{z \thicksim \hexpmech(x)}{Pr}[z = r]$ of every
  $r\in\candidateset$ and the probability 
- $\underset{z \thicksim \hexpmech(x)}{Pr}[\hlg(\bysinfer(x),z) =
- \hlg(\bysinfer(x),r)]$ for the utility score for $r$. In particular, for every
+ $\underset{z \thicksim \hexpmech(x)}{Pr}[\hellinger(\bysinfer(x),z) =
+ \hellinger(\bysinfer(x),r)]$ for the utility score for $r$. In particular, for every
  $r\in\candidateset$ we have:
 
 $$
 \underset{z \thicksim \hexpmech(x)}{Pr}[z = r]=
-\frac{1}{2}\Big (\underset{z \thicksim \hexpmech(x)}{Pr}[\hlg(\bysinfer(x),z) =
- \hlg(\bysinfer(x),r)]\Big )
+\frac{1}{2}\Big (\underset{z \thicksim \hexpmech(x)}{Pr}[\hellinger(\bysinfer(x),z) =
+ \hellinger(\bysinfer(x),r)]\Big )
 $$
 
-To see this, it is enough to notice that: $\underset{z \thicksim \hexpmech(x)}{Pr}[z = r]$ is proportional too $\hlg(\bysinfer(x),r)$, i.e., $u(x,z)$. We can derive, if $u(r,x) = u(r',x)$ then $\underset{z \thicksim \hexpmech(x)}{Pr}[z = r] = \underset{z \thicksim \hexpmech(x)}{Pr}[z = r']$. We assume the number of candidates $z \in \mathcal{R}$ that satisfy $u(z,x) = u(r,x)$ is $|r|$, we have  $\underset{z \thicksim \hexpmech(x)}{Pr}[u(z,x) = u(r,x)] = |r| \underset{z \thicksim \hexpmech(x)}{Pr}[z = r]$. Because Hellinger distance  $\hlg(\bysinfer(x),z)$ is axial symmetry, where the $\bysinfer(x)$ is the symmetry axis. It can be infer that $|z| = 2$ for any candidates, apart from the true output, i.e., $\underset{z \thicksim \hexpmech(x)}{Pr}[u(z,x) = u(r,x)] = 2 \underset{z \thicksim \hexpmech(x)}{Pr}[z = r]$. This parameter can be eliminate in both sides in proof.
+To see this, it is enough to notice that: $\underset{z \thicksim \hexpmech(x)}{Pr}[z = r]$ is proportional too $\hellinger(\bysinfer(x),r)$, i.e., $u(x,z)$. We can derive, if $u(r,x) = u(r',x)$ then $\underset{z \thicksim \hexpmech(x)}{Pr}[z = r] = \underset{z \thicksim \hexpmech(x)}{Pr}[z = r']$. We assume the number of candidates $z \in \mathcal{R}$ that satisfy $u(z,x) = u(r,x)$ is $|r|$, we have  $\underset{z \thicksim \hexpmech(x)}{Pr}[u(z,x) = u(r,x)] = |r| \underset{z \thicksim \hexpmech(x)}{Pr}[z = r]$. Because Hellinger distance  $\hellinger(\bysinfer(x),z)$ is axial symmetry, where the $\bysinfer(x)$ is the symmetry axis. It can be infer that $|z| = 2$ for any candidates, apart from the true output, i.e., $\underset{z \thicksim \hexpmech(x)}{Pr}[u(z,x) = u(r,x)] = 2 \underset{z \thicksim \hexpmech(x)}{Pr}[z = r]$. This parameter can be eliminate in both sides in proof.
 
 We denote the normalizer of the probability mass in $\hexpmech(x)$: $\sum_{r' \in \mathcal{R}}exp(\frac{\epsilon u(r',x)}{2 S(x)})$ as $NL(x)$:
 \begin{equation*}
@@ -403,7 +403,7 @@ where the sensitivity in mechanism is still smooth sensitivity as above.
 
 \begin{proof}
 
-The sensitivity is always greater than 0, and our utility function $-\hlg(\bysinfer(x),z)$ is smaller than zero, i.e., $u(z,x) \leq 0$, we need to consider two cases where $\lambda < 0$, and $\lambda > 0$:
+The sensitivity is always greater than 0, and our utility function $-\hellinger(\bysinfer(x),z)$ is smaller than zero, i.e., $u(z,x) \leq 0$, we need to consider two cases where $\lambda < 0$, and $\lambda > 0$:
 
 We set the $h(c) = Pr[u(\hexpmech(x)) = c] = 2\frac{exp(\frac{\epsilon z}{2 S(x)})}{NL(x)}$.
 
@@ -491,17 +491,16 @@ The first inequality holds by the sliding property, since the $\mathcal{U}_1 \ge
 \end{proof}
 
 \section{Accuracy Analysis}
-\subsection{Laplace Mechanism}
+
+\subsection{Accuracy Bound for Laplace Mechanism}
 \label{subsec_accuracy_lap}
-Fixing a data set $x$, we will sample noise $Lap_i = floor(Y)$ where $Y \sim Lap(\frac{2}{\epsilon})$. Since already had the accuracy bound based on the $l_1$ norm in Laplace mechanism:
+Accuracy bound for Laplace mechanism is provided by its probability density function:
 \begin{equation*}
-Pr[|Y| \geq t] = e^{- \frac{t \epsilon}{2}}.
+Pr[|Y| \geq t] = e^{- \frac{t}{b}},
 \end{equation*}
+where $Y \sim Lap(b)$, $b = \frac{GS}{\epsilon}$
 
-So we have the probability $Pr[| Lap_i |] = Pr[| Lap_i | \leq |Y| < | Lap_i | + 1] = e^{- \frac{| Lap_i | \epsilon}{2}} - e^{- \frac{(| Lap_i | + 1) \epsilon}{2}}$.
-
-When we are in the case of $m$ dimension Dirichlet distribution, we will add $(m-1)$ i.i.d. Laplace noises $\{| Lap_1 |, | Lap_2 |, \cdots, | Lap_{m-1} |\}$ to the output. Then the probability of each group of noises are calculated as $Pr[\{| Lap_1 |, | Lap_2 |, \cdots, | Lap_{m-1} |\}] = Pr[| Lap_1 | \leq |Y| < | Lap_1 | + 1] \times Pr[| Lap_2 | \leq |Y| < | Lap_2 | + 1] \times \cdots \times Pr[| Lap_{m-1} | \leq |Y| < | Lap_{m-1} | + 1] = (e^{- \frac{| Lap_1 | \epsilon}{2}} - e^{- \frac{(| Lap_1 | + 1) \epsilon}{2}}) \times (e^{- \frac{| Lap_2 | \epsilon}{2}} - e^{- \frac{(| Lap_2 | + 1) \epsilon}{2}}) \times \cdots \times (e^{- \frac{| Lap_{m-1} | \epsilon}{2}} - e^{- \frac{(| Lap_{m-1} | + 1) \epsilon}{2}})$.
-
+After post-processing:  $Pr[\lfloor Y \rfloor = t] = Pr[ t-1 \leq Y < t] = \frac{1}{2} (e^{- \frac{t - 1}{b}} - e^{- \frac{t}{b}})$.
 
 
 \subsection{Accuracy Bound for Exponential Mechanism}
@@ -520,19 +519,19 @@ We explored three accuracy bounds for our exponential mechanism with smooth sens
 
 First is the tight bound with very accurate calculation.
 \begin{equation*}
-\underset{z \thicksim \hexpmech(x)}{Pr}[ \hlg(\bysinfer(x), z) \geq c] = \sum\limits_{\{z | \hlg(\bysinfer(x), z) \geq c\}} \frac{e^{\frac{- \epsilon \hlg(\bysinfer(x), z)}{S(x)}}}{NL_x}.
+\underset{z \thicksim \hexpmech(x)}{Pr}[ \hellinger(\bysinfer(x), z) \geq c] = \sum\limits_{\{z | \hellinger(\bysinfer(x), z) \geq c\}} \frac{e^{\frac{- \epsilon \hellinger(\bysinfer(x), z)}{S(x)}}}{NL_x}.
 \end{equation*}
 
 In order to be more efficient, we designed the second accuracy bound which is slightly looser than the first one:
 
 \begin{equation*}
-\underset{z \thicksim \hexpmech(x)}{Pr}[ \hlg(\bysinfer(x), z) \geq c] \leq \frac{|R| \exp{(\frac{- \epsilon c}{S(x)}})}{NL_x}.
+\underset{z \thicksim \hexpmech(x)}{Pr}[ \hellinger(\bysinfer(x), z) \geq c] \leq \frac{|R| \exp{(\frac{- \epsilon c}{S(x)}})}{NL_x}.
 \end{equation*}
 
 In the second bound, we still need to calculate the normaliser every time. So we want make further improvements on efficiency like follows:
 
 \begin{equation*}
-\underset{z \thicksim \hexpmech(x)}{Pr}[ \hlg(\bysinfer(x), z) \geq c] \leq \ \frac{|R| \exp{(\frac{- \epsilon c}{S(x)}})}{N(n)},
+\underset{z \thicksim \hexpmech(x)}{Pr}[ \hellinger(\bysinfer(x), z) \geq c] \leq \ \frac{|R| \exp{(\frac{- \epsilon c}{S(x)}})}{N(n)},
 \end{equation*}
 where we replace the $NL_x$ with a value only related to the size of the data. However, we haven't figured out the formula of this $N(n)$.
 
@@ -553,7 +552,7 @@ which has been used in the dilation property proof.
 
 \subsection{Computation Efficiency}
 \label{subsec_effi}
-The formula for computing the local sensitivity presented in Sec. \ref{subsec_emls}:$\max\limits_{\{|x,y'| \leq 1; y'\in \mathcal{X}^n\}}\max\limits_{\{r\in R\}} \{\hlg(\bysinfer(x), r) - \hlg(\bysinfer(y'), r)|\}$ can be reduced to $\max\limits_{\{|x,y'| \leq 1;y'\in \mathcal{X}^n\}}\hlg(\bysinfer(x), \bysinfer(y'))|$ by applying the distance triangle property. i.e., the maximum value over $\max\limits_{r \in R}$ always happen when $r = \bysinfer(x)$ itself, where $\Delta_{l}u(x) = \max\limits_{\{|x,y'| \leq 1;y'\in \mathcal{X}^n\}} \{\hlg(\bysinfer(x), \bysinfer(x)) - \hlg(\bysinfer(y'), \bysinfer(x))|\} = \max\limits_{\{|x,y'| \leq 1;y'\in \mathcal{X}^n\}} \{\hlg(\bysinfer(y'), \bysinfer(x))|\}$. We also have some experiments for validating our proposal as in Fig. \ref{fig_efficiency}, where we calculate the $\max\limits_{\{|x,y'| \leq 1;y'\in \mathcal{X}^n\}}$ value for every candidate $r \in R$. It is shown that maximum value taken when  $r = \bysinfer(x)$.
+The formula for computing the local sensitivity presented in Sec. \ref{subsec_emls}:$\max\limits_{\{|x,y'| \leq 1; y'\in \mathcal{X}^n\}}\max\limits_{\{r\in R\}} \{\hellinger(\bysinfer(x), r) - \hellinger(\bysinfer(y'), r)|\}$ can be reduced to $\max\limits_{\{|x,y'| \leq 1;y'\in \mathcal{X}^n\}}\hellinger(\bysinfer(x), \bysinfer(y'))|$ by applying the distance triangle property. i.e., the maximum value over $\max\limits_{r \in R}$ always achieves at $r = \bysinfer(x)$ itself, where $\Delta_{l}u(x) = \max\limits_{\{|x,y'| \leq 1;y'\in \mathcal{X}^n\}} \{\hellinger(\bysinfer(x), \bysinfer(x)) - \hellinger(\bysinfer(y'), \bysinfer(x))|\} = \max\limits_{\{|x,y'| \leq 1;y'\in \mathcal{X}^n\}} \{\hellinger(\bysinfer(y'), \bysinfer(x))|\}$. We also have some experiments for validating our proposal as in Fig. \ref{fig_efficiency}, where we calculate the $\max\limits_{\{|x,y'| \leq 1;y'\in \mathcal{X}^n\}}$ value for every candidate $r \in R$. It is shown that maximum value taken when  $r = \bysinfer(x)$.
 
 \begin{figure}[ht]
 \centering
@@ -562,8 +561,25 @@ The formula for computing the local sensitivity presented in Sec. \ref{subsec_em
 \caption{Experimental Results for Finding the Local Sensitivity Efficiently}
 \end{figure}
 
-\subsection{Accuracy Trade-off Evaluation wrt. Different Variables}
+\subsection{Theoretical Results}
+
+\begin{figure}[H]
+\begin{center}
+\centering
+  \subfigure[2 dimensions with data size $600$]{
+    \includegraphics[width=0.22\textwidth]{theory_2d.eps}
+  \label{subfig_theory_2d}
+  }
+  \subfigure[3 dimensions with data size $600$]{
+    \includegraphics[width=0.22\textwidth]{theory_3d.eps}
+  \label{subfig_theory_3d}
+  } 
+\end{center}
+\end{figure}
+
+\subsection{Experimental Results}
 \label{subsec_vs_variables}
+
 In this section, we evaluate the accuracy of the mechanisms defined in
 Section (\ref{sec_smoo}) w.r.t. four variables, including data size, dimensions,
 data variance, prior distribution, and some combinations thereof.
@@ -596,12 +612,9 @@ up to $n$.
 \begin{center}
 \centering
   \subfigure[Data set size from $300$ to $800$ ]{
-    \includegraphics[width=0.45\textwidth]{accuracy_vs_datasize_800.eps}
+    \includegraphics[width=0.45\textwidth]{sampling_2d.eps}
     \label{subsubsec_vs_datasize1a}
   }
-  \subfigure[Data set size from $14000$ to $20000$]{
-    \includegraphics[width=0.45\textwidth]{accuracy_vs_datasize_20000.eps}
-  \label{subsubsec_vs_datasize1b}} 
 \caption{Increasing data size with fixed prior $\betad(1,1)$. Unbalanced datasets of mean $(0.1,0.9)$ and parameters $\epsilon = 0.8$ and $\delta = 10^{-8}$}
 \label{fig_vs_datasize}
 \end{center}
@@ -610,12 +623,20 @@ up to $n$.
 \begin{figure}[ht]
 \begin{center}
 \centering
-  % \subfigure[Data set size from $300$ to $800$ ]{
-  %   \includegraphics[width=0.45\textwidth]{accuracy_vs_datasize_300_dirichlet.eps}
-  %   \label{subsubsec_vs_datasize1adir}
-  % }
   \subfigure[Data set size from $14000$ to $20000$]{
-     \includegraphics[width=0.45\textwidth]{accuracy_vs_datasize_1k_dirichlet.eps}   
+     \includegraphics[width=0.45\textwidth]{sampling_3d.eps}   
+  \label{subsubsec_vs_datasize1bdir}
+  } 
+\caption{Increasing data size with fixed $\dirichlet(1,1,1)$ prior distribution, Unbalanced datasets of mean $(0.2,0.3, 0.5)$ and parameters $\epsilon = 0.8$ and $\delta = 10^{-8}$}
+\label{fig_vs_datasize_dir}
+\end{center}
+\end{figure}
+
+\begin{figure}[ht]
+\begin{center}
+\centering
+  \subfigure[Data set size from $14000$ to $20000$]{
+     \includegraphics[width=0.45\textwidth]{sampling_4d.eps}   
   \label{subsubsec_vs_datasize1bdir}
   } 
 \caption{Increasing data size with fixed $\dirichlet(1,1,1)$ prior distribution, Unbalanced datasets of mean $(0.2,0.3, 0.5)$ and parameters $\epsilon = 0.8$ and $\delta = 10^{-8}$}
@@ -651,7 +672,7 @@ The plot shows that in the beginning the Laplace mechanism performs better but
 it is outperformed after a while.
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.45\textwidth]{accuracy_vs_prior_5_5_5.eps}
+\includegraphics[width=0.45\textwidth]{sampling_prior.eps}
 \caption{Observed data set is: $(5,5,5)$, varying balanced priors}
 \label{fig_vs_prior}
 \end{figure}
@@ -664,9 +685,9 @@ In order to see our privacy behavior, we study the accurate epsilon under concre
 \begin{center}
 \centering
   \subfigure[data size range from 90 to 180]{
-    \includegraphics[width=0.45\textwidth]{global_epsilon_20_20.eps}}
+    \includegraphics[width=0.21\textwidth]{global_epsilon_20_20.eps}}
   \subfigure[data size range from 90 to 180]{
-    \includegraphics[width=0.45\textwidth]{global_epsilon_20_20(2).eps}} 
+    \includegraphics[width=0.21\textwidth]{global_epsilon_20_20(2).eps}} 
 \caption{Concrete privacy calculation under settings that: prior distribution:$[1,1]$, $\epsilon = 0.8$, $\delta = 0.0005$ and observed data are uniformly distributed}
 \label{fig_privacy}
 \end{center}
