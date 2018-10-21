@@ -1,12 +1,12 @@
 # Fdb version 3
-["bibtex main"] 1540144574 "main.aux" "main.bbl" "main" 1540144576
+["bibtex main"] 1540144794 "main.aux" "main.bbl" "main" 1540144796
   "./ACM-Reference-Format.bst" 1538778193 93993 94d2174e63fb9cd866ec1d0b392ce46c ""
   "bayesian.bib" 1538778193 2763 2aab54d6fc4cf2609ba4f2a236993efa ""
-  "main.aux" 1540144575 10346 2fdf070a7ae41a59ac54d58b1094cf7a ""
+  "main.aux" 1540144795 10346 5c8b36cce01b10a6fd6044697fd7d810 ""
   (generated)
-  "main.blg"
   "main.bbl"
-["pdflatex"] 1540144574 "main.tex" "main.pdf" "main" 1540144576
+  "main.blg"
+["pdflatex"] 1540144794 "main.tex" "main.pdf" "main" 1540144796
   "/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/base/8r.enc" 1480098666 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/libertine/lbtn_25tcsq.enc" 1490133665 2921 8ca0eb0831f9bc5da080d3697cfe67bf ""
   "/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/libertine/lbtn_76gpa5.enc" 1490133665 2933 9ad527ce78d7c5fa0a642dead095f172 ""
@@ -316,12 +316,12 @@
   "global_epsilon_20_20(2).eps" 1538778193 58566 aaf4308f720f1729272163d35b2bd1f5 ""
   "global_epsilon_20_20.eps" 1538778193 45264 2cc830f39d1ad5bf8f36c9df65929000 ""
   "macros.tex" 1540142674 2581 fd3799777bebba6b56ab90ab637d19b2 ""
-  "main.aux" 1540144575 10346 2fdf070a7ae41a59ac54d58b1094cf7a ""
-  "main.bbl" 1540144574 5908 4eb2fa80ca6188654c8931fc694efa8c "bibtex main"
-  "main.out" 1540144575 4121 c39e87147e76a0dc3df3a1de5c414888 ""
-  "main.tex" 1540144572 36439 e4bc039a904a1c2398bdfad8edd63f27 ""
+  "main.aux" 1540144795 10346 5c8b36cce01b10a6fd6044697fd7d810 ""
+  "main.bbl" 1540144794 5908 4eb2fa80ca6188654c8931fc694efa8c "bibtex main"
+  "main.out" 1540144795 4121 c39e87147e76a0dc3df3a1de5c414888 ""
+  "main.tex" 1540144790 36437 52311120e78344f834fef9f573e98b75 ""
   (generated)
   "main.log"
+  "main.pdf"
   "main.out"
   "main.aux"
-  "main.pdf"
