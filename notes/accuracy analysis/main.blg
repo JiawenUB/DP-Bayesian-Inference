@@ -1,0 +1,54 @@
+This is BibTeX, Version 0.99d (TeX Live 2017)
+Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
+The top-level auxiliary file: main.aux
+The style file: ACM-Reference-Format.bst
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+Database file #1: bayesian.bib.bib
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Warning--no journal in talwar
+Warning--no number and no volume in talwar
+Warning--empty publisher in nissim2007smooth
+Warning--empty address in nissim2007smooth
+You've used 3 entries,
+            5706 wiz_defined-function locations,
+            1325 strings with 15885 characters,
+and the built_in function-call counts, 4572 in all, are:
+= -- 592
+> -- 120
+< -- 0
++ -- 38
+- -- 135
+* -- 311
+:= -- 434
+add.period$ -- 14
+call.type$ -- 3
+change.case$ -- 19
+chr.to.int$ -- 3
+cite$ -- 7
+duplicate$ -- 272
+empty$ -- 201
+format.name$ -- 52
+if$ -- 995
+int.to.chr$ -- 1
+int.to.str$ -- 0
+missing$ -- 14
+newline$ -- 64
+num.names$ -- 24
+pop$ -- 131
+preamble$ -- 1
+purify$ -- 34
+quote$ -- 0
+skip$ -- 104
+stack$ -- 0
+substring$ -- 596
+swap$ -- 22
+text.length$ -- 191
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 77
+warning$ -- 4
+while$ -- 23
+width$ -- 0
+write$ -- 90
+(There were 4 warnings)

@@ -1,0 +1,78 @@
+%%% -*-BibTeX-*-
+%%% Do NOT edit. File created by BibTeX with style
+%%% ACM-Reference-Format-Journals [18-Jan-2012].
+
+\begin{thebibliography}{00}
+
+%%% ====================================================================
+%%% NOTE TO THE USER: you can override these defaults by providing
+%%% customized versions of any of these macros before the \bibliography
+%%% command.  Each of them MUST provide its own final punctuation,
+%%% except for \shownote{}, \showDOI{}, and \showURL{}.  The latter two
+%%% do not use final punctuation, in order to avoid confusing it with
+%%% the Web address.
+%%%
+%%% To suppress output of a particular field, define its macro to expand
+%%% to an empty string, or better, \unskip, like this:
+%%%
+%%% \newcommand{\showDOI}[1]{\unskip}   % LaTeX syntax
+%%%
+%%% \def \showDOI #1{\unskip}           % plain TeX syntax
+%%%
+%%% ====================================================================
+
+\ifx \showCODEN    \undefined \def \showCODEN     #1{\unskip}     \fi
+\ifx \showDOI      \undefined \def \showDOI       #1{#1}\fi
+\ifx \showISBNx    \undefined \def \showISBNx     #1{\unskip}     \fi
+\ifx \showISBNxiii \undefined \def \showISBNxiii  #1{\unskip}     \fi
+\ifx \showISSN     \undefined \def \showISSN      #1{\unskip}     \fi
+\ifx \showLCCN     \undefined \def \showLCCN      #1{\unskip}     \fi
+\ifx \shownote     \undefined \def \shownote      #1{#1}          \fi
+\ifx \showarticletitle \undefined \def \showarticletitle #1{#1}   \fi
+\ifx \showURL      \undefined \def \showURL       {\relax}        \fi
+% The following commands are used for tagged output and should be
+% invisible to TeX
+\providecommand\bibfield[2]{#2}
+\providecommand\bibinfo[2]{#2}
+\providecommand\natexlab[1]{#1}
+\providecommand\showeprint[2][]{arXiv:#2}
+
+\bibitem[\protect\citeauthoryear{Dwork, Roth, et~al\mbox{.}}{Dwork
+  et~al\mbox{.}}{2014}]%
+        {dwork2014algorithmic}
+\bibfield{author}{\bibinfo{person}{Cynthia Dwork}, \bibinfo{person}{Aaron
+  Roth}, {et~al\mbox{.}}} \bibinfo{year}{2014}\natexlab{}.
+\newblock \showarticletitle{The algorithmic foundations of differential
+  privacy}.
+\newblock \bibinfo{journal}{{\em Foundations and Trends{\textregistered} in
+  Theoretical Computer Science\/}} \bibinfo{volume}{9}, \bibinfo{number}{3--4}
+  (\bibinfo{year}{2014}), \bibinfo{pages}{211--407}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{McSherry and Talwar}{McSherry and
+  Talwar}{2007}]%
+        {talwar}
+\bibfield{author}{\bibinfo{person}{Frank McSherry} {and} \bibinfo{person}{Kunal
+  Talwar}.} \bibinfo{year}{2007}\natexlab{}.
+\newblock \showarticletitle{Mechanism Design via Differential Privacy}, In
+  \bibinfo{booktitle}{Annual IEEE Symposium on Foundations of Computer Science
+  (FOCS)}.
+\newblock
+\showURL{%
+\url{https://www.microsoft.com/en-us/research/publication/mechanism-design-via-differential-privacy/}}
+
+
+\bibitem[\protect\citeauthoryear{Nissim, Raskhodnikova, and Smith}{Nissim
+  et~al\mbox{.}}{2007}]%
+        {nissim2007smooth}
+\bibfield{author}{\bibinfo{person}{Kobbi Nissim}, \bibinfo{person}{Sofya
+  Raskhodnikova}, {and} \bibinfo{person}{Adam Smith}.}
+  \bibinfo{year}{2007}\natexlab{}.
+\newblock \showarticletitle{Smooth sensitivity and sampling in private data
+  analysis}. In \bibinfo{booktitle}{{\em Proceedings of the thirty-ninth annual
+  ACM symposium on Theory of computing}}. ACM, \bibinfo{pages}{75--84}.
+\newblock
+
+
+\end{thebibliography}
