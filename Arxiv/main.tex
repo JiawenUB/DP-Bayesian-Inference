@@ -224,7 +224,7 @@ that we denote by $\bysinfer(\dataobs)$ -- we don't explicitely
 parametrize the result by the prior, which from now on we consider
 fixed and we denote it by $\bprior$.
 
-\subsection{Baseline Approaches}
+\subsection{Baseline Mechanisms}
 \label{subsec_baselines}
 
 
@@ -275,13 +275,13 @@ The exponential mechanism with local sensitivity is non-differential privacy\cit
 
 
 
-\subsubsection{Improved Baseline Approach}
+\subsubsection{Improved Baseline Mechanism}
 
 y using sensitivity 1 in 2 dimensions and 2 in higher dimensions.
     Indeed: we can see the output of the Bayesian inference as a histogram, and $||\bysinfer(\dataobs)-\bysinfer(\dataobs')||_1 \leq 2$.
 
 
-\subsection{Our approach: smoothed Hellinger distance based exponential mechanism}
+\subsection{Our Mechanism: Smoothed Hellinger Distance Based Exponential Mechanism $\hexpmech$}
 \label{subsec_hexpmech}
 
 \subsubsection{Setting up}
@@ -645,8 +645,8 @@ i.e with size less $300$ in the case of Beta-Binomial models,
 both the baseline Laplace mechanisms and improved Laplace mechanism outperform $\hexpmech$.
 But for bigger data sets, that is, bigger than $300$, or as in Figure \ref{fig_vs_datasize_2d} where
 we considered data sets of the order of 15 thousands elements,
-the $\hexpmech$ outperforms the baseline Laplace mechanism, and asymptotically approaches the improved baseline Laplace mechanism.
-Similar experimental tendencies were obtained for the Dirichlet-Multinomial system (Figure \ref{fig_vs_datasize_3d} and \ref{fig_vs_datasize_4d}).
+the $\hexpmech$ outperforms the baseline Laplace mechanism, and asymptotically approaches the improved Laplace mechanism.
+Similar experimental tendencies were obtained for the Dirichlet-Multinomial model (Figure \ref{fig_vs_datasize_3d} and \ref{fig_vs_datasize_4d}).
 
 
 
@@ -654,8 +654,7 @@ Similar experimental tendencies were obtained for the Dirichlet-Multinomial syst
 \paragraph{Fixed dataset varying balanced priors}
 \label{subsubsec_vs_prior}
 In Figure \ref{fig_vs_prior}, we fix the data set to be $(50,50)$, and the parameters the same as before: $\epsilon = 1.0$ and $\delta = 10^{-8}$ . We studied the accuracy under different priors, where the priors considered  are also balanced.
-The plot shows that in the beginning the Laplace mechanism performs better but
-it is outperformed after a while.
+Similar to the plots above, Figure \ref{fig_vs_prior} shows that in the beginning the baseline Laplace mechanism and improved Laplace mechanism performs better but the baseline approach is outperformed after a while, and very close to the improved Laplace mechanism.
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.48\textwidth]{sampling_prior.eps}
@@ -671,9 +670,13 @@ In order to see our privacy behavior, we study the accurate epsilon under concre
 \begin{center}
 \centering
   \subfigure[data size range from 90 to 180]{
-    \includegraphics[width=0.21\textwidth]{global_epsilon_20_20.eps}}
+    \includegraphics[width=0.23\textwidth]{global_epsilon_size50to100.eps}}
   \subfigure[data size range from 90 to 180]{
-    \includegraphics[width=0.21\textwidth]{global_epsilon_20_20(2).eps}} 
+    \includegraphics[width=0.23\textwidth]{global_epsilon_size100to200.eps}} 
+  \subfigure[data size range from 90 to 180]{
+    \includegraphics[width=0.23\textwidth]{global_epsilon_size200to500.eps}} 
+  \subfigure[data size range from 90 to 180]{
+    \includegraphics[width=0.23\textwidth]{global_epsilon_size500to1000.eps}} 
 \caption{Concrete privacy calculation under settings that: prior distribution:$[1,1]$, $\epsilon = 1.0$, $\delta = 0.0005$ and observed data are uniformly distributed}
 \label{fig_privacy}
 \end{center}

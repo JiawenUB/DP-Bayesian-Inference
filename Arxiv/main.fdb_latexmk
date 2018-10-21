@@ -1,12 +1,12 @@
 # Fdb version 3
-["bibtex main"] 1540149504 "main.aux" "main.bbl" "main" 1540150009
+["bibtex main"] 1540152092 "main.aux" "main.bbl" "main" 1540152096
   "./ACM-Reference-Format.bst" 1538778193 93993 94d2174e63fb9cd866ec1d0b392ce46c ""
   "bayesian.bib" 1538778193 2763 2aab54d6fc4cf2609ba4f2a236993efa ""
-  "main.aux" 1540150009 10513 6105ca9a5e1f05b0264f78c932827f50 ""
+  "main.aux" 1540152095 10825 555a72a0dcd5733dcd1472d19ce1a1ba ""
   (generated)
-  "main.blg"
   "main.bbl"
-["pdflatex"] 1540150007 "main.tex" "main.pdf" "main" 1540150009
+  "main.blg"
+["pdflatex"] 1540152092 "main.tex" "main.pdf" "main" 1540152096
   "/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/base/8r.enc" 1480098666 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/libertine/lbtn_25tcsq.enc" 1490133665 2921 8ca0eb0831f9bc5da080d3697cfe67bf ""
   "/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/libertine/lbtn_76gpa5.enc" 1490133665 2933 9ad527ce78d7c5fa0a642dead095f172 ""
@@ -309,13 +309,15 @@
   "/usr/local/texlive/2017/texmf.cnf" 1495593465 577 2b71d4d888f9e5560b2e99985915a9fa ""
   "acmart.cls" 1538778193 76808 9bd9819004b9cbcd198fd558b6385e8a ""
   "efficiency.eps" 1538778193 2883421 2d02c713e03726e65cc041a1230053d7 ""
-  "global_epsilon_20_20(2).eps" 1538778193 58566 aaf4308f720f1729272163d35b2bd1f5 ""
-  "global_epsilon_20_20.eps" 1538778193 45264 2cc830f39d1ad5bf8f36c9df65929000 ""
+  "global_epsilon_size100to200.eps" 1540172632 2922778 708fe0c6d0f1022659db8b62e2dd4a3c ""
+  "global_epsilon_size200to500.eps" 1540172632 2922778 aac4299d845052983bcac789e5f232ce ""
+  "global_epsilon_size500to1000.eps" 1540172634 2922779 bd4310a26f3257f91ab3ca239860b504 ""
+  "global_epsilon_size50to100.eps" 1540172632 2922777 4ba15c1b1ffe0fa75813f8003312e102 ""
   "macros.tex" 1540142674 2581 fd3799777bebba6b56ab90ab637d19b2 ""
-  "main.aux" 1540150009 10513 6105ca9a5e1f05b0264f78c932827f50 ""
-  "main.bbl" 1540149504 5908 4eb2fa80ca6188654c8931fc694efa8c "bibtex main"
-  "main.out" 1540150009 4262 42824a37f6bd26cadc6b7ac839fca547 ""
-  "main.tex" 1540149998 35840 250d8477f75d1e946670e5630b5c5460 ""
+  "main.aux" 1540152095 10825 555a72a0dcd5733dcd1472d19ce1a1ba ""
+  "main.bbl" 1540152092 5908 4eb2fa80ca6188654c8931fc694efa8c "bibtex main"
+  "main.out" 1540152095 4285 9981bc40934879265c1d63e49491ca12 ""
+  "main.tex" 1540152087 36257 d916a630d394cc4c9b466634998d1305 ""
   "sampling_2d.eps" 1538800006 21965843 40d55083c9cb8f5144a4dc57365a68f6 ""
   "sampling_3d.eps" 1538799604 21382169 af98be27d359a097344438505215d8ad ""
   "sampling_4d.eps" 1538800012 25552469 b3621363c6cdfca200240f664ac1c8c9 ""
@@ -324,6 +326,6 @@
   "theory_3d.eps" 1539266823 7473166 25417ac3dbd2f28d7795159b806b8af0 ""
   (generated)
   "main.log"
-  "main.out"
   "main.pdf"
+  "main.out"
   "main.aux"
