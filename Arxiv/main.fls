@@ -465,6 +465,15 @@ INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/public/newtx/rntxmi5.tfm
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/vf/public/libertine/LinLibertineT-tlf-t1.vf
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/public/libertine/LinLibertineT-tlf-t1--base.tfm
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/public/libertine/LinLibertineTB-tlf-t1.tfm
+INPUT sensitivity_2d.eps
+INPUT ./sensitivity_2d.eps
+INPUT ./sensitivity_2d.eps
+INPUT ./sensitivity_2d-eps-converted-to.pdf
+INPUT ./sensitivity_2d-eps-converted-to.pdf
+INPUT ./sensitivity_2d.eps
+INPUT ./sensitivity_2d-eps-converted-to.pdf
+INPUT ./sensitivity_2d-eps-converted-to.pdf
+INPUT ./sensitivity_2d-eps-converted-to.pdf
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/public/libertine/LinBiolinumT-tlf-t1.tfm
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/public/libertine/LinBiolinumTI-tlf-t1.tfm
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/vf/public/libertine/LinLibertineT-tlf-t1.vf
@@ -482,10 +491,6 @@ INPUT /usr/local/texlive/2017/texmf-dist/fonts/vf/public/libertine/LinLibertineT
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/public/libertine/LinLibertineT-tlf-ot1--base.tfm
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/vf/public/libertine/LinBiolinumTI-tlf-t1.vf
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/public/libertine/LinBiolinumTI-tlf-t1--base.tfm
-INPUT /usr/local/texlive/2017/texmf-dist/fonts/vf/public/libertine/LinLibertineTB-tlf-t1.vf
-INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/public/libertine/LinLibertineTB-tlf-t1--base.tfm
-INPUT /usr/local/texlive/2017/texmf-dist/fonts/vf/public/libertine/LinBiolinumT-tlf-ot1.vf
-INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/public/libertine/LinBiolinumT-tlf-ot1--base.tfm
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/public/libertine/LinLibertineT-tlf-ot1.tfm
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/public/libertine/LinLibertineT-tlf-ot1.tfm
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/public/libertine/LinLibertineT-tlf-ot1.tfm
@@ -528,6 +533,10 @@ INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/public/stmaryrd/stmary6.tfm
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/public/latex-fonts/lasy10.tfm
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/public/latex-fonts/lasy8.tfm
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/public/libertine/LinLibertineT-tlf-sc-t1.tfm
+INPUT /usr/local/texlive/2017/texmf-dist/fonts/vf/public/libertine/LinLibertineTB-tlf-t1.vf
+INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/public/libertine/LinLibertineTB-tlf-t1--base.tfm
+INPUT /usr/local/texlive/2017/texmf-dist/fonts/vf/public/libertine/LinBiolinumT-tlf-ot1.vf
+INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/public/libertine/LinBiolinumT-tlf-ot1--base.tfm
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/vf/public/newtx/ntxsy.vf
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/public/newtx/txsys.tfm
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/public/newtx/txex-bar.tfm
@@ -570,8 +579,6 @@ INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/public/newtx/rntxmi.tfm
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/vf/public/txfonts/txmi.vf
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/public/txfonts/rtxmi.tfm
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/public/txfonts/rtxptmri.tfm
-INPUT /usr/local/texlive/2017/texmf-dist/fonts/vf/public/libertine/LinBiolinumT-tlf-ot1.vf
-INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/public/libertine/LinBiolinumT-tlf-ot1--base.tfm
 INPUT efficiency.eps
 INPUT ./efficiency.eps
 INPUT ./efficiency.eps
@@ -599,6 +606,8 @@ INPUT ./theory_3d.eps
 INPUT ./theory_3d-eps-converted-to.pdf
 INPUT ./theory_3d-eps-converted-to.pdf
 INPUT ./theory_3d-eps-converted-to.pdf
+INPUT /usr/local/texlive/2017/texmf-dist/fonts/vf/public/libertine/LinBiolinumT-tlf-ot1.vf
+INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/public/libertine/LinBiolinumT-tlf-ot1--base.tfm
 INPUT sampling_2d.eps
 INPUT ./sampling_2d.eps
 INPUT ./sampling_2d.eps
