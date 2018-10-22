@@ -345,10 +345,11 @@ that $\candidateset$ has $\binom{n + 1}{m - 1}$ elements in this case. We
 will denote by $\hexpmechd$ the mechanism for the
 Dirichlet-multinomial system.
 
-
 By setting the $\gamma$ as $\ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta}{2 (n + 1)})})$, $\hexpmech$ is $(\epsilon, \delta) -$differentially private.
 
-\section{Privacy Analysis}
+
+
+\section{Privacy Proof}
 The differential privacy property of $\hexpmech$ is proved based on the holds of the two properties: \emph{sliding property} and \emph{dilation property}.
 
 \subsection{Sliding Property of $\hexpmech$}
@@ -567,18 +568,32 @@ Pr[u(\hexpmech(x)) \leq c]
 which has been used in the dilation property proof.
 
 
+
 \section{Experimental Evaluations}
 \label{sec_experiment}
 
-\subsection{Computation Efficiency}
+\subsection{Computation Efficiency Optimization}
 \label{subsec_effi}
-The formula for computing the local sensitivity presented in Sec. \ref{subsec_emls}:$\max\limits_{\{|x,y'| \leq 1; y'\in \mathcal{X}^n\}}\max\limits_{\{r\in R\}} \{\hellinger(\bysinfer(x), r) - \hellinger(\bysinfer(y'), r)|\}$ can be reduced to $\max\limits_{\{|x,y'| \leq 1;y'\in \mathcal{X}^n\}}\hellinger(\bysinfer(x), \bysinfer(y'))|$ by applying the distance triangle property. i.e., the maximum value over $\max\limits_{r \in R}$ always achieves at $r = \bysinfer(x)$ itself, where $\Delta_{l}u(x) = \max\limits_{\{|x,y'| \leq 1;y'\in \mathcal{X}^n\}} \{\hellinger(\bysinfer(x), \bysinfer(x)) - \hellinger(\bysinfer(y'), \bysinfer(x))|\} = \max\limits_{\{|x,y'| \leq 1;y'\in \mathcal{X}^n\}} \{\hellinger(\bysinfer(y'), \bysinfer(x))|\}$. We also have some experiments for validating our proposal as in Fig. \ref{fig_efficiency}, where we calculate the $\max\limits_{\{|x,y'| \leq 1;y'\in \mathcal{X}^n\}}$ value for every candidate $r \in R$. It is shown that maximum value taken when  $r = \bysinfer(x)$.
+The formula for computing the local sensitivity presented in Sec. \ref{subsec_baselines}: $LS(\dataobs)=\max\limits_{\dataobs' \in \datauni^n:\adj{\dataobs}{\dataobs'}, r\in \mathcal{R}}\lvert \hellinger(\bysinfer(\dataobs'), r) - \hellinger(\bysinfer(\dataobs'), r)\rvert.$ 
+can be reduced to $\max\limits_{\{|\dataobs,\dataobs'| \leq 1; \dataobs'\in \mathcal{X}^n\}}\hellinger(\bysinfer(\dataobs), \bysinfer(\dataobs'))|$
+by applying the distance triangle property. 
+
+Specifically, the maximum value over ${r \in R}$ always achieves at $r = \bysinfer(x)$:
+\begin{equation*}
+\begin{split}
+LS(\dataobs) 
+  & = \max\limits_{\{|\dataobs,\dataobs'| \leq 1;\dataobs'\in \mathcal{X}^n\}} \{\hellinger(\bysinfer(\dataobs), \bysinfer(\dataobs)) - \hellinger(\bysinfer(\dataobs'), \bysinfer(\dataobs))|\} \\
+  & = \max\limits_{\{|\dataobs,\dataobs'| \leq 1;\dataobs'\in \mathcal{X}^n\}} \{\hellinger(\bysinfer(\dataobs'), \bysinfer(\dataobs))|\}.
+\end{split}
+\end{equation*}
+
+This equation is validated by experimental result shown in Fig. \ref{fig_efficiency}. We calculate the $\max\limits_{\{|\dataobs,\dataobs'| \leq 1;\dataobs'\in \mathcal{X}^n\}}$ value for every candidate $r \in R$. It is shown that maximum value taken when  $r = \bysinfer(\dataobs)$.
 
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.48\textwidth]{efficiency}
-\label{fig_efficiency}
 \caption{Experimental Results for Finding the Local Sensitivity Efficiently}
+\label{fig_efficiency}
 \end{figure}
 
 \subsection{Theoretical Results}
@@ -593,9 +608,17 @@ The formula for computing the local sensitivity presented in Sec. \ref{subsec_em
   \subfigure[3 dimensions with data size $600$]{
     \includegraphics[width=0.22\textwidth]{theory_3d.eps}
   \label{subfig_theory_3d}
-  } 
+  }
+\caption{The theory probabilities of candidates in three mechanisms, with balanced data set and parameters $\epsilon = 1.0$ and $\delta = 10^{-8}$ }
+\label{fig_theory}
 \end{center}
 \end{figure}
+In Fig. \ref{fig_theory} we plot on the x-axis the Hellinger distance from the true posterior and on the y-axis the theoretical probabilities of outputting the candidates with that distance under the different mechanisms. We consider \emph{balanced} data sets, which means that in the Beta-Binomial model (Figure \ref{subfig_theory_2d}) the datasets will consist of 50\% 1s and the rest 0s, while for the
+Dirichelet-Multinomial (Figure  \ref{subfig_theory_3d})
+the data will be split in the $k=3$ bins with perecentages of: 33\%, 33\% and 34\% in 3 dimensionality. Same concept in 4 dimensionality.
+
+In Fig. \ref{fig_theory}, candidates of smaller distance from true posterior can be outputted by $\hexpmech$ (in blue line) with larger probability than by baseline Laplace mechanism (in green line). This means $\hexpmech$ can produce good results with larger probability than baseline mechanism. However, the improved Laplace mechanism represented by red line can produce good results with probability higher than $\hexpmech$. It outperforms $\hexpmech$.
+
 
 \subsection{Experimental Results}
 \label{subsec_vs_variables}
@@ -631,7 +654,7 @@ up to $n$.
 \begin{figure}[H]
 \begin{center}
 \centering
-    \includegraphics[width=0.48\textwidth]{sampling_2d.eps}
+    \includegraphics[width=0.4\textwidth]{sampling_2d.eps}
 \caption{Increasing data size with prior $\betad(1,1)$, balanced datasets and parameters $\epsilon = 1.0$ and $\delta = 10^{-8}$}
 \label{fig_vs_datasize_2d}
 \end{center}
@@ -640,7 +663,7 @@ up to $n$.
 \begin{figure}[ht]
 \begin{center}
 \centering
-     \includegraphics[width=0.48\textwidth]{sampling_3d.eps}   
+     \includegraphics[width=0.4\textwidth]{sampling_3d.eps}   
 \caption{Increasing data size with $\dirichlet(1,1,1)$ prior distribution, balanced datasets and parameters $\epsilon = 1.0$ and $\delta = 10^{-8}$}
 \label{fig_vs_datasize_3d}
 \end{center}
@@ -649,17 +672,14 @@ up to $n$.
 \begin{figure}[ht]
 \begin{center}
 \centering
-     \includegraphics[width=0.48\textwidth]{sampling_4d.eps}    
+     \includegraphics[width=0.4\textwidth]{sampling_4d.eps}    
 \caption{Increasing data size with $\dirichlet(1,1,1,1)$ prior distribution, Unbalanced datasets and parameters $\epsilon = 1.0$ and $\delta = 10^{-8}$}
 \label{fig_vs_datasize_4d}
 \end{center}
 \end{figure}
 
-In Figures \ref{fig_vs_datasize_2d}, \ref{fig_vs_datasize_3d} and \ref{fig_vs_datasize_4d} we consider \emph{balanced} data sets
-of observations. This means that in the Beta-Binomial setting the datasets will consist of 50\% 1s and the rest 0s, while for the
-Dirichelet-Multinomial (Figure  \ref{fig_vs_datasize_3d} and \ref{fig_vs_datasize_4d})
-the data will be split in the $k=3$ bins with perecentages of: 33\%, 33\% and 34\% in 3 dimensionality and 25\%, 25\%, 25\% and 25\% in 4 dimensionality.
-The results show that when the data size increases, the average errors of
+In Figures \ref{fig_vs_datasize_2d}, \ref{fig_vs_datasize_3d} and \ref{fig_vs_datasize_4d} we still consider \emph{balanced} data sets
+of observations. The results show that when the data size increases, the average errors of
 $\hexpmech$, Laplace mechanism and decrease. For small datasets,
 i.e with size less $300$ in the case of Beta-Binomial models,
 both the baseline Laplace mechanisms and improved Laplace mechanism outperform $\hexpmech$.
