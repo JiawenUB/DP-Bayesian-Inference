@@ -5,60 +5,97 @@ The style file: ACM-Reference-Format.bst
 Reallocated singl_function (elt_size=4) to 100 items from 50.
 Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
 Database file #1: bayesian.bib.bib
+Warning--I didn't find a database entry for "zhang2015differential"
 Reallocated singl_function (elt_size=4) to 100 items from 50.
+Warning--empty year in abadi2016deep
+Warning--empty publisher in abadi2016deep
+Warning--empty address in abadi2016deep
+Warning--empty year in chaudhuri2012convergence
+Warning--empty publisher in chaudhuri2012convergence
+Warning--empty address in chaudhuri2012convergence
+Warning--empty year in chaudhuri2009privacy
+Warning--empty publisher in chaudhuri2009privacy
+Warning--empty address in chaudhuri2009privacy
+Warning--empty year in chaudhuri2012near
+Warning--empty publisher in chaudhuri2012near
+Warning--empty address in chaudhuri2012near
+Warning--empty year in dimitrakakis2014robust
 Warning--empty publisher in dimitrakakis2014robust
 Warning--empty address in dimitrakakis2014robust
+Warning--empty year in dimitrakakis2015differential
+Warning--empty booktitle in dimitrakakis2015differential
+Warning--no number and no volume in dimitrakakis2015differential
+Warning--page numbers missing in both pages and numpages fields in dimitrakakis2015differential
+Warning--empty address in dwork2014algorithmic
+Warning--empty year in foulds2016theory
+Warning--empty booktitle in foulds2016theory
 Warning--no number and no volume in foulds2016theory
 Warning--page numbers missing in both pages and numpages fields in foulds2016theory
-Warning--no journal in talwar
-Warning--no number and no volume in talwar
+Warning--empty year in talwar
+Warning--empty publisher in talwar
+Warning--empty address in talwar
+Warning--page numbers missing in both pages and numpages fields in talwar
+Warning--empty year in nissim2007smooth
 Warning--empty publisher in nissim2007smooth
 Warning--empty address in nissim2007smooth
+Warning--empty year in wang2015differentially
+Warning--empty publisher in wang2015differentially
+Warning--empty address in wang2015differentially
+Warning--empty year in wang2015privacy
 Warning--empty publisher in wang2015privacy
 Warning--empty address in wang2015privacy
+Warning--empty year in williams2010probabilistic
+Warning--empty publisher in williams2010probabilistic
+Warning--empty address in williams2010probabilistic
+Warning--empty year in xiao2012bayesian
+Warning--empty booktitle in xiao2012bayesian
 Warning--no number and no volume in xiao2012bayesian
 Warning--page numbers missing in both pages and numpages fields in xiao2012bayesian
+Warning--empty year in Zhang2017privbayes
+Warning--empty booktitle in Zhang2017privbayes
+Warning--no number and no volume in Zhang2017privbayes
+Warning--empty year in zhang2016differential
 Warning--empty publisher in zhang2016differential
 Warning--empty address in zhang2016differential
-You've used 8 entries,
+You've used 16 entries,
             5706 wiz_defined-function locations,
-            1352 strings with 16788 characters,
-and the built_in function-call counts, 10328 in all, are:
-= -- 1304
-> -- 355
+            1381 strings with 17780 characters,
+and the built_in function-call counts, 18462 in all, are:
+= -- 2049
+> -- 759
 < -- 0
-+ -- 110
-- -- 211
-* -- 716
-:= -- 1025
-add.period$ -- 39
-call.type$ -- 8
-change.case$ -- 55
-chr.to.int$ -- 8
-cite$ -- 22
-duplicate$ -- 746
-empty$ -- 545
-format.name$ -- 148
-if$ -- 2423
-int.to.chr$ -- 1
++ -- 241
+- -- 256
+* -- 1207
+:= -- 1913
+add.period$ -- 80
+call.type$ -- 16
+change.case$ -- 116
+chr.to.int$ -- 13
+cite$ -- 66
+duplicate$ -- 1573
+empty$ -- 1125
+format.name$ -- 317
+if$ -- 4528
+int.to.chr$ -- 4
 int.to.str$ -- 0
-missing$ -- 37
-newline$ -- 101
-num.names$ -- 64
-pop$ -- 366
+missing$ -- 77
+newline$ -- 157
+num.names$ -- 125
+pop$ -- 988
 preamble$ -- 1
-purify$ -- 95
+purify$ -- 193
 quote$ -- 0
-skip$ -- 278
+skip$ -- 530
 stack$ -- 0
-substring$ -- 974
-swap$ -- 65
-text.length$ -- 191
+substring$ -- 1086
+swap$ -- 145
+text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 199
-warning$ -- 14
-while$ -- 56
+type$ -- 451
+warning$ -- 50
+while$ -- 115
 width$ -- 0
-write$ -- 171
-(There were 14 warnings)
+write$ -- 281
+(There were 51 warnings)

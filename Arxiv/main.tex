@@ -53,12 +53,12 @@ the Laplace mechanism.
 
 \maketitle
 
+
+
 \section{Introduction}
 \label{sec_intro}
+Data analysis techniques are broadly used in. The data privacy is the persistent  
 
-
-\section{Motivation}
-\label{sec_moti}
 Publishing the posterior distribution inferred from a sensitive dataset can
 leak information about the individuals in the dataset.
 In order to guarantee differential privacy and to protect the
@@ -82,9 +82,27 @@ an approach based on probability metrics can improve on the accuracy of approach
 the numeric parameters of the distributions. 
 We will see that in some cases this can happen.
 
+\noindent \textbf{Main contributions.}
+\begin{itemize}
+	\item We designed a differentially private Bayesian inference mechanism based on the standard exponential mechanism.
+	\item The accuracy is improved by two ways: 1) calibrating noise to the sensitivity of a
+         metric over distributions (e.g. Hellinger distance ($\hellinger$), $f$-divergences, etc\dots).
+	\item We implemented the new proposed mechanism and other art-of-state mechanisms, comparing the performance in terms of accuracy and efficiency.
+\end{itemize}
 
-\section{Bayesian Inference Background}
-\label{sec_background}
+
+\noindent \textbf{Related Work.}
+
+A plentiful of data analysis algorithms have been studied to preserve differential privacy, including the subspace clustering algorithm \citet{wang2015differentially}, the gradient decedent algorithm in deep learning \citet{abadi2016deep}, logical regression \citet{chaudhuri2009privacy}, principle component analysis \citet{chaudhuri2012near}, probabilitic inference \citet{williams2010probabilistic} and convergence in statistic estimation \citet{chaudhuri2012convergence}, etc. 
+
+In Bayesian Inference data analysis, some algorithms have been studied and mechanisms proposed corresponded to maintain their differential privacy. There are 3 main topics: 1) Inherited differential privacy property of posterior sampling in Bayesian inference. \citet{dimitrakakis2014robust}, \citet{zhang2016differential}, \citet{zhang2015differential} and \citet{wang2015privacy}. 2) Data sampled and released from posterior distribution of Bayesian is differentially private: \citet{Zhang2017privbayes}, \citet{dimitrakakis2015differential}  \citet{foulds2016theory}. 3) The inference process is differentially private and the posterior distribution released should be private itself. The third topic where our work focus on is still very new.
+
+
+\section{Preliminaries}
+\label{sec_Pre}
+
+\noindent \textbf{Bayesian Inference.}
+
 Given a prior belief $\Pr(\theta)$ on some parameter $\theta$,
 and an observation $\dataobs$, the posterior distribution on $\theta$ given $\dataobs$ is computed as:
 \[
@@ -102,16 +120,17 @@ belongs to the same \emph{family} of distributions. In this case we say that the
 is conjugate to the likelihood function. Use of a conjugate prior
 simplifies calculations and allows for inference to be performed in a
 recursive fashion over the data.
+
+
+\noindent \textbf{Beta-binomial System.}
+
 In this work we will consider a specific instance of Bayesian inference and one of its generalizations.
-Specifically, we will consider the situation where $\theta$ represents
+specifically, a Beta-binomial mode. We will consider the situation the underlying data is binomial distribution ($\sim binomial(\theta)$), where $\theta$ represents
 the parameter --informally called \emph{bias}-- of a Bernoulli
-distributed random variable, and its immediate generalization where
-the parameter $\vtheta$ represents the vector of parameters of a
-categorically distributed random variable.  In the former case, the
+distributed random variable. The
 prior distribution over $\theta\in [0,1]$ is going to be a beta
 distribution, $\betad(\alpha, \beta)$, with parameters
 $\alpha,\beta\in\mathbb{R}^{+}$, and with p.d.f:
-
 \[
   \Pr(\theta)\equiv \frac{\theta^{\alpha} (1- \theta)^{\beta}}{\betaf(\alpha,\beta)}
 \]
@@ -125,7 +144,11 @@ From this it can easily be derived that the posterior distribution is:
 \[
   \Pr(\theta|\dataobs)=\betad(\alpha + \Delta \alpha,\beta + n - \Delta \alpha)
 \]
-In the latter case the prior distribution over $\vtheta\in [0,1]^{k}$
+
+
+\noindent \textbf{Dirichlet-multinomial Systems.}
+
+The beta-binomial model can be immediately generalized to Dirichlet-multinomial, with underlying data where multinomially distributed. The \emph{bias} is represented by parameter $\vtheta$ represents the vector of parameters of a categorically distributed random variable.  The prior distribution over $\vtheta\in [0,1]^{k}$
 is given by a Dirichelet distribution, $\dirichlet(\valpha)$, for $k\in\mathbb{N}$,
 and $\valpha\in(\mathbb{R}^{+})^{k}$, with p.d.f:
 \[
@@ -145,9 +168,29 @@ Denoting by $\Delta\valpha$ the vector $(\Delta\alpha_1,\dots \Delta\alpha_k)$ t
 \]
 where $+$ denotes the componentwise sum of vectors of reals. 
 
+\noindent \textbf{Differential Privacy.} 
+\begin{definition}
+$\epsilon-$differential privacy.
 
-\section{The Problem Statement}
-\label{sec:base}
+A randomized mechanism $\mathcal{M}: \mathcal{X} \rightarrow \mathcal{Y}$ is differential privacy, iff for any adjacent input $\dataobs, \dataobs' \in \mathcal{X}$, a metric $H$ over $\mathcal{Y}$ and a $B \subseteq H(\mathcal{Y})$, $\mathcal{M}$ satisfies:
+\begin{equation*}
+\mathbb{P}[H(\mathcal{M}(\dataobs)) \in B] = e^\epsilon \mathbb{P}[H(\mathcal{M}(\dataobs')) \in B],
+\end{equation*}
+where $\dataobs = (x_i)_{i = 1}^n$ if there is only one $j$ that $x_j \neq x'_j$ and $x_i = x'_i$ for $i = 1, 2, \cdots, n; i \neq j$. 
+\end{definition}
+
+\begin{definition}
+$(\epsilon,\delta)-$differential privacy.
+
+A randomized mechanism $\mathcal{M}: \mathcal{X} \rightarrow \mathcal{Y}$ is differential privacy, iff for any adjacent input $\dataobs, \dataobs' \in \mathcal{X}$, a metric $H$ over $\mathcal{Y}$ and a $B \subseteq H(\mathcal{Y})$, $\mathcal{M}$ satisfies:
+\begin{equation*}
+\mathbb{P}[H(\mathcal{M}(\dataobs)) \in B] = e^\epsilon \mathbb{P}[H(\mathcal{M}(\dataobs')) \in B] + \delta,
+\end{equation*}
+vwhere $\dataobs = (x_i)_{i = 1}^n$ if there is only one $j$ that $x_j \neq x'_j$ and $x_i = x'_i$ for $i = 1, 2, \cdots, n; i \neq j$. 
+\end{definition}
+
+\section{Technical Problem Statement and Motivations}
+\label{sec_moti}
 We are interested in designing a mechanism for privately releasing the full posterior
 distributions derived in section \ref{sec_background}, as opposed to just sampling from them.
 It's worth noticing that the posterior distributions are fully characterized
