@@ -57,8 +57,11 @@ the Laplace mechanism.
 
 \section{Introduction}
 \label{sec_intro}
-Data analysis techniques are broadly used in. The data privacy is the persistent  
+Data analysis techniques are broadly used in various applications in different areas to improve their service, including disease-medicine service, financial service, location service, social network and so on. In order to provide a better service, large of data are collected from users for analysis. As a consequence, the data privacy came to be a critical issue in all data analysis algorithms. Sensitivity information in data can be revealed through the analysis results. The key challenge here is to release a private analysis results, from which adversary cannot observe individual's sensitive information in data.
 
+Plenty of work have been developed to solve this issue(), They guranteed the privacy in specific data analysis algorithms.
+
+Our work is conducted under a Bayesian inference scenario, where the posterior distribution is the analysis result we obtained from the data.
 Publishing the posterior distribution inferred from a sensitive dataset can
 leak information about the individuals in the dataset.
 In order to guarantee differential privacy and to protect the
@@ -95,7 +98,7 @@ We will see that in some cases this can happen.
 
 A plentiful of data analysis algorithms have been studied to preserve differential privacy, including the subspace clustering algorithm \citet{wang2015differentially}, the gradient decedent algorithm in deep learning \citet{abadi2016deep}, logical regression \citet{chaudhuri2009privacy}, principle component analysis \citet{chaudhuri2012near}, probabilitic inference \citet{williams2010probabilistic} and convergence in statistic estimation \citet{chaudhuri2012convergence}, etc. 
 
-In Bayesian Inference data analysis, some algorithms have been studied and mechanisms proposed corresponded to maintain their differential privacy. There are 3 main topics: 1) Inherited differential privacy property of posterior sampling in Bayesian inference. \citet{dimitrakakis2014robust}, \citet{zhang2016differential}, \citet{zhang2015differential} and \citet{wang2015privacy}. 2) Data sampled and released from posterior distribution of Bayesian is differentially private: \citet{Zhang2017privbayes}, \citet{dimitrakakis2015differential}  \citet{foulds2016theory}. 3) The inference process is differentially private and the posterior distribution released should be private itself. The third topic where our work focus on is still very new.
+In Bayesian Inference data analysis, some algorithms have been studied and mechanisms proposed corresponded to maintain their differential privacy. There are 3 main topics: 1) Inherited differential privacy property of posterior sampling in Bayesian inference. \citet{dimitrakakis2014robust}, \citet{zhang2016differential}, \citet{zheng2015differential} and \citet{wang2015privacy}. 2) Data sampled and released from posterior distribution of Bayesian is differentially private \citet{Zhang2017privbayes}, \citet{dimitrakakis2015differential},  \citet{foulds2016theory}. 3) The inference process is differentially private and the posterior distribution released should be private itself. The third topic where our work focus on is still very new.
 
 
 \section{Preliminaries}
@@ -148,7 +151,7 @@ From this it can easily be derived that the posterior distribution is:
 
 \noindent \textbf{Dirichlet-multinomial Systems.}
 
-The beta-binomial model can be immediately generalized to Dirichlet-multinomial, with underlying data where multinomially distributed. The \emph{bias} is represented by parameter $\vtheta$ represents the vector of parameters of a categorically distributed random variable.  The prior distribution over $\vtheta\in [0,1]^{k}$
+The beta-binomial model can be immediately generalized to Dirichlet-multinomial, with underlying data multinomially distributed. The \emph{bias} is represented by parameter $\vtheta$, the vector of parameters of a categorically distributed random variable. The prior distribution over $\vtheta\in [0,1]^{k}$
 is given by a Dirichelet distribution, $\dirichlet(\valpha)$, for $k\in\mathbb{N}$,
 and $\valpha\in(\mathbb{R}^{+})^{k}$, with p.d.f:
 \[

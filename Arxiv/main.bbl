@@ -203,9 +203,16 @@
         {zhang2016differential}
 \bibfield{author}{\bibinfo{person}{Zuhe Zhang}, \bibinfo{person}{Benjamin~IP
   Rubinstein}, \bibinfo{person}{Christos Dimitrakakis}, {et~al\mbox{.}}}
-\newblock \showarticletitle{On the Differential Privacy of Bayesian
-  Inference.}. In \bibinfo{booktitle}{{\em AAAI, 2016}}.
-  \bibinfo{pages}{2365--2371}.
+\newblock \showarticletitle{On the Differential Privacy of Bayesian Inference}.
+  In \bibinfo{booktitle}{{\em AAAI, 2016}}. \bibinfo{pages}{2365--2371}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Zheng}{Zheng}{}]%
+        {zheng2015differential}
+\bibfield{author}{\bibinfo{person}{Shijie Zheng}.}
+\newblock \showarticletitle{The Differential Privacy of Bayesian Inference}. In
+  \bibinfo{booktitle}{{\em Bachelor's thesis, Harvard College, 2015}}.
 \newblock
 
 

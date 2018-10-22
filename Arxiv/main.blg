@@ -5,7 +5,6 @@ The style file: ACM-Reference-Format.bst
 Reallocated singl_function (elt_size=4) to 100 items from 50.
 Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
 Database file #1: bayesian.bib.bib
-Warning--I didn't find a database entry for "zhang2015differential"
 Reallocated singl_function (elt_size=4) to 100 items from 50.
 Warning--empty year in abadi2016deep
 Warning--empty publisher in abadi2016deep
@@ -57,45 +56,49 @@ Warning--no number and no volume in Zhang2017privbayes
 Warning--empty year in zhang2016differential
 Warning--empty publisher in zhang2016differential
 Warning--empty address in zhang2016differential
-You've used 16 entries,
+Warning--empty year in zheng2015differential
+Warning--empty publisher in zheng2015differential
+Warning--empty address in zheng2015differential
+Warning--page numbers missing in both pages and numpages fields in zheng2015differential
+You've used 17 entries,
             5706 wiz_defined-function locations,
-            1381 strings with 17780 characters,
-and the built_in function-call counts, 18462 in all, are:
-= -- 2049
-> -- 759
+            1384 strings with 17878 characters,
+and the built_in function-call counts, 19271 in all, are:
+= -- 2117
+> -- 779
 < -- 0
-+ -- 241
-- -- 256
-* -- 1207
-:= -- 1913
-add.period$ -- 80
-call.type$ -- 16
-change.case$ -- 116
-chr.to.int$ -- 13
-cite$ -- 66
-duplicate$ -- 1573
-empty$ -- 1125
-format.name$ -- 317
-if$ -- 4528
++ -- 247
+- -- 264
+* -- 1246
+:= -- 1995
+add.period$ -- 84
+call.type$ -- 17
+change.case$ -- 121
+chr.to.int$ -- 14
+cite$ -- 71
+duplicate$ -- 1661
+empty$ -- 1189
+format.name$ -- 325
+if$ -- 4722
 int.to.chr$ -- 4
 int.to.str$ -- 0
-missing$ -- 77
-newline$ -- 157
-num.names$ -- 125
-pop$ -- 988
+missing$ -- 82
+newline$ -- 164
+num.names$ -- 133
+pop$ -- 1053
 preamble$ -- 1
-purify$ -- 193
+purify$ -- 203
 quote$ -- 0
-skip$ -- 530
+skip$ -- 554
 stack$ -- 0
-substring$ -- 1086
-swap$ -- 145
+substring$ -- 1124
+swap$ -- 148
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 451
-warning$ -- 50
-while$ -- 115
+type$ -- 481
+warning$ -- 54
+while$ -- 123
 width$ -- 0
-write$ -- 281
-(There were 51 warnings)
+write$ -- 295
+(There were 54 warnings)
