@@ -197,7 +197,7 @@ an unbounded adversary can have in distingishing two distributions.
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.35\textwidth]{sensitivity_2d.eps}
-\caption{\footnotesize{Sensitivity of $\hellinger$}}
+\caption{{Sensitivity of $\hellinger$}}
 \label{fig_sensitivity}
 \end{figure}
 \end{itemize}
@@ -587,7 +587,7 @@ LS(\dataobs)
 \end{split}
 \end{equation*}
 
-This equation is validated by experimental result shown in Fig. \ref{fig_efficiency}. We calculate the $\max\limits_{\{|\dataobs,\dataobs'| \leq 1;\dataobs'\in \mathcal{X}^n\}}$ value for every candidate $r \in R$. It is shown that maximum value taken when  $r = \bysinfer(\dataobs)$.
+This equation is validated by an experimental result shown in Fig. \ref{fig_efficiency}. We calculate the $\max\limits_{\{|\dataobs,\dataobs'| \leq 1;\dataobs'\in \mathcal{X}^n\}}$ value for every candidate $r \in \candidateset$. It is shown that maximum value taken when  $r = \bysinfer(\dataobs)$.
 
 \begin{figure}[ht]
 \centering
@@ -709,13 +709,13 @@ In order to see our privacy behavior, we study the accurate epsilon under concre
 \begin{figure}
 \begin{center}
 \centering
-  \subfigure[data size range from 90 to 180]{
+  \subfigure[data size range from 50 to 100]{
     \includegraphics[width=0.23\textwidth]{global_epsilon_size50to100.eps}}
-  \subfigure[data size range from 90 to 180]{
+  \subfigure[data size range from 100 to 200]{
     \includegraphics[width=0.23\textwidth]{global_epsilon_size100to200.eps}} 
-  \subfigure[data size range from 90 to 180]{
+  \subfigure[data size range from 200 to 500]{
     \includegraphics[width=0.23\textwidth]{global_epsilon_size200to500.eps}} 
-  \subfigure[data size range from 90 to 180]{
+  \subfigure[data size range from 500 to 1000]{
     \includegraphics[width=0.23\textwidth]{global_epsilon_size500to1000.eps}} 
 \caption{Concrete privacy calculation under settings that: prior distribution:$[1,1]$, $\epsilon = 1.0$, $\delta = 0.0005$ and observed data are uniformly distributed}
 \label{fig_privacy}

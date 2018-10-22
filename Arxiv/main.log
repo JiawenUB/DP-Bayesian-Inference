@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  21 OCT 2018 20:08
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  21 OCT 2018 21:14
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1990,22 +1990,22 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 537.
 
 Package epstopdf Info: Source file: <efficiency.eps>
-(epstopdf)                    date: 2018-10-05 18:23:13
-(epstopdf)                    size: 2883421 bytes
+(epstopdf)                    date: 2018-10-21 21:11:46
+(epstopdf)                    size: 12159690 bytes
 (epstopdf)             Output file: <efficiency-eps-converted-to.pdf>
-(epstopdf)                    date: 2018-10-09 10:14:02
-(epstopdf)                    size: 859239 bytes
+(epstopdf)                    date: 2018-10-21 21:12:00
+(epstopdf)                    size: 343589 bytes
 (epstopdf)             Command: <repstopdf --outfile=efficiency-eps-converted-t
 o.pdf efficiency.eps>
 (epstopdf)             \includegraphics on input line 594.
 Package epstopdf Info: Output file is already uptodate.
-<efficiency-eps-converted-to.pdf, id=189, 8030.0pt x 3513.125pt>
+<efficiency-eps-converted-to.pdf, id=189, 1445.4pt x 722.7pt>
 File: efficiency-eps-converted-to.pdf Graphic file (type pdf)
 
 <use efficiency-eps-converted-to.pdf>
 Package pdftex.def Info: efficiency-eps-converted-to.pdf used on input line 594
 .
-(pdftex.def)             Requested size: 243.01942pt x 106.30049pt.
+(pdftex.def)             Requested size: 243.01942pt x 121.50099pt.
 
 Overfull \hbox (1.87193pt too wide) in paragraph at lines 594--595
  [][] 
@@ -2047,7 +2047,7 @@ Package pdftex.def Info: theory_3d-eps-converted-to.pdf used on input line 611.
 
 (pdftex.def)             Requested size: 111.38551pt x 83.59686pt.
 
-Underfull \vbox (badness 4805) has occurred while \output is active []
+Underfull \vbox (badness 3291) has occurred while \output is active []
 
  [5.5 <./efficiency-eps-converted-to.pdf>]
 Package epstopdf Info: Source file: <sampling_2d.eps>
@@ -2135,7 +2135,7 @@ Package epstopdf Info: Source file: <global_epsilon_size50to100.eps>
 (epstopdf)                    size: 2922777 bytes
 (epstopdf)             Output file: <global_epsilon_size50to100-eps-converted-t
 o.pdf>
-(epstopdf)                    date: 2018-10-21 20:05:26
+(epstopdf)                    date: 2018-10-21 21:14:46
 (epstopdf)                    size: 46425 bytes
 (epstopdf)             Command: <repstopdf --outfile=global_epsilon_size50to100
 -eps-converted-to.pdf global_epsilon_size50to100.eps>
@@ -2145,7 +2145,7 @@ lobal_epsilon_size50to100.eps)...executed safely (allowed).
 
 Package epstopdf Info: Result file: <global_epsilon_size50to100-eps-converted-t
 o.pdf>
-(epstopdf)                    date: 2018-10-21 20:08:51
+(epstopdf)                    date: 2018-10-21 21:14:50
 (epstopdf)                    size: 46425 bytes.
 
 <global_epsilon_size50to100-eps-converted-to.pdf, id=247, 578.16pt x 433.62pt>
@@ -2160,8 +2160,8 @@ Package epstopdf Info: Source file: <global_epsilon_size100to200.eps>
 (epstopdf)                    size: 2922778 bytes
 (epstopdf)             Output file: <global_epsilon_size100to200-eps-converted-
 to.pdf>
-(epstopdf)                    date: 2018-10-21 20:05:27
-(epstopdf)                    size: 48005 bytes
+(epstopdf)                    date: 2018-10-21 21:14:47
+(epstopdf)                    size: 48007 bytes
 (epstopdf)             Command: <repstopdf --outfile=global_epsilon_size100to20
 0-eps-converted-to.pdf global_epsilon_size100to200.eps>
 (epstopdf)             \includegraphics on input line 715.
@@ -2170,7 +2170,7 @@ global_epsilon_size100to200.eps)...executed safely (allowed).
 
 Package epstopdf Info: Result file: <global_epsilon_size100to200-eps-converted-
 to.pdf>
-(epstopdf)                    date: 2018-10-21 20:08:52
+(epstopdf)                    date: 2018-10-21 21:14:51
 (epstopdf)                    size: 48007 bytes.
 
 <global_epsilon_size100to200-eps-converted-to.pdf, id=248, 578.16pt x 433.62pt>
@@ -2184,7 +2184,7 @@ Package epstopdf Info: Source file: <global_epsilon_size200to500.eps>
 (epstopdf)                    size: 2922778 bytes
 (epstopdf)             Output file: <global_epsilon_size200to500-eps-converted-
 to.pdf>
-(epstopdf)                    date: 2018-10-21 20:05:27
+(epstopdf)                    date: 2018-10-21 21:14:47
 (epstopdf)                    size: 49270 bytes
 (epstopdf)             Command: <repstopdf --outfile=global_epsilon_size200to50
 0-eps-converted-to.pdf global_epsilon_size200to500.eps>
@@ -2194,7 +2194,7 @@ global_epsilon_size200to500.eps)...executed safely (allowed).
 
 Package epstopdf Info: Result file: <global_epsilon_size200to500-eps-converted-
 to.pdf>
-(epstopdf)                    date: 2018-10-21 20:08:52
+(epstopdf)                    date: 2018-10-21 21:14:52
 (epstopdf)                    size: 49270 bytes.
 
 <global_epsilon_size200to500-eps-converted-to.pdf, id=249, 578.16pt x 433.62pt>
@@ -2208,7 +2208,7 @@ Package epstopdf Info: Source file: <global_epsilon_size500to1000.eps>
 (epstopdf)                    size: 2922779 bytes
 (epstopdf)             Output file: <global_epsilon_size500to1000-eps-converted
 -to.pdf>
-(epstopdf)                    date: 2018-10-21 20:05:28
+(epstopdf)                    date: 2018-10-21 21:14:48
 (epstopdf)                    size: 49652 bytes
 (epstopdf)             Command: <repstopdf --outfile=global_epsilon_size500to10
 00-eps-converted-to.pdf global_epsilon_size500to1000.eps>
@@ -2218,7 +2218,7 @@ runsystem(repstopdf --outfile=global_epsilon_size500to1000-eps-converted-to.pdf
 
 Package epstopdf Info: Result file: <global_epsilon_size500to1000-eps-converted
 -to.pdf>
-(epstopdf)                    date: 2018-10-21 20:08:53
+(epstopdf)                    date: 2018-10-21 21:14:52
 (epstopdf)                    size: 49652 bytes.
 
 <global_epsilon_size500to1000-eps-converted-to.pdf, id=250, 578.16pt x 433.62pt
@@ -2268,7 +2268,7 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 731.
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 731.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 731.
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: ACA89A8C210CCF418F1431DEFE93E2F0;4192.
+(rerunfilecheck)             Checksum: 86594C65F98471C30760DF0777B31A46;4260.
 
 
 LaTeX Font Warning: Size substitutions with differences
@@ -2282,7 +2282,7 @@ Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 731.
 Here is how much of TeX's memory you used:
  30604 strings out of 492995
  538501 string characters out of 6132704
- 638962 words of memory out of 5000000
+ 638974 words of memory out of 5000000
  33019 multiletter control sequences out of 15000+600000
  211951 words of font info for 432 fonts, out of 8000000 for 9000
  1302 hyphenation exceptions out of 8191
@@ -2319,7 +2319,7 @@ onts/type1/public/newtx/txsys.pfb></usr/local/texlive/2017/texmf-dist/fonts/typ
 e1/public/newtx/zxlr.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public
 /newtx/zxlri.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/newtx/z
 xlzi.pfb>
-Output written on main.pdf (7 pages, 2818857 bytes).
+Output written on main.pdf (7 pages, 2302957 bytes).
 PDF statistics:
  412 PDF objects out of 1000 (max. 8388607)
  322 compressed objects within 4 object streams

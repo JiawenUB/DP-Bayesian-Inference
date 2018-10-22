@@ -154,6 +154,10 @@ class BayesInferwithDirPrior(object):
 		self._observation = numpy.random.multinomial(1, self._bias, self._sample_size)
 		self._posterior = Dir(self._observation_counts) + self._prior
 
+	def _set_observation(self,data):
+		self._observation_counts = data
+		self._posterior = Dir(self._observation_counts) + self._prior
+
 	def _set_candidate_scores(self):
 		self._set_candidates([], numpy.sum(self._observation))
 		# for r in self._candidates:
@@ -270,20 +274,22 @@ class BayesInferwithDirPrior(object):
 		y = numpy.array(y)
 		x = numpy.arange(0, len(y), 1)
 		plt.figure(figsize=(80,35))
-		plt.rc('text', usetex=True)
-		plt.rc('font', family='serif')
-		# plt.tight_layout()
-		plt.scatter(x, y, s = 100, c = 'b', marker = 'o', alpha = 0.7, edgecolors='white', label = r"$\displaystyle\max_{\{D'\ adj\ D\}}|H(D,r)-D(D',r)|$")
+		# plt.rc('text', usetex=True)
+		# plt.rc('font', family='serif')
+		fig = plt.gcf()
+		fig.subplots_adjust(bottom=0.1, left=0.05, right= 0.95, top=0.95)
+		plt.tight_layout()
+		plt.scatter(x, y, s = 100, c = 'b', marker = 'o', alpha = 0.7, edgecolors='white', label = r"$\max_{x'\ adj\ x}|\mathcal{H}(x,r)-\mathcal{H}(x',r)|$")
 		plt.axvline(x=xmark, color='r', label = 'True Posterior:'+str(self._posterior._alphas),linewidth = 6.0)
 		plt.ylim(0.0,self._LS_max+0.01)
 		plt.xlim(0.0,len(y)*1.0)
 		plt.grid()
 		plt.legend(prop={'size': 90}, loc="best")
 		plt.xticks(x, labels, rotation='vertical',fontsize=7)
-		plt.xlabel(r"$Candidates\ r\in R\ (3\ Order\ Dirichlet\ Distribution\ with\ Data\ Size\ 50)$", fontsize=70)
-		plt.ylabel(r"$\displaystyle\max_{\{D'\ adj\ D\}}|H(D,r)-D(D',r)|$", fontsize=90)
+		plt.xlabel(r"$Candidates\ r \in R$", fontsize=70)
+		plt.ylabel(r"$\max_{x'\ adj\ x}|\mathcal{H}(x,r)-\mathcal{H}(x',r)|$", fontsize=90)
 		#plt.show()
-		plt.savefig("Local_Sensitivitiessize50labels_latex.png")
+		plt.savefig("local_sensitivity.png")
 
 
 
@@ -291,11 +297,12 @@ class BayesInferwithDirPrior(object):
 if __name__ == "__main__":
 	# Tests the functioning of the module
 
-	sample_size = 50
+	sample_size = 60
 	epsilon = 0.8
-	prior = Dir([7, 4, 5])
+	prior = Dir([2, 2, 2])
 	Bayesian_Model = BayesInferwithDirPrior(prior, sample_size, epsilon)
 
+	Bayesian_Model._set_observation([10,20,30])
 	Bayesian_Model._set_candidate_scores()
 	Bayesian_Model._set_LS()
 	Bayesian_Model._plot_LS()
