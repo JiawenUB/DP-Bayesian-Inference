@@ -354,7 +354,7 @@ Both Laplace mechanism and improved one are $\epsilon -$differential privacy\cit
 The mechanism $\hexpmech(x)$ outputs a candidate $r \in \candidateset$ with probability
 \begin{equation*}
 \underset{z \thicksim \hexpmech}{\Pr}[z=r] = \frac {exp\big(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r)}{2\cdot S(\dataobs)}\big)}
-{\displaystyle\sum_{r\in\candidateset} exp\Big(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r)}{2\cdot S(\dataobs)}\Big)}.
+{\sum_{r\in\candidateset} exp\Big(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r)}{2\cdot S(\dataobs)}\Big)}.
 \end{equation*}
 where $S_\beta(x)$ is the smooth sensitivity of $\hellinger(\bysinfer(x),-)$, calculated by:
 
@@ -391,7 +391,7 @@ that $\candidateset$ has $\binom{n + 1}{m - 1}$ elements in this case. We
 will denote by $\hexpmechd$ the mechanism for the
 Dirichlet-multinomial system.
 
-By setting the $\gamma$ as $\ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta}{2 (n + 1)})})$, $\hexpmech$ is $(\epsilon, \frac{e^{\frac{\epsilon}{2}} \delta}{2}) -$differentially private. (or $\gamma = \ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta}{2 |\candidateset|})})$ when generalized to Dirichlet-multinomial System)
+By setting the $\gamma$ as $\ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta'}{2 (n + 1)})})$, $\hexpmech$ is $(\epsilon, \delta) -$differentially private, where $\delta = \frac{e^{\frac{\epsilon}{2}} \delta'}{2}$. (or $\gamma = \ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta'}{2 |\candidateset|})})$ when generalized to Dirichlet-multinomial System)
 
 
 \section{Privacy Analysis}
@@ -406,11 +406,11 @@ The differential privacy property of $\hexpmech$ is proved based on the holds of
 \noindent \textbf{Sliding Property of $\hexpmech$}
 \begin{lem}
 Given $\hexpmech(x)$ calibrated on the smooth sensitivity. Let $\lambda = f(\epsilon,
-\delta)$, $\epsilon\geq 0$ and $|\delta| < 1$. Then, the following \emph{sliding property} holds:
+\delta')$, $\epsilon\geq 0$ and $|\delta'| < 1$. Then, the following \emph{sliding property} holds:
 \begin{equation*}
 \underset{r \thicksim \hexpmech(x)}{Pr}[u(r,x) = \hat{s}]
 \leq
-e^{\frac{\epsilon}{2}} \underset{r \thicksim \hexpmech(x)}{Pr}[u(r,x) = (\Delta + \hat{s})] + \frac{\delta}{2},
+e^{\frac{\epsilon}{2}} \underset{r \thicksim \hexpmech(x)}{Pr}[u(r,x) = (\delta' + \hat{s})] + \frac{\delta'}{2},
 \end{equation*}
 
 \end{lem}
@@ -448,19 +448,19 @@ In what follows, we will use a correspondence between the probability
 		LHS 
 		  = \underset{r \thicksim \hexpmech(x)}{Pr}[u(r,x) = \hat{s}]
 		& = \frac{exp(\frac{\epsilon \hat{s}}{2 S(x)})}{NL(x)}\\
-		& = \frac{exp(\frac{\epsilon (\hat{s} + \Delta - \Delta)}{2 S(x)})}{NL(x)}\\
-		& = \frac{exp(\frac{\epsilon (\hat{s} + \Delta)}{2 S(x)} + \frac{- \epsilon \Delta}{2 S(x)})}{NL(x)}\\
-		& = \frac{exp(\frac{\epsilon (\hat{s} + \Delta)}{2 S(x)})}{NL(x)} \cdot e^{\frac{- \epsilon \Delta}{2 S(x)})}.\\
+		& = \frac{exp(\frac{\epsilon (\hat{s} + \delta' - \delta')}{2 S(x)})}{NL(x)}\\
+		& = \frac{exp(\frac{\epsilon (\hat{s} + \delta')}{2 S(x)} + \frac{- \epsilon \delta'}{2 S(x)})}{NL(x)}\\
+		& = \frac{exp(\frac{\epsilon (\hat{s} + \delta')}{2 S(x)})}{NL(x)} \cdot e^{\frac{- \epsilon \delta'}{2 S(x)})}.\\
 		\end{split}
 		\end{equation*}
 
-		By bounding the $\Delta \geq -S(x)$, we can get:
+		By bounding the $\delta' \geq -S(x)$, we can get:
 
 		\begin{equation*}
 		\begin{split}
-		\frac{exp(\frac{\epsilon (\hat{s} + \Delta)}{2 S(x)})}{NL(x)} \cdot e^{\frac{- \epsilon \Delta}{2 S(x)}}
-		& \leq \frac{exp(\frac{\epsilon (\hat{s} + \Delta)}{2 S(x)})}{NL(x)} \cdot e^{\frac{\epsilon}{2}}\\
-		&  =  e^{\frac{\epsilon}{2}} \underset{z \thicksim \hexpmech(x)}{Pr}[u(r,x) = (\Delta + \hat{s})] \leq RHS\\
+		\frac{exp(\frac{\epsilon (\hat{s} + \delta')}{2 S(x)})}{NL(x)} \cdot e^{\frac{- \epsilon \delta'}{2 S(x)}}
+		& \leq \frac{exp(\frac{\epsilon (\hat{s} + \delta')}{2 S(x)})}{NL(x)} \cdot e^{\frac{\epsilon}{2}}\\
+		&  =  e^{\frac{\epsilon}{2}} \underset{z \thicksim \hexpmech(x)}{Pr}[u(r,x) = (\delta' + \hat{s})] \leq RHS\\
 		\end{split}
 		\end{equation*}
 	\item for $r \in R_2$: Proof actually is exactly the same as above by eliminating the parameter $|z|$ in both sides.
@@ -474,16 +474,16 @@ The same in Dirichlet-multinomial distribution, partitioning the $\candidateset$
 
 \noindent \textbf{Dilation Property of $\hexpmech$}
 \begin{lem}
-for any exponential mechanism $\hexpmech(x)$, $\lambda < |\beta|$, $\epsilon$, $|\delta| < 1$ and $\beta \leq \ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta}{2 |\candidateset|})})$, the dilation property holds:
+for any exponential mechanism $\hexpmech(x)$, $\lambda < |\beta|$, $\epsilon$, $|\delta'| < 1$ and $\beta \leq \ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta'}{2 |\candidateset|})})$, the dilation property holds:
 
 \begin{equation*}
 \underset{z \thicksim \hexpmech(x)}{Pr}[u(z,x) = c]
 \leq
-e^{\frac{\epsilon}{2}} \underset{z \thicksim \hexpmech(x)}{Pr}[u(z,x) = e^{\lambda} c] + \frac{\delta}{2},
+e^{\frac{\epsilon}{2}} \underset{z \thicksim \hexpmech(x)}{Pr}[u(z,x) = e^{\lambda} c] + \frac{\delta'}{2},
 \end{equation*}
 where the sensitivity in mechanism is still smooth sensitivity as above.
 
-More specifically, in Beta-binomial system it is enough to take $\beta \leq \ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta}{2 (n + 1)})})$.
+More specifically, in Beta-binomial system it is enough to take $\beta \leq \ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta'}{2 (n + 1)})})$.
 \end{lem}
 
 \begin{proof}
@@ -495,7 +495,7 @@ We set the $h(c) = Pr[u(\hexpmech(x)) = c] = \frac{exp(\frac{\epsilon c}{2 S(x)}
 
 We first consider $\lambda < 0$. In this case, $1 < e ^ {\lambda}$, so the ratio $\frac{h(c)}{h(e^{\lambda}c)} = \frac{exp(\frac{\epsilon c}{2 S(x)})}{exp(\frac{\epsilon (c \cdot e^{\lambda})}{2 S(x)})}$ is at most $\frac{\epsilon}{2}$.
 
-Next, we proof the dilation property for $\lambda > 0$, The ratio of $\frac{h(c)}{h(e^{\lambda}c)}$ is $\exp(\frac{\epsilon}{2} \cdot \frac{u(\hexpmech(x)) (1 - e^{\lambda})}{S(x)})$. Consider the event $G = \{ \hexpmech(x) : u(\hexpmech(x)) \leq \frac{S(x)}{(1 - e^{\lambda})}\}$. Under this event, the log-ratio above is at most $\frac{\epsilon}{2}$. The probability of $G$ under density $h(c)$ is $1 - \frac{\delta}{2}$. Thus, the probability of a given event $z$ is at most $Pr[c \cap G] + Pr[\overline{G}] \leq e^{\frac{\epsilon}{2}} Pr[e^{\lambda}c \cap G] + \frac{\delta}{2} \leq e^{\frac{\epsilon}{2}} Pr[e^{\lambda}c] + \frac{\delta}{2}$.\\
+Next, we proof the dilation property for $\lambda > 0$, The ratio of $\frac{h(c)}{h(e^{\lambda}c)}$ is $\exp(\frac{\epsilon}{2} \cdot \frac{u(\hexpmech(x)) (1 - e^{\lambda})}{S(x)})$. Consider the event $G = \{ \hexpmech(x) : u(\hexpmech(x)) \leq \frac{S(x)}{(1 - e^{\lambda})}\}$. Under this event, the log-ratio above is at most $\frac{\epsilon}{2}$. The probability of $G$ under density $h(c)$ is $1 - \frac{\delta'}{2}$. Thus, the probability of a given event $z$ is at most $Pr[c \cap G] + Pr[\overline{G}] \leq e^{\frac{\epsilon}{2}} Pr[e^{\lambda}c \cap G] + \frac{\delta'}{2} \leq e^{\frac{\epsilon}{2}} Pr[e^{\lambda}c] + \frac{\delta'}{2}$.\\
 
 
 \textbf{Detail proof:}
@@ -503,7 +503,7 @@ Next, we proof the dilation property for $\lambda > 0$, The ratio of $\frac{h(c)
 	\begin{equation*}
 	\underset{z \thicksim \hexpmech(x)}{Pr}[u(z,x) = c]
 	\leq
-	e^{\frac{\epsilon}{2}} \underset{z \thicksim \hexpmech(x)}{Pr}[u(z,x) = e^{\lambda} c] + \frac{\delta}{2}
+	e^{\frac{\epsilon}{2}} \underset{z \thicksim \hexpmech(x)}{Pr}[u(z,x) = e^{\lambda} c] + \frac{\delta'}{2}
 	\end{equation*}
 	for $z \in R_1$.
 
@@ -554,18 +554,18 @@ Next, we proof the dilation property for $\lambda > 0$, The ratio of $\frac{h(c)
 		\end{split}
 		\end{equation*}
 
-		When we set $\lambda \leq \ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta}{2 (n + 1)})})$, it is easily to derive that $Pr[u(\hexpmech(x)) \leq \frac{S(x)}{(1 - e ^ {\lambda})}] \leq \frac{\delta}{2}$.
+		When we set $\lambda \leq \ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta'}{2 (n + 1)})})$, it is easily to derive that $Pr[u(\hexpmech(x)) \leq \frac{S(x)}{(1 - e ^ {\lambda})}] \leq \frac{\delta'}{2}$.
 
-		In Dirichlet-multinomial system, $\lambda$ is set as $ \leq \ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta}{2 |\candidateset|})})$ since $|\candidateset| \neq n + 1$ any more.
+		In Dirichlet-multinomial system, $\lambda$ is set as $ \leq \ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta'}{2 |\candidateset|})})$ since $|\candidateset| \neq n + 1$ any more.
 
 \end{itemize}
 
 \end{proof}
 
-\noindent \textbf{$(\epsilon, \frac{e^{\frac{\epsilon}{2}} \delta}{2})-$Differential Privacy of $\hexpmech$}
+\noindent \textbf{$(\epsilon, \delta)-$Differential Privacy of $\hexpmech$}
 \begin{lem}
 \label{lem_hexpmech_privacy}
-$\hexpmech$ is $(\epsilon, \frac{e^{\frac{\epsilon}{2}} \delta}{2})$-differential privacy.
+$\hexpmech$ is $(\epsilon, \delta)$-differential privacy.
 \end{lem}
 
 \begin{proof}
@@ -592,7 +592,7 @@ Let partition $R_1, R_2 \subset \candidateset$ the same as above. Then we prove 
 	\end{split}
 	\end{equation*}
 	where $\delta = \frac{e^{\epsilon/2} \delta'}{2}$.
-	The first inequality holds by the sliding property, since the $U_1 \geq -S(x)$. The second inequality holds by the dilation property, since $\frac{S(x)}{S(y)} \cdot \ln(\frac{NL(x)}{NL(y)}) \leq 1 - \frac{\epsilon}{2 \ln (\frac{\delta}{2 (n + 1)})}$.
+	The first inequality holds by the sliding property, since the $U_1 \geq -S(x)$. The second inequality holds by the dilation property, since $\frac{S(x)}{S(y)} \cdot \ln(\frac{NL(x)}{NL(y)}) \leq 1 - \frac{\epsilon}{2 \ln (\frac{\delta'}{2 (n + 1)})}$.
 
 	\item for $r \in R_2$:
 
@@ -610,10 +610,10 @@ Let partition $R_1, R_2 \subset \candidateset$ the same as above. Then we prove 
 	\end{equation*}
 	where the $\delta = \frac{e^{\epsilon/2} \delta'}{4}$.
 
-	The first inequality holds by the sliding property, since the $U_1 \geq -S(x)$. The second inequality holds by the dilation property, since $\frac{S(x)}{S(y)} \cdot \ln(\frac{NL(x)}{NL(y)}) \leq 1 - \frac{\epsilon}{2 \ln (\frac{\delta}{2 (n + 1)})}$.
+	The first inequality holds by the sliding property, since the $U_1 \geq -S(x)$. The second inequality holds by the dilation property, since $\frac{S(x)}{S(y)} \cdot \ln(\frac{NL(x)}{NL(y)}) \leq 1 - \frac{\epsilon}{2 \ln (\frac{\delta'}{2 (n + 1)})}$.
 \end{itemize}
 
-Based on two cases above, $\hexpmech$ is $(\epsilon, \delta)-$differential privacy, where $\delta$ takes the maximum value form the two cases.
+Based on two cases above, $\hexpmech$ is $(\epsilon, \delta)-$differential privacy, where $\delta$ takes the maximum value form the two cases, i.e., $\frac{e^{\frac{\epsilon}{2}} \delta'}{2}$.
 
 Proof in Dirichlet-multinomial system can be derived in the same way by proving in parts and taking the maximum $\delta$ value of each part. 
 \end{proof}

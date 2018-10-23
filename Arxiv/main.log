@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  23 OCT 2018 10:33
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  23 OCT 2018 14:27
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1138,12 +1138,12 @@ MS/cmsy/m/n/10 M[]\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 )$: $[][]
 \OML/cmm/m/it/10 exp\OT1/cmr/m/n/10 ([])$
  []
 
-[10]
+[10] [11]
 Underfull \hbox (badness 10000) in paragraph at lines 498--499
 
  []
 
-[11] [12]
+[12]
 Overfull \hbox (10.8847pt too wide) in paragraph at lines 557--558
 []\OT1/cmr/m/n/10 When we set $\OML/cmm/m/it/10 ^^U \OMS/cmsy/m/n/10 ^^T []\OT1
 /cmr/m/n/10 (1 \OMS/cmsy/m/n/10 ^^@ []\OT1/cmr/m/n/10 )$, it is eas-ily to de-r
@@ -1387,7 +1387,7 @@ LaTeX Warning: There were multiply-defined labels.
 Here is how much of TeX's memory you used:
  19923 strings out of 492995
  369397 string characters out of 6132704
- 455442 words of memory out of 5000000
+ 454442 words of memory out of 5000000
  23062 multiletter control sequences out of 15000+600000
  24462 words of font info for 98 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -1427,7 +1427,7 @@ ype1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2017/texmf-dist/fonts/ty
 pe1/public/amsfonts/cm/cmti9.pfb></usr/local/texlive/2017/texmf-dist/fonts/type
 1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2017/texmf-dist/fonts/
 type1/public/amsfonts/symbols/msbm7.pfb>
-Output written on main.pdf (21 pages, 1924257 bytes).
+Output written on main.pdf (21 pages, 1924288 bytes).
 PDF statistics:
  507 PDF objects out of 1000 (max. 8388607)
  424 compressed objects within 5 object streams
