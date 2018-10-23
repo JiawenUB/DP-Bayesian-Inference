@@ -1,104 +1,67 @@
 This is BibTeX, Version 0.99d (TeX Live 2017)
 Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
 The top-level auxiliary file: main.aux
-The style file: ACM-Reference-Format.bst
-Reallocated singl_function (elt_size=4) to 100 items from 50.
-Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+The style file: plain.bst
 Database file #1: bayesian.bib.bib
-Reallocated singl_function (elt_size=4) to 100 items from 50.
 Warning--empty year in abadi2016deep
-Warning--empty publisher in abadi2016deep
-Warning--empty address in abadi2016deep
 Warning--empty year in chaudhuri2012convergence
-Warning--empty publisher in chaudhuri2012convergence
-Warning--empty address in chaudhuri2012convergence
 Warning--empty year in chaudhuri2009privacy
-Warning--empty publisher in chaudhuri2009privacy
-Warning--empty address in chaudhuri2009privacy
 Warning--empty year in chaudhuri2012near
-Warning--empty publisher in chaudhuri2012near
-Warning--empty address in chaudhuri2012near
 Warning--empty year in dimitrakakis2014robust
-Warning--empty publisher in dimitrakakis2014robust
-Warning--empty address in dimitrakakis2014robust
-Warning--empty year in dimitrakakis2015differential
 Warning--empty booktitle in dimitrakakis2015differential
-Warning--no number and no volume in dimitrakakis2015differential
-Warning--page numbers missing in both pages and numpages fields in dimitrakakis2015differential
-Warning--empty address in dwork2014algorithmic
-Warning--empty year in foulds2016theory
+Warning--empty year in dimitrakakis2015differential
 Warning--empty booktitle in foulds2016theory
-Warning--no number and no volume in foulds2016theory
-Warning--page numbers missing in both pages and numpages fields in foulds2016theory
+Warning--empty year in foulds2016theory
 Warning--empty year in talwar
-Warning--empty publisher in talwar
-Warning--empty address in talwar
-Warning--page numbers missing in both pages and numpages fields in talwar
 Warning--empty year in nissim2007smooth
-Warning--empty publisher in nissim2007smooth
-Warning--empty address in nissim2007smooth
 Warning--empty year in wang2015differentially
-Warning--empty publisher in wang2015differentially
-Warning--empty address in wang2015differentially
 Warning--empty year in wang2015privacy
-Warning--empty publisher in wang2015privacy
-Warning--empty address in wang2015privacy
 Warning--empty year in williams2010probabilistic
-Warning--empty publisher in williams2010probabilistic
-Warning--empty address in williams2010probabilistic
-Warning--empty year in xiao2012bayesian
 Warning--empty booktitle in xiao2012bayesian
-Warning--no number and no volume in xiao2012bayesian
-Warning--page numbers missing in both pages and numpages fields in xiao2012bayesian
-Warning--empty year in Zhang2017privbayes
+Warning--empty year in xiao2012bayesian
 Warning--empty booktitle in Zhang2017privbayes
-Warning--no number and no volume in Zhang2017privbayes
+Warning--empty year in Zhang2017privbayes
 Warning--empty year in zhang2016differential
-Warning--empty publisher in zhang2016differential
-Warning--empty address in zhang2016differential
 Warning--empty year in zheng2015differential
-Warning--empty publisher in zheng2015differential
-Warning--empty address in zheng2015differential
-Warning--page numbers missing in both pages and numpages fields in zheng2015differential
 You've used 18 entries,
-            5706 wiz_defined-function locations,
-            1393 strings with 18071 characters,
-and the built_in function-call counts, 20486 in all, are:
-= -- 2317
-> -- 817
-< -- 0
-+ -- 259
-- -- 280
-* -- 1324
-:= -- 2112
-add.period$ -- 89
+            2118 wiz_defined-function locations,
+            586 strings with 6848 characters,
+and the built_in function-call counts, 7603 in all, are:
+= -- 713
+> -- 338
+< -- 11
++ -- 134
+- -- 114
+* -- 492
+:= -- 1111
+add.period$ -- 51
 call.type$ -- 18
-change.case$ -- 127
-chr.to.int$ -- 15
-cite$ -- 72
-duplicate$ -- 1749
-empty$ -- 1254
-format.name$ -- 345
-if$ -- 5042
-int.to.chr$ -- 4
-int.to.str$ -- 0
-missing$ -- 86
-newline$ -- 175
-num.names$ -- 141
-pop$ -- 1083
+change.case$ -- 108
+chr.to.int$ -- 0
+cite$ -- 38
+duplicate$ -- 350
+empty$ -- 637
+format.name$ -- 114
+if$ -- 1678
+int.to.chr$ -- 0
+int.to.str$ -- 18
+missing$ -- 19
+newline$ -- 90
+num.names$ -- 36
+pop$ -- 201
 preamble$ -- 1
-purify$ -- 214
+purify$ -- 91
 quote$ -- 0
-skip$ -- 588
+skip$ -- 270
 stack$ -- 0
-substring$ -- 1216
-swap$ -- 159
-text.length$ -- 0
+substring$ -- 473
+swap$ -- 137
+text.length$ -- 11
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 497
-warning$ -- 54
-while$ -- 133
-width$ -- 0
-write$ -- 315
-(There were 54 warnings)
+type$ -- 70
+warning$ -- 20
+while$ -- 68
+width$ -- 20
+write$ -- 171
+(There were 20 warnings)

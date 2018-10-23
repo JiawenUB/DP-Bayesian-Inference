@@ -1,234 +1,98 @@
-%%% -*-BibTeX-*-
-%%% Do NOT edit. File created by BibTeX with style
-%%% ACM-Reference-Format-Journals [18-Jan-2012].
+\begin{thebibliography}{10}
 
-\begin{thebibliography}{00}
+\bibitem{abadi2016deep}
+Martin Abadi, Andy Chu, Ian Goodfellow, H~Brendan McMahan, Ilya Mironov, Kunal
+  Talwar, and Li~Zhang.
+\newblock Deep learning with differential privacy.
+\newblock In {\em CCS 2016}, pages 308--318.
 
-%%% ====================================================================
-%%% NOTE TO THE USER: you can override these defaults by providing
-%%% customized versions of any of these macros before the \bibliography
-%%% command.  Each of them MUST provide its own final punctuation,
-%%% except for \shownote{}, \showDOI{}, and \showURL{}.  The latter two
-%%% do not use final punctuation, in order to avoid confusing it with
-%%% the Web address.
-%%%
-%%% To suppress output of a particular field, define its macro to expand
-%%% to an empty string, or better, \unskip, like this:
-%%%
-%%% \newcommand{\showDOI}[1]{\unskip}   % LaTeX syntax
-%%%
-%%% \def \showDOI #1{\unskip}           % plain TeX syntax
-%%%
-%%% ====================================================================
+\bibitem{chaudhuri2012convergence}
+Kamalika Chaudhuri and Daniel Hsu.
+\newblock Convergence rates for differentially private statistical estimation.
+\newblock In {\em ICML, 2012}, page 1327.
 
-\ifx \showCODEN    \undefined \def \showCODEN     #1{\unskip}     \fi
-\ifx \showDOI      \undefined \def \showDOI       #1{#1}\fi
-\ifx \showISBNx    \undefined \def \showISBNx     #1{\unskip}     \fi
-\ifx \showISBNxiii \undefined \def \showISBNxiii  #1{\unskip}     \fi
-\ifx \showISSN     \undefined \def \showISSN      #1{\unskip}     \fi
-\ifx \showLCCN     \undefined \def \showLCCN      #1{\unskip}     \fi
-\ifx \shownote     \undefined \def \shownote      #1{#1}          \fi
-\ifx \showarticletitle \undefined \def \showarticletitle #1{#1}   \fi
-\ifx \showURL      \undefined \def \showURL       {\relax}        \fi
-% The following commands are used for tagged output and should be
-% invisible to TeX
-\providecommand\bibfield[2]{#2}
-\providecommand\bibinfo[2]{#2}
-\providecommand\natexlab[1]{#1}
-\providecommand\showeprint[2][]{arXiv:#2}
+\bibitem{chaudhuri2009privacy}
+Kamalika Chaudhuri and Claire Monteleoni.
+\newblock Privacy-preserving logistic regression.
+\newblock In {\em NIPS, 2009}, pages 289--296.
 
-\bibitem[\protect\citeauthoryear{Abadi, Chu, Goodfellow, McMahan, Mironov,
-  Talwar, and Zhang}{Abadi et~al\mbox{.}}{}]%
-        {abadi2016deep}
-\bibfield{author}{\bibinfo{person}{Martin Abadi}, \bibinfo{person}{Andy Chu},
-  \bibinfo{person}{Ian Goodfellow}, \bibinfo{person}{H~Brendan McMahan},
-  \bibinfo{person}{Ilya Mironov}, \bibinfo{person}{Kunal Talwar}, {and}
-  \bibinfo{person}{Li Zhang}.}
-\newblock \showarticletitle{Deep learning with differential privacy}. In
-  \bibinfo{booktitle}{{\em CCS 2016}}. \bibinfo{pages}{308--318}.
-\newblock
+\bibitem{chaudhuri2012near}
+Kamalika Chaudhuri, Anand Sarwate, and Kaushik Sinha.
+\newblock Near-optimal differentially private principal components.
+\newblock In {\em NIPS, 2012}, pages 989--997.
 
+\bibitem{CIT-004}
+I.~Csisz{\'a}r and P.C. Shields.
+\newblock Information theory and statistics: A tutorial.
+\newblock {\em Foundations and Trends® in Communications and Information
+  Theory}, 1(4):417--528, 2004.
 
-\bibitem[\protect\citeauthoryear{Chaudhuri and Hsu}{Chaudhuri and Hsu}{}]%
-        {chaudhuri2012convergence}
-\bibfield{author}{\bibinfo{person}{Kamalika Chaudhuri} {and}
-  \bibinfo{person}{Daniel Hsu}.}
-\newblock \showarticletitle{Convergence rates for differentially private
-  statistical estimation}. In \bibinfo{booktitle}{{\em ICML, 2012}}.
-  \bibinfo{pages}{1327}.
-\newblock
+\bibitem{dimitrakakis2014robust}
+Christos Dimitrakakis, Blaine Nelson, Aikaterini Mitrokotsa, and Benjamin~IP
+  Rubinstein.
+\newblock Robust and private bayesian inference.
+\newblock In {\em ALT, 2014}, pages 291--305.
 
+\bibitem{dimitrakakis2015differential}
+Christos Dimitrakakis, Blaine Nelson, Zuhe Zhang, Aikaterini Mitrokotsa, and
+  Benjamin~IP Rubinsein.
+\newblock Differential privacy in a bayesian setting through posterior
+  sampling.
 
-\bibitem[\protect\citeauthoryear{Chaudhuri and Monteleoni}{Chaudhuri and
-  Monteleoni}{}]%
-        {chaudhuri2009privacy}
-\bibfield{author}{\bibinfo{person}{Kamalika Chaudhuri} {and}
-  \bibinfo{person}{Claire Monteleoni}.}
-\newblock \showarticletitle{Privacy-preserving logistic regression}. In
-  \bibinfo{booktitle}{{\em NIPS, 2009}}. \bibinfo{pages}{289--296}.
-\newblock
+\bibitem{dwork2014algorithmic}
+Cynthia Dwork, Aaron Roth, et~al.
+\newblock {\em The algorithmic foundations of differential privacy}.
+\newblock Now Publishers, Inc., 2014.
 
+\bibitem{foulds2016theory}
+James Foulds, Joseph Geumlek, Max Welling, and Kamalika Chaudhuri.
+\newblock On the theory and practice of privacy-preserving bayesian data
+  analysis.
 
-\bibitem[\protect\citeauthoryear{Chaudhuri, Sarwate, and Sinha}{Chaudhuri
-  et~al\mbox{.}}{}]%
-        {chaudhuri2012near}
-\bibfield{author}{\bibinfo{person}{Kamalika Chaudhuri}, \bibinfo{person}{Anand
-  Sarwate}, {and} \bibinfo{person}{Kaushik Sinha}.}
-\newblock \showarticletitle{Near-optimal differentially private principal
-  components}. In \bibinfo{booktitle}{{\em NIPS, 2012}}.
-  \bibinfo{pages}{989--997}.
-\newblock
+\bibitem{talwar}
+Frank McSherry and Kunal Talwar.
+\newblock Mechanism design via differential privacy.
+\newblock In {\em FOCS, 2007}.
 
+\bibitem{nissim2007smooth}
+Kobbi Nissim, Sofya Raskhodnikova, and Adam Smith.
+\newblock Smooth sensitivity and sampling in private data analysis.
+\newblock In {\em STOC, 2007}, pages 75--84.
 
-\bibitem[\protect\citeauthoryear{Csisz{\'a}r and Shields}{Csisz{\'a}r and
-  Shields}{2004}]%
-        {CIT-004}
-\bibfield{author}{\bibinfo{person}{I. Csisz{\'a}r} {and} \bibinfo{person}{P.C.
-  Shields}.} \bibinfo{year}{2004}\natexlab{}.
-\newblock \showarticletitle{Information Theory and Statistics: A Tutorial}.
-\newblock \bibinfo{journal}{{\em Foundations and Trends® in Communications and
-  Information Theory\/}} \bibinfo{volume}{1}, \bibinfo{number}{4}
-  (\bibinfo{year}{2004}), \bibinfo{pages}{417--528}.
-\newblock
-\showISSN{1567-2190}
-\showDOI{%
-\url{https://doi.org/10.1561/0100000004}}
+\bibitem{wang2015differentially}
+Yining Wang, Yu-Xiang Wang, and Aarti Singh.
+\newblock Differentially private subspace clustering.
+\newblock In {\em NIPS, 2015}, pages 1000--1008.
 
+\bibitem{wang2015privacy}
+Yu-Xiang Wang, Stephen Fienberg, and Alex Smola.
+\newblock Privacy for free: Posterior sampling and stochastic gradient monte
+  carlo.
+\newblock In {\em ICML, 2015}, pages 2493--2502.
 
-\bibitem[\protect\citeauthoryear{Dimitrakakis, Nelson, Mitrokotsa, and
-  Rubinstein}{Dimitrakakis et~al\mbox{.}}{a}]%
-        {dimitrakakis2014robust}
-\bibfield{author}{\bibinfo{person}{Christos Dimitrakakis},
-  \bibinfo{person}{Blaine Nelson}, \bibinfo{person}{Aikaterini Mitrokotsa},
-  {and} \bibinfo{person}{Benjamin~IP Rubinstein}.}
-\newblock \showarticletitle{Robust and private Bayesian inference}. In
-  \bibinfo{booktitle}{{\em ALT, 2014}}. \bibinfo{pages}{291--305}.
-\newblock
+\bibitem{williams2010probabilistic}
+Oliver Williams and Frank McSherry.
+\newblock Probabilistic inference and differential privacy.
+\newblock In {\em NIPS, 2010}, pages 2451--2459.
 
+\bibitem{xiao2012bayesian}
+Yonghui Xiao and Li~Xiong.
+\newblock Bayesian inference under differential privacy.
 
-\bibitem[\protect\citeauthoryear{Dimitrakakis, Nelson, Zhang, Mitrokotsa, and
-  Rubinsein}{Dimitrakakis et~al\mbox{.}}{b}]%
-        {dimitrakakis2015differential}
-\bibfield{author}{\bibinfo{person}{Christos Dimitrakakis},
-  \bibinfo{person}{Blaine Nelson}, \bibinfo{person}{Zuhe Zhang},
-  \bibinfo{person}{Aikaterini Mitrokotsa}, {and} \bibinfo{person}{Benjamin~IP
-  Rubinsein}.}
-\newblock \showarticletitle{Differential privacy in a Bayesian setting through
-  posterior sampling}.
-\newblock \bibinfo{journal}{{\em Technical Report 1306.1066, arXiv, 2015\/}}.
-\newblock
+\bibitem{Zhang2017privbayes}
+Jun Zhang, Graham Cormode, Cecilia~M. Procopiuc, Divesh Srivastava, and Xiaokui
+  Xiao.
+\newblock Privbayes: Private data release via bayesian networks.
+\newblock pages 1423--1434.
 
+\bibitem{zhang2016differential}
+Zuhe Zhang, Benjamin~IP Rubinstein, Christos Dimitrakakis, et~al.
+\newblock On the differential privacy of bayesian inference.
+\newblock In {\em AAAI, 2016}, pages 2365--2371.
 
-\bibitem[\protect\citeauthoryear{Dwork, Roth, et~al\mbox{.}}{Dwork
-  et~al\mbox{.}}{2014}]%
-        {dwork2014algorithmic}
-\bibfield{author}{\bibinfo{person}{Cynthia Dwork}, \bibinfo{person}{Aaron
-  Roth}, {et~al\mbox{.}}} \bibinfo{year}{2014}\natexlab{}.
-\newblock \bibinfo{booktitle}{{\em The algorithmic foundations of differential
-  privacy}}.
-\newblock \bibinfo{publisher}{Now Publishers, Inc.}
-\newblock
-
-
-\bibitem[\protect\citeauthoryear{Foulds, Geumlek, Welling, and
-  Chaudhuri}{Foulds et~al\mbox{.}}{}]%
-        {foulds2016theory}
-\bibfield{author}{\bibinfo{person}{James Foulds}, \bibinfo{person}{Joseph
-  Geumlek}, \bibinfo{person}{Max Welling}, {and} \bibinfo{person}{Kamalika
-  Chaudhuri}.}
-\newblock \showarticletitle{On the theory and practice of privacy-preserving
-  Bayesian data analysis}.
-\newblock \bibinfo{journal}{{\em arXiv preprint arXiv:1603.07294, 2016\/}}.
-\newblock
-
-
-\bibitem[\protect\citeauthoryear{McSherry and Talwar}{McSherry and Talwar}{}]%
-        {talwar}
-\bibfield{author}{\bibinfo{person}{Frank McSherry} {and} \bibinfo{person}{Kunal
-  Talwar}.}
-\newblock \showarticletitle{Mechanism Design via Differential Privacy}. In
-  \bibinfo{booktitle}{{\em FOCS, 2007}}.
-\newblock
-
-
-\bibitem[\protect\citeauthoryear{Nissim, Raskhodnikova, and Smith}{Nissim
-  et~al\mbox{.}}{}]%
-        {nissim2007smooth}
-\bibfield{author}{\bibinfo{person}{Kobbi Nissim}, \bibinfo{person}{Sofya
-  Raskhodnikova}, {and} \bibinfo{person}{Adam Smith}.}
-\newblock \showarticletitle{Smooth sensitivity and sampling in private data
-  analysis}. In \bibinfo{booktitle}{{\em STOC, 2007}}. \bibinfo{pages}{75--84}.
-\newblock
-
-
-\bibitem[\protect\citeauthoryear{Wang, Wang, and Singh}{Wang
-  et~al\mbox{.}}{b}]%
-        {wang2015differentially}
-\bibfield{author}{\bibinfo{person}{Yining Wang}, \bibinfo{person}{Yu-Xiang
-  Wang}, {and} \bibinfo{person}{Aarti Singh}.}
-\newblock \showarticletitle{Differentially private subspace clustering}. In
-  \bibinfo{booktitle}{{\em NIPS, 2015}}. \bibinfo{pages}{1000--1008}.
-\newblock
-
-
-\bibitem[\protect\citeauthoryear{Wang, Fienberg, and Smola}{Wang
-  et~al\mbox{.}}{a}]%
-        {wang2015privacy}
-\bibfield{author}{\bibinfo{person}{Yu-Xiang Wang}, \bibinfo{person}{Stephen
-  Fienberg}, {and} \bibinfo{person}{Alex Smola}.}
-\newblock \showarticletitle{Privacy for free: Posterior sampling and stochastic
-  gradient monte carlo}. In \bibinfo{booktitle}{{\em ICML, 2015}}.
-  \bibinfo{pages}{2493--2502}.
-\newblock
-
-
-\bibitem[\protect\citeauthoryear{Williams and McSherry}{Williams and
-  McSherry}{}]%
-        {williams2010probabilistic}
-\bibfield{author}{\bibinfo{person}{Oliver Williams} {and}
-  \bibinfo{person}{Frank McSherry}.}
-\newblock \showarticletitle{Probabilistic inference and differential privacy}.
-  In \bibinfo{booktitle}{{\em NIPS, 2010}}. \bibinfo{pages}{2451--2459}.
-\newblock
-
-
-\bibitem[\protect\citeauthoryear{Xiao and Xiong}{Xiao and Xiong}{}]%
-        {xiao2012bayesian}
-\bibfield{author}{\bibinfo{person}{Yonghui Xiao} {and} \bibinfo{person}{Li
-  Xiong}.}
-\newblock \showarticletitle{Bayesian inference under differential privacy}.
-\newblock \bibinfo{journal}{{\em arXiv preprint arXiv:1203.0617, 2012\/}}.
-\newblock
-
-
-\bibitem[\protect\citeauthoryear{Zhang, Cormode, Procopiuc, Srivastava, and
-  Xiao}{Zhang et~al\mbox{.}}{a}]%
-        {Zhang2017privbayes}
-\bibfield{author}{\bibinfo{person}{Jun Zhang}, \bibinfo{person}{Graham
-  Cormode}, \bibinfo{person}{Cecilia~M. Procopiuc}, \bibinfo{person}{Divesh
-  Srivastava}, {and} \bibinfo{person}{Xiaokui Xiao}.}
-\newblock \showarticletitle{PrivBayes: Private Data Release via Bayesian
-  Networks}.
-\newblock \bibinfo{journal}{{\em SIGMOD, 2014\/}}, \bibinfo{pages}{1423--1434}.
-\newblock
-
-
-\bibitem[\protect\citeauthoryear{Zhang, Rubinstein, Dimitrakakis,
-  et~al\mbox{.}}{Zhang et~al\mbox{.}}{b}]%
-        {zhang2016differential}
-\bibfield{author}{\bibinfo{person}{Zuhe Zhang}, \bibinfo{person}{Benjamin~IP
-  Rubinstein}, \bibinfo{person}{Christos Dimitrakakis}, {et~al\mbox{.}}}
-\newblock \showarticletitle{On the Differential Privacy of Bayesian Inference}.
-  In \bibinfo{booktitle}{{\em AAAI, 2016}}. \bibinfo{pages}{2365--2371}.
-\newblock
-
-
-\bibitem[\protect\citeauthoryear{Zheng}{Zheng}{}]%
-        {zheng2015differential}
-\bibfield{author}{\bibinfo{person}{Shijie Zheng}.}
-\newblock \showarticletitle{The Differential Privacy of Bayesian Inference}. In
-  \bibinfo{booktitle}{{\em Bachelor's thesis, Harvard College, 2015}}.
-\newblock
-
+\bibitem{zheng2015differential}
+Shijie Zheng.
+\newblock The differential privacy of bayesian inference.
+\newblock In {\em Bachelor's thesis, Harvard College, 2015}.
 
 \end{thebibliography}

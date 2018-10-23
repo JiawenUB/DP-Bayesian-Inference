@@ -1,14 +1,7 @@
-\documentclass[sigconf]{acmart}
+% \documentclass[sigconf]{acmart}
+\documentclass{article}
 
-\fancyhf{} % Remove fancy page headers 
-% \fancyhead[C]{Anonymous submission \#9999 to ACM CCS 2017} % TODO: replace 9999 with your paper number
-\fancyfoot[C]{\thepage}
-
-\setcopyright{none} % No copyright notice required for submissions
-% \acmConference[Anonymous Submission to ACM CCS 2017]{ACM Conference on Computer and Communications Security}{Due 19 May 2017}{Dallas, Texas}
-% \acmYear{2017}
-
-\settopmatter{printacmref=false, printccs=true, printfolios=true} % We want page numbers on submissions
+% We want page numbers on submissions
 
 %%\ccsPaper{9999} % TODO: replace with your paper number once obtained
 \input{macros}
@@ -22,9 +15,9 @@
 allows one to derive a \emph{posterior} distribution,
 starting from a \emph{prior} distribution and observed data. Several
 approaches have been explored in order to make this process differentially
-private. For example, \citet{dimitrakakis2014robust}, and
-\citet{wang2015privacy} proved that, under specific conditions, sampling from
-the posterior distribution is already differentially private. \citet{zhang2016differential}, \citet{foulds2016theory},
+private. For example, \cite{dimitrakakis2014robust}, and
+\cite{wang2015privacy} proved that, under specific conditions, sampling from
+the posterior distribution is already differentially private. \cite{zhang2016differential}, \cite{foulds2016theory},
 designed differentially private mechanisms that output a
 representation of the full posterior distribution. 
 
@@ -47,9 +40,7 @@ use to measure accuracy. To show the usefulness of this mechanism we
 show an experimental analysis comparing it with mechanisms based on
 the Laplace mechanism.
 \end{abstract}
-
-
-\keywords{Differential privacy, Bayesian inference, Hellinger distance} % TODO: replace with your keywords
+ % TODO: replace with your keywords
 
 \maketitle
 
@@ -96,9 +87,9 @@ We will see that in some cases this can happen.
 
 \noindent \textbf{Related Work.}
 
-A plentiful of data analysis algorithms have been studied to preserve differential privacy, including the subspace clustering algorithm \citet{wang2015differentially}, the gradient decedent algorithm in deep learning \citet{abadi2016deep}, logical regression \citet{chaudhuri2009privacy}, principle component analysis \citet{chaudhuri2012near}, probabilitic inference \citet{williams2010probabilistic} and convergence in statistic estimation \citet{chaudhuri2012convergence}, etc. 
+A plentiful of data analysis algorithms have been studied to preserve differential privacy, including the subspace clustering algorithm \cite{wang2015differentially}, the gradient decedent algorithm in deep learning \cite{abadi2016deep}, logical regression \cite{chaudhuri2009privacy}, principle component analysis \cite{chaudhuri2012near}, probabilitic inference \cite{williams2010probabilistic} and convergence in statistic estimation \cite{chaudhuri2012convergence}, etc. 
 
-In Bayesian Inference data analysis, mechanisms are proposed corresponded to maintain their differential privacy, focusing on 3 different goals: 1) Inherited differential privacy property of posterior sampling in Bayesian inference. \citet{dimitrakakis2014robust}, \citet{zhang2016differential}, \citet{zheng2015differential} and \citet{wang2015privacy}. 2) Data sampled and released from posterior distribution of Bayesian is differentially private \citet{Zhang2017privbayes}, \citet{dimitrakakis2015differential},  \citet{foulds2016theory}. 3) The inference process is differentially private and the posterior distribution released should be private itself, in the meantime, with good accuracy. The third topic where our work focus on is still very new.
+In Bayesian Inference data analysis, mechanisms are proposed corresponded to maintain their differential privacy, focusing on 3 different goals: 1) Inherited differential privacy property of posterior sampling in Bayesian inference. \cite{dimitrakakis2014robust}, \cite{zhang2016differential}, \cite{zheng2015differential} and \cite{wang2015privacy}. 2) Data sampled and released from posterior distribution of Bayesian is differentially private \cite{Zhang2017privbayes}, \cite{dimitrakakis2015differential},  \cite{foulds2016theory}. 3) The inference process is differentially private and the posterior distribution released should be private itself, in the meantime, with good accuracy. The third topic where our work focus on is still very new.
 
 
 \section{Preliminaries}
@@ -201,7 +192,7 @@ by their parameters, and the family (beta, Dirichlet) they belong to. Hence, in 
 Beta-Binomial model we are interested in releasing a private version of the pair of
 parameters $(\alpha',\beta')=(\alpha + \Delta \alpha,\beta + n - \Delta \alpha)$, and
 in the case of the Dirichlet-multinomial model we are interested in a private version of
-$\valpha'=(\valpha + \Delta \valpha)$. \citet{zhang2016differential} and \citet{xiao2012bayesian}
+$\valpha'=(\valpha + \Delta \valpha)$. \cite{zhang2016differential} and \cite{xiao2012bayesian}
 have already attacked this problem by adding independent Laplacian noise to the
 parameters of the posteriors. That is, in the case of the Beta-Binomial system,
 the value released would  be: $(\tilde\alpha,\tilde\beta)=(\alpha +  \widetilde{\Delta \alpha},\beta + n - \widetilde{\Delta \alpha})$
@@ -370,7 +361,7 @@ This mechanism is based on the basic exponential mechanism
 $\hellinger(\cdot,\cdot)$ as the scoring function. The difference is
 that in this mechanism we don't calibrate the noise w.r.t. to the
 global sensitivity of the scoring function but w.r.t. to the smooth
-sensitivity $S(\dataobs)$ -- defined by \citet{nissim2007smooth}-- of
+sensitivity $S(\dataobs)$ -- defined by \cite{nissim2007smooth}-- of
 $\hellinger(\bysinfer(\dataobs), \cdot)$.
 
 $\gamma = \gamma(\epsilon, \delta)$ is a function of $\epsilon$ and $\delta$ to
@@ -396,7 +387,7 @@ By setting the $\gamma$ as $\ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta}{2 (n + 
 \section{Privacy Analysis}
 
 \subsection{Privacy Analysis for Baseline Mechanisms}
-In baseline mechanisms, \emph{exponential mechanism}, \emph{Laplace mechanism}, \emph{improved Laplace mechanism} are $\epsilon-$differential privacy provided by \citet{dwork2014algorithmic}. The \emph{exponential mechanism with local sensitivity} is non-differential privacy, also from \citet{dwork2014algorithmic}.
+In baseline mechanisms, \emph{exponential mechanism}, \emph{Laplace mechanism}, \emph{improved Laplace mechanism} are $\epsilon-$differential privacy provided by \cite{dwork2014algorithmic}. The \emph{exponential mechanism with local sensitivity} is non-differential privacy, also from \cite{dwork2014algorithmic}.
 
 \subsection{Privacy Analysis for $\hexpmech$}
 
@@ -716,7 +707,7 @@ This equation is validated by an experimental result shown in Fig. \ref{fig_effi
 
 \subsection{Theoretical Results}
 
-\begin{figure}[H]
+\begin{figure}
 \begin{center}
 \centering
   \subfigure[2 dimensions with data size $600$]{
@@ -769,7 +760,7 @@ up to $n$.
 \paragraph{Increasing data size with balanced datasets}
 \label{subsubsec_vs_datasize}
 
-\begin{figure}[H]
+\begin{figure}
 \begin{center}
 \centering
     \includegraphics[width=0.4\textwidth]{sampling_2d.eps}
@@ -813,7 +804,7 @@ Similar experimental tendencies were obtained for the Dirichlet-multinomial mode
 \label{subsubsec_vs_prior}
 In Figure \ref{fig_vs_prior}, we fix the data set to be $(50,50)$, and the parameters the same as before: $\epsilon = 1.0$ and $\delta = 10^{-8}$ . We studied the accuracy under different priors, where the priors considered  are also balanced.
 Similar to the plots above, Figure \ref{fig_vs_prior} shows that in the beginning the baseline Laplace mechanism and improved Laplace mechanism performs better but the baseline approach is outperformed after a while, and very close to the improved Laplace mechanism.
-\begin{figure}[H]
+\begin{figure}
 \centering
 \includegraphics[width=0.48\textwidth]{sampling_prior.eps}
 \caption{Observed data set is: $(50,50)$, varying balanced priors}
@@ -875,7 +866,7 @@ family of $f$-divergences \cite{CIT-004}.
 \end{enumerate}
 
 
-\bibliographystyle{ACM-Reference-Format}
+\bibliographystyle{plain}
 \bibliography{bayesian.bib}
 
 \end{document}
