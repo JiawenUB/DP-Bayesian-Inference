@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  23 OCT 2018 00:13
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  23 OCT 2018 00:50
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1824,7 +1824,7 @@ LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/b/n' will be
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/it' will be
 (Font)              scaled to size 9.0pt on input line 54.
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Underfull \vbox (badness 1092) has occurred while \output is active []
 
  [1.1{/usr/local/texlive/2017/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
 
@@ -1928,11 +1928,13 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 348.
 
 
-Overfull \hbox (19.6187pt too wide) in paragraph at lines 393--394
-\T1/LinuxLibertineT-TLF/m/n/9 (-20) gen-er-al-ized to Dirichlet-multinomial Sys
--tem), $\LMS/ntxsy/m/n/9 M[]$ \T1/LinuxLibertineT-TLF/m/n/9 (-20) is $\LMS/ntxs
-y/m/n/9 ¹\OML/nxlmi/m/it/9 ^^O; ^^N\LMS/ntxsy/m/n/9 º^^@$\T1/LinuxLibertineT-TL
-F/m/n/9 (-20) differentially
+Overfull \hbox (6.64485pt too wide) in paragraph at lines 393--394
+[]\T1/LinuxLibertineT-TLF/m/n/9 (-20) By set-ting the $\OML/nxlmi/m/it/9 ^^M$ \
+T1/LinuxLibertineT-TLF/m/n/9 (-20) as $[]\LMS/ntxsy/m/n/9 ¹\OT1/LinuxLibertineT
+-TLF/m/n/9 (-20) 1 \LMS/ntxsy/m/n/9 ^^@ []º$\T1/LinuxLibertineT-TLF/m/n/9 (-20)
+ , $\LMS/ntxsy/m/n/9 M[]$ \T1/LinuxLibertineT-TLF/m/n/9 (-20) is $\LMS/ntxsy/m/
+n/9 ¹\OML/nxlmi/m/it/9 ^^O; []\LMS/ntxsy/m/n/9 º^^@$\T1/LinuxLibertineT-TLF/m/n
+/9 (-20) differentially
  []
 
 
@@ -2210,11 +2212,11 @@ LaTeX Warning: There were multiply-defined labels.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 881.
  ) 
 Here is how much of TeX's memory you used:
- 30616 strings out of 492995
- 538497 string characters out of 6132704
+ 30613 strings out of 492995
+ 538425 string characters out of 6132704
  638633 words of memory out of 5000000
  33018 multiletter control sequences out of 15000+600000
- 219273 words of font info for 431 fonts, out of 8000000 for 9000
+ 219000 words of font info for 429 fonts, out of 8000000 for 9000
  1302 hyphenation exceptions out of 8191
  60i,20n,94p,10430b,906s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/libertine/lbtn_ncsllp.enc
@@ -2249,7 +2251,7 @@ type1/public/newtx/txsys.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/pu
 blic/newtx/zxlr.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/newt
 x/zxlri.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/newtx/zxlzi.
 pfb>
-Output written on main.pdf (9 pages, 2237733 bytes).
+Output written on main.pdf (9 pages, 2238038 bytes).
 PDF statistics:
  443 PDF objects out of 1000 (max. 8388607)
  354 compressed objects within 4 object streams

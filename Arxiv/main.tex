@@ -98,7 +98,7 @@ We will see that in some cases this can happen.
 
 A plentiful of data analysis algorithms have been studied to preserve differential privacy, including the subspace clustering algorithm \citet{wang2015differentially}, the gradient decedent algorithm in deep learning \citet{abadi2016deep}, logical regression \citet{chaudhuri2009privacy}, principle component analysis \citet{chaudhuri2012near}, probabilitic inference \citet{williams2010probabilistic} and convergence in statistic estimation \citet{chaudhuri2012convergence}, etc. 
 
-In Bayesian Inference data analysis, some algorithms have been studied and mechanisms proposed corresponded to maintain their differential privacy. There are 3 main topics: 1) Inherited differential privacy property of posterior sampling in Bayesian inference. \citet{dimitrakakis2014robust}, \citet{zhang2016differential}, \citet{zheng2015differential} and \citet{wang2015privacy}. 2) Data sampled and released from posterior distribution of Bayesian is differentially private \citet{Zhang2017privbayes}, \citet{dimitrakakis2015differential},  \citet{foulds2016theory}. 3) The inference process is differentially private and the posterior distribution released should be private itself. The third topic where our work focus on is still very new.
+In Bayesian Inference data analysis, mechanisms are proposed corresponded to maintain their differential privacy, focusing on 3 different goals: 1) Inherited differential privacy property of posterior sampling in Bayesian inference. \citet{dimitrakakis2014robust}, \citet{zhang2016differential}, \citet{zheng2015differential} and \citet{wang2015privacy}. 2) Data sampled and released from posterior distribution of Bayesian is differentially private \citet{Zhang2017privbayes}, \citet{dimitrakakis2015differential},  \citet{foulds2016theory}. 3) The inference process is differentially private and the posterior distribution released should be private itself, in the meantime, with good accuracy. The third topic where our work focus on is still very new.
 
 
 \section{Preliminaries}
@@ -390,7 +390,7 @@ that $\candidateset$ has $\binom{n + 1}{m - 1}$ elements in this case. We
 will denote by $\hexpmechd$ the mechanism for the
 Dirichlet-multinomial system.
 
-By setting the $\gamma$ as $\ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta}{2 (n + 1)})})$ (or $\ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta}{2 |\candidateset|})})$ when generalized to Dirichlet-multinomial System), $\hexpmech$ is $(\epsilon, \delta) -$differentially private.
+By setting the $\gamma$ as $\ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta}{2 (n + 1)})})$, $\hexpmech$ is $(\epsilon, \frac{e^{\frac{\epsilon}{2}} \delta}{2}) -$differentially private. (or $\gamma = \ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta}{2 |\candidateset|})})$ when generalized to Dirichlet-multinomial System)
 
 
 \section{Privacy Analysis}
@@ -462,7 +462,7 @@ In what follows, we will use a correspondence between the probability
 		&  =  e^{\frac{\epsilon}{2}} \underset{z \thicksim \hexpmech(x)}{Pr}[u(r,x) = (\Delta + \hat{s})] \leq RHS\\
 		\end{split}
 		\end{equation*}
-	\item for $r \in R_2$: Actually is exactly the same as above by eliminating the parameter $|z|$ in both sides.
+	\item for $r \in R_2$: Proof actually is exactly the same as above by eliminating the parameter $|z|$ in both sides.
 \end{itemize}
 
 The same in Dirichlet-multinomial distribution, partitioning the $\candidateset$ by the possible value of $|z|$, the proof can be derived in the same way as above by part.
@@ -561,10 +561,10 @@ Next, we proof the dilation property for $\lambda > 0$, The ratio of $\frac{h(c)
 
 \end{proof}
 
-\noindent \textbf{$(\epsilon, \delta)-$Differential Privacy of $\hexpmech$}
+\noindent \textbf{$(\epsilon, \frac{e^{\frac{\epsilon}{2}} \delta}{2})-$Differential Privacy of $\hexpmech$}
 \begin{lem}
 \label{lem_hexpmech_privacy}
-$\hexpmech$ is $(\epsilon, \delta)$-differential privacy.
+$\hexpmech$ is $(\epsilon, \frac{e^{\frac{\epsilon}{2}} \delta}{2})$-differential privacy.
 \end{lem}
 
 \begin{proof}
