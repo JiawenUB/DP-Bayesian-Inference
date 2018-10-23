@@ -1,12 +1,12 @@
 # Fdb version 3
-["bibtex main"] 1540271049 "main.aux" "main.bbl" "main" 1540271362
+["bibtex main"] 1540272155 "main.aux" "main.bbl" "main" 1540272157
   "/usr/local/texlive/2017/texmf-dist/bibtex/bst/base/plain.bst" 1480098433 20613 bd3fbfa9f64872b81ac57a0dd2ed855f ""
   "bayesian.bib" 1540251263 4412 37481d487fe074296116256b6b32be06 ""
-  "main.aux" 1540271361 11203 214820677dbb5762f964a85238f393ec ""
+  "main.aux" 1540272156 11203 c5fce055a7dda4b39a79e4bf06afa4ba ""
   (generated)
   "main.blg"
   "main.bbl"
-["pdflatex"] 1540271360 "main.tex" "main.pdf" "main" 1540271362
+["pdflatex"] 1540272155 "main.tex" "main.pdf" "main" 1540272157
   "/usr/local/texlive/2017/texmf-dist/fonts/map/fontname/texfonts.map" 1480098670 3287 e6b82fe08f5336d4d5ebc73fb1152e87 ""
   "/usr/local/texlive/2017/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy5.tfm" 1480098698 1120 1e8878807317373affa7f7bba4cf2f6a ""
   "/usr/local/texlive/2017/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy7.tfm" 1480098698 1120 7f9f170e8aa57527ad6c49feafd45d54 ""
@@ -189,6 +189,7 @@
   "/usr/local/texlive/2017/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty" 1480098836 9581 023642318cef9f4677efe364de1e2a27 ""
   "/usr/local/texlive/2017/texmf-dist/tex/latex/oberdiek/zref-abspage.sty" 1480098836 2153 d19aab1852eaa8dc344880608fac789e ""
   "/usr/local/texlive/2017/texmf-dist/tex/latex/oberdiek/zref-base.sty" 1480098836 20510 c85fce26ec1b831d7c2882604a05e777 ""
+  "/usr/local/texlive/2017/texmf-dist/tex/latex/preprint/authblk.sty" 1480098837 7016 985a983ce041cc8959cd31133cba0244 ""
   "/usr/local/texlive/2017/texmf-dist/tex/latex/siunitx/siunitx-abbreviations.cfg" 1495227905 4669 80e36c8e5be359448b80ce8ae24c5237 ""
   "/usr/local/texlive/2017/texmf-dist/tex/latex/siunitx/siunitx.sty" 1495227905 278841 e6a10a03b8503754a74f18df9f196c6a ""
   "/usr/local/texlive/2017/texmf-dist/tex/latex/stmaryrd/Ustmry.fd" 1480098839 1766 216b0f832c406513647608b5bb9bb8ff ""
@@ -208,11 +209,11 @@
   "global_epsilon_size100to200.eps" 1540172632 2922778 708fe0c6d0f1022659db8b62e2dd4a3c ""
   "global_epsilon_size50to100-eps-converted-to.pdf" 1540217275 46425 f5b65c1eaabb7137029dbaa2b62de274 ""
   "global_epsilon_size50to100.eps" 1540172632 2922777 4ba15c1b1ffe0fa75813f8003312e102 ""
-  "macros.tex" 1540271045 2617 464896a2274ddbdf1765af91da86745b ""
-  "main.aux" 1540271361 11203 214820677dbb5762f964a85238f393ec ""
-  "main.bbl" 1540271049 3449 a5ac4a969a742242fb7298b07def42fa "bibtex main"
-  "main.out" 1540271361 1933 9834dbd4131f6d0097edc2d18f13950f ""
-  "main.tex" 1540271360 50485 2217ba937dcac1f667d4a8982a1a525b ""
+  "macros.tex" 1540271938 2638 574bc9054f8ab1d2a541bc675655b5ae ""
+  "main.aux" 1540272156 11203 c5fce055a7dda4b39a79e4bf06afa4ba ""
+  "main.bbl" 1540272155 3449 a5ac4a969a742242fb7298b07def42fa "bibtex main"
+  "main.out" 1540272156 1933 9834dbd4131f6d0097edc2d18f13950f ""
+  "main.tex" 1540272154 50809 a5d011b4bd576da4b30511900cb20a81 ""
   "sampling_2d.eps" 1538800006 21965843 40d55083c9cb8f5144a4dc57365a68f6 ""
   "sampling_3d.eps" 1538799604 21382169 af98be27d359a097344438505215d8ad ""
   "sampling_4d.eps" 1538800012 25552469 b3621363c6cdfca200240f664ac1c8c9 ""
@@ -221,7 +222,7 @@
   "theory_2d.eps" 1539266532 7473166 eed600375e31ea9466cae0eb36b478ed ""
   "theory_3d.eps" 1539266823 7473166 25417ac3dbd2f28d7795159b806b8af0 ""
   (generated)
+  "main.pdf"
   "main.out"
   "main.aux"
   "main.log"
-  "main.pdf"

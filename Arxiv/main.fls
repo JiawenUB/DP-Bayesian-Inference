@@ -162,6 +162,8 @@ INPUT /usr/local/texlive/2017/texmf-dist/tex/latex/amsfonts/amsfonts.sty
 INPUT /usr/local/texlive/2017/texmf-dist/tex/latex/amsfonts/amsfonts.sty
 INPUT /usr/local/texlive/2017/texmf-dist/tex/latex/base/latexsym.sty
 INPUT /usr/local/texlive/2017/texmf-dist/tex/latex/base/latexsym.sty
+INPUT /usr/local/texlive/2017/texmf-dist/tex/latex/preprint/authblk.sty
+INPUT /usr/local/texlive/2017/texmf-dist/tex/latex/preprint/authblk.sty
 INPUT /usr/local/texlive/2017/texmf-dist/tex/latex/cancel/cancel.sty
 INPUT /usr/local/texlive/2017/texmf-dist/tex/latex/cancel/cancel.sty
 INPUT /usr/local/texlive/2017/texmf-dist/tex/generic/ulem/ulem.sty
@@ -268,11 +270,11 @@ INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm1
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm10.tfm
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/public/latex-fonts/lasy10.tfm
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/public/latex-fonts/lasy8.tfm
+INPUT /usr/local/texlive/2017/texmf-dist/tex/latex/base/omscmr.fd
+INPUT /usr/local/texlive/2017/texmf-dist/tex/latex/base/omscmr.fd
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/public/cm/cmr12.tfm
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm
-INPUT /usr/local/texlive/2017/texmf-dist/tex/latex/base/omscmr.fd
-INPUT /usr/local/texlive/2017/texmf-dist/tex/latex/base/omscmr.fd
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/public/cm/cmbx7.tfm
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/public/cm/cmbx5.tfm
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/public/cm/cmti10.tfm
