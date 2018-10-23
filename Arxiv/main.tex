@@ -86,8 +86,11 @@ We will see that in some cases this can happen.
 \noindent \textbf{Main contributions.}
 \begin{itemize}
 	\item We designed a differentially private Bayesian inference mechanism based on the standard exponential mechanism.
-	\item The accuracy is improved by two ways: 1) calibrating noise to the sensitivity of a
-         metric over distributions (e.g. Hellinger distance ($\hellinger$), $f$-divergences, etc\dots). 2) Using a smooth upper bound on the local sensitivity and scale the noise to this smooth bound rather than global sensitivity, to improve the mechanism accuracy.
+
+	\item The accuracy is improved by two ways: 1) calibrating noise to the sensitivity of a metric over distributions (e.g. Hellinger distance ($\hellinger$), $f$-divergences, etc\dots). 2) Using a smooth upper bound on the local sensitivity and scale the noise to this smooth bound rather than global sensitivity, to improve the mechanism accuracy.
+
+  \item A full proof on applying exponential mechanism to the smooth sensitivity is $(\epsilon, \delta)-$differential privacy is given in paper.
+
 	\item We implemented the new proposed mechanism and other art-of-state mechanisms, comparing the performance in terms of accuracy and efficiency.
 \end{itemize}
 

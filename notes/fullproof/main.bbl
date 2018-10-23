@@ -1,59 +1,27 @@
-%%% -*-BibTeX-*-
-%%% Do NOT edit. File created by BibTeX with style
-%%% ACM-Reference-Format-Journals [18-Jan-2012].
+\begin{thebibliography}{1}
 
-\begin{thebibliography}{00}
+\bibitem{dwork2014algorithmic}
+Cynthia Dwork, Aaron Roth, et~al.
+\newblock {\em The algorithmic foundations of differential privacy}.
+\newblock Now Publishers, Inc., 2014.
 
-%%% ====================================================================
-%%% NOTE TO THE USER: you can override these defaults by providing
-%%% customized versions of any of these macros before the \bibliography
-%%% command.  Each of them MUST provide its own final punctuation,
-%%% except for \shownote{}, \showDOI{}, and \showURL{}.  The latter two
-%%% do not use final punctuation, in order to avoid confusing it with
-%%% the Web address.
-%%%
-%%% To suppress output of a particular field, define its macro to expand
-%%% to an empty string, or better, \unskip, like this:
-%%%
-%%% \newcommand{\showDOI}[1]{\unskip}   % LaTeX syntax
-%%%
-%%% \def \showDOI #1{\unskip}           % plain TeX syntax
-%%%
-%%% ====================================================================
+\bibitem{talwar}
+Frank McSherry and Kunal Talwar.
+\newblock Mechanism design via differential privacy.
+\newblock In {\em FOCS, 2007}.
 
-\ifx \showCODEN    \undefined \def \showCODEN     #1{\unskip}     \fi
-\ifx \showDOI      \undefined \def \showDOI       #1{#1}\fi
-\ifx \showISBNx    \undefined \def \showISBNx     #1{\unskip}     \fi
-\ifx \showISBNxiii \undefined \def \showISBNxiii  #1{\unskip}     \fi
-\ifx \showISSN     \undefined \def \showISSN      #1{\unskip}     \fi
-\ifx \showLCCN     \undefined \def \showLCCN      #1{\unskip}     \fi
-\ifx \shownote     \undefined \def \shownote      #1{#1}          \fi
-\ifx \showarticletitle \undefined \def \showarticletitle #1{#1}   \fi
-\ifx \showURL      \undefined \def \showURL       {\relax}        \fi
-% The following commands are used for tagged output and should be
-% invisible to TeX
-\providecommand\bibfield[2]{#2}
-\providecommand\bibinfo[2]{#2}
-\providecommand\natexlab[1]{#1}
-\providecommand\showeprint[2][]{arXiv:#2}
+\bibitem{nissim2007smooth}
+Kobbi Nissim, Sofya Raskhodnikova, and Adam Smith.
+\newblock Smooth sensitivity and sampling in private data analysis.
+\newblock In {\em STOC, 2007}, pages 75--84.
 
-\bibitem[\protect\citeauthoryear{McSherry and Talwar}{McSherry and Talwar}{}]%
-        {talwar}
-\bibfield{author}{\bibinfo{person}{Frank McSherry} {and} \bibinfo{person}{Kunal
-  Talwar}.}
-\newblock \showarticletitle{Mechanism Design via Differential Privacy}. In
-  \bibinfo{booktitle}{{\em FOCS, 2007}}.
-\newblock
+\bibitem{xiao2012bayesian}
+Yonghui Xiao and Li~Xiong.
+\newblock Bayesian inference under differential privacy.
 
-
-\bibitem[\protect\citeauthoryear{Nissim, Raskhodnikova, and Smith}{Nissim
-  et~al\mbox{.}}{}]%
-        {nissim2007smooth}
-\bibfield{author}{\bibinfo{person}{Kobbi Nissim}, \bibinfo{person}{Sofya
-  Raskhodnikova}, {and} \bibinfo{person}{Adam Smith}.}
-\newblock \showarticletitle{Smooth sensitivity and sampling in private data
-  analysis}. In \bibinfo{booktitle}{{\em STOC, 2007}}. \bibinfo{pages}{75--84}.
-\newblock
-
+\bibitem{zhang2016differential}
+Zuhe Zhang, Benjamin~IP Rubinstein, Christos Dimitrakakis, et~al.
+\newblock On the differential privacy of bayesian inference.
+\newblock In {\em AAAI, 2016}, pages 2365--2371.
 
 \end{thebibliography}

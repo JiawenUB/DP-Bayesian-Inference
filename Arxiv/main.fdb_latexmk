@@ -1,12 +1,12 @@
 # Fdb version 3
-["bibtex main"] 1540272155 "main.aux" "main.bbl" "main" 1540272157
+["bibtex main"] 1540305234 "main.aux" "main.bbl" "main" 1540305235
   "/usr/local/texlive/2017/texmf-dist/bibtex/bst/base/plain.bst" 1480098433 20613 bd3fbfa9f64872b81ac57a0dd2ed855f ""
   "bayesian.bib" 1540251263 4412 37481d487fe074296116256b6b32be06 ""
-  "main.aux" 1540272156 11203 c5fce055a7dda4b39a79e4bf06afa4ba ""
+  "main.aux" 1540305235 11204 869a3c4eb18990a422f3d2f785721b9c ""
   (generated)
-  "main.blg"
   "main.bbl"
-["pdflatex"] 1540272155 "main.tex" "main.pdf" "main" 1540272157
+  "main.blg"
+["pdflatex"] 1540305234 "main.tex" "main.pdf" "main" 1540305235
   "/usr/local/texlive/2017/texmf-dist/fonts/map/fontname/texfonts.map" 1480098670 3287 e6b82fe08f5336d4d5ebc73fb1152e87 ""
   "/usr/local/texlive/2017/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy5.tfm" 1480098698 1120 1e8878807317373affa7f7bba4cf2f6a ""
   "/usr/local/texlive/2017/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy7.tfm" 1480098698 1120 7f9f170e8aa57527ad6c49feafd45d54 ""
@@ -210,10 +210,10 @@
   "global_epsilon_size50to100-eps-converted-to.pdf" 1540217275 46425 f5b65c1eaabb7137029dbaa2b62de274 ""
   "global_epsilon_size50to100.eps" 1540172632 2922777 4ba15c1b1ffe0fa75813f8003312e102 ""
   "macros.tex" 1540271938 2638 574bc9054f8ab1d2a541bc675655b5ae ""
-  "main.aux" 1540272156 11203 c5fce055a7dda4b39a79e4bf06afa4ba ""
-  "main.bbl" 1540272155 3449 a5ac4a969a742242fb7298b07def42fa "bibtex main"
-  "main.out" 1540272156 1933 9834dbd4131f6d0097edc2d18f13950f ""
-  "main.tex" 1540272154 50809 a5d011b4bd576da4b30511900cb20a81 ""
+  "main.aux" 1540305235 11204 869a3c4eb18990a422f3d2f785721b9c ""
+  "main.bbl" 1540305234 3449 a5ac4a969a742242fb7298b07def42fa "bibtex main"
+  "main.out" 1540305235 1933 9834dbd4131f6d0097edc2d18f13950f ""
+  "main.tex" 1540305232 50948 d9c3fab844e3c95e1fb0c24484a6d62c ""
   "sampling_2d.eps" 1538800006 21965843 40d55083c9cb8f5144a4dc57365a68f6 ""
   "sampling_3d.eps" 1538799604 21382169 af98be27d359a097344438505215d8ad ""
   "sampling_4d.eps" 1538800012 25552469 b3621363c6cdfca200240f664ac1c8c9 ""
