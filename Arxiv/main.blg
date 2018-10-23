@@ -60,45 +60,45 @@ Warning--empty year in zheng2015differential
 Warning--empty publisher in zheng2015differential
 Warning--empty address in zheng2015differential
 Warning--page numbers missing in both pages and numpages fields in zheng2015differential
-You've used 17 entries,
+You've used 18 entries,
             5706 wiz_defined-function locations,
-            1384 strings with 17878 characters,
-and the built_in function-call counts, 19271 in all, are:
-= -- 2117
-> -- 779
+            1393 strings with 18071 characters,
+and the built_in function-call counts, 20486 in all, are:
+= -- 2317
+> -- 817
 < -- 0
-+ -- 247
-- -- 264
-* -- 1246
-:= -- 1995
-add.period$ -- 84
-call.type$ -- 17
-change.case$ -- 121
-chr.to.int$ -- 14
-cite$ -- 71
-duplicate$ -- 1661
-empty$ -- 1189
-format.name$ -- 325
-if$ -- 4722
++ -- 259
+- -- 280
+* -- 1324
+:= -- 2112
+add.period$ -- 89
+call.type$ -- 18
+change.case$ -- 127
+chr.to.int$ -- 15
+cite$ -- 72
+duplicate$ -- 1749
+empty$ -- 1254
+format.name$ -- 345
+if$ -- 5042
 int.to.chr$ -- 4
 int.to.str$ -- 0
-missing$ -- 82
-newline$ -- 164
-num.names$ -- 133
-pop$ -- 1053
+missing$ -- 86
+newline$ -- 175
+num.names$ -- 141
+pop$ -- 1083
 preamble$ -- 1
-purify$ -- 203
+purify$ -- 214
 quote$ -- 0
-skip$ -- 554
+skip$ -- 588
 stack$ -- 0
-substring$ -- 1124
-swap$ -- 148
+substring$ -- 1216
+swap$ -- 159
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 481
+type$ -- 497
 warning$ -- 54
-while$ -- 123
+while$ -- 133
 width$ -- 0
-write$ -- 295
+write$ -- 315
 (There were 54 warnings)

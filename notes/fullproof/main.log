@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  23 OCT 2018 00:13
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  22 OCT 2018 19:23
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1517,17 +1517,14 @@ Package: accents 2006/05/12 v1.3 Math Accent Tools
 \cc@code=\count299
 \cc@group=\count300
 \cc@skewchar=\count301
-) (./main.aux
-
-LaTeX Warning: Label `subsec_accuracy_lap' multiply defined.
-
-)
+) (./main.aux)
 \openout1 = `main.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/nxlmi/m/it on input line 17.
 LaTeX Font Info:    Try loading font information for OML+nxlmi on input line 17
 .
- (/usr/local/texlive/2017/texmf-dist/tex/latex/newtx/omlnxlmi.fd
+
+(/usr/local/texlive/2017/texmf-dist/tex/latex/newtx/omlnxlmi.fd
 File: omlnxlmi.fd 2013/11/19 Fontinst v1.933 font definitions for OML/nxlmi.
 )
 LaTeX Font Info:    ... okay on input line 17.
@@ -1797,138 +1794,133 @@ LaTeX Font Info:    Font shape `OT1/zi4/m/n' will be
 LaTeX Font Info:    Font shape `OT1/zi4/m/n' will be
 (Font)              scaled to size 5.5pt on input line 17.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 17.28pt on input line 54.
+(Font)              scaled to size 17.28pt on input line 27.
 LaTeX Font Info:    Try loading font information for T1+LinuxBiolinumT-TLF on i
-nput line 54.
+nput line 27.
 
 (/usr/local/texlive/2017/texmf-dist/tex/latex/libertine/T1LinuxBiolinumT-TLF.fd
 File: T1LinuxBiolinumT-TLF.fd 2017/03/20 (autoinst) Font definitions for T1/Lin
 uxBiolinumT-TLF.
 )
 LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/m/n' will be
-(Font)              scaled to size 17.28pt on input line 54.
+(Font)              scaled to size 17.28pt on input line 27.
 Package microtype Info: Loading generic settings for font family
 (microtype)             `LinuxBiolinumT-TLF' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/b/n' will be
-(Font)              scaled to size 17.28pt on input line 54.
+(Font)              scaled to size 17.28pt on input line 27.
+LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/n' will be
+(Font)              scaled to size 17.28pt on input line 27.
+LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/n' will be
+(Font)              scaled to size 12.5pt on input line 27.
+LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/n' will be
+(Font)              scaled to size 9.4pt on input line 27.
+LaTeX Font Info:    Font shape `OT1/LinuxBiolinumT-TLF/m/n' will be
+(Font)              scaled to size 17.28pt on input line 27.
+LaTeX Font Info:    Font shape `OT1/LinuxBiolinumT-TLF/m/n' will be
+(Font)              scaled to size 12.5pt on input line 27.
+LaTeX Font Info:    Font shape `OT1/LinuxBiolinumT-TLF/m/n' will be
+(Font)              scaled to size 9.4pt on input line 27.
+LaTeX Font Info:    Font shape `OT1/zi4/m/n' will be
+(Font)              scaled to size 17.28pt on input line 27.
+LaTeX Font Info:    Font shape `OT1/zi4/m/n' will be
+(Font)              scaled to size 12.5pt on input line 27.
+LaTeX Font Info:    Font shape `OT1/zi4/m/n' will be
+(Font)              scaled to size 9.4pt on input line 27.
+
+
+LaTeX Font Warning: Font shape `U/stmry/m/n' in size <12.5> not available
+(Font)              size <12> substituted on input line 27.
+
+
+LaTeX Font Warning: Font shape `U/lasy/m/n' in size <12.5> not available
+(Font)              size <12> substituted on input line 27.
+
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 12.0pt on input line 54.
+(Font)              scaled to size 12.0pt on input line 27.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 10.0pt on input line 54.
+(Font)              scaled to size 10.0pt on input line 27.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/b/n' will be
-(Font)              scaled to size 9.0pt on input line 54.
+(Font)              scaled to size 9.0pt on input line 27.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/b/n' will be
-(Font)              scaled to size 10.95pt on input line 54.
+(Font)              scaled to size 10.95pt on input line 27.
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 27.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `subscript' on input line 27.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 27.
+
+LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
+(Font)              scaled to size 7.3pt on input line 36.
+LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
+(Font)              scaled to size 5.5pt on input line 36.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/it' will be
-(Font)              scaled to size 9.0pt on input line 54.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [1.1{/usr/local/texlive/2017/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
-
-]
-LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 7.3pt on input line 110.
-LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 5.5pt on input line 110.
+(Font)              scaled to size 9.0pt on input line 41.
 LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/sb/n' will be
-(Font)              scaled to size 9.0pt on input line 154.
+(Font)              scaled to size 9.0pt on input line 80.
 LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/sb/n' will be
-(Font)              scaled to size 7.3pt on input line 154.
+(Font)              scaled to size 7.3pt on input line 80.
 LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/sb/n' will be
-(Font)              scaled to size 5.5pt on input line 154.
-
+(Font)              scaled to size 5.5pt on input line 80.
 
 LaTeX Font Warning: Font shape `U/stmry/b/n' undefined
-(Font)              using `U/stmry/m/n' instead on input line 154.
+(Font)              using `U/stmry/m/n' instead on input line 80.
 
 
 LaTeX Font Warning: Font shape `U/stmry/b/n' in size <5.5> not available
-(Font)              size <5> substituted on input line 154.
+(Font)              size <5> substituted on input line 80.
 
 LaTeX Font Info:    Font shape `U/lasy/b/n' in size <9> not available
-(Font)              Font shape `U/lasy/m/n' tried instead on input line 154.
+(Font)              Font shape `U/lasy/m/n' tried instead on input line 80.
 LaTeX Font Info:    Font shape `U/lasy/b/n' in size <7.3> not available
-(Font)              Font shape `U/lasy/m/n' tried instead on input line 154.
+(Font)              Font shape `U/lasy/m/n' tried instead on input line 80.
 LaTeX Font Info:    Font shape `U/lasy/b/n' in size <5.5> not available
-(Font)              Font shape `U/lasy/m/n' tried instead on input line 154.
+(Font)              Font shape `U/lasy/m/n' tried instead on input line 80.
 
 LaTeX Font Warning: Font shape `U/lasy/m/n' in size <5.5> not available
-(Font)              size <5> substituted on input line 154.
+(Font)              size <5> substituted on input line 80.
 
-LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/b/n' will be
-(Font)              scaled to size 7.0pt on input line 214.
-[2.2]
-Package epstopdf Info: Source file: <sensitivity_2d.eps>
-(epstopdf)                    date: 2018-10-11 01:18:52
-(epstopdf)                    size: 12608947 bytes
-(epstopdf)             Output file: <sensitivity_2d-eps-converted-to.pdf>
-(epstopdf)                    date: 2018-10-21 19:25:43
-(epstopdf)                    size: 72540 bytes
-(epstopdf)             Command: <repstopdf --outfile=sensitivity_2d-eps-convert
-ed-to.pdf sensitivity_2d.eps>
-(epstopdf)             \includegraphics on input line 244.
-Package epstopdf Info: Output file is already uptodate.
- <sensitivity_2d-eps-converted-to.pdf, id=159, 574.145pt x 471.7625pt>
-File: sensitivity_2d-eps-converted-to.pdf Graphic file (type pdf)
-
-<use sensitivity_2d-eps-converted-to.pdf>
-Package pdftex.def Info: sensitivity_2d-eps-converted-to.pdf used on input line
- 244.
-(pdftex.def)             Requested size: 177.20633pt x 145.60419pt.
-LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/m/n' will be
-(Font)              scaled to size 9.0pt on input line 273.
-LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/m/it' will be
-(Font)              scaled to size 9.0pt on input line 273.
-
-Overfull \hbox (27.34703pt too wide) in paragraph at lines 273--274
- \T1/LinuxBiolinumT-TLF/m/it/9 (-20) 4.1.1 Ex-po-nen-tial Mech-a-nism.[] \T1/Li
-nuxLibertineT-TLF/m/n/9 (-20) Ex-po-nen-tial mech-a-nism $\LMS/ntxsy/m/n/9 M[]น
-\OML/nxlmi/m/it/9 x; u; []\LMS/ntxsy/m/n/9 บ$
- []
-
-
-Overfull \hbox (9.70718pt too wide) in paragraph at lines 305--306
-[]\T1/LinuxLibertineT-TLF/m/n/9 (-20) The ex-po-nen-tial mech-a-nism with lo-ca
-l sen-si-tiv-ity is non-differential
- []
-
-[3.3 <./sensitivity_2d-eps-converted-to.pdf>]
 LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 10.95pt on input line 348.
+(Font)              scaled to size 10.95pt on input line 135.
 LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 8.0pt on input line 348.
+(Font)              scaled to size 8.0pt on input line 135.
 LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 6.1pt on input line 348.
+(Font)              scaled to size 6.1pt on input line 135.
 LaTeX Font Info:    Font shape `OT1/LinuxBiolinumT-TLF/m/n' will be
-(Font)              scaled to size 10.95pt on input line 348.
+(Font)              scaled to size 10.95pt on input line 135.
 LaTeX Font Info:    Font shape `OT1/LinuxBiolinumT-TLF/m/n' will be
-(Font)              scaled to size 8.0pt on input line 348.
+(Font)              scaled to size 8.0pt on input line 135.
 LaTeX Font Info:    Font shape `OT1/LinuxBiolinumT-TLF/m/n' will be
-(Font)              scaled to size 6.1pt on input line 348.
+(Font)              scaled to size 6.1pt on input line 135.
 LaTeX Font Info:    Font shape `OT1/zi4/m/n' will be
-(Font)              scaled to size 10.95pt on input line 348.
+(Font)              scaled to size 10.95pt on input line 135.
 LaTeX Font Info:    Font shape `OT1/zi4/m/n' will be
-(Font)              scaled to size 8.0pt on input line 348.
+(Font)              scaled to size 8.0pt on input line 135.
 LaTeX Font Info:    Font shape `OT1/zi4/m/n' will be
-(Font)              scaled to size 6.1pt on input line 348.
+(Font)              scaled to size 6.1pt on input line 135.
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 135.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 348.
+(hyperref)                removing `subscript' on input line 135.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `subscript' on input line 348.
+(hyperref)                removing `math shift' on input line 135.
 
+[1.1{/usr/local/texlive/2017/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
 
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 348.
-
-
-Overfull \hbox (19.6187pt too wide) in paragraph at lines 393--394
+]
+Overfull \hbox (19.6187pt too wide) in paragraph at lines 180--181
 \T1/LinuxLibertineT-TLF/m/n/9 (-20) gen-er-al-ized to Dirichlet-multinomial Sys
 -tem), $\LMS/ntxsy/m/n/9 M[]$ \T1/LinuxLibertineT-TLF/m/n/9 (-20) is $\LMS/ntxs
 y/m/n/9 น\OML/nxlmi/m/it/9 ^^O; ^^N\LMS/ntxsy/m/n/9 บ^^@$\T1/LinuxLibertineT-TL
@@ -1937,265 +1929,60 @@ F/m/n/9 (-20) differentially
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 401.
+(hyperref)                removing `math shift' on input line 185.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `subscript' on input line 401.
+(hyperref)                removing `subscript' on input line 185.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 401.
+(hyperref)                removing `math shift' on input line 185.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 403--404
+Underfull \hbox (badness 10000) in paragraph at lines 187--188
 
  []
 
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/sc' will be
-(Font)              scaled to size 9.0pt on input line 407.
-
-Overfull \hbox (6.39874pt too wide) in paragraph at lines 419--424
-\LMS/ntxsy/m/n/9 Hน[]น\OML/nxlmi/m/it/9 []; ^^L[]\LMS/ntxsy/m/n/9 บ\OML/nxlmi/
-m/it/9 ; []\LMS/ntxsy/m/n/9 น\OML/nxlmi/m/it/9 []; ^^L[]\LMS/ntxsy/m/n/9 บบ \U
-/ntxmia/m/it/9 = \LMS/ntxsy/m/n/9 Hน[]น\OML/nxlmi/m/it/9 []; ^^L[]\LMS/ntxsy/m
-/n/9 บ\OML/nxlmi/m/it/9 ; []\LMS/ntxsy/m/n/9 น\OML/nxlmi/m/it/9 []; ^^L[]\LMS/
-ntxsy/m/n/9 บบ$ \T1/LinuxLibertineT-TLF/m/n/9 (-20) iff $\OML/nxlmi/m/it/9 [] 
-\U/ntxmia/m/it/9 =
- []
-
-
-Overfull \hbox (3.38676pt too wide) in paragraph at lines 433--436
-\T1/LinuxLibertineT-TLF/m/n/9 (-20) We as-sume the num-ber of can-di-dates $\OM
-L/nxlmi/m/it/9 z \LMS/ntxsy/m/n/9 2 R$ \T1/LinuxLibertineT-TLF/m/n/9 (-20) that
- sat-isfy $\LMS/ntxsy/m/n/9 Hน[]น\OML/nxlmi/m/it/9 x\LMS/ntxsy/m/n/9 บ\OML/nxlm
-i/m/it/9 ; z\LMS/ntxsy/m/n/9 บ \U/ntxmia/m/it/9 =
- []
-
-[4.4]
-LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/it' will be
-(Font)              scaled to size 7.3pt on input line 476.
-LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/it' will be
-(Font)              scaled to size 5.5pt on input line 476.
-
-Underfull \hbox (badness 10000) in paragraph at lines 497--498
+(Font)              scaled to size 9.0pt on input line 191.
+[2.2]
+Underfull \hbox (badness 10000) in paragraph at lines 264--265
 
  []
 
-[5.5]
-Overfull \hbox (7.48383pt too wide) in paragraph at lines 581--582
-[]\T1/LinuxLibertineT-TLF/m/n/9 (-20) Given that $[]\LMS/ntxsy/m/n/9 ป\OML/nxlm
-i/m/it/9 z \U/ntxmia/m/it/9 = \OML/nxlmi/m/it/9 r\LMS/ntxsy/m/n/9 ผ \U/ntxmia/m
-/it/9 = []\LMS/ntxsy/m/n/9 ป\OML/nxlmi/m/it/9 u\LMS/ntxsy/m/n/9 น\OML/nxlmi/m/i
-t/9 x; z\LMS/ntxsy/m/n/9 บ \U/ntxmia/m/it/9 = \OML/nxlmi/m/it/9 u\LMS/ntxsy/m/n
-/9 น\OML/nxlmi/m/it/9 x; r\LMS/ntxsy/m/n/9 บผ$\T1/LinuxLibertineT-TLF/m/n/9 (-2
-0) ,
+
+Overfull \hbox (66.5361pt too wide) in paragraph at lines 341--341
+[] 
  []
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 655.
+(hyperref)                removing `math shift' on input line 351.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `subscript' on input line 655.
+(hyperref)                removing `subscript' on input line 351.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 655.
-
-[6.6]
-Package epstopdf Info: Source file: <efficiency.eps>
-(epstopdf)                    date: 2018-10-21 21:11:46
-(epstopdf)                    size: 12159690 bytes
-(epstopdf)             Output file: <efficiency-eps-converted-to.pdf>
-(epstopdf)                    date: 2018-10-21 21:12:00
-(epstopdf)                    size: 343589 bytes
-(epstopdf)             Command: <repstopdf --outfile=efficiency-eps-converted-t
-o.pdf efficiency.eps>
-(epstopdf)             \includegraphics on input line 712.
-Package epstopdf Info: Output file is already uptodate.
- <efficiency-eps-converted-to.pdf, id=219, 1445.4pt x 722.7pt>
-File: efficiency-eps-converted-to.pdf Graphic file (type pdf)
-
-<use efficiency-eps-converted-to.pdf>
-Package pdftex.def Info: efficiency-eps-converted-to.pdf used on input line 712
-.
-(pdftex.def)             Requested size: 243.01942pt x 121.50099pt.
-
-Overfull \hbox (1.87193pt too wide) in paragraph at lines 712--713
- [][] 
- []
-
-Package epstopdf Info: Source file: <theory_2d.eps>
-(epstopdf)                    date: 2018-10-11 10:02:12
-(epstopdf)                    size: 7473166 bytes
-(epstopdf)             Output file: <theory_2d-eps-converted-to.pdf>
-(epstopdf)                    date: 2018-10-21 14:42:35
-(epstopdf)                    size: 112217 bytes
-(epstopdf)             Command: <repstopdf --outfile=theory_2d-eps-converted-to
-.pdf theory_2d.eps>
-(epstopdf)             \includegraphics on input line 725.
-Package epstopdf Info: Output file is already uptodate.
-<theory_2d-eps-converted-to.pdf, id=220, 462.72874pt x 347.2975pt>
-File: theory_2d-eps-converted-to.pdf Graphic file (type pdf)
-
-<use theory_2d-eps-converted-to.pdf>
-Package pdftex.def Info: theory_2d-eps-converted-to.pdf used on input line 725.
-
-(pdftex.def)             Requested size: 111.38551pt x 83.59686pt.
-Package epstopdf Info: Source file: <theory_3d.eps>
-(epstopdf)                    date: 2018-10-11 10:07:03
-(epstopdf)                    size: 7473166 bytes
-(epstopdf)             Output file: <theory_3d-eps-converted-to.pdf>
-(epstopdf)                    date: 2018-10-21 14:42:36
-(epstopdf)                    size: 147676 bytes
-(epstopdf)             Command: <repstopdf --outfile=theory_3d-eps-converted-to
-.pdf theory_3d.eps>
-(epstopdf)             \includegraphics on input line 729.
-Package epstopdf Info: Output file is already uptodate.
-
-<theory_3d-eps-converted-to.pdf, id=221, 462.72874pt x 347.2975pt>
-File: theory_3d-eps-converted-to.pdf Graphic file (type pdf)
-
-<use theory_3d-eps-converted-to.pdf>
-Package pdftex.def Info: theory_3d-eps-converted-to.pdf used on input line 729.
-
-(pdftex.def)             Requested size: 111.38551pt x 83.59686pt.
-Package epstopdf Info: Source file: <sampling_2d.eps>
-(epstopdf)                    date: 2018-10-06 00:26:46
-(epstopdf)                    size: 21965843 bytes
-(epstopdf)             Output file: <sampling_2d-eps-converted-to.pdf>
-(epstopdf)                    date: 2018-10-21 14:46:56
-(epstopdf)                    size: 212029 bytes
-(epstopdf)             Command: <repstopdf --outfile=sampling_2d-eps-converted-
-to.pdf sampling_2d.eps>
-(epstopdf)             \includegraphics on input line 775.
-Package epstopdf Info: Output file is already uptodate.
-
-<sampling_2d-eps-converted-to.pdf, id=228, 910.40125pt x 517.935pt>
-File: sampling_2d-eps-converted-to.pdf Graphic file (type pdf)
-
-<use sampling_2d-eps-converted-to.pdf>
-Package pdftex.def Info: sampling_2d-eps-converted-to.pdf used on input line 77
-5.
-(pdftex.def)             Requested size: 202.51491pt x 115.21053pt.
-Package epstopdf Info: Source file: <sampling_3d.eps>
-(epstopdf)                    date: 2018-10-06 00:20:04
-(epstopdf)                    size: 21382169 bytes
-(epstopdf)             Output file: <sampling_3d-eps-converted-to.pdf>
-(epstopdf)                    date: 2018-10-21 14:46:58
-(epstopdf)                    size: 181412 bytes
-(epstopdf)             Command: <repstopdf --outfile=sampling_3d-eps-converted-
-to.pdf sampling_3d.eps>
-(epstopdf)             \includegraphics on input line 784.
-Package epstopdf Info: Output file is already uptodate.
-
-<sampling_3d-eps-converted-to.pdf, id=229, 854.19125pt x 538.01pt>
-File: sampling_3d-eps-converted-to.pdf Graphic file (type pdf)
-
-<use sampling_3d-eps-converted-to.pdf>
-Package pdftex.def Info: sampling_3d-eps-converted-to.pdf used on input line 78
-4.
-(pdftex.def)             Requested size: 202.51491pt x 127.54883pt.
-Package epstopdf Info: Source file: <sampling_4d.eps>
-(epstopdf)                    date: 2018-10-06 00:26:52
-(epstopdf)                    size: 25552469 bytes
-(epstopdf)             Output file: <sampling_4d-eps-converted-to.pdf>
-(epstopdf)                    date: 2018-10-21 14:47:00
-(epstopdf)                    size: 148456 bytes
-(epstopdf)             Command: <repstopdf --outfile=sampling_4d-eps-converted-
-to.pdf sampling_4d.eps>
-(epstopdf)             \includegraphics on input line 793.
-Package epstopdf Info: Output file is already uptodate.
-
-<sampling_4d-eps-converted-to.pdf, id=230, 922.44624pt x 595.22375pt>
-File: sampling_4d-eps-converted-to.pdf Graphic file (type pdf)
-
-<use sampling_4d-eps-converted-to.pdf>
-Package pdftex.def Info: sampling_4d-eps-converted-to.pdf used on input line 79
-3.
-(pdftex.def)             Requested size: 202.51491pt x 130.66808pt.
- [7.7 <./efficiency-eps-converted-to.pdf> <./theory_2d-eps-converted-to.pdf> <.
-/theory_3d-eps-converted-to.pdf> <./sampling_2d-eps-converted-to.pdf>]
-Package epstopdf Info: Source file: <sampling_prior.eps>
-(epstopdf)                    date: 2018-10-12 20:08:15
-(epstopdf)                    size: 15016332 bytes
-(epstopdf)             Output file: <sampling_prior-eps-converted-to.pdf>
-(epstopdf)                    date: 2018-10-21 14:47:02
-(epstopdf)                    size: 199764 bytes
-(epstopdf)             Command: <repstopdf --outfile=sampling_prior-eps-convert
-ed-to.pdf sampling_prior.eps>
-(epstopdf)             \includegraphics on input line 818.
-Package epstopdf Info: Output file is already uptodate.
-
-<sampling_prior-eps-converted-to.pdf, id=264, 719.68875pt x 447.6725pt>
-File: sampling_prior-eps-converted-to.pdf Graphic file (type pdf)
-
-<use sampling_prior-eps-converted-to.pdf>
-Package pdftex.def Info: sampling_prior-eps-converted-to.pdf used on input line
- 818.
-(pdftex.def)             Requested size: 243.01942pt x 151.16833pt.
-
-Overfull \hbox (1.87193pt too wide) in paragraph at lines 818--819
- [][] 
- []
+(hyperref)                removing `math shift' on input line 351.
 
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
+LaTeX Warning: Reference `subsec_accuracy_global' on page 3 undefined on input 
+line 373.
 
-Package epstopdf Info: Source file: <global_epsilon_size50to100.eps>
-(epstopdf)                    date: 2018-10-21 21:43:52
-(epstopdf)                    size: 2922777 bytes
-(epstopdf)             Output file: <global_epsilon_size50to100-eps-converted-t
-o.pdf>
-(epstopdf)                    date: 2018-10-22 10:07:55
-(epstopdf)                    size: 46425 bytes
-(epstopdf)             Command: <repstopdf --outfile=global_epsilon_size50to100
--eps-converted-to.pdf global_epsilon_size50to100.eps>
-(epstopdf)             \includegraphics on input line 831.
-Package epstopdf Info: Output file is already uptodate.
-
-<global_epsilon_size50to100-eps-converted-to.pdf, id=267, 578.16pt x 433.62pt>
-File: global_epsilon_size50to100-eps-converted-to.pdf Graphic file (type pdf)
-
-<use global_epsilon_size50to100-eps-converted-to.pdf>
-Package pdftex.def Info: global_epsilon_size50to100-eps-converted-to.pdf used o
-n input line 831.
-(pdftex.def)             Requested size: 116.44568pt x 87.33118pt.
-Package epstopdf Info: Source file: <global_epsilon_size100to200.eps>
-(epstopdf)                    date: 2018-10-21 21:43:52
-(epstopdf)                    size: 2922778 bytes
-(epstopdf)             Output file: <global_epsilon_size100to200-eps-converted-
-to.pdf>
-(epstopdf)                    date: 2018-10-22 10:07:56
-(epstopdf)                    size: 48007 bytes
-(epstopdf)             Command: <repstopdf --outfile=global_epsilon_size100to20
-0-eps-converted-to.pdf global_epsilon_size100to200.eps>
-(epstopdf)             \includegraphics on input line 833.
-Package epstopdf Info: Output file is already uptodate.
-
-<global_epsilon_size100to200-eps-converted-to.pdf, id=268, 578.16pt x 433.62pt>
-File: global_epsilon_size100to200-eps-converted-to.pdf Graphic file (type pdf)
-<use global_epsilon_size100to200-eps-converted-to.pdf>
-Package pdftex.def Info: global_epsilon_size100to200-eps-converted-to.pdf used 
-on input line 833.
-(pdftex.def)             Requested size: 116.44568pt x 87.33118pt.
- [8.8 <./sampling_3d-eps-converted-to.pdf> <./sampling_4d-eps-converted-to.pdf>
- <./global_epsilon_size50to100-eps-converted-to.pdf> <./global_epsilon_size100t
-o200-eps-converted-to.pdf> <./sampling_prior-eps-converted-to.pdf>] (./main.bbl
+(./main.bbl
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/it' will be
-(Font)              scaled to size 7.0pt on input line 48.
-) [9.9
-
-]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 881.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 881.
+(Font)              scaled to size 7.0pt on input line 45.
+) [3.3]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 391.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 391.
  (./main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 881.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 881.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 391.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 391.
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 9B1DC0A21361F227E3EE4F9F52C0C1A2;3978.
+(rerunfilecheck)             Checksum: 8FA49E6B865ECE58265CAF78D4D70933;1820.
 
 
 LaTeX Font Warning: Size substitutions with differences
@@ -2205,54 +1992,53 @@ LaTeX Font Warning: Size substitutions with differences
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
 
-LaTeX Warning: There were multiply-defined labels.
+LaTeX Warning: There were undefined references.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 881.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 391.
  ) 
 Here is how much of TeX's memory you used:
- 30616 strings out of 492995
- 538497 string characters out of 6132704
- 638633 words of memory out of 5000000
- 33018 multiletter control sequences out of 15000+600000
- 219273 words of font info for 431 fonts, out of 8000000 for 9000
+ 30358 strings out of 492995
+ 532328 string characters out of 6132704
+ 633621 words of memory out of 5000000
+ 32958 multiletter control sequences out of 15000+600000
+ 200772 words of font info for 385 fonts, out of 8000000 for 9000
  1302 hyphenation exceptions out of 8191
- 60i,20n,94p,10430b,906s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 60i,20n,94p,10430b,894s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/libertine/lbtn_ncsllp.enc
 }{/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/newtx/libertinealt.enc}{/u
-sr/local/texlive/2017/texmf-dist/fonts/enc/dvips/libertine/lbtn_25tcsq.enc}{/us
-r/local/texlive/2017/texmf-dist/fonts/enc/dvips/libertine/lbtn_edcawa.enc}{/usr
-/local/texlive/2017/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/local/texlive/
+sr/local/texlive/2017/texmf-dist/fonts/enc/dvips/libertine/lbtn_edcawa.enc}{/us
+r/local/texlive/2017/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/local/texlive
+/2017/texmf-dist/fonts/enc/dvips/libertine/lbtn_7grukw.enc}{/usr/local/texlive/
 2017/texmf-dist/fonts/enc/dvips/libertine/lbtn_oexx6f.enc}{/usr/local/texlive/2
-017/texmf-dist/fonts/enc/dvips/libertine/lbtn_7grukw.enc}{/usr/local/texlive/20
-17/texmf-dist/fonts/enc/dvips/libertine/lbtn_76gpa5.enc}{/usr/local/texlive/201
-7/texmf-dist/fonts/enc/dvips/libertine/lbtn_nh77jq.enc}</usr/local/texlive/2017
+017/texmf-dist/fonts/enc/dvips/libertine/lbtn_76gpa5.enc}{/usr/local/texlive/20
+17/texmf-dist/fonts/enc/dvips/libertine/lbtn_nh77jq.enc}{/usr/local/texlive/201
+7/texmf-dist/fonts/enc/dvips/libertine/lbtn_25tcsq.enc}</usr/local/texlive/2017
 /texmf-dist/fonts/type1/public/libertine/LinBiolinumT.pfb></usr/local/texlive/2
 017/texmf-dist/fonts/type1/public/libertine/LinBiolinumTB.pfb></usr/local/texli
-ve/2017/texmf-dist/fonts/type1/public/libertine/LinBiolinumTI.pfb></usr/local/t
-exlive/2017/texmf-dist/fonts/type1/public/libertine/LinLibertineT.pfb></usr/loc
-al/texlive/2017/texmf-dist/fonts/type1/public/libertine/LinLibertineTB.pfb></us
-r/local/texlive/2017/texmf-dist/fonts/type1/public/libertine/LinLibertineTI.pfb
-></usr/local/texlive/2017/texmf-dist/fonts/type1/public/newtx/fxlri-5letters.pf
-b></usr/local/texlive/2017/texmf-dist/fonts/type1/public/newtx/fxlri-7letters.p
-fb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/newtx/fxlzi-7letters.
+ve/2017/texmf-dist/fonts/type1/public/libertine/LinLibertineT.pfb></usr/local/t
+exlive/2017/texmf-dist/fonts/type1/public/libertine/LinLibertineTB.pfb></usr/lo
+cal/texlive/2017/texmf-dist/fonts/type1/public/libertine/LinLibertineTI.pfb></u
+sr/local/texlive/2017/texmf-dist/fonts/type1/public/newtx/fxlri-5letters.pfb></
+usr/local/texlive/2017/texmf-dist/fonts/type1/public/newtx/fxlri-7letters.pfb><
+/usr/local/texlive/2017/texmf-dist/fonts/type1/public/newtx/fxlzi-7letters.pfb>
+</usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.
 pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/symbols/msb
-m10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/symbols
-/msbm7.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/txfonts/rtxmi
-.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/newtx/rtxmi5.pfb></
-usr/local/texlive/2017/texmf-dist/fonts/type1/public/newtx/rtxmi7.pfb></usr/loc
-al/texlive/2017/texmf-dist/fonts/type1/public/txfonts/rtxr.pfb></usr/local/texl
-ive/2017/texmf-dist/fonts/type1/public/newtx/txexs.pfb></usr/local/texlive/2017
-/texmf-dist/fonts/type1/public/txfonts/txsya.pfb></usr/local/texlive/2017/texmf
--dist/fonts/type1/public/txfonts/txsyb.pfb></usr/local/texlive/2017/texmf-dist/
-fonts/type1/public/txfonts/txsyc.pfb></usr/local/texlive/2017/texmf-dist/fonts/
-type1/public/newtx/txsys.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/pu
-blic/newtx/zxlr.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/newt
-x/zxlri.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/newtx/zxlzi.
-pfb>
-Output written on main.pdf (9 pages, 2237733 bytes).
+m7.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/txfonts/rtxmi.pfb
+></usr/local/texlive/2017/texmf-dist/fonts/type1/public/newtx/rtxmi5.pfb></usr/
+local/texlive/2017/texmf-dist/fonts/type1/public/newtx/rtxmi7.pfb></usr/local/t
+exlive/2017/texmf-dist/fonts/type1/public/txfonts/rtxr.pfb></usr/local/texlive/
+2017/texmf-dist/fonts/type1/public/newtx/txexs.pfb></usr/local/texlive/2017/tex
+mf-dist/fonts/type1/public/txfonts/txsya.pfb></usr/local/texlive/2017/texmf-dis
+t/fonts/type1/public/txfonts/txsyb.pfb></usr/local/texlive/2017/texmf-dist/font
+s/type1/public/txfonts/txsyc.pfb></usr/local/texlive/2017/texmf-dist/fonts/type
+1/public/newtx/txsys.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public
+/newtx/zxlr.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/newtx/zx
+lri.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/newtx/zxlzi.pfb>
+
+Output written on main.pdf (3 pages, 634547 bytes).
 PDF statistics:
- 443 PDF objects out of 1000 (max. 8388607)
- 354 compressed objects within 4 object streams
- 83 named destinations out of 1000 (max. 500000)
- 56543 words of extra memory for PDF output out of 61914 (max. 10000000)
+ 220 PDF objects out of 1000 (max. 8388607)
+ 161 compressed objects within 2 object streams
+ 24 named destinations out of 1000 (max. 500000)
+ 53341 words of extra memory for PDF output out of 61914 (max. 10000000)
 

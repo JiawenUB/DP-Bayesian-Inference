@@ -320,7 +320,7 @@ if __name__ == "__main__":
 	epsilon = 1.0
 	delta = 0.00000001
 	prior = dirichlet([1,1])
-	dataset = [30,30]
+	dataset = [2,58]
 
 #############################################################################
 #SETTING UP THE PARAMETERS WHEN DOING GROUPS EXPERIMENTS

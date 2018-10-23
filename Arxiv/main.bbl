@@ -80,6 +80,21 @@
 \newblock
 
 
+\bibitem[\protect\citeauthoryear{Csisz{\'a}r and Shields}{Csisz{\'a}r and
+  Shields}{2004}]%
+        {CIT-004}
+\bibfield{author}{\bibinfo{person}{I. Csisz{\'a}r} {and} \bibinfo{person}{P.C.
+  Shields}.} \bibinfo{year}{2004}\natexlab{}.
+\newblock \showarticletitle{Information Theory and Statistics: A Tutorial}.
+\newblock \bibinfo{journal}{{\em Foundations and Trends® in Communications and
+  Information Theory\/}} \bibinfo{volume}{1}, \bibinfo{number}{4}
+  (\bibinfo{year}{2004}), \bibinfo{pages}{417--528}.
+\newblock
+\showISSN{1567-2190}
+\showDOI{%
+\url{https://doi.org/10.1561/0100000004}}
+
+
 \bibitem[\protect\citeauthoryear{Dimitrakakis, Nelson, Mitrokotsa, and
   Rubinstein}{Dimitrakakis et~al\mbox{.}}{a}]%
         {dimitrakakis2014robust}
