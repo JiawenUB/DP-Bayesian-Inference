@@ -1,12 +1,12 @@
 # Fdb version 3
-["bibtex main"] 1540325945 "main.aux" "main.bbl" "main" 1540325947
+["bibtex main"] 1540326293 "main.aux" "main.bbl" "main" 1540326295
   "/usr/local/texlive/2017/texmf-dist/bibtex/bst/base/plain.bst" 1480098433 20613 bd3fbfa9f64872b81ac57a0dd2ed855f ""
   "bayesian.bib" 1540251263 4412 37481d487fe074296116256b6b32be06 ""
-  "main.aux" 1540325946 11203 5e2654e09db7c49ea2f250afd9f31a32 ""
+  "main.aux" 1540326294 11160 341d04377fe6ffa1019f1f6e6d14b2e8 ""
   (generated)
   "main.bbl"
   "main.blg"
-["pdflatex"] 1540325945 "main.tex" "main.pdf" "main" 1540325947
+["pdflatex"] 1540326294 "main.tex" "main.pdf" "main" 1540326295
   "/usr/local/texlive/2017/texmf-dist/fonts/map/fontname/texfonts.map" 1480098670 3287 e6b82fe08f5336d4d5ebc73fb1152e87 ""
   "/usr/local/texlive/2017/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy5.tfm" 1480098698 1120 1e8878807317373affa7f7bba4cf2f6a ""
   "/usr/local/texlive/2017/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy7.tfm" 1480098698 1120 7f9f170e8aa57527ad6c49feafd45d54 ""
@@ -210,10 +210,10 @@
   "global_epsilon_size100to200.eps" 1540172632 2922778 708fe0c6d0f1022659db8b62e2dd4a3c ""
   "global_epsilon_size50to100.eps" 1540172632 2922777 4ba15c1b1ffe0fa75813f8003312e102 ""
   "macros.tex" 1540271938 2638 574bc9054f8ab1d2a541bc675655b5ae ""
-  "main.aux" 1540325946 11203 5e2654e09db7c49ea2f250afd9f31a32 ""
-  "main.bbl" 1540325945 3449 a5ac4a969a742242fb7298b07def42fa "bibtex main"
-  "main.out" 1540325946 1933 9834dbd4131f6d0097edc2d18f13950f ""
-  "main.tex" 1540325944 51971 2f3c0397f079ca873677c28a1794f63f ""
+  "main.aux" 1540326294 11160 341d04377fe6ffa1019f1f6e6d14b2e8 ""
+  "main.bbl" 1540326294 3449 a5ac4a969a742242fb7298b07def42fa "bibtex main"
+  "main.out" 1540326294 1933 9834dbd4131f6d0097edc2d18f13950f ""
+  "main.tex" 1540326292 51996 701a105491b2212c976676b88a5009bc ""
   "sampling_2d.eps" 1538800006 21965843 40d55083c9cb8f5144a4dc57365a68f6 ""
   "sampling_3d.eps" 1538799604 21382169 af98be27d359a097344438505215d8ad ""
   "sampling_4d.eps" 1538800012 25552469 b3621363c6cdfca200240f664ac1c8c9 ""
@@ -222,7 +222,7 @@
   "theory_2d.eps" 1539266532 7473166 eed600375e31ea9466cae0eb36b478ed ""
   "theory_3d.eps" 1539266823 7473166 25417ac3dbd2f28d7795159b806b8af0 ""
   (generated)
-  "main.log"
   "main.out"
-  "main.pdf"
   "main.aux"
+  "main.pdf"
+  "main.log"

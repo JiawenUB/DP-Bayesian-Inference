@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  23 OCT 2018 16:19
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  23 OCT 2018 16:24
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1196,7 +1196,7 @@ File: efficiency-eps-converted-to.pdf Graphic file (type pdf)
 <use efficiency-eps-converted-to.pdf>
 Package pdftex.def Info: efficiency-eps-converted-to.pdf used on input line 712
 .
-(pdftex.def)             Requested size: 165.59853pt x 82.79446pt.
+(pdftex.def)             Requested size: 276.00105pt x 137.99812pt.
 Package epstopdf Info: Source file: <theory_2d.eps>
 (epstopdf)                    date: 2018-10-11 10:02:12
 (epstopdf)                    size: 7473166 bytes
@@ -1214,7 +1214,7 @@ File: theory_2d-eps-converted-to.pdf Graphic file (type pdf)
 <use theory_2d-eps-converted-to.pdf>
 Package pdftex.def Info: theory_2d-eps-converted-to.pdf used on input line 725.
 
-(pdftex.def)             Requested size: 75.90042pt x 56.96245pt.
+(pdftex.def)             Requested size: 137.9979pt x 103.57002pt.
 Package epstopdf Info: Source file: <theory_3d.eps>
 (epstopdf)                    date: 2018-10-11 10:07:03
 (epstopdf)                    size: 7473166 bytes
@@ -1232,9 +1232,8 @@ File: theory_3d-eps-converted-to.pdf Graphic file (type pdf)
 <use theory_3d-eps-converted-to.pdf>
 Package pdftex.def Info: theory_3d-eps-converted-to.pdf used on input line 729.
 
-(pdftex.def)             Requested size: 75.90042pt x 56.96245pt.
- [16 <./efficiency-eps-converted-to.pdf> <./theory_2d-eps-converted-to.pdf> <./
-theory_3d-eps-converted-to.pdf>]
+(pdftex.def)             Requested size: 137.9979pt x 103.57002pt.
+ [16 <./efficiency-eps-converted-to.pdf>]
 Package epstopdf Info: Source file: <sampling_2d.eps>
 (epstopdf)                    date: 2018-10-06 00:26:46
 (epstopdf)                    size: 21965843 bytes
@@ -1246,13 +1245,13 @@ to.pdf sampling_2d.eps>
 (epstopdf)             \includegraphics on input line 775.
 Package epstopdf Info: Output file is already uptodate.
 
-<sampling_2d-eps-converted-to.pdf, id=301, 910.40125pt x 517.935pt>
+<sampling_2d-eps-converted-to.pdf, id=295, 910.40125pt x 517.935pt>
 File: sampling_2d-eps-converted-to.pdf Graphic file (type pdf)
 
 <use sampling_2d-eps-converted-to.pdf>
 Package pdftex.def Info: sampling_2d-eps-converted-to.pdf used on input line 77
 5.
-(pdftex.def)             Requested size: 137.9979pt x 78.5088pt.
+(pdftex.def)             Requested size: 276.00105pt x 157.01762pt.
 Package epstopdf Info: Source file: <sampling_3d.eps>
 (epstopdf)                    date: 2018-10-06 00:20:04
 (epstopdf)                    size: 21382169 bytes
@@ -1261,16 +1260,22 @@ Package epstopdf Info: Source file: <sampling_3d.eps>
 (epstopdf)                    size: 181412 bytes
 (epstopdf)             Command: <repstopdf --outfile=sampling_3d-eps-converted-
 to.pdf sampling_3d.eps>
-(epstopdf)             \includegraphics on input line 784.
+(epstopdf)             \includegraphics on input line 788.
 Package epstopdf Info: Output file is already uptodate.
 
-<sampling_3d-eps-converted-to.pdf, id=302, 854.19125pt x 538.01pt>
+<sampling_3d-eps-converted-to.pdf, id=296, 854.19125pt x 538.01pt>
 File: sampling_3d-eps-converted-to.pdf Graphic file (type pdf)
 
 <use sampling_3d-eps-converted-to.pdf>
 Package pdftex.def Info: sampling_3d-eps-converted-to.pdf used on input line 78
-4.
-(pdftex.def)             Requested size: 137.9979pt x 86.91249pt.
+8.
+(pdftex.def)             Requested size: 155.24895pt x 97.7817pt.
+
+Underfull \hbox (badness 1259) in paragraph at lines 788--788
+[]\OT1/cmr/m/n/8 (a) In-creas-ing data size with $[](1\OML/cmm/m/it/8 ; \OT1/cm
+r/m/n/8 1\OML/cmm/m/it/8 ; \OT1/cmr/m/n/8 1)$
+ []
+
 Package epstopdf Info: Source file: <sampling_4d.eps>
 (epstopdf)                    date: 2018-10-06 00:26:52
 (epstopdf)                    size: 25552469 bytes
@@ -1281,15 +1286,13 @@ Package epstopdf Info: Source file: <sampling_4d.eps>
 to.pdf sampling_4d.eps>
 (epstopdf)             \includegraphics on input line 793.
 Package epstopdf Info: Output file is already uptodate.
-
-<sampling_4d-eps-converted-to.pdf, id=303, 922.44624pt x 595.22375pt>
+<sampling_4d-eps-converted-to.pdf, id=297, 922.44624pt x 595.22375pt>
 File: sampling_4d-eps-converted-to.pdf Graphic file (type pdf)
 
 <use sampling_4d-eps-converted-to.pdf>
 Package pdftex.def Info: sampling_4d-eps-converted-to.pdf used on input line 79
 3.
-(pdftex.def)             Requested size: 137.9979pt x 89.04356pt.
- [17 <./sampling_2d-eps-converted-to.pdf>]
+(pdftex.def)             Requested size: 155.24895pt x 100.16946pt.
 Package epstopdf Info: Source file: <sampling_prior.eps>
 (epstopdf)                    date: 2018-10-12 20:08:15
 (epstopdf)                    size: 15016332 bytes
@@ -1298,15 +1301,17 @@ Package epstopdf Info: Source file: <sampling_prior.eps>
 (epstopdf)                    size: 199764 bytes
 (epstopdf)             Command: <repstopdf --outfile=sampling_prior-eps-convert
 ed-to.pdf sampling_prior.eps>
-(epstopdf)             \includegraphics on input line 818.
+(epstopdf)             \includegraphics on input line 823.
 Package epstopdf Info: Output file is already uptodate.
- <sampling_prior-eps-converted-to.pdf, id=324, 719.68875pt x 447.6725pt>
+
+<sampling_prior-eps-converted-to.pdf, id=306, 719.68875pt x 447.6725pt>
 File: sampling_prior-eps-converted-to.pdf Graphic file (type pdf)
 
 <use sampling_prior-eps-converted-to.pdf>
 Package pdftex.def Info: sampling_prior-eps-converted-to.pdf used on input line
- 818.
-(pdftex.def)             Requested size: 165.59853pt x 103.01031pt.
+ 823.
+(pdftex.def)             Requested size: 276.00105pt x 171.68843pt.
+ [17 <./theory_2d-eps-converted-to.pdf> <./theory_3d-eps-converted-to.pdf>]
 Package epstopdf Info: Source file: <global_epsilon_size50to100.eps>
 (epstopdf)                    date: 2018-10-21 21:43:52
 (epstopdf)                    size: 2922777 bytes
@@ -1316,21 +1321,16 @@ o.pdf>
 (epstopdf)                    size: 46425 bytes
 (epstopdf)             Command: <repstopdf --outfile=global_epsilon_size50to100
 -eps-converted-to.pdf global_epsilon_size50to100.eps>
-(epstopdf)             \includegraphics on input line 831.
+(epstopdf)             \includegraphics on input line 836.
 Package epstopdf Info: Output file is already uptodate.
 
-<global_epsilon_size50to100-eps-converted-to.pdf, id=327, 578.16pt x 433.62pt>
+<global_epsilon_size50to100-eps-converted-to.pdf, id=324, 578.16pt x 433.62pt>
 File: global_epsilon_size50to100-eps-converted-to.pdf Graphic file (type pdf)
 
 <use global_epsilon_size50to100-eps-converted-to.pdf>
 Package pdftex.def Info: global_epsilon_size50to100-eps-converted-to.pdf used o
-n input line 831.
-(pdftex.def)             Requested size: 79.34853pt x 59.50879pt.
-
-Underfull \hbox (badness 4686) in paragraph at lines 831--831
-[]\OT1/cmr/m/n/8 (a) data size range
- []
-
+n input line 836.
+(pdftex.def)             Requested size: 137.9979pt x 103.49529pt.
 Package epstopdf Info: Source file: <global_epsilon_size100to200.eps>
 (epstopdf)                    date: 2018-10-21 21:43:52
 (epstopdf)                    size: 2922778 bytes
@@ -1340,39 +1340,34 @@ to.pdf>
 (epstopdf)                    size: 48007 bytes
 (epstopdf)             Command: <repstopdf --outfile=global_epsilon_size100to20
 0-eps-converted-to.pdf global_epsilon_size100to200.eps>
-(epstopdf)             \includegraphics on input line 833.
+(epstopdf)             \includegraphics on input line 838.
 Package epstopdf Info: Output file is already uptodate.
 
-<global_epsilon_size100to200-eps-converted-to.pdf, id=328, 578.16pt x 433.62pt>
+<global_epsilon_size100to200-eps-converted-to.pdf, id=325, 578.16pt x 433.62pt>
 File: global_epsilon_size100to200-eps-converted-to.pdf Graphic file (type pdf)
 <use global_epsilon_size100to200-eps-converted-to.pdf>
 Package pdftex.def Info: global_epsilon_size100to200-eps-converted-to.pdf used 
-on input line 833.
-(pdftex.def)             Requested size: 79.34853pt x 59.50879pt.
+on input line 838.
+(pdftex.def)             Requested size: 137.9979pt x 103.49529pt.
 
-Underfull \hbox (badness 4181) in paragraph at lines 833--833
-[]\OT1/cmr/m/n/8 (b) data size range
- []
-
-
-Underfull \hbox (badness 5022) in paragraph at lines 838--838
-[]\OT1/cmr/m/n/10 Figure 8: []Concrete pri-vacy cal-cu-la-tion un-der set-tings
+Underfull \hbox (badness 5022) in paragraph at lines 843--843
+[]\OT1/cmr/m/n/10 Figure 6: []Concrete pri-vacy cal-cu-la-tion un-der set-tings
  that: prior
  []
 
-[18 <./sampling_3d-eps-converted-to.pdf> <./sampling_4d-eps-converted-to.pdf>]
-[19 <./sampling_prior-eps-converted-to.pdf> <./global_epsilon_size50to100-eps-c
-onverted-to.pdf> <./global_epsilon_size100to200-eps-converted-to.pdf>]
-(./main.bbl [20]
+[18 <./sampling_2d-eps-converted-to.pdf> <./sampling_3d-eps-converted-to.pdf> <
+./sampling_4d-eps-converted-to.pdf>] [19 <./sampling_prior-eps-converted-to.pdf
+>] (./main.bbl
 Missing character: There is no Â in font cmti10!
 Missing character: There is no ® in font cmti10!
-)
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 881.
+ [20 <./global_epsilon_size50to100-eps-converted-to.pdf> <./global_epsilon_size
+100to200-eps-converted-to.pdf>])
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 886.
  [21]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 881.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 886.
  (./main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 881.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 881.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 886.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 886.
 Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: 9834DBD4131F6D0097EDC2D18F13950F;1933.
 
@@ -1384,13 +1379,13 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 19918 strings out of 492995
- 369338 string characters out of 6132704
- 455442 words of memory out of 5000000
- 23057 multiletter control sequences out of 15000+600000
+ 19920 strings out of 492995
+ 369396 string characters out of 6132704
+ 455342 words of memory out of 5000000
+ 23059 multiletter control sequences out of 15000+600000
  24462 words of font info for 98 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 41i,20n,37p,10430b,857s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 41i,20n,37p,10430b,869s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 ></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
 </usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx5.pfb></
@@ -1427,7 +1422,7 @@ e1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type
 1/public/amsfonts/cm/cmti9.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/
 public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2017/texmf-dist/fonts/ty
 pe1/public/amsfonts/symbols/msbm7.pfb>
-Output written on main.pdf (21 pages, 1925551 bytes).
+Output written on main.pdf (21 pages, 1927622 bytes).
 PDF statistics:
  511 PDF objects out of 1000 (max. 8388607)
  427 compressed objects within 5 object streams
