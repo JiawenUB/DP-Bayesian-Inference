@@ -353,7 +353,7 @@ Both Laplace mechanism and improved one are $\epsilon -$differential privacy\cit
 The mechanism $\hexpmech(\dataobs)$ outputs a candidate $r \in \candidateset$ with probability
 \begin{equation*}
 \underset{z \thicksim \hexpmech}{\Pr}[z=r] = \frac {exp\big(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r)}{2\cdot S(\dataobs)}\big)}
-{\sum_{r\in\candidateset} exp\Big(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r)}{2\cdot S(\dataobs)}\Big)}.
+{\sum_{r'\in\candidateset} exp\Big(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r')}{2\cdot S(\dataobs)}\Big)}.
 \end{equation*}
 where $S_\beta(\dataobs)$ is the smooth sensitivity of $\hellinger(\bysinfer(\dataobs),-)$, calculated by:
 
@@ -421,21 +421,36 @@ In what follows, we will use a correspondence between the probability
  $\underset{z \thicksim \hexpmech(\dataobs)}{Pr}[z = r]$ of every
  $r\in\candidateset$ and the probability 
  $\underset{z \thicksim \hexpmech(\dataobs)}{Pr}[\hellinger(\bysinfer(\dataobs),z) =
- \hellinger(\bysinfer(\dataobs),r)]$ for the utility score for $r$. In Beta-binomial system, because of the property of beta function, the order of parameters in Beta distribution doesn't matter when computing the Hellinegr distance. More specifically, for 3 different beta distributions $\betad(\alpha_0, \beta_0)$, $\betad(\alpha_1, \beta_1)$ and $\betad(\alpha_2, \beta_2)$, $\hellinger(\betad(\alpha_0, \beta_0),\betad(\alpha_1, \beta_1)) = \hellinger(\betad(\alpha_0, \beta_0),\betad(\alpha_2, \beta_2))$ iff $\alpha_2 = \beta_1$,  $\alpha_1 = \beta_2$ and $\alpha_0 + \alpha_1 = \beta_0 + \beta_2$ and $\alpha_0 + \alpha_2 = \beta_0 + \beta_1$.
+ \hellinger(\bysinfer(\dataobs),r)]$ for the utility score of $r \in \candidateset$. In Beta-binomial system, because of the property of beta function, the order of parameters in Beta distribution doesn't matter when computing the Hellinegr distance. 
 
- From this, we can derive that there are either only one or two candidates in $\candidateset$ can have the same score, i.e., for every $r \in \candidateset$ we have: $
- \underset{z \thicksim \hexpmech(\dataobs)}{Pr}[z = r]$ either 
+ \begin{lem}
+ \label{lem_hellinegr_equality}
+ for 3 different beta distributions $\betad(\alpha_0, \beta_0)$, $\betad(\alpha_1, \beta_1)$ and $\betad(\alpha_2, \beta_2)$, $\hellinger(\betad(\alpha_0, \beta_0),\betad(\alpha_1, \beta_1)) = \hellinger(\betad(\alpha_0, \beta_0),\betad(\alpha_2, \beta_2))$ iff:
+  $$
+  \alpha_2 = \beta_1, \alpha_1 = \beta_2, \alpha_0 + \alpha_1 = \beta_0 + \beta_2 \alpha_0 + \alpha_2 = \beta_0 + \beta_1.
+  $$
+ \end{lem}
+
+
+ \begin{thm}
+ \label{thm_candidate_divide}
+ there are at most two candidates in $\candidateset$ can have the same score, i.e., for every $r \in \candidateset$, $\underset{z \thicksim \hexpmech(\dataobs)}{Pr}[\hellinger(\bysinfer(\dataobs),z) = \hellinger(\bysinfer(\dataobs),r)]$ either 
  $$
- =\frac{1}{2}\Big (\underset{z \thicksim \hexpmech(\dataobs)}{Pr}[\hellinger(\bysinfer(\dataobs),z) =
- \hellinger(\bysinfer(\dataobs),r)]\Big )
+ = 2\Big ( \underset{z \thicksim \hexpmech(\dataobs)}{Pr}[z = r]\Big )
  $$ or 
  $$
- =\underset{z \thicksim \hexpmech(\dataobs)}{Pr}[\hellinger(\bysinfer(\dataobs),z) = \hellinger(\bysinfer(\dataobs),r)].
+ =\underset{z \thicksim \hexpmech(\dataobs)}{Pr}[z = r].
  $$
+ \end{thm}
  % proportional too $\hellinger(\bysinfer(\dataobs),r)$, i.e., $u(x,z)$. We can derive, if $u(r,x) = u(r',x)$ then $\underset{z \thicksim \hexpmech(\dataobs)}{Pr}[z = r] = \underset{z \thicksim \hexpmech(\dataobs)}{Pr}[z = r']$. 
- We assume the number of candidates $z \in \mathcal{R}$ that satisfy $\hellinger(\bysinfer(\dataobs),z) = \hellinger(\bysinfer(\dataobs),r)$, i.e. $u(z,\dataobs) = u(r,\dataobs)$ is $|z|$, then  $\underset{z \thicksim \hexpmech(\dataobs)}{Pr}[u(z,\dataobs) = u(r,\dataobs)] = |z| \underset{z \thicksim \hexpmech(\dataobs)}{Pr}[z = r]$. It can be infer that $|z| = 2$ or $|z| = 1$, i.e., $\underset{z \thicksim \hexpmech(\dataobs)}{Pr}[u(z,x) = u(r,x)] = 2 \underset{z \thicksim \hexpmech(\dataobs)}{Pr}[z = r]$ or $\underset{z \thicksim \hexpmech(\dataobs)}{Pr}[z = r]$.
+ \begin{proof} of Theorem \ref{thm_candidate_divide}.
+
+ We assume the number of candidates $z \in \mathcal{R}$ that satisfy $\hellinger(\bysinfer(\dataobs),z) = \hellinger(\bysinfer(\dataobs),r)$, i.e. $u(z,\dataobs) = u(r,\dataobs)$ is $|z|$, then  $\underset{z \thicksim \hexpmech(\dataobs)}{Pr}[u(z,\dataobs) = u(r,\dataobs)] = |z| \underset{z \thicksim \hexpmech(\dataobs)}{Pr}[z = r]$.
+
+ From Lemma \ref{lem_hellinegr_equality}, It can be infer that $|z| = 2$ or $|z| = 1$, i.e., $\underset{z \thicksim \hexpmech(\dataobs)}{Pr}[u(z,x) = u(r,x)] = 2 \underset{z \thicksim \hexpmech(\dataobs)}{Pr}[z = r]$ or $\underset{z \thicksim \hexpmech(\dataobs)}{Pr}[z = r]$.
 
  The same way in Dirichlet-multinomial system. By combination and permutation, $|z|$ can take value of 1 or 3 or 6 in 3 dimensionality, and trivially in higher dimensions.
+ \end{proof}
 
  In Beta-binomial system, let $R_1, R_2 \subset \candidateset$ be a partition of $\candidateset$, where every $z \in R_1$ has a distinct score, i.e., $|z| = 1$ and $z \in R_2$ has another $z' \in R_2$ with the same score, i.e., $|z| = 2$. The proofs are given by parts: 
 
