@@ -16,8 +16,7 @@
 \author[*]{Marco Gaboardi}
 \affil[*]{Department of Computer Science and Engineering, University at Buffalo, SUNY. \{jliu223,gianpiet,gaboardi\}@buffalo.edu}
 \affil[**]{Department of Computer Science, Princeton University. {mbun@cs.princeton.edu}}
-
-
+\date{}
 \maketitle
 \section{Preliminaries}
 \label{sec_background}
@@ -46,7 +45,7 @@ recursive fashion over the data.
 \noindent \textbf{Beta-binomial System.}
 
 In this work we will consider a specific instance of Bayesian inference and one of its generalizations.
-specifically, a Beta-binomial mode. We will consider the situation the underlying data is binomial distribution ($\sim binomial(\theta)$), where $\theta$ represents
+specifically, a Beta-binomial mode. We will consider the situation the underlying data is binomial distribution ($\thicksim binomial(\theta)$), where $\theta$ represents
 the parameter --informally called \emph{bias}-- of a Bernoulli
 distributed random variable. The
 prior distribution over $\theta\in [0,1]$ is going to be a beta
@@ -93,17 +92,18 @@ where $+$ denotes the componentwise sum of vectors of reals.
 \begin{definition}
 $\epsilon-$differential privacy.
 
-A randomized mechanism $\mathcal{M}: \mathcal{X} \rightarrow \mathcal{Y}$ is differential privacy, iff for any adjacent input $\dataobs, \dataobs' \in \mathcal{X}$, a metric $H$ over $\mathcal{Y}$ and a $B \subseteq H(\mathcal{Y})$, $\mathcal{M}$ satisfies:
+A randomized mechanism $\mathcal{M}: \mathcal{X} \rightarrow \mathcal{Y}$ is differential privacy, iff for any adjacent\footnote{Given $\dataobs, \dataobs'$  we say that $\dataobs$ and $\dataobs'$ are adjacent and we write, $\adj{\dataobs}{\dataobs'}$, iff\\
+$\displaystyle \sum_{i}^{n}\iverson{x_i = x'_i }\leq 1$. } input $\dataobs, \dataobs' \in \mathcal{X}$, a metric $H$ over $\mathcal{Y}$ and a $B \subseteq H(\mathcal{Y})$, $\mathcal{M}$ satisfies:
 \begin{equation*}
-\mathbb{P}[H(\mathcal{M}(\dataobs)) \in B] = e^\epsilon \mathbb{P}[H(\mathcal{M}(\dataobs')) \in B],
+\mathbb{P}[H(\mathcal{M}(\dataobs)) \in B] = e^\epsilon \mathbb{P}[H(\mathcal{M}(\dataobs')) \in B].
 \end{equation*}
-where $\dataobs = (x_i)_{i = 1}^n$ and $\dataobs = (x'_i)_{i = 1}^n$ is adjacent if there is only one $j$ that $x_j \neq x'_j$ and $x_i = x'_i$ for $i = 1, 2, \cdots, n; i \neq j$. 
+
 \end{definition}
 
 \begin{definition}
 $(\epsilon,\delta)-$differential privacy.
 
-A randomized mechanism $\mathcal{M}: \mathcal{X} \rightarrow \mathcal{Y}$ is differential privacy, iff for any adjacent input $\dataobs, \dataobs' \in \mathcal{X}$, a metric $H$ over $\mathcal{Y}$ and a $B \subseteq H(\mathcal{Y})$, $\mathcal{M}$ satisfies:
+A randomized mechanism $\mathcal{M}: \mathcal{X} \rightarrow \mathcal{Y}$ is differential privacy, iff for any $\adj{\dataobs}{\dataobs'} \in \mathcal{X}$, a metric $H$ over $\mathcal{Y}$ and a $B \subseteq H(\mathcal{Y})$, $\mathcal{M}$ satisfies:
 \begin{equation*}
 \mathbb{P}[H(\mathcal{M}(\dataobs)) \in B] = e^\epsilon \mathbb{P}[H(\mathcal{M}(\dataobs')) \in B] + \delta,
 \end{equation*}
@@ -123,14 +123,12 @@ $\valpha'=(\valpha + \Delta \valpha)$. \cite{zhang2016differential} and \cite{xi
 have already attacked this problem by adding independent Laplacian noise to the
 parameters of the posteriors. That is, in the case of the Beta-Binomial system,
 the value released would  be: $(\tilde\alpha,\tilde\beta)=(\alpha +  \widetilde{\Delta \alpha},\beta + n - \widetilde{\Delta \alpha})$
-where $\widetilde{\Delta \alpha}\sim \lap{\Delta \alpha}{\frac{2}{\epsilon}}$,
+where $\widetilde{\Delta \alpha}\thicksim \lap{\Delta \alpha}{\frac{2}{\epsilon}}$,
 and where $\lap{\mu}{\nu}$ denotes a Laplace random variable with mean $\mu$ and scale $\nu$.
 This mechanism is $\epsilon$-differentially private, and the noise is
 calibrated w.r.t. to a sensitivity of 2 which is derived by using
 $\ell_1$ norm over the pair of parameters. Indeed, considering two
-adjacent\footnote{Given $\dataobs, \dataobs'$  we say that $\dataobs$ and $\dataobs'$ are adjacent and we write, $\adj{\dataobs}{\dataobs'}$, iff\\
-$\displaystyle \sum_{i}^{n}\iverson{x_i = x'_i }\leq 1$. } data observations
-$\dataobs, \dataobs'$, that, from a unique prior, give rise to two posterior
+adjacent data observations $\dataobs, \dataobs'$, that, from a unique prior, give rise to two posterior
 distributions, characterized by the pairs
 $(\alpha',\beta')$ and $(\alpha'',\beta'')$ then
 $|\alpha'-\alpha''|+|\beta'-\beta''|\leq 2$.
@@ -182,98 +180,17 @@ fixed and we denote it by $\bprior$.
 
 
 
-
-\subsection{Baseline Mechanisms}
-\label{subsec_baselines}
-Baseline Mechanisms are introduced in prior to our mechanism: $\hexpmech$.
-
-\subsubsection{Exponential Mechanism}
-Exponential mechanism $\expmech{}{x}{u}{\candidateset}$ samples a element from the candidate set $\candidateset = \{r_1, r_2, \cdots r_n\}$ with probability proportional to $exp(\frac{\epsilon u(x,r)}{2 GS})$:
-\begin{equation*}
-\underset{z \thicksim \expmech{}{x}{u}{\candidateset} }{Pr}[z=r] = \frac
-{exp(\frac{\epsilon u(x,r)}{2 GS})}
-{\Sigma_{r' \in \mathcal{R}}\ exp(\frac{\epsilon u(x,r')}{2 GS})},
-\end{equation*}
-where $u(x,r)$ is the Hellinger scoring function over candidates, $-\hellinger(\bysinfer(\dataobs), r)$, and $GS$ is the global sensitivity calculated by:
-\begin{equation*}
-GS = 
-\max_{\{|\dataobs,\dataobs'| \leq 1;\dataobs,\dataobs'\in \mathcal{X}^n\}}\max_{\{r\in \mathcal{R}\}}
-|\hellinger(\bysinfer(\dataobs), r) - \hellinger(\bysinfer(\dataobs'), r)|
-\end{equation*}
-
-Exponential mechanism is $\epsilon -$differential privacy\cite{dwork2014algorithmic}.
-
-
-\subsubsection{Exponential Mechanism with Local Sensitivity}
-\label{subsec_emls}
-% \subsubsection{Mechanism Set up}
-Exponential mechanism with local sensitivity $\expmech{local}{x}{u}{\candidateset}$ share the same candidate set and utility function as it with standard exponential mechanism. This outputs a candidate $r \in \mathcal{R}$ with probability proportional to $exp(\frac{\epsilon u(x,r)}{2 LS(x)})$:
-\begin{equation*}
-\underset{z \thicksim \expmech{local}{x}{u}{\candidateset}}{\Pr}[z=r] = \frac
-{exp(\frac{\epsilon u(x,r)}{2 LS(x)})}
-{\Sigma_{r' \in \mathcal{R}}\ exp(\frac{\epsilon u(x,r')}{2 LS(x)})},
-\end{equation*}
-
-where $LS(x)$ is the local sensitivity calculated by:
-
-\begin{equation*}
-LS(\dataobs)=\max_{\dataobs' \in \datauni^n:\adj{\dataobs}{\dataobs'}, r\in \mathcal{R}}\lvert \hellinger(\bysinfer(\dataobs'), r) - \hellinger(\bysinfer(\dataobs'), r)\rvert.
-\end{equation*}
-
-The exponential mechanism with local sensitivity is non-differential privacy\cite{dwork2014algorithmic}.
-
-
-
-\subsubsection{Baseline Mechanism - Laplace Mechanism}
- Adding noise to the posterior distribution parameters directly, through Laplace mechanism ($\lap{\cdot}{\cdot}$) with post-processing:
-
- \[
- \betad(\alpha +  \lfloor{\Delta \alpha + Y}\rfloor^n_0,\beta + n - \lfloor{\Delta \alpha + Y}\rfloor^n_0),
- \] 
- where $Y \sim \lap{0}{\frac{\Delta \bysinfer}{\epsilon}}$ in Beta-binomial model; and
- \[
- \dirichlet(\alpha_1 +  \lfloor{\Delta \alpha_1 + Y_1}\rfloor^n_0, \cdots, \alpha_k + \lfloor n - \sum_{i = 1}^{k-1}\lfloor{\Delta \alpha_i + Y_i}\rfloor^n_0 \rfloor^n_0),
- \]
- where $Y_i \sim \lap{0}{\frac{\Delta \bysinfer}{\epsilon}}$ in Dirichlet-multinomial model. $\lfloor \cdot \rfloor^n_0$ is taking the floor value and truncating into $[0,n]$ to make sure the noised posterior is valid.
-
- Then release it as the private posterior distribution.
-
- The sensitivity used in this baseline mechanism is:
- \[
- \Delta \bysinfer \equiv \max\limits_{\dataobs, \dataobs' \in \{0,1\}^{n}, ||\dataobs - \dataobs'||_1 \leq 1} ||\bysinfer(\dataobs) - \bysinfer(\dataobs')||_1,
- \]
- which is proportional to the dimensionality.
-
-
-\subsubsection{Improved Laplace Mechanism}
-
- Noise added to posterior distribution parameters are scaled to smaller sensitivity in this improved Laplace mechanism. Because in terms of two adjacent data sets $\dataobs, \dataobs'$, their posterior distributions by Bayesian inference -- $\bysinfer(\dataobs), \bysinfer(\dataobs')$ -- which parameter differs at most in 2 dimensions even though extended to Dirichlet-multinomial mode, i.e., $\Delta \bysinfer \leq 2$. 
-
- Then it is enough to use sensitivity $1$ in 2 dimensions and $2$ in higher dimensions:
-
- \[
- \betad(\alpha +  \lfloor{\Delta \alpha + Y}\rfloor^n_0,\beta + n - \lfloor{\Delta \alpha + Y}\rfloor^n_0),
- \]
- where $Y \sim \lap{0}{\frac{1}{\epsilon}}$ in Beta-binomial model; and
- \[
- \dirichlet(\alpha_1 +  \lfloor{\Delta \alpha_1 + Y_1}\rfloor^n_0, \cdots, \alpha_k + \lfloor n - \sum_{i = 1}^{k-1}\lfloor{\Delta \alpha_i + Y_i}\rfloor^n_0 \rfloor^n_0),
- \]
-where $Y_i \sim \lap{0}{\frac{2}{\epsilon}}$ in Dirichlet-multinomial model.
-
-Both Laplace mechanism and improved one are $\epsilon -$differential privacy\cite{dwork2014algorithmic}.
-
-
 \subsection{$\hexpmech$: Smoothed Hellinger Distance Based Exponential Mechanism}
 \label{subsec_hexpmech}
 
 \begin{definition}
 \label{def_smoo}
-The mechanism $\hexpmech(x)$ outputs a candidate $r \in \candidateset$ with probability
+The mechanism $\hexpmech(\dataobs)$ outputs a candidate $r \in \candidateset$ with probability
 \begin{equation*}
 \underset{z \thicksim \hexpmech}{\Pr}[z=r] = \frac {exp\big(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r)}{2\cdot S(\dataobs)}\big)}
-{\displaystyle\sum_{r\in\candidateset} exp\Big(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r)}{2\cdot S(\dataobs)}\Big)}.
+{\sum_{r'\in\candidateset} exp\Big(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r')}{2\cdot S(\dataobs)}\Big)}.
 \end{equation*}
-where $S_\beta(x)$ is the smooth sensitivity of $\hellinger(\bysinfer(x),-)$, calculated by:
+where $S_\beta(\dataobs)$ is the smooth sensitivity of $\hellinger(\bysinfer(\dataobs),-)$, calculated by:
 
 \begin{equation}
   \label{eq:smooth}
@@ -308,7 +225,7 @@ that $\candidateset$ has $\binom{n + 1}{m - 1}$ elements in this case. We
 will denote by $\hexpmechd$ the mechanism for the
 Dirichlet-multinomial system.
 
-By setting the $\gamma$ as $\ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta}{2 (n + 1)})})$, $\hexpmech$ is $(\epsilon, \frac{e^{\frac{\epsilon}{2}} \delta}{2}) -$differentially private. (or $\gamma = \ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta}{2 |\candidateset|})})$ when generalized to Dirichlet-multinomial System)
+By setting the $\gamma$ as $\ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta'}{2 (n + 1)})})$, $\hexpmech$ is $(\epsilon, \delta) -$differentially private, where $\delta = \frac{e^{\frac{\epsilon}{2}} \delta'}{2}$. (or $\gamma = \ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta'}{2 |\candidateset|})})$ when generalized to Dirichlet-multinomial System)
 
 
 \section{Privacy Analysis}
@@ -318,16 +235,17 @@ In baseline mechanisms, \emph{exponential mechanism}, \emph{Laplace mechanism}, 
 
 \subsection{Privacy Analysis for $\hexpmech$}
 
-The differential privacy property of $\hexpmech$ is proved based on the holds of the two properties: \emph{sliding property} and \emph{dilation property}.\\
+The differential privacy property of $\hexpmech$ is proved based on following two lemmas: Lemma \ref{lem_sliding} and Lemma \ref{lem_dilation}.\\
 
 \noindent \textbf{Sliding Property of $\hexpmech$}
 \begin{lem}
-Given $\hexpmech(x)$ calibrated on the smooth sensitivity. Let $\lambda = f(\epsilon,
-\delta)$, $\epsilon\geq 0$ and $|\delta| < 1$. Then, the following \emph{sliding property} holds:
+\label{lem_sliding}
+Given $\hexpmech(\dataobs)$ calibrated on the smooth sensitivity. Let $\lambda = f(\epsilon,
+\delta')$, $\epsilon\geq 0$ and $|\delta'| < 1$. Then, the following \emph{sliding property} holds:
 \begin{equation*}
-\underset{r \thicksim \hexpmech(x)}{Pr}[u(r,x) = \hat{s}]
+\underset{r \thicksim \hexpmech(\dataobs)}{Pr}[u(r,\dataobs) = \hat{s}]
 \leq
-e^{\frac{\epsilon}{2}} \underset{r \thicksim \hexpmech(x)}{Pr}[u(r,x) = (\Delta + \hat{s})] + \frac{\delta}{2},
+e^{\frac{\epsilon}{2}} \underset{r \thicksim \hexpmech(\dataobs)}{Pr}[u(r,\dataobs) = (\delta' + \hat{s})] + \frac{\delta'}{2},
 \end{equation*}
 
 \end{lem}
@@ -335,49 +253,90 @@ e^{\frac{\epsilon}{2}} \underset{r \thicksim \hexpmech(x)}{Pr}[u(r,x) = (\Delta 
 \begin{proof}
 
 In what follows, we will use a correspondence between the probability
- $\underset{z \thicksim \hexpmech(x)}{Pr}[z = r]$ of every
+ $\underset{z \thicksim \hexpmech(\dataobs)}{Pr}[z = r]$ of every
  $r\in\candidateset$ and the probability 
- $\underset{z \thicksim \hexpmech(x)}{Pr}[\hellinger(\bysinfer(x),z) =
- \hellinger(\bysinfer(x),r)]$ for the utility score for $r$. In Beta-binomial system, because of the property of beta function, the order of parameters in Beta distribution doesn't matter when computing the Hellinegr distance. More specifically, for 3 different beta distributions $\betad(\alpha_0, \beta_0)$, $\betad(\alpha_1, \beta_1)$ and $\betad(\alpha_2, \beta_2)$, $\hellinger(\betad(\alpha_0, \beta_0),\betad(\alpha_1, \beta_1)) = \hellinger(\betad(\alpha_0, \beta_0),\betad(\alpha_2, \beta_2))$ iff $\alpha_2 = \beta_1$,  $\alpha_1 = \beta_2$ and $\alpha_0 + \alpha_1 = \beta_0 + \beta_2$ and $\alpha_0 + \alpha_2 = \beta_0 + \beta_1$.
+ $\underset{z \thicksim \hexpmech(\dataobs)}{Pr}[\hellinger(\bysinfer(\dataobs),z) =
+ \hellinger(\bysinfer(\dataobs),r)]$ for the utility score of $r \in \candidateset$. In Beta-binomial system, because of the property of beta function, the order of parameters in Beta distribution doesn't matter when computing the Hellinegr distance. 
 
- From this, we can derive that there are either only one or two candidates in $\candidateset$ can have the same score, i.e., for every $r \in \candidateset$ we have: $
- \underset{z \thicksim \hexpmech(x)}{Pr}[z = r]$ either 
+ \begin{thm}
+ \label{thm_hellinegr_equality_beta}
+ for 3 different beta distributions $\betad(\alpha_0, \beta_0)$, $\betad(\alpha_1, \beta_1)$ and $\betad(\alpha_2, \beta_2)$, $\hellinger(\betad(\alpha_0, \beta_0),\betad(\alpha_1, \beta_1)) = \hellinger(\betad(\alpha_0, \beta_0),\betad(\alpha_2, \beta_2))$ iff:
+  $$
+  \alpha_2 = \beta_1, \alpha_1 = \beta_2, \alpha_0 + \alpha_1 = \beta_0 + \beta_2, \alpha_0 + \alpha_2 = \beta_0 + \beta_1.
+  $$
+ \end{thm}
+
+\begin{thm}
+ \label{thm_hellinegr_equality_dirichlet}
+ In Dirichlet-multinomial system, for 3 different Dirichlet distributions $\dirichlet(\valpha)$, $\dirichlet(\vbeta_1)$ and $\dirichlet(\vbeta_2)$, $\hellinger(\dirichlet(\valpha),\dirichlet(\vbeta_1)) = \hellinger(\dirichlet(\valpha),\dirichlet(\vbeta_2))$ iff:
+  $$
+  set(\vbeta_1) = set(\vbeta_2)\ and\ set(\valpha + \vbeta_1) = set(\valpha + \vbeta_2),
+  $$
+  where $set(\cdot)$ means we only consider the value of each dimension in the vector without the order.
+ \end{thm}
+
+
+ \begin{thm}
+ \label{thm_candidate_divide}
+ There are at most two candidates in $\candidateset$ can have the same score, i.e., for every $r \in \candidateset$, $\underset{z \thicksim \hexpmech(\dataobs)}{Pr}[\hellinger(\bysinfer(\dataobs),z) = \hellinger(\bysinfer(\dataobs),r)]$ either 
  $$
- =\frac{1}{2}\Big (\underset{z \thicksim \hexpmech(x)}{Pr}[\hellinger(\bysinfer(x),z) =
- \hellinger(\bysinfer(x),r)]\Big )
+ = 2\Big ( \underset{z \thicksim \hexpmech(\dataobs)}{Pr}[z = r]\Big )
  $$ or 
  $$
- =\underset{z \thicksim \hexpmech(x)}{Pr}[\hellinger(\bysinfer(x),z) = \hellinger(\bysinfer(x),r)]
+ =\underset{z \thicksim \hexpmech(\dataobs)}{Pr}[z = r].
  $$
- % proportional too $\hellinger(\bysinfer(x),r)$, i.e., $u(x,z)$. We can derive, if $u(r,x) = u(r',x)$ then $\underset{z \thicksim \hexpmech(x)}{Pr}[z = r] = \underset{z \thicksim \hexpmech(x)}{Pr}[z = r']$. 
- We assume the number of candidates $z \in \mathcal{R}$ that satisfy $\hellinger(\bysinfer(x),z) = \hellinger(\bysinfer(x),r)$, i.e. $u(z,x) = u(r,x)$ is $|z|$, then  $\underset{z \thicksim \hexpmech(x)}{Pr}[u(z,x) = u(r,x)] = |z| \underset{z \thicksim \hexpmech(x)}{Pr}[z = r]$. It can be infer that $|z| = 2$ or $|z| = 1$, i.e., $\underset{z \thicksim \hexpmech(x)}{Pr}[u(z,x) = u(r,x)] = 2 \underset{z \thicksim \hexpmech(x)}{Pr}[z = r]$ or $\underset{z \thicksim \hexpmech(x)}{Pr}[z = r]$.
+ \end{thm}
+ \begin{proof} of Theorem \ref{thm_candidate_divide}.
 
- The same way in Dirichlet-multinomial system. By combination and permutation, $|z|$ can take value of 1 or 3 or 6 in 3 dimensionality, and trivially in higher dimensions.
+ Let $|z|$ be the number of candidates $z \in \mathcal{R}$ that satisfy $\hellinger(\bysinfer(\dataobs),z) = \hellinger(\bysinfer(\dataobs),r)$, i.e. $u(z,\dataobs) = u(r,\dataobs)$, then  $\underset{z \thicksim \hexpmech(\dataobs)}{Pr}[u(z,\dataobs) = u(r,\dataobs)] = |z| \underset{z \thicksim \hexpmech(\dataobs)}{Pr}[z = r]$.
+
+ From Theorem \ref{thm_hellinegr_equality_beta}, It can be infer that $|z| = 2$ or $|z| = 1$, i.e., $\underset{z \thicksim \hexpmech(\dataobs)}{Pr}[u(z,x) = u(r,x)] = 2 \underset{z \thicksim \hexpmech(\dataobs)}{Pr}[z = r]$ or $\underset{z \thicksim \hexpmech(\dataobs)}{Pr}[z = r]$.
+ \end{proof}
+
+
+\begin{thm}
+ \label{thm_candidate_divide_dirichlet}
+ In Dirichlet-multinomial system with $k$-dimensional Dirichlet distribution, for every $r \in \candidateset$:
+ $$
+ \underset{z \thicksim \hexpmech(\dataobs)}{Pr}[\hellinger(\bysinfer(\dataobs),z) = \hellinger(\bysinfer(\dataobs),r)] 
+ = |z|\Big ( \underset{z \thicksim \hexpmech(\dataobs)}{Pr}[z = r]\Big ),
+ $$ 
+ and $|z| = \frac{k! k!}{|a_1|! |a_2|! \cdots |a_{k_a}|! \cdot |b_1|! |b_2|! \cdots |b_{k_b}|!}$, where $\sum{|a_i|} = \sum{|b_i|} = k$.
+ \end{thm}
+
+ \begin{proof} of Theorem \ref{thm_candidate_divide_dirichlet}.
+
+ Let $\bysinfer(\dataobs) = \dirichlet(\valpha)$, and $\dirichlet(\vbeta)$ be a candidate from $\candidateset$, 
+ $a_i$ is the distinct value in $\valpha$ and $b_i$ the same in $\vbeta$, 
+ $|a_i|$ denotes the number of values in $\valpha$ having the value $a_i$ and $|b_i|$ the same in $\vbeta$.
+ Then, there are $\frac{k! k!}{|a_1|! |a_2|! \cdots |a_{k_a}|! \cdot |b_1|! |b_2|! \cdots |b_{k_b}|!}$ possible permutation when the condition in Theorem \ref{thm_hellinegr_equality_dirichlet} is satisfied.
+ \end{proof}
+
 
  In Beta-binomial system, let $R_1, R_2 \subset \candidateset$ be a partition of $\candidateset$, where every $z \in R_1$ has a distinct score, i.e., $|z| = 1$ and $z \in R_2$ has another $z' \in R_2$ with the same score, i.e., $|z| = 2$. The proofs are given by parts: 
 
  \begin{itemize}
  	\item for $r \in R_1$:
 
-		We denote the normalizer of the probability mass in $\hexpmech(x)$: $\sum_{r' \in \mathcal{R}}exp(\frac{\epsilon u(r',x)}{2 S(x)})$ as $NL(x)$:
+		We denote the normalizer of the probability mass in $\hexpmech(\dataobs)$: $\sum_{r' \in \mathcal{R}}exp(\frac{\epsilon u(r',x)}{2 S(\dataobs)})$ as $NL(\dataobs)$:
 		\begin{equation*}
 		\begin{split}
 		LHS 
-		  = \underset{r \thicksim \hexpmech(x)}{Pr}[u(r,x) = \hat{s}]
-		& = \frac{exp(\frac{\epsilon \hat{s}}{2 S(x)})}{NL(x)}\\
-		& = \frac{exp(\frac{\epsilon (\hat{s} + \Delta - \Delta)}{2 S(x)})}{NL(x)}\\
-		& = \frac{exp(\frac{\epsilon (\hat{s} + \Delta)}{2 S(x)} + \frac{- \epsilon \Delta}{2 S(x)})}{NL(x)}\\
-		& = \frac{exp(\frac{\epsilon (\hat{s} + \Delta)}{2 S(x)})}{NL(x)} \cdot e^{\frac{- \epsilon \Delta}{2 S(x)})}.\\
+		  = \underset{r \thicksim \hexpmech(\dataobs)}{Pr}[u(r,x) = \hat{s}]
+		& = \frac{exp(\frac{\epsilon \hat{s}}{2 S(\dataobs)})}{NL(\dataobs)}\\
+		& = \frac{exp(\frac{\epsilon (\hat{s} + \delta' - \delta')}{2 S(\dataobs)})}{NL(\dataobs)}\\
+		& = \frac{exp(\frac{\epsilon (\hat{s} + \delta')}{2 S(\dataobs)} + \frac{- \epsilon \delta'}{2 S(\dataobs)})}{NL(\dataobs)}\\
+		& = \frac{exp(\frac{\epsilon (\hat{s} + \delta')}{2 S(\dataobs)})}{NL(\dataobs)} \cdot e^{\frac{- \epsilon \delta'}{2 S(\dataobs)})}.\\
 		\end{split}
 		\end{equation*}
 
-		By bounding the $\Delta \geq -S(x)$, we can get:
+		By bounding the $\delta' \geq -S(\dataobs)$, we can get:
 
 		\begin{equation*}
 		\begin{split}
-		\frac{exp(\frac{\epsilon (\hat{s} + \Delta)}{2 S(x)})}{NL(x)} \cdot e^{\frac{- \epsilon \Delta}{2 S(x)}}
-		& \leq \frac{exp(\frac{\epsilon (\hat{s} + \Delta)}{2 S(x)})}{NL(x)} \cdot e^{\frac{\epsilon}{2}}\\
-		&  =  e^{\frac{\epsilon}{2}} \underset{z \thicksim \hexpmech(x)}{Pr}[u(r,x) = (\Delta + \hat{s})] \leq RHS\\
+		\frac{exp(\frac{\epsilon (\hat{s} + \delta')}{2 S(\dataobs)})}{NL(\dataobs)} \cdot e^{\frac{- \epsilon \delta'}{2 S(\dataobs)}}
+		& \leq \frac{exp(\frac{\epsilon (\hat{s} + \delta')}{2 S(\dataobs)})}{NL(\dataobs)} \cdot e^{\frac{\epsilon}{2}}\\
+		&  =  e^{\frac{\epsilon}{2}} \underset{z \thicksim \hexpmech(\dataobs)}{Pr}[u(r,x) = (\delta' + \hat{s})] \leq RHS\\
 		\end{split}
 		\end{equation*}
 	\item for $r \in R_2$: Proof actually is exactly the same as above by eliminating the parameter $|z|$ in both sides.
@@ -391,149 +350,150 @@ The same in Dirichlet-multinomial distribution, partitioning the $\candidateset$
 
 \noindent \textbf{Dilation Property of $\hexpmech$}
 \begin{lem}
-for any exponential mechanism $\hexpmech(x)$, $\lambda < |\beta|$, $\epsilon$, $|\delta| < 1$ and $\beta \leq \ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta}{2 |\candidateset|})})$, the dilation property holds:
+\label{lem_dilation}
+for any exponential mechanism $\hexpmech(\dataobs)$, $\lambda < |\beta|$, $\epsilon$, $|\delta'| < 1$ and $\beta \leq \ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta'}{2 |\candidateset|})})$, the dilation property holds:
 
 \begin{equation*}
-\underset{z \thicksim \hexpmech(x)}{Pr}[u(z,x) = c]
+\underset{z \thicksim \hexpmech(\dataobs)}{Pr}[u(z,\dataobs) = c]
 \leq
-e^{\frac{\epsilon}{2}} \underset{z \thicksim \hexpmech(x)}{Pr}[u(z,x) = e^{\lambda} c] + \frac{\delta}{2},
+e^{\frac{\epsilon}{2}} \underset{z \thicksim \hexpmech(\dataobs)}{Pr}[u(z,\dataobs) = e^{\lambda} c] + \frac{\delta'}{2},
 \end{equation*}
 where the sensitivity in mechanism is still smooth sensitivity as above.
 
-More specifically, in Beta-binomial system it is enough to take $\beta \leq \ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta}{2 (n + 1)})})$.
+More specifically, in Beta-binomial system it is enough to take $\beta \leq \ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta'}{2 (n + 1)})})$.
 \end{lem}
 
 \begin{proof}
-We partition $\candidateset$ in the same way as before, $R_1, R_2$. It is enough to proof under just one partition. Without loss of generalization, we take $R_1$.
+Based on Theorem \ref{thm_hellinegr_equality_beta} and \ref{thm_candidate_divide}, we use the same partition of $\candidateset$, $R_1, R_2$. It is enough to proof under just one partition. Without loss of generalization, we take $R_1$.
 
-The sensitivity is always greater than 0, and our utility function $-\hellinger(\bysinfer(x),z)$ is smaller than zero, i.e., $u(z,x) \leq 0$, we need to consider two cases where $\lambda < 0$, and $\lambda > 0$:
+The sensitivity is always greater than 0, and our utility function $-\hellinger(\bysinfer(\dataobs),z)$ is smaller than zero, i.e., $u(z,\dataobs) \leq 0$, we need to consider two cases where $\lambda < 0$, and $\lambda > 0$:
 
-We set the $h(c) = Pr[u(\hexpmech(x)) = c] = \frac{exp(\frac{\epsilon c}{2 S(x)})}{NL(x)}$.
+We set the $h(c) = Pr[u(\hexpmech(\dataobs)) = c] = \frac{exp(\frac{\epsilon c}{2 S(\dataobs)})}{NL(\dataobs)}$.
 
-We first consider $\lambda < 0$. In this case, $1 < e ^ {\lambda}$, so the ratio $\frac{h(c)}{h(e^{\lambda}c)} = \frac{exp(\frac{\epsilon c}{2 S(x)})}{exp(\frac{\epsilon (c \cdot e^{\lambda})}{2 S(x)})}$ is at most $\frac{\epsilon}{2}$.
+We first consider $\lambda < 0$. In this case, $1 < e ^ {\lambda}$, so the ratio $\frac{h(c)}{h(e^{\lambda}c)} = \frac{exp(\frac{\epsilon c}{2 S(\dataobs)})}{exp(\frac{\epsilon (c \cdot e^{\lambda})}{2 S(\dataobs)})}$ is at most $\frac{\epsilon}{2}$.
 
-Next, we proof the dilation property for $\lambda > 0$, The ratio of $\frac{h(c)}{h(e^{\lambda}c)}$ is $\exp(\frac{\epsilon}{2} \cdot \frac{u(\hexpmech(x)) (1 - e^{\lambda})}{S(x)})$. Consider the event $G = \{ \hexpmech(x) : u(\hexpmech(x)) \leq \frac{S(x)}{(1 - e^{\lambda})}\}$. Under this event, the log-ratio above is at most $\frac{\epsilon}{2}$. The probability of $G$ under density $h(c)$ is $1 - \frac{\delta}{2}$. Thus, the probability of a given event $z$ is at most $Pr[c \cap G] + Pr[\overline{G}] \leq e^{\frac{\epsilon}{2}} Pr[e^{\lambda}c \cap G] + \frac{\delta}{2} \leq e^{\frac{\epsilon}{2}} Pr[e^{\lambda}c] + \frac{\delta}{2}$.\\
+Next, we proof the dilation property for $\lambda > 0$, The ratio of $\frac{h(c)}{h(e^{\lambda}c)}$ is $\exp(\frac{\epsilon}{2} \cdot \frac{u(\hexpmech(\dataobs)) (1 - e^{\lambda})}{S(\dataobs)})$. Consider the event $G = \{ \hexpmech(\dataobs) : u(\hexpmech(\dataobs)) \leq \frac{S(\dataobs)}{(1 - e^{\lambda})}\}$. Under this event, the log-ratio above is at most $\frac{\epsilon}{2}$. The probability of $G$ under density $h(c)$ is $1 - \frac{\delta'}{2}$. Thus, the probability of a given event $z$ is at most $Pr[c \cap G] + Pr[\overline{G}] \leq e^{\frac{\epsilon}{2}} Pr[e^{\lambda}c \cap G] + \frac{\delta'}{2} \leq e^{\frac{\epsilon}{2}} Pr[e^{\lambda}c] + \frac{\delta'}{2}$.\\
 
 
 \textbf{Detail proof:}
 	To show:
 	\begin{equation*}
-	\underset{z \thicksim \hexpmech(x)}{Pr}[u(z,x) = c]
+	\underset{z \thicksim \hexpmech(\dataobs)}{Pr}[u(z,\dataobs) = c]
 	\leq
-	e^{\frac{\epsilon}{2}} \underset{z \thicksim \hexpmech(x)}{Pr}[u(z,x) = e^{\lambda} c] + \frac{\delta}{2}
+	e^{\frac{\epsilon}{2}} \underset{z \thicksim \hexpmech(\dataobs)}{Pr}[u(z,x) = e^{\lambda} c] + \frac{\delta'}{2},
 	\end{equation*}
 	for $z \in R_1$.
 
-	Let $Pr[u(\hexpmech(x)) = c] = \frac{exp(\frac{\epsilon c}{2 S(x)})}{NL(x)}$ and $Pr[u(\hexpmech(x)) = e^{\lambda} c] = \frac{exp(\frac{\epsilon e^{\lambda} c}{2 S(x)})}{NL(x)}$ by definition.
+	Let $Pr[u(\hexpmech(\dataobs)) = c] = \frac{exp(\frac{\epsilon c}{2 S(\dataobs)})}{NL(\dataobs)}$ and $Pr[u(\hexpmech(\dataobs)) = e^{\lambda} c] = \frac{exp(\frac{\epsilon e^{\lambda} c}{2 S(\dataobs)})}{NL(\dataobs)}$ by definition.
 
-	After simplification, we need to show: $u(\hexpmech(x)) \leq \frac{S(x)}{(1 - e ^ {\lambda})}$.
-	Because the sensitivity is always greater than 0, and our utility function $-\hellinger(\bysinfer(x),z)$ is smaller than zero, i.e., $u(z,x) \leq 0$, we need to consider two cases where $\lambda < 0$, and $\lambda > 0$:
+	After simplification, we need to show: $u(\hexpmech(\dataobs)) \leq \frac{S(\dataobs)}{(1 - e ^ {\lambda})}$.
+	Because the sensitivity is always greater than 0, and our utility function $-\hellinger(\bysinfer(\dataobs),z)$ is smaller than zero, i.e., $u(z,x) \leq 0$, we need to consider two cases where $\lambda < 0$, and $\lambda > 0$:
 
 \begin{itemize}
 	\item $\lambda < 0$
 
 		The left hand side will always be smaller than 0 and the right hand side greater than 0. This will always holds, i.e.
 		\begin{equation*}
-		u(\hexpmech(x)) \leq \frac{S(x)}{(1 - e ^ {\lambda})}
+		u(\hexpmech(\dataobs)) \leq \frac{S(\dataobs)}{(1 - e ^ {\lambda})}
 		\end{equation*}
 		is always true when $\lambda < 0$
 	\item $\lambda > 0$
 
 
-		Because $\hat{s} = u(r)$ where $r \thicksim \hexpmech(x)$, we can substitute $\hat{s}$ with $u(\hexpmech(x))$. Then, what we need to proof under the case $\lambda > 0$ is:
+		Because $\hat{s} = u(r)$ where $r \thicksim \hexpmech(\dataobs)$, we can substitute $\hat{s}$ with $u(\hexpmech(\dataobs))$. Then, what we need to proof under the case $\lambda > 0$ is:
 		\begin{equation}
 		\label{eq_dilation_case2}
-		u(\hexpmech(x)) \leq \frac{S(x)}{(1 - e ^ {\lambda})}
+		u(\hexpmech(\dataobs)) \leq \frac{S(\dataobs)}{(1 - e ^ {\lambda})}.
 		\end{equation}
+
 		Based on the accuracy property of exponential mechanism:
 		\begin{equation*}
 		\begin{split}
 		Pr[u(\expmech{}{x}{u}{\candidateset}) \leq c] 
-		& \leq \frac{|\mathcal{R}|exp(\frac{\epsilon c}{2 GS})}{|\mathcal{R}_{OPT}| exp(\frac{\epsilon OPT_{u(x)}}{2 GS})}\\
+		& \leq \frac{|\mathcal{R}|exp(\frac{\epsilon c}{2 GS})}{|\mathcal{R}_{OPT}| exp(\frac{\epsilon OPT_{u(\dataobs)}}{2 GS})},\\
 		\end{split}
 		\end{equation*}
-
 		we derived the accuracy bound for $\hexpmech$:
-
 		\begin{equation*}
 		\begin{split}
-		Pr[u(\hexpmech(x)) \leq c] 
-		& \leq |\candidateset|exp(\frac{\epsilon c}{2 S(x)})
+		Pr[u(\hexpmech(\dataobs)) \leq c] 
+		& \leq |\candidateset|exp(\frac{\epsilon c}{2 S(\dataobs)}).
 		\end{split}
 		\end{equation*}
 
 		In Beta-binomial system, $|\candidateset| = n + 1$, apply this bound to eq. \ref{eq_dilation_case2}:
 		\begin{equation*}
 		\begin{split}
-		Pr[u(\hexpmech(x)) \leq \frac{S(x)}{(1 - e ^ {\lambda})}] 
-		& = (n + 1)exp(\frac{\epsilon S(x)}{(1 - e ^ {\lambda})}/2 S(x))\\
-		& = (n + 1)exp(\frac{\epsilon}{2 (1 - e ^ {\lambda})})\\
+		Pr[u(\hexpmech(\dataobs)) \leq \frac{S(\dataobs)}{(1 - e ^ {\lambda})}] 
+		& = (n + 1)exp(\frac{\epsilon S(\dataobs)}{(1 - e ^ {\lambda})}/2 S(\dataobs))\\
+		& = (n + 1)exp(\frac{\epsilon}{2 (1 - e ^ {\lambda})}).\\
 		\end{split}
 		\end{equation*}
 
-		When we set $\lambda \leq \ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta}{2 (n + 1)})})$, it is easily to derive that $Pr[u(\hexpmech(x)) \leq \frac{S(x)}{(1 - e ^ {\lambda})}] \leq \frac{\delta}{2}$.
+		When we set $\lambda \leq \ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta'}{2 (n + 1)})})$, it is easily to derive that $Pr[u(\hexpmech(\dataobs)) \leq \frac{S(\dataobs)}{(1 - e ^ {\lambda})}] \leq \frac{\delta'}{2}$.
 
-		In Dirichlet-multinomial system, $\lambda$ is set as $ \leq \ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta}{2 |\candidateset|})})$ since $|\candidateset| \neq n + 1$ any more.
+		In Dirichlet-multinomial system, $\lambda$ is set as $ \leq \ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta'}{2 |\candidateset|})})$ since $|\candidateset| \neq n + 1$ any more.
 
 \end{itemize}
 
 \end{proof}
 
-\noindent \textbf{$(\epsilon, \frac{e^{\frac{\epsilon}{2}} \delta}{2})-$Differential Privacy of $\hexpmech$}
+\noindent \textbf{$(\epsilon, \delta)-$Differential Privacy of $\hexpmech$}
 \begin{lem}
 \label{lem_hexpmech_privacy}
-$\hexpmech$ is $(\epsilon, \frac{e^{\frac{\epsilon}{2}} \delta}{2})$-differential privacy.
+$\hexpmech$ is $(\epsilon, \delta)$-differential privacy.
 \end{lem}
 
 \begin{proof}
 
-For all neighboring $x, y \in D^n$ and all sets $\mathcal{S}$, we need to show that:
+For all $\adj{\dataobs}{\dataobs'} \in \mathcal{X}$ and any beta distribution $r$, we need to show that:
 \begin{equation*}
-\underset{z \thicksim \hexpmech(x)}{Pr}[ z = r] \leq e^{\epsilon} \underset{z \thicksim \hexpmech(y)}{Pr}[z = r] + \delta. 
+\underset{z \thicksim \hexpmech(\dataobs)}{Pr}[ z = r] \leq e^{\epsilon} \underset{z \thicksim \hexpmech(\dataobs')}{Pr}[z = r] + \delta. 
 \end{equation*}
 
 Let partition $R_1, R_2 \subset \candidateset$ the same as above. Then we prove by part:
 \begin{itemize}
 	\item for $r \in R_1$:
 
-	Given that $\underset{z \thicksim \hexpmech(x)}{Pr}[z = r] = \underset{z \thicksim \hexpmech(x)}{Pr}[u(x,z) = u(x,r)]$, let $U = u(x,r)$, $U_1 = u(y,z) - u(x,z)$, $U_2 = U + U_1$ and $U_3 = U_2 \cdot \frac{S(x)}{S(y)} \cdot \ln(\frac{NL(x)}{NL(y)})$. Then,
+	Given that $\underset{z \thicksim \hexpmech(\dataobs)}{Pr}[z = r] = \underset{z \thicksim \hexpmech(\dataobs)}{Pr}[u(\dataobs,z) = u(\dataobs,r)]$, let $U = u(\dataobs,r)$, $U_1 = u(\dataobs',z) - u(\dataobs,z)$, $U_2 = U + U_1$ and $U_3 = U_2 \cdot \frac{S(\dataobs)}{S(\dataobs')} \cdot \ln(\frac{NL(\dataobs)}{NL(\dataobs')})$. Then,
 
 	\begin{equation*}
 	\begin{split}
-	\underset{z \thicksim \hexpmech(x)}{Pr}[ z = r]
-	& = \underset{z \thicksim \hexpmech(x)}{Pr}[ u(x,z) = U]\\
-	& \leq e^{\epsilon / 2} \cdot \underset{z \thicksim \hexpmech(x)}{Pr}[ u(x,z) = U_2]\\
-	& \leq e^{\epsilon} \cdot \underset{z \thicksim \hexpmech(x)}{Pr}[ u(x,z) = U_3] + e^{\epsilon/2} \cdot \frac{\delta'}{2}\\
-	& = e^{\epsilon} \cdot \underset{z \thicksim \hexpmech(y)}{Pr}[ u(y,z) = U] + \frac{e^{\epsilon/2} \delta'}{2} \\
-	& = e^{\epsilon} \cdot \underset{z \thicksim \hexpmech(x)}{Pr}[ z = r] + \delta,
+	\underset{z \thicksim \hexpmech(\dataobs)}{Pr}[ z = r]
+	& = \underset{z \thicksim \hexpmech(\dataobs)}{Pr}[ u(x,z) = U]\\
+	& \leq e^{\epsilon / 2} \cdot \underset{z \thicksim \hexpmech(\dataobs)}{Pr}[ u(x,z) = U_2]\\
+	& \leq e^{\epsilon} \cdot \underset{z \thicksim \hexpmech(\dataobs)}{Pr}[ u(x,z) = U_3] + e^{\epsilon/2} \cdot \frac{\delta'}{2}\\
+	& = e^{\epsilon} \cdot \underset{z \thicksim \hexpmech(\dataobs')}{Pr}[ u(\dataobs',z) = U] + \frac{e^{\epsilon/2} \delta'}{2} \\
+	& = e^{\epsilon} \cdot \underset{z \thicksim \hexpmech(\dataobs)}{Pr}[ z = r] + \delta,
 	\end{split}
 	\end{equation*}
 	where $\delta = \frac{e^{\epsilon/2} \delta'}{2}$.
-	The first inequality holds by the sliding property, since the $U_1 \geq -S(x)$. The second inequality holds by the dilation property, since $\frac{S(x)}{S(y)} \cdot \ln(\frac{NL(x)}{NL(y)}) \leq 1 - \frac{\epsilon}{2 \ln (\frac{\delta}{2 (n + 1)})}$.
+	The first inequality holds by the sliding property, since the $U_1 \geq -S(\dataobs)$. The second inequality holds by the dilation property, since $\frac{S(\dataobs)}{S(\dataobs')} \cdot \ln(\frac{NL(\dataobs)}{NL(\dataobs')}) \leq 1 - \frac{\epsilon}{2 \ln (\frac{\delta'}{2 (n + 1)})}$.
 
 	\item for $r \in R_2$:
 
-	Given that $2\Big( \underset{z \thicksim \hexpmech(x)}{Pr}[z = r]\Big) = \underset{z \thicksim \hexpmech(x)}{Pr}[ u(x,z) = u(x,r)]$, let $U = u(x,r)$, $U_1 = u(y,z) - u(x,z)$, $U_2 = U + U_1$ and $U_3 = U_2 \cdot \frac{S(x)}{S(y)} \cdot \ln(\frac{NL(x)}{NL(y)})$. Then,
+	Given that $2\Big( \underset{z \thicksim \hexpmech(\dataobs)}{Pr}[z = r]\Big) = \underset{z \thicksim \hexpmech(\dataobs)}{Pr}[ u(\dataobs,z) = u(\dataobs,r)]$, let $U = u(\dataobs,r)$, $U_1 = u(y,z) - u(\dataobs,z)$, $U_2 = U + U_1$ and $U_3 = U_2 \cdot \frac{S(\dataobs)}{S(\dataobs')} \cdot \ln(\frac{NL(\dataobs)}{NL(\dataobs')})$. Then,
 
 	\begin{equation*}
 	\begin{split}
-	\underset{z \thicksim \hexpmech(x)}{Pr}[ z = r]
-	& = 	\frac{1}{2}\Big( \underset{z \thicksim \hexpmech(x)}{Pr}[ u(x,z) = U]\Big)\\
-	& \leq 	\frac{1}{2}\Big( e^{\epsilon / 2} \cdot \underset{z \thicksim \hexpmech(x)}{Pr}[ u(x,z) = U_2]\Big)\\
-	& \leq 	\frac{1}{2}\Big( e^{\epsilon} \cdot \underset{z \thicksim \hexpmech(x)}{Pr}[ u(x,z) = U_3] + e^{\epsilon/2} \cdot \frac{\delta'}{2}\Big)\\
-	& = 	\frac{1}{2}\Big( e^{\epsilon} \cdot \underset{z \thicksim \hexpmech(y)}{Pr}[ u(y,z) = U] + \frac{e^{\epsilon/2} \delta'}{2}\Big) \\
-	& = e^{\epsilon} \cdot \underset{z \thicksim \hexpmech(x)}{Pr}[ z = r] + \delta,
+	\underset{z \thicksim \hexpmech(\dataobs)}{Pr}[ z = r]
+	& = 	\frac{1}{2}\Big( \underset{z \thicksim \hexpmech(\dataobs)}{Pr}[ u(x,z) = U]\Big)\\
+	& \leq 	\frac{1}{2}\Big( e^{\epsilon / 2} \cdot \underset{z \thicksim \hexpmech(\dataobs)}{Pr}[ u(x,z) = U_2]\Big)\\
+	& \leq 	\frac{1}{2}\Big( e^{\epsilon} \cdot \underset{z \thicksim \hexpmech(\dataobs)}{Pr}[ u(x,z) = U_3] + e^{\epsilon/2} \cdot \frac{\delta'}{2}\Big)\\
+	& = 	\frac{1}{2}\Big( e^{\epsilon} \cdot \underset{z \thicksim \hexpmech(\dataobs')}{Pr}[ u(y,z) = U] + \frac{e^{\epsilon/2} \delta'}{2}\Big) \\
+	& = e^{\epsilon} \cdot \underset{z \thicksim \hexpmech(\dataobs)}{Pr}[ z = r] + \delta,
 	\end{split}
 	\end{equation*}
 	where the $\delta = \frac{e^{\epsilon/2} \delta'}{4}$.
 
-	The first inequality holds by the sliding property, since the $U_1 \geq -S(x)$. The second inequality holds by the dilation property, since $\frac{S(x)}{S(y)} \cdot \ln(\frac{NL(x)}{NL(y)}) \leq 1 - \frac{\epsilon}{2 \ln (\frac{\delta}{2 (n + 1)})}$.
+	The first inequality holds by the sliding property, since the $U_1 \geq -S(\dataobs)$. The second inequality holds by the dilation property, since $\frac{S(\dataobs)}{S(\dataobs')} \cdot \ln(\frac{NL(\dataobs)}{NL(\dataobs')}) \leq 1 - \frac{\epsilon}{2 \ln (\frac{\delta'}{2 (n + 1)})}$.
 \end{itemize}
 
-Based on two cases above, $\hexpmech$ is $(\epsilon, \delta)-$differential privacy, where $\delta$ takes the maximum value form the two cases.
+Based on two cases above, $\hexpmech$ is $(\epsilon, \delta)-$differential privacy, where $\delta$ takes the maximum value form the two cases, i.e., $\frac{e^{\frac{\epsilon}{2}} \delta'}{2}$.
 
 Proof in Dirichlet-multinomial system can be derived in the same way by proving in parts and taking the maximum $\delta$ value of each part. 
 \end{proof}
+
 
 \bibliographystyle{plain}
 \bibliography{bayesian.bib}

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  23 OCT 2018 10:34
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  24 OCT 2018 15:11
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1017,38 +1017,41 @@ LaTeX Font Info:    Try loading font information for U+lasy on input line 10.
 File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
 )
 \c__siunitx_mathtt_int=\count300
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 21.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 20.
 
 (/usr/local/texlive/2017/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 21.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 20.
  [1
 
 {/usr/local/texlive/2017/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
 
 LaTeX Font Warning: Font shape `U/stmry/b/n' undefined
-(Font)              using `U/stmry/m/n' instead on input line 72.
+(Font)              using `U/stmry/m/n' instead on input line 71.
 
 LaTeX Font Info:    Font shape `U/lasy/b/n' in size <7> not available
-(Font)              Font shape `U/lasy/m/n' tried instead on input line 72.
+(Font)              Font shape `U/lasy/m/n' tried instead on input line 71.
 LaTeX Font Info:    Font shape `U/lasy/b/n' in size <5> not available
-(Font)              Font shape `U/lasy/m/n' tried instead on input line 72.
+(Font)              Font shape `U/lasy/m/n' tried instead on input line 71.
 
-Overfull \hbox (24.36182pt too wide) in paragraph at lines 72--75
+Overfull \hbox (24.36182pt too wide) in paragraph at lines 71--74
 []\OT1/cmr/m/n/10 The beta-binomial model can be im-me-di-ately gen-er-al-ized 
 to Dirichlet-multinomial,
  []
 
-
+[2]
 Overfull \hbox (2.57288pt too wide) in paragraph at lines 113--113
 []\OT1/cmr/bx/n/14.4 Technical Prob-lem State-ment and Mo-ti-va-tions 
  []
 
-[2]
+
+LaTeX Warning: Reference `subsec_baselines' on page 3 undefined on input line 1
+35.
+
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 156.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 154.
 Package epstopdf Info: Source file: <sensitivity_2d.eps>
 (epstopdf)                    date: 2018-10-11 01:18:52
 (epstopdf)                    size: 12608947 bytes
@@ -1057,154 +1060,152 @@ Package epstopdf Info: Source file: <sensitivity_2d.eps>
 (epstopdf)                    size: 72540 bytes
 (epstopdf)             Command: <repstopdf --outfile=sensitivity_2d-eps-convert
 ed-to.pdf sensitivity_2d.eps>
-(epstopdf)             \includegraphics on input line 162.
+(epstopdf)             \includegraphics on input line 160.
 Package epstopdf Info: Output file is already uptodate.
- <sensitivity_2d-eps-converted-to.pdf, id=87, 574.145pt x 471.7625pt>
+<sensitivity_2d-eps-converted-to.pdf, id=74, 574.145pt x 471.7625pt>
 File: sensitivity_2d-eps-converted-to.pdf Graphic file (type pdf)
 
 <use sensitivity_2d-eps-converted-to.pdf>
 Package pdftex.def Info: sensitivity_2d-eps-converted-to.pdf used on input line
- 162.
+ 160.
 (pdftex.def)             Requested size: 120.7521pt x 99.21701pt.
- [3] [4 <./sensitivity_2d-eps-converted-to.pdf>]
-Overfull \hbox (5.27844pt too wide) in paragraph at lines 223--224
-[]\OT1/cmr/m/n/10 The ex-po-nen-tial mech-a-nism with lo-cal sen-si-tiv-ity is 
-non-differential privacy[[]]. 
+ [3]
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `math shift' on input line 183.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `subscript' on input line 183.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `math shift' on input line 183.
+
+[4 <./sensitivity_2d-eps-converted-to.pdf>]
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `math shift' on input line 236.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `subscript' on input line 236.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `math shift' on input line 236.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 238--239
+
  []
 
 [5]
+Overfull \hbox (16.66254pt too wide) in paragraph at lines 291--292
+\OMS/cmsy/m/n/10 H\OT1/cmr/m/n/10 ([]([])\OML/cmm/m/it/10 ; r\OT1/cmr/m/n/10 )$
+, i.e. $\OML/cmm/m/it/10 u\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 z; []\OT1/cmr/m/n/1
+0 ) = \OML/cmm/m/it/10 u\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 r; []\OT1/cmr/m/n/10 
+)$, then $[][\OML/cmm/m/it/10 u\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 z; []\OT1/cmr/
+m/n/10 ) = \OML/cmm/m/it/10 u\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 r; []\OT1/cmr/m/
+n/10 )] = \OMS/cmsy/m/n/10 j\OML/cmm/m/it/10 z\OMS/cmsy/m/n/10 j[]\OT1/cmr/m/n/
+10 [\OML/cmm/m/it/10 z \OT1/cmr/m/n/10 =
+ []
 
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 266.
 
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `subscript' on input line 266.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 266.
+Overfull \hbox (10.1637pt too wide) in paragraph at lines 293--294
+[]\OT1/cmr/m/n/10 From The-o-rem []4.2[], It can be in-fer that $\OMS/cmsy/m/n/
+10 j\OML/cmm/m/it/10 z\OMS/cmsy/m/n/10 j \OT1/cmr/m/n/10 = 2$ or $\OMS/cmsy/m/n
+/10 j\OML/cmm/m/it/10 z\OMS/cmsy/m/n/10 j \OT1/cmr/m/n/10 = 1$, i.e., $[][\OML/
+cmm/m/it/10 u\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 z; x\OT1/cmr/m/n/10 ) =
+ []
 
 [6]
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 319.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `subscript' on input line 319.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 319.
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 321--322
-
- []
-
-
-Overfull \hbox (53.83629pt too wide) in paragraph at lines 337--342
-\OT1/cmr/m/n/10 beta dis-tri-bu-tions $[](\OML/cmm/m/it/10 []; ^^L[]\OT1/cmr/m
-/n/10 )$, $[](\OML/cmm/m/it/10 []; ^^L[]\OT1/cmr/m/n/10 )$ and $[](\OML/cmm/m/
-it/10 []; ^^L[]\OT1/cmr/m/n/10 )$, $\OMS/cmsy/m/n/10 H\OT1/cmr/m/n/10 ([](\OML
-/cmm/m/it/10 []; ^^L[]\OT1/cmr/m/n/10 )\OML/cmm/m/it/10 ; []\OT1/cmr/m/n/10 (\
-OML/cmm/m/it/10 []; ^^L[]\OT1/cmr/m/n/10 )) =
- []
-
-
-Overfull \hbox (6.7092pt too wide) in paragraph at lines 351--354
-\OT1/cmr/m/n/10 We as-sume the num-ber of can-di-dates $\OML/cmm/m/it/10 z \OMS
-/cmsy/m/n/10 2 R$ \OT1/cmr/m/n/10 that sat-isfy $\OMS/cmsy/m/n/10 H\OT1/cmr/m/n
-/10 ([](\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 )\OML/cmm/m/it/10 ; z\OT1/cmr/m/n/10 
-) = \OMS/cmsy/m/n/10 H\OT1/cmr/m/n/10 ([](\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 )\O
-ML/cmm/m/it/10 ; r\OT1/cmr/m/n/10 )$,
+Overfull \hbox (27.05869pt too wide) in paragraph at lines 321--322
+[]\OT1/cmr/m/n/10 We de-note the nor-mal-izer of the prob-a-bil-ity mass in $\O
+MS/cmsy/m/n/10 M[]\OT1/cmr/m/n/10 ([])$: $[][] \OML/cmm/m/it/10 exp\OT1/cmr/m/n
+/10 ([])$
  []
 
 [7]
-Overfull \hbox (26.70454pt too wide) in paragraph at lines 362--363
-[]\OT1/cmr/m/n/10 We de-note the nor-mal-izer of the prob-a-bil-ity mass in $\O
-MS/cmsy/m/n/10 M[]\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 )$: $[][] 
-\OML/cmm/m/it/10 exp\OT1/cmr/m/n/10 ([])$
+Underfull \hbox (badness 10000) in paragraph at lines 375--376
+
  []
 
 [8]
-Underfull \hbox (badness 10000) in paragraph at lines 415--416
-
- []
-
-[9]
-Overfull \hbox (10.8847pt too wide) in paragraph at lines 474--475
+Overfull \hbox (11.23885pt too wide) in paragraph at lines 433--434
 []\OT1/cmr/m/n/10 When we set $\OML/cmm/m/it/10 ^^U \OMS/cmsy/m/n/10 ^^T []\OT1
 /cmr/m/n/10 (1 \OMS/cmsy/m/n/10 ^^@ []\OT1/cmr/m/n/10 )$, it is eas-ily to de-r
 ive that $\OML/cmm/m/it/10 Pr\OT1/cmr/m/n/10 [\OML/cmm/m/it/10 u\OT1/cmr/m/n/10
- (\OMS/cmsy/m/n/10 M[]\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 )) \OM
-S/cmsy/m/n/10 ^^T
+ (\OMS/cmsy/m/n/10 M[]\OT1/cmr/m/n/10 ([])) \OMS/cmsy/m/n/10 ^^T
  []
 
-[10]
-Overfull \hbox (4.4006pt too wide) in paragraph at lines 530--531
+[9]
+Overfull \hbox (10.29922pt too wide) in paragraph at lines 489--490
 \OT1/cmr/m/n/10 The sec-ond in-equal-ity holds by the di-la-tion prop-erty, sin
 ce $[] \OMS/cmsy/m/n/10 ^^A []\OT1/cmr/m/n/10 ([]) \OMS/cmsy/m/n/10 ^^T
  []
 
-(./main.bbl)
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 541.
+(./main.bbl [10])
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 501.
  [11]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 541.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 501.
  (./main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 541.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 541.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 501.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 501.
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 1D1E225E851EDDEE41D8F5A79AB1B7B7;938.
+(rerunfilecheck)             Checksum: 65FCE04DDE8A3FED3E650E64B239A405;502.
 
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
+
+LaTeX Warning: There were undefined references.
+
  ) 
 Here is how much of TeX's memory you used:
  19714 strings out of 492995
- 365127 string characters out of 6132704
- 453508 words of memory out of 5000000
- 22938 multiletter control sequences out of 15000+600000
+ 365101 string characters out of 6132704
+ 453518 words of memory out of 5000000
+ 22939 multiletter control sequences out of 15000+600000
  21481 words of font info for 86 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 41i,20n,37p,10430b,857s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 41i,20n,37p,10430b,863s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 ></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
-</usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx7.pfb></
-usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></us
-r/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxti10.pfb></u
-sr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></us
-r/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex8.pfb><
-/usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></
-usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></us
-r/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/
-local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/lo
-cal/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/loca
-l/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/loca
-l/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib7.pfb></usr/
-local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/lo
-cal/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/loca
-l/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/
-texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/tex
-live/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texliv
-e/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2
-017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2017
-/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/local/texlive/2017/
-texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/local/texlive/2017/te
-xmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2017/tex
-mf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/texlive/2017/texmf
--dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2017/texmf-d
-ist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2017/texmf-dis
-t/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2017/texmf-dist/
-fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2017/texmf-dist/f
-onts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2017/texmf-di
-st/fonts/type1/public/amsfonts/symbols/msbm7.pfb>
-Output written on main.pdf (11 pages, 426420 bytes).
+</usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx5.pfb></
+usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx7.pfb></us
+r/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></usr/
+local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxti10.pfb></usr
+/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/
+local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex8.pfb></u
+sr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></us
+r/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/
+local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/lo
+cal/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/loca
+l/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/
+texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/local/
+texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib7.pfb></usr/lo
+cal/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/loca
+l/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/
+texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/te
+xlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/texli
+ve/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/
+2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/201
+7/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2017/t
+exmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/local/texlive/2017/te
+xmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/local/texlive/2017/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2017/texmf
+-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/texlive/2017/texmf-d
+ist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2017/texmf-dis
+t/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2017/texmf-dist/
+fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2017/texmf-dist/fo
+nts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2017/texmf-dist/fon
+ts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2017/texmf-dist
+/fonts/type1/public/amsfonts/symbols/msbm7.pfb>
+Output written on main.pdf (11 pages, 428043 bytes).
 PDF statistics:
- 275 PDF objects out of 1000 (max. 8388607)
- 226 compressed objects within 3 object streams
- 40 named destinations out of 1000 (max. 500000)
- 102 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 267 PDF objects out of 1000 (max. 8388607)
+ 217 compressed objects within 3 object streams
+ 39 named destinations out of 1000 (max. 500000)
+ 62 words of extra memory for PDF output out of 10000 (max. 10000000)
 
