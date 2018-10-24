@@ -400,10 +400,11 @@ In baseline mechanisms, \emph{exponential mechanism}, \emph{Laplace mechanism}, 
 
 \subsection{Privacy Analysis for $\hexpmech$}
 
-The differential privacy property of $\hexpmech$ is proved based on the holds of the two properties: \emph{sliding property} and \emph{dilation property}.\\
+The differential privacy property of $\hexpmech$ is proved based on following two lemmas: Lemma \ref{lem_sliding} and Lemma \ref{lem_dilation}.\\
 
 \noindent \textbf{Sliding Property of $\hexpmech$}
 \begin{lem}
+\label{lem_sliding}
 Given $\hexpmech(\dataobs)$ calibrated on the smooth sensitivity. Let $\lambda = f(\epsilon,
 \delta')$, $\epsilon\geq 0$ and $|\delta'| < 1$. Then, the following \emph{sliding property} holds:
 \begin{equation*}
@@ -429,7 +430,7 @@ In what follows, we will use a correspondence between the probability
  \hellinger(\bysinfer(\dataobs),r)]\Big )
  $$ or 
  $$
- =\underset{z \thicksim \hexpmech(\dataobs)}{Pr}[\hellinger(\bysinfer(\dataobs),z) = \hellinger(\bysinfer(\dataobs),r)]
+ =\underset{z \thicksim \hexpmech(\dataobs)}{Pr}[\hellinger(\bysinfer(\dataobs),z) = \hellinger(\bysinfer(\dataobs),r)].
  $$
  % proportional too $\hellinger(\bysinfer(\dataobs),r)$, i.e., $u(x,z)$. We can derive, if $u(r,x) = u(r',x)$ then $\underset{z \thicksim \hexpmech(\dataobs)}{Pr}[z = r] = \underset{z \thicksim \hexpmech(\dataobs)}{Pr}[z = r']$. 
  We assume the number of candidates $z \in \mathcal{R}$ that satisfy $\hellinger(\bysinfer(\dataobs),z) = \hellinger(\bysinfer(\dataobs),r)$, i.e. $u(z,\dataobs) = u(r,\dataobs)$ is $|z|$, then  $\underset{z \thicksim \hexpmech(\dataobs)}{Pr}[u(z,\dataobs) = u(r,\dataobs)] = |z| \underset{z \thicksim \hexpmech(\dataobs)}{Pr}[z = r]$. It can be infer that $|z| = 2$ or $|z| = 1$, i.e., $\underset{z \thicksim \hexpmech(\dataobs)}{Pr}[u(z,x) = u(r,x)] = 2 \underset{z \thicksim \hexpmech(\dataobs)}{Pr}[z = r]$ or $\underset{z \thicksim \hexpmech(\dataobs)}{Pr}[z = r]$.
@@ -473,6 +474,7 @@ The same in Dirichlet-multinomial distribution, partitioning the $\candidateset$
 
 \noindent \textbf{Dilation Property of $\hexpmech$}
 \begin{lem}
+\label{lem_dilation}
 for any exponential mechanism $\hexpmech(\dataobs)$, $\lambda < |\beta|$, $\epsilon$, $|\delta'| < 1$ and $\beta \leq \ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta'}{2 |\candidateset|})})$, the dilation property holds:
 
 \begin{equation*}
@@ -502,7 +504,7 @@ Next, we proof the dilation property for $\lambda > 0$, The ratio of $\frac{h(c)
 	\begin{equation*}
 	\underset{z \thicksim \hexpmech(\dataobs)}{Pr}[u(z,\dataobs) = c]
 	\leq
-	e^{\frac{\epsilon}{2}} \underset{z \thicksim \hexpmech(\dataobs)}{Pr}[u(z,x) = e^{\lambda} c] + \frac{\delta'}{2}
+	e^{\frac{\epsilon}{2}} \underset{z \thicksim \hexpmech(\dataobs)}{Pr}[u(z,x) = e^{\lambda} c] + \frac{\delta'}{2},
 	\end{equation*}
 	for $z \in R_1$.
 
@@ -525,22 +527,21 @@ Next, we proof the dilation property for $\lambda > 0$, The ratio of $\frac{h(c)
 		Because $\hat{s} = u(r)$ where $r \thicksim \hexpmech(\dataobs)$, we can substitute $\hat{s}$ with $u(\hexpmech(\dataobs))$. Then, what we need to proof under the case $\lambda > 0$ is:
 		\begin{equation}
 		\label{eq_dilation_case2}
-		u(\hexpmech(\dataobs)) \leq \frac{S(\dataobs)}{(1 - e ^ {\lambda})}
+		u(\hexpmech(\dataobs)) \leq \frac{S(\dataobs)}{(1 - e ^ {\lambda})}.
 		\end{equation}
+
 		Based on the accuracy property of exponential mechanism:
 		\begin{equation*}
 		\begin{split}
 		Pr[u(\expmech{}{x}{u}{\candidateset}) \leq c] 
-		& \leq \frac{|\mathcal{R}|exp(\frac{\epsilon c}{2 GS})}{|\mathcal{R}_{OPT}| exp(\frac{\epsilon OPT_{u(\dataobs)}}{2 GS})}\\
+		& \leq \frac{|\mathcal{R}|exp(\frac{\epsilon c}{2 GS})}{|\mathcal{R}_{OPT}| exp(\frac{\epsilon OPT_{u(\dataobs)}}{2 GS})},\\
 		\end{split}
 		\end{equation*}
-
 		we derived the accuracy bound for $\hexpmech$:
-
 		\begin{equation*}
 		\begin{split}
 		Pr[u(\hexpmech(\dataobs)) \leq c] 
-		& \leq |\candidateset|exp(\frac{\epsilon c}{2 S(\dataobs)})
+		& \leq |\candidateset|exp(\frac{\epsilon c}{2 S(\dataobs)}).
 		\end{split}
 		\end{equation*}
 
@@ -549,7 +550,7 @@ Next, we proof the dilation property for $\lambda > 0$, The ratio of $\frac{h(c)
 		\begin{split}
 		Pr[u(\hexpmech(\dataobs)) \leq \frac{S(\dataobs)}{(1 - e ^ {\lambda})}] 
 		& = (n + 1)exp(\frac{\epsilon S(\dataobs)}{(1 - e ^ {\lambda})}/2 S(\dataobs))\\
-		& = (n + 1)exp(\frac{\epsilon}{2 (1 - e ^ {\lambda})})\\
+		& = (n + 1)exp(\frac{\epsilon}{2 (1 - e ^ {\lambda})}).\\
 		\end{split}
 		\end{equation*}
 
