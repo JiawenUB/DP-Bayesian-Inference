@@ -129,7 +129,7 @@ recursive fashion over the data.
 \noindent \textbf{Beta-binomial System.}
 
 In this work we will consider a specific instance of Bayesian inference and one of its generalizations.
-specifically, a Beta-binomial mode. We will consider the situation the underlying data is binomial distribution ($\sim binomial(\theta)$), where $\theta$ represents
+specifically, a Beta-binomial mode. We will consider the situation the underlying data is binomial distribution ($\thicksim binomial(\theta)$), where $\theta$ represents
 the parameter --informally called \emph{bias}-- of a Bernoulli
 distributed random variable. The
 prior distribution over $\theta\in [0,1]$ is going to be a beta
@@ -207,7 +207,7 @@ $\valpha'=(\valpha + \Delta \valpha)$. \cite{zhang2016differential} and \cite{xi
 have already attacked this problem by adding independent Laplacian noise to the
 parameters of the posteriors. That is, in the case of the Beta-Binomial system,
 the value released would  be: $(\tilde\alpha,\tilde\beta)=(\alpha +  \widetilde{\Delta \alpha},\beta + n - \widetilde{\Delta \alpha})$
-where $\widetilde{\Delta \alpha}\sim \lap{\Delta \alpha}{\frac{2}{\epsilon}}$,
+where $\widetilde{\Delta \alpha}\thicksim \lap{\Delta \alpha}{\frac{2}{\epsilon}}$,
 and where $\lap{\mu}{\nu}$ denotes a Laplace random variable with mean $\mu$ and scale $\nu$.
 This mechanism is $\epsilon$-differentially private, and the noise is
 calibrated w.r.t. to a sensitivity of 2 which is derived by using
@@ -312,11 +312,11 @@ The exponential mechanism with local sensitivity is non-differential privacy\cit
  \[
  \betad(\alpha +  \lfloor{\Delta \alpha + Y}\rfloor^n_0,\beta + n - \lfloor{\Delta \alpha + Y}\rfloor^n_0),
  \] 
- where $Y \sim \lap{0}{\frac{\Delta \bysinfer}{\epsilon}}$ in Beta-binomial model; and
+ where $Y \thicksim \lap{0}{\frac{\Delta \bysinfer}{\epsilon}}$ in Beta-binomial model; and
  \[
  \dirichlet(\alpha_1 +  \lfloor{\Delta \alpha_1 + Y_1}\rfloor^n_0, \cdots, \alpha_k + \lfloor n - \sum_{i = 1}^{k-1}\lfloor{\Delta \alpha_i + Y_i}\rfloor^n_0 \rfloor^n_0),
  \]
- where $Y_i \sim \lap{0}{\frac{\Delta \bysinfer}{\epsilon}}$ in Dirichlet-multinomial model. $\lfloor \cdot \rfloor^n_0$ is taking the floor value and truncating into $[0,n]$ to make sure the noised posterior is valid.
+ where $Y_i \thicksim \lap{0}{\frac{\Delta \bysinfer}{\epsilon}}$ in Dirichlet-multinomial model. $\lfloor \cdot \rfloor^n_0$ is taking the floor value and truncating into $[0,n]$ to make sure the noised posterior is valid.
 
  Then release it as the private posterior distribution.
 
@@ -336,11 +336,11 @@ The exponential mechanism with local sensitivity is non-differential privacy\cit
  \[
  \betad(\alpha +  \lfloor{\Delta \alpha + Y}\rfloor^n_0,\beta + n - \lfloor{\Delta \alpha + Y}\rfloor^n_0),
  \]
- where $Y \sim \lap{0}{\frac{1}{\epsilon}}$ in Beta-binomial model; and
+ where $Y \thicksim \lap{0}{\frac{1}{\epsilon}}$ in Beta-binomial model; and
  \[
  \dirichlet(\alpha_1 +  \lfloor{\Delta \alpha_1 + Y_1}\rfloor^n_0, \cdots, \alpha_k + \lfloor n - \sum_{i = 1}^{k-1}\lfloor{\Delta \alpha_i + Y_i}\rfloor^n_0 \rfloor^n_0),
  \]
-where $Y_i \sim \lap{0}{\frac{2}{\epsilon}}$ in Dirichlet-multinomial model.
+where $Y_i \thicksim \lap{0}{\frac{2}{\epsilon}}$ in Dirichlet-multinomial model.
 
 Both Laplace mechanism and improved one are $\epsilon -$differential privacy\cite{dwork2014algorithmic}.
 
@@ -423,13 +423,13 @@ In what follows, we will use a correspondence between the probability
  $\underset{z \thicksim \hexpmech(\dataobs)}{Pr}[\hellinger(\bysinfer(\dataobs),z) =
  \hellinger(\bysinfer(\dataobs),r)]$ for the utility score of $r \in \candidateset$. In Beta-binomial system, because of the property of beta function, the order of parameters in Beta distribution doesn't matter when computing the Hellinegr distance. 
 
- \begin{lem}
- \label{lem_hellinegr_equality}
+ \begin{thm}
+ \label{thm_hellinegr_equality}
  for 3 different beta distributions $\betad(\alpha_0, \beta_0)$, $\betad(\alpha_1, \beta_1)$ and $\betad(\alpha_2, \beta_2)$, $\hellinger(\betad(\alpha_0, \beta_0),\betad(\alpha_1, \beta_1)) = \hellinger(\betad(\alpha_0, \beta_0),\betad(\alpha_2, \beta_2))$ iff:
   $$
   \alpha_2 = \beta_1, \alpha_1 = \beta_2, \alpha_0 + \alpha_1 = \beta_0 + \beta_2 \alpha_0 + \alpha_2 = \beta_0 + \beta_1.
   $$
- \end{lem}
+ \end{thm}
 
 
  \begin{thm}
@@ -447,7 +447,7 @@ In what follows, we will use a correspondence between the probability
 
  We assume the number of candidates $z \in \mathcal{R}$ that satisfy $\hellinger(\bysinfer(\dataobs),z) = \hellinger(\bysinfer(\dataobs),r)$, i.e. $u(z,\dataobs) = u(r,\dataobs)$ is $|z|$, then  $\underset{z \thicksim \hexpmech(\dataobs)}{Pr}[u(z,\dataobs) = u(r,\dataobs)] = |z| \underset{z \thicksim \hexpmech(\dataobs)}{Pr}[z = r]$.
 
- From Lemma \ref{lem_hellinegr_equality}, It can be infer that $|z| = 2$ or $|z| = 1$, i.e., $\underset{z \thicksim \hexpmech(\dataobs)}{Pr}[u(z,x) = u(r,x)] = 2 \underset{z \thicksim \hexpmech(\dataobs)}{Pr}[z = r]$ or $\underset{z \thicksim \hexpmech(\dataobs)}{Pr}[z = r]$.
+ From Theorem \ref{thm_hellinegr_equality}, It can be infer that $|z| = 2$ or $|z| = 1$, i.e., $\underset{z \thicksim \hexpmech(\dataobs)}{Pr}[u(z,x) = u(r,x)] = 2 \underset{z \thicksim \hexpmech(\dataobs)}{Pr}[z = r]$ or $\underset{z \thicksim \hexpmech(\dataobs)}{Pr}[z = r]$.
 
  The same way in Dirichlet-multinomial system. By combination and permutation, $|z|$ can take value of 1 or 3 or 6 in 3 dimensionality, and trivially in higher dimensions.
  \end{proof}
@@ -503,7 +503,7 @@ More specifically, in Beta-binomial system it is enough to take $\beta \leq \ln(
 \end{lem}
 
 \begin{proof}
-We partition $\candidateset$ in the same way as before, $R_1, R_2$. It is enough to proof under just one partition. Without loss of generalization, we take $R_1$.
+Based on Theorem \ref{thm_hellinegr_equality} and \ref{thm_candidate_divide}, we use the same partition of $\candidateset$, $R_1, R_2$. It is enough to proof under just one partition. Without loss of generalization, we take $R_1$.
 
 The sensitivity is always greater than 0, and our utility function $-\hellinger(\bysinfer(\dataobs),z)$ is smaller than zero, i.e., $u(z,\dataobs) \leq 0$, we need to consider two cases where $\lambda < 0$, and $\lambda > 0$:
 
@@ -653,7 +653,7 @@ Accuracy bound for Laplace mechanism is provided by its probability density func
 \begin{equation*}
 Pr[|Y| \geq t] = e^{- \frac{t}{b}},
 \end{equation*}
-where $Y \sim Lap(b)$, $b = \frac{\Delta \bysinfer}{\epsilon}$ in our case.
+where $Y \thicksim Lap(b)$, $b = \frac{\Delta \bysinfer}{\epsilon}$ in our case.
 
 After post-processing, Laplace noise is discretized. Then the accuracy bound for Laplace mechanism is obtained by:
 \[

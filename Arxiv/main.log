@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  24 OCT 2018 09:35
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  24 OCT 2018 09:46
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1115,11 +1115,11 @@ Underfull \hbox (badness 10000) in paragraph at lines 403--404
  []
 
 [9]
-Overfull \hbox (3.60815pt too wide) in paragraph at lines 450--451
-[]\OT1/cmr/m/n/10 From Lemma []5.2[], It can be in-fer that $\OMS/cmsy/m/n/10 j
-\OML/cmm/m/it/10 z\OMS/cmsy/m/n/10 j \OT1/cmr/m/n/10 = 2$ or $\OMS/cmsy/m/n/10 
-j\OML/cmm/m/it/10 z\OMS/cmsy/m/n/10 j \OT1/cmr/m/n/10 = 1$, i.e., $[][\OML/cmm/
-m/it/10 u\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 z; x\OT1/cmr/m/n/10 ) =
+Overfull \hbox (10.1637pt too wide) in paragraph at lines 450--451
+[]\OT1/cmr/m/n/10 From The-o-rem []5.2[], It can be in-fer that $\OMS/cmsy/m/n/
+10 j\OML/cmm/m/it/10 z\OMS/cmsy/m/n/10 j \OT1/cmr/m/n/10 = 2$ or $\OMS/cmsy/m/n
+/10 j\OML/cmm/m/it/10 z\OMS/cmsy/m/n/10 j \OT1/cmr/m/n/10 = 1$, i.e., $[][\OML/
+cmm/m/it/10 u\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 z; x\OT1/cmr/m/n/10 ) =
  []
 
 
@@ -1181,7 +1181,7 @@ Package epstopdf Info: Source file: <efficiency.eps>
 o.pdf efficiency.eps>
 (epstopdf)             \includegraphics on input line 728.
 Package epstopdf Info: Output file is already uptodate.
- <efficiency-eps-converted-to.pdf, id=281, 1445.4pt x 722.7pt>
+ <efficiency-eps-converted-to.pdf, id=283, 1445.4pt x 722.7pt>
 File: efficiency-eps-converted-to.pdf Graphic file (type pdf)
 
 <use efficiency-eps-converted-to.pdf>
@@ -1199,7 +1199,7 @@ Package epstopdf Info: Source file: <theory_2d.eps>
 (epstopdf)             \includegraphics on input line 741.
 Package epstopdf Info: Output file is already uptodate.
 
-<theory_2d-eps-converted-to.pdf, id=282, 462.72874pt x 347.2975pt>
+<theory_2d-eps-converted-to.pdf, id=284, 462.72874pt x 347.2975pt>
 File: theory_2d-eps-converted-to.pdf Graphic file (type pdf)
 
 <use theory_2d-eps-converted-to.pdf>
@@ -1217,7 +1217,7 @@ Package epstopdf Info: Source file: <theory_3d.eps>
 (epstopdf)             \includegraphics on input line 745.
 Package epstopdf Info: Output file is already uptodate.
 
-<theory_3d-eps-converted-to.pdf, id=283, 462.72874pt x 347.2975pt>
+<theory_3d-eps-converted-to.pdf, id=285, 462.72874pt x 347.2975pt>
 File: theory_3d-eps-converted-to.pdf Graphic file (type pdf)
 
 <use theory_3d-eps-converted-to.pdf>
@@ -1236,7 +1236,7 @@ to.pdf sampling_2d.eps>
 (epstopdf)             \includegraphics on input line 791.
 Package epstopdf Info: Output file is already uptodate.
 
-<sampling_2d-eps-converted-to.pdf, id=301, 910.40125pt x 517.935pt>
+<sampling_2d-eps-converted-to.pdf, id=303, 910.40125pt x 517.935pt>
 File: sampling_2d-eps-converted-to.pdf Graphic file (type pdf)
 
 <use sampling_2d-eps-converted-to.pdf>
@@ -1254,7 +1254,7 @@ to.pdf sampling_3d.eps>
 (epstopdf)             \includegraphics on input line 804.
 Package epstopdf Info: Output file is already uptodate.
 
-<sampling_3d-eps-converted-to.pdf, id=302, 854.19125pt x 538.01pt>
+<sampling_3d-eps-converted-to.pdf, id=304, 854.19125pt x 538.01pt>
 File: sampling_3d-eps-converted-to.pdf Graphic file (type pdf)
 
 <use sampling_3d-eps-converted-to.pdf>
@@ -1277,7 +1277,7 @@ Package epstopdf Info: Source file: <sampling_4d.eps>
 to.pdf sampling_4d.eps>
 (epstopdf)             \includegraphics on input line 809.
 Package epstopdf Info: Output file is already uptodate.
-<sampling_4d-eps-converted-to.pdf, id=303, 922.44624pt x 595.22375pt>
+<sampling_4d-eps-converted-to.pdf, id=305, 922.44624pt x 595.22375pt>
 File: sampling_4d-eps-converted-to.pdf Graphic file (type pdf)
 
 <use sampling_4d-eps-converted-to.pdf>
@@ -1296,7 +1296,7 @@ ed-to.pdf sampling_prior.eps>
 (epstopdf)             \includegraphics on input line 839.
 Package epstopdf Info: Output file is already uptodate.
 
-<sampling_prior-eps-converted-to.pdf, id=327, 719.68875pt x 447.6725pt>
+<sampling_prior-eps-converted-to.pdf, id=329, 719.68875pt x 447.6725pt>
 File: sampling_prior-eps-converted-to.pdf Graphic file (type pdf)
 
 <use sampling_prior-eps-converted-to.pdf>
@@ -1317,7 +1317,7 @@ o.pdf>
 (epstopdf)             \includegraphics on input line 852.
 Package epstopdf Info: Output file is already uptodate.
 
-<global_epsilon_size50to100-eps-converted-to.pdf, id=345, 578.16pt x 433.62pt>
+<global_epsilon_size50to100-eps-converted-to.pdf, id=347, 578.16pt x 433.62pt>
 File: global_epsilon_size50to100-eps-converted-to.pdf Graphic file (type pdf)
 
 <use global_epsilon_size50to100-eps-converted-to.pdf>
@@ -1336,7 +1336,7 @@ to.pdf>
 (epstopdf)             \includegraphics on input line 854.
 Package epstopdf Info: Output file is already uptodate.
 
-<global_epsilon_size100to200-eps-converted-to.pdf, id=346, 578.16pt x 433.62pt>
+<global_epsilon_size100to200-eps-converted-to.pdf, id=348, 578.16pt x 433.62pt>
 File: global_epsilon_size100to200-eps-converted-to.pdf Graphic file (type pdf)
 <use global_epsilon_size100to200-eps-converted-to.pdf>
 Package pdftex.def Info: global_epsilon_size100to200-eps-converted-to.pdf used 
@@ -1372,11 +1372,11 @@ LaTeX Warning: There were multiply-defined labels.
 Here is how much of TeX's memory you used:
  19926 strings out of 492995
  369483 string characters out of 6132704
- 456437 words of memory out of 5000000
+ 455437 words of memory out of 5000000
  23063 multiletter control sequences out of 15000+600000
  24462 words of font info for 98 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 41i,20n,37p,10430b,865s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 41i,20n,37p,10430b,871s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 ></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
 </usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx5.pfb></
@@ -1413,10 +1413,10 @@ e1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type
 1/public/amsfonts/cm/cmti9.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/
 public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2017/texmf-dist/fonts/ty
 pe1/public/amsfonts/symbols/msbm7.pfb>
-Output written on main.pdf (21 pages, 1928110 bytes).
+Output written on main.pdf (21 pages, 1928105 bytes).
 PDF statistics:
- 517 PDF objects out of 1000 (max. 8388607)
- 433 compressed objects within 5 object streams
+ 519 PDF objects out of 1000 (max. 8388607)
+ 435 compressed objects within 5 object streams
  96 named destinations out of 1000 (max. 500000)
  251 words of extra memory for PDF output out of 10000 (max. 10000000)
 
