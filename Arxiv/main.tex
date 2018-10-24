@@ -435,8 +435,9 @@ In what follows, we will use a correspondence between the probability
  \label{thm_hellinegr_equality_dirichlet}
  In Dirichlet-multinomial system, for 3 different Dirichlet distributions $\dirichlet(\valpha)$, $\dirichlet(\vbeta_1)$ and $\dirichlet(\vbeta_2)$, $\hellinger(\dirichlet(\valpha),\dirichlet(\vbeta_1)) = \hellinger(\dirichlet(\valpha),\dirichlet(\vbeta_2))$ iff:
   $$
-  set(\vbeta_1) = set(\vbeta_2)\ and\ set(\valpha + \vbeta_1) = set(\valpha + \vbeta_2).
+  set(\vbeta_1) = set(\vbeta_2)\ and\ set(\valpha + \vbeta_1) = set(\valpha + \vbeta_2),
   $$
+  where $set(\cdot)$ means we only consider the value of each dimension in the vector without the order.
  \end{thm}
 
 
@@ -465,11 +466,15 @@ In what follows, we will use a correspondence between the probability
  \underset{z \thicksim \hexpmech(\dataobs)}{Pr}[\hellinger(\bysinfer(\dataobs),z) = \hellinger(\bysinfer(\dataobs),r)] 
  = |z|\Big ( \underset{z \thicksim \hexpmech(\dataobs)}{Pr}[z = r]\Big ),
  $$ 
- and $|z| = \min\{\frac{k!}{a_1! a_2! \cdots a_{k_a}!},\frac{k!}{b_1! b_2! \cdots b_{k_b}!}\}$, where $\sum{a_i} = \sum{b_i} = k$.
+ and $|z| $ can have $\frac{k! k!}{|a_1|! |a_2|! \cdots |a_{k_a}|! \cdot |b_1|! |b_2|! \cdots |b_{k_b}|!}$ possible values, where $\sum{a_i} = \sum{b_i} = k$.
  \end{thm}
 
  \begin{proof} of Theorem \ref{thm_candidate_divide_dirichlet}.
- By 
+
+ Let $\bysinfer(\dataobs) = \dirichlet(\valpha)$, and $\dirichlet(\vbeta)$ be a candidate from $\candidateset$, 
+ $a_i$ is the distinct value in $\valpha$ and $b_i$ the same in $\vbeta$, 
+ $|a_i|$ denotes the number of values in $\valpha$ having the value$a_i$ and $|b_i|$ the same in $\vbeta$.
+ Then, by combination and permutation, there are $\frac{k! k!}{|a_1|! |a_2|! \cdots |a_{k_a}|! \cdot |b_1|! |b_2|! \cdots |b_{k_b}|!}$ possible combination that satisfy the condition in Theorem \ref{thm_hellinegr_equality_dirichlet}.
  \end{proof}
 
 
