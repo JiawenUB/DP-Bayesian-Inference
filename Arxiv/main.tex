@@ -390,7 +390,7 @@ that $\candidateset$ has $\binom{n + 1}{m - 1}$ elements in this case. We
 will denote by $\hexpmechd$ the mechanism for the
 Dirichlet-multinomial system.
 
-By setting the $\gamma$ as $\ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta'}{2 (n + 1)})})$, $\hexpmech$ is $(\epsilon, \delta) -$differentially private, where $\delta = \frac{e^{\frac{\epsilon}{2}} \delta'}{2}$. (or $\gamma = \ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta'}{2 |\candidateset|})})$ when generalized to Dirichlet-multinomial System)
+By setting the $\gamma$ as $\ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta'}{2 (n + 1)})})$, $\hexpmech$ is $(\epsilon, \delta) -$differentially private, where $\delta = \frac{e^{\frac{\epsilon}{2}} \delta'}{2}$.
 
 
 \section{Privacy Analysis}
@@ -445,7 +445,7 @@ In what follows, we will use a correspondence between the probability
 		\begin{equation*}
 		\begin{split}
 		|r|  \frac{exp(\frac{\epsilon (\hat{s} + \delta')}{2 S(\dataobs)})}{NL(\dataobs)} \cdot e^{\frac{- \epsilon \delta'}{2 S(\dataobs)}}
-		& |r| \leq \frac{exp(\frac{\epsilon (\hat{s} + \delta')}{2 S(\dataobs)})}{NL(\dataobs)} \cdot e^{\frac{\epsilon}{2}}\\
+		&  \leq |r| \frac{exp(\frac{\epsilon (\hat{s} + \delta')}{2 S(\dataobs)})}{NL(\dataobs)} \cdot e^{\frac{\epsilon}{2}}\\
 		&  =  e^{\frac{\epsilon}{2}} \underset{z \thicksim \hexpmech(\dataobs)}{Pr}[u(r,x) = (\delta' + \hat{s})] \leq RHS\\
 		\end{split}
 		\end{equation*}
@@ -569,14 +569,14 @@ For all $\adj{\dataobs}{\dataobs'} \in \mathcal{X}$ and any beta distribution $r
 	& \leq 	\frac{1}{|z|}\Big( e^{\epsilon / 2} \cdot \underset{z \thicksim \hexpmech(\dataobs)}{Pr}[ u(x,z) = U_2]\Big)\\
 	& \leq 	\frac{1}{|z|}\Big( e^{\epsilon} \cdot \underset{z \thicksim \hexpmech(\dataobs)}{Pr}[ u(x,z) = U_3] + e^{\epsilon/2} \cdot \frac{\delta'}{2}\Big)\\
 	& = 	\frac{1}{|z|}\Big( e^{\epsilon} \cdot \underset{z \thicksim \hexpmech(\dataobs')}{Pr}[ u(y,z) = U] + \frac{e^{\epsilon/2} \delta'}{2}\Big) \\
-	& = e^{\epsilon} \cdot \underset{z \thicksim \hexpmech(\dataobs)}{Pr}[ z = r] + \delta,
+	& = e^{\epsilon} \cdot \underset{z \thicksim \hexpmech(\dataobs')}{Pr}[ z = r] + \delta,
 	\end{split}
 	\end{equation*}
 	where the $\delta = \frac{e^{\epsilon/2} \delta'}{2|z|}$.
 
 	The first inequality holds by the sliding property, since the $U_1 \geq -S(\dataobs)$. The second inequality holds by the dilation property, since $\frac{S(\dataobs)}{S(\dataobs')} \cdot \ln(\frac{NL(\dataobs)}{NL(\dataobs')}) \leq 1 - \frac{\epsilon}{2 \ln (\frac{\delta'}{2 (n + 1)})}$.
 
-Since $\delta$ takes the maximum value, i.e., $\frac{e^{\frac{\epsilon}{2}} \delta'}{2}$.
+ $\delta$ takes the maximum value, i.e., $\frac{e^{\frac{\epsilon}{2}} \delta'}{2}$.
 \end{proof}
 
 \section{Accuracy Analysis}
