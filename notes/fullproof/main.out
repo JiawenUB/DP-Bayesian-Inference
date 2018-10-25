@@ -1,7 +1,0 @@
-\BOOKMARK [1][-]{section.1}{Preliminaries}{}% 1
-\BOOKMARK [1][-]{section.2}{Technical Problem Statement and Motivations}{}% 2
-\BOOKMARK [1][-]{section.3}{Mechanism Proposition}{}% 3
-\BOOKMARK [2][-]{subsection.3.1}{MH: Smoothed Hellinger Distance Based Exponential Mechanism}{section.3}% 4
-\BOOKMARK [1][-]{section.4}{Privacy Analysis}{}% 5
-\BOOKMARK [2][-]{subsection.4.1}{Privacy Analysis for Baseline Mechanisms}{section.4}% 6
-\BOOKMARK [2][-]{subsection.4.2}{Privacy Analysis for MH}{section.4}% 7
