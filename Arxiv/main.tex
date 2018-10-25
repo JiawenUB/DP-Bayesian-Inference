@@ -483,32 +483,37 @@ Next, we proof the dilation property for $\lambda > 0$, The ratio of $\frac{h(c)
 \textbf{Detail proof:}
 	To show:
 	\begin{equation*}
-	\underset{z \thicksim \hexpmech(\dataobs)}{Pr}[u(z,\dataobs) = c]
+	\underset{z \thicksim \hexpmech(\dataobs)}{Pr}[u(z,\dataobs) = u(r,\dataobs)]
 	\leq
-	e^{\frac{\epsilon}{2}} \underset{z \thicksim \hexpmech(\dataobs)}{Pr}[u(z,x) = e^{\lambda} c] + \frac{\delta'}{2},
+	e^{\frac{\epsilon}{2}} \underset{z \thicksim \hexpmech(\dataobs)}{Pr}[u(z,x) = e^{\lambda} u(r,\dataobs)] + \frac{\delta'}{2},
 	\end{equation*}
-	for $z \in R_1$.
+  we need to show:
+  \begin{equation*}
+  Pr[u(\hexpmech(\dataobs), \dataobs) = u(r,\dataobs)]
+  \leq
+  e^{\frac{\epsilon}{2}} Pr[u(\hexpmech(\dataobs), \dataobs) = e^{\lambda} u(r,\dataobs)] + \frac{\delta'}{2},
+  \end{equation*}
 
-	Let $Pr[u(\hexpmech(\dataobs)) = c] = |r|  \frac{exp(\frac{\epsilon c}{2 S(\dataobs)})}{NL(\dataobs)}$ and $Pr[u(\hexpmech(\dataobs)) = e^{\lambda} c] = |r|  \frac{exp(\frac{\epsilon e^{\lambda} c}{2 S(\dataobs)})}{NL(\dataobs)}$ by definition.
+	Let $u(r,\dataobs) = c$, $Pr[u(\hexpmech(\dataobs), \dataobs) = c] = |z|  \frac{exp(\frac{\epsilon c}{2 S(\dataobs)})}{NL(\dataobs)}$ and $Pr[u(\hexpmech(\dataobs), \dataobs) = e^{\lambda} c] = |z|  \frac{exp(\frac{\epsilon e^{\lambda} c}{2 S(\dataobs)})}{NL(\dataobs)}$ by definition.
 
-	After simplification, we need to show: $u(\hexpmech(\dataobs)) \leq \frac{S(\dataobs)}{(1 - e ^ {\lambda})}$.
-	Because the sensitivity is always greater than 0, and our utility function $-\hellinger(\bysinfer(\dataobs),z)$ is smaller than zero, i.e., $u(z,x) \leq 0$, we need to consider two cases where $\lambda < 0$, and $\lambda > 0$:
+	After simplification, we need to show: $u(\hexpmech(\dataobs), \dataobs) \leq \frac{S(\dataobs)}{(1 - e ^ {\lambda})}$.
+	Because the sensitivity is always greater than 0, and our utility function $-\hellinger(\bysinfer(\dataobs),z)$ is smaller than zero, i.e., $u(z,\dataobs) \leq 0$, we need to consider two cases where $\lambda < 0$, and $\lambda > 0$:
 
 \begin{itemize}
 	\item $\lambda < 0$
 
 		The left hand side will always be smaller than 0 and the right hand side greater than 0. This will always holds, i.e.
 		\begin{equation*}
-		u(\hexpmech(\dataobs)) \leq \frac{S(\dataobs)}{(1 - e ^ {\lambda})}
+		u(\hexpmech(\dataobs), \dataobs) \leq \frac{S(\dataobs)}{(1 - e ^ {\lambda})}
 		\end{equation*}
 		is always true when $\lambda < 0$
 	\item $\lambda > 0$
 
 
-		Because $\hat{s} = u(r)$ where $r \thicksim \hexpmech(\dataobs)$, we can substitute $\hat{s}$ with $u(\hexpmech(\dataobs))$. Then, what we need to proof under the case $\lambda > 0$ is:
+		Because $\hat{s} = u(r, \dataobs)$ where $r \thicksim \hexpmech(\dataobs)$, we can substitute $\hat{s}$ with $u(\hexpmech(\dataobs), \dataobs)$. Then, what we need to proof under the case $\lambda > 0$ is:
 		\begin{equation}
 		\label{eq_dilation_case2}
-		u(\hexpmech(\dataobs)) \leq \frac{S(\dataobs)}{(1 - e ^ {\lambda})}.
+		u(\hexpmech(\dataobs), \dataobs) \leq \frac{S(\dataobs)}{(1 - e ^ {\lambda})}.
 		\end{equation}
 
 		Based on the accuracy property of exponential mechanism:
@@ -521,7 +526,7 @@ Next, we proof the dilation property for $\lambda > 0$, The ratio of $\frac{h(c)
 		we derived the accuracy bound for $\hexpmech$:
 		\begin{equation*}
 		\begin{split}
-		Pr[u(\hexpmech(\dataobs)) \leq c] 
+		Pr[u(\hexpmech(\dataobs), \dataobs) \leq c] 
 		& \leq |\candidateset|exp(\frac{\epsilon c}{2 S(\dataobs)}).
 		\end{split}
 		\end{equation*}
@@ -529,13 +534,13 @@ Next, we proof the dilation property for $\lambda > 0$, The ratio of $\frac{h(c)
 		apply this bound to eq. \ref{eq_dilation_case2}:
 		\begin{equation*}
 		\begin{split}
-		Pr[u(\hexpmech(\dataobs)) \leq \frac{S(\dataobs)}{(1 - e ^ {\lambda})}] 
+		Pr[u(\hexpmech(\dataobs), \dataobs) \leq \frac{S(\dataobs)}{(1 - e ^ {\lambda})}] 
 		& = (n + 1)exp(\frac{\epsilon S(\dataobs)}{(1 - e ^ {\lambda})}/2 S(\dataobs))\\
 		& = (n + 1)exp(\frac{\epsilon}{2 (1 - e ^ {\lambda})}).\\
 		\end{split}
 		\end{equation*}
 
-		When we set $\lambda \leq \ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta'}{2 (n + 1)})})$, it is easily to derive that $Pr[u(\hexpmech(\dataobs)) \leq \frac{S(\dataobs)}{(1 - e ^ {\lambda})}] \leq \frac{\delta'}{2}$.
+		When we set $\lambda \leq \ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta'}{2 (n + 1)})})$, it is easily to derive that $Pr[u(\hexpmech(\dataobs), \dataobs) \leq \frac{S(\dataobs)}{(1 - e ^ {\lambda})}] \leq \frac{\delta'}{2}$.
 
 		Particularly in Beta-binomial system, $|\candidateset| = n + 1$, then it is enough to set $\gamma$ as $ \leq \ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta'}{2 |n + 1|})})$.
 
@@ -557,18 +562,18 @@ For all $\adj{\dataobs}{\dataobs'} \in \mathcal{X}$ and any beta distribution $r
 \end{equation*}
 
 
-	Given that $\underset{z \thicksim \hexpmech(\dataobs)}{Pr}[z = r] = \underset{z \thicksim \hexpmech(\dataobs)}{Pr}[u(\dataobs,z) = u(\dataobs,r)]$, let $U = u(\dataobs,r)$, $U_1 = u(\dataobs',z) - u(\dataobs,z)$, $U_2 = U + U_1$ and $U_3 = U_2 \cdot \frac{S(\dataobs)}{S(\dataobs')} \cdot \ln(\frac{NL(\dataobs)}{NL(\dataobs')})$. Then,
+	Given that $\underset{z \thicksim \hexpmech(\dataobs)}{Pr}[z = r] = \underset{z \thicksim \hexpmech(\dataobs)}{Pr}[u(\dataobs,z) = u(\dataobs,r)]$, let $U = u(r, \dataobs)$, $U_1 = u(z, \dataobs') - u(z, \dataobs$), $U_2 = U + U_1$ and $U_3 = U_2 \cdot \frac{S(\dataobs)}{S(\dataobs')} \cdot \ln(\frac{NL(\dataobs)}{NL(\dataobs')})$. Then,
 
 
-	Given that $2\Big( \underset{z \thicksim \hexpmech(\dataobs)}{Pr}[z = r]\Big) = \underset{z \thicksim \hexpmech(\dataobs)}{Pr}[ u(\dataobs,z) = u(\dataobs,r)]$, let $U = u(\dataobs,r)$, $U_1 = u(y,z) - u(\dataobs,z)$, $U_2 = U + U_1$ and $U_3 = U_2 \cdot \frac{S(\dataobs)}{S(\dataobs')} \cdot \ln(\frac{NL(\dataobs)}{NL(\dataobs')})$. Then,
+	Given that $2\Big( \underset{z \thicksim \hexpmech(\dataobs)}{Pr}[z = r]\Big) = \underset{z \thicksim \hexpmech(\dataobs)}{Pr}[ u(z, \dataobs) = u(r, \dataobs)]$, let $U = u(\dataobs,r)$, $U_1 = u(z, \dataobs') - u(z, \dataobs)$, $U_2 = U + U_1$ and $U_3 = U_2 \cdot \frac{S(\dataobs)}{S(\dataobs')} \cdot \ln(\frac{NL(\dataobs)}{NL(\dataobs')})$. Then,
 
 	\begin{equation*}
 	\begin{split}
 	\underset{z \thicksim \hexpmech(\dataobs)}{Pr}[ z = r]
-	& = 	\frac{1}{|z|}\Big( \underset{z \thicksim \hexpmech(\dataobs)}{Pr}[ u(x,z) = U]\Big)\\
-	& \leq 	\frac{1}{|z|}\Big( e^{\epsilon / 2} \cdot \underset{z \thicksim \hexpmech(\dataobs)}{Pr}[ u(x,z) = U_2]\Big)\\
-	& \leq 	\frac{1}{|z|}\Big( e^{\epsilon} \cdot \underset{z \thicksim \hexpmech(\dataobs)}{Pr}[ u(x,z) = U_3] + e^{\epsilon/2} \cdot \frac{\delta'}{2}\Big)\\
-	& = 	\frac{1}{|z|}\Big( e^{\epsilon} \cdot \underset{z \thicksim \hexpmech(\dataobs')}{Pr}[ u(y,z) = U] + \frac{e^{\epsilon/2} \delta'}{2}\Big) \\
+	& = 	\frac{1}{|z|}\Big( \underset{z \thicksim \hexpmech(\dataobs)}{Pr}[ u(z, \dataobs) = U]\Big)\\
+	& \leq 	\frac{1}{|z|}\Big( e^{\epsilon / 2} \cdot \underset{z \thicksim \hexpmech(\dataobs)}{Pr}[ u(z, \dataobs) = U_2]\Big)\\
+	& \leq 	\frac{1}{|z|}\Big( e^{\epsilon} \cdot \underset{z \thicksim \hexpmech(\dataobs)}{Pr}[ u(z, \dataobs) = U_3] + e^{\epsilon/2} \cdot \frac{\delta'}{2}\Big)\\
+	& = 	\frac{1}{|z|}\Big( e^{\epsilon} \cdot \underset{z \thicksim \hexpmech(\dataobs')}{Pr}[ u(z,, \dataobs') = U] + \frac{e^{\epsilon/2} \delta'}{2}\Big) \\
 	& = e^{\epsilon} \cdot \underset{z \thicksim \hexpmech(\dataobs')}{Pr}[ z = r] + \delta,
 	\end{split}
 	\end{equation*}
