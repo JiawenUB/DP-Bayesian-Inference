@@ -408,9 +408,9 @@ The differential privacy property of $\hexpmech$ is proved based on following tw
 Given $\hexpmech(\dataobs)$ calibrated on the smooth sensitivity. Let $\lambda = f(\epsilon,
 \delta')$, $\epsilon\geq 0$ and $|\delta'| < 1$. Then, the following \emph{sliding property} holds:
 \begin{equation*}
-\underset{r \thicksim \hexpmech(\dataobs)}{Pr}[u(r,\dataobs) = \hat{s}]
+\underset{z \thicksim \hexpmech(\dataobs)}{Pr}[u(z,\dataobs) = \hat{s}]
 \leq
-e^{\frac{\epsilon}{2}} \underset{r \thicksim \hexpmech(\dataobs)}{Pr}[u(r,\dataobs) = (\delta' + \hat{s})] + \frac{\delta'}{2},
+e^{\frac{\epsilon}{2}} \underset{z \thicksim \hexpmech(\dataobs)}{Pr}[u(z,\dataobs) = (\delta' + \hat{s})] + \frac{\delta'}{2},
 \end{equation*}
 
 \end{lem}
@@ -432,11 +432,11 @@ In what follows, we will use a correspondence between the probability
 		\begin{equation*}
 		\begin{split}
 		LHS 
-		  = \underset{r \thicksim \hexpmech(\dataobs)}{Pr}[u(r,x) = \hat{s}]
-		& = |r| \frac{exp(\frac{\epsilon \hat{s}}{2 S(\dataobs)})}{NL(\dataobs)}\\
-		& = |r| \frac{exp(\frac{\epsilon (\hat{s} + \delta' - \delta')}{2 S(\dataobs)})}{NL(\dataobs)}\\
-		& = |r| \frac{exp(\frac{\epsilon (\hat{s} + \delta')}{2 S(\dataobs)} + \frac{- \epsilon \delta'}{2 S(\dataobs)})}{NL(\dataobs)}\\
-		& = |r| \frac{exp(\frac{\epsilon (\hat{s} + \delta')}{2 S(\dataobs)})}{NL(\dataobs)} \cdot e^{\frac{- \epsilon \delta'}{2 S(\dataobs)})}.\\
+		  = \underset{z \thicksim \hexpmech(\dataobs)}{Pr}[u(r,x) = \hat{s}]
+		& = |z| \frac{exp(\frac{\epsilon \hat{s}}{2 S(\dataobs)})}{NL(\dataobs)}\\
+		& = |z| \frac{exp(\frac{\epsilon (\hat{s} + \delta' - \delta')}{2 S(\dataobs)})}{NL(\dataobs)}\\
+		& = |z| \frac{exp(\frac{\epsilon (\hat{s} + \delta')}{2 S(\dataobs)} + \frac{- \epsilon \delta'}{2 S(\dataobs)})}{NL(\dataobs)}\\
+		& = |z| \frac{exp(\frac{\epsilon (\hat{s} + \delta')}{2 S(\dataobs)})}{NL(\dataobs)} \cdot e^{\frac{- \epsilon \delta'}{2 S(\dataobs)})}.\\
 		\end{split}
 		\end{equation*}
 
@@ -444,9 +444,9 @@ In what follows, we will use a correspondence between the probability
 
 		\begin{equation*}
 		\begin{split}
-		|r|  \frac{exp(\frac{\epsilon (\hat{s} + \delta')}{2 S(\dataobs)})}{NL(\dataobs)} \cdot e^{\frac{- \epsilon \delta'}{2 S(\dataobs)}}
-		&  \leq |r| \frac{exp(\frac{\epsilon (\hat{s} + \delta')}{2 S(\dataobs)})}{NL(\dataobs)} \cdot e^{\frac{\epsilon}{2}}\\
-		&  =  e^{\frac{\epsilon}{2}} \underset{z \thicksim \hexpmech(\dataobs)}{Pr}[u(r,x) = (\delta' + \hat{s})] \leq RHS\\
+		|z|  \frac{exp(\frac{\epsilon (\hat{s} + \delta')}{2 S(\dataobs)})}{NL(\dataobs)} \cdot e^{\frac{- \epsilon \delta'}{2 S(\dataobs)}}
+		&  \leq |z| \frac{exp(\frac{\epsilon (\hat{s} + \delta')}{2 S(\dataobs)})}{NL(\dataobs)} \cdot e^{\frac{\epsilon}{2}}\\
+		&  =  e^{\frac{\epsilon}{2}} \underset{z \thicksim \hexpmech(\dataobs)}{Pr}[u(z,x) = (\delta' + \hat{s})] \leq RHS\\
 		\end{split}
 		\end{equation*}
 
