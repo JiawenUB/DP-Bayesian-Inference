@@ -429,9 +429,7 @@ In what follows, let $ \ux{r} = \hellinger(\bysinfer(\dataobs), r)$ for $r \in \
   \end{split}
   \end{equation*}
 
-
   \item $\impliedby$
-
     \begin{equation*}
   \begin{split}
   & \hexpmechPr{\dataobs}{z = r_1} = \hexpmechPr{\dataobs}{z = r_2} \\
@@ -494,8 +492,8 @@ e^{(\frac{\epsilon k}{2 S(\dataobs)} + \ln 2)} \hexpmechPr{\dataobs}{\ux{z} = ( 
 
 In Beta-binomial system, $\cardinality{\dataobs}{r}$ takes two possible values: $1$, $2$:
 \begin{itemize}
-  \item[-] $\cardinality{\dataobs}{r} = 1$, $\ux{r} = 0$,  containing only the correct posterior.
-  \item[-] $\cardinality{\dataobs}{r} = 2$, $\ux{r} \neq 0$. $R_r$ containing 2 elements by the symmetry property of $\hellinger$.
+  \item[-] $\cardinality{\dataobs}{r} = 1$, $\ux{r} = 0$.  $R^{\dataobs}_r$ contains only the correct posterior.
+  \item[-] $\cardinality{\dataobs}{r} = 2$, $\ux{r} \neq 0$. $R^{\dataobs}_r$ contains 2 elements by the symmetry property of $\hellinger$.
 \end{itemize}
 
 \todo{
@@ -663,11 +661,11 @@ Next, we proof the dilation property for $\lambda > 0$, The ratio of $\frac{h(c)
 
 
   In Beta-binomial system, $\cardinality{\dataobs}{r}$ takes two possible values: $1$, $2$:
-  \begin{itemize}
-    \item[-] $\cardinality{\dataobs}{r} = 1$, $\ux{r} = 0$,  $R_r$ containing only the correct posterior.
-    \item[-] $\cardinality{\dataobs}{r} = 2$, $\ux{r} \neq 0$. $R_r$ containing 2 elements by the symmetry property of $\hellinger$.
-  \end{itemize}
-  Let $\ux{t} = e^{\lambda} \ux{r}$.
+\begin{itemize}
+  \item[-] $\cardinality{\dataobs}{r} = 1$, $\ux{r} = 0$.  $R^{\dataobs}_r$ contains only the correct posterior.
+  \item[-] $\cardinality{\dataobs}{r} = 2$, $\ux{r} \neq 0$. $R^{\dataobs}_r$ contains 2 elements by the symmetry property of $\hellinger$.
+\end{itemize}
+ Let $\ux{t} = e^{\lambda} \ux{r}$.
 
   \begin{assert}
   \label{cardinality_eq}
@@ -834,14 +832,14 @@ $\hexpmech$ is $(\epsilon', \delta)$-differential privacy in Beta-binomial syste
   \end{equation*}
 
    In Beta-binomial system, $\cardinality{\dataobs}{r}$ takes two possible values: $1$, $2$, when considering data set $\dataobs$:
+\begin{itemize}
+  \item[-] $\cardinality{\dataobs}{r} = 1$, $\ux{r} = 0$.  $R^{\dataobs}_r$ contains only the correct posterior.
+  \item[-] $\cardinality{\dataobs}{r} = 2$, $\ux{r} \neq 0$. $R^{\dataobs}_r$ contains 2 elements by the symmetry property of $\hellinger$.
+\end{itemize}
+ when considering data set $\dataobs'$:
   \begin{itemize}
-    \item[*] $\cardinality{\dataobs}{r} = 1$, $\ux{r} = 0$,  $R_r$ containing only the correct posterior.
-    \item[*] $\cardinality{\dataobs}{r} = 2$, $\ux{r} \neq 0$. $R_r$ containing 2 elements by the symmetry property of $\hellinger$.
-  \end{itemize}
-  when considering data set $\dataobs'$:
-  \begin{itemize}
-    \item[*] $\cardinality{\dataobs'}{r} = 1$, $\uxadj{r} = 0$,  $R_r$ containing only the correct posterior.
-    \item[*] $\cardinality{\dataobs'}{r} = 2$, $\uxadj{r} \neq 0$. $R_r$ containing 2 elements by the symmetry property of $\hellinger$.
+    \item[*] $\cardinality{\dataobs'}{r} = 1$, $\uxadj{r} = 0$,  $R^{\dataobs'}_r$ contains only the correct posterior.
+    \item[*] $\cardinality{\dataobs'}{r} = 2$, $\uxadj{r} \neq 0$. $R^{\dataobs'}_r$ contains 2 elements by the symmetry property of $\hellinger$.
   \end{itemize}
 
  
