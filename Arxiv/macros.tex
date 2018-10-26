@@ -36,7 +36,7 @@
 \usepackage[normalem]{ulem}
 \newcommand{\dataobs}{\textbf{x}}
 \newcommand{\adj}[2]{\textbf{adj}(#1,#2)}
-\newcommand{\candidateset}{\mathcal{R}_{\textup{post}}}
+\newcommand{\candidateset}[1]{\mathcal{R}_{\textup{post}}(#1)}
 \newcommand{\bprior}{\boldsymbol{\beta}_{\textup{prior}}}
 \newcommand{\bysinfer}{\mathsf{BI}}
 \newcommand{\betad}{\mathsf{beta}}
@@ -58,6 +58,11 @@
 \newcommand{\iverson}[1]{[#1]}
 \newcommand{\datauni}{\mathcal{X}}
 \newcommand{\hellinger}{\mathcal{H}}
+\newcommand{\ux}[1]{u(\textbf{x}, {#1})}
+\newcommand{\cardinality}[1]{\mathcal{C}_{#1}}
+\newcommand{\nomalizer}[1]{\sum_{r'\in \mathcal{R}_{\textup{post}}(#1)} exp \Big(\frac{-\epsilon\cdot \mathcal{H} (\mathsf{BI}(#1),r')}{2 \cdot S(#1)}\Big)}
+
+\newcommand{\hexpmechPr}[2]{\underset{z \thicksim \hexpmech(#1)}{Pr}[#2]}
 % \newcommand{\because}{\mathsf{because}}
 % \newcommand{\therefore}{\mathsf{therefore}}
 %\newcommand{\theHalgorithm}{\arabic{algorithm}}
