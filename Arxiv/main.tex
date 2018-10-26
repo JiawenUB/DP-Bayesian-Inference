@@ -417,30 +417,30 @@ In what follows, let $ \ux{r} = \hellinger(\bysinfer(\dataobs), r)$ for $r \in \
 \begin{proof} of Lemma \ref{lem_score_pro_eq}.
 \begin{itemize}
   \item $\implies$
-  \begin{equation*}
-  \begin{split}
-  & \ux{r_1} = \ux{r_2} \\
-  & Apply\ \ux{r} = \hellinger(\bysinfer(\dataobs), r)\ for\ r \in \candidateset{\dataobs}:\\
-  & \implies \hellinger(\bysinfer(\dataobs), r_1) = \hellinger(\bysinfer(\dataobs), r_2) \\
-  & \implies \frac {exp\big(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r_1)}{2\cdot S(\dataobs)}\big)}{\nomalizer{\dataobs}} 
-  = \frac {exp\big(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r_2)}{2\cdot S(\dataobs)}\big)}{\nomalizer{\dataobs}}\\
-  & Apply\ Definition\ \ref{def_smoo} :\\
-  & \implies \hexpmechPr{\dataobs}{z = r_1} = \hexpmechPr{\dataobs}{z = r_2}.
-  \end{split}
-  \end{equation*}
+
+  $\ux{r_1} = \ux{r_2}$
+
+  Apply $\ux{r} = \hellinger(\bysinfer(\dataobs), r)$ for $r \in \candidateset{\dataobs}$:\\
+  $\implies \hellinger(\bysinfer(\dataobs), r_1) = \hellinger(\bysinfer(\dataobs), r_2)$. \\
+  $\implies \frac {exp\big(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r_1)}{2\cdot S(\dataobs)}\big)}{\nomalizer{\dataobs}} 
+  = \frac {exp\big(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r_2)}{2\cdot S(\dataobs)}\big)}{\nomalizer{\dataobs}}$.
+
+  Apply\ Definition\ \ref{def_smoo}:\\
+  $\implies \hexpmechPr{\dataobs}{z = r_1} = \hexpmechPr{\dataobs}{z = r_2}$.
+
 
   \item $\impliedby$
-    \begin{equation*}
-  \begin{split}
-  & \hexpmechPr{\dataobs}{z = r_1} = \hexpmechPr{\dataobs}{z = r_2} \\
-  & Apply\ Definition\ \ref{def_smoo} :\\
-  & \implies \frac {exp\big(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r_1)}{2\cdot S(\dataobs)}\big)}{\nomalizer{\dataobs}} 
-  = \frac {exp\big(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r_2)}{2\cdot S(\dataobs)}\big)}{\nomalizer{\dataobs}}\\
-  & \implies  \hellinger(\bysinfer(\dataobs), r_1) = \hellinger(\bysinfer(\dataobs), r_2) \\
-  & Apply\ \ux{r} = \hellinger(\bysinfer(\dataobs), r)\ for\ r \in \candidateset{\dataobs}:\\
-  & \implies \ux{r_1} = \ux{r_2}.
-  \end{split}
-  \end{equation*}
+
+  $\hexpmechPr{\dataobs}{z = r_1} = \hexpmechPr{\dataobs}{z = r_2} $
+
+  Apply Definition \ref{def_smoo}:\\
+  $\implies \frac {exp\big(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r_1)}{2\cdot S(\dataobs)}\big)}{\nomalizer{\dataobs}} 
+    = \frac {exp\big(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r_2)}{2\cdot S(\dataobs)}\big)}{\nomalizer{\dataobs}}$.\\
+  $\implies  \hellinger(\bysinfer(\dataobs), r_1) = \hellinger(\bysinfer(\dataobs), r_2)$.
+
+  Apply\ $\ux{r} = \hellinger(\bysinfer(\dataobs), r)$ for $r \in \candidateset{\dataobs}$:
+  $\implies \ux{r_1} = \ux{r_2}$.
+
 \end{itemize}
 
 \end{proof}
@@ -466,10 +466,10 @@ To compute $\hexpmechPr{\dataobs}{\ux{z} = \ux{r}}$\\
 $\iff $ to compute $\hexpmechPr{\dataobs}{ z \in R | R = \{r' | r' \in \candidateset{\dataobs} \land \ux{r'} = \ux{r}\}}.$\\
 By Definition \ref{def_cardinality}, $R^{\dataobs}_r$ is this set.\\
 $\implies \hexpmechPr{\dataobs}{\ux{z} = \ux{r}} = \hexpmechPr{\dataobs}{z \in R^{\dataobs}_r} $.\\
-By the independence of $r' \in R_r$, $ \hexpmechPr{\dataobs}{z \in R_r}  =\sum\limits_{r'\in R^{\dataobs}_r} \hexpmechPr{\dataobs}{z = r'}$ ,\\
-Apply Lemma \ref{lem_score_pro_eq} in $R_r$, \\
-$\implies$ for any $r', r''\in R_r$, $\hexpmechPr{\dataobs}{z = r'} = \hexpmechPr{\dataobs}{z = r''}$.\\
-$\implies$ $\sum\limits_{r'\in R_r} \hexpmechPr{\dataobs}{z = r'} = \cardinality{\dataobs}{r}\hexpmechPr{\dataobs}{z = r}$.\\
+By the independence of $r' \in R_r$, $ \hexpmechPr{\dataobs}{z \in R^{\dataobs}_r}  =\sum\limits_{r'\in R^{\dataobs}_r} \hexpmechPr{\dataobs}{z = r'}$ ,\\
+Apply Lemma \ref{lem_score_pro_eq} in $R^{\dataobs}_r$, \\
+$\implies$ for any $r', r''\in R^{\dataobs}_r$, $\hexpmechPr{\dataobs}{z = r'} = \hexpmechPr{\dataobs}{z = r''}$.\\
+$\implies$ $\sum\limits_{r'\in R^{\dataobs}_r} \hexpmechPr{\dataobs}{z = r'} = \cardinality{\dataobs}{r}\hexpmechPr{\dataobs}{z = r}$.\\
 $\implies$ $\hexpmechPr{\dataobs}{\ux{z} = \ux{r}} = \cardinality{\dataobs}{r}\hexpmechPr{\dataobs}{z = r}$.\\
 \end{proof}
 
