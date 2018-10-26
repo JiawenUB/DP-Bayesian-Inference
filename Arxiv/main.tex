@@ -449,16 +449,16 @@ In what follows, let $ \ux{r} = \hellinger(\bysinfer(\dataobs), r)$ for $r \in \
 
 \begin{definition}
 \label{def_cardinality}
-  $\cardinality{r}$
+  $\cardinality{\dataobs}{r}$
 
-  Define $\cardinality{r}$ as the cardinality of $R_r$ s.t. $ R_r = \{ r' | r' \in \candidateset{\dataobs}\ s.t. \ \ux{r'} = \ux{r}, \}$ and $\forall \hat{r} \in \candidateset{\dataobs}, \hat{r} \notin R_r \implies \ux{\hat{r}} \neq \ux{r}$, 
+  Define $\cardinality{\dataobs}{r}$ as the cardinality of $R_r$ s.t. $ R_r = \{ r' | r' \in \candidateset{\dataobs}\ s.t. \ \ux{r'} = \ux{r}, \}$ and $\forall \hat{r} \in \candidateset{\dataobs}, \hat{r} \notin R_r \implies \ux{\hat{r}} \neq \ux{r}$, 
 \end{definition}
 
 \begin{lem}
 \label{lem_score_pro_convert}
  Given $\hexpmech(\dataobs)$, then the following property holds:
 \begin{equation*}
-\hexpmechPr{\dataobs}{\ux{z} = \ux{r}} = \cardinality{r}\hexpmechPr{\dataobs}{z = r}
+\hexpmechPr{\dataobs}{\ux{z} = \ux{r}} = \cardinality{\dataobs}{r}\hexpmechPr{\dataobs}{z = r}
  \end{equation*}
 \end{lem}
 \begin{proof} of Lemma \ref{lem_score_pro_convert}.\\
@@ -469,8 +469,8 @@ $\implies \hexpmechPr{\dataobs}{\ux{z} = \ux{r}} = \hexpmechPr{\dataobs}{R_r} $.
 By the independence of $r' \in R_r$, $ \hexpmechPr{\dataobs}{z \in R_r}  =\sum\limits_{r'\in R_r} \hexpmechPr{\dataobs}{z = r'}$ ,\\
 Apply Lemma \ref{lem_score_pro_eq} in $R_r$, \\
 $\implies$ for any $r', r''\in R_r$, $\hexpmechPr{\dataobs}{z = r'} = \hexpmechPr{\dataobs}{z = r''}$.\\
-$\implies$ $\sum\limits_{r'\in R_r} \hexpmechPr{\dataobs}{z = r'} = \cardinality{r}\hexpmechPr{\dataobs}{z = r}$.\\
-$\implies$ $\hexpmechPr{\dataobs}{\ux{z} = \ux{r}} = \cardinality{r}\hexpmechPr{\dataobs}{z = r}$.\\
+$\implies$ $\sum\limits_{r'\in R_r} \hexpmechPr{\dataobs}{z = r'} = \cardinality{\dataobs}{r}\hexpmechPr{\dataobs}{z = r}$.\\
+$\implies$ $\hexpmechPr{\dataobs}{\ux{z} = \ux{r}} = \cardinality{\dataobs}{r}\hexpmechPr{\dataobs}{z = r}$.\\
 \end{proof}
 
 
@@ -490,37 +490,37 @@ e^{(\frac{\epsilon k}{2 S(\dataobs)} + \ln 2)} \hexpmechPr{\dataobs}{\ux{z} = ( 
 
 \begin{proof} of Lemma \ref{lem_sliding}:
 
-In Beta-binomial system, $\cardinality{r}$ takes two possible value: $1$, $2$:
+In Beta-binomial system, $\cardinality{\dataobs}{r}$ takes two possible values: $1$, $2$:
 \begin{itemize}
-  \item[-] $\cardinality{r} = 1$, $\ux{r} = 0$,  containing only the correct posterior.
-  \item[-] $\cardinality{r} = 2$, $\ux{r} \neq 0$. $R_r$ containing 2 elements by the symmetry property of $\hellinger$.
+  \item[-] $\cardinality{\dataobs}{r} = 1$, $\ux{r} = 0$,  containing only the correct posterior.
+  \item[-] $\cardinality{\dataobs}{r} = 2$, $\ux{r} \neq 0$. $R_r$ containing 2 elements by the symmetry property of $\hellinger$.
 \end{itemize}
 
 \todo{
-In Beta-binomial system, $\cardinality{r}$ takes two possible value: $1$, $2$. Let $\mathcal{R}_1$, $\mathcal{R}_2$ be a partition of $\candidateset{\dataobs}$:
+In Beta-binomial system, $\cardinality{\dataobs}{r}$ takes two possible values: $1$, $2$. Let $\mathcal{R}_1$, $\mathcal{R}_2$ be a partition of $\candidateset{\dataobs}$:
 \begin{itemize}
-  \item[*] $\mathcal{R}_1 = \{r | r \in \candidateset{\dataobs}\ s.t.\ \cardinality{r} = 1\}$.
-  \item[*] $\mathcal{R}_2 = \{r | r \in \candidateset{\dataobs}\ s.t.\ \cardinality{r} = 2\}$.
+  \item[*] $\mathcal{R}_1 = \{r | r \in \candidateset{\dataobs}\ s.t.\ \cardinality{\dataobs}{r} = 1\}$.
+  \item[*] $\mathcal{R}_2 = \{r | r \in \candidateset{\dataobs}\ s.t.\ \cardinality{\dataobs}{r} = 2\}$.
 \end{itemize}
 }
 
 Let $\ux{t} = \ux{r} + k$. The proof is given by cases:
 \begin{itemize}
-  \item $\ux{r} \neq 0$, $\ux{r} + k \neq 0$. \todo{$r \in \mathcal{R}_2 \land t \in \mathcal{R}_2$} \\
-  By $\ux{r} + k \neq 0$, $\cardinality{t} = 2$. \todo{By $t \in \mathcal{R}_2$, $\cardinality{t} = 2$}\\
-  By $\ux{r} \neq 0 $, $\cardinality{r} = 2$. \todo{By $r \in \mathcal{R}_2$, $\cardinality{r} = 2$}\\
+  \item {\boldmath$\ux{r} \neq 0$, $\ux{r} + k \neq 0$}. \todo{$r \in \mathcal{R}_2 \land t \in \mathcal{R}_2$} \\
+  By $\ux{r} + k \neq 0$, $\cardinality{\dataobs}{t} = 2$. \todo{By $t \in \mathcal{R}_2$, $\cardinality{\dataobs}{t} = 2$}\\
+  By $\ux{r} \neq 0 $, $\cardinality{\dataobs}{r} = 2$. \todo{By $r \in \mathcal{R}_2$, $\cardinality{\dataobs}{r} = 2$}\\
   Destruct k:
   \begin{itemize}
     \item  $k \geq 0$: $\implies$\\
       \begin{equation*}
       \begin{split}
       LHS 
-      & = \cardinality{r} \cdot \hexpmechPr{\dataobs}{z = r}     (Apply\ Lemma\ \ref{lem_score_pro_convert})\\
-      & = \cardinality{r} \cdot \frac {exp\big(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r)}{2\cdot S(\dataobs)}\big)}{\nomalizer{\dataobs}} 
+      & = \cardinality{\dataobs}{r} \cdot \hexpmechPr{\dataobs}{z = r}     (Apply\ Lemma\ \ref{lem_score_pro_convert})\\
+      & = \cardinality{\dataobs}{r} \cdot \frac {exp\big(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r)}{2\cdot S(\dataobs)}\big)}{\nomalizer{\dataobs}} 
       (Apply\ Definition\ \ref{def_smoo})\\
-      & = \cardinality{r} \cdot \frac{exp(\frac{-\epsilon \ux{r}}{2 S(\dataobs)})}{\unomalizer{\dataobs}}
+      & = \cardinality{\dataobs}{r} \cdot \frac{exp(\frac{-\epsilon \ux{r}}{2 S(\dataobs)})}{\unomalizer{\dataobs}}
       (Apply\ \ux{r} = \hellinger(\bysinfer(\dataobs), r))\\
-      & = 2 \cdot \frac{exp(\frac{-\epsilon \ux{r}}{2 S(\dataobs)})}{\unomalizer{\dataobs}}                  (Apply\ \cardinality{r} = 2)\\
+      & = 2 \cdot \frac{exp(\frac{-\epsilon \ux{r}}{2 S(\dataobs)})}{\unomalizer{\dataobs}}                  (Apply\ \cardinality{\dataobs}{r} = 2)\\
       & = 2 \cdot \frac{exp(\frac{-\epsilon (\ux{r} + k - k)}{2 S(\dataobs)})}{\unomalizer{\dataobs}}\\
       & = 2 \cdot \frac{exp(\frac{-\epsilon (\ux{r} + k)}{2 S(\dataobs)} + \frac{\epsilon k}{2 S(\dataobs)})}{\unomalizer{\dataobs}}\\
       & = 2 \cdot \frac{exp(\frac{-\epsilon (\ux{r} + k)}{2 S(\dataobs)})}{\unomalizer{\dataobs}} \cdot e^{\frac{\epsilon k}{2 S(\dataobs)}}\\
@@ -528,7 +528,7 @@ Let $\ux{t} = \ux{r} + k$. The proof is given by cases:
       & = e^{\frac{\epsilon k}{2 S(\dataobs)}} \cdot 2 \cdot \frac {exp\big(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs), t)}{2\cdot S(\dataobs)}\big)}{\nomalizer{\dataobs}} 
       (Apply\ \ux{r} = \hellinger(\bysinfer(\dataobs), r))\\
       & = e^{\frac{\epsilon k}{2 S(\dataobs)}} \cdot 2 \hexpmechPr{\dataobs}{z = t}       (Apply\ Definition\ \ref{def_smoo})\\
-      & = e^{\frac{\epsilon k}{2 S(\dataobs)}} \cdot \cardinality{t} \hexpmechPr{\dataobs}{z = t}         (Apply \ \cardinality{t} = 2)\\
+      & = e^{\frac{\epsilon k}{2 S(\dataobs)}} \cdot \cardinality{\dataobs}{t} \hexpmechPr{\dataobs}{z = t}         (Apply \ \cardinality{\dataobs}{t} = 2)\\
       & = e^{\frac{\epsilon k}{2 S(\dataobs)}} \cdot \hexpmechPr{\dataobs}{\ux{z} = \ux{t}}               (Apply \ Lemma\ \ref{lem_score_pro_convert})\\
       & = e^{\frac{\epsilon k}{2 S(\dataobs)}} \cdot \hexpmechPr{\dataobs}{\ux{z} = (\ux{r} + k)}         (Apply \ \ux{t} = \ux{r} + k)\\
       & \leq e^{(\frac{\epsilon k}{2 S(\dataobs)} + \ln 2)} \hexpmechPr{\dataobs}{\ux{z} = (\ux{r} + k)}\\
@@ -541,12 +541,12 @@ Let $\ux{t} = \ux{r} + k$. The proof is given by cases:
       \begin{equation*}
       \begin{split}
       LHS 
-      & = \cardinality{r} \cdot \hexpmechPr{\dataobs}{z = r}     (Apply\ Lemma\ \ref{lem_score_pro_convert})\\
-      & = \cardinality{r} \cdot \frac {exp\big(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r)}{2\cdot S(\dataobs)}\big)}{\nomalizer{\dataobs}} 
+      & = \cardinality{\dataobs}{r} \cdot \hexpmechPr{\dataobs}{z = r}     (Apply\ Lemma\ \ref{lem_score_pro_convert})\\
+      & = \cardinality{\dataobs}{r} \cdot \frac {exp\big(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r)}{2\cdot S(\dataobs)}\big)}{\nomalizer{\dataobs}} 
       (Apply\ Definition\ \ref{def_smoo})\\
-      & = \cardinality{r} \cdot \frac{exp(\frac{-\epsilon \ux{r}}{2 S(\dataobs)})}{\unomalizer{\dataobs}}
+      & = \cardinality{\dataobs}{r} \cdot \frac{exp(\frac{-\epsilon \ux{r}}{2 S(\dataobs)})}{\unomalizer{\dataobs}}
       (Apply\ \ux{r} = \hellinger(\bysinfer(\dataobs), r))\\
-      & = 2 \cdot \frac{exp(\frac{-\epsilon \ux{r}}{2 S(\dataobs)})}{\unomalizer{\dataobs}}                  (Apply\ \cardinality{r} = 2)\\
+      & = 2 \cdot \frac{exp(\frac{-\epsilon \ux{r}}{2 S(\dataobs)})}{\unomalizer{\dataobs}}                  (Apply\ \cardinality{\dataobs}{r} = 2)\\
       & = 2 \cdot \frac{exp(\frac{-\epsilon (\ux{r} + k - k)}{2 S(\dataobs)})}{\unomalizer{\dataobs}}\\
       & = 2 \cdot \frac{exp(\frac{-\epsilon (\ux{r} + k)}{2 S(\dataobs)} + \frac{\epsilon k}{2 S(\dataobs)})}{\unomalizer{\dataobs}}\\
       & = 2 \cdot \frac{exp(\frac{-\epsilon (\ux{r} + k)}{2 S(\dataobs)})}{\unomalizer{\dataobs}} \cdot e^{\frac{\epsilon k}{2 S(\dataobs)}}\\
@@ -554,7 +554,7 @@ Let $\ux{t} = \ux{r} + k$. The proof is given by cases:
       & = e^{\frac{\epsilon k}{2 S(\dataobs)}} \cdot 2 \cdot \frac {exp\big(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs), t)}{2\cdot S(\dataobs)}\big)}{\nomalizer{\dataobs}} 
       (Apply\ \ux{r} = \hellinger(\bysinfer(\dataobs), r))\\
       & = e^{\frac{\epsilon k}{2 S(\dataobs)}} \cdot 2 \hexpmechPr{\dataobs}{z = t}       (Apply\ Definition\ \ref{def_smoo})\\
-      & = e^{\frac{\epsilon k}{2 S(\dataobs)}} \cdot \cardinality{t} \hexpmechPr{\dataobs}{z = t}         (Apply \cardinality{t} = 2)\\
+      & = e^{\frac{\epsilon k}{2 S(\dataobs)}} \cdot \cardinality{\dataobs}{t} \hexpmechPr{\dataobs}{z = t}         (Apply \ \cardinality{\dataobs}{t} = 2)\\
       & = e^{\frac{\epsilon k}{2 S(\dataobs)}} \cdot \hexpmechPr{\dataobs}{\ux{z} = \ux{t}}               (Apply \ Lemma\ \ref{lem_score_pro_convert})\\
       & = e^{\frac{\epsilon k}{2 S(\dataobs)}} \cdot \hexpmechPr{\dataobs}{\ux{z} = (\ux{r} + k)}         (Apply \ \ux{t} = \ux{r} + k)\\
       & \leq e^{(\frac{\epsilon k}{2 S(\dataobs)} + \ln 2)} \hexpmechPr{\dataobs}{\ux{z} = (\ux{r} + k)}\\
@@ -564,19 +564,19 @@ Let $\ux{t} = \ux{r} + k$. The proof is given by cases:
 
   \end{itemize}
 
-  \item $\ux{r} = 0, \ux{r} + k \neq 0$. \todo{$r \in \mathcal{R}_1 \land t \in \mathcal{R}_2$}\\
-        By $\ux{r} = 0$, $\cardinality{r} = 1$. \todo{By $r \in \mathcal{R}_1$, $\cardinality{t} = 1$}\\
-        By $\ux{r} + k = k \neq 0$, $\cardinality{t} = 2$. \todo{By $t \in \mathcal{R}_2$, $\cardinality{t} = 2$}\\
+  \item {\boldmath$\ux{r} = 0, \ux{r} + k \neq 0$}. \todo{$r \in \mathcal{R}_1 \land t \in \mathcal{R}_2$}\\
+        By $\ux{r} = 0$, $\cardinality{\dataobs}{r} = 1$. \todo{By $r \in \mathcal{R}_1$, $\cardinality{\dataobs}{t} = 1$}\\
+        By $\ux{r} + k = k \neq 0$, $\cardinality{\dataobs}{t} = 2$. \todo{By $t \in \mathcal{R}_2$, $\cardinality{\dataobs}{t} = 2$}\\
         $\implies$\\
         \begin{equation*}
         \begin{split}
         LHS 
-        & = \cardinality{r} \cdot \hexpmechPr{\dataobs}{z = r}     (Apply\ Lemma\ \ref{lem_score_pro_convert})\\
-        & = \cardinality{r} \cdot \frac {exp\big(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r)}{2\cdot S(\dataobs)}\big)}{\nomalizer{\dataobs}} 
+        & = \cardinality{\dataobs}{r} \cdot \hexpmechPr{\dataobs}{z = r}     (Apply\ Lemma\ \ref{lem_score_pro_convert})\\
+        & = \cardinality{\dataobs}{r} \cdot \frac {exp\big(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r)}{2\cdot S(\dataobs)}\big)}{\nomalizer{\dataobs}} 
         (Apply\ Definition\ \ref{def_smoo})\\
-        & = \cardinality{r} \cdot \frac{exp(\frac{-\epsilon \ux{r}}{2 S(\dataobs)})}{\unomalizer{\dataobs}}
+        & = \cardinality{\dataobs}{r} \cdot \frac{exp(\frac{-\epsilon \ux{r}}{2 S(\dataobs)})}{\unomalizer{\dataobs}}
         (Apply\ \ux{r} = \hellinger(\bysinfer(\dataobs), r))\\
-        & = \frac{exp(\frac{- \epsilon \ux{r}}{2 S(\dataobs)})}{\unomalizer{\dataobs}}                        (Apply \ \cardinality{r} = 1) \\
+        & = \frac{exp(\frac{- \epsilon \ux{r}}{2 S(\dataobs)})}{\unomalizer{\dataobs}}                        (Apply \ \cardinality{\dataobs}{r} = 1) \\
         & = \frac{exp(\frac{- \epsilon (\ux{r} + k - k)}{2 S(\dataobs)})}{\unomalizer{\dataobs}}\\
         & = \frac{exp(\frac{- \epsilon (\ux{r} + k)}{2 S(\dataobs)} + \frac{\epsilon k}{2 S(\dataobs)})}{\unomalizer{\dataobs}}\\
         & = \frac{exp(\frac{-\epsilon (\ux{r} + k)}{2 S(\dataobs)})}{\unomalizer{\dataobs}} \cdot e^{\frac{\epsilon k}{2 S(\dataobs)}}\\
@@ -585,7 +585,7 @@ Let $\ux{t} = \ux{r} + k$. The proof is given by cases:
         (Apply\ \ux{r} = \hellinger(\bysinfer(\dataobs), r))\\
         & = e^{\frac{\epsilon k}{2 S(\dataobs)}} \cdot \hexpmechPr{\dataobs}{z = t}       (Apply\ Definition\ \ref{def_smoo})\\
         & < 2 \cdot e^{\frac{\epsilon k}{2 S(\dataobs)}} \cdot \hexpmechPr{\dataobs}{z = t}\\
-        & = e^{\frac{\epsilon k}{2 S(\dataobs)}} \cdot \cardinality{t} \hexpmechPr{\dataobs}{z = t}   (Apply \ \cardinality{t} = 2)\\
+        & = e^{\frac{\epsilon k}{2 S(\dataobs)}} \cdot \cardinality{\dataobs}{t} \hexpmechPr{\dataobs}{z = t}   (Apply \ \cardinality{\dataobs}{t} = 2)\\
         & = e^{\frac{\epsilon k}{2 S(\dataobs)}} \cdot \hexpmechPr{\dataobs}{\ux{z} = \ux{t}}         (Apply \ Lemma\ \ref{lem_score_pro_convert})\\
         & = e^{\frac{\epsilon k}{2 S(\dataobs)}} \cdot \hexpmechPr{\dataobs}{\ux{z} = (\ux{r} + k)}   (Apply \ \ux{t} = \ux{r} + k)\\
         & \leq e^{(\frac{\epsilon k}{2 S(\dataobs)} + \ln 2)} \hexpmechPr{\dataobs}{\ux{z} = ( \ux{r} + k)}\\
@@ -593,19 +593,22 @@ Let $\ux{t} = \ux{r} + k$. The proof is given by cases:
         \end{split}
         \end{equation*}
 
-  \item $\ux{r} \neq 0, \ux{r} + k = 0$ \todo{$r \in \mathcal{R}_2 \land t \in \mathcal{R}_1$}\\
-      By $\ux{r} + k = 0$, $\cardinality{t} = 1$. \todo{By $t \in \mathcal{R}_1$, $\cardinality{t} = 1$}\\
-      By $\ux{r} \neq 0$, $\cardinality{r} = 2$.  \todo{By $r \in \mathcal{R}_2$, $\cardinality{t} = 2$}\\
-      $\implies$\\
+  \item {\boldmath$\ux{r} \neq 0, \ux{r} + k = 0$} \todo{$r \in \mathcal{R}_2 \land t \in \mathcal{R}_1$}
+
+      By $\ux{r} + k = 0$, $\cardinality{\dataobs}{t} = 1$. \todo{By $t \in \mathcal{R}_1$, $\cardinality{\dataobs}{t} = 1$}
+
+      By $\ux{r} \neq 0$, $\cardinality{\dataobs}{r} = 2$.  \todo{By $r \in \mathcal{R}_2$, $\cardinality{\dataobs}{t} = 2$}
+
+      $\implies$
       \begin{equation*}
       \begin{split}
       LHS   
-      & = \cardinality{r} \cdot \hexpmechPr{\dataobs}{z = r}     (Apply\ Lemma\ \ref{lem_score_pro_convert})\\
-      & = \cardinality{r} \cdot \frac {exp\big(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r)}{2\cdot S(\dataobs)}\big)}{\nomalizer{\dataobs}} 
+      & = \cardinality{\dataobs}{r} \cdot \hexpmechPr{\dataobs}{z = r}     (Apply\ Lemma\ \ref{lem_score_pro_convert})\\
+      & = \cardinality{\dataobs}{r} \cdot \frac {exp\big(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r)}{2\cdot S(\dataobs)}\big)}{\nomalizer{\dataobs}} 
       (Apply\ Definition\ \ref{def_smoo})\\
-      & = \cardinality{r} \cdot \frac{exp(\frac{-\epsilon \ux{r}}{2 S(\dataobs)})}{\unomalizer{\dataobs}}
+      & = \cardinality{\dataobs}{r} \cdot \frac{exp(\frac{-\epsilon \ux{r}}{2 S(\dataobs)})}{\unomalizer{\dataobs}}
       (Apply\ \ux{r} = \hellinger(\bysinfer(\dataobs), r))\\
-      & = 2 \cdot \frac{exp(\frac{-\epsilon \ux{r}}{2 S(\dataobs)})}{\unomalizer{\dataobs}}                  (Apply \ \cardinality{r} = 2)\\
+      & = 2 \cdot \frac{exp(\frac{-\epsilon \ux{r}}{2 S(\dataobs)})}{\unomalizer{\dataobs}}                  (Apply \ \cardinality{\dataobs}{r} = 2)\\
       & = 2 \cdot \frac{exp(\frac{-\epsilon (\ux{r} + k - k)}{2 S(\dataobs)})}{\unomalizer{\dataobs}}\\
       & = 2 \cdot \frac{exp(\frac{-\epsilon (\ux{r} + k)}{2 S(\dataobs)} + \frac{\epsilon k}{2 S(\dataobs)})}{\unomalizer{\dataobs}}\\
       & = 2 \cdot \frac{exp(\frac{-\epsilon (\ux{r} + k)}{2 S(\dataobs)})}{\unomalizer{\dataobs}} \cdot e^{\frac{\epsilon k}{2 S(\dataobs)}}\\
@@ -613,7 +616,7 @@ Let $\ux{t} = \ux{r} + k$. The proof is given by cases:
       & = 2 \cdot e^{\frac{\epsilon k}{2 S(\dataobs)}} \cdot \frac {exp\big(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs), t)}{2\cdot S(\dataobs)}\big)}{\nomalizer{\dataobs}} 
       (Apply\ \ux{r} = \hellinger(\bysinfer(\dataobs), r))\\
       & = 2 \cdot e^{\frac{\epsilon k}{2 S(\dataobs)}} \hexpmechPr{\dataobs}{z = t}       (Apply\ Definition\ \ref{def_smoo})\\
-      & = 2 \cdot e^{\frac{\epsilon k}{2 S(\dataobs)}} \cdot \cardinality{t} \hexpmechPr{\dataobs}{z = t} (Apply\ \cardinality{t} = 1)\\
+      & = 2 \cdot e^{\frac{\epsilon k}{2 S(\dataobs)}} \cdot \cardinality{\dataobs}{t} \hexpmechPr{\dataobs}{z = t} (Apply\ \cardinality{\dataobs}{t} = 1)\\
       & = 2 \cdot e^{\frac{\epsilon k}{2 S(\dataobs)}} \cdot \hexpmechPr{\dataobs}{\ux{z} = \ux{t}}       (Apply \ Lemma\ \ref{lem_score_pro_convert})\\
       & = 2 \cdot e^{\frac{\epsilon k}{2 S(\dataobs)}} \cdot \hexpmechPr{\dataobs}{\ux{z} = (\ux{r} + k)} (Apply \ \ux{t} = \ux{r} + k)\\
       & = e^{\ln 2} \cdot e^{\frac{\epsilon k}{2 S(\dataobs)}} \cdot \hexpmechPr{\dataobs}{\ux{z} = (\ux{r} + k)}\\
@@ -622,7 +625,7 @@ Let $\ux{t} = \ux{r} + k$. The proof is given by cases:
       \end{split}
       \end{equation*} 
 
-  \item $\ux{r} = 0, \ux{r} + k = 0$: \todo{$r \in \mathcal{R}_1 \land t \in \mathcal{R}_1$}\\
+  \item {\boldmath $\ux{r} = 0, \ux{r} + k = 0$}: \todo{$r \in \mathcal{R}_1 \land t \in \mathcal{R}_1$}
 
         \begin{equation*}
         \begin{split}
@@ -663,22 +666,22 @@ Next, we proof the dilation property for $\lambda > 0$, The ratio of $\frac{h(c)
 }
 
 
-  In Beta-binomial system, $\cardinality{r}$ takes two possible value: $1$, $2$:
+  In Beta-binomial system, $\cardinality{\dataobs}{r}$ takes two possible values: $1$, $2$:
   \begin{itemize}
-    \item[-] $\cardinality{r} = 1$, $\ux{r} = 0$,  $R_r$ containing only the correct posterior.
-    \item[-] $\cardinality{r} = 2$, $\ux{r} \neq 0$. $R_r$ containing 2 elements by the symmetry property of $\hellinger$.
+    \item[-] $\cardinality{\dataobs}{r} = 1$, $\ux{r} = 0$,  $R_r$ containing only the correct posterior.
+    \item[-] $\cardinality{\dataobs}{r} = 2$, $\ux{r} \neq 0$. $R_r$ containing 2 elements by the symmetry property of $\hellinger$.
   \end{itemize}
   Let $\ux{t} = e^{\lambda} \ux{r}$, then the proof is given by cases:
 
   \begin{itemize}
-    \item $\ux{r} = 0$:
+    \item {\boldmath$\ux{r} = 0$}:
 
-        By $\ux{r} = 0$, $\cardinality{r} = 1$.\\
-        By $\ux{t} = e^{\lambda} \ux{r} = 0$, $\cardinality{t} = 1$.
+        By $\ux{r} = 0$, $\cardinality{\dataobs}{r} = 1$.\\
+        By $\ux{t} = e^{\lambda} \ux{r} = 0$, $\cardinality{\dataobs}{t} = 1$.
 
-    \item $\ux{r} \neq 0$:\\
-        By $\ux{r} \neq 0$, $\cardinality{r} = 2$.\\
-        By $\ux{t} = e^{\lambda} \ux{r} \neq 0$, $\cardinality{t} = 2$.
+    \item {\boldmath$\ux{r} \neq 0$}:\\
+        By $\ux{r} \neq 0$, $\cardinality{\dataobs}{r} = 2$.\\
+        By $\ux{t} = e^{\lambda} \ux{r} \neq 0$, $\cardinality{\dataobs}{t} = 2$.
 
         To show:
         \begin{equation*}
@@ -705,13 +708,13 @@ Next, we proof the dilation property for $\lambda > 0$, The ratio of $\frac{h(c)
 
         By Lemma \ref{lem_score_pro_convert}, we need to show:
         \begin{equation*}
-        \cardinality{r} \cdot \hexpmechPr{\dataobs}{z = r}
+        \cardinality{\dataobs}{r} \cdot \hexpmechPr{\dataobs}{z = r}
         \leq
-        e^{\frac{\epsilon}{2}} \cardinality{t} \cdot \hexpmechPr{\dataobs}{z = t}
+        e^{\frac{\epsilon}{2}} \cardinality{\dataobs}{t} \cdot \hexpmechPr{\dataobs}{z = t}
         \end{equation*}
         holds with failure probability $\frac{\delta'}{2}$.
 
-        By $\cardinality{t} = \cardinality{r} = 2$, we need to show:
+        By $\cardinality{\dataobs}{t} = \cardinality{\dataobs}{r} = 2$, we need to show:
         \begin{equation*}
         \hexpmechPr{\dataobs}{z = r}
         \leq
@@ -738,14 +741,14 @@ Next, we proof the dilation property for $\lambda > 0$, The ratio of $\frac{h(c)
         Then, prove it by two cases: $\lambda \leq 0$, and $\lambda > 0$:
 
       \begin{itemize}
-        \item $\lambda < 0$:
+        \item {\boldmath$\lambda < 0$}:
 
           \begin{equation*}
           \ux{r}(1 - e ^ {\lambda}) \leq 0 \leq S(\dataobs)
           \end{equation*}
           is always true.
 
-        \item $\lambda > 0$:
+        \item {\boldmath$\lambda > 0$}:
 
           To show:
           \begin{equation*}
@@ -811,55 +814,50 @@ Next, we proof the dilation property for $\lambda > 0$, The ratio of $\frac{h(c)
 
 \end{proof}
 
-\noindent \textbf{$(\epsilon, \delta)-$Differential Privacy of $\hexpmech$}
+\noindent \textbf{$(\epsilon', \delta)-$Differential Privacy of $\hexpmech$}
 \begin{lem}
 \label{lem_hexpmech_privacy}
-$\hexpmech$ is $(\epsilon, \delta)$-differential privacy in Beta-binomial system.
+$\hexpmech$ is $(\epsilon', \delta)$-differential privacy in Beta-binomial system.
 \end{lem}
 
 \begin{proof} of Lemma \ref{lem_hexpmech_privacy}.
 
   By Definition \ref{def_epsilon_delta_dp}, to proof Lemma \ref{lem_hexpmech_privacy}, we need to prove:
 
-  For all $\adj{\dataobs}{\dataobs'} \in \mathcal{X}$ and any beta distribution $r$, we need to show that:
+  For any $\adj{\dataobs}{\dataobs'} \in \mathcal{X}$ and any beta distribution $r$:
   \begin{equation*}
-  \hexpmechPr{\dataobs}{z = r} \leq e^{\epsilon} \hexpmechPr{\dataobs'}{z = r} + \delta. 
+  \hexpmechPr{\dataobs}{z = r} \leq e^{\epsilon'} \hexpmechPr{\dataobs'}{z = r} + \delta. 
   \end{equation*}
 
-   In Beta-binomial system, $\cardinality{r}$ takes two possible value: $1$, $2$, when considering data set $\dataobs$:
+   In Beta-binomial system, $\cardinality{\dataobs}{r}$ takes two possible values: $1$, $2$, when considering data set $\dataobs$:
   \begin{itemize}
-    \item[*] $\cardinality{r} = 1$, $\ux{r} = 0$,  $R_r$ containing only the correct posterior.
-    \item[*] $\cardinality{r} = 2$, $\ux{r} \neq 0$. $R_r$ containing 2 elements by the symmetry property of $\hellinger$.
+    \item[*] $\cardinality{\dataobs}{r} = 1$, $\ux{r} = 0$,  $R_r$ containing only the correct posterior.
+    \item[*] $\cardinality{\dataobs}{r} = 2$, $\ux{r} \neq 0$. $R_r$ containing 2 elements by the symmetry property of $\hellinger$.
   \end{itemize}
   when considering data set $\dataobs'$:
   \begin{itemize}
-    \item[*] $\cardinality{r} = 1$, $\uxadj{r} = 0$,  $R_r$ containing only the correct posterior.
-    \item[*] $\cardinality{r} = 2$, $\uxadj{r} \neq 0$. $R_r$ containing 2 elements by the symmetry property of $\hellinger$.
+    \item[*] $\cardinality{\dataobs'}{r} = 1$, $\uxadj{r} = 0$,  $R_r$ containing only the correct posterior.
+    \item[*] $\cardinality{\dataobs'}{r} = 2$, $\uxadj{r} \neq 0$. $R_r$ containing 2 elements by the symmetry property of $\hellinger$.
   \end{itemize}
 
-  Then the proof is given by cases:
-  \begin{itemize}
-    \item $\ux{r} \neq 0$, $\uxadj{r} \neq 0$:
-
-    By $\ux{r} \neq 0$, $\cardinality{r} = 2$ under data set $\dataobs$.
-
-      Apply \ Lemma\ \ref{lem_score_pro_convert}:  
+ 
+      Apply Lemma \ref{lem_score_pro_convert}:  
       \begin{equation*}
-      \hexpmechPr{\dataobs}{z = r} = \frac{1}{\cardinality{r}} \hexpmechPr{\dataobs}{\ux{z} = \ux{r}}.
+      \hexpmechPr{\dataobs}{z = r} = \frac{1}{\cardinality{\dataobs}{r}} \hexpmechPr{\dataobs}{\ux{z} = \ux{r}}.
       \end{equation*}
 
-      Apply \ Lemma\ \ref{lem_sliding}:
+      Apply Lemma \ref{lem_sliding}:
       \begin{equation*}
       \begin{split}
-      & = \frac{1}{\cardinality{r}} \Big( e^{(\frac{\epsilon (\uxadj{r} - \ux{r})}{2 S(\dataobs)} + \ln 2)} \hexpmechPr{\dataobs}{\ux{z} = \ux{r} + (\uxadj{r} - \ux{r})} \Big)\\
-      & = \frac{1}{\cardinality{r}} \Big( e^{(\frac{\epsilon (\uxadj{r} - \ux{r})}{2 S(\dataobs)} + \ln 2)} \hexpmechPr{\dataobs}{\ux{z} = \uxadj{r} } \Big).
+      & \leq \frac{1}{\cardinality{\dataobs}{r}} \Big( e^{(\frac{\epsilon (\uxadj{r} - \ux{r})}{2 S(\dataobs)} + \ln 2)} \hexpmechPr{\dataobs}{\ux{z} = \ux{r} + (\uxadj{r} - \ux{r})} \Big)\\
+      & = \frac{1}{\cardinality{\dataobs}{r}} \Big( e^{(\frac{\epsilon (\uxadj{r} - \ux{r})}{2 S(\dataobs)} + \ln 2)} \hexpmechPr{\dataobs}{\ux{z} = \uxadj{r} } \Big).
       \end{split}
       \end{equation*}
 
-      Apply \ Lemma \ref{lem_dilation}:
+      Apply Lemma \ref{lem_dilation}:
       \begin{equation*}
       \begin{split}
-      & = \frac{1}{\cardinality{r}} \Big( e^{(\frac{\epsilon (\uxadj{r} - \ux{r})}{2 S(\dataobs)} + \ln 2)} 
+      & \leq \frac{1}{\cardinality{\dataobs}{r}} \Big( e^{(\frac{\epsilon (\uxadj{r} - \ux{r})}{2 S(\dataobs)} + \ln 2)} 
       \big( e^{\frac{\epsilon}{2}}
       \hexpmechPr{\dataobs}{\ux{z} = \frac{S(\dataobs)}{S(\dataobs')} \ln(\frac{NL(\dataobs)}{NL(\dataobs')}) \uxadj{r} } \\
       & + 1 - |\candidateset{\dataobs}|exp(\frac{\epsilon}{2 (1 - e ^ {\ln(\frac{S(\dataobs)}{S(\dataobs')} \ln(\frac{NL(\dataobs)}{NL(\dataobs')}))})}) 
@@ -870,7 +868,7 @@ $\hexpmech$ is $(\epsilon, \delta)$-differential privacy in Beta-binomial system
       Let $\ux{t} = \frac{S(\dataobs)}{S(\dataobs')} \ln(\frac{NL(\dataobs)}{NL(\dataobs')}) \uxadj{r}$:      
       \begin{equation*}
       \begin{split}
-      & = \frac{1}{\cardinality{r}} \Big( e^{(\frac{\epsilon (\uxadj{r} - \ux{r})}{2 S(\dataobs)} + \ln 2)} 
+      & = \frac{1}{\cardinality{\dataobs}{r}} \Big( e^{(\frac{\epsilon (\uxadj{r} - \ux{r})}{2 S(\dataobs)} + \ln 2)} 
       \big( e^{\frac{\epsilon}{2}}
       \hexpmechPr{\dataobs}{\ux{z} = \ux{t} } \\
       & + 1 - |\candidateset{\dataobs}|exp(\frac{\epsilon}{2 (1 - e ^ {\ln(\frac{S(\dataobs)}{S(\dataobs')} \ln(\frac{NL(\dataobs)}{NL(\dataobs')}))})}) 
@@ -881,86 +879,138 @@ $\hexpmech$ is $(\epsilon, \delta)$-differential privacy in Beta-binomial system
       Apply Lemma \ref{lem_score_pro_convert}:
       \begin{equation*}
       \begin{split}
-      & = \frac{1}{\cardinality{r}} \Big( e^{(\frac{\epsilon (\uxadj{r} - \ux{r})}{2 S(\dataobs)} + \ln 2)} 
+      & = \frac{1}{\cardinality{\dataobs}{r}} \Big( e^{(\frac{\epsilon (\uxadj{r} - \ux{r})}{2 S(\dataobs)} + \ln 2)} 
       \big( e^{\frac{\epsilon}{2}}
-      \cardinality{t} \cdot \hexpmechPr{\dataobs}{z = t } \\
+      \cardinality{\dataobs}{t} \cdot \hexpmechPr{\dataobs}{z = t } \\
       & + 1 - |\candidateset{\dataobs}|exp(\frac{\epsilon}{2 (1 - e ^ {\ln(\frac{S(\dataobs)}{S(\dataobs')} \ln(\frac{NL(\dataobs)}{NL(\dataobs')}))})}) 
       \big ) \Big).
       \end{split}
       \end{equation*}
 
-      Apply $\uxadj{r} \neq 0 \implies \ux{t} \neq 0 \implies \cardinality{t} = 2$.\\
-      Apply  $\cardinality{r} = 2$ and  $\cardinality{t} = 2$:\\
-      \begin{equation*}
-      \begin{split}
-      & = \frac{1}{2} \Big( e^{(\frac{\epsilon (\uxadj{r} - \ux{r})}{2 S(\dataobs)} + \ln 2)} 
-      \big( e^{\frac{\epsilon}{2}} 2 \hexpmechPr{\dataobs}{z = t} \\
-      & + 1 - |\candidateset{\dataobs}|exp(\frac{\epsilon}{2 (1 - e ^ {\ln(\frac{S(\dataobs)}{S(\dataobs')} \ln(\frac{NL(\dataobs)}{NL(\dataobs')}))})}) 
-      \big ) \Big)\\
-      \end{split}
-      \end{equation*} 
-
-      Apply Definition \ref{def_smoo} and $\ux{t} = \hellinger(\bysinfer(\dataobs),t)$:
+      Apply Definition \ref{def_smoo} and $\ux{r} = \hellinger(\bysinfer(\dataobs),r)$ for $r \in \candidateset{\dataobs}$:
       \begin{equation*}
       \begin{split}          
-      & = \frac{1}{2} \Big( e^{(\frac{\epsilon (\uxadj{r} - \ux{r})}{2 S(\dataobs)} + \ln 2)} 
+      & = \frac{1}{\cardinality{\dataobs}{r}} \Big( e^{(\frac{\epsilon (\uxadj{r} - \ux{r})}{2 S(\dataobs)} + \ln 2)} 
       \big( e^{\frac{\epsilon}{2}}
-      2  \frac{exp(\frac{-\epsilon (\ux{t})}{2 S(\dataobs)})}{\unomalizer{\dataobs}}\\
+      \cardinality{\dataobs}{t}  \frac{exp(\frac{-\epsilon (\ux{t})}{2 S(\dataobs)})}{\unomalizer{\dataobs}}\\
       & + 1 - |\candidateset{\dataobs}|exp(\frac{\epsilon}{2 (1 - e ^ {\ln(\frac{S(\dataobs)}{S(\dataobs')} \ln(\frac{NL(\dataobs)}{NL(\dataobs')}))})}) 
-      \big ) \Big)
+      \big ) \Big).
       \end{split}
       \end{equation*}
 
       Apply $\ux{t} = \frac{S(\dataobs)}{S(\dataobs')} \ln(\frac{NL(\dataobs)}{NL(\dataobs')}) \uxadj{r}$ and simplify:\\
       \begin{equation*}
       \begin{split}          
-      & = \frac{1}{2} \Big( e^{(\frac{\epsilon (\uxadj{r} - \ux{r})}{2 S(\dataobs)} + \ln 2)} 
+      & = \frac{1}{\cardinality{\dataobs}{r}} \Big( e^{(\frac{\epsilon (\uxadj{r} - \ux{r})}{2 S(\dataobs)} + \ln 2)} 
       \big( e^{\frac{\epsilon}{2}}
-      2 \frac{exp(\frac{-\epsilon (\uxadj{r})}{2 S(\dataobs')})}{\unomalizer{\dataobs'}}\\
+      \cardinality{\dataobs}{t} \frac{exp(\frac{-\epsilon (\uxadj{r})}{2 S(\dataobs')})}{\unomalizer{\dataobs'}}\\
       & + 1 - |\candidateset{\dataobs}|exp(\frac{\epsilon}{2 (1 - e ^ {\ln(\frac{S(\dataobs)}{S(\dataobs')} \ln(\frac{NL(\dataobs)}{NL(\dataobs')}))})}) 
-      \big ) \Big)\\
+      \big ) \Big).
        \end{split}
       \end{equation*}
 
-      Apply Definition \ref{def_smoo} and $\ux{t} = \hellinger(\bysinfer(\dataobs),t)$:\\
+      Apply Definition \ref{def_smoo} and $\uxadj{r} = \hellinger(\bysinfer(\dataobs'),r)$ for $r \in \candidateset{\dataobs'}$:\\
       \begin{equation*}
       \begin{split}          
-      & = \frac{1}{2} \Big( e^{(\frac{\epsilon (\uxadj{r} - \ux{r})}{2 S(\dataobs)} + \ln 2)} 
+      & = \frac{1}{\cardinality{\dataobs}{r}} \Big( e^{(\frac{\epsilon (\uxadj{r} - \ux{r})}{2 S(\dataobs)} + \ln 2)} 
       \big( e^{\frac{\epsilon}{2}}
-      2  \hexpmechPr{\dataobs'}{z = r}
-      + 1 - |\candidateset{\dataobs}|exp(\frac{\epsilon}{2 (1 - e ^ {\ln(\frac{S(\dataobs)}{S(\dataobs')} \ln(\frac{NL(\dataobs)}{NL(\dataobs')}))})}) 
+      \cardinality{\dataobs}{t}  \hexpmechPr{\dataobs'}{z = r} \\
+      & + 1 - |\candidateset{\dataobs}|exp(\frac{\epsilon}{2 (1 - e ^ {\ln(\frac{S(\dataobs)}{S(\dataobs')} \ln(\frac{NL(\dataobs)}{NL(\dataobs')}))})}) 
       \big ) \Big)\\
-      & = e^{(\frac{\epsilon (\uxadj{r} - \ux{r})}{2 S(\dataobs)} + \ln 2)} \cdot e^{\frac{\epsilon}{2}}
+      & = \frac{\cardinality{\dataobs}{t}}{\cardinality{\dataobs}{r}} e^{(\frac{\epsilon (\uxadj{r} - \ux{r})}{2 S(\dataobs)} + \ln 2)} \cdot e^{\frac{\epsilon}{2}}
       \hexpmechPr{\dataobs'}{z = r} \\
-      & + \frac{e^{(\frac{\epsilon (\uxadj{r} - \ux{r})}{2 S(\dataobs)} + \ln 2)}}{2}
-      \Big( 1 - |\candidateset{\dataobs}|exp(\frac{\epsilon}{2 (1 - e ^ {\ln(\frac{S(\dataobs)}{S(\dataobs')} \ln(\frac{NL(\dataobs)}{NL(\dataobs')}))})}) \Big)\\
+      & + \frac{e^{(\frac{\epsilon (\uxadj{r} - \ux{r})}{2 S(\dataobs)} + \ln 2)}}{\cardinality{\dataobs}{r}}
+      \Big( 1 - |\candidateset{\dataobs}|exp(\frac{\epsilon}{2 (1 - e ^ {\ln(\frac{S(\dataobs)}{S(\dataobs')} \ln(\frac{NL(\dataobs)}{NL(\dataobs')}))})}) \Big).
       \end{split}
       \end{equation*}
 
-      Then, $\hexpmech$ is $(\epsilon', \delta)-$differential privacy where $\epsilon = e^{(\frac{\epsilon (\uxadj{r} - \ux{r})}{2 S(\dataobs)} + \ln 2)} \cdot e^{\frac{\epsilon}{2}}$, and
-      $\delta = \frac{e^{(\frac{\epsilon (\uxadj{r} - \ux{r})}{2 S(\dataobs)} + \ln 2)}}{2}
+      Then, $\hexpmech$ is $(\epsilon', \delta)-$differential privacy where $\epsilon' = \frac{\cardinality{\dataobs}{t}}{\cardinality{\dataobs}{r}} e^{(\frac{\epsilon (\uxadj{r} - \ux{r})}{2 S(\dataobs)} + \ln 2)} \cdot e^{\frac{\epsilon}{2}}$, and
+      $\delta = \frac{e^{(\frac{\epsilon (\uxadj{r} - \ux{r})}{2 S(\dataobs)} + \ln 2)}}{\cardinality{\dataobs}{r}}
       \Big( 1 - |\candidateset{\dataobs}|exp(\frac{\epsilon}{2 (1 - e ^ {\ln(\frac{S(\dataobs)}{S(\dataobs')} \ln(\frac{NL(\dataobs)}{NL(\dataobs')}))})}) \Big)$.
 
-    \item $\ux{r} = 0$, $\uxadj{r} \neq 0$:
-    \item $\ux{r} \neq 0$, $\uxadj{r} = 0$:
-    \item $\ux{r} = 0$, $\uxadj{r} = 0$:
+
+ Then the proof is given by cases:
+  \begin{itemize}
+    \item {\boldmath$\ux{r} \neq 0$, $\uxadj{r} \neq 0$}:
+
+      By $\ux{r} \neq 0$, $\cardinality{\dataobs}{r} = 2$ under data set $\dataobs$.
+
+      Apply $\uxadj{r} \neq 0 \implies \ux{t} \neq 0 \implies \cardinality{\dataobs}{t} = 2$.
+
+      Apply  $\cardinality{\dataobs}{r} = 2$ and  $\cardinality{\dataobs}{t} = 2$:
+
+      $\hexpmech$ is $(\epsilon', \delta)-$differential privacy where:
+      $$
+      \epsilon' = \ln( e^{(\frac{\epsilon (\uxadj{r} - \ux{r})}{2 S(\dataobs)} + \ln 2)} \cdot e^{\frac{\epsilon}{2}}),
+      $$ and
+      $$
+      \delta = \frac{e^{(\frac{\epsilon (\uxadj{r} - \ux{r})}{2 S(\dataobs)} + \ln 2)}}{2}
+      \Big( 1 - |\candidateset{\dataobs}|exp(\frac{\epsilon}{2 (1 - e ^ {\ln(\frac{S(\dataobs)}{S(\dataobs')} \ln(\frac{NL(\dataobs)}{NL(\dataobs')}))})}) \Big).
+      $$ 
+
+    \item {\boldmath$\ux{r} = 0$, $\uxadj{r} \neq 0$}:
+
+      By $\ux{r} = 0$, $\cardinality{\dataobs}{r} = 1$ under data set $\dataobs$.
+      
+      Apply $\uxadj{r} \neq 0 \implies \ux{t} \neq 0 \implies \cardinality{\dataobs}{t} = 2$.
+
+      Apply  $\cardinality{\dataobs}{r} = 1$ and  $\cardinality{\dataobs}{t} = 2$:
+
+      $\hexpmech$ is $(\epsilon', \delta)-$differential privacy where:
+      $$
+      \epsilon' = \ln (2 \cdot e^{(\frac{\epsilon (\uxadj{r} - \ux{r})}{2 S(\dataobs)} + \ln 2)} \cdot e^{\frac{\epsilon}{2}}),
+      $$ and
+      $$
+      \delta = e^{(\frac{\epsilon (\uxadj{r} - \ux{r})}{2 S(\dataobs)} + \ln 2)}
+      \Big( 1 - |\candidateset{\dataobs}|exp(\frac{\epsilon}{2 (1 - e ^ {\ln(\frac{S(\dataobs)}{S(\dataobs')} \ln(\frac{NL(\dataobs)}{NL(\dataobs')}))})}) \Big).
+      $$ 
+      
+
+    \item {\boldmath$\ux{r} \neq 0$, $\uxadj{r} = 0$}:
+
+      By $\ux{r} \neq 0$, $\cardinality{\dataobs}{r} = 2$ under data set $\dataobs$.
+      
+      Apply $\uxadj{r} = 0 \implies \ux{t} = 0 \implies \cardinality{\dataobs}{t} = 1$.
+
+      Apply  $\cardinality{\dataobs}{r} = 2$ and  $\cardinality{\dataobs}{t} = 2$:
+
+      $\hexpmech$ is $(\epsilon', \delta)-$differential privacy where:
+      $$
+      \epsilon' = \ln (\frac{1}{2} e^{(\frac{\epsilon (\uxadj{r} - \ux{r})}{2 S(\dataobs)} + \ln 2)} \cdot e^{\frac{\epsilon}{2}}),
+      $$ and
+      $$
+      \delta = \frac{e^{(\frac{\epsilon (\uxadj{r} - \ux{r})}{2 S(\dataobs)} + \ln 2)}}{2}
+      \Big( 1 - |\candidateset{\dataobs}|exp(\frac{\epsilon}{2 (1 - e ^ {\ln(\frac{S(\dataobs)}{S(\dataobs')} \ln(\frac{NL(\dataobs)}{NL(\dataobs')}))})}) \Big).
+      $$ 
+
+    \item {\boldmath$\ux{r} = 0$, $\uxadj{r} = 0$}:
+      By $\ux{r} \neq 0$, $\cardinality{\dataobs}{r} = 1$ under data set $\dataobs$.
+      
+      Apply $\uxadj{r} = 0 \implies \ux{t} = 0 \implies \cardinality{\dataobs}{t} = 1$.
+
+      Apply  $\cardinality{\dataobs}{r} = 2$ and  $\cardinality{\dataobs}{t} = 2$:
+
+      $\hexpmech$ is $(\epsilon', \delta)-$differential privacy where:
+      $$
+      \epsilon' = \ln (e^{(\frac{\epsilon (\uxadj{r} - \ux{r})}{2 S(\dataobs)} + \ln 2)} \cdot e^{\frac{\epsilon}{2}}),
+      $$ and
+      $$
+      \delta = e^{(\frac{\epsilon (\uxadj{r} - \ux{r})}{2 S(\dataobs)} + \ln 2)}
+      \Big( 1 - |\candidateset{\dataobs}|exp(\frac{\epsilon}{2 (1 - e ^ {\ln(\frac{S(\dataobs)}{S(\dataobs')} \ln(\frac{NL(\dataobs)}{NL(\dataobs')}))})}) \Big).
+      $$ 
+
   \end{itemize}
 
-	\begin{equation*}
-	\begin{split}
-	\hexpmechPr{\dataobs}{z = r}
-	& = 	\frac{1}{|z|}\Big( \hexpmechPr{\dataobs}{ u(z, \dataobs) = U}\Big)\\
-	& \leq 	\frac{1}{|z|}\Big( e^{\epsilon / 2} \cdot \hexpmechPr{\dataobs}{u(z, \dataobs) = U_2}\Big)\\
-	& \leq 	\frac{1}{|z|}\Big( e^{\epsilon} \cdot \hexpmechPr{\dataobs}{u(z, \dataobs) = U_3} + e^{\epsilon/2} \cdot \frac{\delta'}{2}\Big)\\
-	& = 	\frac{1}{|z|}\Big( e^{\epsilon} \cdot \underset{z \thicksim \hexpmech(\dataobs')}{Pr}[ u(z, \dataobs') = U] + \frac{e^{\epsilon/2} \delta'}{2}\Big) \\
-	& = e^{\epsilon} \cdot \underset{z \thicksim \hexpmech(\dataobs')}{Pr}[ z = r] + \delta,
-	\end{split}
-	\end{equation*}
-	where the $\delta = \frac{e^{\epsilon/2} \delta'}{2|z|}$.
-
-	The first inequality holds by the sliding property, since the $U_1 \geq -S(\dataobs)$. The second inequality holds by the dilation property, since $\frac{S(\dataobs)}{S(\dataobs')} \cdot \ln(\frac{NL(\dataobs)}{NL(\dataobs')}) \leq 1 - \frac{\epsilon}{2 \ln (\frac{\delta'}{2 (n + 1)})}$.
-
- $\delta$ takes the maximum value, i.e., $\frac{e^{\frac{\epsilon}{2}} \delta'}{2}$.
+	
+      Then, $\hexpmech$ is $(\epsilon', \delta)-$differential privacy, by setting $\epsilon $ and $\delta$ as the maximum value from above.
+      i.e., under the case {\boldmath$\ux{r} = 0$, $\uxadj{r} \neq 0$}, 
+      $
+      \epsilon' = \ln (2 \cdot e^{(\frac{\epsilon (\uxadj{r} - \ux{r})}{2 S(\dataobs)} + \ln 2)} \cdot e^{\frac{\epsilon}{2}})
+      $, and
+      $
+      \delta = e^{(\frac{\epsilon (\uxadj{r} - \ux{r})}{2 S(\dataobs)} + \ln 2)}
+      \Big( 1 - |\candidateset{\dataobs}|exp(\frac{\epsilon}{2 (1 - e ^ {\ln(\frac{S(\dataobs)}{S(\dataobs')} \ln(\frac{NL(\dataobs)}{NL(\dataobs')}))})}) \Big).
+      $
 \end{proof}
 
 
