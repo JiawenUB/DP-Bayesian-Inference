@@ -62,6 +62,9 @@
 \newcommand{\cardinality}[1]{\mathcal{C}_{#1}}
 \newcommand{\nomalizer}[1]{\sum_{r'\in \mathcal{R}_{\textup{post}}(#1)} exp \Big(\frac{-\epsilon\cdot \mathcal{H} (\mathsf{BI}(#1),r')}{2 \cdot S(#1)}\Big)}
 
+\newcommand{\unomalizer}[1]{\sum_{r'\in \mathcal{R}_{\textup{post}}(#1)} exp \Big(\frac{-\epsilon\cdot u(\textbf{#1}, r')}{2 \cdot S(#1)}\Big)}
+
+
 \newcommand{\hexpmechPr}[2]{\underset{z \thicksim \hexpmech(#1)}{Pr}[#2]}
 % \newcommand{\because}{\mathsf{because}}
 % \newcommand{\therefore}{\mathsf{therefore}}
@@ -81,4 +84,4 @@
 % \newtheorem*{rem}{Remark}
 % \newtheorem*{note}{Note}
 \newcommand{\lap}[2]{\mathcal{L}(#1, #2)}
-\newcommand{\todo}[1]{{\color{red}\textbf{[[ #1 ]]}}}
+\newcommand{\todo}[1]{\small{\color{red}\textbf{[[ #1 ]]}}}
