@@ -529,11 +529,11 @@ Let $\ux{t} = \ux{r} + k$. The proof is given by cases:
       & = 2 \cdot \frac{exp(\frac{-\epsilon (\ux{t})}{2 S(\dataobs)})}{\unomalizer{\dataobs}} \cdot e^{\frac{\epsilon k}{2 S(\dataobs)}}  (Apply \ \ux{t} = \ux{r} + k)\\
       & = e^{\frac{\epsilon k}{2 S(\dataobs)}} \cdot 2 \cdot \frac {exp\big(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs), t)}{2\cdot S(\dataobs)}\big)}{\nomalizer{\dataobs}} 
       (Apply\ \ux{r} = \hellinger(\bysinfer(\dataobs), r))\\
-      & = e^{\frac{\epsilon k}{2 S(\dataobs)}} \cdot 2 \hexpmechPr{\dataobs}{z = t}       (Apply\ Definition\ \ref{def_smoo})\\
-      & = e^{\frac{\epsilon k}{2 S(\dataobs)}} \cdot \cardinality{\dataobs}{t} \hexpmechPr{\dataobs}{z = t}         (Apply \ \cardinality{\dataobs}{t} = 2)\\
+      & = e^{\frac{\epsilon k}{2 S(\dataobs)}} \cdot 2 \cdot \hexpmechPr{\dataobs}{z = t}       (Apply\ Definition\ \ref{def_smoo})\\
+      & = e^{\frac{\epsilon k}{2 S(\dataobs)}} \cdot \cardinality{\dataobs}{t} \cdot \hexpmechPr{\dataobs}{z = t}         (Apply \ \cardinality{\dataobs}{t} = 2)\\
       & = e^{\frac{\epsilon k}{2 S(\dataobs)}} \cdot \hexpmechPr{\dataobs}{\ux{z} = \ux{t}}               (Apply \ Lemma\ \ref{lem_score_pro_convert})\\
       & = e^{\frac{\epsilon k}{2 S(\dataobs)}} \cdot \hexpmechPr{\dataobs}{\ux{z} = (\ux{r} + k)}         (Apply \ \ux{t} = \ux{r} + k)\\
-      & \leq e^{(\frac{\epsilon k}{2 S(\dataobs)} + \ln 2)} \hexpmechPr{\dataobs}{\ux{z} = (\ux{r} + k)}\\
+      & \leq e^{(\frac{\epsilon k}{2 S(\dataobs)} + \ln 2)} \cdot \hexpmechPr{\dataobs}{\ux{z} = (\ux{r} + k)}\\
       & = RHS.
       \end{split}
       \end{equation*}
@@ -555,11 +555,11 @@ Let $\ux{t} = \ux{r} + k$. The proof is given by cases:
       & = 2 \cdot \frac{exp(\frac{-\epsilon (\ux{t})}{2 S(\dataobs)})}{\unomalizer{\dataobs}} \cdot e^{\frac{\epsilon k}{2 S(\dataobs)}}  (Apply \ \ux{t} = \ux{r} + k)\\
       & = e^{\frac{\epsilon k}{2 S(\dataobs)}} \cdot 2 \cdot \frac {exp\big(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs), t)}{2\cdot S(\dataobs)}\big)}{\nomalizer{\dataobs}} 
       (Apply\ \ux{r} = \hellinger(\bysinfer(\dataobs), r))\\
-      & = e^{\frac{\epsilon k}{2 S(\dataobs)}} \cdot 2 \hexpmechPr{\dataobs}{z = t}       (Apply\ Definition\ \ref{def_smoo})\\
-      & = e^{\frac{\epsilon k}{2 S(\dataobs)}} \cdot \cardinality{\dataobs}{t} \hexpmechPr{\dataobs}{z = t}         (Apply \ \cardinality{\dataobs}{t} = 2)\\
+      & = e^{\frac{\epsilon k}{2 S(\dataobs)}} \cdot 2 \cdot \hexpmechPr{\dataobs}{z = t}       (Apply\ Definition\ \ref{def_smoo})\\
+      & = e^{\frac{\epsilon k}{2 S(\dataobs)}} \cdot \cardinality{\dataobs}{t} \cdot \hexpmechPr{\dataobs}{z = t}         (Apply \ \cardinality{\dataobs}{t} = 2)\\
       & = e^{\frac{\epsilon k}{2 S(\dataobs)}} \cdot \hexpmechPr{\dataobs}{\ux{z} = \ux{t}}               (Apply \ Lemma\ \ref{lem_score_pro_convert})\\
       & = e^{\frac{\epsilon k}{2 S(\dataobs)}} \cdot \hexpmechPr{\dataobs}{\ux{z} = (\ux{r} + k)}         (Apply \ \ux{t} = \ux{r} + k)\\
-      & \leq e^{(\frac{\epsilon k}{2 S(\dataobs)} + \ln 2)} \hexpmechPr{\dataobs}{\ux{z} = (\ux{r} + k)}\\
+      & \leq e^{(\frac{\epsilon k}{2 S(\dataobs)} + \ln 2)} \cdot \hexpmechPr{\dataobs}{\ux{z} = (\ux{r} + k)}\\
       & = RHS.
       \end{split}
       \end{equation*}
@@ -587,10 +587,10 @@ Let $\ux{t} = \ux{r} + k$. The proof is given by cases:
         (Apply\ \ux{r} = \hellinger(\bysinfer(\dataobs), r))\\
         & = e^{\frac{\epsilon k}{2 S(\dataobs)}} \cdot \hexpmechPr{\dataobs}{z = t}       (Apply\ Definition\ \ref{def_smoo})\\
         & < 2 \cdot e^{\frac{\epsilon k}{2 S(\dataobs)}} \cdot \hexpmechPr{\dataobs}{z = t}\\
-        & = e^{\frac{\epsilon k}{2 S(\dataobs)}} \cdot \cardinality{\dataobs}{t} \hexpmechPr{\dataobs}{z = t}   (Apply \ \cardinality{\dataobs}{t} = 2)\\
+        & = e^{\frac{\epsilon k}{2 S(\dataobs)}} \cdot \cardinality{\dataobs}{t} \cdot \hexpmechPr{\dataobs}{z = t}   (Apply \ \cardinality{\dataobs}{t} = 2)\\
         & = e^{\frac{\epsilon k}{2 S(\dataobs)}} \cdot \hexpmechPr{\dataobs}{\ux{z} = \ux{t}}         (Apply \ Lemma\ \ref{lem_score_pro_convert})\\
         & = e^{\frac{\epsilon k}{2 S(\dataobs)}} \cdot \hexpmechPr{\dataobs}{\ux{z} = (\ux{r} + k)}   (Apply \ \ux{t} = \ux{r} + k)\\
-        & \leq e^{(\frac{\epsilon k}{2 S(\dataobs)} + \ln 2)} \hexpmechPr{\dataobs}{\ux{z} = ( \ux{r} + k)}\\
+        & \leq e^{(\frac{\epsilon k}{2 S(\dataobs)} + \ln 2)} \cdot \hexpmechPr{\dataobs}{\ux{z} = ( \ux{r} + k)}\\
         & = RHS.
         \end{split}
         \end{equation*}
@@ -618,11 +618,11 @@ Let $\ux{t} = \ux{r} + k$. The proof is given by cases:
       & = 2 \cdot e^{\frac{\epsilon k}{2 S(\dataobs)}} \cdot \frac {exp\big(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs), t)}{2\cdot S(\dataobs)}\big)}{\nomalizer{\dataobs}} 
       (Apply\ \ux{r} = \hellinger(\bysinfer(\dataobs), r))\\
       & = 2 \cdot e^{\frac{\epsilon k}{2 S(\dataobs)}} \hexpmechPr{\dataobs}{z = t}       (Apply\ Definition\ \ref{def_smoo})\\
-      & = 2 \cdot e^{\frac{\epsilon k}{2 S(\dataobs)}} \cdot \cardinality{\dataobs}{t} \hexpmechPr{\dataobs}{z = t} (Apply\ \cardinality{\dataobs}{t} = 1)\\
+      & = 2 \cdot e^{\frac{\epsilon k}{2 S(\dataobs)}} \cdot \cardinality{\dataobs}{t} \cdot \hexpmechPr{\dataobs}{z = t} (Apply\ \cardinality{\dataobs}{t} = 1)\\
       & = 2 \cdot e^{\frac{\epsilon k}{2 S(\dataobs)}} \cdot \hexpmechPr{\dataobs}{\ux{z} = \ux{t}}       (Apply \ Lemma\ \ref{lem_score_pro_convert})\\
       & = 2 \cdot e^{\frac{\epsilon k}{2 S(\dataobs)}} \cdot \hexpmechPr{\dataobs}{\ux{z} = (\ux{r} + k)} (Apply \ \ux{t} = \ux{r} + k)\\
       & = e^{\ln 2} \cdot e^{\frac{\epsilon k}{2 S(\dataobs)}} \cdot \hexpmechPr{\dataobs}{\ux{z} = (\ux{r} + k)}\\
-      & = e^{(\frac{\epsilon k}{2 S(\dataobs)} + \ln 2)} \hexpmechPr{\dataobs}{\ux{z} = (\ux{r} + k)}\\
+      & = e^{(\frac{\epsilon k}{2 S(\dataobs)} + \ln 2)} \cdot \hexpmechPr{\dataobs}{\ux{z} = (\ux{r} + k)}\\
       & = RHS.
       \end{split}
       \end{equation*} 
@@ -634,7 +634,7 @@ Let $\ux{t} = \ux{r} + k$. The proof is given by cases:
         LHS 
         & = \hexpmechPr{\dataobs}{\ux{z} = \ux{r} + 0}\\
         & = \hexpmechPr{\dataobs}{\ux{z} = \ux{r} + k}\\
-        & \leq e^{(\frac{\epsilon k}{2 S(x)} + \ln 2)} \hexpmechPr{\dataobs}{\ux{z} = ( \ux{r} + k)}\\
+        & \leq e^{(\frac{\epsilon k}{2 S(x)} + \ln 2)} \cdot \hexpmechPr{\dataobs}{\ux{z} = ( \ux{r} + k)}\\
         & = RHS.
         \end{split}
         \end{equation*} 
