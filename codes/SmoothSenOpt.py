@@ -13,7 +13,7 @@ import statistics
 from decimal import *
 from scipy.special import gammaln
 from dirichlet import dirichlet
-from dpbayesinfer import BayesInferwithDirPrior
+from dpbayesinfer_Betabinomial import BayesInferwithDirPrior
 
 def Hamming_Distance(c1, c2):
 	temp = [abs(a - b) for a,b in zip(c1,c2)]
@@ -115,10 +115,10 @@ def ss_ls_component_study(prior, sample_size, epsilon, delta, percentage):
 
 	xstick = [str(c._alphas) for c in Bayesian_Model._candidates]
 	beta = math.log(1 - epsilon / (2.0 * math.log(delta / (2.0 * (sample_size)))))
-	y=[Bayesian_Model._LS_Candidates[r] for r in Bayesian_Model._candidates]
+	y=[1.0/Bayesian_Model._LS_Candidates[r] for r in Bayesian_Model._candidates]
 
 
-	scatter_plot(y[1:-1],xstick,"", r"$\mathcal{H}(\mathsf{beta}(\alpha + 1, 100 - \alpha), \mathsf{beta}(\alpha, 101 - \alpha))$")
+	scatter_plot(y,xstick,"", r"$\frac{1}{\mathcal{H}(\mathsf{beta}(\alpha + 1, 100 - \alpha), \mathsf{beta}(\alpha, 101 - \alpha))}$")
 
 	return
 

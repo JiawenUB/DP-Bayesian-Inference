@@ -156,5 +156,5 @@ class dirichlet(object):
 
 # print "yes" if (opt_hellinger(dirichlet([20, 22, 21]),dirichlet([21, 21, 21]))) == (opt_hellinger(dirichlet([20, 21, 22]),dirichlet([21, 21, 21]))) else "no"
 
-# print (opt_hellinger(dirichlet([20, 21, 22]),dirichlet([21, 21, 21])))
+print 1.0/ (opt_hellinger(dirichlet([1,2]),dirichlet([2,1]))) - 1.0/ (opt_hellinger(dirichlet([2,2]),dirichlet([1,3])))
 
