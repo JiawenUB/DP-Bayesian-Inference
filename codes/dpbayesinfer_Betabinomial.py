@@ -39,19 +39,14 @@ class BayesInferwithDirPrior(object):
 		self._LS_probabilities = []
 		self._GS_probabilities = []
 		self._SS_probabilities = []
-		self._GS = 0.0
+		self._alpha_SS_probabilities = []
 		self._LS_Candidates = {}
-		self._VS = {}
-		self._SS = {}
+		self._GS = 0.0
 		self._LS = 0.0
 		self._SS = 0.0
-		# self._SS_Expon = 0.0
-		# self._SS_Laplace = 0.0
-		self._candidate_VS_scores = {}
-		#self._keys = ["Laplace Mechanism | Achieving" + str(self._epsilon) + "-DP"]
-		self._keys = ["LaplaceMech"]
-		self._accuracy = {self._keys[0]:[]}
-		self._accuracy_l1 = {self._keys[0]:[]}
+		self._alpha_SS = 0.0
+		self._keys = []
+		self._accuracy = {}
 		self._accuracy_mean = {}
 	
 	def _set_bias(self, bias):
@@ -72,8 +67,6 @@ class BayesInferwithDirPrior(object):
 
 	def _get_approximation_accuracy_bound(self, c, delta):
 		return len(self._candidates) * math.exp(- self._epsilon * c/ delta)
-
-
 
 
 	def _update_observation(self):
@@ -98,86 +91,125 @@ class BayesInferwithDirPrior(object):
 			self._set_candidates(current, rest - i)
 			current.pop()
 
-	def _set_LS_Candidates(self):
+	def _set_local_sensitivities(self):
 		for r in self._candidates:
 			self._LS_Candidates[r] = r._hellinger_sensitivity()
 
-	def _set_SS_opt(self):
-		self._set_LS_Candidates()
-		start = time.clock()
-		beta = 0.00005 #math.log(1 - self._epsilon / (2.0 * math.log(self._delta / (2.0 * (self._sample_size)))))
-		for i in range(n):
-			extrem_values = []
-		self._SS = max(self._LS, max([self._LS_Candidates[r] * math.exp(- beta * Hamming_Distance(self._observation_counts, [r._alphas[i] - self._prior._alphas[i] for i in range(self._prior._size)])) for r in self._candidates]))
-		key3 = "Exponential Mechanism with " + str(beta) + " - Bound Smooth Sensitivity (" + str(self._SS) + ")|(" + str(self._epsilon) + "," + str(self._delta) + ")-DP"
-		key3 = "ExpoMech of SS"
-		self._accuracy[key3] = []
-		self._accuracy_l1[key3] = []
-		self._keys.append(key3)
-		nomalizer = 0.0
+###################################################################################################################################
+#####SETTING UP THE MECHANISMS BEFORE DOING EXPERIMENTS
+###################################################################################################################################	
 
 
-		for r in self._candidates:
-			temp = math.exp(self._epsilon * self._candidate_scores[r]/(2 * self._SS))
-			self._SS_probabilities.append(temp)
-			nomalizer += temp
+	###################################################################################################################################
+	#####SETTING UP THE BASELINE LAPLACE MECHANISM
+	###################################################################################################################################	
 
-		for i in range(len(self._SS_probabilities)):
-			self._SS_probabilities[i] = self._SS_probabilities[i]/nomalizer
-			# print self._candidates[i]._alphas, self._SS_probabilities[i]
+	def _set_up_baseline_lap_mech(self):
+		self._keys.append("Baseline LaplaceMech")
+		self._accuracy["Baseline LaplaceMech"]=[]
+		self._accuracy_mean["Baseline LaplaceMech"]=[]
 
-		return nomalizer
+	###################################################################################################################################
+	#####SETTING UP THE IMRPOVED LAPLACE MECHANISM
+	###################################################################################################################################	
+	def _set_up_improved_lap_mech(self):
+		self._keys.append("Improved LaplaceMech")
+		self._accuracy["Improved LaplaceMech"]=[]
+		self._accuracy_mean["Improved LaplaceMech"]=[]
 
 
+	###################################################################################################################################
+	#####SETTING UP THE EMPONENTIAL MECHANISM WITH THE SMOOTH SENSITIVITY
+	###################################################################################################################################	
+	def _set_up_exp_mech_with_SS(self):
 
-	def _set_SS(self):
+		###################################################################################################################################
+		#INITIALIZE THE LISTS FOR EXPERIMENTS
+		###################################################################################################################################	
+		self._keys.append("ExpoMech of SS")
+		self._accuracy["ExpoMech of SS"] = []
+		self._accuracy_mean["ExpoMech of SS"] = []
 
+		#############################################################################################################
+		#CALCULATING THE SENSITIVITY
+		###################################################################################################################################
 		t0 = time.time()
-		self._set_LS_Candidates()
+		self._set_local_sensitivities()
 		start = time.clock()
-		beta = 0.00001 #math.log(1 - self._epsilon / (2.0 * math.log(self._delta / (2.0 * (self._sample_size)))))
+		beta = 0.000001 # math.log(1 - self._epsilon / (2.0 * math.log(self._delta / (2.0 * (self._sample_size)))))
 		self._SS = max(self._LS, max([self._LS_Candidates[r] * math.exp(- beta * Hamming_Distance(self._observation_counts, [r._alphas[i] - self._prior._alphas[i] for i in range(self._prior._size)])) for r in self._candidates]))
-		key3 = "Exponential Mechanism with " + str(beta) + " - Bound Smooth Sensitivity (" + str(self._SS) + ")|(" + str(self._epsilon) + "," + str(self._delta) + ")-DP"
-		key3 = "ExpoMech of SS"
-		self._accuracy[key3] = []
-		self._accuracy_l1[key3] = []
-		self._keys.append(key3)
 		t1 = time.time()
-		print("smooth sensitivity"+str(t1 - t0))
+		print("smooth sensitivity"+str(t1 - t0)), self._SS
 
-		# beta = 0.0
-		# self._SS_Expon = max(self._LS, max([self._LS_Candidates[r] * math.exp(- beta * Hamming_Distance(self._posterior, r)) for r in self._candidates]))
-		# key2 = "Exponential Mechanism with " + str(beta) + " - Bound Smooth Sensitivity - " + str(self._SS_Expon) + "| Achieving" + str(self._epsilon) + "-DP"
-		# self._accuracy[key2] = []
-		# self._keys.append(key2)
 
-	def _set_SS_probabilities(self):
+		###################################################################################################################################
+		#CALCULATING THE OUTPUTTING PROBABILITIES
+		###################################################################################################################################
 		nomalizer = 0.0
 		for r in self._candidates:
-			temp = math.exp(self._epsilon * self._candidate_scores[r]/(2 * self._SS))
+			temp = math.exp(self._epsilon * self._candidate_scores[r]/(self._SS))
 			self._SS_probabilities.append(temp)
 			nomalizer += temp
 
 		for i in range(len(self._SS_probabilities)):
 			self._SS_probabilities[i] = self._SS_probabilities[i]/nomalizer
-			# print self._candidates[i]._alphas, self._SS_probabilities[i]
 		return nomalizer
 
 
-	def _set_LS(self):
+
+	###################################################################################################################################
+	#####SETTING UP THE EXPONENTIAL MECHANISM WITH THE ALPHA SMOOTH SENSITIVITY
+	###################################################################################################################################	
+
+	def _set_up_exp_mech_with_alpha_SS(self):
+
+		###################################################################################################################################
+		#INITIALIZE THE LISTS FOR EXPERIMENTS
+		###################################################################################################################################		
+		self._keys.append("ExpoMech of alpha SS")
+		self._accuracy["ExpoMech of alpha SS"] = []
+		self._accuracy_mean["ExpoMech of alpha SS"] = []
+
+		###################################################################################################################################
+		#CALCULATING THE SENSITIVITY
+		###################################################################################################################################
 		t0 = time.time()
-		self._LS = self._posterior._hellinger_sensitivity()#self._posterior
+		self._set_local_sensitivities()
+		start = time.clock()
+		beta = 0.5
+		self._alpha_SS = max([(1.0 / (1.0/self._LS_Candidates[r] + beta * Hamming_Distance(self._observation_counts, [r._alphas[i] - self._prior._alphas[i] for i in range(self._prior._size)]))) for r in self._candidates])
+		t1 = time.time()
+		print ("alpha smooth sensitivity"+str(t1 - t0)), self._alpha_SS
 
-		key = "Exponential Mechanism with Local Sensitivity - " + str(self._LS) + "| Non Privacy"
-		# print key
-		key = "Expomech of LS"
-		self._accuracy[key] = []
-		self._accuracy_l1[key] = []
-		self._keys.append(key)
 
+		###################################################################################################################################
+		#CALCULATING THE SENSITIVITY
+		###################################################################################################################################
 		nomalizer = 0.0
-		# print self._posterior._alphas
+		for r in self._candidates:
+			temp = math.exp(self._epsilon * self._candidate_scores[r]/(self._alpha_SS))
+			self._alpha_SS_probabilities.append(temp)
+			nomalizer += temp
 
+		for i in range(len(self._alpha_SS_probabilities)):
+			self._alpha_SS_probabilities[i] = self._alpha_SS_probabilities[i]/nomalizer
+		return nomalizer
+
+
+
+	###################################################################################################################################
+	#####SETTING UP THE EXPONENTIAL MECHANISM WITH THE LOCAL SENSITIVITY
+	###################################################################################################################################	
+	def _set_up_exp_mech_with_LS(self):
+
+		self._accuracy["Expomech of LS"] = []
+		self._keys.append("Expomech of LS")
+
+		
+		self._LS = self._posterior._hellinger_sensitivity()
+
+		
+		nomalizer = 0.0
 		for r in self._candidates:
 			temp = math.exp(self._epsilon * self._candidate_scores[r]/(2 * self._LS))
 			self._LS_probabilities.append(temp)
@@ -185,30 +217,24 @@ class BayesInferwithDirPrior(object):
 
 		for i in range(len(self._LS_probabilities)):
 			self._LS_probabilities[i] = self._LS_probabilities[i]/nomalizer
-		t1 = time.time()
-		print("local sensitivity"+str(t1 - t0))
+
 		return nomalizer
 
 
 
 
-	def _set_GS(self):
-		t0 = time.time()
-		t1 = [1 for i in range(self._prior._size)]
-		t1[0] += 1
-		t2 = [1 for i in range(self._prior._size)]
-		t2[1] += 1
-		
+	###################################################################################################################################
+	#####SETTING UP THE STANDARD EXPONENTIAL MECHANISM
+	###################################################################################################################################	
+	def _set_up_exp_mech_with_GS(self):
+
+
+		self._accuracy["ExpoMech of GS"] = []
+		self._keys.append("ExpoMech of GS")
+
 		self._GS = dirichlet(t1) - dirichlet(t2)
-		key = "Exponential Mechanism with Global Sensitivity - " + str(self._GS) + "| Achieving" + str(self._epsilon) + "-DP"
-		# print key
-		key = "ExpoMech of GS"
-		self._accuracy[key] = []
-		self._accuracy_l1[key] = []
-		self._keys.append(key)
 
 		nomalizer = 0.0
-		
 		for r in self._candidates:
 			temp = math.exp(self._epsilon * self._candidate_scores[r]/(2 * self._GS))
 			self._GS_probabilities.append(temp)
@@ -216,104 +242,28 @@ class BayesInferwithDirPrior(object):
 
 		for i in range(len(self._GS_probabilities)):
 			self._GS_probabilities[i] = self._GS_probabilities[i]/nomalizer
-		t1 = time.time()
-		print("global sensitivity"+str(t1 - t0))
+
 		return nomalizer
 
 
+	
+########################################################################################################################################
+######EXPERMENTING FUNCTION, I.E., SAMPLING FROM EACH MECHANISMS
+########################################################################################################################################	
 
-
-	# def _set_VS(self):
-	# 	t = 2 * math.log(len(self._candidates) / 0.8) / self._epsilon
-	# 	print "Calculating Varying Sensitivity Scores....."
-	# 	start = time.clock()
-	# 	self._set_LS()
-	# 	for r in self._candidates:
-	# 		self._candidate_VS_scores[r] = -max([((-self._candidate_scores[r] + t * self._LS_Candidates[r] - (-self._candidate_scores[i] + t * self._LS_Candidates[i]))/(self._LS_Candidates[r] + self._LS_Candidates[i])) for i in self._candidates])
-	# 	key = "Exponential Mechanism with Varying Sensitivity Scores | Achieving " + str(self._epsilon) + "-DP"
-	# 	print key
-	# 	key = "ExpoMech of VS"
-	# 	self._accuracy[key] = []
-	# 	self._accuracy_l1[key] = []
-	# 	self._keys.append(key)
-	# 	print str(time.clock() - start) + "seconds."
-
-	# def _Smooth_Sensitivity_Noize(self):
-	# 	gamma = 1
-	# 	z = numpy.random.standard_cauchy()
-	# 	alpha = self._epsilon/ (2.0 * (gamma + 1))
-	# 	temp = [a + self._SS * z /alpha for a in self._posterior._alphas]
-	# 	self._SS_posterior = dirichlet(temp)
-	# 	return
-
-	# def _Smooth_Sensitivity_Noize_Hamming(self):
-	# 	gamma = 1
-	# 	z = abs(numpy.random.standard_cauchy())
-	# 	alpha = self._epsilon/ (2.0 * (gamma + 1))
-	# 	temp = [a + self._SS * z /alpha for a in self._posterior._alphas]
-	# 	self._SS_posterior = dirichlet(temp)
-	# 	return
-
-	# def _Smooth_Sensitivity_Laplace_Noize(self):
-	# 	gamma = 1
-	# 	Z = [numpy.random.laplace(0,1) for i in range(len(self._posterior._alphas))]
-	# 	alpha = self._epsilon/ 2.0
-	# 	temp = [a + self._SS_Laplace * z /alpha for a,z in self._posterior._alphas,Z]
-	# 	self._SS_posterior = dirichlet(temp)
-	# 	return		
-
-	def _laplace_noize(self, sensitivity = 2.0):
-		noised_alphas = []
-		rest = self._sample_size
-		for i in range(self._prior._size - 1):
-			t = self._observation_counts[i] + math.floor(numpy.random.laplace(0, sensitivity/self._epsilon))
-			if t < 0:
-				noised_alphas.append(0)
-				rest -= 0
-			elif t > rest:
-				noised_alphas.append(rest)
-				rest -= rest
-				for j in range(i+1,self._prior._size - 1):
-					noised_alphas.append(0)
-				break
-			else:
-				noised_alphas.append(t)
-				rest -= t
-		noised_alphas.append(rest)
-		self._laplaced_posterior = dirichlet(noised_alphas) + self._prior
-
-
-	# def _laplace_noize_ours(self):
-
-	# 	self._laplaced_posterior = dirichlet([alpha + math.floor(numpy.random.laplace(0, 1.0/self._epsilon)) for alpha in self._posterior._alphas])
-
-	def _laplace_fourier(self):
-		
-		
-		return
-
-	def _laplace_noize_navie(self):
-		t = numpy.random.laplace(0, 1.0/self._epsilon)
-		self._laplaced_posterior = dirichlet([self._posterior._alphas[0] + t, self._posterior._alphas[0] - t])
-
-	def _laplace_noize_zhang(self):
-		noised = [i + numpy.random.laplace(0, 2.0/self._epsilon) for i in self._observation_counts]
+	def _laplace_mechanism(self, sensitivity):
+		noised = [i + math.ceil(numpy.random.laplace(0, sensitivity/self._epsilon)) for i in self._observation_counts]
 		noised = [self._sample_size if i > self._sample_size else i for i in noised]
 		noised = [0 if i < 0 else i for i in noised]
-		self._laplaced_zhang_posterior = dirichlet(noised) + self._prior
+		if self._sample_size - sum(noised[:-1]) < 0:
+			noised[-1] = 0
+		elif self._sample_size - sum(noised[:-1]) > self._sample_size:
+			noised[-1] = self._sample_size
+		else:
+			noised[-1] = self._sample_size - sum(noised[:-1]) 
+		self._laplaced_posterior = dirichlet(noised) + self._prior
 
 
-
-	# def _laplace_noize_mle(self):
-	# 	while True:
-	# 		flage = True
-	# 		self._laplaced_posterior = dirichlet([alpha + round(numpy.random.laplace(0, 2.0/self._epsilon)) for alpha in self._posterior._alphas])
-	# 		self._laplaced_posterior._alphas[0] += (sum(self._prior._alphas) + self._sample_size - sum(self._laplaced_posterior._alphas))
-	# 		for  alpha in self._laplaced_posterior._alphas:
-	# 			if alpha <= 0.0:
-	# 				flage = False
-	# 		if flage:
-	# 			break
 
 	def _exponentialize_GS(self):
 		probabilities = {}
@@ -331,61 +281,66 @@ class BayesInferwithDirPrior(object):
 		nomalizer = 0.0
 		self._exponential_posterior = numpy.random.choice(self._candidates, p=self._SS_probabilities)
 
-		# for r in self._candidates:
-		# 	probabilities[r] = math.exp(self._epsilon * self._candidate_scores[r]/(self._SS))
-		# 	nomalizer += probabilities[r]
-		# outpro = random.random()
-		# for r in self._candidates:
-		# 	if outpro < 0:
-		# 		return
-		# 	outpro = outpro - probabilities[r]/nomalizer
-		# 	self._exponential_posterior = r
+	def _exponentialize_alpha_SS(self):
+		nomalizer = 0.0
+		self._exponential_posterior = numpy.random.choice(self._candidates, p=self._alpha_SS_probabilities)
+
 
 	def _propose_test_release(self):
 		return
 
+########################################################################################################################################
+######EXPERMENTS FRO N TIMES, I.E., CALL THE SAMPLING FUNCTION OF EACH MECHANISMS FOR N TIMES
+########################################################################################################################################	
 
 	def _experiments(self, times):
 		self._set_candidate_scores()
-		self._set_GS()
-		self._set_LS()
-		self._set_SS()
-		self._set_SS_probabilities()
-		self._keys.append('Laplace_s2')
-		self._accuracy['Laplace_s2'] = []
-		self._accuracy_mean['Laplace_s2'] = []
-		#self._show_all()
+		self._set_up_baseline_lap_mech()
+		self._set_up_improved_lap_mech()
+		self._set_up_exp_mech_with_SS()
+		self._set_up_exp_mech_with_alpha_SS()
+
+
+		def sensitivity_for_lap(dimension):
+			if (dimension == 2):
+				return 1,2
+			else:
+				return 2,dimension
+		s1,s2 = sensitivity_for_lap(self._prior._size)
+
+
 		for i in range(times):
-			self._laplace_noize(sensitivity = 1.0)
-			# print self._laplaced_posterior._alphas
+			#############################################################################
+			#SAMPLING WITH THE BASELINE LAPLACE MECHANISM 
+			#############################################################################
+			self._laplace_mechanism(sensitivity = s2)
 			self._accuracy[self._keys[0]].append(self._posterior - self._laplaced_posterior)
-			# self._laplace_noize()
-			# self._accuracy_l1[self._keys[0]].append(L1_Nrom(self._posterior, self._laplaced_posterior))
-			# self._exponentialize_GS()
-			# self._accuracy_l1[self._keys[1]].append(L1_Nrom(self._posterior, self._exponential_posterior))
-			# self._accuracy[self._keys[1]].append(self._posterior - self._exponential_posterior)
-			# self._exponentialize_LS()
-			# self._accuracy[self._keys[2]].append(self._posterior - self._exponential_posterior)
-			# self._accuracy_l1[self._keys[2]].append(L1_Nrom(self._posterior, self._exponential_posterior))
-			# self._Smooth_Sensitivity_Noize()
-			# self._accuracy[self._keys[2]].append(self._posterior - self._SS_posterior)
-			# self._Smooth_Sensitivity_Noize_Hamming()
-			# self._accuracy[self._keys[3]].append(self._posterior - self._SS_posterior)
-			# self._Smooth_Sensitivity_Laplace_Noize()
-			# self._accuracy[self._keys[4]].append(self._posterior - self._SS_posterior)
-			self._exponentialize_SS()
-			self._accuracy[self._keys[3]].append(self._posterior - self._exponential_posterior)
-			self._laplace_noize(sensitivity = 2.0)
-			# print self._laplaced_posterior._alphas
-			self._accuracy[self._keys[4]].append(self._posterior - self._laplaced_posterior)
 			
-			# self._laplace_noize_zhang()
-			# self._accuracy[self._keys[4]].append(self._posterior - self._laplaced_zhang_posterior)
-			# # self._accuracy_l1[self._keys[3]].append(L1_Nrom(self._posterior, self._exponential_posterior))
+			#############################################################################
+			#SAMPLING WITH THE IMRPOVED LAPLACE MECHANISM 
+			#############################################################################
+			self._laplace_mechanism(sensitivity = s1)
+			self._accuracy[self._keys[1]].append(self._posterior - self._laplaced_posterior)
+
+			#############################################################################
+			#SAMPLING WITH THE EXPONENTIAL MECHANISM OF SMOOTH SENSITIVITY
+			#############################################################################
+			self._exponentialize_SS()
+			self._accuracy[self._keys[2]].append(self._posterior - self._exponential_posterior)
+
+			#############################################################################
+			#SAMPLING WITH THE EXPONENTIAL MECHANISM OF ALPHA SMOOTH SENSITIVITY
+			#############################################################################
+			self._exponentialize_alpha_SS()
+			self._accuracy[self._keys[3]].append(self._posterior - self._exponential_posterior)
+			
 		for key,item in self._accuracy.items():
-			self._accuracy_mean[key] = sum(item)*1.0/(1 if len(item) == 0 else len(item))
+			self._accuracy_mean[key] = numpy.mean(item)
 
 
+########################################################################################################################################
+######PRINT FUNCTION TO SHOW THE PRARMETERS OF THE CLASS
+########################################################################################################################################	
 
 	def _get_bias(self):
 		return self._bias

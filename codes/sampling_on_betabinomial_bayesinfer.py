@@ -53,7 +53,7 @@ def plot_error_box(data, xlabel, xstick, title, legends, colors):
 def plot_mean_error(x,y_list,xstick,xlabel, ylabel, title):
 	plt.figure(figsize=(12,10))
 	i = 0	
-	for i in range(3):
+	for i in range(len(y_list)):
 		plt.plot(x,y_list[i],'^',label=ylabel[i])
 
 	plt.xticks(x,xstick,rotation=70,fontsize=12)
@@ -70,7 +70,7 @@ def plot_mean_error(x,y_list,xstick,xlabel, ylabel, title):
 
 def accuracy_VS_datasize(epsilon,delta,prior,observations,datasizes):
 	data = []
-	mean_error = [[],[],[]]
+	mean_error = [[],[],[],[]]
 	for i in range(len(datasizes)):
 		observation = observations[i]
 		Bayesian_Model = BayesInferwithDirPrior(prior, sum(observation), epsilon, delta)
@@ -78,22 +78,31 @@ def accuracy_VS_datasize(epsilon,delta,prior,observations,datasizes):
 		print("start" + str(observation))
 		Bayesian_Model._experiments(10000)
 		print("finished" + str(observation))
-		# mean_error[0].append(Bayesian_Model._accuracy_mean[Bayesian_Model._keys[3]])
-		# mean_error[1].append(Bayesian_Model._accuracy_mean[Bayesian_Model._keys[0]])
-		# mean_error[2].append(Bayesian_Model._accuracy_mean[Bayesian_Model._keys[4]])
-		data.append(Bayesian_Model._accuracy[Bayesian_Model._keys[3]])
-		data.append(Bayesian_Model._accuracy[Bayesian_Model._keys[0]])
-		data.append(Bayesian_Model._accuracy[Bayesian_Model._keys[4]])
-		a = statistics.median(Bayesian_Model._accuracy[Bayesian_Model._keys[3]])
-		b = statistics.median(Bayesian_Model._accuracy[Bayesian_Model._keys[0]])
-		c = statistics.median(Bayesian_Model._accuracy[Bayesian_Model._keys[4]])
+		mean_error[0].append(Bayesian_Model._accuracy_mean[Bayesian_Model._keys[0]])
+		mean_error[1].append(Bayesian_Model._accuracy_mean[Bayesian_Model._keys[1]])
+		mean_error[2].append(Bayesian_Model._accuracy_mean[Bayesian_Model._keys[2]])
+		mean_error[3].append(Bayesian_Model._accuracy_mean[Bayesian_Model._keys[3]])
+
+		# data.append(Bayesian_Model._accuracy[Bayesian_Model._keys[3]])
+		# data.append(Bayesian_Model._accuracy[Bayesian_Model._keys[0]])
+		# data.append(Bayesian_Model._accuracy[Bayesian_Model._keys[4]])
+		# a = statistics.median(Bayesian_Model._accuracy[Bayesian_Model._keys[3]])
+		# b = statistics.median(Bayesian_Model._accuracy[Bayesian_Model._keys[0]])
+		# c = statistics.median(Bayesian_Model._accuracy[Bayesian_Model._keys[4]])
+
 
 	print('Accuracy / prior: ' + str(prior._alphas) + ", delta: " 
 		+ str(delta) + ", epsilon:" + str(epsilon))
-
-	plot_error_box(data,"Different Datasizes",datasizes,"Accuracy VS. Data Size",
-		[r'$\mathcal{M}^{B}_{\mathcal{H}}$',"LapMech (sensitivity = 2)", "LapMech (sensitivity = 3)"],
-		['lightblue', 'navy', 'red'])
+	plot_mean_error(datasizes, mean_error, datasizes, "Different Datasizes", 
+		["BASELINE LapMech (sensitivity = 2)", 
+		"IMPROVED LapMech (sensitivity = 1)",
+		r'$\mathcal{M}^{B}_{\mathcal{H}}$ with SS',
+		r'$\mathcal{M}^{B}_{\mathcal{H}}$ with alpha SS'
+		], "")
+	
+	# plot_error_box(data,"Different Datasizes",datasizes,"Accuracy VS. Data Size",
+	# 	[r'$\mathcal{M}^{B}_{\mathcal{H}}$',"LapMech (sensitivity = 2)", "LapMech (sensitivity = 3)"],
+	# 	['lightblue', 'navy', 'red'])
 	return
 
 
@@ -221,32 +230,35 @@ if __name__ == "__main__":
 #SETTING UP THE PARAMETERS
 #############################################################################
 
-	datasize = 100
+	datasize = 20
 	epsilon = 1.0
 	delta = 0.00000001
 	prior = dirichlet([1,1])
-	dataset = [50,50]
+	dataset = [10,10]
+
+
 #############################################################################
 #SETTING UP THE PARAMETERS WHEN DOING GROUPS EXPERIMENTS
 #############################################################################
-
 	epsilons = numpy.arange(0.1, 2, 0.1)
-	datasizes = gen_datasizes((600,600),50)#[300] #[8,12,18,24,30,36,42,44,46,48]#,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80]
+	datasizes = gen_datasizes((200,500),50)#[300] #[8,12,18,24,30,36,42,44,46,48]#,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80]
 	percentage = [0.5,0.5]
 	datasets = gen_datasets(percentage, datasizes)
 	priors = gen_priors([20,50], 10, 2) + gen_priors([100,200], 50, 2)# + gen_priors([200,500], 100, 2) + gen_priors([600,2000], 200, 2)
 	
+
+
 #############################################################################
 #DOING PLOTS OF ACCURACY V.S. THE DATA SIZE
 #############################################################################
 	
-	# accuracy_VS_datasize(epsilon,delta,prior,datasets,datasizes)
+	accuracy_VS_datasize(epsilon,delta,prior,datasets,datasizes)
 
 #############################################################################
 #DOING PLOTS OF ACCURACY V.S. THE PRIOR
 #############################################################################
 
-	accuracy_VS_prior(datasize,epsilon,delta,priors,dataset)
+	# accuracy_VS_prior(datasize,epsilon,delta,priors,dataset)
 
 #############################################################################
 #DOING PLOTS OF ACCURACY V.S. THE PRIOR AND MEAN
