@@ -105,7 +105,7 @@ class BayesInferwithDirPrior(object):
 	def _set_SS_opt(self):
 		self._set_LS_Candidates()
 		start = time.clock()
-		beta = math.log(1 - self._epsilon / (2.0 * math.log(self._delta / (2.0 * (self._sample_size)))))
+		beta = 0.00005 #math.log(1 - self._epsilon / (2.0 * math.log(self._delta / (2.0 * (self._sample_size)))))
 		for i in range(n):
 			extrem_values = []
 		self._SS = max(self._LS, max([self._LS_Candidates[r] * math.exp(- beta * Hamming_Distance(self._observation_counts, [r._alphas[i] - self._prior._alphas[i] for i in range(self._prior._size)])) for r in self._candidates]))
@@ -135,7 +135,7 @@ class BayesInferwithDirPrior(object):
 		t0 = time.time()
 		self._set_LS_Candidates()
 		start = time.clock()
-		beta = math.log(1 - self._epsilon / (2.0 * math.log(self._delta / (2.0 * (self._sample_size)))))
+		beta = 0.00001 #math.log(1 - self._epsilon / (2.0 * math.log(self._delta / (2.0 * (self._sample_size)))))
 		self._SS = max(self._LS, max([self._LS_Candidates[r] * math.exp(- beta * Hamming_Distance(self._observation_counts, [r._alphas[i] - self._prior._alphas[i] for i in range(self._prior._size)])) for r in self._candidates]))
 		key3 = "Exponential Mechanism with " + str(beta) + " - Bound Smooth Sensitivity (" + str(self._SS) + ")|(" + str(self._epsilon) + "," + str(self._delta) + ")-DP"
 		key3 = "ExpoMech of SS"

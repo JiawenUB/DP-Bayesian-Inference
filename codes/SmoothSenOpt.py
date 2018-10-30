@@ -28,7 +28,9 @@ def smooth_sensitivity_study2(prior, sample_size, epsilon, delta, percentage):
 	Bayesian_Model._set_candidate_scores()
 	Bayesian_Model._set_LS_Candidates()
 	x = [(c._minus(Bayesian_Model._prior)) for c in Bayesian_Model._candidates]
-	beta = math.log(1 - epsilon / (2.0 * math.log(delta / (2.0 * (sample_size)))))
+	beta = 0.001 # math.log(1 - epsilon / (2.0 * math.log(delta / (2.0 * (sample_size)))))
+	max_value_list = []
+	xstick = [str((r._minus(Bayesian_Model._prior))._alphas) for r in Bayesian_Model._candidates]
 
 	for t in x:
 		Bayesian_Model._set_observation(t._alphas)
@@ -47,9 +49,11 @@ def smooth_sensitivity_study2(prior, sample_size, epsilon, delta, percentage):
 		# 	temp = Bayesian_Model._LS_Candidates[r] * math.exp(- beta * Hamming_Distance(observation, r._alphas))
 		# 	if max_value == temp:
 		# 		max_y_list.append(str(r._alphas))
+		max_value_list.append(max_value)
 
-		print "when data set x = "+str(t._alphas) + ", the max value takes at y = " + str(max_y)
+		print "when data set x = "+str(t._alphas) + ", smooth sensitivity: S(" + str(t._alphas) + ") = " + str(max_value)
 
+	scatter_plot(y,xstick,'Smooth Sensitivity Given Size' + str(sample_size), )
 
 
 def smooth_sensitivity_study(prior, sample_size, epsilon, delta, percentage):
@@ -62,7 +66,7 @@ def smooth_sensitivity_study(prior, sample_size, epsilon, delta, percentage):
 
 	xstick = [str((r._minus(Bayesian_Model._prior))._alphas) for r in Bayesian_Model._candidates]
 
-	beta = math.log(1 - epsilon / (2.0 * math.log(delta / (2.0 * (sample_size)))))
+	beta = 0.00000001
 
 	y=[Bayesian_Model._LS_Candidates[r] * math.exp(- beta * Hamming_Distance(observation, r._alphas)) for r in Bayesian_Model._candidates]
 
@@ -77,7 +81,7 @@ def scatter_plot(ss,xstick,title,yaxis):
 
 	# plt.xticks(range(len(ss)),xstick,rotation=70,fontsize=7)
 	plt.title(title,fontsize=20)
-	plt.xlabel(r"$\alpha$",fontsize=25)	
+	plt.xlabel(r"$D$",fontsize=25)	
 	plt.ylabel(yaxis,fontsize=15)
 	plt.grid()
 	plt.legend()
@@ -115,25 +119,25 @@ def ss_ls_component_study(prior, sample_size, epsilon, delta, percentage):
 
 	xstick = [str(c._alphas) for c in Bayesian_Model._candidates]
 	beta = math.log(1 - epsilon / (2.0 * math.log(delta / (2.0 * (sample_size)))))
-	y=[1.0/Bayesian_Model._LS_Candidates[r] for r in Bayesian_Model._candidates]
+	y=[1.0/((1 - Bayesian_Model._LS_Candidates[r] **2)) for r in Bayesian_Model._candidates]
 
-
-	scatter_plot(y,xstick,"", r"$\frac{1}{\mathcal{H}(\mathsf{beta}(\alpha + 1, 100 - \alpha), \mathsf{beta}(\alpha, 101 - \alpha))}$")
+	print abs(y[2] - y[1])
+	scatter_plot(y,xstick,"", r"$\frac{1}{LS((\alpha, 100 - \alpha))}$")
 
 	return
 
 
 if __name__ == "__main__":
 	percentage = [0.5,0.5]
-	datasize = 100
+	datasize = 1000
 	prior = dirichlet([1,1])
 
 	# ss_exponentiate_component_study(prior, datasize, 0.1, 0.00000001, percentage)
 
-	ss_ls_component_study(prior, datasize, 1.0, 0.00000001, percentage)
+	# ss_ls_component_study(prior, datasize, 1.0, 0.00000001, percentage)
 
 	# smooth_sensitivity_study(prior,datasize, 1.0, 0.00000001, percentage)
 	
-	# smooth_sensitivity_study2(prior,datasize,3,0.00000001, percentage)
+	smooth_sensitivity_study2(prior,datasize,3,0.00000001, percentage)
 
 
