@@ -8,7 +8,7 @@
 \usepackage{accents}
 
 \begin{document}
-\title{Tailoring Differentially Private Bayesian Inference to Distance Between Distributions}
+\title{Proof of 2$\epsilon-$Differential Privacy}
 
 \author[*]{Jiawen Liu}
 \author[**]{Mark Bun}
@@ -121,12 +121,16 @@ vwhere $\dataobs = (x_i)_{i = 1}^n$ and $\dataobs = (x'_i)_{i = 1}^n$ is adjacen
 \label{sec_mechs}
 
 \begin{definition}
-Given data set $\dataobs$, $S(\dataobs)$ is the $\gamma -$smooth sensitivity of $\dataobs$, s.t. for any $\adj{\dataobs}{\dataobs'}$:
+Given data set $\dataobs$, if a sensitivity $S(\dataobs)$ of $\dataobs$ satisfying:
 
+For any $\adj{\dataobs}{\dataobs'}$:
 \begin{equation}
 \label{eq_gamma_smooth}
 \frac{1}{S(\dataobs)} - \frac{1}{S(\dataobs')} \leq \gamma.
 \end{equation}
+
+$S(\dataobs)$ is $\gamma -$smooth sensitivity.
+
 \end{definition}
 
 
@@ -135,7 +139,7 @@ Given data set $\dataobs$, $S(\dataobs)$ is the $\gamma -$smooth sensitivity of 
 $S(\dataobs)$ is $\gamma -$smooth sensitivity if it is calculated by:
 \begin{equation}
   \label{eq_smooth}
-   S(\dataobs)=\max_{\dataobs' \in \{0,1\}^{n}}\bigg \{ \frac{1}{\frac{1}{LS(\dataobs')} +\gamma \cdot d(\dataobs,\dataobs')} \bigg \},
+   S(\dataobs)=\max_{\dataobs'' \in \{0,1\}^{n}}\bigg \{ \frac{1}{\frac{1}{LS(\dataobs'')} +\gamma \cdot d(\dataobs,\dataobs'')} \bigg \},
 \end{equation}
 where $d$ is the Hamming distance between two data sets.
 \end{thm}
@@ -173,30 +177,34 @@ $\implies$
 
 
 
+
 \section{$\hexpmech$: Smoothed Hellinger Distance Based Exponential Mechanism}
 \label{sec_mechs}
 Given a prior distribution $\bprior = \betad(\alpha, \beta)$ and a sequence of $n$ observations $\dataobs\in\{0,1\}^n$, we define the follwing set:
 \[
-  \candidateset\dataobs \equiv\{\betad(\alpha',\beta')\mid \alpha'=\alpha+\Delta\alpha, \beta'=\beta+n-\Delta\alpha\},
+  \candidateset \equiv\{\betad(\alpha',\beta')\mid \alpha'=\alpha+\Delta\alpha, \beta'=\beta+n-\Delta\alpha\},
 \]
 where $\Delta\alpha$ is as defined in Section\ref{sec_background}.
-Notice that $\candidateset{\dataobs}$ has $n + 1$ elements, and
-the Bayesian Inference process will produce an element from $\candidateset{\dataobs}$
+Notice that $\candidateset$ has $n + 1$ elements, and
+the Bayesian Inference process will produce an element from $\candidateset$
 that we denote by $\bysinfer(\dataobs)$ -- we don't explicitely
 parametrize the result by the prior, which from now on we consider
-fixed and we denote it by $\bprior$.
+fixed and we denote it by $\bprior$. Given data size n, $\candidateset$ is fixed.
 
 \begin{definition}
 \label{def_smoo}
-The mechanism $\hexpmech(\dataobs)$ outputs a candidate $r \in \candidateset\dataobs$ with probability
+The mechanism $\hexpmech(\dataobs)$ outputs a candidate $r \in \candidateset$ with probability
 \begin{equation*}
-\underset{z \thicksim \hexpmech}{\Pr}[z=r] = \frac {exp\big(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r)}{2\cdot S(\dataobs)}\big)}
-{\nomalizer{\dataobs}}.
+  \hexpmechPr{\dataobs}{z = r} = \frac {exp\big(\frac{-\epsilon\cdot \ux{r}}{2\cdot S(\dataobs)}\big)}
+{\unomalizer{\dataobs}}.
 \end{equation*}
-where $S(\dataobs)$ is the $\gamma -$smooth sensitivity of $\hellinger(\bysinfer(\dataobs),-)$, calculated by Theorem \ref{thm_gamma_smooth}.
+where $\ux{r} = \hellinger(\bysinfer(\dataobs),r)$ for $r \in \candidateset$ and $S(\dataobs)$ is the $\gamma -$smooth sensitivity of $\hellinger(\bysinfer(\dataobs),-)$, calculated from Theorem \ref{thm_gamma_smooth} by setting $\gamma = 1$.
 \end{definition}
 
-\section{Privacy Analysis}
+
+
+
+\section{$\hexpmech$ Privacy Analysis}
 
 \begin{lem}
 \label{lem_hexpmech_privacy}
@@ -205,7 +213,7 @@ $\hexpmech$ is $2\epsilon$-differential privacy.
 
 \begin{proof} of Lemma \ref{lem_hexpmech_privacy}.
 
-  By Definition \ref{def_epsilon_delta_dp}, to proof Lemma \ref{lem_hexpmech_privacy}, we need to prove:
+  By Definition \ref{def_epsilon_dp}, to proof Lemma \ref{lem_hexpmech_privacy}, we need to prove:
 
   For any $\adj{\dataobs}{\dataobs'} \in \mathcal{X}$ and any beta distribution $r$:
   \begin{equation*}
@@ -288,7 +296,7 @@ $\hexpmech$ is $2\epsilon$-differential privacy.
   \end{split}
   \end{equation*}
 
-  Because the property of $\gamma -$ smooth sensitivity: $|\frac{1}{S(\dataobs')} - \frac{1}{S(\dataobs)}| \leq \gamma$:
+  Because the property of $\gamma -$smooth sensitivity: $\frac{1}{S(\dataobs')} - \frac{1}{S(\dataobs)} \leq \gamma$:
   
   \begin{equation*}
   \begin{split}
@@ -326,7 +334,7 @@ $\hexpmech$ is $2\epsilon$-differential privacy.
   \big)
   } 
   {
-  \sum_{r'\in \candidateset{\dataobs}} 
+  \sum_{r'\in \candidateset} 
   exp 
   \big(
   \frac{-\epsilon\cdot(\ux{r'} + \uxadj{r'} - \uxadj{r'})}{2 \cdot S(\dataobs)}
@@ -340,7 +348,7 @@ $\hexpmech$ is $2\epsilon$-differential privacy.
   \big)
   } 
   {
-  \sum_{r'\in \candidateset{\dataobs}} 
+  \sum_{r'\in \candidateset} 
   exp 
   \big(
   \frac{-\epsilon\cdot(\uxadj{r'}}{2 \cdot S(\dataobs)}
@@ -365,7 +373,7 @@ $\hexpmech$ is $2\epsilon$-differential privacy.
   \big)
   } 
   {
-  \sum_{r'\in \candidateset{\dataobs}} 
+  \sum_{r'\in \candidateset} 
   exp 
   \big(
   \frac{-\epsilon\cdot(\uxadj{r'}}{2 \cdot S(\dataobs)}
@@ -383,7 +391,7 @@ $\hexpmech$ is $2\epsilon$-differential privacy.
   \big)
   } 
   {
-  \sum_{r'\in \candidateset{\dataobs}} 
+  \sum_{r'\in \candidateset} 
   exp 
   \big(
   \frac{-\epsilon\cdot(\uxadj{r'}}{2 \cdot S(\dataobs)}
@@ -409,7 +417,7 @@ $\hexpmech$ is $2\epsilon$-differential privacy.
   \big)
   } 
   {
-  \sum_{r'\in \candidateset{\dataobs}} 
+  \sum_{r'\in \candidateset} 
   exp 
   \big(
   \frac{-\epsilon\cdot(\uxadj{r'}}{2 \cdot S(\dataobs')}
@@ -441,7 +449,7 @@ $\hexpmech$ is $2\epsilon$-differential privacy.
   \big)
   } 
   {
-  \sum_{r'\in \candidateset{\dataobs}} 
+  \sum_{r'\in \candidateset} 
   exp 
   \big(
   \frac{-\epsilon\cdot(\uxadj{r'}}{2 \cdot S(\dataobs')}
@@ -461,7 +469,7 @@ $\hexpmech$ is $2\epsilon$-differential privacy.
   \end{split}
   \end{equation*}
 
-  Because the property of $\gamma -$ smooth sensitivity: $|\frac{1}{S(\dataobs)} - \frac{1}{S(\dataobs')}| \leq \gamma$ $\implies$
+  Because the property of $\gamma -$ smooth sensitivity: $\frac{1}{S(\dataobs)} - \frac{1}{S(\dataobs')} \leq \gamma$ $\implies$
   $\frac{- \epsilon}{2}
   (\frac{1}{S(\dataobs)}-
   \frac{1}{S(\dataobs')}) \geq \frac{- \epsilon}{2} \cdot \gamma$
@@ -475,7 +483,7 @@ $\hexpmech$ is $2\epsilon$-differential privacy.
   \big)
   } 
   {
-  \sum_{r'\in \candidateset{\dataobs}} 
+  \sum_{r'\in \candidateset} 
   exp 
   \big(
   \frac{-\epsilon\cdot(\uxadj{r'}}{2 \cdot S(\dataobs')}
@@ -497,7 +505,7 @@ $\hexpmech$ is $2\epsilon$-differential privacy.
   \big)
   } 
   {
-  \sum_{r'\in \candidateset{\dataobs}} 
+  \sum_{r'\in \candidateset} 
   exp 
   \big(
   \frac{-\epsilon\cdot(\uxadj{r'}}{2 \cdot S(\dataobs')}
@@ -515,7 +523,7 @@ $\hexpmech$ is $2\epsilon$-differential privacy.
   \big)
   } 
   {
-  \sum_{r'\in \candidateset{\dataobs}} 
+  \sum_{r'\in \candidateset} 
   exp 
   \big(
   \frac{-\epsilon\cdot(\uxadj{r'}}{2 \cdot S(\dataobs')}
@@ -525,7 +533,7 @@ $\hexpmech$ is $2\epsilon$-differential privacy.
   \end{split}
   \end{equation*}
 
-  By setting the $\gamma = 1$, $2\epsilon - $differential privacy can be achieved.
+  Given $\gamma = 1$, $2\epsilon - $differential privacy can be achieved.
 \end{proof}
 
 \bibliographystyle{plain}
