@@ -121,12 +121,11 @@ vwhere $\dataobs = (x_i)_{i = 1}^n$ and $\dataobs = (x'_i)_{i = 1}^n$ is adjacen
 \label{sec_mechs}
 
 \begin{definition}
-
-$S(\dataobs)$ is the $\gamma -$smooth sensitivity of data set $\dataobs$, s.t. for any $\adj{\dataobs}{\dataobs'}$:
+Given data set $\dataobs$, $S(\dataobs)$ is the $\gamma -$smooth sensitivity of $\dataobs$, s.t. for any $\adj{\dataobs}{\dataobs'}$:
 
 \begin{equation}
 \label{eq_gamma_smooth}
-|\frac{1}{S(\dataobs)} - \frac{1}{S(\dataobs')}| \leq \gamma.
+\frac{1}{S(\dataobs)} - \frac{1}{S(\dataobs')} \leq \gamma.
 \end{equation}
 \end{definition}
 
@@ -136,13 +135,34 @@ $S(\dataobs)$ is the $\gamma -$smooth sensitivity of data set $\dataobs$, s.t. f
 $S_\beta(\dataobs)$ is $\gamma -$smooth sensitivity for $\hellinger(\bysinfer(\dataobs),-)$ if it is calculated by:
 \begin{equation}
   \label{eq_smooth}
-   S(\dataobs)=\max_{\dataobs' \in \{0,1\}^{n}}\bigg \{ \frac{1}{\frac{1}{LS(\dataobs')} +\gamma + d(\dataobs,\dataobs')} \bigg \},
+   S(\dataobs)=\max_{\dataobs' \in \{0,1\}^{n}}\bigg \{ \frac{1}{\frac{1}{LS(\dataobs')} +\gamma \cdot d(\dataobs,\dataobs')} \bigg \},
 \end{equation}
 where $d$ is the Hamming distance between two data sets.
 \end{thm}
 
 \begin{proof}
 of Theorem. \ref{thm_gamma_smooth}.
+For $\adj{\dataobs}{\dataobs'}$ and arbitrary $\dataobs'' \in \{0,1\}^{n}$:
+
+By Definition \ref{eq_smooth}:
+\begin{equation*}
+\begin{split}
+S(\dataobs) 
+& \geq \frac{1}{\frac{1}{LS(\dataobs'')} +\gamma \cdot d(\dataobs,\dataobs'')}\\
+\frac{1}{S(\dataobs)} 
+& \leq \frac{1}{LS(\dataobs'')} +\gamma \cdot d(\dataobs,\dataobs'')\\
+\end{split}
+\end{equation*}
+
+Since $d(\dataobs,\dataobs'') \leq d(\dataobs,\dataobs') + d(\dataobs',\dataobs'') \leq 1 + d(\dataobs',\dataobs'')$:
+
+\begin{equation*}
+\begin{split}
+& \leq \frac{1}{LS(\dataobs'')} +\gamma \cdot (1 + d(\dataobs',\dataobs''))\\
+& = \gamma + \frac{1}{LS(\dataobs'')} +\gamma \cdot d(\dataobs',\dataobs'')\\
+& = \gamma + \frac{1}{S(\dataobs')}
+\end{split}
+\end{equation*}
 
 
 \end{proof}
@@ -176,7 +196,7 @@ where $S_\beta(\dataobs)$ is the $\gamma -$smooth sensitivity of $\hellinger(\by
 
 \begin{lem}
 \label{lem_hexpmech_privacy}
-$\hexpmech$ is $2\epsilon$-differential privacy in Beta-binomial system.
+$\hexpmech$ is $2\epsilon$-differential privacy.
 \end{lem}
 
 \begin{proof} of Lemma \ref{lem_hexpmech_privacy}.
@@ -192,15 +212,15 @@ $\hexpmech$ is $2\epsilon$-differential privacy in Beta-binomial system.
   \begin{equation*}
   \begin{split}
   \hexpmechPr{\dataobs}{z = r} 
-  & = \frac {exp\big(\frac{-\epsilon\cdot\ux{r}}{2\cdot S(\dataobs)}\big)}{\nomalizer{\dataobs}} \\
+  & = \frac {exp\big(\frac{-\epsilon\cdot\ux{r}}{2\cdot S(\dataobs)}\big)}{\unomalizer{\dataobs}} \\
   & = \frac {exp\big(
   \frac{-\epsilon\cdot(\ux{r} + \uxadj{r} - \uxadj{r})}{2\cdot S(\dataobs)}
   \big)}
-  {\nomalizer{\dataobs}} \\
+  {\unomalizer{\dataobs}} \\
   & = \frac {exp\big(
   \frac{-\epsilon\cdot(\uxadj{r})}{2\cdot S(\dataobs)}
   \big)}
-  {\nomalizer{\dataobs}}
+  {\unomalizer{\dataobs}}
   \cdot exp\big( \frac{\epsilon\cdot(\uxadj{r} - \ux{r})}{2\cdot S(\dataobs)} \big)\\
   \end{split}
   \end{equation*}
