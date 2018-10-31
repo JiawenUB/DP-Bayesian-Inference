@@ -134,9 +134,8 @@ class BayesInferwithDirPrior(object):
 		#CALCULATING THE SENSITIVITY
 		###################################################################################################################################
 		t0 = time.time()
-		self._set_local_sensitivities()
 		start = time.clock()
-		beta = 0.000001 # math.log(1 - self._epsilon / (2.0 * math.log(self._delta / (2.0 * (self._sample_size)))))
+		beta = 0.001 # math.log(1 - self._epsilon / (2.0 * math.log(self._delta / (2.0 * (self._sample_size)))))
 		self._SS = max(self._LS, max([self._LS_Candidates[r] * math.exp(- beta * Hamming_Distance(self._observation_counts, [r._alphas[i] - self._prior._alphas[i] for i in range(self._prior._size)])) for r in self._candidates]))
 		t1 = time.time()
 		print("smooth sensitivity"+str(t1 - t0)), self._SS
@@ -147,7 +146,7 @@ class BayesInferwithDirPrior(object):
 		###################################################################################################################################
 		nomalizer = 0.0
 		for r in self._candidates:
-			temp = math.exp(self._epsilon * self._candidate_scores[r]/(self._SS))
+			temp = math.exp(self._epsilon * self._candidate_scores[r]/(2 * self._SS))
 			self._SS_probabilities.append(temp)
 			nomalizer += temp
 
@@ -174,7 +173,6 @@ class BayesInferwithDirPrior(object):
 		#CALCULATING THE SENSITIVITY
 		###################################################################################################################################
 		t0 = time.time()
-		self._set_local_sensitivities()
 		start = time.clock()
 		beta = 0.5
 		self._alpha_SS = max([(1.0 / (1.0/self._LS_Candidates[r] + beta * Hamming_Distance(self._observation_counts, [r._alphas[i] - self._prior._alphas[i] for i in range(self._prior._size)]))) for r in self._candidates])
@@ -187,7 +185,7 @@ class BayesInferwithDirPrior(object):
 		###################################################################################################################################
 		nomalizer = 0.0
 		for r in self._candidates:
-			temp = math.exp(self._epsilon * self._candidate_scores[r]/(self._alpha_SS))
+			temp = math.exp(self._epsilon * self._candidate_scores[r]/(2 * self._alpha_SS))
 			self._alpha_SS_probabilities.append(temp)
 			nomalizer += temp
 
@@ -295,6 +293,8 @@ class BayesInferwithDirPrior(object):
 
 	def _experiments(self, times):
 		self._set_candidate_scores()
+		self._set_local_sensitivities()
+
 		self._set_up_baseline_lap_mech()
 		self._set_up_improved_lap_mech()
 		self._set_up_exp_mech_with_SS()

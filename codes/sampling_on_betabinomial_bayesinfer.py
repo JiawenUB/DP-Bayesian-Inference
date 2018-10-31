@@ -241,8 +241,8 @@ if __name__ == "__main__":
 #SETTING UP THE PARAMETERS WHEN DOING GROUPS EXPERIMENTS
 #############################################################################
 	epsilons = numpy.arange(0.1, 2, 0.1)
-	datasizes = gen_datasizes((200,500),50)#[300] #[8,12,18,24,30,36,42,44,46,48]#,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80]
-	percentage = [0.5,0.5]
+	datasizes = gen_datasizes((30,300),30)#[300] #[8,12,18,24,30,36,42,44,46,48]#,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80]
+	percentage = [1.0/3,1.0/3,1/3.0]
 	datasets = gen_datasets(percentage, datasizes)
 	priors = gen_priors([20,50], 10, 2) + gen_priors([100,200], 50, 2)# + gen_priors([200,500], 100, 2) + gen_priors([600,2000], 200, 2)
 	

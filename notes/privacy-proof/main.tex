@@ -1,0 +1,535 @@
+% \documentclass[sigconf]{acmart}
+\documentclass{article}
+
+% We want page numbers on submissions
+
+%%\ccsPaper{9999} % TODO: replace with your paper number once obtained
+\input{macros}
+\usepackage{accents}
+
+\begin{document}
+\title{Tailoring Differentially Private Bayesian Inference to Distance Between Distributions}
+
+\author[*]{Jiawen Liu}
+\author[**]{Mark Bun}
+\author[*]{Gian Pietro Farina}
+\author[*]{Marco Gaboardi}
+\affil[*]{Department of Computer Science and Engineering, University at Buffalo, SUNY. \{jliu223,gianpiet,gaboardi\}@buffalo.edu}
+\affil[**]{Department of Computer Science, Princeton University. {mbun@cs.princeton.edu}}
+\date{}
+\maketitle
+
+
+
+\section{Preliminaries}
+\label{sec_background}
+
+\noindent \textbf{Bayesian Inference.}
+
+Given a prior belief $\Pr(\theta)$ on some parameter $\theta$,
+and an observation $\dataobs$, the posterior distribution on $\theta$ given $\dataobs$ is computed as:
+\[
+  \Pr(\theta | \dataobs) = \frac{\Pr(\dataobs | \theta) \cdot \Pr(\theta)}{\Pr(\dataobs)}
+\]
+where the expression $\Pr(\dataobs | \theta)$ denotes the
+\emph{likelihood} of observing $\dataobs$ under a value of
+$\theta$. Since we consider $\dataobs$ to be fixed, the likelihood is
+a function of $\theta$.
+For the same reason $\Pr(\dataobs)$ is a constant independent of $\theta$.
+Usually in statistics the prior distribution $\Pr(\theta)$ is chosen so that it represents
+the initial belief on $\theta$, that is, when no data has been observed. In practice though,
+prior distributions and likelihood functions are usually chosen so that the posterior
+belongs to the same \emph{family} of distributions. In this case we say that the prior
+is conjugate to the likelihood function. Use of a conjugate prior
+simplifies calculations and allows for inference to be performed in a
+recursive fashion over the data.
+
+
+\noindent \textbf{Beta-binomial System.}
+
+In this work we will consider a specific instance of Bayesian inference and one of its generalizations.
+specifically, a Beta-binomial mode. We will consider the situation the underlying data is binomial distribution ($\thicksim binomial(\theta)$), where $\theta$ represents
+the parameter --informally called \emph{bias}-- of a Bernoulli
+distributed random variable. The
+prior distribution over $\theta\in [0,1]$ is going to be a beta
+distribution, $\betad(\alpha, \beta)$, with parameters
+$\alpha,\beta\in\mathbb{R}^{+}$, and with p.d.f:
+\[
+  \Pr(\theta)\equiv \frac{\theta^{\alpha} (1- \theta)^{\beta}}{\betaf(\alpha,\beta)}
+\]
+where $\betaf(\cdot,\cdot)$ is the beta function.
+The data $\dataobs$ will be a sequence of $n\in\mathbb{N}$ binary values, that is $\dataobs= (x_1,\dots x_n), x_i\in\{0,1\}$, and the likelihood function is:
+\[
+  \Pr(\dataobs | \theta)\equiv \theta^{\Delta \alpha}(1-\theta)^{n - \Delta \alpha}
+\]
+where $\Delta \alpha = \displaystyle\sum_{i=1}^{n}x_i$.
+From this it can easily be derived that the posterior distribution is:
+\[
+  \Pr(\theta|\dataobs)=\betad(\alpha + \Delta \alpha,\beta + n - \Delta \alpha)
+\]
+
+
+\noindent \textbf{Dirichlet-multinomial Systems.}
+
+The beta-binomial model can be immediately generalized to Dirichlet-multinomial, with underlying data multinomially distributed. The \emph{bias} is represented by parameter $\vtheta$, the vector of parameters of a categorically distributed random variable. The prior distribution over $\vtheta\in [0,1]^{k}$
+is given by a Dirichelet distribution, $\dirichlet(\valpha)$, for $k\in\mathbb{N}$,
+and $\valpha\in(\mathbb{R}^{+})^{k}$, with p.d.f:
+\[
+  \Pr(\vtheta)\equiv\frac{1}{\mbetaf(\valpha)}\cdot \displaystyle\prod_{i=1}^{k}{\theta_i^{\alpha_i-1}}
+\]
+where $\mbetaf(\cdot)$ is the generalized beta function.
+The data $\dataobs$ will be a sequence of $n\in\mathbb{N}$ values
+coming from a universe $\datauni$, such that $\mid\datauni \mid=k$.
+The likelihood function will be:
+\[
+  \Pr(\dataobs|\vtheta)\equiv \displaystyle\prod_{a_i\in\datauni}\theta_{i}^{\Delta \alpha_i},
+\]
+with $\Delta \alpha_i=\displaystyle\sum_{j=1}^{n}\iverson{x_j=a_i}$, where $\iverson{\cdot}$ represents Iverson bracket notation.
+Denoting by $\Delta\valpha$ the vector $(\Delta\alpha_1,\dots \Delta\alpha_k)$ the posterior distribution over $\vtheta$ turns out to be
+\[
+  \Pr(\vtheta|\dataobs)=\dirichlet(\valpha+\Delta \valpha). 
+\]
+where $+$ denotes the componentwise sum of vectors of reals. 
+
+\noindent \textbf{Differential Privacy.} 
+\begin{definition}
+\label{def_epsilon_dp}
+$\epsilon-$differential privacy.
+
+A randomized mechanism $\mathcal{M}: \mathcal{X} \rightarrow \mathcal{Y}$ is differential privacy, iff for any adjacent\footnote{Given $\dataobs, \dataobs'$  we say that $\dataobs$ and $\dataobs'$ are adjacent and we write, $\adj{\dataobs}{\dataobs'}$, iff\\
+$\displaystyle \sum_{i}^{n}\iverson{x_i = x'_i }\leq 1$. } input $\dataobs, \dataobs' \in \mathcal{X}$, a metric $H$ over $\mathcal{Y}$ and a $B \subseteq H(\mathcal{Y})$, $\mathcal{M}$ satisfies:
+\begin{equation*}
+\mathbb{P}[H(\mathcal{M}(\dataobs)) \in B] = e^\epsilon \mathbb{P}[H(\mathcal{M}(\dataobs')) \in B].
+\end{equation*}
+
+\end{definition}
+
+\begin{definition}
+\label{def_epsilon_delta_dp}
+$(\epsilon,\delta)-$differential privacy.
+
+A randomized mechanism $\mathcal{M}: \mathcal{X} \rightarrow \mathcal{Y}$ is differential privacy, iff for any $\adj{\dataobs}{\dataobs'} \in \mathcal{X}$, a metric $H$ over $\mathcal{Y}$ and a $B \subseteq H(\mathcal{Y})$, $\mathcal{M}$ satisfies:
+\begin{equation*}
+\mathbb{P}[H(\mathcal{M}(\dataobs)) \in B] = e^\epsilon \mathbb{P}[H(\mathcal{M}(\dataobs')) \in B] + \delta,
+\end{equation*}
+vwhere $\dataobs = (x_i)_{i = 1}^n$ and $\dataobs = (x'_i)_{i = 1}^n$ is adjacent if there is only one $j$ that $x_j \neq x'_j$ and $x_i = x'_i$ for $i = 1, 2, \cdots, n; i \neq j$. 
+\end{definition}
+
+
+
+\section{$\gamma$ -Smooth Sensitivity}
+\label{sec_mechs}
+$S_\beta(\dataobs)$ is the $\gamma -$smooth sensitivity of $\hellinger(\bysinfer(\dataobs),-)$, calculated by:
+
+\begin{equation}
+  \label{eq:smooth}
+   S(\dataobs)=\max_{\dataobs' \in \{0,1\}^{n}}\bigg \{ \frac{1}{\frac{1}{LS(\dataobs')} +\gamma + d(\dataobs,\dataobs')} \bigg \},
+\end{equation}
+where $d$ is the Hamming distance between two data sets, and $\gamma = 1$.
+
+
+
+
+\section{Mechanism Proposition}
+\label{sec_mechs}
+Given a prior distribution $\bprior=\betad(\alpha, \beta)$ and a sequence of $n$ observations $\dataobs\in\{0,1\}^n$, we define the follwing set:
+\[
+  \candidateset\equiv\{\betad(\alpha',\beta')\mid \alpha'=\alpha+\Delta\alpha, \beta'=\beta+n-\Delta\alpha\},
+\]
+where $\Delta\alpha$ is as defined in Section\ref{sec_background}.
+Notice that $\candidateset$ has $n + 1$ elements, and
+the Bayesian Inference process will produce an element from $\candidateset$
+that we denote by $\bysinfer(\dataobs)$ -- we don't explicitely
+parametrize the result by the prior, which from now on we consider
+fixed and we denote it by $\bprior$.
+
+
+
+\subsection{$\hexpmech$: Smoothed Hellinger Distance Based Exponential Mechanism}
+\label{subsec_hexpmech}
+
+\begin{definition}
+\label{def_smoo}
+The mechanism $\hexpmech(\dataobs)$ outputs a candidate $r \in \candidateset$ with probability
+\begin{equation*}
+\underset{z \thicksim \hexpmech}{\Pr}[z=r] = \frac {exp\big(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r)}{2\cdot S(\dataobs)}\big)}
+{\nomalizer{\dataobs}}.
+\end{equation*}
+where $S_\beta(\dataobs)$ is the $\gamma -$smooth sensitivity of $\hellinger(\bysinfer(\dataobs),-)$, calculated by:
+
+\begin{equation}
+  \label{eq:smooth}
+   S(\dataobs)=\max_{\dataobs' \in \{0,1\}^{n}}\bigg \{ \frac{1}{\frac{1}{LS(\dataobs')} +\gamma + d(\dataobs,\dataobs')} \bigg \},
+\end{equation}
+where $d$ is the Hamming distance between two datasets, and $\gamma = 0.5$.
+\end{definition}
+
+This mechanism is based on the basic exponential mechanism
+\cite{talwar}, with $\candidateset$ as the range and
+$\hellinger(\cdot,\cdot)$ as the scoring function. The difference is
+that in this mechanism we don't calibrate the noise w.r.t. to the
+global sensitivity of the scoring function but w.r.t. to the smooth
+sensitivity $S(\dataobs)$ -- defined by \cite{nissim2007smooth}-- of
+$\hellinger(\bysinfer(\dataobs), \cdot)$.
+
+$\gamma = \gamma(\epsilon, \delta)$ is a function of $\epsilon$ and $\delta$ to
+be determined later, and where $LS(\dataobs')$ denotes the local
+sensitivity at $\bysinfer(\dataobs')$, or equivalently at $\dataobs'$,
+of the scoring function used in our mechanism.
+
+This mechanism also extends to the Dirichlet-multinomial system $\dirichlet(\valpha)$ by rewriting the Hellinger distance as:
+\[
+  \hellinger(\dirichlet(\valpha_1), \dirichlet(\valpha_2)) = \sqrt{1 - \frac{\betaf(\frac{\valpha_1 + \valpha_2}{2})}{\sqrt{\betaf(\valpha_1) \betaf(\valpha_2)}}},
+\]
+and by replacing the $\candidateset$ with set of posterior Dirichlet
+distributions candidates. Also, the smooth sensitivity $S(\dataobs)$
+in (\ref{eq:smooth}) will be computed by letting $\dataobs'$ range
+over all the elements in $\datauni^{n}$ adjacent to $\dataobs$. Notice
+that $\candidateset$ has $\binom{n + 1}{m - 1}$ elements in this case. We
+will denote by $\hexpmechd$ the mechanism for the
+Dirichlet-multinomial system.
+
+By setting the $\gamma$ as $\ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta'}{2 (n + 1)})})$, $\hexpmech$ is $(\epsilon, \delta) -$differentially private, where $\delta = \frac{e^{\frac{\epsilon}{2}} \delta'}{2}$. (or $\gamma = \ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta'}{2 |\candidateset|})})$ when generalized to Dirichlet-multinomial System)
+
+
+\section{Privacy Analysis}
+
+\begin{lem}
+\label{lem_hexpmech_privacy}
+$\hexpmech$ is $2\epsilon$-differential privacy in Beta-binomial system.
+\end{lem}
+
+\begin{proof} of Lemma \ref{lem_hexpmech_privacy}.
+  By Definition \ref{def_epsilon_delta_dp}, to proof Lemma \ref{lem_hexpmech_privacy}, we need to prove:
+
+  For any $\adj{\dataobs}{\dataobs'} \in \mathcal{X}$ and any beta distribution $r$:
+  \begin{equation*}
+  \hexpmechPr{\dataobs}{z = r} \leq e^{2\epsilon} \hexpmechPr{\dataobs'}{z = r}. 
+  \end{equation*}
+
+  By definition \ref{def_smoo}:
+
+  \begin{equation*}
+  \begin{split}
+  \hexpmechPr{\dataobs}{z = r} 
+  & = \frac {exp\big(\frac{-\epsilon\cdot\ux{r}}{2\cdot S(\dataobs)}\big)}{\nomalizer{\dataobs}} \\
+  & = \frac {exp\big(
+  \frac{-\epsilon\cdot(\ux{r} + \uxadj{r} - \uxadj{r})}{2\cdot S(\dataobs)}
+  \big)}
+  {\nomalizer{\dataobs}} \\
+  & = \frac {exp\big(
+  \frac{-\epsilon\cdot(\uxadj{r})}{2\cdot S(\dataobs)}
+  \big)}
+  {\nomalizer{\dataobs}}
+  \cdot exp\big( \frac{\epsilon\cdot(\uxadj{r} - \ux{r})}{2\cdot S(\dataobs)} \big)\\
+  \end{split}
+  \end{equation*}
+
+  Because $S(\dataobs) \geq LS(\dataobs) \geq (\uxadj{r} - \ux{r})$:
+  \begin{equation*}
+  \begin{split}
+  & \leq \frac {exp\big(
+  \frac{-\epsilon\cdot(\uxadj{r})}{2\cdot S(\dataobs)}
+  \big)}
+  {\unomalizer{\dataobs}}
+  \cdot exp\big( \frac{\epsilon}{2} \big) \\
+  & = exp\big( \frac{\epsilon}{2} \big) \cdot 
+  \frac {
+  exp
+  \big(
+  \frac{-\epsilon\cdot(\uxadj{r})}{2\cdot S(\dataobs)}
+  \big)
+  } 
+  {\unomalizer{\dataobs}}
+  exp
+  \big(
+  \frac{\epsilon\cdot(\uxadj{r})}{2\cdot S(\dataobs')}
+  \big)
+  exp
+  \big(
+  \frac{-\epsilon\cdot(\uxadj{r})}{2\cdot S(\dataobs')}
+  \big)\\
+  \end{split}
+  \end{equation*}
+
+  \begin{equation*}
+  \begin{split}
+  & = exp\big( \frac{\epsilon}{2} \big) \cdot 
+  \frac {
+  exp
+  \big(
+  \frac{-\epsilon\cdot(\uxadj{r})}{2\cdot S(\dataobs')}
+  \big)
+  } 
+  {\unomalizer{\dataobs}}
+  exp
+  \big(
+  \frac{\epsilon\cdot(\uxadj{r})}{2}(\frac{1}{S(\dataobs')} - \frac{1}{S(\dataobs)})
+  \big)\\
+  \end{split}
+  \end{equation*}
+  
+  Because $\uxadj{r} = \hellinger(\bysinfer(\dataobs'), r) \leq 1$:
+
+  \begin{equation*}
+  \begin{split}
+  & \leq exp\big( \frac{\epsilon}{2} \big) \cdot 
+  \frac {
+  exp
+  \big(
+  \frac{-\epsilon\cdot(\uxadj{r})}{2\cdot S(\dataobs')}
+  \big)
+  } 
+  {\unomalizer{\dataobs}}
+  exp
+  \big(
+  \frac{\epsilon}{2}(\frac{1}{S(\dataobs')} - \frac{1}{S(\dataobs)})
+  \big)\\
+  \end{split}
+  \end{equation*}
+
+  Because the property of $\gamma -$ smooth sensitivity: $|\frac{1}{S(\dataobs')} - \frac{1}{S(\dataobs)}| \leq \gamma$:
+  
+  \begin{equation*}
+  \begin{split}
+  & \leq exp\big( \frac{\epsilon}{2} \big) \cdot 
+  \frac {
+  exp
+  \big(
+  \frac{-\epsilon\cdot(\uxadj{r})}{2\cdot S(\dataobs')}
+  \big)
+  } 
+  {\unomalizer{\dataobs}}
+  exp
+  \big(
+  \frac{\epsilon}{2} \cdot \gamma
+  \big)\\
+  & = exp\big( \frac{\epsilon}{2} + \frac{\epsilon}{2} \cdot \gamma\big) \cdot 
+  \frac {
+  exp
+  \big(
+  \frac{-\epsilon\cdot(\uxadj{r})}{2\cdot S(\dataobs')}
+  \big)
+  } 
+  {\unomalizer{\dataobs}}\\
+  \end{split}
+  \end{equation*}
+  Doing the same transformation in the denominator:
+
+  \begin{equation*}
+  \begin{split}
+  & = exp\big( \frac{\epsilon}{2} + \frac{\epsilon}{2} \cdot \gamma\big) \cdot 
+  \frac {
+  exp
+  \big(
+  \frac{-\epsilon\cdot(\uxadj{r})}{2\cdot S(\dataobs')}
+  \big)
+  } 
+  {
+  \sum_{r'\in \candidateset{\dataobs}} 
+  exp 
+  \big(
+  \frac{-\epsilon\cdot(\ux{r'} + \uxadj{r'} - \uxadj{r'})}{2 \cdot S(\dataobs)}
+  \big)
+  }\\
+  & = exp\big( \frac{\epsilon}{2} + \frac{\epsilon}{2} \cdot \gamma\big) \cdot 
+  \frac {
+  exp
+  \big(
+  \frac{-\epsilon\cdot(\uxadj{r})}{2\cdot S(\dataobs')}
+  \big)
+  } 
+  {
+  \sum_{r'\in \candidateset{\dataobs}} 
+  exp 
+  \big(
+  \frac{-\epsilon\cdot(\uxadj{r'}}{2 \cdot S(\dataobs)}
+  \big)
+  exp 
+  \big(
+  \frac{-\epsilon\cdot(\ux{r'} - \uxadj{r'})}{2 \cdot S(\dataobs)}
+  \big)
+  }\\
+  \end{split}
+  \end{equation*}
+
+  Because $S(\dataobs) \geq LS(\dataobs) \geq (\ux{r} - \uxadj{r})$ $\implies$ $ \frac{-\epsilon\cdot(\ux{r'} - \uxadj{r'})}{2 \cdot S(\dataobs)} \geq \frac{-\epsilon}{2}$:
+
+  \begin{equation*}
+  \begin{split}
+  & \leq exp\big( \frac{\epsilon}{2} + \frac{\epsilon}{2} \cdot \gamma\big) \cdot 
+  \frac {
+  exp
+  \big(
+  \frac{-\epsilon\cdot(\uxadj{r})}{2\cdot S(\dataobs')}
+  \big)
+  } 
+  {
+  \sum_{r'\in \candidateset{\dataobs}} 
+  exp 
+  \big(
+  \frac{-\epsilon\cdot(\uxadj{r'}}{2 \cdot S(\dataobs)}
+  \big)
+  exp 
+  \big(
+  \frac{-\epsilon}{2}
+  \big)
+  }\\
+  & = exp\big( \frac{\epsilon}{2} + \frac{\epsilon}{2} \cdot \gamma\big) \cdot 
+  \frac {
+  exp
+  \big(
+  \frac{-\epsilon\cdot(\uxadj{r})}{2\cdot S(\dataobs')}
+  \big)
+  } 
+  {
+  \sum_{r'\in \candidateset{\dataobs}} 
+  exp 
+  \big(
+  \frac{-\epsilon\cdot(\uxadj{r'}}{2 \cdot S(\dataobs)}
+  \big)
+  exp 
+  \big(
+  \frac{-\epsilon}{2}
+  \big)
+  exp
+  \big(
+  \frac{\epsilon\cdot(\uxadj{r'})}{2\cdot S(\dataobs')}
+  \big)
+  exp
+  \big(
+  \frac{-\epsilon\cdot(\uxadj{r'})}{2\cdot S(\dataobs')}
+  \big)
+  }\\
+  & = exp\big( \frac{\epsilon}{2} + \frac{\epsilon}{2} \cdot \gamma\big) \cdot 
+  \frac {
+  exp
+  \big(
+  \frac{-\epsilon\cdot(\uxadj{r})}{2\cdot S(\dataobs')}
+  \big)
+  } 
+  {
+  \sum_{r'\in \candidateset{\dataobs}} 
+  exp 
+  \big(
+  \frac{-\epsilon\cdot(\uxadj{r'}}{2 \cdot S(\dataobs')}
+  \big)
+  exp 
+  \big(
+  \frac{-\epsilon}{2}
+  \big)
+  exp
+  \big(
+  \frac{- \epsilon\cdot(\ux{r'})}{2}
+  (\frac{1}{S(\dataobs)}
+-
+  \frac{1}{S(\dataobs')})
+  \big)
+  }\\
+  \end{split}
+  \end{equation*}
+
+  Because $\uxadj{r} = \hellinger(\bysinfer(\dataobs'), r) \leq 1$ $\implies$ $\frac{- \epsilon\cdot(\ux{r'})}{2} \geq  \frac{-\epsilon}{2}$:
+
+    \begin{equation*}
+  \begin{split}
+  & \leq exp\big( \frac{\epsilon}{2} + \frac{\epsilon}{2} \cdot \gamma\big) \cdot 
+  \frac {
+  exp
+  \big(
+  \frac{-\epsilon\cdot(\uxadj{r})}{2\cdot S(\dataobs')}
+  \big)
+  } 
+  {
+  \sum_{r'\in \candidateset{\dataobs}} 
+  exp 
+  \big(
+  \frac{-\epsilon\cdot(\uxadj{r'}}{2 \cdot S(\dataobs')}
+  \big)
+  exp 
+  \big(
+  \frac{-\epsilon}{2}
+  \big)
+  exp
+  \big(
+  \frac{- \epsilon}{2}
+  (\frac{1}{S(\dataobs)}
+-
+  \frac{1}{S(\dataobs')})
+  \big)
+  }\\
+  \end{split}
+  \end{equation*}
+
+  Because the property of $\gamma -$ smooth sensitivity: $|\frac{1}{S(\dataobs)} - \frac{1}{S(\dataobs')}| \leq \gamma$ $\implies$
+  $\frac{- \epsilon}{2}
+  (\frac{1}{S(\dataobs)}-
+  \frac{1}{S(\dataobs')}) \geq \frac{- \epsilon}{2} \cdot \gamma$
+      \begin{equation*}
+  \begin{split}
+  & \leq exp\big( \frac{\epsilon}{2} + \frac{\epsilon}{2} \cdot \gamma\big) \cdot 
+  \frac {
+  exp
+  \big(
+  \frac{-\epsilon\cdot(\uxadj{r})}{2\cdot S(\dataobs')}
+  \big)
+  } 
+  {
+  \sum_{r'\in \candidateset{\dataobs}} 
+  exp 
+  \big(
+  \frac{-\epsilon\cdot(\uxadj{r'}}{2 \cdot S(\dataobs')}
+  \big)
+  exp 
+  \big(
+  \frac{-\epsilon}{2}
+  \big)
+  exp
+  \big(
+  \frac{- \epsilon}{2} \cdot \gamma
+  \big)
+  }\\
+  & = exp\big( \frac{\epsilon}{2} + \frac{\epsilon}{2} \cdot \gamma\big) \cdot 
+  \frac {
+  exp
+  \big(
+  \frac{-\epsilon\cdot(\uxadj{r})}{2\cdot S(\dataobs')}
+  \big)
+  } 
+  {
+  \sum_{r'\in \candidateset{\dataobs}} 
+  exp 
+  \big(
+  \frac{-\epsilon\cdot(\uxadj{r'}}{2 \cdot S(\dataobs')}
+  \big)
+  exp 
+  \big(
+  \frac{-\epsilon}{2} +   \frac{- \epsilon}{2} \cdot \gamma
+  \big)
+  }\\
+  & = e^{(\epsilon + \epsilon \cdot \gamma )} \cdot 
+  \frac {
+  exp
+  \big(
+  \frac{-\epsilon\cdot(\uxadj{r})}{2\cdot S(\dataobs')}
+  \big)
+  } 
+  {
+  \sum_{r'\in \candidateset{\dataobs}} 
+  exp 
+  \big(
+  \frac{-\epsilon\cdot(\uxadj{r'}}{2 \cdot S(\dataobs')}
+  \big)
+  }\\
+  & = e^{( \epsilon + \epsilon \cdot \gamma )} \cdot   \hexpmechPr{\dataobs'}{z = r}
+  \end{split}
+  \end{equation*}
+
+  By setting the $\gamma = 1$, $2\epsilon - $differential privacy can be achieved.
+\end{proof}
+
+\bibliographystyle{plain}
+\bibliography{bayesian.bib}
+
+\end{document}
+
