@@ -132,7 +132,7 @@ Given data set $\dataobs$, $S(\dataobs)$ is the $\gamma -$smooth sensitivity of 
 
 \begin{thm}
 \label{thm_gamma_smooth}
-$S_\beta(\dataobs)$ is $\gamma -$smooth sensitivity for $\hellinger(\bysinfer(\dataobs),-)$ if it is calculated by:
+$S(\dataobs)$ is $\gamma -$smooth sensitivity for $\hellinger(\bysinfer(\dataobs),-)$ if it is calculated by:
 \begin{equation}
   \label{eq_smooth}
    S(\dataobs)=\max_{\dataobs' \in \{0,1\}^{n}}\bigg \{ \frac{1}{\frac{1}{LS(\dataobs')} +\gamma \cdot d(\dataobs,\dataobs')} \bigg \},
@@ -142,6 +142,7 @@ where $d$ is the Hamming distance between two data sets.
 
 \begin{proof}
 of Theorem. \ref{thm_gamma_smooth}.
+
 For $\adj{\dataobs}{\dataobs'}$ and arbitrary $\dataobs'' \in \{0,1\}^{n}$:
 
 By Definition \ref{eq_smooth}:
@@ -200,6 +201,7 @@ $\hexpmech$ is $2\epsilon$-differential privacy.
 \end{lem}
 
 \begin{proof} of Lemma \ref{lem_hexpmech_privacy}.
+
   By Definition \ref{def_epsilon_delta_dp}, to proof Lemma \ref{lem_hexpmech_privacy}, we need to prove:
 
   For any $\adj{\dataobs}{\dataobs'} \in \mathcal{X}$ and any beta distribution $r$:
