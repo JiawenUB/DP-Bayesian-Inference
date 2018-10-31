@@ -135,7 +135,7 @@ class BayesInferwithDirPrior(object):
 		###################################################################################################################################
 		t0 = time.time()
 		start = time.clock()
-		beta = 0.001 # math.log(1 - self._epsilon / (2.0 * math.log(self._delta / (2.0 * (self._sample_size)))))
+		beta = 1 # math.log(1 - self._epsilon / (2.0 * math.log(self._delta / (2.0 * (self._sample_size)))))
 		self._SS = max(self._LS, max([self._LS_Candidates[r] * math.exp(- beta * Hamming_Distance(self._observation_counts, [r._alphas[i] - self._prior._alphas[i] for i in range(self._prior._size)])) for r in self._candidates]))
 		t1 = time.time()
 		print("smooth sensitivity"+str(t1 - t0)), self._SS
@@ -174,7 +174,7 @@ class BayesInferwithDirPrior(object):
 		###################################################################################################################################
 		t0 = time.time()
 		start = time.clock()
-		beta = 0.5
+		beta = 1
 		self._alpha_SS = max([(1.0 / (1.0/self._LS_Candidates[r] + beta * Hamming_Distance(self._observation_counts, [r._alphas[i] - self._prior._alphas[i] for i in range(self._prior._size)]))) for r in self._candidates])
 		t1 = time.time()
 		print ("alpha smooth sensitivity"+str(t1 - t0)), self._alpha_SS

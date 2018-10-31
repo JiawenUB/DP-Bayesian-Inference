@@ -117,80 +117,60 @@ vwhere $\dataobs = (x_i)_{i = 1}^n$ and $\dataobs = (x'_i)_{i = 1}^n$ is adjacen
 
 
 
-\section{$\gamma$ -Smooth Sensitivity}
+\section{$\gamma$-Smooth Sensitivity}
 \label{sec_mechs}
-$S_\beta(\dataobs)$ is the $\gamma -$smooth sensitivity of $\hellinger(\bysinfer(\dataobs),-)$, calculated by:
+
+\begin{definition}
+
+$S(\dataobs)$ is the $\gamma -$smooth sensitivity of data set $\dataobs$, s.t. for any $\adj{\dataobs}{\dataobs'}$:
 
 \begin{equation}
-  \label{eq:smooth}
+\label{eq_gamma_smooth}
+|\frac{1}{S(\dataobs)} - \frac{1}{S(\dataobs')}| \leq \gamma.
+\end{equation}
+\end{definition}
+
+
+\begin{thm}
+\label{thm_gamma_smooth}
+$S_\beta(\dataobs)$ is $\gamma -$smooth sensitivity for $\hellinger(\bysinfer(\dataobs),-)$ if it is calculated by:
+\begin{equation}
+  \label{eq_smooth}
    S(\dataobs)=\max_{\dataobs' \in \{0,1\}^{n}}\bigg \{ \frac{1}{\frac{1}{LS(\dataobs')} +\gamma + d(\dataobs,\dataobs')} \bigg \},
 \end{equation}
-where $d$ is the Hamming distance between two data sets, and $\gamma = 1$.
+where $d$ is the Hamming distance between two data sets.
+\end{thm}
+
+\begin{proof}
+of Theorem. \ref{thm_gamma_smooth}.
+
+
+\end{proof}
 
 
 
-
-\section{Mechanism Proposition}
+\section{$\hexpmech$: Smoothed Hellinger Distance Based Exponential Mechanism}
 \label{sec_mechs}
-Given a prior distribution $\bprior=\betad(\alpha, \beta)$ and a sequence of $n$ observations $\dataobs\in\{0,1\}^n$, we define the follwing set:
+Given a prior distribution $\bprior = \betad(\alpha, \beta)$ and a sequence of $n$ observations $\dataobs\in\{0,1\}^n$, we define the follwing set:
 \[
-  \candidateset\equiv\{\betad(\alpha',\beta')\mid \alpha'=\alpha+\Delta\alpha, \beta'=\beta+n-\Delta\alpha\},
+  \candidateset\dataobs \equiv\{\betad(\alpha',\beta')\mid \alpha'=\alpha+\Delta\alpha, \beta'=\beta+n-\Delta\alpha\},
 \]
 where $\Delta\alpha$ is as defined in Section\ref{sec_background}.
-Notice that $\candidateset$ has $n + 1$ elements, and
-the Bayesian Inference process will produce an element from $\candidateset$
+Notice that $\candidateset{\dataobs}$ has $n + 1$ elements, and
+the Bayesian Inference process will produce an element from $\candidateset{\dataobs}$
 that we denote by $\bysinfer(\dataobs)$ -- we don't explicitely
 parametrize the result by the prior, which from now on we consider
 fixed and we denote it by $\bprior$.
 
-
-
-\subsection{$\hexpmech$: Smoothed Hellinger Distance Based Exponential Mechanism}
-\label{subsec_hexpmech}
-
 \begin{definition}
 \label{def_smoo}
-The mechanism $\hexpmech(\dataobs)$ outputs a candidate $r \in \candidateset$ with probability
+The mechanism $\hexpmech(\dataobs)$ outputs a candidate $r \in \candidateset\dataobs$ with probability
 \begin{equation*}
 \underset{z \thicksim \hexpmech}{\Pr}[z=r] = \frac {exp\big(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r)}{2\cdot S(\dataobs)}\big)}
 {\nomalizer{\dataobs}}.
 \end{equation*}
-where $S_\beta(\dataobs)$ is the $\gamma -$smooth sensitivity of $\hellinger(\bysinfer(\dataobs),-)$, calculated by:
-
-\begin{equation}
-  \label{eq:smooth}
-   S(\dataobs)=\max_{\dataobs' \in \{0,1\}^{n}}\bigg \{ \frac{1}{\frac{1}{LS(\dataobs')} +\gamma + d(\dataobs,\dataobs')} \bigg \},
-\end{equation}
-where $d$ is the Hamming distance between two datasets, and $\gamma = 0.5$.
+where $S_\beta(\dataobs)$ is the $\gamma -$smooth sensitivity of $\hellinger(\bysinfer(\dataobs),-)$, calculated by Theorem \ref{thm_gamma_smooth}.
 \end{definition}
-
-This mechanism is based on the basic exponential mechanism
-\cite{talwar}, with $\candidateset$ as the range and
-$\hellinger(\cdot,\cdot)$ as the scoring function. The difference is
-that in this mechanism we don't calibrate the noise w.r.t. to the
-global sensitivity of the scoring function but w.r.t. to the smooth
-sensitivity $S(\dataobs)$ -- defined by \cite{nissim2007smooth}-- of
-$\hellinger(\bysinfer(\dataobs), \cdot)$.
-
-$\gamma = \gamma(\epsilon, \delta)$ is a function of $\epsilon$ and $\delta$ to
-be determined later, and where $LS(\dataobs')$ denotes the local
-sensitivity at $\bysinfer(\dataobs')$, or equivalently at $\dataobs'$,
-of the scoring function used in our mechanism.
-
-This mechanism also extends to the Dirichlet-multinomial system $\dirichlet(\valpha)$ by rewriting the Hellinger distance as:
-\[
-  \hellinger(\dirichlet(\valpha_1), \dirichlet(\valpha_2)) = \sqrt{1 - \frac{\betaf(\frac{\valpha_1 + \valpha_2}{2})}{\sqrt{\betaf(\valpha_1) \betaf(\valpha_2)}}},
-\]
-and by replacing the $\candidateset$ with set of posterior Dirichlet
-distributions candidates. Also, the smooth sensitivity $S(\dataobs)$
-in (\ref{eq:smooth}) will be computed by letting $\dataobs'$ range
-over all the elements in $\datauni^{n}$ adjacent to $\dataobs$. Notice
-that $\candidateset$ has $\binom{n + 1}{m - 1}$ elements in this case. We
-will denote by $\hexpmechd$ the mechanism for the
-Dirichlet-multinomial system.
-
-By setting the $\gamma$ as $\ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta'}{2 (n + 1)})})$, $\hexpmech$ is $(\epsilon, \delta) -$differentially private, where $\delta = \frac{e^{\frac{\epsilon}{2}} \delta'}{2}$. (or $\gamma = \ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta'}{2 |\candidateset|})})$ when generalized to Dirichlet-multinomial System)
-
 
 \section{Privacy Analysis}
 
@@ -249,11 +229,6 @@ $\hexpmech$ is $2\epsilon$-differential privacy in Beta-binomial system.
   \big(
   \frac{-\epsilon\cdot(\uxadj{r})}{2\cdot S(\dataobs')}
   \big)\\
-  \end{split}
-  \end{equation*}
-
-  \begin{equation*}
-  \begin{split}
   & = exp\big( \frac{\epsilon}{2} \big) \cdot 
   \frac {
   exp
