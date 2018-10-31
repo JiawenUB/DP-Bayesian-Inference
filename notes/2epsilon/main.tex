@@ -132,7 +132,7 @@ Given data set $\dataobs$, $S(\dataobs)$ is the $\gamma -$smooth sensitivity of 
 
 \begin{thm}
 \label{thm_gamma_smooth}
-$S(\dataobs)$ is $\gamma -$smooth sensitivity for $\hellinger(\bysinfer(\dataobs),-)$ if it is calculated by:
+$S(\dataobs)$ is $\gamma -$smooth sensitivity if it is calculated by:
 \begin{equation}
   \label{eq_smooth}
    S(\dataobs)=\max_{\dataobs' \in \{0,1\}^{n}}\bigg \{ \frac{1}{\frac{1}{LS(\dataobs')} +\gamma \cdot d(\dataobs,\dataobs')} \bigg \},
@@ -164,7 +164,10 @@ Since $d(\dataobs,\dataobs'') \leq d(\dataobs,\dataobs') + d(\dataobs',\dataobs'
 & = \gamma + \frac{1}{S(\dataobs')}
 \end{split}
 \end{equation*}
-
+$\implies$
+\begin{equation*}
+\frac{1}{S(\dataobs)} - \frac{1}{S(\dataobs')} \leq \gamma.
+\end{equation*}
 
 \end{proof}
 
@@ -190,7 +193,7 @@ The mechanism $\hexpmech(\dataobs)$ outputs a candidate $r \in \candidateset\dat
 \underset{z \thicksim \hexpmech}{\Pr}[z=r] = \frac {exp\big(\frac{-\epsilon\cdot\hellinger(\bysinfer(\dataobs),r)}{2\cdot S(\dataobs)}\big)}
 {\nomalizer{\dataobs}}.
 \end{equation*}
-where $S_\beta(\dataobs)$ is the $\gamma -$smooth sensitivity of $\hellinger(\bysinfer(\dataobs),-)$, calculated by Theorem \ref{thm_gamma_smooth}.
+where $S(\dataobs)$ is the $\gamma -$smooth sensitivity of $\hellinger(\bysinfer(\dataobs),-)$, calculated by Theorem \ref{thm_gamma_smooth}.
 \end{definition}
 
 \section{Privacy Analysis}
