@@ -1,0 +1,89 @@
+\usepackage{natbib}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{mdframed}
+\usepackage{subfigure}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{subfigure}
+\usepackage{siunitx} % Provides the \SI{}{} and \si{} command for typesetting SI units
+\usepackage{graphicx} % Required for the inclusion of images
+% \usepackage{natbib} % Required to change bibliography style to APA
+\usepackage{datetime}
+\usepackage{xspace}
+\usepackage[english]{babel} % English language/hyphenation
+\usepackage{proof}
+\usepackage{booktabs} % Top and bottom rules for tables
+
+\usepackage{stmaryrd}
+\usepackage{amsmath,amsthm,amssymb,latexsym} 
+% \usepackage{mathabx}
+% \usepackage{subfigure}
+% \usepackage{caption}
+% \usepackage[utf8]{inputenc}
+% \usepackage[english]{babel} 
+% \usepackage[nottoc]{tocbibind}
+% \usepackage[english]{babel}
+ 
+%\usepackage{biblatex}
+
+\usepackage{authblk}
+%\usepackage[usenames, dvipsnames]{color}
+%\setlength\parindent{0pt}
+\newtheorem{definition}{Definition}
+\usepackage{cancel}
+\usepackage[normalem]{ulem}
+\newcommand{\dataobs}{\textbf{x}}
+\newcommand{\adj}[2]{\textbf{adj}(#1,#2)}
+\newcommand{\candidateset}[1]{\mathcal{R}_{\textup{post}}(#1)}
+\newcommand{\bprior}{\boldsymbol{\beta}_{\textup{prior}}}
+\newcommand{\bysinfer}{\mathsf{BI}}
+\newcommand{\betad}{\mathsf{beta}}
+\newcommand{\betaf}{\textup{B}}
+\newcommand{\mbetaf}{\boldsymbol{\textup{B}}}
+\newcommand{\vtheta}{\boldsymbol{\theta}}
+\newcommand{\valpha}{\boldsymbol{\alpha}}
+\newcommand{\vbeta}{\boldsymbol{\beta}}
+
+\newcommand{\expmech}[4]{\mathcal{M}_E^{#1}({#2},{#3},{#4})}
+\newcommand{\sexpmech}{\mathcal{M}_E^S}
+\newcommand{\hexpmech}{\mathcal{M}_{\hellinger}}
+\newcommand{\hexpmechd}{\mathcal{M}^{D}_{\hellinger}}
+\newcommand{\privinfer}{\mathsf{PrivInfer}}
+\newcommand{\hlg}{\mathsf{H}}
+\newcommand{\dirichlet}{\mathsf{DL}}
+\newcommand{\alphas}{\boldsymbol{\alpha}}
+\newcommand{\xis}{\boldsymbol{\xi}}
+\newcommand{\iverson}[1]{[#1]}
+\newcommand{\datauni}{\mathcal{X}}
+\newcommand{\hellinger}{\mathcal{H}}
+\newcommand{\ux}[1]{u(\textbf{x}, {#1})}
+\newcommand{\uxadj}[1]{u(\textbf{x}', {#1})}
+\newcommand{\cardinality}[2]{\mathcal{C}^{#1}_{#2}}
+\newcommand{\nomalizer}[1]{\sum_{r'\in \mathcal{R}_{\textup{post}}(#1)} exp \big(\frac{-\epsilon\cdot \mathcal{H} (\mathsf{BI}(#1),r')}{2 \cdot S(#1)}\big)}
+
+\newcommand{\unomalizer}[1]{\sum_{r'\in \mathcal{R}_{\textup{post}}(#1)} exp \big(\frac{-\epsilon\cdot u(\textbf{#1}, r')}{2 \cdot S(#1)}\big)}
+
+
+\newcommand{\hexpmechPr}[2]{\underset{z \thicksim \hexpmech(#1)}{Pr}[#2]}
+% \newcommand{\because}{\mathsf{because}}
+% \newcommand{\therefore}{\mathsf{therefore}}
+%\newcommand{\theHalgorithm}{\arabic{algorithm}}
+% \theoremstyle{plain}
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{lem}{Lemma}[section]
+% \newtheorem{prop}[thm]{Proposition}
+\newtheorem{assert}{Assertion}[lem]
+% \newtheorem*{cor}{Corollary}
+% \theoremstyle{definition}
+% % \newtheorem{definition}{Definition}[section]
+% \newtheorem{defn}{Definition}[section]
+% \newtheorem{conj}{Conjecture}[section]
+% \newtheorem{exmp}{Example}[section]
+
+% \theoremstyle{remark}
+% \newtheorem*{rem}{Remark}
+% \newtheorem*{note}{Note}
+\newcommand{\lap}[2]{\mathcal{L}(#1, #2)}
+\newcommand{\todo}[1]{{\footnotesize \color{red}\textbf{[[ #1 ]]}}}
