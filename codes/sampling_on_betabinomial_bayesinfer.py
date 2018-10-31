@@ -70,7 +70,7 @@ def plot_mean_error(x,y_list,xstick,xlabel, ylabel, title):
 
 def accuracy_VS_datasize(epsilon,delta,prior,observations,datasizes):
 	data = []
-	mean_error = [[],[],[],[]]
+	mean_error = [[],[],[]]
 	for i in range(len(datasizes)):
 		observation = observations[i]
 		Bayesian_Model = BayesInferwithDirPrior(prior, sum(observation), epsilon, delta)
@@ -81,7 +81,7 @@ def accuracy_VS_datasize(epsilon,delta,prior,observations,datasizes):
 		mean_error[0].append(Bayesian_Model._accuracy_mean[Bayesian_Model._keys[0]])
 		mean_error[1].append(Bayesian_Model._accuracy_mean[Bayesian_Model._keys[1]])
 		mean_error[2].append(Bayesian_Model._accuracy_mean[Bayesian_Model._keys[2]])
-		mean_error[3].append(Bayesian_Model._accuracy_mean[Bayesian_Model._keys[3]])
+		# mean_error[3].append(Bayesian_Model._accuracy_mean[Bayesian_Model._keys[3]])
 
 		# data.append(Bayesian_Model._accuracy[Bayesian_Model._keys[3]])
 		# data.append(Bayesian_Model._accuracy[Bayesian_Model._keys[0]])
@@ -96,8 +96,8 @@ def accuracy_VS_datasize(epsilon,delta,prior,observations,datasizes):
 	plot_mean_error(datasizes, mean_error, datasizes, "Different Datasizes", 
 		["BASELINE LapMech (sensitivity = 2)", 
 		"IMPROVED LapMech (sensitivity = 1)",
-		r'$\mathcal{M}^{B}_{\mathcal{H}}$ with SS',
-		r'$\mathcal{M}^{B}_{\mathcal{H}}$ with alpha SS'
+		r'$\mathcal{M}_{\mathcal{H}}$ with SS',
+		# r'$\mathcal{M}_{\mathcal{H}}$ with $\gamma -$SS'
 		], "")
 	
 	# plot_error_box(data,"Different Datasizes",datasizes,"Accuracy VS. Data Size",
@@ -129,7 +129,7 @@ def accuracy_VS_prior(sample_size,epsilon,delta,priors,observation):
 		
 	plot_error_box(data,r"Different Priors on $\theta$",[r"$\mathsf{beta}$" + str(i._alphas) for i in priors],
 		"Accuracy VS. Prior Distribution",
-		[r'$\mathcal{M}^{B}_{\mathcal{H}}$',"LapMech (sensitivity = 1)", "LapMech (sensitivity = 2)"],
+		[r'$\mathcal{M}_{\mathcal{H}}$',"LapMech (sensitivity = 1)", "LapMech (sensitivity = 2)"],
 		['navy', 'red', 'green'])
 	return
 
