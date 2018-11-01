@@ -637,7 +637,7 @@ Then, the proof is finished.
 \subsubsection{Dilation Property of $\hexpmech$}
 \begin{lem}
 \label{lem_dilation}
-Given $\hexpmech(\dataobs)$ in Beta-binomial system, for any $r\in \candidateset$, let $\lambda < |\gamma|$, $\epsilon$, $|\delta'| < 1$ and $\gamma \leq \ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta'}{2 |\candidateset|})})$, the following \emph{dilation property} holds:
+Given $\hexpmech(\dataobs)$ in Beta-binomial system, for any $r\in \candidateset$, let $1 - \frac{\delta'}{2} = |\candidateset|exp(\frac{\epsilon}{2 (1 - e ^ {\lambda})})$, the following \emph{dilation property} holds:
 \begin{equation*}
 \hexpmechPr{\dataobs}{\ux{z} = \ux{r}}
 \leq
@@ -804,7 +804,7 @@ Next, we proof the dilation property for $\lambda > 0$, The ratio of $\frac{h(c)
           \end{equation*}         
           holds with failure probability $\frac{\delta'}{2}$ is proved.
 
-          Particularly, $|\candidateset| = n + 1$ because in Beta-binomial system.
+          Particularly, $|\candidateset| = n + 1$ in Beta-binomial system.
 
       \end{itemize}
 
@@ -1085,7 +1085,7 @@ where $\ux{r} = \hellinger(\bysinfer(\dataobs),r)$ for $r \in \candidateset$ and
 
 
 
-\subsubsection{$\hexpmech$ $2\epsilon$ Privacy Analysis}
+\subsubsection{$\hexpmech$ $2\epsilon-$Differential Privacy Proof}
 
 \begin{lem}
 \label{lem_hexpmech_privacy}
