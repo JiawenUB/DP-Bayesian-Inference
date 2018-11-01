@@ -12,13 +12,13 @@
 \author[**]{Mark Bun}
 \author[*]{Gian Pietro Farina}
 \author[*]{Marco Gaboardi}
-\affil[*]{Department of Computer Science and Engineering, University at Buffalo, SUNY. \{jliu223,gianpiet,gaboardi\}@buffalo.edu}
-\affil[**]{Department of Computer Science, Princeton University. {mbun@cs.princeton.edu}}
+\affil[*]{University at Buffalo, SUNY. \{jliu223,gianpiet,gaboardi\}@buffalo.edu}
+\affil[**]{Princeton University. {mbun@cs.princeton.edu}}
 \date{}
-
 \maketitle
-\tableofcontents
+{\footnotesize \tableofcontents}
 
+\newpage
 \begin{abstract} Bayesian inference is a statistical method which
 allows one to derive a \emph{posterior} distribution,
 starting from a \emph{prior} distribution and observed data. Several
@@ -1080,7 +1080,6 @@ Pr[u(\hexpmech(\dataobs)) \leq c]
 & \leq |\candidateset|exp(\frac{\epsilon c}{2 S(\dataobs)}),
 \end{split}
 \end{equation*}
-
 which has been used in the dilation property proof.
 
 
@@ -1090,7 +1089,7 @@ which has been used in the dilation property proof.
 
 \subsection{Efficiency Evaluation}
 \label{subsec_effi}
-The formula for computing the local sensitivity presented in Sec. \ref{subsec_baselines}: $LS(\dataobs)=\max\limits_{\dataobs' \in \datauni^n:\adj{\dataobs}{\dataobs'}, r\in \mathcal{R}}\lvert \hellinger(\bysinfer(\dataobs'), r) - \hellinger(\bysinfer(\dataobs'), r)\rvert.$ 
+The formula for computing the local sensitivity presented in Sec. \ref{subsec_baselines}: $LS(\dataobs)=\max\limits_{\dataobs' \in \datauni^n:\adj{\dataobs}{\dataobs'}, r\in \mathcal{R}}\lvert \hellinger(\bysinfer(\dataobs'), r) - \hellinger(\bysinfer(\dataobs'), r)\rvert$ 
 can be reduced to $\max\limits_{\{|\dataobs,\dataobs'| \leq 1; \dataobs'\in \mathcal{X}^n\}}\hellinger(\bysinfer(\dataobs), \bysinfer(\dataobs'))|$
 by applying the distance triangle property. 
 
