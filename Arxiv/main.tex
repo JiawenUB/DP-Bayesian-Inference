@@ -180,7 +180,7 @@ $\epsilon-$differential privacy.
 A randomized mechanism $\mathcal{M}: \mathcal{X} \rightarrow \mathcal{Y}$ is differential privacy, iff for any adjacent\footnote{Given $\dataobs, \dataobs'$  we say that $\dataobs$ and $\dataobs'$ are adjacent and we write, $\adj{\dataobs}{\dataobs'}$, iff\\
 $\displaystyle \sum_{i}^{n}\iverson{x_i = x'_i }\leq 1$. } input $\dataobs, \dataobs' \in \mathcal{X}$, a metric $H$ over $\mathcal{Y}$ and a $B \subseteq H(\mathcal{Y})$, $\mathcal{M}$ satisfies:
 \begin{equation*}
-\mathbb{P}[H(\mathcal{M}(\dataobs)) \in B] = e^\epsilon \mathbb{P}[H(\mathcal{M}(\dataobs')) \in B].
+\Pr[H(\mathcal{M}(\dataobs)) \in B] = e^\epsilon \Pr[H(\mathcal{M}(\dataobs')) \in B].
 \end{equation*}
 
 \end{definition}
@@ -191,9 +191,8 @@ $(\epsilon,\delta)-$differential privacy.
 
 A randomized mechanism $\mathcal{M}: \mathcal{X} \rightarrow \mathcal{Y}$ is differential privacy, iff for any $\adj{\dataobs}{\dataobs'} \in \mathcal{X}$, a metric $H$ over $\mathcal{Y}$ and a $B \subseteq H(\mathcal{Y})$, $\mathcal{M}$ satisfies:
 \begin{equation*}
-\mathbb{P}[H(\mathcal{M}(\dataobs)) \in B] = e^\epsilon \mathbb{P}[H(\mathcal{M}(\dataobs')) \in B] + \delta,
-\end{equation*}
-vwhere $\dataobs = (x_i)_{i = 1}^n$ and $\dataobs = (x'_i)_{i = 1}^n$ is adjacent if there is only one $j$ that $x_j \neq x'_j$ and $x_i = x'_i$ for $i = 1, 2, \cdots, n; i \neq j$. 
+\Pr[H(\mathcal{M}(\dataobs)) \in B] = e^\epsilon \Pr[H(\mathcal{M}(\dataobs')) \in B] + \delta.
+\end{equation*} 
 \end{definition}
 
 \section{Technical Problem Statement and Motivations}
@@ -308,7 +307,7 @@ The exponential mechanism with local sensitivity is non-differential privacy\cit
 
 
 
-\subsubsection{Baseline Mechanism - Laplace Mechanism}
+\subsubsection{Laplace Mechanism}
  Adding noise to the posterior distribution parameters directly, through Laplace mechanism ($\lap{\cdot}{\cdot}$) with post-processing:
 
  \[
@@ -366,18 +365,14 @@ where $S_\beta(\dataobs)$ is the smooth sensitivity of $\hellinger(\bysinfer(\da
 where $d$ is the Hamming distance between two datasets, and $\gamma$ is the smooth upper bound in smooth sensitivity.
 \end{definition}
 
-This mechanism is based on the basic exponential mechanism
+This mechanism is based on the standard exponential mechanism
 \cite{talwar}, with $\candidateset$ as the range and
 $\hellinger(\cdot,\cdot)$ as the scoring function. The difference is
 that in this mechanism we don't calibrate the noise w.r.t. to the
 global sensitivity of the scoring function but w.r.t. to the smooth
 sensitivity $S(\dataobs)$ -- defined by \cite{nissim2007smooth}-- of
-$\hellinger(\bysinfer(\dataobs), \cdot)$.
-
-$\gamma = \gamma(\epsilon, \delta)$ is a function of $\epsilon$ and $\delta$ to
-be determined later, and where $LS(\dataobs')$ denotes the local
-sensitivity at $\bysinfer(\dataobs')$, or equivalently at $\dataobs'$,
-of the scoring function used in our mechanism.
+$\hellinger(\bysinfer(\dataobs), \cdot)$, where $LS(\dataobs')$ denotes the local
+sensitivity at $\dataobs'$, of the scoring function used in our mechanism and  $\gamma$ is the smooth upper bound for smooth sensitivity.
 
 This mechanism also extends to the Dirichlet-multinomial system $\dirichlet(\valpha)$ by rewriting the Hellinger distance as:
 \[
@@ -391,7 +386,7 @@ that $\candidateset$ has $\binom{n + 1}{m - 1}$ elements in this case. We
 will denote by $\hexpmechd$ the mechanism for the
 Dirichlet-multinomial system.
 
-By setting the $\gamma$ as $\ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta'}{2 (n + 1)})})$, $\hexpmech$ is $(\epsilon, \delta) -$differentially private, where $\delta = \frac{e^{\frac{\epsilon}{2}} \delta'}{2}$.
+% By setting the $\gamma$ as $\ln(1 - \frac{\epsilon}{2 \ln (\frac{\delta'}{2 (n + 1)})})$, $\hexpmech$ is $(\epsilon, \delta) -$differentially private, where $\delta = \frac{e^{\frac{\epsilon}{2}} \delta'}{2}$.
 
 
 \section{Privacy Analysis}

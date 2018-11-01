@@ -99,7 +99,7 @@ $\epsilon-$differential privacy.
 A randomized mechanism $\mathcal{M}: \mathcal{X} \rightarrow \mathcal{Y}$ is differential privacy, iff for any adjacent\footnote{Given $\dataobs, \dataobs'$  we say that $\dataobs$ and $\dataobs'$ are adjacent and we write, $\adj{\dataobs}{\dataobs'}$, iff\\
 $\displaystyle \sum_{i}^{n}\iverson{x_i = x'_i }\leq 1$. } input $\dataobs, \dataobs' \in \mathcal{X}$, a metric $H$ over $\mathcal{Y}$ and a $B \subseteq H(\mathcal{Y})$, $\mathcal{M}$ satisfies:
 \begin{equation*}
-\mathbb{P}[H(\mathcal{M}(\dataobs)) \in B] = e^\epsilon \mathbb{P}[H(\mathcal{M}(\dataobs')) \in B].
+\Pr[H(\mathcal{M}(\dataobs)) \in B] = e^\epsilon \Pr[H(\mathcal{M}(\dataobs')) \in B].
 \end{equation*}
 
 \end{definition}
@@ -110,7 +110,7 @@ $(\epsilon,\delta)-$differential privacy.
 
 A randomized mechanism $\mathcal{M}: \mathcal{X} \rightarrow \mathcal{Y}$ is differential privacy, iff for any $\adj{\dataobs}{\dataobs'} \in \mathcal{X}$, a metric $H$ over $\mathcal{Y}$ and a $B \subseteq H(\mathcal{Y})$, $\mathcal{M}$ satisfies:
 \begin{equation*}
-\mathbb{P}[H(\mathcal{M}(\dataobs)) \in B] = e^\epsilon \mathbb{P}[H(\mathcal{M}(\dataobs')) \in B] + \delta,
+\Pr[H(\mathcal{M}(\dataobs)) \in B] = e^\epsilon \Pr[H(\mathcal{M}(\dataobs')) \in B] + \delta,
 \end{equation*}
 vwhere $\dataobs = (x_i)_{i = 1}^n$ and $\dataobs = (x'_i)_{i = 1}^n$ is adjacent if there is only one $j$ that $x_j \neq x'_j$ and $x_i = x'_i$ for $i = 1, 2, \cdots, n; i \neq j$. 
 \end{definition}
@@ -136,7 +136,7 @@ $S(\dataobs)$ is $\gamma -$smooth sensitivity.
 
 \begin{thm}
 \label{thm_gamma_smooth}
-$S(\dataobs)$ is $\gamma -$smooth sensitivity if it is calculated by:
+Given data set $\dataobs$ of size $n$, $S(\dataobs)$ is $\gamma -$smooth sensitivity if it is calculated by:
 \begin{equation}
   \label{eq_smooth}
    S(\dataobs)=\max_{\dataobs'' \in \{0,1\}^{n}}\bigg \{ \frac{1}{\frac{1}{LS(\dataobs'')} +\gamma \cdot d(\dataobs,\dataobs'')} \bigg \},
@@ -149,7 +149,7 @@ of Theorem. \ref{thm_gamma_smooth}.
 
 For $\adj{\dataobs}{\dataobs'}$ and arbitrary $\dataobs'' \in \{0,1\}^{n}$:
 
-By Definition \ref{eq_smooth}:
+By Equation (\ref{eq_smooth}):
 \begin{equation*}
 \begin{split}
 S(\dataobs) 
@@ -221,7 +221,6 @@ $\hexpmech$ is $2\epsilon$-differential privacy.
   \end{equation*}
 
   By definition \ref{def_smoo}:
-
   \begin{equation*}
   \begin{split}
   \hexpmechPr{\dataobs}{z = r} 
@@ -278,7 +277,6 @@ $\hexpmech$ is $2\epsilon$-differential privacy.
   \end{equation*}
   
   Because $\uxadj{r} = \hellinger(\bysinfer(\dataobs'), r) \leq 1$:
-
   \begin{equation*}
   \begin{split}
   & \leq exp\big( \frac{\epsilon}{2} \big) \cdot 
@@ -296,8 +294,7 @@ $\hexpmech$ is $2\epsilon$-differential privacy.
   \end{split}
   \end{equation*}
 
-  Because the property of $\gamma -$smooth sensitivity: $\frac{1}{S(\dataobs')} - \frac{1}{S(\dataobs)} \leq \gamma$:
-  
+  Because the property of $\gamma -$smooth sensitivity: $\frac{1}{S(\dataobs')} - \frac{1}{S(\dataobs)} \leq \gamma$:  
   \begin{equation*}
   \begin{split}
   & \leq exp\big( \frac{\epsilon}{2} \big) \cdot 
@@ -322,8 +319,8 @@ $\hexpmech$ is $2\epsilon$-differential privacy.
   {\unomalizer{\dataobs}}\\
   \end{split}
   \end{equation*}
-  Doing the same transformation in the denominator:
 
+  Doing the same transformation in the denominator:
   \begin{equation*}
   \begin{split}
   & = exp\big( \frac{\epsilon}{2} + \frac{\epsilon}{2} \cdot \gamma\big) \cdot 
@@ -362,7 +359,6 @@ $\hexpmech$ is $2\epsilon$-differential privacy.
   \end{equation*}
 
   Because $S(\dataobs) \geq LS(\dataobs) \geq (\ux{r} - \uxadj{r})$ $\implies$ $ \frac{-\epsilon\cdot(\ux{r'} - \uxadj{r'})}{2 \cdot S(\dataobs)} \geq \frac{-\epsilon}{2}$:
-
   \begin{equation*}
   \begin{split}
   & \leq exp\big( \frac{\epsilon}{2} + \frac{\epsilon}{2} \cdot \gamma\big) \cdot 
@@ -438,8 +434,7 @@ $\hexpmech$ is $2\epsilon$-differential privacy.
   \end{equation*}
 
   Because $\uxadj{r} = \hellinger(\bysinfer(\dataobs'), r) \leq 1$ $\implies$ $\frac{- \epsilon\cdot(\ux{r'})}{2} \geq  \frac{-\epsilon}{2}$:
-
-    \begin{equation*}
+  \begin{equation*}
   \begin{split}
   & \leq exp\big( \frac{\epsilon}{2} + \frac{\epsilon}{2} \cdot \gamma\big) \cdot 
   \frac {
@@ -473,7 +468,7 @@ $\hexpmech$ is $2\epsilon$-differential privacy.
   $\frac{- \epsilon}{2}
   (\frac{1}{S(\dataobs)}-
   \frac{1}{S(\dataobs')}) \geq \frac{- \epsilon}{2} \cdot \gamma$
-      \begin{equation*}
+  \begin{equation*}
   \begin{split}
   & \leq exp\big( \frac{\epsilon}{2} + \frac{\epsilon}{2} \cdot \gamma\big) \cdot 
   \frac {
