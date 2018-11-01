@@ -1,11 +1,9 @@
  % \documentclass[sigconf]{acmart}
 \documentclass{article}
-
 % We want page numbers on submissions
 
 %%\ccsPaper{9999} % TODO: replace with your paper number once obtained
 \input{macros}
-\usepackage{accents}
 
 \begin{document}
 \title{Tailoring Differentially Private Bayesian Inference to Distance Between Distributions}
@@ -17,7 +15,10 @@
 \affil[*]{Department of Computer Science and Engineering, University at Buffalo, SUNY. \{jliu223,gianpiet,gaboardi\}@buffalo.edu}
 \affil[**]{Department of Computer Science, Princeton University. {mbun@cs.princeton.edu}}
 \date{}
+
 \maketitle
+\tableofcontents
+
 \begin{abstract} Bayesian inference is a statistical method which
 allows one to derive a \emph{posterior} distribution,
 starting from a \emph{prior} distribution and observed data. Several
@@ -1087,7 +1088,7 @@ which has been used in the dilation property proof.
 \section{Experimental Evaluations}
 \label{sec_experiment}
 
-\subsection{Computation Efficiency Optimization}
+\subsection{Efficiency Evaluation}
 \label{subsec_effi}
 The formula for computing the local sensitivity presented in Sec. \ref{subsec_baselines}: $LS(\dataobs)=\max\limits_{\dataobs' \in \datauni^n:\adj{\dataobs}{\dataobs'}, r\in \mathcal{R}}\lvert \hellinger(\bysinfer(\dataobs'), r) - \hellinger(\bysinfer(\dataobs'), r)\rvert.$ 
 can be reduced to $\max\limits_{\{|\dataobs,\dataobs'| \leq 1; \dataobs'\in \mathcal{X}^n\}}\hellinger(\bysinfer(\dataobs), \bysinfer(\dataobs'))|$
@@ -1111,7 +1112,8 @@ This equation is validated by an experimental result shown in Fig. \ref{fig_effi
 \label{fig_efficiency}
 \end{figure}
 
-\subsection{Theoretical Results}
+\subsection{Accuracy Evaluation}
+\subsubsection{Theoretical Results}
 
 \begin{figure}
 \begin{center}
@@ -1135,7 +1137,7 @@ the data will be split in the $k=3$ bins with perecentages of: 33\%, 33\% and 34
 In Fig. \ref{fig_theory}, candidates of smaller distance from true posterior can be outputted by $\hexpmech$ (in blue line) with larger probability than by baseline Laplace mechanism (in green line). This means $\hexpmech$ can produce good results with larger probability than baseline mechanism. However, the improved Laplace mechanism represented by red line can produce good results with probability higher than $\hexpmech$. It outperforms $\hexpmech$.
 
 
-\subsection{Experimental Results}
+\subsubsection{Experimental Results}
 \label{subsec_vs_variables}
 
 In this section, we evaluate the accuracy of the mechanisms defined in
@@ -1222,7 +1224,7 @@ Similar to the plots above, Figure \ref{fig_vs_prior} shows that in the beginnin
 \label{fig_vs_prior}
 \end{figure}
 
-\subsection{Experiment Evaluations on Privacy Loss}
+\subsection{Privacy Evaluation}
 \label{subsec_experiment_privacy}
 In order to see our privacy behavior, we study the accurate epsilon under concrete cases in this section. The $(\epsilon, \delta)$ - differential privacy we proved in Sec. \ref{subsec_hexpmech} is just an upper bound, we concrete $\epsilon$ should be smaller than upper bound in our exponential mechanism. We calculate the concrete privacy value in following ways wrt. the data size, and obtain plots in Fig. \ref{fig_privacy}.
 
