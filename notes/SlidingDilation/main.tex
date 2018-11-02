@@ -8,7 +8,7 @@
 \usepackage{accents}
 
 \begin{document}
-\title{Proof of 2$\epsilon-$Differential Privacy}
+\title{Proof of Sliding and Dilation Property}
 
 \author[*]{Jiawen Liu}
 \author[**]{Mark Bun}
@@ -114,68 +114,6 @@ A randomized mechanism $\mathcal{M}: \mathcal{X} \rightarrow \mathcal{Y}$ is dif
 \end{equation*}
 vwhere $\dataobs = (x_i)_{i = 1}^n$ and $\dataobs = (x'_i)_{i = 1}^n$ is adjacent if there is only one $j$ that $x_j \neq x'_j$ and $x_i = x'_i$ for $i = 1, 2, \cdots, n; i \neq j$. 
 \end{definition}
-
-
-
-\section{$\gamma$-Smooth Sensitivity}
-\label{sec_mechs}
-
-\begin{definition}
-Given data set $\dataobs$, if a sensitivity $S(\dataobs)$ of $\dataobs$ satisfying:
-
-For any $\adj{\dataobs}{\dataobs'}$:
-\begin{equation}
-\label{eq_gamma_smooth}
-\frac{1}{S(\dataobs)} - \frac{1}{S(\dataobs')} \leq \gamma.
-\end{equation}
-
-$S(\dataobs)$ is $\gamma -$smooth sensitivity.
-
-\end{definition}
-
-
-\begin{thm}
-\label{thm_gamma_smooth}
-Given data set $\dataobs$ of size $n$, $S(\dataobs)$ is $\gamma -$smooth sensitivity if it is calculated by:
-\begin{equation}
-  \label{eq_smooth}
-   S(\dataobs)=\max_{\dataobs'' \in \{0,1\}^{n}}\bigg \{ \frac{1}{\frac{1}{LS(\dataobs'')} +\gamma \cdot d(\dataobs,\dataobs'')} \bigg \},
-\end{equation}
-where $d$ is the Hamming distance between two data sets.
-\end{thm}
-
-\begin{proof}
-of Theorem. \ref{thm_gamma_smooth}.
-
-For $\adj{\dataobs}{\dataobs'}$ and arbitrary $\dataobs'' \in \{0,1\}^{n}$:
-
-By Equation (\ref{eq_smooth}):
-\begin{equation*}
-\begin{split}
-S(\dataobs) 
-& \geq \frac{1}{\frac{1}{LS(\dataobs'')} +\gamma \cdot d(\dataobs,\dataobs'')}\\
-\frac{1}{S(\dataobs)} 
-& \leq \frac{1}{LS(\dataobs'')} +\gamma \cdot d(\dataobs,\dataobs'')\\
-\end{split}
-\end{equation*}
-
-Since $d(\dataobs,\dataobs'') \leq d(\dataobs,\dataobs') + d(\dataobs',\dataobs'') \leq 1 + d(\dataobs',\dataobs'')$:
-
-\begin{equation*}
-\begin{split}
-& \leq \frac{1}{LS(\dataobs'')} +\gamma \cdot (1 + d(\dataobs',\dataobs''))\\
-& = \gamma + \frac{1}{LS(\dataobs'')} +\gamma \cdot d(\dataobs',\dataobs'')\\
-& = \gamma + \frac{1}{S(\dataobs')}
-\end{split}
-\end{equation*}
-$\implies$
-\begin{equation*}
-\frac{1}{S(\dataobs)} - \frac{1}{S(\dataobs')} \leq \gamma.
-\end{equation*}
-
-\end{proof}
-
-
 
 
 \subsection{$\hexpmech$: Smoothed Hellinger Distance Based Exponential Mechanism}
