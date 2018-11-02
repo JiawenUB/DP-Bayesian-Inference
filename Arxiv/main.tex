@@ -16,7 +16,7 @@
 \affil[**]{Princeton University. {mbun@cs.princeton.edu}}
 \date{}
 \maketitle
-{\small \tableofcontents}
+{\footnotesize \tableofcontents}
 
 \newpage
 \begin{abstract} Bayesian inference is a statistical method which
@@ -413,7 +413,7 @@ $\implies$
 
 \end{proof}
 
-\subsubsection{$\hexpmech$ Proposition}
+\subsection{$\hexpmech$ Proposition}
 
 \begin{definition}
 \label{def_smoo_2}
@@ -441,7 +441,7 @@ This mechanism also extends to the Dirichlet-multinomial system $\dirichlet(\val
 \]
 and by replacing the $\candidateset$ with set of posterior Dirichlet
 distributions candidates. Also, the smooth sensitivity $S(\dataobs)$
-in (\ref{eq:smooth}) will be computed by letting $\dataobs'$ range
+in (\ref{thm_gamma_smooth}) will be computed by letting $\dataobs'$ range
 over all the elements in $\datauni^{n}$ adjacent to $\dataobs$. Notice
 that $\candidateset$ has $\binom{n + 1}{m - 1}$ elements in this case. We
 will denote by $\hexpmechd$ the mechanism for the
@@ -456,11 +456,11 @@ Dirichlet-multinomial system.
 
 \section{Privacy Analysis}
 
-\subsection{Privacy Analysis for Baseline Mechanisms}
-In baseline mechanisms, \emph{exponential mechanism}, \emph{Laplace mechanism}, \emph{improved Laplace mechanism} are $\epsilon-$differential privacy provided by \cite{dwork2014algorithmic}. The \emph{exponential mechanism with local sensitivity} is non-differential privacy, also from \cite{dwork2014algorithmic}.
+% \subsection{Privacy Analysis for Baseline Mechanisms}
+% In baseline mechanisms, \emph{exponential mechanism}, \emph{Laplace mechanism}, \emph{improved Laplace mechanism} are $\epsilon-$differential privacy provided by \cite{dwork2014algorithmic}. The \emph{exponential mechanism with local sensitivity} is non-differential privacy, also from \cite{dwork2014algorithmic}.
 
 
-\subsubsection{$\hexpmech$ $\epsilon-$Differential Privacy Proof}
+\subsection{$\hexpmech$ $\epsilon-$Differential Privacy Proof}
 
 \begin{lem}
 \label{lem_hexpmech_privacy}
