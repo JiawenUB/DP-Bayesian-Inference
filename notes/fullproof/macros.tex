@@ -5,7 +5,7 @@
 \usepackage{mdframed}
 \usepackage{subfigure}
 \usepackage{booktabs}
-\usepackage{hyperref}
+% \usepackage{hyperref}
 \usepackage{subfigure}
 \usepackage{siunitx} % Provides the \SI{}{} and \si{} command for typesetting SI units
 \usepackage{graphicx} % Required for the inclusion of images
@@ -15,6 +15,8 @@
 \usepackage[english]{babel} % English language/hyphenation
 \usepackage{proof}
 \usepackage{booktabs} % Top and bottom rules for tables
+\usepackage[colorlinks, allcolors = blue,]{hyperref}
+\usepackage{accents}
 
 \usepackage{stmaryrd}
 \usepackage{amsmath,amsthm,amssymb,latexsym} 
@@ -58,13 +60,23 @@
 \newcommand{\iverson}[1]{[#1]}
 \newcommand{\datauni}{\mathcal{X}}
 \newcommand{\hellinger}{\mathcal{H}}
+\newcommand{\ux}[1]{u(\textbf{x}, {#1})}
+\newcommand{\uxadj}[1]{u(\textbf{x}', {#1})}
+\newcommand{\cardinality}[2]{\mathcal{C}^{#1}_{#2}}
+\newcommand{\nomalizer}[1]{\sum_{r'\in \mathcal{R}_{\textup{post}}(#1)} exp \big(\frac{-\epsilon\cdot \mathcal{H} (\mathsf{BI}(#1),r')}{2 \cdot S(#1)}\big)}
+
+\newcommand{\unomalizer}[1]{\sum_{r'\in \mathcal{R}_{\textup{post}}(#1)} exp \big(\frac{-\epsilon\cdot u(\textbf{#1}, r')}{2 \cdot S(#1)}\big)}
+
+
+\newcommand{\hexpmechPr}[2]{\underset{z \thicksim \hexpmech(#1)}{Pr}[#2]}
 % \newcommand{\because}{\mathsf{because}}
 % \newcommand{\therefore}{\mathsf{therefore}}
 %\newcommand{\theHalgorithm}{\arabic{algorithm}}
 % \theoremstyle{plain}
 \newtheorem{thm}{Theorem}[section]
-\newtheorem{lem}[thm]{Lemma}
+\newtheorem{lem}{Lemma}[section]
 % \newtheorem{prop}[thm]{Proposition}
+\newtheorem{assert}{Assertion}[lem]
 % \newtheorem*{cor}{Corollary}
 % \theoremstyle{definition}
 % % \newtheorem{definition}{Definition}[section]
@@ -76,4 +88,4 @@
 % \newtheorem*{rem}{Remark}
 % \newtheorem*{note}{Note}
 \newcommand{\lap}[2]{\mathcal{L}(#1, #2)}
-\newcommand{\todo}[1]{{\color{red}\textbf{[[ #1 ]]}}}
+\newcommand{\todo}[1]{{\footnotesize \color{red}\textbf{[[ #1 ]]}}}
