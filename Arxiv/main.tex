@@ -386,9 +386,9 @@ By Equation (\ref{eq_smooth}):
 \begin{equation*}
 \begin{split}
 S(\dataobs) 
-& \geq \frac{1}{\frac{1}{LS(\dataobs'')} +\gamma \cdot d(\dataobs,\dataobs'')}\\
+& = \max_{\dataobs'' \in \{0,1\}^{n}}\bigg \{ \frac{1}{\frac{1}{LS(\dataobs'')} +\gamma \cdot d(\dataobs,\dataobs'')} \bigg \}\\
 \frac{1}{S(\dataobs)} 
-& \leq \frac{1}{LS(\dataobs'')} +\gamma \cdot d(\dataobs,\dataobs'')\\
+& = \min_{\dataobs'' \in \{0,1\}^{n}}\bigg \{ \frac{1}{LS(\dataobs'')} +\gamma \cdot d(\dataobs,\dataobs'') \bigg \}\\
 \end{split}
 \end{equation*}
 
@@ -396,8 +396,13 @@ Since $d(\dataobs,\dataobs'') \leq d(\dataobs,\dataobs') + d(\dataobs',\dataobs'
 
 \begin{equation*}
 \begin{split}
-& \leq \frac{1}{LS(\dataobs'')} +\gamma \cdot (1 + d(\dataobs',\dataobs''))\\
-& = \gamma + \frac{1}{LS(\dataobs'')} +\gamma \cdot d(\dataobs',\dataobs'')\\
+& \leq \min_{\dataobs'' \in \{0,1\}^{n}}\bigg \{  \frac{1}{LS(\dataobs'')} +\gamma \cdot (1 + d(\dataobs',\dataobs'')) \bigg \}\\
+& = \min_{\dataobs'' \in \{0,1\}^{n}}\bigg \{
+\gamma + \frac{1}{LS(\dataobs'')} +\gamma \cdot d(\dataobs',\dataobs'')\bigg 
+\}\\
+& = \gamma + \min_{\dataobs'' \in \{0,1\}^{n}}\bigg \{
+\frac{1}{LS(\dataobs'')} +\gamma \cdot d(\dataobs',\dataobs'')\bigg 
+\}\\
 & = \gamma + \frac{1}{S(\dataobs')}
 \end{split}
 \end{equation*}
