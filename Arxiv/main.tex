@@ -350,39 +350,6 @@ Both Laplace mechanism and improved one are $\epsilon -$differential privacy\cit
 \subsection{$\hexpmech$: Smoothed Hellinger Distance Based Exponential Mechanism}
 \label{subsec_hexpmech}
 
-\begin{definition}
-\label{def_smoo_2}
-$\hexpmech(\dataobs)$ outputs a candidate $r \in \candidateset$ with probability
-\begin{equation*}
-  \hexpmechPr{\dataobs}{z = r} = \frac {exp\big(\frac{-\epsilon\cdot \ux{r}}{2\cdot S(\dataobs)}\big)}
-{\unomalizer{\dataobs}}.
-\end{equation*}
-where $\ux{r} = \hellinger(\bysinfer(\dataobs),r)$ for $r \in \candidateset$ and $S(\dataobs)$ is the $\gamma -$smooth sensitivity of $\hellinger(\bysinfer(\dataobs),-)$, calculated from Theorem \ref{thm_gamma_smooth} by setting $\gamma = 1$.
-\end{definition}
-
-
-This mechanism is based on the standard exponential mechanism
-\cite{talwar}, with $\candidateset$ as the range and
-$\hellinger(\cdot,\cdot)$ as the scoring function. The difference is
-that in this mechanism we don't calibrate the noise w.r.t. to the
-global sensitivity of the scoring function but w.r.t. to the smooth
-sensitivity $S(\dataobs)$ -- defined by \cite{nissim2007smooth}-- of
-$\hellinger(\bysinfer(\dataobs), \cdot)$, where $LS(\dataobs')$ denotes the local
-sensitivity at $\dataobs'$, of the scoring function used in our mechanism and  $\gamma$ is the smooth upper bound for smooth sensitivity.
-
-This mechanism also extends to the Dirichlet-multinomial system $\dirichlet(\valpha)$ by rewriting the Hellinger distance as:
-\[
-  \hellinger(\dirichlet(\valpha_1), \dirichlet(\valpha_2)) = \sqrt{1 - \frac{\betaf(\frac{\valpha_1 + \valpha_2}{2})}{\sqrt{\betaf(\valpha_1) \betaf(\valpha_2)}}},
-\]
-and by replacing the $\candidateset$ with set of posterior Dirichlet
-distributions candidates. Also, the smooth sensitivity $S(\dataobs)$
-in (\ref{eq:smooth}) will be computed by letting $\dataobs'$ range
-over all the elements in $\datauni^{n}$ adjacent to $\dataobs$. Notice
-that $\candidateset$ has $\binom{n + 1}{m - 1}$ elements in this case. We
-will denote by $\hexpmechd$ the mechanism for the
-Dirichlet-multinomial system.
-
-
 
 \subsubsection{$\gamma$-Smooth Sensitivity}
 \label{sec_mechs}
@@ -399,7 +366,6 @@ For any $\adj{\dataobs}{\dataobs'}$:
 $S(\dataobs)$ is $\gamma -$smooth sensitivity.
 
 \end{definition}
-
 
 \begin{thm}
 \label{thm_gamma_smooth}
@@ -442,17 +408,58 @@ $\implies$
 
 \end{proof}
 
-Under this smooth sensitivity, we define $\hexpmech$ as:
+\subsubsection{$\hexpmech$ Proposition}
+
+\begin{definition}
+\label{def_smoo_2}
+$\hexpmech(\dataobs)$ outputs a candidate $r \in \candidateset$ with probability
+\begin{equation*}
+  \hexpmechPr{\dataobs}{z = r} = \frac {exp\big(\frac{-\epsilon\cdot \ux{r}}{4\cdot S(\dataobs)}\big)}
+{\unomalizer{\dataobs}}.
+\end{equation*}
+where $\ux{r} = \hellinger(\bysinfer(\dataobs),r)$ for $r \in \candidateset$ and $S(\dataobs)$ is the $\gamma -$smooth sensitivity of $\hellinger(\bysinfer(\dataobs),-)$, calculated from Theorem \ref{thm_gamma_smooth} by setting $\gamma = 1$.
+\end{definition}
+
+
+This mechanism is based on the standard exponential mechanism
+\cite{talwar}, with $\candidateset$ as the range and
+$\hellinger(\cdot,\cdot)$ as the scoring function. The difference is
+that in this mechanism we don't calibrate the noise w.r.t. to the
+global sensitivity of the scoring function but w.r.t. to the smooth
+sensitivity $S(\dataobs)$ -- defined by \cite{nissim2007smooth}-- of
+$\hellinger(\bysinfer(\dataobs), \cdot)$, where $LS(\dataobs')$ denotes the local
+sensitivity at $\dataobs'$, of the scoring function used in our mechanism and  $\gamma$ is the smooth upper bound for smooth sensitivity.
+
+This mechanism also extends to the Dirichlet-multinomial system $\dirichlet(\valpha)$ by rewriting the Hellinger distance as:
+\[
+  \hellinger(\dirichlet(\valpha_1), \dirichlet(\valpha_2)) = \sqrt{1 - \frac{\betaf(\frac{\valpha_1 + \valpha_2}{2})}{\sqrt{\betaf(\valpha_1) \betaf(\valpha_2)}}},
+\]
+and by replacing the $\candidateset$ with set of posterior Dirichlet
+distributions candidates. Also, the smooth sensitivity $S(\dataobs)$
+in (\ref{eq:smooth}) will be computed by letting $\dataobs'$ range
+over all the elements in $\datauni^{n}$ adjacent to $\dataobs$. Notice
+that $\candidateset$ has $\binom{n + 1}{m - 1}$ elements in this case. We
+will denote by $\hexpmechd$ the mechanism for the
+Dirichlet-multinomial system.
 
 
 
 
 
-\subsubsection{$\hexpmech$ $2\epsilon-$Differential Privacy Proof}
+
+
+
+\section{Privacy Analysis}
+
+\subsection{Privacy Analysis for Baseline Mechanisms}
+In baseline mechanisms, \emph{exponential mechanism}, \emph{Laplace mechanism}, \emph{improved Laplace mechanism} are $\epsilon-$differential privacy provided by \cite{dwork2014algorithmic}. The \emph{exponential mechanism with local sensitivity} is non-differential privacy, also from \cite{dwork2014algorithmic}.
+
+
+\subsubsection{$\hexpmech$ $\epsilon-$Differential Privacy Proof}
 
 \begin{lem}
 \label{lem_hexpmech_privacy}
-$\hexpmech$ is $2\epsilon$-differential privacy.
+$\hexpmech$ is $\epsilon$-differential privacy.
 \end{lem}
 
 \begin{proof} of Lemma \ref{lem_hexpmech_privacy}.
@@ -461,23 +468,23 @@ $\hexpmech$ is $2\epsilon$-differential privacy.
 
   For any $\adj{\dataobs}{\dataobs'} \in \mathcal{X}$ and any beta distribution $r$:
   \begin{equation*}
-  \hexpmechPr{\dataobs}{z = r} \leq e^{2\epsilon} \hexpmechPr{\dataobs'}{z = r}. 
+  \hexpmechPr{\dataobs}{z = r} \leq e^{\epsilon} \hexpmechPr{\dataobs'}{z = r}. 
   \end{equation*}
 
   By definition \ref{def_smoo_2}:
   \begin{equation*}
   \begin{split}
   \hexpmechPr{\dataobs}{z = r} 
-  & = \frac {exp\big(\frac{-\epsilon\cdot\ux{r}}{2\cdot S(\dataobs)}\big)}{\unomalizer{\dataobs}} \\
+  & = \frac {exp\big(\frac{-\epsilon\cdot\ux{r}}{4\cdot S(\dataobs)}\big)}{\unomalizer{\dataobs}} \\
   & = \frac {exp\big(
-  \frac{-\epsilon\cdot(\ux{r} + \uxadj{r} - \uxadj{r})}{2\cdot S(\dataobs)}
+  \frac{-\epsilon\cdot(\ux{r} + \uxadj{r} - \uxadj{r})}{4\cdot S(\dataobs)}
   \big)}
   {\unomalizer{\dataobs}} \\
   & = \frac {exp\big(
-  \frac{-\epsilon\cdot(\uxadj{r})}{2\cdot S(\dataobs)}
+  \frac{-\epsilon\cdot(\uxadj{r})}{4\cdot S(\dataobs)}
   \big)}
   {\unomalizer{\dataobs}}
-  \cdot exp\big( \frac{\epsilon\cdot(\uxadj{r} - \ux{r})}{2\cdot S(\dataobs)} \big)\\
+  \cdot exp\big( \frac{\epsilon\cdot(\uxadj{r} - \ux{r})}{4\cdot S(\dataobs)} \big)\\
   \end{split}
   \end{equation*}
 
@@ -485,37 +492,37 @@ $\hexpmech$ is $2\epsilon$-differential privacy.
   \begin{equation*}
   \begin{split}
   & \leq \frac {exp\big(
-  \frac{-\epsilon\cdot(\uxadj{r})}{2\cdot S(\dataobs)}
+  \frac{-\epsilon\cdot(\uxadj{r})}{4\cdot S(\dataobs)}
   \big)}
   {\unomalizer{\dataobs}}
-  \cdot exp\big( \frac{\epsilon}{2} \big) \\
-  & = exp\big( \frac{\epsilon}{2} \big) \cdot 
+  \cdot exp\big( \frac{\epsilon}{4} \big) \\
+  & = exp\big( \frac{\epsilon}{4} \big) \cdot 
   \frac {
   exp
   \big(
-  \frac{-\epsilon\cdot(\uxadj{r})}{2\cdot S(\dataobs)}
+  \frac{-\epsilon\cdot(\uxadj{r})}{4\cdot S(\dataobs)}
   \big)
   } 
   {\unomalizer{\dataobs}}
   exp
   \big(
-  \frac{\epsilon\cdot(\uxadj{r})}{2\cdot S(\dataobs')}
+  \frac{\epsilon\cdot(\uxadj{r})}{4\cdot S(\dataobs')}
   \big)
   exp
   \big(
-  \frac{-\epsilon\cdot(\uxadj{r})}{2\cdot S(\dataobs')}
+  \frac{-\epsilon\cdot(\uxadj{r})}{4\cdot S(\dataobs')}
   \big)\\
-  & = exp\big( \frac{\epsilon}{2} \big) \cdot 
+  & = exp\big( \frac{\epsilon}{4} \big) \cdot 
   \frac {
   exp
   \big(
-  \frac{-\epsilon\cdot(\uxadj{r})}{2\cdot S(\dataobs')}
+  \frac{-\epsilon\cdot(\uxadj{r})}{4\cdot S(\dataobs')}
   \big)
   } 
   {\unomalizer{\dataobs}}
   exp
   \big(
-  \frac{\epsilon\cdot(\uxadj{r})}{2}(\frac{1}{S(\dataobs')} - \frac{1}{S(\dataobs)})
+  \frac{\epsilon\cdot(\uxadj{r})}{4}(\frac{1}{S(\dataobs')} - \frac{1}{S(\dataobs)})
   \big)\\
   \end{split}
   \end{equation*}
@@ -523,17 +530,17 @@ $\hexpmech$ is $2\epsilon$-differential privacy.
   Because $\uxadj{r} = \hellinger(\bysinfer(\dataobs'), r) \leq 1$:
   \begin{equation*}
   \begin{split}
-  & \leq exp\big( \frac{\epsilon}{2} \big) \cdot 
+  & \leq exp\big( \frac{\epsilon}{4} \big) \cdot 
   \frac {
   exp
   \big(
-  \frac{-\epsilon\cdot(\uxadj{r})}{2\cdot S(\dataobs')}
+  \frac{-\epsilon\cdot(\uxadj{r})}{4\cdot S(\dataobs')}
   \big)
   } 
   {\unomalizer{\dataobs}}
   exp
   \big(
-  \frac{\epsilon}{2}(\frac{1}{S(\dataobs')} - \frac{1}{S(\dataobs)})
+  \frac{\epsilon}{4}(\frac{1}{S(\dataobs')} - \frac{1}{S(\dataobs)})
   \big)\\
   \end{split}
   \end{equation*}
@@ -541,23 +548,23 @@ $\hexpmech$ is $2\epsilon$-differential privacy.
   Because the property of $\gamma -$smooth sensitivity: $\frac{1}{S(\dataobs')} - \frac{1}{S(\dataobs)} \leq \gamma$:  
   \begin{equation*}
   \begin{split}
-  & \leq exp\big( \frac{\epsilon}{2} \big) \cdot 
+  & \leq exp\big( \frac{\epsilon}{4} \big) \cdot 
   \frac {
   exp
   \big(
-  \frac{-\epsilon\cdot(\uxadj{r})}{2\cdot S(\dataobs')}
+  \frac{-\epsilon\cdot(\uxadj{r})}{4\cdot S(\dataobs')}
   \big)
   } 
   {\unomalizer{\dataobs}}
   exp
   \big(
-  \frac{\epsilon}{2} \cdot \gamma
+  \frac{\epsilon}{4} \cdot \gamma
   \big)\\
-  & = exp\big( \frac{\epsilon}{2} + \frac{\epsilon}{2} \cdot \gamma\big) \cdot 
+  & = exp\big( \frac{\epsilon}{4} + \frac{\epsilon}{4} \cdot \gamma\big) \cdot 
   \frac {
   exp
   \big(
-  \frac{-\epsilon\cdot(\uxadj{r})}{2\cdot S(\dataobs')}
+  \frac{-\epsilon\cdot(\uxadj{r})}{4\cdot S(\dataobs')}
   \big)
   } 
   {\unomalizer{\dataobs}}\\
@@ -567,100 +574,100 @@ $\hexpmech$ is $2\epsilon$-differential privacy.
   Doing the same transformation in the denominator:
   \begin{equation*}
   \begin{split}
-  & = exp\big( \frac{\epsilon}{2} + \frac{\epsilon}{2} \cdot \gamma\big) \cdot 
+  & = exp\big( \frac{\epsilon}{4} + \frac{\epsilon}{4} \cdot \gamma\big) \cdot 
   \frac {
   exp
   \big(
-  \frac{-\epsilon\cdot(\uxadj{r})}{2\cdot S(\dataobs')}
+  \frac{-\epsilon\cdot(\uxadj{r})}{4\cdot S(\dataobs')}
   \big)
   } 
   {
   \sum_{r'\in \candidateset} 
   exp 
   \big(
-  \frac{-\epsilon\cdot(\ux{r'} + \uxadj{r'} - \uxadj{r'})}{2 \cdot S(\dataobs)}
+  \frac{-\epsilon\cdot(\ux{r'} + \uxadj{r'} - \uxadj{r'})}{4 \cdot S(\dataobs)}
   \big)
   }\\
-  & = exp\big( \frac{\epsilon}{2} + \frac{\epsilon}{2} \cdot \gamma\big) \cdot 
+  & = exp\big( \frac{\epsilon}{4} + \frac{\epsilon}{4} \cdot \gamma\big) \cdot 
   \frac {
   exp
   \big(
-  \frac{-\epsilon\cdot(\uxadj{r})}{2\cdot S(\dataobs')}
+  \frac{-\epsilon\cdot(\uxadj{r})}{4\cdot S(\dataobs')}
   \big)
   } 
   {
   \sum_{r'\in \candidateset} 
   exp 
   \big(
-  \frac{-\epsilon\cdot(\uxadj{r'}}{2 \cdot S(\dataobs)}
+  \frac{-\epsilon\cdot(\uxadj{r'}}{4 \cdot S(\dataobs)}
   \big)
   exp 
   \big(
-  \frac{-\epsilon\cdot(\ux{r'} - \uxadj{r'})}{2 \cdot S(\dataobs)}
+  \frac{-\epsilon\cdot(\ux{r'} - \uxadj{r'})}{4 \cdot S(\dataobs)}
   \big)
   }\\
   \end{split}
   \end{equation*}
 
-  Because $S(\dataobs) \geq LS(\dataobs) \geq (\ux{r} - \uxadj{r})$ $\implies$ $ \frac{-\epsilon\cdot(\ux{r'} - \uxadj{r'})}{2 \cdot S(\dataobs)} \geq \frac{-\epsilon}{2}$:
+  Because $S(\dataobs) \geq LS(\dataobs) \geq (\ux{r} - \uxadj{r})$ $\implies$ $ \frac{-\epsilon\cdot(\ux{r'} - \uxadj{r'})}{4 \cdot S(\dataobs)} \geq \frac{-\epsilon}{2}$:
   \begin{equation*}
   \begin{split}
-  & \leq exp\big( \frac{\epsilon}{2} + \frac{\epsilon}{2} \cdot \gamma\big) \cdot 
+  & \leq exp\big( \frac{\epsilon}{4} + \frac{\epsilon}{4} \cdot \gamma\big) \cdot 
   \frac {
   exp
   \big(
-  \frac{-\epsilon\cdot(\uxadj{r})}{2\cdot S(\dataobs')}
+  \frac{-\epsilon\cdot(\uxadj{r})}{4\cdot S(\dataobs')}
   \big)
   } 
   {
   \sum_{r'\in \candidateset} 
   exp 
   \big(
-  \frac{-\epsilon\cdot(\uxadj{r'}}{2 \cdot S(\dataobs)}
+  \frac{-\epsilon\cdot(\uxadj{r'}}{4 \cdot S(\dataobs)}
   \big)
   exp 
   \big(
-  \frac{-\epsilon}{2}
+  \frac{-\epsilon}{4}
   \big)
   }\\
-  & = exp\big( \frac{\epsilon}{2} + \frac{\epsilon}{2} \cdot \gamma\big) \cdot 
+  & = exp\big( \frac{\epsilon}{4} + \frac{\epsilon}{4} \cdot \gamma\big) \cdot 
   \frac {
   exp
   \big(
-  \frac{-\epsilon\cdot(\uxadj{r})}{2\cdot S(\dataobs')}
+  \frac{-\epsilon\cdot(\uxadj{r})}{4\cdot S(\dataobs')}
   \big)
   } 
   {
   \sum_{r'\in \candidateset} 
   exp 
   \big(
-  \frac{-\epsilon\cdot(\uxadj{r'}}{2 \cdot S(\dataobs)}
+  \frac{-\epsilon\cdot(\uxadj{r'}}{4 \cdot S(\dataobs)}
   \big)
   exp 
   \big(
-  \frac{-\epsilon}{2}
+  \frac{-\epsilon}{4}
   \big)
   exp
   \big(
-  \frac{\epsilon\cdot(\uxadj{r'})}{2\cdot S(\dataobs')}
+  \frac{\epsilon\cdot(\uxadj{r'})}{4\cdot S(\dataobs')}
   \big)
   exp
   \big(
-  \frac{-\epsilon\cdot(\uxadj{r'})}{2\cdot S(\dataobs')}
+  \frac{-\epsilon\cdot(\uxadj{r'})}{4\cdot S(\dataobs')}
   \big)
   }\\
-  & = exp\big( \frac{\epsilon}{2} + \frac{\epsilon}{2} \cdot \gamma\big) \cdot 
+  & = exp\big( \frac{\epsilon}{4} + \frac{\epsilon}{4} \cdot \gamma\big) \cdot 
   \frac {
   exp
   \big(
-  \frac{-\epsilon\cdot(\uxadj{r})}{2\cdot S(\dataobs')}
+  \frac{-\epsilon\cdot(\uxadj{r})}{4\cdot S(\dataobs')}
   \big)
   } 
   {
   \sum_{r'\in \candidateset} 
   exp 
   \big(
-  \frac{-\epsilon\cdot(\uxadj{r'}}{2 \cdot S(\dataobs')}
+  \frac{-\epsilon\cdot(\uxadj{r'}}{4 \cdot S(\dataobs')}
   \big)
   exp 
   \big(
@@ -668,7 +675,7 @@ $\hexpmech$ is $2\epsilon$-differential privacy.
   \big)
   exp
   \big(
-  \frac{- \epsilon\cdot(\ux{r'})}{2}
+  \frac{- \epsilon\cdot(\ux{r'})}{4}
   (\frac{1}{S(\dataobs)}
 -
   \frac{1}{S(\dataobs')})
@@ -677,29 +684,29 @@ $\hexpmech$ is $2\epsilon$-differential privacy.
   \end{split}
   \end{equation*}
 
-  Because $\uxadj{r} = \hellinger(\bysinfer(\dataobs'), r) \leq 1$ $\implies$ $\frac{- \epsilon\cdot(\ux{r'})}{2} \geq  \frac{-\epsilon}{2}$:
+  Because $\uxadj{r} = \hellinger(\bysinfer(\dataobs'), r) \leq 1$ $\implies$ $\frac{- \epsilon\cdot(\ux{r'})}{4} \geq  \frac{-\epsilon}{4}$:
   \begin{equation*}
   \begin{split}
-  & \leq exp\big( \frac{\epsilon}{2} + \frac{\epsilon}{2} \cdot \gamma\big) \cdot 
+  & \leq exp\big( \frac{\epsilon}{4} + \frac{\epsilon}{4} \cdot \gamma\big) \cdot 
   \frac {
   exp
   \big(
-  \frac{-\epsilon\cdot(\uxadj{r})}{2\cdot S(\dataobs')}
+  \frac{-\epsilon\cdot(\uxadj{r})}{4\cdot S(\dataobs')}
   \big)
   } 
   {
   \sum_{r'\in \candidateset} 
   exp 
   \big(
-  \frac{-\epsilon\cdot(\uxadj{r'}}{2 \cdot S(\dataobs')}
+  \frac{-\epsilon\cdot(\uxadj{r'}}{4 \cdot S(\dataobs')}
   \big)
   exp 
   \big(
-  \frac{-\epsilon}{2}
+  \frac{-\epsilon}{4}
   \big)
   exp
   \big(
-  \frac{- \epsilon}{2}
+  \frac{- \epsilon}{4}
   (\frac{1}{S(\dataobs)}
 -
   \frac{1}{S(\dataobs')})
@@ -709,70 +716,70 @@ $\hexpmech$ is $2\epsilon$-differential privacy.
   \end{equation*}
 
   Because the property of $\gamma -$ smooth sensitivity: $\frac{1}{S(\dataobs)} - \frac{1}{S(\dataobs')} \leq \gamma$ $\implies$
-  $\frac{- \epsilon}{2}
+  $\frac{- \epsilon}{4}
   (\frac{1}{S(\dataobs)}-
-  \frac{1}{S(\dataobs')}) \geq \frac{- \epsilon}{2} \cdot \gamma$
+  \frac{1}{S(\dataobs')}) \geq \frac{- \epsilon}{4} \cdot \gamma$
   \begin{equation*}
   \begin{split}
-  & \leq exp\big( \frac{\epsilon}{2} + \frac{\epsilon}{2} \cdot \gamma\big) \cdot 
+  & \leq exp\big( \frac{\epsilon}{4} + \frac{\epsilon}{4} \cdot \gamma\big) \cdot 
   \frac {
   exp
   \big(
-  \frac{-\epsilon\cdot(\uxadj{r})}{2\cdot S(\dataobs')}
+  \frac{-\epsilon\cdot(\uxadj{r})}{4\cdot S(\dataobs')}
   \big)
   } 
   {
   \sum_{r'\in \candidateset} 
   exp 
   \big(
-  \frac{-\epsilon\cdot(\uxadj{r'}}{2 \cdot S(\dataobs')}
+  \frac{-\epsilon\cdot(\uxadj{r'}}{4 \cdot S(\dataobs')}
   \big)
   exp 
   \big(
-  \frac{-\epsilon}{2}
+  \frac{-\epsilon}{4}
   \big)
   exp
   \big(
-  \frac{- \epsilon}{2} \cdot \gamma
+  \frac{- \epsilon}{4} \cdot \gamma
   \big)
   }\\
-  & = exp\big( \frac{\epsilon}{2} + \frac{\epsilon}{2} \cdot \gamma\big) \cdot 
+  & = exp\big( \frac{\epsilon}{4} + \frac{\epsilon}{4} \cdot \gamma\big) \cdot 
   \frac {
   exp
   \big(
-  \frac{-\epsilon\cdot(\uxadj{r})}{2\cdot S(\dataobs')}
+  \frac{-\epsilon\cdot(\uxadj{r})}{4\cdot S(\dataobs')}
   \big)
   } 
   {
   \sum_{r'\in \candidateset} 
   exp 
   \big(
-  \frac{-\epsilon\cdot(\uxadj{r'}}{2 \cdot S(\dataobs')}
+  \frac{-\epsilon\cdot(\uxadj{r'}}{4 \cdot S(\dataobs')}
   \big)
   exp 
   \big(
-  \frac{-\epsilon}{2} +   \frac{- \epsilon}{2} \cdot \gamma
+  \frac{-\epsilon}{4} +   \frac{- \epsilon}{4} \cdot \gamma
   \big)
   }\\
-  & = e^{(\epsilon + \epsilon \cdot \gamma )} \cdot 
+  & = e^{( \frac{\epsilon}{2} + \frac{\epsilon}{2} \cdot \gamma )} \cdot 
   \frac {
   exp
   \big(
-  \frac{-\epsilon\cdot(\uxadj{r})}{2\cdot S(\dataobs')}
+  \frac{-\epsilon\cdot(\uxadj{r})}{4\cdot S(\dataobs')}
   \big)
   } 
   {
   \sum_{r'\in \candidateset} 
   exp 
   \big(
-  \frac{-\epsilon\cdot(\uxadj{r'}}{2 \cdot S(\dataobs')}
+  \frac{-\epsilon\cdot(\uxadj{r'}}{4\cdot S(\dataobs')}
   \big)
   }\\
-  & = e^{( \epsilon + \epsilon \cdot \gamma )} \cdot   \hexpmechPr{\dataobs'}{z = r}
+  & = e^{( \frac{\epsilon}{2} + \frac{\epsilon}{2} \cdot \gamma )} \cdot   \hexpmechPr{\dataobs'}{z = r}
   \end{split}
   \end{equation*}
 
-  Given $\gamma = 1$, $2\epsilon - $differential privacy can be achieved.
+  Given $\gamma = 1$, $\epsilon - $differential privacy can be achieved.
 \end{proof}
 
 
