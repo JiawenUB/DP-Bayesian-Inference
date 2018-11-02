@@ -185,7 +185,7 @@ class BayesInferwithDirPrior(object):
 		###################################################################################################################################
 		nomalizer = 0.0
 		for r in self._candidates:
-			temp = math.exp(self._epsilon * self._candidate_scores[r]/(2 * self._alpha_SS))
+			temp = math.exp(self._epsilon * self._candidate_scores[r]/(4 * self._alpha_SS))
 			self._alpha_SS_probabilities.append(temp)
 			nomalizer += temp
 
