@@ -135,7 +135,7 @@ class BayesInferwithDirPrior(object):
 		###################################################################################################################################
 		t0 = time.time()
 		start = time.clock()
-		beta = 0.1 # math.log(1 - self._epsilon / (2.0 * math.log(self._delta / (2.0 * (self._sample_size)))))
+		beta = 0.01 # math.log(1 - self._epsilon / (2.0 * math.log(self._delta / (2.0 * (self._sample_size)))))
 		self._SS = max(self._LS, max([self._LS_Candidates[r] * math.exp(- beta * Hamming_Distance(self._observation_counts, [r._alphas[i] - self._prior._alphas[i] for i in range(self._prior._size)])) for r in self._candidates]))
 		t1 = time.time()
 		print("smooth sensitivity"+str(t1 - t0)), self._SS
@@ -230,7 +230,7 @@ class BayesInferwithDirPrior(object):
 		self._accuracy["ExpoMech of GS"] = []
 		self._keys.append("ExpoMech of GS")
 
-		self._GS = dirichlet(t1) - dirichlet(t2)
+		self._GS = math.sqrt(1 - math.pi/4)
 
 		nomalizer = 0.0
 		for r in self._candidates:
@@ -263,24 +263,17 @@ class BayesInferwithDirPrior(object):
 
 
 
-	def _exponentialize_GS(self):
-		probabilities = {}
+	def _exponentialize(self):
 		self._exponential_posterior = numpy.random.choice(self._candidates, p=self._GS_probabilities)
 
 
 	def _exponentialize_LS(self):
-		probabilities = {}
 		self._exponential_posterior = numpy.random.choice(self._candidates, p=self._LS_probabilities)
 
-
- 		self._exponential_posterior = r
-
 	def _exponentialize_SS(self):
-		nomalizer = 0.0
 		self._exponential_posterior = numpy.random.choice(self._candidates, p=self._SS_probabilities)
 
 	def _exponentialize_alpha_SS(self):
-		nomalizer = 0.0
 		self._exponential_posterior = numpy.random.choice(self._candidates, p=self._alpha_SS_probabilities)
 
 
@@ -298,7 +291,9 @@ class BayesInferwithDirPrior(object):
 		self._set_up_baseline_lap_mech()
 		self._set_up_improved_lap_mech()
 		self._set_up_exp_mech_with_SS()
-		# self._set_up_exp_mech_with_alpha_SS()
+		self._set_up_exp_mech_with_alpha_SS()
+		self._set_up_exp_mech_with_GS()
+		self._set_up_exp_mech_with_LS()
 
 
 		def sensitivity_for_lap(dimension):
@@ -331,8 +326,21 @@ class BayesInferwithDirPrior(object):
 			#############################################################################
 			#SAMPLING WITH THE EXPONENTIAL MECHANISM OF ALPHA SMOOTH SENSITIVITY
 			# #############################################################################
-			# self._exponentialize_alpha_SS()
-			# self._accuracy[self._keys[2]].append(self._posterior - self._exponential_posterior)
+			self._exponentialize_alpha_SS()
+			self._accuracy[self._keys[3]].append(self._posterior - self._exponential_posterior)
+
+			#############################################################################
+			#SAMPLING WITH THE EXPONENTIAL MECHANISM OF ALPHA SMOOTH SENSITIVITY
+			# #############################################################################
+			self._exponentialize()
+			self._accuracy[self._keys[4]].append(self._posterior - self._exponential_posterior)
+			
+			#############################################################################
+			#SAMPLING WITH THE EXPONENTIAL MECHANISM OF ALPHA SMOOTH SENSITIVITY
+			# #############################################################################
+			self._exponentialize_LS()
+			self._accuracy[self._keys[5]].append(self._posterior - self._exponential_posterior)
+
 			
 		for key,item in self._accuracy.items():
 			self._accuracy_mean[key] = numpy.mean(item)
