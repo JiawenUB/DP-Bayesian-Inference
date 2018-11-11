@@ -1,0 +1,374 @@
+\newif\ifdraft\drafttrue
+\documentclass[runningheads,a4paper]{llncs}
+\usepackage{mathpartir}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage[all]{xy}
+%\usepackage{latexsym}
+\usepackage{bussproofs}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{txfonts}
+\usepackage{etex}
+\usepackage{comment}
+\usepackage{braket}
+%\pagestyle{headings}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\usepackage{color}
+
+% Decorations
+% \newcommand{\mathbf}[1]{{\bf #1}}
+% \newcommand{\Sf}[1]{{\sf #1}}
+% \newcommand{\mathrm}[1]{{\rm #1}}
+
+% \newcommand{\ul}{\underline}
+% \newcommand{\ol}{\overline}
+% \newcommand{\mc}{\mathcal}
+
+% Category theory
+\newcommand{\dom}{\mathrm{dom}}
+\newcommand{\cod}{\mathrm{cod}}
+\newcommand{\colim}{\operatorname{colim}}
+\newcommand{\Obj}[1]{\mathbf{Obj}(#1)}
+\newcommand{\Mor}[1]{\mathbf{Mor}(#1)}
+\newcommand{\Hom}[3]{#1(#2,#3)}
+\newcommand{\Sub}[1]{\mathbf{Sub}(#1)}
+
+\newcommand{\Sets}{\mathbf{Set}}
+\newcommand{\FinSet}{\mathbf{Fin}}
+\newcommand{\Rel}{\mathbf{Rel}}
+\newcommand{\Cat}{\mathbf{Cat}}
+\newcommand{\CAT}{\mathbf{CAT}}
+\newcommand{\Card}{\mathbf{Card}}
+\newcommand{\Pred}{\mathbf{Pred}}
+\newcommand{\BRel}{\mathbf{BRel}}
+\newcommand{\ERel}{\mathbf{ERel}}
+\newcommand{\Meas}{\mathbf{Meas}}
+\newcommand{\Span}{\mathbf{Span}}
+
+\newcommand{\Pre}{\mathbf{Pre}}
+\newcommand{\Pos}{\mathbf{Pos}}
+\newcommand{\wCPO}{\omega\mathbf{CPO}}
+\newcommand{\wCPPO}{\omega\mathbf{CPPO}}
+\newcommand{\CSPre}{\mathbf{CSPre}}
+\newcommand{\Alg}{\mathbf{Alg}}
+\newcommand{\Coalg}{\mathbf{Coalg}}
+
+
+% MathBB
+\renewcommand{\AA}{\Bbb A}
+\newcommand{\BB}{\Bbb B}
+\newcommand{\CC}{\Bbb C}
+\newcommand{\DD}{\Bbb D}
+\newcommand{\EE}{\Bbb E}
+\newcommand{\FF}{\Bbb F}
+\newcommand{\II}{\Bbb I}
+\newcommand{\KK}{\Bbb K}
+\newcommand{\PP}{\Bbb P}
+\newcommand{\RR}{\Bbb R}
+\renewcommand{\SS}{\Bbb S} 
+
+\newcommand{\VV}{\Bbb V}
+\newcommand{\XX}{\Bbb X}
+
+\newcommand{\Syn}{\operatorname{S}}
+\newcommand{\Inh}{\operatorname{I}}
+\newcommand{\Use}{\operatorname{U}}
+\newcommand{\Def}{\operatorname{D}}
+
+
+
+\newcommand{\Gr}{\mathbf{Gr}}
+\newcommand{\SRel}{\mathbf{SRel}}
+\newcommand{\Upward}{\mathbf{Up}}
+\newcommand{\BX}{\mathbf{X}}
+\newcommand{\BY}{\mathbf{Y}}
+\newcommand{\QBS}{\mathbf{QBS}}
+%New Operators
+
+\newcommand{\dArrow}{\mathbin{\dot\Arrow}}
+\newcommand{\darrow}{\mathbin{\dot\arrow}}
+\newcommand{\dtimes}{\mathbin{\dot\times}}
+\newcommand{\dplus}{\mathbin{\dot +}}
+\newcommand{\dsqsubseteq}{\mathbin{\dot\sqsubseteq}}
+\newcommand{\dle}{\mathbin{\dot\le}}
+
+\newcommand{\unlhdneq}{\mathbin{\ooalign{$\unlhd$\crcr\hss$\raisebox{-.6ex}[0pt][0pt]{\scalebox{0.5}[0.4]{/}}$\hss}}}
+\newcommand{\defiff}{\mathbin{\ooalign{$\iff$\crcr\hss\raisebox{1.0ex}[0pt][0pt]{\scalebox{0.7}[0.7]{\rm def}}\hss}}}
+\newcommand{\labeleq}[1]{\mathbin{\ooalign{$=$\crcr\hss\raisebox{1.0ex}[0pt][0pt]{\scalebox{0.7}[0.7]{#1}}\hss}}}
+\newcommand{\labelled}[2]{\mathbin{\ooalign{${#1}$\crcr\hss\raisebox{1.0ex}[0pt][0pt]{\scalebox{0.7}[0.7]{#2}}\hss}}}
+
+\newcommand{\opposite}[1]{{{#1}}^{\mathrm{o\!p}}}
+\newcommand{\inverse}[1]{{#1}^{\hspace{-0.15em} - \hspace{-0.1em}1}\hspace{-0.1em}}
+
+%Other macros
+
+\newcommand{\supp}{\mathop{\mathrm{supp}}}
+\newcommand{\Eq}{{\rm Eq}}
+\newcommand{\lrangle}[1]{\langle #1\rangle}
+\newcommand{\interpret}[1]{{\llbracket {#1} \rrbracket}}
+\newcommand{\Rinterpret}[1]{{\mathopen{(\!|} {#1} \mathclose{|\!)}}}
+
+%\newcommand{\closuremeetop}{{\cal C}_{{\cap},\opposite{}}}
+\newcommand{\DistMonad}{{\mathcal{D}_{\!\!=\!1}}}
+\newcommand{\cornerUL}[1][dr]{\save*!/#1-1.2pc/#1:(-1,1)@^{|-}\restore}
+\newcommand{\cornerUR}[1][dl]{\save*!/#1-1.2pc/#1:(-1,1)@^{|-}\restore}
+\newcommand{\cornerDL}[1][dl]{\save*!/#1+1.2pc/#1:(1,-1)@^{|-}\restore}
+\newcommand{\cornerDR}[1][dr]{\save*!/#1+1.2pc/#1:(1,-1)@^{|-}\restore}
+\newcommand{\argmax}{\mathop{\rm argmax}\limits}
+\newcommand{\argmin}{\mathop{\rm argmin}\limits}
+
+%%%% Macros for comments.%%%% 
+\definecolor{deep_green}{rgb}{0.1,0.6,0.1}
+\newcommand{\tetsuya}[1]{\ifdraft\textit{\color{deep_green}[TS]: #1}\fi}
+\newcommand{\TODO}[1]{\ifdraft\textit{\color{red}[TODO]: #1}\fi}
+
+\begin{document}
+\newcommand{\hlg}{\mathsf{H}}
+
+%\title{A Note on a Mighty Higher-Order Program Logic}
+%\author{Tetsuya Sato}
+%\institute{
+%University at Buffalo, SUNY
+%}
+%\date{}
+%\maketitle
+%\begin{abstract}
+%\end{abstract}
+%*** We postpone preliminaries to appendix. ***
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{A Note on Hellinger Distance of Beta distributions}
+\author{Tetsuya Sato}
+\institute{
+University at Buffalo, SUNY
+}
+\date{}
+\maketitle
+%\begin{abstract}
+%\end{abstract}
+%*** We postpone preliminaries to appendix. ***
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Analysis the bound of Hellinger distance over two $Beta$ distributions:
+$$
+\hlg(Beta(\alpha, \beta), Beta(\alpha + n, \beta - n)).
+$$
+
+\begin{lemma}[Stirling's approximation] \tetsuya{source: {\tt https://dlmf.nist.gov/5.6}}
+Let $\Gamma$ be the Gamma function.
+For all $\alpha > 0$, we obtain
+\[
+\sqrt{\frac{2\pi}{\alpha}} \cdot
+\left(\frac{\alpha}{e}\right)^\alpha
+\leq \Gamma(\alpha) \leq
+\sqrt{\frac{2\pi}{\alpha}} \cdot
+\left(\frac{\alpha}{e}\right)^\alpha  \cdot e^{\frac{1}{12\alpha}}.
+\]
+\end{lemma}
+Using the Stirling's approximation, we can deal with $\Gamma(\alpha + \frac{1}{2})$ by an upper bound and a lower bound.
+\begin{lemma}
+Let $\Gamma$ be the Gamma function.
+For all $\alpha > 0$, we obtain
+\[
+\frac{\alpha}{\sqrt{\alpha + \frac{1}{2}}} \leq 
+\frac{\Gamma(\alpha + \frac{1}{2})}{\Gamma(\alpha)} \leq \sqrt{\alpha}.
+\]
+\end{lemma}
+\begin{proof}
+By Stirling's approximation, we have 
+\[
+\Gamma(\alpha + \frac{1}{2}) \geq \sqrt{\frac{2\pi}{\alpha + \frac{1}{2}}} \cdot
+\left(\frac{\alpha + \frac{1}{2}}{e}\right)^{\alpha + \frac{1}{2}}, \qquad 
+\Gamma(\alpha) \leq \sqrt{\frac{2\pi}{\alpha}} \cdot
+\left(\frac{\alpha}{e}\right)^\alpha  \cdot e^{\frac{1}{12\alpha}}.
+\]
+Hence,
+\begin{align*}
+\frac{\Gamma(\alpha + \frac{1}{2})}{\Gamma(\alpha)}
+& \leq \sqrt{ \frac{\alpha}{\alpha + \frac{1}{2}} \cdot \frac{1}{\sqrt{e}}} \cdot  \left(\frac{\alpha + \frac{1}{2}}{\alpha}\right)^\alpha \cdot \sqrt{\alpha + \frac{1}{2}} \cdot e^{(1 - \frac{1}{12\alpha})}\\
+&= \sqrt{\alpha} \cdot \frac{1}{\sqrt{e}} \cdot  \left(1 + \frac{1}{2\alpha}\right)^{\frac{2\alpha}{2}} \cdot e^{(1 - \frac{1}{12\alpha})}\\
+& \leq \sqrt{\alpha} \cdot \frac{1}{\sqrt{e}} \cdot \sqrt{e} \cdot 1 = \sqrt{\alpha}.
+\end{align*}
+On the other hand,
+\[
+\frac{\Gamma(\alpha + \frac{1}{2})}{\Gamma(\alpha)}  = \frac{\alpha \Gamma(\alpha + \frac{1}{2})}{\Gamma(\alpha + 1)} \geq \alpha \cdot \frac{1}{\sqrt{\alpha + \frac{1}{2}}}.
+\]
+\qed
+\end{proof}
+\newcommand{\floor}[1]{\lfloor {#1} \rfloor}
+\begin{align*}
+\lefteqn{
+( \hlg(\mathrm{beta}(\alpha,\beta),\mathrm{beta}(\alpha+n,\beta-n))^2
+}\\
+&= 1 - \frac{B(\alpha+\frac{n}{2},\beta-\frac{n}{2})}{\sqrt{B(\alpha,\beta) \cdot B(\alpha+n,\beta-n)}}\\
+&= 1 - \frac{\Gamma(\alpha+\frac{n}{2})\Gamma(\beta-\frac{n}{2})}
+{\sqrt{\Gamma(\alpha) \cdot \Gamma(\beta) \cdot \Gamma(\alpha + n ) \cdot \Gamma(\beta - n)}}\\
+&= 1 - \frac{\Gamma(\alpha+\frac{n}{2})}{\sqrt{\Gamma(\alpha) \cdot \Gamma(\alpha + n )}} \cdot \frac{\Gamma(\beta-\frac{n}{2})}{\sqrt{\Gamma(\beta) \cdot \Gamma(\beta - n)}}
+\end{align*}
+Here, 
+\begin{align*}
+\lefteqn{\frac{\Gamma(\alpha+\frac{n}{2})}{\sqrt{\Gamma(\alpha) \cdot \Gamma(\alpha + n )}}}\\
+&= \frac{\Gamma(\alpha+\frac{n}{2} - 1) \cdot (\alpha+\frac{n}{2} - 1)}{\sqrt{\Gamma(\alpha) \cdot \Gamma(\alpha + n - 1 ) \cdot(\alpha + n - 1)}} \\
+&= \frac{\Gamma(\alpha+\frac{n}{2} - 2) \cdot (\alpha+\frac{n}{2} - 2) \cdot (\alpha+\frac{n}{2} - 1)}{\sqrt{\Gamma(\alpha) \cdot \Gamma(\alpha + n - 2 ) \cdot(\alpha + n - 2) \cdot(\alpha + n - 1)}} \\
+& = \cdots = \\
+&= \frac{\Gamma(\alpha+\frac{n}{2} - \floor{\frac{n}{2}}) \cdot (\alpha+\frac{n}{2} - \floor{\frac{n}{2}}) \cdot \cdots \cdot (\alpha + \frac{n}{2} - 2 ) \cdot (\alpha+\frac{n}{2} - 1)}{\sqrt{\Gamma(\alpha) \cdot \Gamma(\alpha + n - n ) \cdot (\alpha + n - n) \cdot \cdots \cdot(\alpha + n - 2) \cdot(\alpha + n - 1)}} \\
+&= \frac{\Gamma(\alpha+\frac{n}{2} - \floor{\frac{n}{2}})}{\Gamma(\alpha)}
+\cdot \frac{\prod_{k = 0}^{\floor{\frac{n}{2}}-1}(\alpha + \frac{n}{2} - \floor{\frac{n}{2}}+ k)}{\sqrt{\prod_{k = 0}^{n-1}(\alpha + k) }}.
+\end{align*}
+Similary,
+\begin{align*}
+\lefteqn{\frac{\Gamma(\beta-\frac{n}{2})}{\sqrt{\Gamma(\beta) \cdot \Gamma(\beta - n)}}}\\
+&=
+\frac{\Gamma(\beta - \frac{n}{2} + \floor{\frac{n}{2}})}{\Gamma(\beta)}
+\cdot \frac{\sqrt{\prod_{k = 1}^{n}(\beta - k)}}{\prod_{k = 1}^{\floor{\frac{n}{2}}}(\beta - \frac{n}{2} + \floor{\frac{n}{2}} -  k)}
+\end{align*}
+Thus,
+\begin{align*}
+\lefteqn{
+( \hlg(\mathrm{beta}(\alpha,\beta),\mathrm{beta}(\alpha+n,\beta-n))^2
+}\\
+&=
+1 - \frac{\Gamma(\alpha+\frac{n}{2} - \floor{\frac{n}{2}})}{\Gamma(\alpha)} \cdot
+\frac{\Gamma(\beta - \frac{n}{2} + \floor{\frac{n}{2}})}{\Gamma(\beta)}
+\cdot \frac{\prod_{k = 0}^{\floor{\frac{n}{2}}-1}(\alpha + \frac{n}{2} - \floor{\frac{n}{2}}+ k)}{\sqrt{\prod_{k = 0}^{n-1}(\alpha + k) }} 
+\cdot \frac{\sqrt{\prod_{k = 1}^{n}(\beta - k)}}{\prod_{k = 1}^{\floor{\frac{n}{2}}}(\beta - \frac{1}{2} -  k)}
+\end{align*}
+If $n$ is even, that is, $n = 2m$ for some $m$, we have 
+\begin{align*}
+\lefteqn{
+( \hlg(\mathrm{beta}(\alpha,\beta),\mathrm{beta}(\alpha+n,\beta-n))^2
+}\\
+&= 1 - \frac{\prod_{k = 0}^{m-1}(\alpha + k)}{\sqrt{\prod_{k = 0}^{2m -1}(\alpha + k) }} 
+\cdot 
+\frac{\sqrt{\prod_{k = 1}^{2m}(\beta - k)}}{\prod_{k = 1}^{m}(\beta -  k)}
+\\
+&= 1 - \frac{\sqrt{\prod_{k = 0}^{m-1}(\alpha + k)}}{\sqrt{\prod_{k = m}^{2m -1}(\alpha + k) }} 
+\cdot 
+\frac{\sqrt{\prod_{k = m+1}^{2m}(\beta - k)}}{\sqrt{\prod_{k = 1}^{m}(\beta -  k)}}
+%\frac{\sqrt{\prod_{k = 0}^{m-1}(\beta - 2m + k)}}{\sqrt{\prod_{k = m}^{2m-1}(\beta - 2m + k)}}
+\\
+&= 1 - \prod_{k = 0}^{m-1}
+\sqrt{\frac{(\alpha + k)}{(\alpha + m + k)}}
+\cdot
+\prod_{k = 1}^{m} 
+\sqrt{
+\frac{(\beta - k - m)}{(\beta - k)}
+}
+\end{align*}
+If $n$ is odd, that is, $n = 2m + 1$ for some $m$, we have 
+\begin{align*}
+\lefteqn{
+( \hlg(\mathrm{beta}(\alpha,\beta),\mathrm{beta}(\alpha+n,\beta-n))^2
+}\\
+&=
+1 - \frac{\Gamma(\alpha+\frac{1}{2})}{\Gamma(\alpha)} \cdot
+\frac{\Gamma(\beta - \frac{1}{2})}{\Gamma(\beta)}
+\cdot \frac{\prod_{k = 0}^{m-1}(\alpha + \frac{1}{2}+ k)}{\sqrt{\prod_{k = 0}^{2m}(\alpha + k) }} 
+\cdot \frac{\sqrt{\prod_{k = 1}^{2m+1}(\beta - k)}}{\prod_{k = 1}^{m}(\beta - \frac{1}{2} -  k)}\\
+&\leq
+1 - \frac{\alpha}{\sqrt{\alpha + \frac{1}{2}}} \frac{1}{\sqrt{\beta}}\\
+&\qquad \cdot \sqrt{\frac{\prod_{k = 0}^{m-1}(\alpha + \frac{1}{2} + k)^2}{(\alpha + 2m)\prod_{k = 0}^{m-1}(\alpha + k)(\alpha + m  + k)}}\\
+&\qquad \cdot 
+\sqrt{ \frac{(\beta - 2m - 1)\cdot \prod_{k = 1}^{m}(\beta - k)(\beta - k - m) }{\prod_{k = 1}^{m}(\beta - \frac{1}{2}- k)^2}}
+\\
+&=
+1 - \frac{\alpha}{\sqrt{\alpha + \frac{1}{2}}} \cdot \frac{1}{\sqrt{\beta}} \cdot \frac{1}{\sqrt{\alpha + 2m}} \cdot \sqrt{(\beta - 2m - 1)}\cdot \\
+&\qquad \cdot 
+\prod_{k = 0}^{m-1}
+\sqrt{\frac{(\alpha + \frac{1}{2} + k)^2}{(\alpha + k)(\alpha + m  + k)}} \cdot 
+\prod_{k = 1}^{m} \sqrt{\frac{(\beta - k)(\beta - k - m)}{(\beta - \frac{1}{2}- k)^2}}
+\\
+%&= 1 - \frac{\Gamma(\alpha+ \frac{1}{2})}{\Gamma(\alpha)} \cdot
+%\frac{\Gamma(\beta - n + \frac{1}{2})}{\Gamma(\beta - n)}
+%\cdot \frac{\prod_{k = 0}^{m-1}(\alpha + \frac{1}{2}+ k)}{\sqrt{\prod_{k = 0}^{2m}(\alpha + k) }} 
+%\cdot \frac{\prod_{k = 0}^{m-1}(\beta - n + \frac{1}{2}+ k)}{\sqrt{\prod_{k = 0}^{2m}(\beta - n + k)}}\\
+%& \leq 
+%1 - \frac{\alpha}{\sqrt{\alpha + \frac{1}{2}}} \cdot
+%\frac{\beta - n}{\sqrt{\beta - n  + \frac{1}{2}}}
+%\cdot \frac{\prod_{k = 0}^{m-1}(\alpha + \frac{1}{2}+ k)}{\sqrt{\prod_{k = 0}^{2m}(\alpha + k) }} 
+%\cdot \frac{\prod_{k = 0}^{m-1}(\beta - n + \frac{1}{2}+ k)}{\sqrt{\prod_{k = 0}^{2m}(\beta - n + k)}}\\
+%&=
+%1 - \sqrt{\alpha \cdot  (\alpha + \frac{1}{2})} \cdot
+%\sqrt{(\beta - n) \cdot (\beta - n + \frac{1}{2})} 
+%\cdot \frac{\prod_{k = 1}^{m-1}(\alpha + \frac{1}{2}+ k)}{\sqrt{\prod_{k = 1}^{2m}(\alpha + k) }} 
+%\cdot \frac{\prod_{k = 1}^{m-1}(\beta - n + \frac{1}{2}+ k)}{\sqrt{\prod_{k = 1 }^{2m}(\beta - n + k)}}\\
+%&=
+%1 - \sqrt{\frac{\alpha \cdot  (\alpha + \frac{1}{2})}{(\alpha + 1) \cdot  (\alpha + 2m)}} \cdot
+%\sqrt{\frac{(\beta - 2m - 1) \cdot (\beta - 2m - \frac{1}{2})}{(\beta - 2m) \cdot (\beta - m + 1)}}\\
+%&\qquad \qquad 
+%\cdot
+%\prod_{k = 1}^{m-1}
+%\sqrt{
+%\frac{(\alpha + \frac{1}{2} + k )}{(\alpha + 1 + k)}
+%\cdot
+%\frac{(\alpha + \frac{1}{2} + k)}{(\alpha + m + k)}
+%\cdot
+%\frac{(\beta - 2m - \frac{1}{2} + k)}{(\beta - 2m + k)}
+%\cdot
+%\frac{(\beta - 2m - \frac{1}{2} + k)}{(\beta - m - 1 + k)}
+%}
+\end{align*}
+
+Simplification by Jiawen
+
+When n is even:
+\begin{align*}
+&= 1 - \prod_{k = 0}^{m-1}
+\sqrt{\frac{(\alpha + k)}{(\alpha + m + k)}}
+\cdot
+\prod_{k = 1}^{m} 
+\sqrt{
+\frac{(\beta - k - m)}{(\beta - k)}
+}\\
+& = 1 - \prod_{k = 0}^{m - 1}
+\sqrt{1 + \frac{- m}{a + k + m}}
+\cdot
+\prod_{k = 1}^{m}
+\sqrt{1 + \frac{- m}{\beta - k}} \\
+& = 1 - \prod_{k = 0}^{m - 1}
+\sqrt{1 - \frac{m}{a + k + m}}
+\cdot
+\prod_{k = 1}^{m}
+\sqrt{1 - \frac{m}{\beta - k}},
+\end{align*}
+Then, we can see clearly this value approach to 0 when $\alpha$ and $\beta$ increase and when $m$ is small.
+\\
+
+When n is odd:
+
+\begin{align*}
+& = 
+1 - \frac{\alpha}{\sqrt{\alpha + \frac{1}{2}}} \cdot \frac{1}{\sqrt{\beta}} \cdot \frac{1}{\sqrt{\alpha + 2m}} \cdot \sqrt{(\beta - 2m - 1)}\cdot \\
+&\qquad \cdot 
+\prod_{k = 0}^{m-1}
+\sqrt{\frac{(\alpha + \frac{1}{2} + k)^2}{(\alpha + k)(\alpha + m  + k)}} \cdot 
+\prod_{k = 1}^{m} \sqrt{\frac{(\beta - k)(\beta - k - m)}{(\beta - \frac{1}{2}- k)^2}}\\
+& = 
+1 - \frac{\alpha}{\sqrt{\alpha + \frac{1}{2}}} \cdot 
+\frac{\sqrt{(\beta - 2m - 1)}}{\sqrt{\beta(\alpha + 2m)}} \cdot \\
+&\qquad \cdot 
+\prod_{k = 0}^{m-1}
+\sqrt{(1 + \frac{1}{2(\alpha + k)})
+(1 + \frac{\frac{1}{2} - m}{(\alpha + m  + k)})
+} \cdot 
+\prod_{k = 1}^{m} 
+\sqrt{(1 + \frac{1}{2(\beta - \frac{1}{2}- k)})(1 + \frac{\frac{1}{2} - m}{(\beta - \frac{1}{2}- k)})}\\
+& = 
+1 - \frac{1}{\sqrt{1 + \frac{1}{2\alpha}}} \cdot 
+\sqrt{\frac{1}{\alpha + 2m} + \frac{- 2m - 1}{\beta(\alpha + 2m)}} \cdot \\
+&\qquad \cdot 
+\prod_{k = 0}^{m-1}
+\sqrt{(1 + \frac{1}{2(\alpha + k)})
+(1 + \frac{\frac{1}{2} - m}{(\alpha + m  + k)})
+} \cdot 
+\prod_{k = 1}^{m} 
+\sqrt{(1 + \frac{1}{2(\beta - \frac{1}{2}- k)})(1 + \frac{\frac{1}{2} - m}{(\beta - \frac{1}{2}- k)})},
+\end{align*}
+Then we can also see that this value approach to $0$ when $\alpha$ and $\beta$ increase, because all the $\alpha$ and $\beta$ are in the denominator. 
+
+
+\end{document}
+
+
+
