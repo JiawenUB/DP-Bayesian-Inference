@@ -833,7 +833,14 @@ where $r_L = \betad(\alpha + \lfloor Y \rfloor, \beta - \lfloor Y \rfloor$.\\
 By simplification the Hellinger distance in $\hlg(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)$, we get:
 \begin{itemize}
 \item[\textbf{case 1:}] \textbf{t is even}\\
-
+$$
+Pr[\hlg(\bysinfer(\dataobs), r_L ) 
+= 1 - \prod_{k = 0}^{\frac{t}{2} - 1}
+\sqrt{1 - \frac{\frac{t}{2}}{a + k + \frac{t}{2}}}
+\cdot
+\prod_{k = 1}^{\frac{t}{2}}
+\sqrt{1 - \frac{\frac{t}{2}}{\beta - k}}] =  \frac{1}{2} (e^{- \frac{\epsilon (t - 1)}{\Delta \bysinfer}} - e^{- \frac{\epsilon (t)}{\Delta \bysinfer}})
+$$
 
 \item[\textbf{case 2:}] \textbf{t is odd}
 \end{itemize} 
