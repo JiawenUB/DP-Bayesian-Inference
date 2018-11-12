@@ -827,18 +827,18 @@ Pr\big[\lfloor Y \rfloor = t\big]
 Let $\betad(\alpha, \beta)$ be the true posterior distribution, i.e., $\bysinfer(\dataobs) = \betad(\alpha, \beta)$, and $r_L$ be the posterior produced by Laplace mechanism. By applying the probability mess function of discretized Laplace mechanism in our case with Hellinger distance, we get:
 $$
 \begin{array}{rcl}
-& Pr\big[\hlg(\bysinfer(\dataobs), r_L ) 
-= \hlg(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)\big] 
+& Pr\big[\hellinger(\bysinfer(\dataobs), r_L ) 
+= \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)\big] 
 =  \frac{1}{2} (e^{- \frac{\epsilon (t - 1)}{\Delta \bysinfer}} - e^{- \frac{\epsilon (t)}{\Delta \bysinfer}})\\
 \end{array}
 $$
 where $r_L = \betad(\alpha + \lfloor Y \rfloor, \beta - \lfloor Y \rfloor)$.\\
-By simplification the Hellinger distance in $\hlg(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)$, we get:
+By simplification the Hellinger distance in $\hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)$, we get:
 
 \begin{itemize}
   \item[\textbf{case 1:}] \textbf{t is even}\\
   \begin{align*}
-  & Pr\Bigg[\hlg(\bysinfer(\dataobs), r_L ) 
+  & Pr\Bigg[\hellinger(\bysinfer(\dataobs), r_L )^2 
   = 1 - \prod_{k = 0}^{\frac{t}{2} - 1}
   \sqrt{1 - \frac{\frac{t}{2}}{a + k + \frac{t}{2}}}
   \cdot
@@ -850,10 +850,10 @@ By simplification the Hellinger distance in $\hlg(\betad(\alpha, \beta), \betad(
   \item[\textbf{case 2:}] \textbf{t is odd}\\
   let $t = 2 m + 1$
   \begin{align*}
-   Pr\Bigg[ \hlg(\bysinfer(\dataobs), r_L ) = & \\
+   Pr\Bigg[ \hellinger(\bysinfer(\dataobs), r_L )^2 = & \\
   \qquad &
   1 - \frac{1}{\sqrt{1 + \frac{1}{2\alpha}}} \cdot 
-  \sqrt{\frac{1}{\alpha + 2m} + \frac{- 2m - 1}{\beta(\alpha + 2m)}} \cdot \\
+  \sqrt{\frac{1}{\alpha + 2m} + \frac{- 2m - 1}{\beta(\alpha + 2m)}} \\
   \qquad &\cdot 
   \prod_{k = 0}^{m-1}
   \sqrt{(1 + \frac{1}{2(\alpha + k)})
@@ -875,37 +875,25 @@ Accuracy bound for improved Laplace mechanism is obtained from the standard Lapl
 
 \subsection{Accuracy Bound for $\hexpmech$}
 \label{subsec_accuracy_smoo}
-We explored three accuracy bounds for our exponential mechanism with smooth sensitivity.
+We explored following accuracy bound for $\hexpmech$:
+  \begin{align*}
+  \hexpmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), z) \geq c} 
+  = & \sum\limits_{\{r | \hellinger(\bysinfer(\dataobs), r) \geq c\}} \frac{\exp{\frac{- \epsilon \hellinger(\bysinfer(\dataobs), r)}{4 S(\dataobs)}}}{\unomalizer{\dataobs}}\\
+  \leq & \frac{|\candidateset| \exp{(\frac{- \epsilon c}{4 S(\dataobs)}})}{\unomalizer{\dataobs}}\\
+  \leq & \frac{|\candidateset| \exp{(\frac{- \epsilon c}{4 S(\dataobs)}})}{|\candidateset|\exp{(\frac{- \epsilon}{4 S(\dataobs)})}}\\
+  = & \exp{\big(\frac{ \epsilon (1 - c)}{4 S(\dataobs)}}\big)\\
+  \end{align*}
 
-First is the tight bound with very accurate calculation.
-\begin{equation*}
-\hexpmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), z) \geq c} = \sum\limits_{\{z | \hellinger(\bysinfer(\dataobs), z) \geq c\}} \frac{e^{\frac{- \epsilon \hellinger(\bysinfer(\dataobs), z)}{S(\dataobs)}}}{NL_x}.
-\end{equation*}
-
-In order to be more efficient, we designed the second accuracy bound which is slightly looser than the first one:
-
-\begin{equation*}
-\hexpmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), z) \geq c} \leq \frac{|R| \exp{(\frac{- \epsilon c}{S(\dataobs)}})}{NL_x}.
-\end{equation*}
-
-In the second bound, we still need to calculate the normaliser every time. So we want make further improvements on efficiency like follows:
-
-\begin{equation*}
-\hexpmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), z) \geq c} \leq \ \frac{|R| \exp{(\frac{- \epsilon c}{S(\dataobs)}})}{N(n)},
-\end{equation*}
-where we replace the $NL_x$ with a value only related to the size of the data. However, we haven't figured out the formula of this $N(n)$.
-
-Moreover, based on the accuracy bound in Sec. \ref{subsec_accuracy_global}, we can derive a loose bound:
+Moreover, based on the accuracy bound in Sec. \ref{subsec_accuracy_global}, we also derived a loose bound:
 
 \begin{equation*}
 \begin{split}
 Pr[u(\hexpmech(\dataobs)) \leq c] 
-& \leq |\candidateset|exp(\frac{\epsilon c}{2 S(\dataobs)}),
+& \leq |\candidateset|exp(\frac{\epsilon c}{2 S(\dataobs)}).
 \end{split}
 \end{equation*}
-which has been used in the dilation property proof.
 
-
+Unfolding the Hellinger distance in the accuracy bound, we get:
 
 
 \section{Experimental Evaluations}
