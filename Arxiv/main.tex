@@ -791,8 +791,6 @@ $\hexpmech$ is $\epsilon$-differential privacy.
 
 
 
-
-
 \section{Accuracy Analysis}
 
 \subsection{Accuracy Bound for Baseline Mechanisms}
@@ -809,20 +807,24 @@ where $|R|$ is the size of the candidate set, $OPT$ is the optimal candidates, $
 
 \subsubsection{Accuracy Bound for Laplace Mechanism}
 \label{subsec_accuracy_lap}
-Accuracy bound for Laplace mechanism is provided by its probability density function:
+Accuracy bound for Laplace mechanism is provided by its probability density function\cite{dwork2014algorithmic}:
+$$
+Pr[|Y| \geq t \cdot b] = e^{- t},
+$$
+where $Y \thicksim Lap(b)$, i.e.,
 \begin{equation*}
-Pr[|Y| \geq t] = e^{- \frac{t \epsilon}{\Delta \bysinfer}},
+Pr[|Y| \geq t] = e^{- \frac{t \epsilon}{\Delta \bysinfer}}
 \end{equation*}
-where $Y \thicksim Lap(\frac{\Delta \bysinfer}{\epsilon})$.
+in our case, where $Y \thicksim Lap(\frac{\Delta \bysinfer}{\epsilon})$.
 
-After post-processing, Laplace noise is discretized. Then the accuracy bound for Laplace mechanism is obtained by:
+After post-processing, Laplace noise is discretized. Then the probability mess function for discretized Laplace mechanism is obtained by:
 \[
 Pr\big[\lfloor Y \rfloor = t\big] 
 = Pr[ t-1 \leq Y < t] 
 = \frac{1}{2} (e^{- \frac{\epsilon (t - 1)}{\Delta \bysinfer}} - e^{- \frac{\epsilon (t)}{\Delta \bysinfer}}).
 \]
 
-Let $\betad(\alpha, \beta)$ be the true posterior distribution, i.e., $\bysinfer(\dataobs) = \betad(\alpha, \beta)$, and $r_L$ be the posterior produced by Laplace mechanism. By applying the accuracy bound into Hellinger distance in our case:
+Let $\betad(\alpha, \beta)$ be the true posterior distribution, i.e., $\bysinfer(\dataobs) = \betad(\alpha, \beta)$, and $r_L$ be the posterior produced by Laplace mechanism. By applying the probability mess function of discretized Laplace mechanism in our case with Hellinger distance, we get:
 $$
 \begin{array}{rcl}
 & Pr\big[\hlg(\bysinfer(\dataobs), r_L ) 
@@ -846,7 +848,7 @@ By simplification the Hellinger distance in $\hlg(\betad(\alpha, \beta), \betad(
   \end{align*}
 
   \item[\textbf{case 2:}] \textbf{t is odd}\\
-  let $t = 2 m + \frac{1}{2}$
+  let $t = 2 m + 1$
   \begin{align*}
    Pr\Bigg[ \hlg(\bysinfer(\dataobs), r_L ) = & \\
   \qquad &
@@ -868,9 +870,7 @@ By simplification the Hellinger distance in $\hlg(\betad(\alpha, \beta), \betad(
 \subsubsection{Accuracy Bound for Improved Laplace Mechanism}
 \label{subsec_accuracy_lap}
 Accuracy bound for improved Laplace mechanism is obtained from the standard Laplace Mechanism by replacing the sensitivity of $\Delta \bysinfer$ with $2$.
-\[
-Pr[\lfloor Y \rfloor = t] = Pr[ t-1 \leq Y < t] = \frac{1}{2} (e^{- \frac{\epsilon (t - 1)}{2}} - e^{- \frac{\epsilon (t)}{2}}).
-\]
+
 
 
 \subsection{Accuracy Bound for $\hexpmech$}
