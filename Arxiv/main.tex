@@ -817,7 +817,7 @@ where $Y \thicksim Lap(\frac{\Delta \bysinfer}{\epsilon})$.
 
 After post-processing, Laplace noise is discretized. Then the accuracy bound for Laplace mechanism is obtained by:
 \[
-Pr[\lfloor Y \rfloor = t] 
+Pr\big[\lfloor Y \rfloor = t\big] 
 = Pr[ t-1 \leq Y < t] 
 = \frac{1}{2} (e^{- \frac{\epsilon (t - 1)}{\Delta \bysinfer}} - e^{- \frac{\epsilon (t)}{\Delta \bysinfer}}).
 \]
@@ -825,24 +825,44 @@ Pr[\lfloor Y \rfloor = t]
 Let $\betad(\alpha, \beta)$ be the true posterior distribution, i.e., $\bysinfer(\dataobs) = \betad(\alpha, \beta)$, and $r_L$ be the posterior produced by Laplace mechanism. By applying the accuracy bound into Hellinger distance in our case:
 $$
 \begin{array}{rcl}
-& Pr[\hlg(\bysinfer(\dataobs), r_L ) = \hlg(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)] 
+& Pr\big[\hlg(\bysinfer(\dataobs), r_L ) 
+= \hlg(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)\big] 
 =  \frac{1}{2} (e^{- \frac{\epsilon (t - 1)}{\Delta \bysinfer}} - e^{- \frac{\epsilon (t)}{\Delta \bysinfer}})\\
 \end{array}
 $$
-where $r_L = \betad(\alpha + \lfloor Y \rfloor, \beta - \lfloor Y \rfloor$.\\
+where $r_L = \betad(\alpha + \lfloor Y \rfloor, \beta - \lfloor Y \rfloor)$.\\
 By simplification the Hellinger distance in $\hlg(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)$, we get:
-\begin{itemize}
-\item[\textbf{case 1:}] \textbf{t is even}\\
-$$
-Pr[\hlg(\bysinfer(\dataobs), r_L ) 
-= 1 - \prod_{k = 0}^{\frac{t}{2} - 1}
-\sqrt{1 - \frac{\frac{t}{2}}{a + k + \frac{t}{2}}}
-\cdot
-\prod_{k = 1}^{\frac{t}{2}}
-\sqrt{1 - \frac{\frac{t}{2}}{\beta - k}}] =  \frac{1}{2} (e^{- \frac{\epsilon (t - 1)}{\Delta \bysinfer}} - e^{- \frac{\epsilon (t)}{\Delta \bysinfer}})
-$$
 
-\item[\textbf{case 2:}] \textbf{t is odd}
+\begin{itemize}
+  \item[\textbf{case 1:}] \textbf{t is even}\\
+  \begin{align*}
+  & Pr\Bigg[\hlg(\bysinfer(\dataobs), r_L ) 
+  = 1 - \prod_{k = 0}^{\frac{t}{2} - 1}
+  \sqrt{1 - \frac{\frac{t}{2}}{a + k + \frac{t}{2}}}
+  \cdot
+  \prod_{k = 1}^{\frac{t}{2}}
+  \sqrt{1 - \frac{\frac{t}{2}}{\beta - k}}\ \Bigg] \\
+  = \quad & \frac{1}{2} (e^{- \frac{\epsilon (t - 1)}{\Delta \bysinfer}} - e^{- \frac{\epsilon (t)}{\Delta \bysinfer}})\\
+  \end{align*}
+
+  \item[\textbf{case 2:}] \textbf{t is odd}\\
+  let $t = 2 m + \frac{1}{2}$
+  \begin{align*}
+   Pr\Bigg[ \hlg(\bysinfer(\dataobs), r_L ) = & \\
+  \qquad &
+  1 - \frac{1}{\sqrt{1 + \frac{1}{2\alpha}}} \cdot 
+  \sqrt{\frac{1}{\alpha + 2m} + \frac{- 2m - 1}{\beta(\alpha + 2m)}} \cdot \\
+  \qquad &\cdot 
+  \prod_{k = 0}^{m-1}
+  \sqrt{(1 + \frac{1}{2(\alpha + k)})
+  (1 + \frac{\frac{1}{2} - m}{(\alpha + m  + k)})
+  } \\
+  \qquad & \cdot 
+  \prod_{k = 1}^{m} 
+  \sqrt{(1 + \frac{1}{2(\beta - \frac{1}{2}- k)})(1 + \frac{\frac{1}{2} - m}{(\beta - \frac{1}{2}- k)})}\ \Bigg] \\
+  = \quad & \frac{1}{2} (e^{- \frac{\epsilon (t - 1)}{\Delta \bysinfer}} - e^{- \frac{\epsilon (t)}{\Delta \bysinfer}})\\
+  \end{align*}
+
 \end{itemize} 
 
 \subsubsection{Accuracy Bound for Improved Laplace Mechanism}
