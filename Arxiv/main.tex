@@ -811,14 +811,32 @@ where $|R|$ is the size of the candidate set, $OPT$ is the optimal candidates, $
 \label{subsec_accuracy_lap}
 Accuracy bound for Laplace mechanism is provided by its probability density function:
 \begin{equation*}
-Pr[|Y| \geq t] = e^{- \frac{t}{b}},
+Pr[|Y| \geq t] = e^{- \frac{t \epsilon}{\Delta \bysinfer}},
 \end{equation*}
-where $Y \thicksim Lap(b)$, $b = \frac{\Delta \bysinfer}{\epsilon}$ in our case.
+where $Y \thicksim Lap(\frac{\Delta \bysinfer}{\epsilon})$.
 
 After post-processing, Laplace noise is discretized. Then the accuracy bound for Laplace mechanism is obtained by:
 \[
-Pr[\lfloor Y \rfloor = t] = Pr[ t-1 \leq Y < t] = \frac{1}{2} (e^{- \frac{\epsilon (t - 1)}{\Delta \bysinfer}} - e^{- \frac{\epsilon (t)}{\Delta \bysinfer}}).
+Pr[\lfloor Y \rfloor = t] 
+= Pr[ t-1 \leq Y < t] 
+= \frac{1}{2} (e^{- \frac{\epsilon (t - 1)}{\Delta \bysinfer}} - e^{- \frac{\epsilon (t)}{\Delta \bysinfer}}).
 \]
+
+Let $\betad(\alpha, \beta)$ be the true posterior distribution, i.e., $\bysinfer(\dataobs) = \betad(\alpha, \beta)$, and $r_L$ be the posterior produced by Laplace mechanism. By applying the accuracy bound into Hellinger distance in our case:
+$$
+\begin{array}{rcl}
+& Pr[\hlg(\bysinfer(\dataobs), r_L ) = \hlg(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)] 
+=  \frac{1}{2} (e^{- \frac{\epsilon (t - 1)}{\Delta \bysinfer}} - e^{- \frac{\epsilon (t)}{\Delta \bysinfer}})\\
+\end{array}
+$$
+where $r_L = \betad(\alpha + \lfloor Y \rfloor, \beta - \lfloor Y \rfloor$.\\
+By simplification the Hellinger distance in $\hlg(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)$, we get:
+\begin{itemize}
+\item[\textbf{case 1:}] \textbf{t is even}\\
+
+
+\item[\textbf{case 2:}] \textbf{t is odd}
+\end{itemize} 
 
 \subsubsection{Accuracy Bound for Improved Laplace Mechanism}
 \label{subsec_accuracy_lap}
@@ -1009,21 +1027,13 @@ In order to see our privacy behavior, we study the accurate epsilon under concre
 \begin{figure}
 \begin{center}
 \centering
-  \subfigure[data size range from 50 to 100]{
-    \includegraphics[width=0.4\textwidth]{global_epsilon_size50to100.eps}}
-  \subfigure[data size range from 100 to 200]{
-    \includegraphics[width=0.4\textwidth]{global_epsilon_size100to200.eps}} 
-  % \subfigure[data size range from 200 to 500]{
-  %   \includegraphics[width=0.23\textwidth]{global_epsilon_size200to500.eps}} 
-  % \subfigure[data size range from 500 to 1000]{
-  %   \includegraphics[width=0.23\textwidth]{global_epsilon_size500to1000.eps}} 
-\caption{Concrete privacy calculation under settings that: prior distribution:$[1,1]$, $\epsilon = 1.0$, $\delta = 0.0005$ and observed data are uniformly distributed}
+    \includegraphics[width=0.6\textwidth]{privacyloss.eps}
+\caption{Concrete privacy calculation under settings that: prior distribution:$[1,1]$, $\epsilon = 1.0$ and observed data are uniformly distributed}
 \label{fig_privacy}
 \end{center}
 \end{figure}
 
-$\epsilon = 1.0$ is a privacy upper bound, we can observe that the concrete $\epsilon$ values are smaller than the upper bound. That is to say, we achieved a higher privacy level than expected. In next step, we are going to improve the accuracy using this property.
-
+$\epsilon = 1.0$ is a privacy upper bound, we can observe that the concrete $\epsilon$ values are smaller than the upper bound. That is to say, we achieved a higher privacy level than expected. 
 
 \section{Conclusion and Future Work}
 From what we have seen in the previous sections we can obtain some preliminary conclusions. That is, the probabiliy measure approach outperforms the $\ell_1$-norm approach in the following cases:
