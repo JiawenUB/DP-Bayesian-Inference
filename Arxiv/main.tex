@@ -797,7 +797,7 @@ $\hexpmech$ is $\epsilon$-differential privacy.
 
 \subsubsection{Accuracy Bound for Exponential Mechanism}
 \label{subsec_accuracy_global}
-The accuracy bound of exponential mechanism is provided in \cite{dwork2014algorithmic} as:
+The accuracy bound of exponential mechanism is given in \cite{dwork2014algorithmic} as:
 \begin{equation*}
 Pr[u(\expmech{}{x}{u}{\candidateset}) \leq c] 
 		 \leq \frac{|\mathcal{R}|exp(\frac{\epsilon c}{2 GS})}{|\mathcal{R}_{OPT}| exp(\frac{\epsilon OPT_{u(\dataobs)}}{2 GS})},
@@ -807,7 +807,7 @@ where $|R|$ is the size of the candidate set, $OPT$ is the optimal candidates, $
 
 \subsubsection{Accuracy Bound for Laplace Mechanism}
 \label{subsec_accuracy_lap}
-Accuracy bound for Laplace mechanism is provided by its probability density function\cite{dwork2014algorithmic}:
+Accuracy bound for Laplace mechanism is given by its probability density function\cite{dwork2014algorithmic}:
 $$
 Pr[|Y| \geq t \cdot b] = e^{- t},
 $$
@@ -824,7 +824,7 @@ Pr\big[\lfloor Y \rfloor = t\big]
 = \frac{1}{2} (e^{- \frac{\epsilon (t)}{\Delta \bysinfer}} - e^{- \frac{\epsilon (t + 1)}{\Delta \bysinfer}}).
 \]
 
-Let $\betad(\alpha, \beta)$ be the true posterior distribution, i.e., $\bysinfer(\dataobs) = \betad(\alpha, \beta)$, and $r_L$ be the posterior produced by Laplace mechanism. By applying the probability mess function of discretized Laplace mechanism in our case with Hellinger distance, we get:
+Let $\betad(\alpha, \beta)$ be the true posterior distribution, i.e., $\bysinfer(\dataobs) = \betad(\alpha, \beta)$, and $r_L$ be the posterior produced by Laplace mechanism, i.e., $r_L = \betad(\alpha + \lfloor Y \rfloor, \beta - \lfloor Y \rfloor)$. By applying the probability mess function of discretized Laplace mechanism in our case with Hellinger distance, we get:
 $$
 \begin{array}{rcl}
 & Pr\big[\hellinger(\bysinfer(\dataobs), r_L ) 
@@ -832,8 +832,7 @@ $$
 =  \frac{1}{2} (e^{- \frac{\epsilon (t)}{\Delta \bysinfer}} - e^{- \frac{\epsilon (t + 1)}{\Delta \bysinfer}})\\
 \end{array}
 $$
-where $r_L = \betad(\alpha + \lfloor Y \rfloor, \beta - \lfloor Y \rfloor)$.\\
-Also, we have:
+When $\alpha = \beta$, we also have:
 \begin{align*}
  Pr\big[\hellinger(\bysinfer(\dataobs), r_L ) 
 \leq \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)\big] 
@@ -862,11 +861,31 @@ By simplification the Hellinger distance in $\hellinger(\betad(\alpha, \beta), \
   \cdot
   \prod_{k = 1}^{\frac{t}{2}}
   \sqrt{1 - \frac{\frac{t}{2}}{\beta - k}}\ \Bigg] \\
-  = \quad & \frac{1}{2} (1 - e^{- \frac{\epsilon (t + 1)}{\Delta \bysinfer}}- e^{- \frac{\epsilon t}{\Delta \bysinfer}})\\
+  = \quad & \frac{1}{2} (1 - e^{- \frac{\epsilon (t + 1)}{\Delta \bysinfer}}- e^{- \frac{\epsilon t}{\Delta \bysinfer}}),
   \end{align*} 
+  when $\alpha = \beta$.
 
   \item[\textbf{case 2:}] \textbf{t is odd}\\
   let $t = 2 m + 1$
+  \begin{align*}
+  Pr\Bigg[ \hellinger(\bysinfer(\dataobs), r_L )^2 = & \\
+  \qquad &
+  1 - \frac{1}{\sqrt{1 + \frac{1}{2\alpha}}} \cdot 
+  \sqrt{\frac{1}{\alpha + 2m} + \frac{- 2m - 1}{\beta(\alpha + 2m)}} \\
+  \qquad &\cdot 
+  \prod_{k = 0}^{m-1}
+  \sqrt{(1 + \frac{1}{2(\alpha + k)})
+  (1 + \frac{\frac{1}{2} - m}{(\alpha + m  + k)})
+  } \\
+  \qquad & \cdot 
+  \prod_{k = 1}^{m} 
+  \sqrt{(1 + \frac{1}{2(\beta - \frac{1}{2}- k)})(1 + \frac{\frac{1}{2} - m}{(\beta - \frac{1}{2}- k)})}\ \Bigg] \\
+  \geq \quad & Pr[ - t \leq Y < t + 1] \\
+  = \quad & \frac{1}{2} (1 - e^{- \frac{\epsilon (t + 1)}{\Delta \bysinfer}}- e^{- \frac{\epsilon t}{\Delta \bysinfer}})
+  \end{align*}
+ 
+
+  we also have: 
   \begin{align*}
    Pr\Bigg[ \hellinger(\bysinfer(\dataobs), r_L )^2 \leq & \\
   \qquad &
@@ -881,8 +900,9 @@ By simplification the Hellinger distance in $\hellinger(\betad(\alpha, \beta), \
   \prod_{k = 1}^{m} 
   \sqrt{(1 + \frac{1}{2(\beta - \frac{1}{2}- k)})(1 + \frac{\frac{1}{2} - m}{(\beta - \frac{1}{2}- k)})}\ \Bigg] \\
   \geq \quad & Pr[ - t \leq Y < t + 1] \\
-  = \quad & \frac{1}{2} (1 - e^{- \frac{\epsilon (t + 1)}{\Delta \bysinfer}}- e^{- \frac{\epsilon t}{\Delta \bysinfer}})\\
+  = \quad & \frac{1}{2} (1 - e^{- \frac{\epsilon (t + 1)}{\Delta \bysinfer}}- e^{- \frac{\epsilon t}{\Delta \bysinfer}})
   \end{align*}
+  when $\alpha = \beta$
 
 \end{itemize} 
 
@@ -894,36 +914,55 @@ Accuracy bound for improved Laplace mechanism is obtained from the standard Lapl
 
 \subsection{Accuracy Bound for $\hexpmech$}
 \label{subsec_accuracy_smoo}
-We explored following accuracy bound for $\hexpmech$:
 
-\begin{itemize}
-  \item[\textbf{lower bound}]
-  \begin{align*}
-  \hexpmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), z) \leq c} 
-  = & \sum\limits_{\{r | \hellinger(\bysinfer(\dataobs), r) \leq c\}} \frac{\exp{(\frac{- \epsilon \hellinger(\bysinfer(\dataobs), r)}{4 S(\dataobs)})}}{\unomalizer{\dataobs}}\\
-  \geq & \frac{\exp{(\frac{- \epsilon c}{4 S(\dataobs)}})}{\unomalizer{\dataobs}}\\
-  \geq & \frac{\exp{(\frac{- \epsilon c}{4 S(\dataobs)}})}{|\candidateset|},
-  \end{align*}
+\begin{definition}
+\label{def_cardinality}
+  $\cardinality{\dataobs}{r}$, $R^{\dataobs}_r$.
 
-  Also, we have:
-  \begin{align*}
+  Given $\hexpmech(\dataobs)$, define $R^{\dataobs}_r \subset \candidateset$, s.t. $r' \in R^{\dataobs}_r \iff \ux{r'} = \ux{r}$.
+
+  Given $\hexpmech(\dataobs)$, define $\cardinality{\dataobs}{r}$ as the cardinality of $R^{\dataobs}_r$. 
+\end{definition}
+% \begin{itemize}
+%   \item[\textbf{lower bound}]
+%   \begin{align*}
+%   \hexpmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), z) \leq c} 
+%   = & \sum\limits_{\{r | \hellinger(\bysinfer(\dataobs), r) \leq c\}} \frac{\exp{(\frac{- \epsilon \hellinger(\bysinfer(\dataobs), r)}{4 S(\dataobs)})}}{\unomalizer{\dataobs}}\\
+%   \geq & \frac{\exp{(\frac{- \epsilon c}{4 S(\dataobs)}})}{\unomalizer{\dataobs}}\\
+%   \geq & \frac{\exp{(\frac{- \epsilon c}{4 S(\dataobs)}})}{|\candidateset|},
+%   \end{align*}
+
+  We have following probability distribution for accuracy:
+  \begin{align}
+  \label{eq_acc}
   \hexpmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), z) = c} 
-  = & \frac{2 \exp{(\frac{- \epsilon c}{4 S(\dataobs)})}}{\unomalizer{\dataobs}}
-  \end{align*}
+  = & \frac{\cardinality{\dataobs}{c} \exp{(\frac{- \epsilon c}{4 S(\dataobs)})}}{\unomalizer{\dataobs}},
+  \end{align}
+  $c = \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)$, and $\cardinality{\dataobs}{c} = 2$ when $t \neq 0$.\\
+  Unfolding the Hellinegr distance in this accuracy bound:
 
-  in the Bate-binomial model.\\
-  Unfolding the Hellinegr distance in this accuracy bound:\\
-  $c^2 = \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)^2 = $
+ \begin{itemize}
+
+  \item[\textbf{case 1:}] \textbf{t is even}
+
   \begin{align*}
-  & 1 - \prod_{k = 0}^{\frac{t}{2} - 1}
+  &\hexpmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), z)^2 =  1 - \prod_{k = 0}^{\frac{t}{2} - 1}
   \sqrt{1 - \frac{\frac{t}{2}}{a + k + \frac{t}{2}}}
   \cdot
   \prod_{k = 1}^{\frac{t}{2}}
-  \sqrt{1 - \frac{\frac{t}{2}}{\beta - k}}
+  \sqrt{1 - \frac{\frac{t}{2}}{\beta - k}}\ }\\
+  = & \frac{2 \exp{(\frac{- \epsilon \sqrt{1 - \prod_{k = 0}^{\frac{t}{2} - 1}
+  \sqrt{1 - \frac{\frac{t}{2}}{a + k + \frac{t}{2}}}
+  \cdot
+  \prod_{k = 1}^{\frac{t}{2}}
+  \sqrt{1 - \frac{\frac{t}{2}}{\beta - k}}}}{4 S(\dataobs)})}}{\unomalizer{\dataobs}}
   \end{align*}
-  when t is even, and when t is odd, let $t = 2 m + 1$:
+
+
+  \item[\textbf{case 2:}] \textbf{t is odd}
+
   \begin{align*}
-  \qquad &
+  c^2 = \qquad &
   1 - \frac{1}{\sqrt{1 + \frac{1}{2\alpha}}} \cdot 
   \sqrt{\frac{1}{\alpha + 2m} + \frac{- 2m - 1}{\beta(\alpha + 2m)}} \\
   \qquad &\cdot 
@@ -935,6 +974,7 @@ We explored following accuracy bound for $\hexpmech$:
   \prod_{k = 1}^{m} 
   \sqrt{(1 + \frac{1}{2(\beta - \frac{1}{2}- k)})(1 + \frac{\frac{1}{2} - m}{(\beta - \frac{1}{2}- k)})}
   \end{align*}
+  Substitute the $c$ in Equation, (\ref{eq_acc})
 
 \end{itemize}
 
