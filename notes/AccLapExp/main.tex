@@ -120,29 +120,20 @@ Accuracy bound for improved Laplace mechanism is obtained from the standard Lapl
 
 \subsection{Accuracy Bound for $\hexpmech$}
 \label{subsec_accuracy_smoo}
-
-\begin{definition}
-\label{def_cardinality}
-  $\cardinality{\dataobs}{r}$, $R^{\dataobs}_r$.
-
-  Given $\hexpmech(\dataobs)$, define $R^{\dataobs}_r \subset \candidateset$, s.t. $r' \in R^{\dataobs}_r \iff \ux{r'} = \ux{r}$.
-
-  Given $\hexpmech(\dataobs)$, define $\cardinality{\dataobs}{r}$ as the cardinality of $R^{\dataobs}_r$. 
-\end{definition}
-% \begin{itemize}
-%   \item[\textbf{lower bound}]
-%   \begin{align*}
-%   \hexpmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), z) \leq c} 
-%   = & \sum\limits_{\{r | \hellinger(\bysinfer(\dataobs), r) \leq c\}} \frac{\exp{(\frac{- \epsilon \hellinger(\bysinfer(\dataobs), r)}{4 S(\dataobs)})}}{\unomalizer{\dataobs}}\\
-%   \geq & \frac{\exp{(\frac{- \epsilon c}{4 S(\dataobs)}})}{\unomalizer{\dataobs}}\\
-%   \geq & \frac{\exp{(\frac{- \epsilon c}{4 S(\dataobs)}})}{|\candidateset|},
-%   \end{align*}
-
-  We have following probability distribution for accuracy:
+  In Beta-binomial model,
+  % \begin{itemize}
+  %   \item[\textbf{lower bound}]
+  %   \begin{align*}
+  %   \hexpmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), z) \leq c} 
+  %   = & \sum\limits_{\{r | \hellinger(\bysinfer(\dataobs), r) \leq c\}} \frac{\exp{(\frac{- \epsilon \hellinger(\bysinfer(\dataobs), r)}{4 S(\dataobs)})}}{\unomalizer{\dataobs}}\\
+  %   \geq & \frac{\exp{(\frac{- \epsilon c}{4 S(\dataobs)}})}{\unomalizer{\dataobs}}\\
+  %   \geq & \frac{\exp{(\frac{- \epsilon c}{4 S(\dataobs)}})}{|\candidateset|},
+  %   \end{align*}
+  we have following probability distribution for accuracy:
   \begin{align}
   \label{eq_acc}
   \hexpmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), z) = c} 
-  = & \frac{\cardinality{\dataobs}{c} \exp{(\frac{- \epsilon c}{4 S(\dataobs)})}}{\unomalizer{\dataobs}},
+  = & \frac{2 \exp{(\frac{- \epsilon c}{4 S(\dataobs)})}}{\unomalizer{\dataobs}},
   \end{align}
   $c = \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)$, and $\cardinality{\dataobs}{c} = 2$ when $t \neq 0$.\\
   Unfolding the Hellinegr distance in this accuracy bound:
