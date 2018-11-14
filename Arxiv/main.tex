@@ -795,29 +795,29 @@ $\hexpmech$ is $\epsilon$-differential privacy.
 
 \subsection{Accuracy Bound for Baseline Mechanisms}
 
-\subsubsection{Accuracy Bound for Exponential Mechanism}
-\label{subsec_accuracy_global}
-The accuracy bound of exponential mechanism is given in \cite{dwork2014algorithmic} as:
-\begin{equation*}
-Pr[u(\expmech{}{x}{u}{\candidateset}) \leq c] 
-		 \leq \frac{|\mathcal{R}|exp(\frac{\epsilon c}{2 GS})}{|\mathcal{R}_{OPT}| exp(\frac{\epsilon OPT_{u(\dataobs)}}{2 GS})},
-\end{equation*}
-where $|R|$ is the size of the candidate set, $OPT$ is the optimal candidates, $|R_{OPT}|$ is the number of optimal candidates.
+% \subsubsection{Accuracy Bound for Exponential Mechanism}
+% \label{subsec_accuracy_global}
+% The accuracy bound of exponential mechanism is given in \cite{dwork2014algorithmic} as:
+% \begin{equation*}
+% Pr[u(\expmech{}{x}{u}{\candidateset}) \leq c] 
+% 		 \leq \frac{|\mathcal{R}|exp(\frac{\epsilon c}{2 GS})}{|\mathcal{R}_{OPT}| exp(\frac{\epsilon OPT_{u(\dataobs)}}{2 GS})},
+% \end{equation*}
+% where $|R|$ is the size of the candidate set, $OPT$ is the optimal candidates, $|R_{OPT}|$ is the number of optimal candidates.
 
 
 \subsubsection{Accuracy Bound for Laplace Mechanism}
 \label{subsec_accuracy_lap}
-Given\cite{dwork2014algorithmic}:
+If $Y \thicksim Lap(b)$, we have\cite{dwork2014algorithmic}:
 $$
-Pr[|Y| \geq t \cdot b] = e^{- t},
+Pr[|Y| \geq t \cdot b] = e^{- t}.
 $$
-where $Y \thicksim Lap(b)$, we get:
+Based on this, we get:
 \begin{equation*}
 Pr[|Y| \geq t] = e^{- \frac{t \epsilon}{\Delta \bysinfer}}
 \end{equation*}
 in our case, where $Y \thicksim Lap(\frac{\Delta \bysinfer}{\epsilon})$.
 
-After post-processing, we get:
+After post-processing (i.e., taking the floor value of $Y$), we get:
 \[
 Pr\big[\lfloor Y \rfloor = t\big] 
 = Pr[ t \leq Y < t + 1] 
@@ -917,10 +917,10 @@ Accuracy bound for improved Laplace mechanism is obtained from the standard Lapl
   \begin{align}
   \label{eq_acc}
   \hexpmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), z) = c} 
-  = & \frac{2 \exp{(\frac{- \epsilon c}{4 S(\dataobs)})}}{\unomalizer{\dataobs}},
+  = & \frac{2 \exp{(\frac{- \epsilon c}{4 S(\dataobs)})}}{\nomalizer{\dataobs}},
   \end{align}
   $c = \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)$.\\
-  Unfolding the Hellinegr distance in this accuracy bound:
+  Unfolding the Hellinegr distance in this accuracy formula:
 
  \begin{itemize}
 
@@ -961,15 +961,6 @@ Accuracy bound for improved Laplace mechanism is obtained from the standard Lapl
 
 \end{itemize}
 
-
-Moreover, based on the accuracy bound in Sec. \ref{subsec_accuracy_global}, we also derived a loose bound:
-
-\begin{equation*}
-\begin{split}
-Pr[u(\hexpmech(\dataobs)) \leq c] 
-& \leq |\candidateset|exp(\frac{\epsilon c}{2 S(\dataobs)}).
-\end{split}
-\end{equation*}
 
 \section{Experimental Evaluations}
 \label{sec_experiment}
