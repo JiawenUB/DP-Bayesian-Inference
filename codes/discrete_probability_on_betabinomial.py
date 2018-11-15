@@ -222,16 +222,28 @@ def row_discrete_probabilities(sample_size,epsilon,delta,prior,observation):
 	#############################################################################
 	exp_GS = calculate_prob_exp(Candidate_bins_by_step, Bayesian_Model, mechanism_parameter = 2,
 		sensitivity = Bayesian_Model._GS, savename = "_exp_GS.txt")
+	
+	#############################################################################
+	#SETTING THE SENSITIVITY
+	#############################################################################
+	
+	if (len(prior._alphas) == 2):
+		sensitivity1 = 1.0
+		sensitivity2 = 2.0
+	else:
+		sensitivity1 = 2.0
+		sensitivity2 = len(prior._alphas)*1.0
+
 
 	#############################################################################
 	#CALCULATE the Laplace prob within the same bin
 	#############################################################################
 	
 	step,lap_1 = calculate_prob_lap(Candidate_bins_by_step, Bayesian_Model, 
-		sensitivity = 1.0, savename = "_lap_1.txt")
+		sensitivity = sensitivity1, savename = "_lap_1.txt")
 
 	step,lap_2 = calculate_prob_lap(Candidate_bins_by_step, Bayesian_Model, 
-		sensitivity = 2.0, savename = "_lap_2.txt")
+		sensitivity = sensitivity2, savename = "_lap_2.txt")
 
 
 	#############################################################################
@@ -247,8 +259,8 @@ def row_discrete_probabilities(sample_size,epsilon,delta,prior,observation):
 		r'$\mathcal{M}_{\mathcal{H}}$ with $\gamma -$Sensitivity',
 		r"NON PRIVATE $\mathcal{M}_{\mathcal{E}}$",
 		r"STANDARD $\mathcal{M}_{\mathcal{E}}$",
-		'IMPROVED LapMech (sensitivity =1)', 
-		'LapMech (sensitivity = 2)']
+		'IMPROVED LapMech (sensitivity ='+ str(sensitivity1) +')', 
+		'LapMech (sensitivity = '+ str(sensitivity1) +')']
 
 
 	#############################################################################
@@ -357,7 +369,7 @@ if __name__ == "__main__":
 	#SETTING UP THE PARAMETERS
 	#############################################################################
 	datasize = 600
-	epsilon = 1.0
+	epsilon = 5.0
 	delta = 0.00000001
 	prior = dirichlet([1,1,1])
 	dataset = [200,200,200]

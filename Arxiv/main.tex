@@ -991,28 +991,46 @@ This equation is validated by an experimental result shown in Fig. \ref{fig_effi
 
 \subsection{Accuracy Evaluation}
 \subsubsection{Theoretical Results}
+In Fig. \ref{fig_theory} and \ref{fig_theory_epsilon}, we plot on the x-axis the Hellinger distance from the true posterior and on the y-axis the theoretical probabilities of outputting the candidates with that distance under the different mechanisms. We consider \emph{balanced} data sets, which means that in the Beta-Binomial model (Figure \ref{subfig_theory_2d}) the datasets will consist of 50\% 1s and the rest 0s, while for the
+Dirichelet-Multinomial (Figure  \ref{subfig_theory_3d})
+the data will be split in the $k=3$ bins with perecentages of: 33\%, 33\% and 34\% in 3 dimensionality. Same concept in 4 dimensionality.
+
+We consider 6 mechanisms in our comparison, including the Laplace mechanism, improved Laplace mechanism, standard exponential mechanism, non-private exponential mechanism (using local sensitivity) and two newly designed mechanisms (one with smooth sensitivity achieving $(\epsilon, \delta)-$dp and the other with $\gamma$ sensitivity achieving $\epsilon-$dp).
 
 \begin{figure}
 \begin{center}
 \centering
   \subfigure[2 dimensions with data size $600$]{
-    \includegraphics[width=0.4\textwidth]{theory_2d.eps}
+    \includegraphics[width=0.45\textwidth]{theory_2d.eps}
   \label{subfig_theory_2d}
   }
   \subfigure[3 dimensions with data size $600$]{
-    \includegraphics[width=0.4\textwidth]{theory_3d.eps}
+    \includegraphics[width=0.45\textwidth]{theory_3d.eps}
   \label{subfig_theory_3d}
   }
-\caption{The theory probabilities of candidates in three mechanisms, with balanced data set and parameters $\epsilon = 1.0$ and $\delta = 10^{-8}$ }
+\caption{The theory probabilities of outputting candidates in certain distance from true posterior, with balanced data set and parameters $\epsilon = 1.0$}
 \label{fig_theory}
 \end{center}
 \end{figure}
-In Fig. \ref{fig_theory} we plot on the x-axis the Hellinger distance from the true posterior and on the y-axis the theoretical probabilities of outputting the candidates with that distance under the different mechanisms. We consider \emph{balanced} data sets, which means that in the Beta-Binomial model (Figure \ref{subfig_theory_2d}) the datasets will consist of 50\% 1s and the rest 0s, while for the
-Dirichelet-Multinomial (Figure  \ref{subfig_theory_3d})
-the data will be split in the $k=3$ bins with perecentages of: 33\%, 33\% and 34\% in 3 dimensionality. Same concept in 4 dimensionality.
 
 In Fig. \ref{fig_theory}, candidates of smaller distance from true posterior can be outputted by $\hexpmech$ (in blue line) with larger probability than by baseline Laplace mechanism (in green line). This means $\hexpmech$ can produce good results with larger probability than baseline mechanism. However, the improved Laplace mechanism represented by red line can produce good results with probability higher than $\hexpmech$. It outperforms $\hexpmech$.
 
+\begin{figure}
+\begin{center}
+\centering
+  \subfigure[2 dimensions of data size 1000]{
+    \includegraphics[width=0.45\textwidth]{epsilon5_2d_1000.eps}
+  \label{subfig_theory_2d}
+  }
+  \subfigure[2 dimensions of data size 10000]{
+    \includegraphics[width=0.45\textwidth]{epsilon5_2d_10000.eps}
+  \label{subfig_theory_3d}
+  }
+\caption{The theory probabilities of outputting candidates in certain distance from true posterior, with balanced data set and parameters $\epsilon = 5.0$}
+\label{fig_theory_epsilon}
+\end{center}
+\end{figure}
+Increasing the privacy bound $\epsilon$, we get theoretical results as in Fig. \ref{fig_theory_epsilon}. In 2 dimensions, we can perform better than Laplace mechanisms.
 
 \subsubsection{Experimental Results}
 \label{subsec_vs_variables}
@@ -1021,7 +1039,7 @@ In this section, we evaluate the accuracy of the mechanisms defined in
 Section (\ref{sec_mechs}) w.r.t. four variables, including data size, dimensions,
 data variance, prior distribution, and some combinations thereof.
 Every plot is an average over 1000 runs. In all the experiments we set
-$\epsilon = 1.0$, and $\delta = 10^{-8}$.
+$\epsilon = 1.0$.
 
 \noindent In the following some of the plots show
 mean error as a function of the datasize while one
@@ -1049,7 +1067,7 @@ up to $n$.
 \begin{center}
 \centering
     \includegraphics[width=0.8\textwidth]{sampling_2d.eps}
-\caption{Increasing data size with prior $\betad(1,1)$, balanced datasets and parameters $\epsilon = 1.0$ and $\delta = 10^{-8}$}
+\caption{Increasing data size with prior $\betad(1,1)$, balanced datasets and parameters $\epsilon = 1.0$}
 \label{fig_vs_datasize_2d}
 \end{center}
 \end{figure}
@@ -1057,12 +1075,12 @@ up to $n$.
 \begin{figure}[ht]
 \begin{center}
 \centering
-\subfigure[Increasing data size with $\dirichlet(1,1,1)$ prior distribution, balanced datasets and parameters $\epsilon = 1.0$ and $\delta = 10^{-8}$]
+\subfigure[Increasing data size with $\dirichlet(1,1,1)$ prior distribution, balanced datasets and parameters $\epsilon = 1.0$]
 {
         \includegraphics[width=0.45\textwidth]{sampling_3d.eps} 
         \label{fig_vs_datasize_3d}
 }
-\subfigure[Increasing data size with $\dirichlet(1,1,1,1)$ prior distribution, Unbalanced datasets and parameters $\epsilon = 1.0$ and $\delta = 10^{-8}$]
+\subfigure[Increasing data size with $\dirichlet(1,1,1,1)$ prior distribution, balanced datasets and parameters $\epsilon = 1.0$]
 {
      \includegraphics[width=0.45\textwidth]{sampling_4d.eps} 
 \label{fig_vs_datasize_4d}
