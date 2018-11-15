@@ -228,10 +228,10 @@ def row_discrete_probabilities(sample_size,epsilon,delta,prior,observation):
 	#############################################################################
 	
 	step,lap_1 = calculate_prob_lap(Candidate_bins_by_step, Bayesian_Model, 
-		sensitivity = 2.0, savename = "_lap_1.txt")
+		sensitivity = 1.0, savename = "_lap_1.txt")
 
 	step,lap_2 = calculate_prob_lap(Candidate_bins_by_step, Bayesian_Model, 
-		sensitivity = 10.0, savename = "_lap_2.txt")
+		sensitivity = 2.0, savename = "_lap_2.txt")
 
 
 	#############################################################################
@@ -247,8 +247,8 @@ def row_discrete_probabilities(sample_size,epsilon,delta,prior,observation):
 		r'$\mathcal{M}_{\mathcal{H}}$ with $\gamma -$Sensitivity',
 		r"NON PRIVATE $\mathcal{M}_{\mathcal{E}}$",
 		r"STANDARD $\mathcal{M}_{\mathcal{E}}$",
-		'IMPROVED LapMech (sensitivity = 2)', 
-		'LapMech (sensitivity = 10)']
+		'IMPROVED LapMech (sensitivity =1)', 
+		'LapMech (sensitivity = 2)']
 
 
 	#############################################################################
@@ -256,29 +256,29 @@ def row_discrete_probabilities(sample_size,epsilon,delta,prior,observation):
 	#############################################################################
 
 	plt.figure()
-	# plt.plot(step, exp, 'o', label=(labels[0]))
+	plt.plot(step, exp, 'o', label=(labels[0]))
 
-	# plt.plot(step, exp_new, '*', label=(labels[1]))
+	plt.plot(step, exp_new, '*', label=(labels[1]))
 
-	# plt.plot(step, exp_LS, '-', label=(labels[2]))
+	plt.plot(step, exp_LS, '-', label=(labels[2]))
 
-	# plt.plot(step, exp_GS, '-', label=(labels[3]))
+	plt.plot(step, exp_GS, '-', label=(labels[3]))
 
-	# plt.plot(step, lap_1,'^', color = 'navy', label=(labels[4]))
+	plt.plot(step, lap_1,'-', color = 'navy', label=(labels[4]))
 
-	# plt.plot(step, lap_2, '.',color = 'lightblue', label=(labels[5]))
+	plt.plot(step, lap_2, '-',color = 'lightblue', label=(labels[5]))
 
-	plt.plot(step, exp,  label=(labels[0]))
+	# plt.plot(step, exp,  label=(labels[0]))
 
-	plt.plot(step, exp_new, label=(labels[1]))
+	# plt.plot(step, exp_new, label=(labels[1]))
 
-	plt.plot(step, exp_LS,  label=(labels[2]))
+	# plt.plot(step, exp_LS,  label=(labels[2]))
 
-	plt.plot(step, exp_GS,  label=(labels[3]))
+	# plt.plot(step, exp_GS,  label=(labels[3]))
 
-	plt.plot(step, lap_1, color = 'navy', label=(labels[4]))
+	# plt.plot(step, lap_1, color = 'navy', label=(labels[4]))
 
-	plt.plot(step, lap_2, color = 'lightblue', label=(labels[5]))
+	# plt.plot(step, lap_2, color = 'lightblue', label=(labels[5]))
 
 	#############################################################################
 	#PLOT FEATURE SETTING
@@ -356,11 +356,11 @@ if __name__ == "__main__":
 	#############################################################################
 	#SETTING UP THE PARAMETERS
 	#############################################################################
-	datasize = 20
+	datasize = 600
 	epsilon = 1.0
 	delta = 0.00000001
-	prior = dirichlet([1 for i in range(10)])
-	dataset = [2 for i in range(10)]
+	prior = dirichlet([1,1,1])
+	dataset = [200,200,200]
 
 	#############################################################################
 	#SETTING UP THE PARAMETERS WHEN DOING GROUPS EXPERIMENTS
