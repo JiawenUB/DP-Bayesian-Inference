@@ -158,10 +158,7 @@ if __name__ == "__main__":
 	delta = 0.00000001
 	prior = dirichlet([1,1])
 	dataset = [50,50]
-	x1 = [1,499]
-	x2 = [0,500]
 	epsilons = numpy.arange(0.1, 2, 0.1)
-	datasizes = gen_datasizes((10000,20000),10000) # gen_datasizes((10,50),5) + gen_datasizes((100,500), 50)#[300] #[8,12,18,24,30,36,42,44,46,48]#,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80]
 	datasizes = gen_datasizes((10,50),5) + gen_datasizes((100,500), 100) + gen_datasizes((1000,5000),1000)  + gen_datasizes((10000,50000),5000)# #[300] #[8,12,18,24,30,36,42,44,46,48]#,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80]
 	percentage = [0.5,0.5]
 	datasets = gen_datasets(percentage, datasizes)
