@@ -11,25 +11,53 @@
 \author[*]{Jiawen Liu}
 \maketitle
 
-
+\section{privacy}
   \begin{equation*}
   \begin{split}
-  & \frac {exp\big(
-  \frac{-\epsilon\cdot(\uxadj{r})}{4\cdot L(\dataobs)}
+  & \frac {\exp\big(
+  \frac{-\epsilon\cdot(\ux{r})}{2\cdot L(\dataobs)}
   \big)}
-  {\unomalizer{\dataobs}}
-  \cdot exp\big( \frac{\epsilon}{4} \big) \\
-  & = \frac {exp\big(
-  \frac{-\epsilon\cdot(\uxadj{r})}{4\cdot L(\dataobs')}
-  \cdot   \frac{L(\dataobs')}{L(\dataobs)}
-  \big)}
-  {\unomalizer{\dataobs}}
-  \cdot exp\big( \frac{\epsilon}{4} \big) \\
-  & \leq \frac{exp\big(
-  \frac{-\epsilon\cdot(\uxadj{r})}{4\cdot L(\dataobs')}
-  \cdot 1
-  \big)}
-  {\unomalizer{\dataobs}}
-  \cdot exp\big( \frac{\epsilon}{4} \big)
+  {\exp\big(
+  \frac
+  {-\epsilon\cdot(\uxadj{r})}{2\cdot L(\dataobs')}
+  \big)}\\
+  & = \exp\big(
+  \frac{-\epsilon\cdot(\ux{r})}{2\cdot L(\dataobs)}
+  - 
+  \frac{-\epsilon\cdot(\uxadj{r})}{2\cdot L(\dataobs')}
+  \big)\\
+  & = \exp
+  \big(
+  \frac{\epsilon}{2}
+  (\frac{\uxadj{r}}{L(\dataobs')}
+  - 
+  \frac{\ux{r}}{ L(\dataobs)})
+  \big)\\
+  & = \exp
+  \big(
+  \frac{\epsilon}{2}
+  (\frac{\uxadj{r}}{ L(\dataobs)}\cdot \frac{L(\dataobs)}{L(\dataobs')}
+  - 
+  \frac{\ux{r}}{L(\dataobs)} )
+  \big)\\
+  & \leq \exp
+  \big(
+  \frac{\epsilon}{2}
+  (\frac{\uxadj{r}}{ L(\dataobs)}\cdot 1
+  - 
+  \frac{\ux{r}}{L(\dataobs)})
+  \big)\\
+  & = \exp
+  \big(
+  \frac{\epsilon}{2}
+  (\frac{\uxadj{r} - \ux{r}}{L(\dataobs)})
+  \big)\\
+  & \leq \exp
+  \big(
+  \frac{\epsilon}{2}
+  \big)
   \end{split}
   \end{equation*}
+
+
+  \end{document}
