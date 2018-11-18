@@ -69,7 +69,7 @@ def privacy_loss(sample_sizes,epsilon,delta,prior):
 	#########################################################################################################################			
 	plt.figure()
 	plt.title(("PRIVACY LOSS wrt. the data size/ prior: " + str(prior._alphas)))
-	plt.plot(sample_sizes,epsilons, 'bo-', label=('Exp Mech'))
+	plt.plot(sample_sizes,epsilons, 'bo-', label=('Exp Mech with Local Sensitivity'))
 	plt.xlabel("Data Size")
 	plt.ylabel("maximum privacy loss at data size n")
 	plt.grid()
@@ -96,25 +96,27 @@ def privacy_loss_x1_x2(sample_size,epsilon,delta,prior,x1, x2):
 	
 	return max(sorted_epsilons[-1][1], abs(sorted_epsilons[0][1]))
 	
-	for key,value in sorted_epsilons:
-		print "Pr[ ( M(x1) = " + key + ") / ( M(x2) = " + key + ") ] = exp(" + str(value) + ")"
+	#########################################################################################################################
+	#PLOT THE PRIVACY LOSS FOR 2 ADJACENT DATA SETS
+	#########################################################################################################################	
+	# for key,value in sorted_epsilons:
+	# 	print "Pr[ ( M(x1) = " + key + ") / ( M(x2) = " + key + ") ] = exp(" + str(value) + ")"
 
-	y = [value for key, value in sorted_epsilons]
+	# y = [value for key, value in sorted_epsilons]
 
-	x = range(len(sorted_epsilons))
+	# x = range(len(sorted_epsilons))
 
-	xlabel = [key for key, value in sorted_epsilons]
-	plt.figure(figsize=(15,8))
-	plt.plot(x, y, 'bs-', label=('Exp Mech'))
-	# plt.plot(T, approximate_bounds, 'g^', label=('Expmech_SS zApproximate Bound'))
-	plt.xlabel("z / (candiates)")
-	plt.ylabel("Pr[(Pr[ ( M(x1) = z) / ( M(x2) = z) ])] = exp(y)")
+	# xlabel = [key for key, value in sorted_epsilons]
+	# plt.figure(figsize=(15,8))
+	# plt.plot(x, y, 'bs-', label=('Exp Mech'))
+	# plt.xlabel("z / (candiates)")
+	# plt.ylabel("Pr[(Pr[ ( M(x1) = z) / ( M(x2) = z) ])] = exp(y)")
 
-	plt.title("datasize: "+ str(sample_size) + ", x1: "+ str(x1) + ", x2: "+ str(x2) + ", epsilon: "+ str(epsilon))
-	plt.legend()
-	plt.xticks(x,xlabel,rotation=70,fontsize=8)
-	plt.grid()
-	plt.show()
+	# plt.title("datasize: "+ str(sample_size) + ", x1: "+ str(x1) + ", x2: "+ str(x2) + ", epsilon: "+ str(epsilon))
+	# plt.legend()
+	# plt.xticks(x,xlabel,rotation=70,fontsize=8)
+	# plt.grid()
+	# plt.show()
 
 
 def probability_values(sample_size,epsilon,delta,prior,observation):
@@ -124,14 +126,14 @@ def probability_values(sample_size,epsilon,delta,prior,observation):
 
 	Bayesian_Model._set_candidate_scores()
 	Bayesian_Model._set_local_sensitivities()
-	Bayesian_Model._set_up_exp_mech_with_alpha_SS()
+	Bayesian_Model._set_up_exp_mech_with_LS()
 	
 
 	probabilities_exp = {}
 
 	for i in range(len(Bayesian_Model._candidates)):
 		z = Bayesian_Model._candidates[i]
-		probabilities_exp[str(z._alphas)] = Bayesian_Model._alpha_SS_probabilities[i]
+		probabilities_exp[str(z._alphas)] = Bayesian_Model._LS_probabilities[i]
 	
 	return probabilities_exp
 
