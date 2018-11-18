@@ -6,21 +6,23 @@
 \input{macros}
 
 \begin{document}
-\title{Privacy of LS}
+\title{Privacy of Exponential Mechanism with Local Sensitivity}
 
 \author[*]{Jiawen Liu}
 \maketitle
 
 \section{privacy}
+Given $\frac{L(\dataobs)}{L(\dataobs')} \leq 1$ by experiments, we have: for any $r \in \candidateset$,
   \begin{equation*}
   \begin{split}
-  & \frac {\exp\big(
+  \frac {\
+  exp\big(
   \frac{-\epsilon\cdot(\ux{r})}{2\cdot L(\dataobs)}
   \big)}
   {\exp\big(
   \frac
   {-\epsilon\cdot(\uxadj{r})}{2\cdot L(\dataobs')}
-  \big)}\\
+  \big)}
   & = \exp\big(
   \frac{-\epsilon\cdot(\ux{r})}{2\cdot L(\dataobs)}
   - 
@@ -58,6 +60,37 @@
   \big)
   \end{split}
   \end{equation*}
+$\implies $ $\forall$ $r \in \candidateset$:
+$$
+\exp(-\frac{\epsilon}{2}) \leq \frac {\
+  exp\big(
+  \frac{-\epsilon\cdot(\ux{r})}{2\cdot L(\dataobs)}
+  \big)}
+  {\exp\big(
+  \frac
+  {-\epsilon\cdot(\uxadj{r})}{2\cdot L(\dataobs')}
+  \big)}
+\leq \exp(\frac{\epsilon}{2})
+$$
+\begin{align*}
+\frac{\hexpmechPr{\dataobs}{z = r}}{\hexpmechPr{\dataobs'}{z = r}}
+= & \frac {\
+  exp\big(
+  \frac{-\epsilon\cdot(\ux{r})}{2\cdot L(\dataobs)}
+  \big)}
+  {\exp\big(
+  \frac
+  {-\epsilon\cdot(\uxadj{r})}{2\cdot L(\dataobs')}
+  \big)} 
+  \cdot
+  \frac{\unomalizer{\dataobs'}}{\unomalizer{\dataobs}}
+  \\
+\leq & \exp(\frac{\epsilon}{2}) 
+\cdot 
+\frac{\unomalizer{\dataobs'}}
+{\unomalizer{\dataobs'}\cdot \exp(-\frac{\epsilon}{2})}\\
+= & \exp(\epsilon)
+\end{align*}
 
 
   \end{document}

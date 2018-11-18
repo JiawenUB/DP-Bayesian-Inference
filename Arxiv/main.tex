@@ -775,11 +775,7 @@ $\hexpmech$ is $\epsilon$-differential privacy.
   \big)
   } 
   {
-  \sum_{r'\in \candidateset} 
-  exp 
-  \big(
-  \frac{-\epsilon\cdot(\uxadj{r'}}{4\cdot S(\dataobs')}
-  \big)
+  \unomalizer{\dataobs'}
   }\\
   & = e^{( \frac{\epsilon}{2} + \frac{\epsilon}{2} \cdot \gamma )} \cdot   \hexpmechPr{\dataobs'}{z = r}
   \end{split}
