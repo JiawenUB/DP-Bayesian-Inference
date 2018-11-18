@@ -92,5 +92,22 @@ $$
 = & \exp(\epsilon)
 \end{align*}
 
+\section{Bound for Sensitivity}
+Given the $\gamma$ sensitivity $S(\dataobs)$ of $\dataobs$ satisfying: for any $\adj{\dataobs}{\dataobs'}$:
+\begin{equation}
+\label{eq_gamma_smooth}
+\frac{1}{S(\dataobs)} - \frac{1}{S(\dataobs')} \leq \gamma,
+\end{equation}
+We have:
+\begin{align*}
+\frac{1}{S(\dataobs)} - \frac{1}{S(\dataobs')} \leq & \gamma\\
+\frac{S(\dataobs')}{S(\dataobs)} - 1 \leq & \gamma \cdot S(\dataobs')\\
+\frac{S(\dataobs')}{S(\dataobs)} \leq & \gamma \cdot S(\dataobs') + 1\\
+\leq & \gamma \cdot GS + 1 \\
+\leq & \gamma \cdot 0.46 + 1.
+\end{align*}
+
+By setting $\gamma = 1.0$, we have: $\frac{S(\dataobs')}{S(\dataobs)} \leq 1.46$.
+
 
   \end{document}
