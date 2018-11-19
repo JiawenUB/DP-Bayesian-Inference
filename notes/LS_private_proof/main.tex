@@ -16,7 +16,7 @@ Given $\frac{L(\dataobs)}{L(\dataobs')} \leq 1$ by experiments, we have: for any
   \begin{equation*}
   \begin{split}
   \frac {\
-  exp\big(
+  \exp\big(
   \frac{-\epsilon\cdot(\ux{r})}{2\cdot L(\dataobs)}
   \big)}
   {\exp\big(
@@ -72,6 +72,8 @@ $$
   \big)}
 \leq \exp(\frac{\epsilon}{2})
 $$
+
+For example, given the bound of nominator:
 \begin{align*}
 \frac{\hexpmechPr{\dataobs}{z = r}}{\hexpmechPr{\dataobs'}{z = r}}
 = & \frac {\
@@ -109,5 +111,120 @@ We have:
 
 By setting $\gamma = 1.0$, we have: $\frac{S(\dataobs')}{S(\dataobs)} \leq 1.46$.
 
+
+\section{Non-Privacy Explanation}
+Given $\frac{S(\dataobs)}{S(\dataobs')} \leq 1.46$, we have: for any $r \in \candidateset$,
+  \begin{equation*}
+  \begin{split}
+  \frac {\
+  \exp\big(
+  \frac{-\epsilon\cdot(\ux{r})}{2\cdot S(\dataobs)}
+  \big)}
+  {\exp\big(
+  \frac
+  {-\epsilon\cdot(\uxadj{r})}{2\cdot S(\dataobs')}
+  \big)}
+  & = \exp\big(
+  \frac{-\epsilon\cdot(\ux{r})}{2\cdot S(\dataobs)}
+  - 
+  \frac{-\epsilon\cdot(\uxadj{r})}{2\cdot S(\dataobs')}
+  \big)\\
+  & = \exp
+  \big(
+  \frac{\epsilon}{2}
+  (\frac{\uxadj{r}}{S(\dataobs')}
+  - 
+  \frac{\ux{r}}{ S(\dataobs)})
+  \big)\\
+  & = \exp
+  \big(
+  \frac{\epsilon}{2}
+  (\frac{\uxadj{r}}{ S(\dataobs)}\cdot \frac{S(\dataobs)}{S(\dataobs')}
+  - 
+  \frac{\ux{r}}{S(\dataobs)} )
+  \big)\\
+  & \leq \exp
+  \big(
+  \frac{\epsilon}{2}
+  (\frac{\uxadj{r}}{ S(\dataobs)}\cdot 1.46
+  - 
+  \frac{\ux{r}}{S(\dataobs)})
+  \big)\\
+  & = \exp
+  \big(
+  \frac{\epsilon}{2}
+  (\frac{1.46 \cdot \uxadj{r} - \ux{r}}{S(\dataobs)})
+  \big)\\
+  & ? \exp
+  \big(
+  \frac{\epsilon}{2} \cdot 1.46
+  \big)
+  \end{split}
+  \end{equation*}
+  Because we don't know the relation bewtween $1.46 \cdot \uxadj{r}$ and $\ux{r}$. So we cannot derive $\frac{1.46 \cdot \uxadj{r} - \ux{r}}{S(\dataobs)} \leq 1.46$.
+
+\section{Privacy Loss Analysis}
+
+
+For example, given the bound of nominator:
+$$
+\exp(-\frac{\epsilon}{2}) \leq \frac {
+\exp\big(
+  \frac{-\epsilon\cdot(\ux{r})}{2\cdot S(\dataobs)}
+  \big)}
+  {\exp\big(
+  \frac
+  {-\epsilon\cdot(\uxadj{r})}{2\cdot S(\dataobs')}
+  \big)}
+\leq \exp(\frac{\epsilon}{2})
+$$
+Then, we have:
+\begin{align}
+\frac{\hexpmechPr{\dataobs}{z = r}}{\hexpmechPr{\dataobs'}{z = r}}
+= & \frac {\
+  exp\big(
+  \frac{-\epsilon\cdot(\ux{r})}{2\cdot S(\dataobs)}
+  \big)}
+  {\exp\big(
+  \frac
+  {-\epsilon\cdot(\uxadj{r})}{2\cdot S(\dataobs')}
+  \big)} 
+  \cdot
+  \frac{\unomalizer{\dataobs'}}{\unomalizer{\dataobs}}
+  \\
+	\leq & \exp(\frac{\epsilon}{2}) 
+	\cdot 
+	\frac{\unomalizer{\dataobs'}}
+	{\unomalizer{\dataobs}}\\
+	\leq & \exp(\frac{\epsilon}{2}) 
+	\cdot 
+	\frac{\unomalizer{\dataobs'}}
+	{\unomalizer{\dataobs'}\cdot \exp(-\frac{\epsilon}{2})}\\
+	= & \exp(\epsilon)
+\end{align}
+Then we show the second $\leq$ (step (4)) is too loose.
+
+Because the bound for nominator is the maximum case: 
+$$ \exp\big(
+  \frac{-\epsilon\cdot(\ux{r})}{2\cdot L(\dataobs)}
+  \big)
+  \leq
+  \exp\big(
+  \frac{-\epsilon\cdot(\uxadj{r})}{2\cdot L(\dataobs')}
+  \big) 
+  \cdot \exp(\frac{\epsilon}{2}).$$
+  There are a lot of $r \in \candidateset$ that makes $\exp\big(
+  \frac{-\epsilon\cdot(\ux{r})}{2\cdot L(\dataobs)}
+  \big)$ much more smaller than this bound, i.e., cannot achieve this bound.
+
+  So when we do approximation in denominator, we sum up all these 
+  $\exp\big( \frac{-\epsilon\cdot(\ux{r})}{2\cdot L(\dataobs)} \big)$
+  for different $r$ using the same maximum bound they cannot achieve, we get: 
+  $$
+ \unomalizer{\dataobs}
+	\leq
+\unomalizer{\dataobs'}\cdot \exp(\frac{\epsilon}{2}).
+  $$
+  This bound is too loose.
 
   \end{document}

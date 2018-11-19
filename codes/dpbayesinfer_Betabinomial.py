@@ -183,13 +183,15 @@ class BayesInferwithDirPrior(object):
 		###################################################################################################################################
 		#CALCULATING THE SENSITIVITY
 		###################################################################################################################################
+		x = self._observation_counts
 		nomalizer = 0.0
 		for r in self._candidates:
-			temp = math.exp(self._epsilon * self._candidate_scores[r]/(4 * self._alpha_SS))
+			temp = math.exp(self._epsilon * self._candidate_scores[r]/(2 * self._alpha_SS))
 			self._alpha_SS_probabilities.append(temp)
 			nomalizer += temp
 
 		for i in range(len(self._alpha_SS_probabilities)):
+			r = self._candidates[i]
 			self._alpha_SS_probabilities[i] = self._alpha_SS_probabilities[i]/nomalizer
 		return nomalizer
 

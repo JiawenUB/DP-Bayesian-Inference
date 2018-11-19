@@ -37,7 +37,7 @@ def privacy_loss(sample_sizes,epsilon,delta,prior):
 			candidates[i]._minus(prior)
 
 		candidates = [dirichlet([0,n]), dirichlet([1,n-1]),dirichlet([2,n-2]), 
-		dirichlet([n,0]), dirichlet([n-1, 1]), dirichlet([n - 2, 2])]
+		dirichlet([3, n - 3])]
 		#########################################################################################################################
 		#MAX PRIVACY LOSS UNDER SIZE N
 		#########################################################################################################################			
@@ -79,44 +79,67 @@ def privacy_loss(sample_sizes,epsilon,delta,prior):
 
 
 def privacy_loss_x1_x2(sample_size,epsilon,delta,prior,x1, x2):
+
+	print "Adjacent data set:", x1, x2
+	#########################################################################################################################
+	#OBTAIN DECOMPOSED OUTPUTTING PROBABILITIES UNDER TWO ADJACENT DATA SET
+	#########################################################################################################################	
+	x1_nomalizer, x1_probabilities = decomposed_probability_values(sample_size,epsilon,delta,prior,x1)
+	x2_nomalizer, x2_probabilities = decomposed_probability_values(sample_size,epsilon,delta,prior,x2)
+
+	print "NL(x1) =", x1_nomalizer, "NL(x2) =", x2_nomalizer
+	print "NL(x2)/NL(x1) = exp(", math.log(x2_nomalizer / x1_nomalizer),")"
+
+	epsilons = {}
+	for key, item in x1_probabilities.items():
+		i = x2_probabilities[key]
+		epsilons[key] = math.log(item / i)
+		print "nominator(x1," + key + ") =", item, "; nominator(x2," + key + ") =", i
+		print "nominator(x1,r)/nominator(x2,r) = exp(", epsilons[key],")"
+
+	sorted_epsilons = sorted(epsilons.items(), key=operator.itemgetter(1))
+	
+	
+	# return max(sorted_epsilons[-1][1], abs(sorted_epsilons[0][1]))
 	#########################################################################################################################
 	#OBTAIN OUTPUTTING PROBABILITIES UNDER TWO ADJACENT DATA SET
 	#########################################################################################################################	
 	x1_probabilities = probability_values(sample_size,epsilon,delta,prior,x1)
 	x2_probabilities = probability_values(sample_size,epsilon,delta,prior,x2)
 
-
-	accuracy_epsilons = {}
+	epsilons = {}
 	for key, item in x1_probabilities.items():
 		i = x2_probabilities[key]
-		accuracy_epsilons[key] = math.log(item / i)
+		epsilons[key] = math.log(item / i)
 
-	sorted_epsilons = sorted(accuracy_epsilons.items(), key=operator.itemgetter(1))
-	
-	
-	return max(sorted_epsilons[-1][1], abs(sorted_epsilons[0][1]))
+	sorted_epsilons = sorted(epsilons.items(), key=operator.itemgetter(1))
 	
 	#########################################################################################################################
 	#PLOT THE PRIVACY LOSS FOR 2 ADJACENT DATA SETS
 	#########################################################################################################################	
-	# for key,value in sorted_epsilons:
-	# 	print "Pr[ ( M(x1) = " + key + ") / ( M(x2) = " + key + ") ] = exp(" + str(value) + ")"
+	for key,value in sorted_epsilons:
+		print "Pr[ ( M(x1) = " + key + ") / ( M(x2) = " + key + ") ] = exp(" + str(value) + ")"
 
-	# y = [value for key, value in sorted_epsilons]
+	return max(sorted_epsilons[-1][1], abs(sorted_epsilons[0][1]))
 
-	# x = range(len(sorted_epsilons))
 
-	# xlabel = [key for key, value in sorted_epsilons]
-	# plt.figure(figsize=(15,8))
-	# plt.plot(x, y, 'bs-', label=('Exp Mech'))
-	# plt.xlabel("z / (candiates)")
-	# plt.ylabel("Pr[(Pr[ ( M(x1) = z) / ( M(x2) = z) ])] = exp(y)")
+def decomposed_probability_values(sample_size,epsilon,delta,prior,observation):
+	
+	Bayesian_Model = BayesInferwithDirPrior(prior, sample_size, epsilon, delta)
+	Bayesian_Model._set_observation(observation)
 
-	# plt.title("datasize: "+ str(sample_size) + ", x1: "+ str(x1) + ", x2: "+ str(x2) + ", epsilon: "+ str(epsilon))
-	# plt.legend()
-	# plt.xticks(x,xlabel,rotation=70,fontsize=8)
-	# plt.grid()
-	# plt.show()
+	Bayesian_Model._set_candidate_scores()
+	Bayesian_Model._set_local_sensitivities()
+	nomalizer = Bayesian_Model._set_up_exp_mech_with_alpha_SS()
+	
+
+	probabilities_exp = {}
+
+	for i in range(len(Bayesian_Model._candidates)):
+		z = Bayesian_Model._candidates[i]
+		probabilities_exp[str(z._alphas)] = nomalizer * Bayesian_Model._alpha_SS_probabilities[i]
+	
+	return nomalizer, probabilities_exp
 
 
 def probability_values(sample_size,epsilon,delta,prior,observation):
@@ -126,14 +149,14 @@ def probability_values(sample_size,epsilon,delta,prior,observation):
 
 	Bayesian_Model._set_candidate_scores()
 	Bayesian_Model._set_local_sensitivities()
-	Bayesian_Model._set_up_exp_mech_with_LS()
+	Bayesian_Model._set_up_exp_mech_with_alpha_SS()
 	
 
 	probabilities_exp = {}
 
 	for i in range(len(Bayesian_Model._candidates)):
 		z = Bayesian_Model._candidates[i]
-		probabilities_exp[str(z._alphas)] = Bayesian_Model._LS_probabilities[i]
+		probabilities_exp[str(z._alphas)] = Bayesian_Model._alpha_SS_probabilities[i]
 	
 	return probabilities_exp
 
@@ -155,17 +178,19 @@ def gen_priors(r, step, d):
 
 if __name__ == "__main__":
 
-	datasize = 100
+	datasize = 6
 	epsilon = 1.0
 	delta = 0.00000001
 	prior = dirichlet([1,1])
 	dataset = [50,50]
 	epsilons = numpy.arange(0.1, 2, 0.1)
-	datasizes = gen_datasizes((10,50),5) + gen_datasizes((100,500), 100) + gen_datasizes((1000,5000),1000)  + gen_datasizes((10000,50000),5000)# #[300] #[8,12,18,24,30,36,42,44,46,48]#,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80]
+	# datasizes = gen_datasizes((10,50),5) + gen_datasizes((100,500), 100) + gen_datasizes((1000,5000),1000)  + gen_datasizes((10000,50000),5000)# #[300] #[8,12,18,24,30,36,42,44,46,48]#,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80]
+	datasizes = [4,6]
 	percentage = [0.5,0.5]
 	datasets = gen_datasets(percentage, datasizes)
 	priors = [dirichlet([1,1])] + gen_priors([5,20], 5, 2) + gen_priors([40,100], 20, 2) + gen_priors([150,300], 50, 2) + gen_priors([400,400], 50, 2)
 
-	privacy_loss(datasizes,epsilon,delta,prior)	
+	privacy_loss_x1_x2(datasize, epsilon, delta, prior, [1,5],[0,6])
+	# privacy_loss(datasizes,epsilon,delta,prior)	
 	
 
