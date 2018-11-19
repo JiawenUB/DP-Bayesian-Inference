@@ -481,19 +481,18 @@ $\hexpmech$ is $\epsilon$-differential privacy.
   \begin{equation*}
   \begin{split}
   \hexpmechPr{\dataobs}{z = r} 
-  & = \frac {exp\big(\frac{-\epsilon\cdot\ux{r}}{4\cdot S(\dataobs)}\big)}{\unomalizer{\dataobs}} \\
-  & = \frac {exp\big(
+  & = \frac {\exp\big(\frac{-\epsilon\cdot\ux{r}}{4\cdot S(\dataobs)}\big)}{\unomalizer{\dataobs}} \\
+  & = \frac {\exp\big(
   \frac{-\epsilon\cdot(\ux{r} + \uxadj{r} - \uxadj{r})}{4\cdot S(\dataobs)}
   \big)}
   {\unomalizer{\dataobs}} \\
-  & = \frac {exp\big(
+  & = \frac {\exp\big(
   \frac{-\epsilon\cdot(\uxadj{r})}{4\cdot S(\dataobs)}
   \big)}
   {\unomalizer{\dataobs}}
-  \cdot exp\big( \frac{\epsilon\cdot(\uxadj{r} - \ux{r})}{4\cdot S(\dataobs)} \big)\\
+  \cdot \exp\big( \frac{\epsilon\cdot(\uxadj{r} - \ux{r})}{4\cdot S(\dataobs)} \big)\\
   \end{split}
   \end{equation*}
-
   Because $S(\dataobs) \geq LS(\dataobs) \geq (\uxadj{r} - \ux{r})$:
   \begin{equation*}
   \begin{split}
@@ -501,32 +500,32 @@ $\hexpmech$ is $\epsilon$-differential privacy.
   \frac{-\epsilon\cdot(\uxadj{r})}{4\cdot S(\dataobs)}
   \big)}
   {\unomalizer{\dataobs}}
-  \cdot exp\big( \frac{\epsilon}{4} \big) \\
-  & = exp\big( \frac{\epsilon}{4} \big) \cdot 
+  \cdot \exp\big( \frac{\epsilon}{4} \big) \\
+  & = \exp\big( \frac{\epsilon}{4} \big) \cdot 
   \frac {
-  exp
+  \exp
   \big(
   \frac{-\epsilon\cdot(\uxadj{r})}{4\cdot S(\dataobs)}
   \big)
   } 
   {\unomalizer{\dataobs}}
-  exp
+  \exp
   \big(
   \frac{\epsilon\cdot(\uxadj{r})}{4\cdot S(\dataobs')}
   \big)
-  exp
+  \exp
   \big(
   \frac{-\epsilon\cdot(\uxadj{r})}{4\cdot S(\dataobs')}
   \big)\\
-  & = exp\big( \frac{\epsilon}{4} \big) \cdot 
+  & = \exp\big( \frac{\epsilon}{4} \big) \cdot 
   \frac {
-  exp
+  \exp
   \big(
   \frac{-\epsilon\cdot(\uxadj{r})}{4\cdot S(\dataobs')}
   \big)
   } 
   {\unomalizer{\dataobs}}
-  exp
+  \exp
   \big(
   \frac{\epsilon\cdot(\uxadj{r})}{4}(\frac{1}{S(\dataobs')} - \frac{1}{S(\dataobs)})
   \big)\\
@@ -536,15 +535,15 @@ $\hexpmech$ is $\epsilon$-differential privacy.
   Because $\uxadj{r} = \hellinger(\bysinfer(\dataobs'), r) \leq 1$:
   \begin{equation*}
   \begin{split}
-  & \leq exp\big( \frac{\epsilon}{4} \big) \cdot 
+  & \leq \exp\big( \frac{\epsilon}{4} \big) \cdot 
   \frac {
-  exp
+  \exp
   \big(
   \frac{-\epsilon\cdot(\uxadj{r})}{4\cdot S(\dataobs')}
   \big)
   } 
   {\unomalizer{\dataobs}}
-  exp
+  \exp
   \big(
   \frac{\epsilon}{4}(\frac{1}{S(\dataobs')} - \frac{1}{S(\dataobs)})
   \big)\\
@@ -554,21 +553,21 @@ $\hexpmech$ is $\epsilon$-differential privacy.
   Because the property of $\gamma -$smooth sensitivity: $\frac{1}{S(\dataobs')} - \frac{1}{S(\dataobs)} \leq \gamma$:  
   \begin{equation*}
   \begin{split}
-  & \leq exp\big( \frac{\epsilon}{4} \big) \cdot 
+  & \leq \exp\big( \frac{\epsilon}{4} \big) \cdot 
   \frac {
-  exp
+  \exp
   \big(
   \frac{-\epsilon\cdot(\uxadj{r})}{4\cdot S(\dataobs')}
   \big)
   } 
   {\unomalizer{\dataobs}}
-  exp
+  \exp
   \big(
   \frac{\epsilon}{4} \cdot \gamma
   \big)\\
-  & = exp\big( \frac{\epsilon}{4} + \frac{\epsilon}{4} \cdot \gamma\big) \cdot 
+  & = \exp\big( \frac{\epsilon}{4} + \frac{\epsilon}{4} \cdot \gamma\big) \cdot 
   \frac {
-  exp
+  \exp
   \big(
   \frac{-\epsilon\cdot(\uxadj{r})}{4\cdot S(\dataobs')}
   \big)
@@ -580,34 +579,34 @@ $\hexpmech$ is $\epsilon$-differential privacy.
   Doing the same transformation in the denominator:
   \begin{equation*}
   \begin{split}
-  & = exp\big( \frac{\epsilon}{4} + \frac{\epsilon}{4} \cdot \gamma\big) \cdot 
+  & = \exp\big( \frac{\epsilon}{4} + \frac{\epsilon}{4} \cdot \gamma\big) \cdot 
   \frac {
-  exp
+  \exp
   \big(
   \frac{-\epsilon\cdot(\uxadj{r})}{4\cdot S(\dataobs')}
   \big)
   } 
   {
   \sum_{r'\in \candidateset} 
-  exp 
+  \exp 
   \big(
   \frac{-\epsilon\cdot(\ux{r'} + \uxadj{r'} - \uxadj{r'})}{4 \cdot S(\dataobs)}
   \big)
   }\\
-  & = exp\big( \frac{\epsilon}{4} + \frac{\epsilon}{4} \cdot \gamma\big) \cdot 
+  & = \exp\big( \frac{\epsilon}{4} + \frac{\epsilon}{4} \cdot \gamma\big) \cdot 
   \frac {
-  exp
+  \exp
   \big(
   \frac{-\epsilon\cdot(\uxadj{r})}{4\cdot S(\dataobs')}
   \big)
   } 
   {
   \sum_{r'\in \candidateset} 
-  exp 
+  \exp 
   \big(
   \frac{-\epsilon\cdot(\uxadj{r'}}{4 \cdot S(\dataobs)}
   \big)
-  exp 
+  \exp 
   \big(
   \frac{-\epsilon\cdot(\ux{r'} - \uxadj{r'})}{4 \cdot S(\dataobs)}
   \big)
@@ -618,68 +617,68 @@ $\hexpmech$ is $\epsilon$-differential privacy.
   Because $S(\dataobs) \geq LS(\dataobs) \geq (\ux{r} - \uxadj{r})$ $\implies$ $ \frac{-\epsilon\cdot(\ux{r'} - \uxadj{r'})}{4 \cdot S(\dataobs)} \geq \frac{-\epsilon}{2}$:
   \begin{equation*}
   \begin{split}
-  & \leq exp\big( \frac{\epsilon}{4} + \frac{\epsilon}{4} \cdot \gamma\big) \cdot 
+  & \leq \exp\big( \frac{\epsilon}{4} + \frac{\epsilon}{4} \cdot \gamma\big) \cdot 
   \frac {
-  exp
+  \exp
   \big(
   \frac{-\epsilon\cdot(\uxadj{r})}{4\cdot S(\dataobs')}
   \big)
   } 
   {
   \sum_{r'\in \candidateset} 
-  exp 
+  \exp 
   \big(
   \frac{-\epsilon\cdot(\uxadj{r'}}{4 \cdot S(\dataobs)}
   \big)
-  exp 
+  \exp 
   \big(
   \frac{-\epsilon}{4}
   \big)
   }\\
-  & = exp\big( \frac{\epsilon}{4} + \frac{\epsilon}{4} \cdot \gamma\big) \cdot 
+  & = \exp\big( \frac{\epsilon}{4} + \frac{\epsilon}{4} \cdot \gamma\big) \cdot 
   \frac {
-  exp
+  \exp
   \big(
   \frac{-\epsilon\cdot(\uxadj{r})}{4\cdot S(\dataobs')}
   \big)
   } 
   {
   \sum_{r'\in \candidateset} 
-  exp 
+  \exp 
   \big(
   \frac{-\epsilon\cdot(\uxadj{r'}}{4 \cdot S(\dataobs)}
   \big)
-  exp 
+  \exp 
   \big(
   \frac{-\epsilon}{4}
   \big)
-  exp
+  \exp
   \big(
   \frac{\epsilon\cdot(\uxadj{r'})}{4\cdot S(\dataobs')}
   \big)
-  exp
+  \exp
   \big(
   \frac{-\epsilon\cdot(\uxadj{r'})}{4\cdot S(\dataobs')}
   \big)
   }\\
-  & = exp\big( \frac{\epsilon}{4} + \frac{\epsilon}{4} \cdot \gamma\big) \cdot 
+  & = \exp\big( \frac{\epsilon}{4} + \frac{\epsilon}{4} \cdot \gamma\big) \cdot 
   \frac {
-  exp
+  \exp
   \big(
   \frac{-\epsilon\cdot(\uxadj{r})}{4\cdot S(\dataobs')}
   \big)
   } 
   {
   \sum_{r'\in \candidateset} 
-  exp 
+  \exp 
   \big(
   \frac{-\epsilon\cdot(\uxadj{r'}}{4 \cdot S(\dataobs')}
   \big)
-  exp 
+  \exp 
   \big(
   \frac{-\epsilon}{2}
   \big)
-  exp
+  \exp
   \big(
   \frac{- \epsilon\cdot(\ux{r'})}{4}
   (\frac{1}{S(\dataobs)}
@@ -693,24 +692,24 @@ $\hexpmech$ is $\epsilon$-differential privacy.
   Because $\uxadj{r} = \hellinger(\bysinfer(\dataobs'), r) \leq 1$ $\implies$ $\frac{- \epsilon\cdot(\ux{r'})}{4} \geq  \frac{-\epsilon}{4}$:
   \begin{equation*}
   \begin{split}
-  & \leq exp\big( \frac{\epsilon}{4} + \frac{\epsilon}{4} \cdot \gamma\big) \cdot 
+  & \leq \exp\big( \frac{\epsilon}{4} + \frac{\epsilon}{4} \cdot \gamma\big) \cdot 
   \frac {
-  exp
+  \exp
   \big(
   \frac{-\epsilon\cdot(\uxadj{r})}{4\cdot S(\dataobs')}
   \big)
   } 
   {
   \sum_{r'\in \candidateset} 
-  exp 
+  \exp 
   \big(
   \frac{-\epsilon\cdot(\uxadj{r'}}{4 \cdot S(\dataobs')}
   \big)
-  exp 
+  \exp 
   \big(
   \frac{-\epsilon}{4}
   \big)
-  exp
+  \exp
   \big(
   \frac{- \epsilon}{4}
   (\frac{1}{S(\dataobs)}
@@ -727,49 +726,49 @@ $\hexpmech$ is $\epsilon$-differential privacy.
   \frac{1}{S(\dataobs')}) \geq \frac{- \epsilon}{4} \cdot \gamma$
   \begin{equation*}
   \begin{split}
-  & \leq exp\big( \frac{\epsilon}{4} + \frac{\epsilon}{4} \cdot \gamma\big) \cdot 
+  & \leq \exp\big( \frac{\epsilon}{4} + \frac{\epsilon}{4} \cdot \gamma\big) \cdot 
   \frac {
-  exp
+  \exp
   \big(
   \frac{-\epsilon\cdot(\uxadj{r})}{4\cdot S(\dataobs')}
   \big)
   } 
   {
   \sum_{r'\in \candidateset} 
-  exp 
+  \exp 
   \big(
   \frac{-\epsilon\cdot(\uxadj{r'}}{4 \cdot S(\dataobs')}
   \big)
-  exp 
+  \exp 
   \big(
   \frac{-\epsilon}{4}
   \big)
-  exp
+  \exp
   \big(
   \frac{- \epsilon}{4} \cdot \gamma
   \big)
   }\\
-  & = exp\big( \frac{\epsilon}{4} + \frac{\epsilon}{4} \cdot \gamma\big) \cdot 
+  & = \exp\big( \frac{\epsilon}{4} + \frac{\epsilon}{4} \cdot \gamma\big) \cdot 
   \frac {
-  exp
+  \exp
   \big(
   \frac{-\epsilon\cdot(\uxadj{r})}{4\cdot S(\dataobs')}
   \big)
   } 
   {
   \sum_{r'\in \candidateset} 
-  exp 
+  \exp 
   \big(
   \frac{-\epsilon\cdot(\uxadj{r'}}{4 \cdot S(\dataobs')}
   \big)
-  exp 
+  \exp 
   \big(
   \frac{-\epsilon}{4} +   \frac{- \epsilon}{4} \cdot \gamma
   \big)
   }\\
   & = e^{( \frac{\epsilon}{2} + \frac{\epsilon}{2} \cdot \gamma )} \cdot 
   \frac {
-  exp
+  \exp
   \big(
   \frac{-\epsilon\cdot(\uxadj{r})}{4\cdot S(\dataobs')}
   \big)
