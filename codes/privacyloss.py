@@ -70,7 +70,7 @@ def privacy_loss_one_pair(datasize,epsilon,delta,prior, x1, x2):
 	epsilons = {}
 	for key, item in x1_probabilities.items():
 		i = x2_probabilities[key]
-		epsilons[key] = math.log(item / i)
+		epsilons[key] = abs(math.log(item / i))
 
 	return sorted(epsilons.items(), key=operator.itemgetter(1))
 
@@ -80,8 +80,6 @@ def privacy_loss_one_pair(datasize,epsilon,delta,prior, x1, x2):
 #########################################################################################################################	
 def numerator_privacy_loss_one_pair(datasize,epsilon,delta,prior, x1, x2):
 
-	print "Adjacent data set:", x1, x2
-
 	x1_nomalizer, x1_probabilities = decomposed_probability_values(datasize,epsilon,delta,prior,x1)
 	x2_nomalizer, x2_probabilities = decomposed_probability_values(datasize,epsilon,delta,prior,x2)
 
@@ -89,6 +87,7 @@ def numerator_privacy_loss_one_pair(datasize,epsilon,delta,prior, x1, x2):
 	for key, item in x1_probabilities.items():
 		i = x2_probabilities[key]
 		epsilons[key] = abs(math.log(item / i))
+		# print "numerator", key, epsilons[key]
 
 	return sorted(epsilons.items(), key=operator.itemgetter(1))
 
@@ -104,7 +103,7 @@ def denumerator_privacy_loss_one_pair(datasize,epsilon,delta,prior, x1, x2):
 	print "NL(x1) =", x1_nomalizer, "NL(x2) =", x2_nomalizer
 	print "NL(x2)/NL(x1) = exp(", math.log(x2_nomalizer / x1_nomalizer),")"
 
-	return math.log(x2_nomalizer / x1_nomalizer)
+	return abs(math.log(x2_nomalizer / x1_nomalizer))
 
 
 
@@ -122,6 +121,9 @@ def plot_privacyloss(x, y, label):
 	plt.show()
 
 
+#########################################################################################################################
+# DECOMPOSED PRIVACY UNDER DIFFERENET DATA SIZE - DENUMERATOR
+#########################################################################################################################	
 def denumerator_study(datasizes, epsilon, delta, prior):
 	loss_in_nomalizer = []
 	for datasize in datasizes:
@@ -129,15 +131,39 @@ def denumerator_study(datasizes, epsilon, delta, prior):
 
 	plot_privacyloss(datasizes, loss_in_nomalizer, "in denumerator")
 
+#########################################################################################################################
+# DECOMPOSED PRIVACY UNDER DIFFERENET DATA SIZE - NUMERATOR
+#########################################################################################################################	
 def numerator_study(datasizes, epsilon, delta, prior):
 	loss_in_numerator = []
 	for datasize in datasizes:
-		loss = denumerator_privacy_loss_one_pair(datasize,epsilon,delta,prior,[datasize-1,1],[datasize,0])
-		loss_in_numerator.append(loss[-1][1])
+		loss_max_pair = (0.0,0.0)
+		candidates = [[datasize-3,3],[datasize-2,2],[datasize-1,1],[datasize, 0]]
+
+		for C in candidates:
+		#########################################################################################################################
+		#GET THE ADJACENT DATA SET OF DATA SET C			
+			C_adj = get_adjacent_set(C)
+				#########################################################################################################################
+				#GET THE PRIVACY LOSS UNDER TWO ADJACENT DATA SET C	AND 		
+			loss = numerator_privacy_loss_one_pair(datasize,epsilon,delta,prior,C,C_adj)
+			if loss_max_pair[1] < loss[-1][1]:
+				loss_max = loss[-1][1]
+		loss_in_numerator.append(loss_max)
+		print loss_max
 
 	plot_privacyloss(datasizes, loss_in_numerator, "in numerator")
 
 
+def get_adjacent_set(x):
+	C_adj = deepcopy(x)
+	if C_adj[0] == 0:
+		C_adj[0] += 1
+		C_adj[1] -= 1
+	elif C_adj[0] > 0:
+		C_adj[0] -= 1
+		C_adj[1] += 1
+	return C_adj
 
 def privacy_loss_of_size_n(prior, datasize, epsilon, delta):
 	Bayesian_Model = BayesInferwithDirPrior(prior, datasize, epsilon, delta)
@@ -159,16 +185,7 @@ def privacy_loss_of_size_n(prior, datasize, epsilon, delta):
 	for C in candidates:
 	#########################################################################################################################
 	#GET THE ADJACENT DATA SET OF DATA SET C			
-		C_adj = deepcopy(C)
-		if C_adj[0] == 0:
-			C_adj[0] += 1
-			C_adj[1] -= 1
-		elif C_adj[0] > 0:
-			C_adj[0] -= 1
-			C_adj[1] += 1
-		else:
-			continue
-
+		C_adj = get_adjacent_set(C)
 			#########################################################################################################################
 			#GET THE PRIVACY LOSS UNDER TWO ADJACENT DATA SET C	AND 		
 		loss = privacy_loss_one_pair(datasize,epsilon,delta,prior,C,C_adj)
@@ -220,9 +237,10 @@ if __name__ == "__main__":
 	prior = dirichlet([1,1])
 	dataset = [50,50]
 	epsilons = numpy.arange(0.1, 2, 0.1)
-	datasizes = gen_datasizes((2,12),1) + gen_datasizes((15,50),10) + gen_datasizes((100,500), 100) + gen_datasizes((1000,5000),1000)  + gen_datasizes((10000,50000),10000)# #[300] #[8,12,18,24,30,36,42,44,46,48]#,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80]
+	datasizes = gen_datasizes((2,12),2) + gen_datasizes((15,50),10) + gen_datasizes((100,500), 100) + gen_datasizes((1000,5000),1000)#  + gen_datasizes((10000,50000),10000)
+	# datasizes =  gen_datasizes((15,50),10)
 	percentage = [0.5,0.5]
 	datasets = gen_datasets(percentage, datasizes)
 	priors = [dirichlet([1,1])] + gen_priors([5,20], 5, 2) + gen_priors([40,100], 20, 2) + gen_priors([150,300], 50, 2) + gen_priors([400,400], 50, 2)
-	privacy_loss(datasizes,epsilon,delta,prior)
+	denumerator_study(datasizes,epsilon,delta,prior)
 
