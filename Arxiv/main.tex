@@ -836,6 +836,8 @@ When $\alpha = \beta$, we also have:
   = \quad & \frac{1}{2} (1 - e^{- \frac{\epsilon (t + 1)}{\Delta \bysinfer}}- e^{- \frac{\epsilon t}{\Delta \bysinfer}})\\
  \end{align*}
  By simplifying the Hellinger distance in $\hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)$, we get:
+
+
 \begin{itemize}
   \item[\textbf{case 1:}] \textbf{t is even}\\
   \begin{align*}
@@ -859,7 +861,14 @@ When $\alpha = \beta$, we also have:
   = \quad & \frac{1}{2} (1 - e^{- \frac{\epsilon (t + 1)}{\Delta \bysinfer}}- e^{- \frac{\epsilon t}{\Delta \bysinfer}}),
   \end{align*} 
   when $\alpha = \beta$.
+in 2 dimensions, where $\epsilon = 1.0$. 
+% \begin{itemize}
+% 	\item \textbf{Case} of baseline Laplace mechanism, where $\Delta \bysinfer = 2$:\\
 
+
+% 	\item \textbf{Case} of improved Laplace mechanism, where $\Delta \bysinfer = 1$
+% \end{itemize} 
+  
   \item[\textbf{case 2:}] \textbf{t is odd}\\
   let $t = 2 m + 1$
   \begin{align*}
@@ -899,6 +908,7 @@ When $\alpha = \beta$, we also have:
   when $\alpha = \beta$
 
 \end{itemize} 
+In both cases, $Pr[\hellinger(\bysinfer(\dataobs), r_L )^2 = 0]$ asymptotically equal to 1 when data size increases.
 
 \subsubsection{Accuracy Bound for Improved Laplace Mechanism}
 \label{subsec_accuracy_lap}
