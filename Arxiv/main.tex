@@ -819,6 +819,14 @@ Pr\big[\lfloor Y \rfloor = t\big]
 = Pr[ t \leq Y < t + 1] 
 = \frac{1}{2} (e^{- \frac{\epsilon (t)}{\Delta \bysinfer}} - e^{- \frac{\epsilon (t + 1)}{\Delta \bysinfer}}).
 \]
+when $t \geq 0$, and\\
+\[
+Pr\big[\lfloor Y \rfloor = t\big] 
+= Pr[ t \leq Y < t + 1] 
+= \frac{1}{2} (e^{\frac{\epsilon (t)}{\Delta \bysinfer}} - e^{\frac{\epsilon (t + 1)}{\Delta \bysinfer}}).
+\]
+when $t < 0$.\\
+
 
 Let $\betad(\alpha, \beta)$ be the true posterior distribution, i.e., $\bysinfer(\dataobs) = \betad(\alpha, \beta)$, and $r_L$ be the posterior produced by Laplace mechanism, i.e., $r_L = \betad(\alpha + \lfloor Y \rfloor, \beta - \lfloor Y \rfloor)$. By applying Hellinger distance in our case, we get:
 $$
@@ -828,18 +836,28 @@ $$
 =  \frac{1}{2} (e^{- \frac{\epsilon (t)}{\Delta \bysinfer}} - e^{- \frac{\epsilon (t + 1)}{\Delta \bysinfer}})\\
 \end{array}
 $$
-When $\alpha = \beta$, we also have:
-\begin{align*}
- Pr\big[\hellinger(\bysinfer(\dataobs), r_L ) 
-\leq \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)\big] 
-  = \quad & Pr[ - t \leq Y < t + 1] \\
-  = \quad & \frac{1}{2} (1 - e^{- \frac{\epsilon (t + 1)}{\Delta \bysinfer}}- e^{- \frac{\epsilon t}{\Delta \bysinfer}})\\
- \end{align*}
- By simplifying the Hellinger distance in $\hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)$, we get:
+when $t \geq 0$, and\\
+$$
+\begin{array}{rcl}
+& Pr\big[\hellinger(\bysinfer(\dataobs), r_L ) 
+= \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)\big] 
+= \frac{1}{2} (e^{\frac{\epsilon (t)}{\Delta \bysinfer}} - e^{\frac{\epsilon (t + 1)}{\Delta \bysinfer}}).
+\end{array}
+$$
+when $t < 0$.\\
 
 
+
+% When $\alpha = \beta$, we also have:
+% \begin{align*}
+%  Pr\big[\hellinger(\bysinfer(\dataobs), r_L ) 
+% \leq \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)\big] 
+%   = \quad & Pr[ - t \leq Y < t + 1] \\
+%   = \quad & \frac{1}{2} (1 - e^{- \frac{\epsilon (t + 1)}{\Delta \bysinfer}}- e^{- \frac{\epsilon t}{\Delta \bysinfer}})\\
+%  \end{align*}
+Unfolding the Hellinger distance formula($\hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)$), we get:
 \begin{itemize}
-  \item[\textbf{case 1:}] \textbf{t is even}\\
+  \item[\textbf{case}] \textbf{t is even}\\
   \begin{align*}
   & Pr\Bigg[\hellinger(\bysinfer(\dataobs), r_L )^2 
   = 1 - \prod_{k = 0}^{\frac{t}{2} - 1}
@@ -850,18 +868,18 @@ When $\alpha = \beta$, we also have:
   = \quad & \frac{1}{2} (e^{- \frac{\epsilon (t)}{\Delta \bysinfer}} - e^{- \frac{\epsilon (t + 1)}{\Delta \bysinfer}})\\
   \end{align*}
 
-  We also have:
-  \begin{align*}
-  & Pr\Bigg[\hellinger(\bysinfer(\dataobs), r_L )^2 
-  \leq 1 - \prod_{k = 0}^{\frac{t}{2} - 1}
-  \sqrt{1 - \frac{\frac{t}{2}}{a + k + \frac{t}{2}}}
-  \cdot
-  \prod_{k = 1}^{\frac{t}{2}}
-  \sqrt{1 - \frac{\frac{t}{2}}{\beta - k}}\ \Bigg] \\
-  = \quad & \frac{1}{2} (1 - e^{- \frac{\epsilon (t + 1)}{\Delta \bysinfer}}- e^{- \frac{\epsilon t}{\Delta \bysinfer}}),
-  \end{align*} 
-  when $\alpha = \beta$.
-in 2 dimensions, where $\epsilon = 1.0$. 
+%   We also have:
+%   \begin{align*}
+%   & Pr\Bigg[\hellinger(\bysinfer(\dataobs), r_L )^2 
+%   \leq 1 - \prod_{k = 0}^{\frac{t}{2} - 1}
+%   \sqrt{1 - \frac{\frac{t}{2}}{a + k + \frac{t}{2}}}
+%   \cdot
+%   \prod_{k = 1}^{\frac{t}{2}}
+%   \sqrt{1 - \frac{\frac{t}{2}}{\beta - k}}\ \Bigg] \\
+%   = \quad & \frac{1}{2} (1 - e^{- \frac{\epsilon (t + 1)}{\Delta \bysinfer}}- e^{- \frac{\epsilon t}{\Delta \bysinfer}}),
+%   \end{align*} 
+%   when $\alpha = \beta$.
+% in 2 dimensions, where $\epsilon = 1.0$. 
 % \begin{itemize}
 % 	\item \textbf{Case} of baseline Laplace mechanism, where $\Delta \bysinfer = 2$:\\
 
@@ -869,7 +887,7 @@ in 2 dimensions, where $\epsilon = 1.0$.
 % 	\item \textbf{Case} of improved Laplace mechanism, where $\Delta \bysinfer = 1$
 % \end{itemize} 
   
-  \item[\textbf{case 2:}] \textbf{t is odd}\\
+  \item[\textbf{case}] \textbf{t is odd}\\
   let $t = 2 m + 1$
   \begin{align*}
   Pr\Bigg[ \hellinger(\bysinfer(\dataobs), r_L )^2 = & \\
@@ -886,35 +904,31 @@ in 2 dimensions, where $\epsilon = 1.0$.
   \sqrt{(1 + \frac{1}{2(\beta - \frac{1}{2}- k)})(1 + \frac{\frac{1}{2} - m}{(\beta - \frac{1}{2}- k)})}\ \Bigg] \\
   = \quad & \frac{1}{2} (e^{- \frac{\epsilon (t)}{\Delta \bysinfer}} - e^{- \frac{\epsilon (t + 1)}{\Delta \bysinfer}})\\
   \end{align*}
- 
+  % we also have: 
+  % \begin{align*}
+  %  Pr\Bigg[ \hellinger(\bysinfer(\dataobs), r_L )^2 \leq & \\
+  % \qquad &
+  % 1 - \frac{1}{\sqrt{1 + \frac{1}{2\alpha}}} \cdot 
+  % \sqrt{\frac{1}{\alpha + 2m} + \frac{- 2m - 1}{\beta(\alpha + 2m)}} \\
+  % \qquad &\cdot 
+  % \prod_{k = 0}^{m-1}
+  % \sqrt{(1 + \frac{1}{2(\alpha + k)})
+  % (1 + \frac{\frac{1}{2} - m}{(\alpha + m  + k)})
+  % } \\
+  % \qquad & \cdot 
+  % \prod_{k = 1}^{m} 
+  % \sqrt{(1 + \frac{1}{2(\beta - \frac{1}{2}- k)})(1 + \frac{\frac{1}{2} - m}{(\beta - \frac{1}{2}- k)})}\ \Bigg] \\
+  % \geq \quad & Pr[ - t \leq Y < t + 1] \\
+  % = \quad & \frac{1}{2} (1 - e^{- \frac{\epsilon (t + 1)}{\Delta \bysinfer}}- e^{- \frac{\epsilon t}{\Delta \bysinfer}})
+  % \end{align*}
+  % when $\alpha = \beta$
+\end{itemize}
 
-  we also have: 
-  \begin{align*}
-   Pr\Bigg[ \hellinger(\bysinfer(\dataobs), r_L )^2 \leq & \\
-  \qquad &
-  1 - \frac{1}{\sqrt{1 + \frac{1}{2\alpha}}} \cdot 
-  \sqrt{\frac{1}{\alpha + 2m} + \frac{- 2m - 1}{\beta(\alpha + 2m)}} \\
-  \qquad &\cdot 
-  \prod_{k = 0}^{m-1}
-  \sqrt{(1 + \frac{1}{2(\alpha + k)})
-  (1 + \frac{\frac{1}{2} - m}{(\alpha + m  + k)})
-  } \\
-  \qquad & \cdot 
-  \prod_{k = 1}^{m} 
-  \sqrt{(1 + \frac{1}{2(\beta - \frac{1}{2}- k)})(1 + \frac{\frac{1}{2} - m}{(\beta - \frac{1}{2}- k)})}\ \Bigg] \\
-  \geq \quad & Pr[ - t \leq Y < t + 1] \\
-  = \quad & \frac{1}{2} (1 - e^{- \frac{\epsilon (t + 1)}{\Delta \bysinfer}}- e^{- \frac{\epsilon t}{\Delta \bysinfer}})
-  \end{align*}
-  when $\alpha = \beta$
-
-\end{itemize} 
 In both cases, $Pr[\hellinger(\bysinfer(\dataobs), r_L )^2 = 0]$ asymptotically equal to 1 when data size increases.
 
 \subsubsection{Accuracy Bound for Improved Laplace Mechanism}
 \label{subsec_accuracy_lap}
 Accuracy bound for improved Laplace mechanism is obtained from the standard Laplace Mechanism by replacing the sensitivity of $\Delta \bysinfer$ with $2$.
-
-
 
 \subsection{Accuracy Bound for $\hexpmech$}
 \label{subsec_accuracy_smoo}
@@ -926,46 +940,45 @@ Accuracy bound for improved Laplace mechanism is obtained from the standard Lapl
   = & \frac{2 \exp{(\frac{- \epsilon c}{4 S(\dataobs)})}}{\nomalizer{\dataobs}},
   \end{align}
   $c = \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)$.\\
-  Unfolding the Hellinegr distance in this accuracy formula:
+%   Unfolding the Hellinegr distance in this accuracy formula:
+%  \begin{itemize}
 
- \begin{itemize}
+%   \item[\textbf{case 1:}] \textbf{t is even}
 
-  \item[\textbf{case 1:}] \textbf{t is even}
-
-  \begin{align*}
-  &\hexpmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), z)^2 = 
-  1 - \prod_{k = 0}^{\frac{t}{2} - 1}
-  \sqrt{1 - \frac{\frac{t}{2}}{a + k + \frac{t}{2}}}
-  \cdot
-  \prod_{k = 1}^{\frac{t}{2}}
-  \sqrt{1 - \frac{\frac{t}{2}}{\beta - k}}\ }\\
-  = & \frac{2 \exp{(\frac{- \epsilon \sqrt{1 - \prod_{k = 0}^{\frac{t}{2} - 1}
-  \sqrt{1 - \frac{\frac{t}{2}}{a + k + \frac{t}{2}}}
-  \cdot
-  \prod_{k = 1}^{\frac{t}{2}}
-  \sqrt{1 - \frac{\frac{t}{2}}{\beta - k}}}}{4 S(\dataobs)})}}
-  {\nomalizer{\dataobs}}
-  \end{align*}
+%   \begin{align*}
+%   &\hexpmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), z)^2 = 
+%   1 - \prod_{k = 0}^{\frac{t}{2} - 1}
+%   \sqrt{1 - \frac{\frac{t}{2}}{a + k + \frac{t}{2}}}
+%   \cdot
+%   \prod_{k = 1}^{\frac{t}{2}}
+%   \sqrt{1 - \frac{\frac{t}{2}}{\beta - k}}\ }\\
+%   = & \frac{2 \exp{(\frac{- \epsilon \sqrt{1 - \prod_{k = 0}^{\frac{t}{2} - 1}
+%   \sqrt{1 - \frac{\frac{t}{2}}{a + k + \frac{t}{2}}}
+%   \cdot
+%   \prod_{k = 1}^{\frac{t}{2}}
+%   \sqrt{1 - \frac{\frac{t}{2}}{\beta - k}}}}{4 S(\dataobs)})}}
+%   {\nomalizer{\dataobs}}
+%   \end{align*}
 
 
-  \item[\textbf{case 2:}] \textbf{t is odd}
+%   \item[\textbf{case 2:}] \textbf{t is odd}
 
-  \begin{align*}
-  c^2 = \qquad &
-  1 - \frac{1}{\sqrt{1 + \frac{1}{2\alpha}}} \cdot 
-  \sqrt{\frac{1}{\alpha + 2m} + \frac{- 2m - 1}{\beta(\alpha + 2m)}} \\
-  \qquad &\cdot 
-  \prod_{k = 0}^{m-1}
-  \sqrt{(1 + \frac{1}{2(\alpha + k)})
-  (1 + \frac{\frac{1}{2} - m}{(\alpha + m  + k)})
-  } \\
-  \qquad & \cdot 
-  \prod_{k = 1}^{m} 
-  \sqrt{(1 + \frac{1}{2(\beta - \frac{1}{2}- k)})(1 + \frac{\frac{1}{2} - m}{(\beta - \frac{1}{2}- k)})}
-  \end{align*}
-  Substitute the $c$ in Equation, (\ref{eq_acc})
+%   \begin{align*}
+%   c^2 = \qquad &
+%   1 - \frac{1}{\sqrt{1 + \frac{1}{2\alpha}}} \cdot 
+%   \sqrt{\frac{1}{\alpha + 2m} + \frac{- 2m - 1}{\beta(\alpha + 2m)}} \\
+%   \qquad &\cdot 
+%   \prod_{k = 0}^{m-1}
+%   \sqrt{(1 + \frac{1}{2(\alpha + k)})
+%   (1 + \frac{\frac{1}{2} - m}{(\alpha + m  + k)})
+%   } \\
+%   \qquad & \cdot 
+%   \prod_{k = 1}^{m} 
+%   \sqrt{(1 + \frac{1}{2(\beta - \frac{1}{2}- k)})(1 + \frac{\frac{1}{2} - m}{(\beta - \frac{1}{2}- k)})}
+%   \end{align*}
+%   Substitute the $c$ in Equation, (\ref{eq_acc})
 
-\end{itemize}
+% \end{itemize}
 
 
 \section{Experimental Evaluations}
