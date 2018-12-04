@@ -269,7 +269,7 @@ fixed and we denote it by $\bprior$.
 
 \subsection{Baseline Mechanisms}
 \label{subsec_baselines}
-Baseline Mechanisms are introduced in prior to our mechanism: $\hexpmech$.
+Baseline Mechanisms are introduced in prior to our mechanism, $\hexpmech$.
 
 \subsubsection{Exponential Mechanism}
 Exponential mechanism $\expmech{}{x}{u}{\candidateset}$ samples a element from the candidate set $\candidateset = \{r_1, r_2, \cdots r_n\}$ with probability proportional to $exp(\frac{\epsilon u(x,r)}{2 GS})$:
@@ -309,12 +309,12 @@ The exponential mechanism with local sensitivity is non-differential privacy\cit
 
 
 \subsubsection{Laplace Mechanism}
- Adding noise to the posterior distribution parameters directly, through Laplace mechanism ($\lap{\cdot}{\cdot}$) with post-processing:
+ Adding noise to the posterior distribution parameters directly, through Laplace mechanism with post-processing, $\lapmech$. $\lapmech$ produces an output $r_L$:
 
  \[
  \betad(\alpha +  \lfloor{\Delta \alpha + Y}\rfloor^n_0,\beta + n - \lfloor{\Delta \alpha + Y}\rfloor^n_0),
  \] 
- where $Y \thicksim \lap{0}{\frac{\Delta \bysinfer}{\epsilon}}$ in Beta-binomial model; and
+ where $Y \thicksim \lap{0}{\frac{\Delta \bysinfer}{\epsilon}}$, a Laplace distribution with location $0$ and scale $\frac{\Delta \bysinfer}{\epsilon}$ in Beta-binomial model; and
  \[
  \dirichlet(\alpha_1 +  \lfloor{\Delta \alpha_1 + Y_1}\rfloor^n_0, \cdots, \alpha_k + \lfloor n - \sum_{i = 1}^{k-1}\lfloor{\Delta \alpha_i + Y_i}\rfloor^n_0 \rfloor^n_0),
  \]
@@ -333,7 +333,7 @@ The exponential mechanism with local sensitivity is non-differential privacy\cit
 
  Noise added to posterior distribution parameters are scaled to smaller sensitivity in this improved Laplace mechanism. Because in terms of two adjacent data sets $\dataobs, \dataobs'$, their posterior distributions by Bayesian inference -- $\bysinfer(\dataobs), \bysinfer(\dataobs')$ -- which parameter differs at most in 2 dimensions even though extended to Dirichlet-multinomial mode, i.e., $\Delta \bysinfer \leq 2$. 
 
- Then it is enough to use sensitivity $1$ in 2 dimensions and $2$ in higher dimensions:
+ Then it is enough to use sensitivity $1$ in 2 dimensions and $2$ in higher dimensions, then the improved Laplace mechanism $\ilapmech$ is producing an output $r_{IL}$:
 
  \[
  \betad(\alpha +  \lfloor{\Delta \alpha + Y}\rfloor^n_0,\beta + n - \lfloor{\Delta \alpha + Y}\rfloor^n_0),
@@ -841,7 +841,7 @@ $$
 \begin{array}{rcl}
 & Pr\big[\hellinger(\bysinfer(\dataobs), r_L ) 
 = \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)\big] 
-= \frac{1}{2} (e^{\frac{\epsilon (t)}{\Delta \bysinfer}} - e^{\frac{\epsilon (t + 1)}{\Delta \bysinfer}}).
+= \frac{1}{2} (e^{\frac{\epsilon (t + 1)}{\Delta \bysinfer}} - e^{\frac{\epsilon (t)}{\Delta \bysinfer}}).
 \end{array}
 $$
 when $t < 0$.\\
@@ -890,7 +890,7 @@ Unfolding the Hellinger distance formula($\hellinger(\betad(\alpha, \beta), \bet
   \item[\textbf{case}] \textbf{t is odd}\\
   let $t = 2 m + 1$
   \begin{align*}
-  Pr\Bigg[ \hellinger(\bysinfer(\dataobs), r_L )^2 = & \\
+  Pr\Bigg[ \hellinger(\bysinfer(\dataobs), r_L )^2 =
   \qquad &
   1 - \frac{\Gamma(\alpha+\frac{1}{2})}{\Gamma(\alpha)} \cdot
 \frac{\Gamma(\beta - \frac{1}{2})}{\Gamma(\beta)}\\
@@ -904,27 +904,20 @@ Unfolding the Hellinger distance formula($\hellinger(\betad(\alpha, \beta), \bet
   \sqrt{(1 + \frac{1}{2(\beta - \frac{1}{2}- k)})(1 + \frac{\frac{1}{2} - m}{(\beta - \frac{1}{2}- k)})}\ \Bigg] \\
   = \quad & \frac{1}{2} (e^{- \frac{\epsilon (t)}{\Delta \bysinfer}} - e^{- \frac{\epsilon (t + 1)}{\Delta \bysinfer}})\\
   \end{align*}
-  % we also have: 
-  % \begin{align*}
-  %  Pr\Bigg[ \hellinger(\bysinfer(\dataobs), r_L )^2 \leq & \\
-  % \qquad &
-  % 1 - \frac{1}{\sqrt{1 + \frac{1}{2\alpha}}} \cdot 
-  % \sqrt{\frac{1}{\alpha + 2m} + \frac{- 2m - 1}{\beta(\alpha + 2m)}} \\
-  % \qquad &\cdot 
-  % \prod_{k = 0}^{m-1}
-  % \sqrt{(1 + \frac{1}{2(\alpha + k)})
-  % (1 + \frac{\frac{1}{2} - m}{(\alpha + m  + k)})
-  % } \\
-  % \qquad & \cdot 
-  % \prod_{k = 1}^{m} 
-  % \sqrt{(1 + \frac{1}{2(\beta - \frac{1}{2}- k)})(1 + \frac{\frac{1}{2} - m}{(\beta - \frac{1}{2}- k)})}\ \Bigg] \\
-  % \geq \quad & Pr[ - t \leq Y < t + 1] \\
-  % = \quad & \frac{1}{2} (1 - e^{- \frac{\epsilon (t + 1)}{\Delta \bysinfer}}- e^{- \frac{\epsilon t}{\Delta \bysinfer}})
-  % \end{align*}
-  % when $\alpha = \beta$
+
 \end{itemize}
 
-In both cases, $Pr[\hellinger(\bysinfer(\dataobs), r_L )^2 = 0]$ asymptotically equal to 1 when data size increases.
+\begin{itemize}
+  \item[\textbf{t = 0}] $\lapmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), r_L ) = 0} = 0.19673467014$.
+  \item[\textbf{t = 1}]
+  $\lapmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), r_L )^2 = 1 - \frac{\Gamma(\alpha+\frac{1}{2})}{\Gamma(\alpha)} \cdot
+  \frac{\Gamma(\beta - \frac{1}{2})}{\Gamma(\beta)} } = 0.11932560927$. 
+  \item[\textbf{t = 2}]$\lapmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), r_L )^2 = 1 - 
+  \sqrt{1 - \frac{\frac{t}{2}}{a + \frac{t}{2}}}
+  \cdot
+  \sqrt{1 - \frac{\frac{t}{2}}{\beta}}} = 0.07237464051$.
+\end{itemize}
+In all cases above, probabilities are fixed whenever data size changes.
 
 \subsubsection{Accuracy Bound for Improved Laplace Mechanism}
 \label{subsec_accuracy_lap}
@@ -937,9 +930,41 @@ Accuracy bound for improved Laplace mechanism is obtained from the standard Lapl
   \begin{align}
   \label{eq_acc}
   \hexpmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), z) = c} 
-  = & \frac{2 \exp{(\frac{- \epsilon c}{4 S(\dataobs)})}}{\nomalizer{\dataobs}},
+  = & \frac{\exp{(\frac{- \epsilon c}{4 S(\dataobs)})}}{\nomalizer{\dataobs}},
   \end{align}
   $c = \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)$.\\
+
+For comparison with Laplace mechanism, we developed the Table \ref{tab_acc_theo}.
+
+
+\begin{table*}[h!]
+\centering
+\begin{tabular}{ |c|c|c|c| } 
+\hline
+ c & 0 
+ & $1 - \frac{\Gamma(\alpha+\frac{1}{2})}{\Gamma(\alpha)} \cdot
+  \frac{\Gamma(\beta - \frac{1}{2})}{\Gamma(\beta)}$
+  & $1 - 
+    \sqrt{1 - \frac{\frac{t}{2}}{a + \frac{t}{2}}}
+    \cdot
+    \sqrt{1 - \frac{\frac{t}{2}}{\beta}}$  \\
+ \hline
+ $\lapmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), z ) = c} $
+ & 0.39346934028 & 0.39346934028 & 0.39346934028  \\
+ \hline
+ $\ilapmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), z) = c}$
+ & $\frac{1}{\nomalizer{\dataobs}}$ & $\frac{\exp{(\frac{- \epsilon \sqrt{1 - \frac{\Gamma(\alpha+\frac{1}{2})}{\Gamma(\alpha)} \cdot
+  \frac{\Gamma(\beta - \frac{1}{2})}{\Gamma(\beta)}}}{4 S(\dataobs)})}}{\nomalizer{\dataobs}}$ & \\
+ \hline
+ $\hexpmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), z) = c}$
+ &  &  & \\
+ \hline
+\end{tabular}
+\caption{Accuracy Comparison in Theoretical}
+\label{tab_acc_theo}
+\end{table*}
+
+
 %   Unfolding the Hellinegr distance in this accuracy formula:
 %  \begin{itemize}
 
