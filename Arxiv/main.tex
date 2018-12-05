@@ -803,17 +803,10 @@ $\hexpmech$ is $\epsilon$-differential privacy.
 
 \subsubsection{Accuracy Bound for Laplace Mechanism}
 \label{subsec_accuracy_lap}
-If $Y \thicksim Lap(b)$, we have\cite{dwork2014algorithmic}:
-$$
-Pr[|Y| \geq t \cdot b] = e^{- t}.
-$$
-Based on this, we get:
-\begin{equation*}
-Pr[|Y| \geq t] = e^{- \frac{t \epsilon}{\Delta \bysinfer}}
-\end{equation*}
-in our case, where $Y \thicksim Lap(\frac{\Delta \bysinfer}{\epsilon})$.
+Given $Y \thicksim \lap{0}{b}$, we have\cite{dwork2014algorithmic}:$Pr[|Y| \geq t \cdot b] = e^{- t}.$\\
+Based on this, we get:$Pr[|Y| \geq t] = e^{- \frac{t \epsilon}{\Delta \bysinfer}}$, where $Y \thicksim \lap{0}{\frac{\Delta \bysinfer}{\epsilon}}$ in our setting.\\
 
-After post-processing (i.e., taking the floor value of $Y$), we get:
+Considering the post-processing (i.e., taking the floor value of $Y$) in $\lapmech$, we have:
 \[
 Pr\big[\lfloor Y \rfloor = t\big] 
 = Pr[ t \leq Y < t + 1] 
@@ -825,8 +818,7 @@ Pr\big[\lfloor Y \rfloor = t\big]
 = Pr[ t \leq Y < t + 1] 
 = \frac{1}{2} (e^{\frac{\epsilon (t)}{\Delta \bysinfer}} - e^{\frac{\epsilon (t + 1)}{\Delta \bysinfer}}).
 \]
-when $t < 0$.\\
-
+when $t < 0$.
 
 Let $\betad(\alpha, \beta)$ be the true posterior distribution, i.e., $\bysinfer(\dataobs) = \betad(\alpha, \beta)$, and $r_L$ be the posterior produced by Laplace mechanism, i.e., $r_L = \betad(\alpha + \lfloor Y \rfloor, \beta - \lfloor Y \rfloor)$. By applying Hellinger distance in our case, we get:
 $$
@@ -907,6 +899,8 @@ Unfolding the Hellinger distance formula($\hellinger(\betad(\alpha, \beta), \bet
 
 \end{itemize}
 
+Given $t$ with specific values ($1, 2, 3$ for example), we get following accuracy equations:
+
 \begin{itemize}
   \item[\textbf{t = 0}] $\lapmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), r_L ) = 0} = 0.19673467014$.
   \item[\textbf{t = 1}]
@@ -917,11 +911,25 @@ Unfolding the Hellinger distance formula($\hellinger(\betad(\alpha, \beta), \bet
   \cdot
   \sqrt{1 - \frac{\frac{t}{2}}{\beta}}} = 0.07237464051$.
 \end{itemize}
-In all cases above, probabilities are fixed whenever data size changes.
+In all cases above, probability values are fixed even data size changes, only the distance are decreasing.
 
 \subsubsection{Accuracy Bound for Improved Laplace Mechanism}
 \label{subsec_accuracy_lap}
 Accuracy bound for improved Laplace mechanism is obtained from the standard Laplace Mechanism by replacing the sensitivity of $\Delta \bysinfer$ with $1$ in Beta-binomial model and $2$ in Dirichlet-multinomial model.
+
+Given $t$ with the same specific values ($1, 2, 3$ as above), we get following accuracy equations:
+
+\begin{itemize}
+  \item[\textbf{t = 0}] $\lapmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), r_L ) = 0} = 0.31606027941$.
+  \item[\textbf{t = 1}]
+  $\lapmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), r_L )^2 = 1 - \frac{\Gamma(\alpha+\frac{1}{2})}{\Gamma(\alpha)} \cdot
+  \frac{\Gamma(\beta - \frac{1}{2})}{\Gamma(\beta)} } = 0.11627207896$. 
+  \item[\textbf{t = 2}]$\lapmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), r_L )^2 = 1 - 
+  \sqrt{1 - \frac{\frac{t}{2}}{a + \frac{t}{2}}}
+  \cdot
+  \sqrt{1 - \frac{\frac{t}{2}}{\beta}}} = 0.04277410743$.
+\end{itemize}
+In all cases above, probability values are fixed even data size changes, only the distance are decreasing.
 
 \subsection{Accuracy Bound for $\hexpmech$}
 \label{subsec_accuracy_smoo}
@@ -934,8 +942,8 @@ Accuracy bound for improved Laplace mechanism is obtained from the standard Lapl
   \end{align}
   $c = \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)$.\\
 
+\subsection{Accuracy Comparison between $\hexpmech$, $\lapmech$ and $\ilapmech$}
 For comparison with Laplace mechanism, we developed the Table \ref{tab_acc_theo}.
-
 \begin{table}[h!]
 \scriptsize
 \centering
@@ -943,8 +951,8 @@ For comparison with Laplace mechanism, we developed the Table \ref{tab_acc_theo}
 \hline
  c & 0 
  & $1 - \frac{\Gamma(\alpha+\frac{1}{2})}{\Gamma(\alpha)} \cdot
-  \frac{\Gamma(\beta - \frac{1}{2})}{\Gamma(\beta)}$
-  & $1 - 
+    \frac{\Gamma(\beta - \frac{1}{2})}{\Gamma(\beta)}$
+ & $1 - 
     \sqrt{1 - \frac{\frac{t}{2}}{a + \frac{t}{2}}}
     \cdot
     \sqrt{1 - \frac{\frac{t}{2}}{\beta}}$  \\
@@ -956,8 +964,14 @@ For comparison with Laplace mechanism, we developed the Table \ref{tab_acc_theo}
  & 0.31606027941 & 0.11627207896 & 0.04277410743 \\
  \hline
  $\hexpmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), z) = c}$
- & $\frac{1}{\nomalizer{\dataobs}}$ & $\frac{\exp{(\frac{- \epsilon \sqrt{1 - \frac{\Gamma(\alpha+\frac{1}{2})}{\Gamma(\alpha)} \cdot
-  \frac{\Gamma(\beta - \frac{1}{2})}{\Gamma(\beta)}}}{4 S(\dataobs)})}}{\nomalizer{\dataobs}}$ & \\
+ & $\frac{1}{\nomalizer{\dataobs}}$
+ & $\frac{\exp{(\frac{- \epsilon \sqrt{1 - \frac{\Gamma(\alpha+\frac{1}{2})}{\Gamma(\alpha)} \cdot
+ \frac{\Gamma(\beta - \frac{1}{2})}{\Gamma(\beta)}}}{4 S(\dataobs)})}}{\nomalizer{\dataobs}}$
+ & $\frac{\exp{(\frac{- \epsilon \sqrt{1 - 
+    \sqrt{1 - \frac{\frac{t}{2}}{a + \frac{t}{2}}}
+    \cdot
+    \sqrt{1 - \frac{\frac{t}{2}}{\beta}}}}
+    {4 S(\dataobs)})}}{\nomalizer{\dataobs}}$\\
  \hline
 \end{tabular}
 \caption{Accuracy Comparison in Theoretical}
@@ -985,15 +999,41 @@ In the case when $\alpha = \beta$, there are always 2 symmetric beta distributio
  & 0.31606027941 & 0.43233235838 & 0.1590461864 \\
  \hline
  $\hexpmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), z) = c}$
- & $\frac{2}{\nomalizer{\dataobs}}$ & $\frac{2 \exp{(\frac{- \epsilon \sqrt{1 - \frac{\Gamma(\alpha+\frac{1}{2})}{\Gamma(\alpha)} \cdot
-  \frac{\Gamma(\beta - \frac{1}{2})}{\Gamma(\beta)}}}{4 S(\dataobs)})}}{\nomalizer{\dataobs}}$ & \\
+ & $\frac{1}{\nomalizer{\dataobs}}$ & $\frac{2 \exp{(\frac{- \epsilon \sqrt{1 - \frac{\Gamma(\alpha+\frac{1}{2})}{\Gamma(\alpha)} \cdot
+  \frac{\Gamma(\beta - \frac{1}{2})}{\Gamma(\beta)}}}{4 S(\dataobs)})}}{\nomalizer{\dataobs}}$ 
+  &$\frac{\exp{(\frac{- \epsilon \sqrt{1 - 
+    \sqrt{1 - \frac{\frac{t}{2}}{a + \frac{t}{2}}}
+    \cdot
+    \sqrt{1 - \frac{\frac{t}{2}}{\beta}}}}
+    {4 S(\dataobs)})}}{\nomalizer{\dataobs}}$\\
  \hline
 \end{tabular}
 \caption{Accuracy Comparison in Theoretical}
 \label{tab_acc_theo}
 \end{table}
 
-The probability of getting the true posterior, or posterior with certain step from Laplace mechanism is fixed whatever the data size or prior changes. 
+When $\epsilon$ and dimensions are fixed, the probability of getting the true posterior, or posterior with certain step from Laplace mechanism is fixed whatever the data size or prior changes.
+
+By solving following equations:
+\begin{itemize}
+  \item
+\[
+\frac{1}{\nomalizer{\dataobs}} = 0.19673467014
+\]
+we can get the range where we can do better than $\lapmech$ on outputting the correct answer and
+
+\[
+\frac{1}{\nomalizer{\dataobs}} = 0.31606027941
+\]
+we can get the range where we can do better than $\ilapmech$ on outputting the correct answer and
+
+  \item 
+  \item 
+  \item 
+  \item 
+\end{itemize}
+
+
 
 
 %   Unfolding the Hellinegr distance in this accuracy formula:
