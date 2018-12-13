@@ -103,7 +103,7 @@ def denumerator_privacy_loss_one_pair(datasize,epsilon,delta,prior, x1, x2):
 	print "NL(x1) =", x1_nomalizer, "NL(x2) =", x2_nomalizer
 	print "NL(x2)/NL(x1) = exp(", math.log(x2_nomalizer / x1_nomalizer),")"
 
-	return abs(math.log(x2_nomalizer / x1_nomalizer))
+	return (math.log(x2_nomalizer / x1_nomalizer))
 
 
 
@@ -112,10 +112,10 @@ def denumerator_privacy_loss_one_pair(datasize,epsilon,delta,prior, x1, x2):
 #########################################################################################################################			
 def plot_privacyloss(x, y, label):
 	plt.figure()
-	plt.title(("PRIVACY LOSS" + label))
-	plt.plot(x,y, 'bo-', label=('Exp Mech with Local Sensitivity'))
+	plt.title(("PRIVACY LOSS " + label))
+	plt.plot(x,y, 'bo-', label=(r'Exp Mech with $\gamma$ Sensitivity'))
 	plt.xlabel("Data Size")
-	plt.ylabel(r"privacy loss" + label)
+	plt.ylabel(r"privacy loss " + label)
 	plt.grid()
 	plt.legend(loc='best')
 	plt.show()
@@ -124,7 +124,7 @@ def plot_privacyloss(x, y, label):
 #########################################################################################################################
 # DECOMPOSED PRIVACY UNDER DIFFERENET DATA SIZE - DENUMERATOR
 #########################################################################################################################	
-def denumerator_study(datasizes, epsilon, delta, prior):
+def privacy_loss_in_denumerator(datasizes, epsilon, delta, prior):
 	loss_in_nomalizer = []
 	for datasize in datasizes:
 		loss_in_nomalizer.append(denumerator_privacy_loss_one_pair(datasize,epsilon,delta,prior,[datasize-1,1],[datasize,0]))
@@ -134,11 +134,11 @@ def denumerator_study(datasizes, epsilon, delta, prior):
 #########################################################################################################################
 # DECOMPOSED PRIVACY UNDER DIFFERENET DATA SIZE - NUMERATOR
 #########################################################################################################################	
-def numerator_study(datasizes, epsilon, delta, prior):
+def privacy_loss_in_numerator(datasizes, epsilon, delta, prior):
 	loss_in_numerator = []
 	for datasize in datasizes:
 		loss_max_pair = (0.0,0.0)
-		candidates = [[datasize-3,3],[datasize-2,2],[datasize-1,1],[datasize, 0]]
+		candidates = [[datasize-2,2],[datasize-1,1],[datasize, 0],[0,datasize], [1, datasize - 1], [2, datasize - 2]]
 
 		for C in candidates:
 		#########################################################################################################################
@@ -148,9 +148,9 @@ def numerator_study(datasizes, epsilon, delta, prior):
 				#GET THE PRIVACY LOSS UNDER TWO ADJACENT DATA SET C	AND 		
 			loss = numerator_privacy_loss_one_pair(datasize,epsilon,delta,prior,C,C_adj)
 			if loss_max_pair[1] < loss[-1][1]:
-				loss_max = loss[-1][1]
-		loss_in_numerator.append(loss_max)
-		print loss_max
+				loss_max_pair = loss[-1]
+		print loss_max_pair
+		loss_in_numerator.append(loss_max_pair[1])
 
 	plot_privacyloss(datasizes, loss_in_numerator, "in numerator")
 
@@ -180,7 +180,7 @@ def privacy_loss_of_size_n(prior, datasize, epsilon, delta):
 	privacyloss_of_n = 0.0
 	pair_of_n = []
 
-	candidates = [[datasize-3,3],[datasize-2,2],[datasize-1,1],[datasize, 0]]
+	candidates = [[datasize-2,2],[datasize-1,1],[datasize, 0],[0,datasize], [1, datasize - 1], [2, datasize - 2]]
 
 	for C in candidates:
 	#########################################################################################################################
@@ -191,7 +191,7 @@ def privacy_loss_of_size_n(prior, datasize, epsilon, delta):
 		loss = privacy_loss_one_pair(datasize,epsilon,delta,prior,C,C_adj)
 		if privacyloss_of_n < loss[-1][1]:
 			privacyloss_of_n = loss[-1][1]
-			pair_of_n = [C,C_adj]
+			pair_of_n = (C,C_adj)
 
 	return privacyloss_of_n, pair_of_n
 
@@ -237,10 +237,10 @@ if __name__ == "__main__":
 	prior = dirichlet([1,1])
 	dataset = [50,50]
 	epsilons = numpy.arange(0.1, 2, 0.1)
-	datasizes = gen_datasizes((2,12),2) + gen_datasizes((15,50),10) + gen_datasizes((100,500), 100) + gen_datasizes((1000,5000),1000)#  + gen_datasizes((10000,50000),10000)
+	datasizes = gen_datasizes((2,20),2) + gen_datasizes((25,100),10)# + gen_datasizes((100,500), 100) + gen_datasizes((1000,5000),1000)  + gen_datasizes((10000,50000),10000)
 	# datasizes =  gen_datasizes((15,50),10)
 	percentage = [0.5,0.5]
 	datasets = gen_datasets(percentage, datasizes)
 	priors = [dirichlet([1,1])] + gen_priors([5,20], 5, 2) + gen_priors([40,100], 20, 2) + gen_priors([150,300], 50, 2) + gen_priors([400,400], 50, 2)
-	denumerator_study(datasizes,epsilon,delta,prior)
+	privacy_loss_in_numerator(datasizes, epsilon, delta, prior)
 
