@@ -999,9 +999,11 @@ In the case when $\alpha = \beta$, there are always 2 symmetric beta distributio
  & 0.31606027941 & 0.43233235838 & 0.1590461864 \\
  \hline
  $\hexpmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), z) = c}$
- & $\frac{1}{\nomalizer{\dataobs}}$ & $\frac{2 \exp{(\frac{- \epsilon \sqrt{1 - \frac{\Gamma(\alpha+\frac{1}{2})}{\Gamma(\alpha)} \cdot
-  \frac{\Gamma(\beta - \frac{1}{2})}{\Gamma(\beta)}}}{4 S(\dataobs)})}}{\nomalizer{\dataobs}}$ 
-  &$\frac{\exp{(\frac{- \epsilon \sqrt{1 - 
+ & $\frac{1}{\nomalizer{\dataobs}}$ 
+ & $\frac{2 \exp{(\frac{- \epsilon \sqrt{1 - \frac{\Gamma(\alpha+\frac{1}{2})}{\Gamma(\alpha)} 
+ \cdot
+ \frac{\Gamma(\beta - \frac{1}{2})}{\Gamma(\beta)}}}{4 S(\dataobs)})}}{\nomalizer{\dataobs}}$ 
+ & $\frac{2 \exp{(\frac{- \epsilon \sqrt{1 - 
     \sqrt{1 - \frac{\frac{t}{2}}{a + \frac{t}{2}}}
     \cdot
     \sqrt{1 - \frac{\frac{t}{2}}{\beta}}}}
@@ -1021,16 +1023,31 @@ By solving following equations:
 \frac{1}{\nomalizer{\dataobs}} = 0.19673467014
 \]
 we can get the range where we can do better than $\lapmech$ on outputting the correct answer and
-
 \[
 \frac{1}{\nomalizer{\dataobs}} = 0.31606027941
 \]
 we can get the range where we can do better than $\ilapmech$ on outputting the correct answer and
 
   \item 
+\[
+\frac{\exp{(\frac{- \epsilon \sqrt{1 - \frac{\Gamma(\alpha+\frac{1}{2})}{\Gamma(\alpha)} \cdot
+ \frac{\Gamma(\beta - \frac{1}{2})}{\Gamma(\beta)}}}{4 S(\dataobs)})}}{\nomalizer{\dataobs}}
+ = 0.11932560927\ or\ 0.11627207896
+\]
+we can get the range where we can do better than $\lapmech$ or $\ilapmech$ on outputting the answer with one step from correct one.
+
   \item 
-  \item 
-  \item 
+\[
+\frac{2 \exp{(\frac{- \epsilon \sqrt{1 - 
+    \sqrt{1 - \frac{\frac{t}{2}}{a + \frac{t}{2}}}
+    \cdot
+    \sqrt{1 - \frac{\frac{t}{2}}{\beta}}}}
+    {4 S(\dataobs)})}}{\nomalizer{\dataobs}}
+     = 0.07237464051\ or\ 0.04277410743
+\]
+we can get the range where we can do better than $\lapmech$ or $\ilapmech$ on outputting the answer with two steps from the correct one.
+
+  \item Following equations can be in the same way.
 \end{itemize}
 
 
