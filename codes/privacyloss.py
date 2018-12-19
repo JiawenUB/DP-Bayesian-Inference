@@ -113,7 +113,7 @@ def denumerator_privacy_loss_one_pair(datasize,epsilon,delta,prior, x1, x2):
 def plot_privacyloss(x, y, label):
 	plt.figure()
 	plt.title(("PRIVACY LOSS " + label))
-	plt.plot(x,y, 'bo-', label=(r'Exp Mech with $\gamma$ Sensitivity'))
+	plt.plot(x,y, 'bo-', label=(r'Exp Mech with $\gamma$ Sensitivity ($\frac{\epsilon}{4}$)'))
 	plt.xlabel("Data Size")
 	plt.ylabel(r"privacy loss " + label)
 	plt.grid()
@@ -237,10 +237,10 @@ if __name__ == "__main__":
 	prior = dirichlet([1,1])
 	dataset = [50,50]
 	epsilons = numpy.arange(0.1, 2, 0.1)
-	datasizes = gen_datasizes((2,20),2) + gen_datasizes((25,100),10)# + gen_datasizes((100,500), 100) + gen_datasizes((1000,5000),1000)  + gen_datasizes((10000,50000),10000)
+	datasizes = gen_datasizes((2,20),2) + gen_datasizes((25,100),10) + gen_datasizes((100,500), 100) + gen_datasizes((1000,5000),1000)  + gen_datasizes((10000,50000),10000)
 	# datasizes =  gen_datasizes((15,50),10)
 	percentage = [0.5,0.5]
 	datasets = gen_datasets(percentage, datasizes)
 	priors = [dirichlet([1,1])] + gen_priors([5,20], 5, 2) + gen_priors([40,100], 20, 2) + gen_priors([150,300], 50, 2) + gen_priors([400,400], 50, 2)
-	privacy_loss_in_numerator(datasizes, epsilon, delta, prior)
+	privacy_loss(datasizes,epsilon,delta,prior)
 
