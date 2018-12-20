@@ -126,8 +126,21 @@ def plot_privacyloss(x, y, label):
 #########################################################################################################################	
 def privacy_loss_in_denumerator(datasizes, epsilon, delta, prior):
 	loss_in_nomalizer = []
+	max_loss = 0.0
 	for datasize in datasizes:
-		loss_in_nomalizer.append(denumerator_privacy_loss_one_pair(datasize,epsilon,delta,prior,[datasize-1,1],[datasize,0]))
+		candidates = [[datasize-2,2],[datasize-1,1],[datasize, 0],[0,datasize], [1, datasize - 1], [2, datasize - 2]]
+
+		for C in candidates:
+		#########################################################################################################################
+		#GET THE ADJACENT DATA SET OF DATA SET C			
+			C_adj = get_adjacent_set(C)
+				#########################################################################################################################
+				#GET THE PRIVACY LOSS UNDER TWO ADJACENT DATA SET C	AND 		
+			loss = denumerator_privacy_loss_one_pair(datasize,epsilon,delta,prior,C,C_adj)
+			if abs(max_loss) < abs(loss):
+				max_loss = loss
+
+		loss_in_nomalizer.append(max_loss)
 
 	plot_privacyloss(datasizes, loss_in_nomalizer, "in denumerator")
 
@@ -237,9 +250,9 @@ if __name__ == "__main__":
 	prior = dirichlet([1,1])
 	dataset = [50,50]
 	epsilons = numpy.arange(0.1, 2, 0.1)
-	datasizes = gen_datasizes((2,20),2) + gen_datasizes((25,100),10) + gen_datasizes((100,500), 100) + gen_datasizes((1000,5000),1000)  + gen_datasizes((10000,50000),10000)
+	datasizes = gen_datasizes((100000,500000),100000)# gen_datasizes((10,20),2) + gen_datasizes((25,100),10) + gen_datasizes((100,500), 100) + gen_datasizes((1000,5000),1000)  + gen_datasizes((10000,50000),10000) + 
 	# datasizes =  gen_datasizes((15,50),10)
-	percentage = [0.5,0.5]
+	percentage = [0.1,0.9]
 	datasets = gen_datasets(percentage, datasizes)
 	priors = [dirichlet([1,1])] + gen_priors([5,20], 5, 2) + gen_priors([40,100], 20, 2) + gen_priors([150,300], 50, 2) + gen_priors([400,400], 50, 2)
 	privacy_loss(datasizes,epsilon,delta,prior)
