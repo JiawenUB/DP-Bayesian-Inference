@@ -35,9 +35,7 @@ distribution, accuracy is naturally measured by means of
 from the original one. Some classical examples are total variation distance,
 Hellinger distance, $\chi^2$-distance, KL-divergence, etc.
 
-In this work, we design a mechanism for
-bayesian inference exploring the idea of calibrating noise using the
-same probabilistic distance we want to measure accuracy with. 
+In this work, we explore the design space for differentially private bayesian inference, by considering different metrics and different algorithms we design a mechanism. 
 We focus on two discrete models, the Beta-Binomial and the
 Dirichlet-multinomial models, and one probability distance, Hellinger distance. 
 Our mechanism can be understood as a version of  the exponential mechanism
@@ -88,11 +86,11 @@ We will see that in some cases this can happen.
 \begin{itemize}
 	\item We designed a differentially private Bayesian inference mechanism based on the standard exponential mechanism.
 
-	\item The accuracy is improved by two ways: 1) calibrating noise to the sensitivity of a metric over distributions (e.g. Hellinger distance ($\hellinger$), $f$-divergences, etc\dots). 2) Using a smooth upper bound on the local sensitivity and scale the noise to this smooth bound rather than global sensitivity, to improve the mechanism accuracy.
+	\item We explored two ways to improve the accuracy: 1) calibrating noise to the sensitivity of a metric over distributions (e.g. Hellinger distance ($\hellinger$), $f$-divergences, etc\dots). 2) Using a smooth upper bound on the local sensitivity and scale the noise to this smooth bound rather than global sensitivity, to improve the mechanism accuracy.
 
-  \item A full proof on applying exponential mechanism to the smooth sensitivity is $(\epsilon, \delta)-$differential privacy is given in paper.
+  \item A full proof on the newly designed mechanism is $(\epsilon, \delta)-$differential privacy is given in paper.
 
-	\item We implemented the new proposed mechanism and other art-of-state mechanisms, comparing the performance in terms of accuracy and efficiency.
+	\item We implemented the new proposed mechanism and other art-of-state mechanisms, comparing the performance in terms of accuracy and privacy.
 \end{itemize}
 
 
@@ -124,7 +122,10 @@ prior distributions and likelihood functions are usually chosen so that the post
 belongs to the same \emph{family} of distributions. In this case we say that the prior
 is conjugate to the likelihood function. Use of a conjugate prior
 simplifies calculations and allows for inference to be performed in a
-recursive fashion over the data.
+recursive fashion over the data. Then, we have:
+\[
+  \bysinfer(\Pr(\dataobs | \theta), \Pr(\theta), \dataobs) = \frac{\Pr(\dataobs | \theta) \cdot \Pr(\theta)}{\Pr(\dataobs)}
+\]
 
 
 \noindent \textbf{Beta-binomial System.}
@@ -145,9 +146,9 @@ The data $\dataobs$ will be a sequence of $n\in\mathbb{N}$ binary values, that i
   \Pr(\dataobs | \theta)\equiv \theta^{\Delta \alpha}(1-\theta)^{n - \Delta \alpha}
 \]
 where $\Delta \alpha = \displaystyle\sum_{i=1}^{n}x_i$.
-From this it can easily be derived that the posterior distribution is:
+From this, the inference can be easily derived:
 \[
-  \Pr(\theta|\dataobs)=\betad(\alpha + \Delta \alpha,\beta + n - \Delta \alpha)
+   \bysinfer(binomial(\theta), \betad(\alpha, \beta), \dataobs)=\betad(\alpha + \Delta \alpha,\beta + n - \Delta \alpha)
 \]
 
 
@@ -167,9 +168,9 @@ The likelihood function will be:
   \Pr(\dataobs|\vtheta)\equiv \displaystyle\prod_{a_i\in\datauni}\theta_{i}^{\Delta \alpha_i},
 \]
 with $\Delta \alpha_i=\displaystyle\sum_{j=1}^{n}\iverson{x_j=a_i}$, where $\iverson{\cdot}$ represents Iverson bracket notation.
-Denoting by $\Delta\valpha$ the vector $(\Delta\alpha_1,\dots \Delta\alpha_k)$ the posterior distribution over $\vtheta$ turns out to be
+Denoting by $\Delta\valpha$ the vector $(\Delta\alpha_1,\dots \Delta\alpha_k)$ the inference over $\vtheta$ turns out to be
 \[
-  \Pr(\vtheta|\dataobs)=\dirichlet(\valpha+\Delta \valpha). 
+   \bysinfer(multinomial(\theta), \dirichlet(\valpha), \dataobs)=\dirichlet(\valpha + \Delta \valpha)
 \]
 where $+$ denotes the componentwise sum of vectors of reals. 
 
@@ -198,17 +199,17 @@ A randomized mechanism $\mathcal{M}: \mathcal{X} \rightarrow \mathcal{Y}$ is dif
 
 \section{Technical Problem Statement and Motivations}
 \label{sec_moti}
-We are interested in designing a mechanism for privately releasing the full posterior
+We are interested in exploring mechanisms for privately releasing the full posterior
 distributions derived in section \ref{sec_background}, as opposed to just sampling from them.
 It's worth noticing that the posterior distributions are fully characterized
-by their parameters, and the family (beta, Dirichlet) they belong to. Hence, in case of the
+by their parameters, and the family (Beta, Dirichlet distribution) they belong to. Hence, in case of the
 Beta-Binomial model we are interested in releasing a private version of the pair of
 parameters $(\alpha',\beta')=(\alpha + \Delta \alpha,\beta + n - \Delta \alpha)$, and
 in the case of the Dirichlet-multinomial model we are interested in a private version of
 $\valpha'=(\valpha + \Delta \valpha)$. \cite{zhang2016differential} and \cite{xiao2012bayesian}
 have already attacked this problem by adding independent Laplacian noise to the
 parameters of the posteriors. That is, in the case of the Beta-Binomial system,
-the value released would  be: $(\tilde\alpha,\tilde\beta)=(\alpha +  \widetilde{\Delta \alpha},\beta + n - \widetilde{\Delta \alpha})$
+the value released would be: $(\tilde\alpha,\tilde\beta)=(\alpha +  \widetilde{\Delta \alpha},\beta + n - \widetilde{\Delta \alpha})$
 where $\widetilde{\Delta \alpha}\thicksim \lap{\Delta \alpha}{\frac{2}{\epsilon}}$,
 and where $\lap{\mu}{\nu}$ denotes a Laplace random variable with mean $\mu$ and scale $\nu$.
 This mechanism is $\epsilon$-differentially private, and the noise is
@@ -218,29 +219,30 @@ adjacent data observations $\dataobs, \dataobs'$, that, from a unique prior, giv
 distributions, characterized by the pairs
 $(\alpha',\beta')$ and $(\alpha'',\beta'')$ then
 $|\alpha'-\alpha''|+|\beta'-\beta''|\leq 2$.
-This argument extends similarly to the Dirichelet-Multinomial system. Details are introduced in Sec. \ref{subsec_baselines}.
+This argument extends similarly to the Dirichelet-Multinomial system. Details are introduced in Sec. \ref{sec_mechs}.
 
 However, in previous works, the accuracy of the posterior was measured again with respect to $\ell_1$ norm. That is, an upper bound was given on
 \[
   \Pr[|\alpha - \tilde\alpha| + |\beta - \tilde\beta |\geq \gamma ]
 \]
-where $(\alpha, \beta), (\tilde\alpha,\tilde\beta)$ are as defined above. This accuracy metric is meaningless when the results released are distributions rather than numerical values. In contrast, distribution metrics such as $f$-divergence, Hellinger distance, etc. come into mind overtly when we are measuring distance between distributions. This gives us motivation on using a different norm (a distribution metric) to compute the sensitivity
+where $(\alpha, \beta), (\tilde\alpha,\tilde\beta)$ are as defined above. This accuracy metric is meaningless when the results released are distributions rather than numerical values. In contrast, distribution metrics such as $f$-divergence, Hellinger distance, etc. come into mind overtly when we are measuring distance between distributions. This gives us motivation on exploring the design space of mechanisms by considering different norms (a distribution metric) to compute the sensitivity
 and provide guarantees on the accuracy. 
 
 Specifically, we will use the Hellinger distance $\hellinger(\cdot,\cdot)$:
 Given two beta distributions
-$\boldsymbol{\beta}_1=\betad(\alpha_1, \beta_1),$ and $\boldsymbol{\beta}_2=\betad(\alpha_2, \beta_2)$ the following equality holds 
+$\betad(\alpha_1, \beta_1),$ and $\betad(\alpha_2, \beta_2)$ the following equality holds 
 \[
-  \hellinger(\boldsymbol{\beta}_1, \boldsymbol{\beta}_2)=
+  \hellinger(\betad(\alpha_1, \beta_1), \betad(\alpha_2, \beta_2))=
   \sqrt{1 - \frac{\betaf(\frac{\alpha_1 + \alpha_2}{2}, \frac{\beta_1 + \beta_2}{2})}{\sqrt{\betaf(\alpha_1,\beta_1)\betaf(\alpha_2,\beta_2)}}}
 \]
 
 Our choice to use Hellinger distance is motivated by three facts:
 \begin{itemize}
-\item It simplifies calculations in the case of the probabilistic models considered here.
-\item It also automatically yields bounds on the total variation distance, which represents also the maximum advantage
-an unbounded adversary can have in distingishing two distributions. 
-\item The accuracy can be improved by using a smooth bound on Hellinger distance's local sensitivity. As shown in Fig. \ref{fig_sensitivity}, taking advantage of the gap between the global sensitivity and local sensitivity, we can improve the accuracy by applying a smooth upper bound on local sensitivity instead of using global sensitivity.
+  \item It simplifies calculations in the case of the probabilistic models considered here.
+  
+  \item It also automatically yields bounds on the total variation distance, which represents also the maximum advantage an unbounded adversary can have in distingishing two distributions. 
+
+  \item The accuracy can be improved by using a smooth bound on Hellinger distance's local sensitivity. As shown in Fig. \ref{fig_sensitivity}, taking advantage of the gap between the global sensitivity and local sensitivity, we can improve the accuracy by applying an upper bound on local sensitivity instead of using global sensitivity.
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.35\textwidth]{sensitivity_2d.eps}
@@ -253,87 +255,35 @@ an unbounded adversary can have in distingishing two distributions.
 
 \section{Mechanism Proposition}
 \label{sec_mechs}
-Given a prior distribution $\bprior=\betad(\alpha, \beta)$ and a sequence of $n$ observations $\dataobs\in\{0,1\}^n$, we define the follwing set:
-\[
-  \candidateset\equiv\{\betad(\alpha',\beta')\mid \alpha'=\alpha+\Delta\alpha, \beta'=\beta+n-\Delta\alpha\},
-\]
-where $\Delta\alpha$ is as defined in Section \ref{sec_background}.
-Notice that $\candidateset$ has $n + 1$ elements, and
-the Bayesian Inference process will produce an element from $\candidateset$
-that we denote by $\bysinfer(\dataobs)$ -- we don't explicitly
-parametrize the result by the prior, which from now on we consider
-fixed and we denote it by $\bprior$.
 
 
+\subsection{Laplace Mechanism Family}
 
-
-\subsection{Baseline Mechanisms}
-\label{subsec_baselines}
-Baseline Mechanisms are introduced in prior to our mechanism, $\hexpmech$.
-
-\subsubsection{Exponential Mechanism}
-Exponential mechanism $\expmech{}{x}{u}{\candidateset}$ samples a element from the candidate set $\candidateset = \{r_1, r_2, \cdots r_n\}$ with probability proportional to $exp(\frac{\epsilon u(x,r)}{2 GS})$:
-\begin{equation*}
-\underset{z \thicksim \expmech{}{x}{u}{\candidateset} }{Pr}[z=r] = \frac
-{exp(\frac{\epsilon u(x,r)}{2 GS})}
-{\Sigma_{r' \in \mathcal{R}}\ exp(\frac{\epsilon u(x,r')}{2 GS})},
-\end{equation*}
-where $u(x,r)$ is the Hellinger scoring function over candidates, $-\hellinger(\bysinfer(\dataobs), r)$, and $GS$ is the global sensitivity calculated by:
-\begin{equation*}
-GS = 
-\max_{\{|\dataobs,\dataobs'| \leq 1;\dataobs,\dataobs'\in \mathcal{X}^n\}}\max_{\{r\in \mathcal{R}\}}
-|\hellinger(\bysinfer(\dataobs), r) - \hellinger(\bysinfer(\dataobs'), r)|
-\end{equation*}
-
-Exponential mechanism is $\epsilon -$differential privacy\cite{dwork2014algorithmic}.
-
-
-\subsubsection{Exponential Mechanism with Local Sensitivity}
-\label{subsec_emls}
-% \subsubsection{Mechanism Set up}
-Exponential mechanism with local sensitivity $\expmech{local}{x}{u}{\candidateset}$ share the same candidate set and utility function as it with standard exponential mechanism. This outputs a candidate $r \in \mathcal{R}$ with probability proportional to $exp(\frac{\epsilon u(x,r)}{2 LS(\dataobs)})$:
-\begin{equation*}
-\underset{z \thicksim \expmech{local}{x}{u}{\candidateset}}{\Pr}[z=r] = \frac
-{exp(\frac{\epsilon u(x,r)}{2 LS(\dataobs)})}
-{\Sigma_{r' \in \mathcal{R}}\ exp(\frac{\epsilon u(x,r')}{2 LS(\dataobs)})},
-\end{equation*}
-
-where $LS(\dataobs)$ is the local sensitivity calculated by:
-
-\begin{equation*}
-LS(\dataobs)=\max_{\dataobs' \in \datauni^n:\adj{\dataobs}{\dataobs'}, r\in \mathcal{R}}\lvert \hellinger(\bysinfer(\dataobs'), r) - \hellinger(\bysinfer(\dataobs'), r)\rvert.
-\end{equation*}
-
-The exponential mechanism with local sensitivity is non-differential privacy\cite{dwork2014algorithmic}.
-
-
-
-\subsubsection{Laplace Mechanism}
- Adding noise to the posterior distribution parameters directly, through Laplace mechanism with post-processing, $\lapmech$. $\lapmech$ produces an output $r_L$:
+\subsubsection{using $\ell_1$ norm metric}
+ Adding noise to the posterior distribution parameters directly, through Laplace mechanism with post-processing, $\lapmech(\bysinfer, \dataobs)$, producing an output:
 
  \[
- \betad(\alpha +  \lfloor{\Delta \alpha + Y}\rfloor^n_0,\beta + n - \lfloor{\Delta \alpha + Y}\rfloor^n_0),
+\lapmech(\bysinfer, \dataobs) = \betad(\alpha +  \lfloor{\Delta \alpha + Y}\rfloor^n_0,\beta + n - \lfloor{\Delta \alpha + Y}\rfloor^n_0),
  \] 
  where $Y \thicksim \lap{0}{\frac{\Delta \bysinfer}{\epsilon}}$, a Laplace distribution with location $0$ and scale $\frac{\Delta \bysinfer}{\epsilon}$ in Beta-binomial model; and
  \[
- \dirichlet(\alpha_1 +  \lfloor{\Delta \alpha_1 + Y_1}\rfloor^n_0, \cdots, \alpha_k + \lfloor n - \sum_{i = 1}^{k-1}\lfloor{\Delta \alpha_i + Y_i}\rfloor^n_0 \rfloor^n_0),
+ \lapmech(\bysinfer, \dataobs) = \dirichlet(\alpha_1 +  \lfloor{\Delta \alpha_1 + Y_1}\rfloor^n_0, \cdots, \alpha_k + \lfloor n - \sum_{i = 1}^{k-1}\lfloor{\Delta \alpha_i + Y_i}\rfloor^n_0 \rfloor^n_0),
  \]
  where $Y_i \thicksim \lap{0}{\frac{\Delta \bysinfer}{\epsilon}}$ in Dirichlet-multinomial model. $\lfloor \cdot \rfloor^n_0$ is taking the floor value and truncating into $[0,n]$ to make sure the noised posterior is valid.
 
- Then release it as the private posterior distribution.
+ We use $ \lapmech(\dataobs) = \betad(\tilde{\alpha}, \tilde{\beta})$ or $\dirichlet(\tilde{\valpha})$ for short. Then release it as the private posterior distribution.
 
- The sensitivity used in this baseline mechanism is:
+ The sensitivity of the inference process w.r.t. $\ell_1$ norm in $\lapmech$ is:
  \[
  \Delta \bysinfer \equiv \max\limits_{\dataobs, \dataobs' \in \{0,1\}^{n}, ||\dataobs - \dataobs'||_1 \leq 1} ||\bysinfer(\dataobs) - \bysinfer(\dataobs')||_1,
  \]
  which is proportional to the dimensionality.
 
 
-\subsubsection{Improved Laplace Mechanism}
-
+\subsubsection{using improved $\ell_1$ norm metric}
  Noise added to posterior distribution parameters are scaled to smaller sensitivity in this improved Laplace mechanism. Because in terms of two adjacent data sets $\dataobs, \dataobs'$, their posterior distributions by Bayesian inference -- $\bysinfer(\dataobs), \bysinfer(\dataobs')$ -- which parameter differs at most in 2 dimensions even though extended to Dirichlet-multinomial mode, i.e., $\Delta \bysinfer \leq 2$. 
 
- Then it is enough to use sensitivity $1$ in 2 dimensions and $2$ in higher dimensions, then the improved Laplace mechanism $\ilapmech$ is producing an output $r_{IL}$:
+ Then it is enough to use sensitivity $1$ in 2 dimensions and $2$ in higher dimensions, then the improved Laplace mechanism $\ilapmech(\bysinfer, \dataobs)$ is producing an output:
 
  \[
  \betad(\alpha +  \lfloor{\Delta \alpha + Y}\rfloor^n_0,\beta + n - \lfloor{\Delta \alpha + Y}\rfloor^n_0),
@@ -347,34 +297,88 @@ where $Y_i \thicksim \lap{0}{\frac{2}{\epsilon}}$ in Dirichlet-multinomial model
 Both Laplace mechanism and improved one are $\epsilon -$differential privacy\cite{dwork2014algorithmic}.
 
 
-\subsection{$\hexpmech$: Smoothed Hellinger Distance Based Exponential Mechanism}
+
+
+\subsection{Exponential Mechanism Family}
+In this section, we explore the exponential mechanism family: $\expmech{}{\cdot}{\cdot}{\cdot}$ by considering Hellinger distance metrics and different sensitivities.
+
+Given a prior distribution $\bprior=\betad(\alpha, \beta)$ and a sequence of $n$ observations $\dataobs\in\{0,1\}^n$, we define the follwing set as candidate set where the mechanisms in this family sample from:
+
+\[
+  \candidateset\equiv\{\bysinfer(binomial(\theta), \bprior,\dataobs)\mid \dataobs \in \{0,1\}^n\}.
+\]
+For simplicity:
+\[
+  \candidateset\equiv\{\betad(\alpha',\beta')\mid \alpha'=\alpha + \Delta\alpha, \beta'=\beta + n-\Delta\alpha\}
+\]
+over all $\dataobs \in \{0,1\}^n$, where $\Delta\alpha$ is as defined in Section \ref{sec_background}, and
+\[
+  \candidateset\equiv\{\dirichlet(\valpha')\mid \valpha'=\valpha + \Delta\valpha\},
+\]
+over all $\dataobs \in \mathcal{X}^n$ in Dirichlet-multinomial model.
+
+We don't explicitly
+parametrize the result by the prior and likelihood, which from now on we consider
+fixed and we denote them by $\bprior$ and $binomial(\theta)$, $multinomial(\theta)$. We use $\bysinfer(\dataobs)$ to denote the Bayesian inference process when the other two parameters are fixed.
+
+
+\subsubsection{Standard Exponential Mechanism}
+Standard exponential mechanism $\expmech{}{x}{u}{\candidateset}$ samples an element from the candidate set $\candidateset = \{r_1, r_2, \cdots r_n\}$ with probability proportional to $\exp(\frac{\epsilon u(x,r)}{2 GS})$:
+\begin{equation*}
+\underset{z \thicksim \expmech{}{x}{u}{\candidateset} }{Pr}[z=r] = \frac
+{exp(\frac{\epsilon u(x,r)}{2 GS})}
+{\Sigma_{r' \in \mathcal{R}}\ exp(\frac{\epsilon u(x,r')}{2 GS})},
+\end{equation*}
+where $u(x,r)$ is the Hellinger scoring function over candidates, $-\hellinger(\bysinfer(\dataobs), r)$, and $GS$ is the global sensitivity of the scoring function (i.e. the global sensitivity of the Bayesian inference w.r.t the Hellinger distance), calculated by:
+\begin{equation*}
+GS = 
+\max_{\{|\dataobs,\dataobs'| \leq 1;\dataobs,\dataobs'\in \mathcal{X}^n\}}\max_{\{r\in \mathcal{R}\}}
+|\hellinger(\bysinfer(\dataobs), r) - \hellinger(\bysinfer(\dataobs'), r)|
+\end{equation*}
+
+Exponential mechanism is $\epsilon -$differential privacy\cite{dwork2014algorithmic}.
+
+
+\subsubsection{Exponential Mechanism with Hellinger Metric and Local Sensitivity}
+\label{subsec_emls}
+% \subsubsection{Mechanism Set up}
+Exponential mechanism with local sensitivity $\expmech{local}{x}{u}{\candidateset}$ share the same candidate set and utility function as it with standard exponential mechanism. This outputs a candidate $r \in \mathcal{R}$ with probability proportional to $exp(\frac{\epsilon u(x,r)}{2 LS(\dataobs)})$:
+\begin{equation*}
+\underset{z \thicksim \expmech{local}{x}{u}{\candidateset}}{\Pr}[z=r] = \frac
+{exp(\frac{\epsilon u(x,r)}{2 LS(\dataobs)})}
+{\Sigma_{r' \in \mathcal{R}}\ exp(\frac{\epsilon u(x,r')}{2 LS(\dataobs)})},
+\end{equation*}
+
+where $LS(\dataobs)$ is the local sensitivity of scoring function, calculated by:
+
+\begin{equation*}
+LS(\dataobs)=\max_{\dataobs' \in \datauni^n:\adj{\dataobs}{\dataobs'}, r\in \mathcal{R}}\lvert \hellinger(\bysinfer(\dataobs'), r) - \hellinger(\bysinfer(\dataobs'), r)\rvert.
+\end{equation*}
+
+The exponential mechanism with local sensitivity is non-differential privacy\cite{dwork2014algorithmic}.
+
+\subsubsection{Exponential Mechanism with Hellinger Metric and Smoothed Sensitivity}
 \label{subsec_hexpmech}
 
-
-\subsubsection{$\gamma$-Smooth Sensitivity}
-\label{sec_mechs}
-
 \begin{definition}
-Given data set $\dataobs$, if a sensitivity $S(\dataobs)$ of $\dataobs$ satisfying:
+\label{def_gamma_smooth}
+Given data set $\dataobs$ of size $n$, we define $\gamma -$smooth sensitivity of Bayesian inference process w.r.t. the Hellinger distance $S(\dataobs)$ is:
+\begin{equation}
+  \label{eq_smooth}
+   S(\dataobs)=\max_{\dataobs'' \in \{0,1\}^{n}}\bigg \{ \frac{1}{\frac{1}{LS(\dataobs'')} +\gamma \cdot d(\dataobs,\dataobs'')} \bigg \},
+\end{equation}
+where $d$ is the Hamming distance between two data sets.
+\end{definition}
 
+\begin{thm}
+\label{thm_gamma_smooth}
+Given data set $\dataobs$, the $\gamma -$smooth sensitivity of Bayesian inference process w.r.t. the Hellinger distance $S(\dataobs)$ satisfying:\\
 For any $\adj{\dataobs}{\dataobs'}$:
 \begin{equation}
 \label{eq_gamma_smooth}
 \frac{1}{S(\dataobs)} - \frac{1}{S(\dataobs')} \leq \gamma.
 \end{equation}
 
-$S(\dataobs)$ is $\gamma -$smooth sensitivity.
-
-\end{definition}
-
-\begin{thm}
-\label{thm_gamma_smooth}
-Given data set $\dataobs$ of size $n$, $S(\dataobs)$ is $\gamma -$smooth sensitivity if it is calculated by:
-\begin{equation}
-  \label{eq_smooth}
-   S(\dataobs)=\max_{\dataobs'' \in \{0,1\}^{n}}\bigg \{ \frac{1}{\frac{1}{LS(\dataobs'')} +\gamma \cdot d(\dataobs,\dataobs'')} \bigg \},
-\end{equation}
-where $d$ is the Hamming distance between two data sets.
 \end{thm}
 
 \begin{proof}
@@ -412,8 +416,7 @@ $\implies$
 \end{equation*}
 
 \end{proof}
-
-\subsubsection{$\hexpmech$ Proposition}
+ 
 
 \begin{definition}
 \label{def_smoo_2}
@@ -422,20 +425,11 @@ $\hexpmech(\dataobs)$ outputs a candidate $r \in \candidateset$ with probability
   \hexpmechPr{\dataobs}{z = r} = \frac {exp\big(\frac{-\epsilon\cdot \ux{r}}{4\cdot S(\dataobs)}\big)}
 {\unomalizer{\dataobs}}.
 \end{equation*}
-where $\ux{r} = \hellinger(\bysinfer(\dataobs),r)$ for $r \in \candidateset$ and $S(\dataobs)$ is the $\gamma -$smooth sensitivity of $\hellinger(\bysinfer(\dataobs),-)$, calculated from Theorem \ref{thm_gamma_smooth} by setting $\gamma = 1$.
+where $\ux{r} = \hellinger(\bysinfer(\dataobs),r)$ for $r \in \candidateset$ and $S(\dataobs)$ is the $\gamma -$smooth sensitivity of $\hellinger(\bysinfer(\dataobs),-)$, calculated from Definition \ref{def_gamma_smooth} by setting $\gamma = 1$.
 \end{definition}
 
 
-This mechanism is based on the standard exponential mechanism
-\cite{talwar}, with $\candidateset$ as the range and
-$\hellinger(\cdot,\cdot)$ as the scoring function. The difference is
-that in this mechanism we don't calibrate the noise w.r.t. to the
-global sensitivity of the scoring function but w.r.t. to the smooth
-sensitivity $S(\dataobs)$ -- defined by \cite{nissim2007smooth}-- of
-$\hellinger(\bysinfer(\dataobs), \cdot)$, where $LS(\dataobs')$ denotes the local
-sensitivity at $\dataobs'$, of the scoring function used in our mechanism and  $\gamma$ is the smooth upper bound for smooth sensitivity.
-
-This mechanism also extends to the Dirichlet-multinomial system $\dirichlet(\valpha)$ by rewriting the Hellinger distance as:
+Mechanisms in Exponential mechanism family also extends to the Dirichlet-multinomial system $\dirichlet(\valpha)$ by rewriting the Hellinger distance as:
 \[
   \hellinger(\dirichlet(\valpha_1), \dirichlet(\valpha_2)) = \sqrt{1 - \frac{\betaf(\frac{\valpha_1 + \valpha_2}{2})}{\sqrt{\betaf(\valpha_1) \betaf(\valpha_2)}}},
 \]
@@ -449,18 +443,21 @@ Dirichlet-multinomial system.
 
 
 
-
-
-
-
-
 \section{Privacy Analysis}
 
 % \subsection{Privacy Analysis for Baseline Mechanisms}
 % In baseline mechanisms, \emph{exponential mechanism}, \emph{Laplace mechanism}, \emph{improved Laplace mechanism} are $\epsilon-$differential privacy provided by \cite{dwork2014algorithmic}. The \emph{exponential mechanism with local sensitivity} is non-differential privacy, also from \cite{dwork2014algorithmic}.
+\subsection{Privacy of Laplace Mechanism Family}
+Mechanisms in Laplace family are $\epsilon-$differential privacy by \cite{dwork2014algorithmic}.
 
+\subsection{Privacy of Exponential Mechanism Family}
+\subsubsection{$\expmech{}{}{}{}$ $\epsilon-$Differential Privacy}
+Standard exponential mechanism in $\epsilon-$differential privacy by \cite{dwork2014algorithmic}.
 
-\subsection{$\hexpmech$ $\epsilon-$Differential Privacy Proof}
+\subsubsection{$\expmech{local}{}{}{}$ non-Differential Privacy}
+Exponential mechanism with local sensitivity non-differential privacy.
+
+\subsubsection{$\hexpmech$ $\epsilon-$Differential Privacy Proof}
 
 \begin{lem}
 \label{lem_hexpmech_privacy}
@@ -999,9 +996,11 @@ In the case when $\alpha = \beta$, there are always 2 symmetric beta distributio
  & 0.31606027941 & 0.43233235838 & 0.1590461864 \\
  \hline
  $\hexpmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), z) = c}$
- & $\frac{1}{\nomalizer{\dataobs}}$ & $\frac{2 \exp{(\frac{- \epsilon \sqrt{1 - \frac{\Gamma(\alpha+\frac{1}{2})}{\Gamma(\alpha)} \cdot
-  \frac{\Gamma(\beta - \frac{1}{2})}{\Gamma(\beta)}}}{4 S(\dataobs)})}}{\nomalizer{\dataobs}}$ 
-  &$\frac{\exp{(\frac{- \epsilon \sqrt{1 - 
+ & $\frac{1}{\nomalizer{\dataobs}}$ 
+ & $\frac{2 \exp{(\frac{- \epsilon \sqrt{1 - \frac{\Gamma(\alpha+\frac{1}{2})}{\Gamma(\alpha)} 
+ \cdot
+ \frac{\Gamma(\beta - \frac{1}{2})}{\Gamma(\beta)}}}{4 S(\dataobs)})}}{\nomalizer{\dataobs}}$ 
+ & $\frac{2 \exp{(\frac{- \epsilon \sqrt{1 - 
     \sqrt{1 - \frac{\frac{t}{2}}{a + \frac{t}{2}}}
     \cdot
     \sqrt{1 - \frac{\frac{t}{2}}{\beta}}}}
@@ -1018,19 +1017,30 @@ By solving following equations:
 \begin{itemize}
   \item
 \[
-\frac{1}{\nomalizer{\dataobs}} = 0.19673467014
+\frac{1}{\nomalizer{\dataobs}} = 0.19673467014\ or\ 0.31606027941
 \]
-we can get the range where we can do better than $\lapmech$ on outputting the correct answer and
+we can get the range where we can do better than $\lapmech$ or $\ilapmech$ on outputting the correct answer.
 
+  \item 
 \[
-\frac{1}{\nomalizer{\dataobs}} = 0.31606027941
+\frac{\exp{(\frac{- \epsilon \sqrt{1 - \frac{\Gamma(\alpha+\frac{1}{2})}{\Gamma(\alpha)} \cdot
+ \frac{\Gamma(\beta - \frac{1}{2})}{\Gamma(\beta)}}}{4 S(\dataobs)})}}{\nomalizer{\dataobs}}
+ = 0.11932560927\ or\ 0.11627207896
 \]
-we can get the range where we can do better than $\ilapmech$ on outputting the correct answer and
+we can get the range where we can do better than $\lapmech$ or $\ilapmech$ on outputting the answer with one step from correct one.
 
   \item 
-  \item 
-  \item 
-  \item 
+\[
+\frac{2 \exp{(\frac{- \epsilon \sqrt{1 - 
+    \sqrt{1 - \frac{\frac{t}{2}}{a + \frac{t}{2}}}
+    \cdot
+    \sqrt{1 - \frac{\frac{t}{2}}{\beta}}}}
+    {4 S(\dataobs)})}}{\nomalizer{\dataobs}}
+     = 0.07237464051\ or\ 0.04277410743
+\]
+we can get the range where we can do better than $\lapmech$ or $\ilapmech$ on outputting the answer with two steps from the correct one.
+
+  \item Following equations can be in the same way.
 \end{itemize}
 
 
@@ -1082,7 +1092,7 @@ we can get the range where we can do better than $\ilapmech$ on outputting the c
 
 \subsection{Efficiency Evaluation}
 \label{subsec_effi}
-The formula for computing the local sensitivity presented in Sec. \ref{subsec_baselines}: $LS(\dataobs)=\max\limits_{\dataobs' \in \datauni^n:\adj{\dataobs}{\dataobs'}, r\in \mathcal{R}}\lvert \hellinger(\bysinfer(\dataobs'), r) - \hellinger(\bysinfer(\dataobs'), r)\rvert$ 
+The formula for computing the local sensitivity presented in Sec. \ref{sec_mechs}: $LS(\dataobs)=\max\limits_{\dataobs' \in \datauni^n:\adj{\dataobs}{\dataobs'}, r\in \mathcal{R}}\lvert \hellinger(\bysinfer(\dataobs'), r) - \hellinger(\bysinfer(\dataobs'), r)\rvert$ 
 can be reduced to $\max\limits_{\{|\dataobs,\dataobs'| \leq 1; \dataobs'\in \mathcal{X}^n\}}\hellinger(\bysinfer(\dataobs), \bysinfer(\dataobs'))|$
 by applying the distance triangle property. 
 
@@ -1168,7 +1178,7 @@ range of the data. A blue box in the plots represents our newly
 designed exponential mechanism's behavior-- where the sensitivity is calibrated
 w.r.t Hellinger distance-- while the yellow box next to
 it represents the performance of a variation of the basic Laplace
-mechanism presented in Section (\ref{subsec_baselines}) with the same
+mechanism presented in Section (\ref{sec_mechs}) with the same
 settings: that is $\epsilon, \delta$, data, prior. The variation
 considered performs a postprocessing on the released parameters so
 that they are consistent. For instance when the sum of the noised
