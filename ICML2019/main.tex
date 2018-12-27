@@ -357,7 +357,7 @@ parametrize the result by the prior and likelihood, which from now on we conside
 fixed and we denote them by $\bprior$ and $binomial(\theta)$, $multinomial(\theta)$. We use $\bysinfer(\dataobs)$ to denote the Bayesian inference process when the other two parameters are fixed.
 
 
-\subsubsection{Standard Exponential Mechanism}
+\subsubsection{Standard Exponential Mechanism with Hellinger Metric}
 Standard exponential mechanism $\expmech{}{x}{u}{\candidateset}$ samples an element from the candidate set $\candidateset = \{r_1, r_2, \cdots r_n\}$ with probability proportional to $\exp(\frac{\epsilon u(x,r)}{2 GS})$:
 \begin{equation*}
 \underset{z \thicksim \expmech{}{x}{u}{\candidateset} }{Pr}[z=r] = \frac
