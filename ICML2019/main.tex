@@ -68,13 +68,10 @@ Hellinger distance, $\chi^2$-distance, KL-divergence, etc.
 In this work, we explore the design space for differentially private bayesian inference, by considering different metrics and different algorithms we design a mechanism. 
 We focus on two discrete models, the Beta-Binomial and the
 Dirichlet-multinomial models, and one probability distance, Hellinger distance. 
-Our mechanism can be understood as a version of  the exponential mechanism
-where the noise is calibrated to the smooth sensitivity of the
-utility function, rather than to its global sensitivity. In our
-setting, the utility function is the probability distance we want to
-use to measure accuracy. To show the usefulness of this mechanism we
-show an experimental analysis comparing it with mechanisms based on
-the Laplace mechanism.
+For different algorithms, we explore three main mechanisms based on the Laplace algorithm family and exponential algorithm family.
+For different metrics, we apply them by calibrating noise to the sensitivity of that utility function, where the utility function is the probability metric we want to
+use to measure accuracy. To show the usefulness of these mechanisms we
+show an experimental analysis comparing their performance.
 \end{abstract}
  % TODO: replace with your keywords
 
@@ -124,8 +121,9 @@ We will see that in some cases this can happen.
 \end{itemize}
 
 
+\section{Problem Setting}
 
-\section{Preliminaries}
+\subsection{Preliminaries}
 \label{sec_background}
 
 \noindent \textbf{Bayesian Inference.}
@@ -221,8 +219,8 @@ A randomized mechanism $\mathcal{M}: \mathcal{X} \rightarrow \mathcal{Y}$ is dif
 \end{equation*} 
 \end{definition}
 
-\section{Problem Statement}
-\label{sec_moti}
+\subsection{Technical Problem Statement}
+\label{subsec_problem}
 We are interested in exploring mechanisms for privately releasing the full posterior
 distributions derived in section \ref{sec_background}, as opposed to just sampling from them.
 It's worth noticing that the posterior distributions are fully characterized
@@ -285,17 +283,20 @@ Our choice to use Hellinger distance is motivated by three facts:
 
 \subsubsection{using $\ell_1$ norm metric}
  Adding noise to the posterior distribution parameters directly, through Laplace mechanism with post-processing, $\lapmech(\bysinfer, \dataobs)$, producing an output:
-
- \[
-\lapmech(\bysinfer, \dataobs) = \betad(\alpha +  \lfloor{\Delta \alpha + Y}\rfloor^n_0,\beta + n - \lfloor{\Delta \alpha + Y}\rfloor^n_0),
- \] 
+$$
+\begin{array}{rcl}
+& \lapmech(\bysinfer, \dataobs) \\
+& = \betad(\alpha +  \lfloor{\Delta \alpha + Y}\rfloor^n_0,\beta + n - \lfloor{\Delta \alpha + Y}\rfloor^n_0),
+\end{array} 
+$$
  where $Y \thicksim \lap{0}{\frac{\Delta \bysinfer}{\epsilon}}$, a Laplace distribution with location $0$ and scale $\frac{\Delta \bysinfer}{\epsilon}$ in Beta-binomial model; and
- \begin{equation*}
- \begin{split}
+$$
+\begin{array}{rcl}
  & \lapmech(\bysinfer, \dataobs) = \\
- & \dirichlet(\alpha_1 +  \lfloor{\Delta \alpha_1 + Y_1}\rfloor^n_0, \cdots, \alpha_k + \lfloor n - \sum_{i = 1}^{k-1}\lfloor{\Delta \alpha_i + Y_i}\rfloor^n_0 \rfloor^n_0),
- \end{split}
- \end{equation*}
+ & \dirichlet(\alpha_1 +  \lfloor{\Delta \alpha_1 + Y_1}\rfloor^n_0, \cdots, \\
+ & \alpha_k + \lfloor n - \sum_{i = 1}^{k-1}\lfloor{\Delta \alpha_i + Y_i}\rfloor^n_0 \rfloor^n_0),
+\end{array} 
+$$
  where $Y_i \thicksim \lap{0}{\frac{\Delta \bysinfer}{\epsilon}}$ in Dirichlet-multinomial model. $\lfloor \cdot \rfloor^n_0$ is taking the floor value and truncating into $[0,n]$ to make sure the noised posterior is valid.
 
  We use $ \lapmech(\dataobs) = \betad(\tilde{\alpha}, \tilde{\beta})$ or $\dirichlet(\tilde{\valpha})$ for short. Then release it as the private posterior distribution.
@@ -312,13 +313,20 @@ Our choice to use Hellinger distance is motivated by three facts:
 
  Then it is enough to use sensitivity $1$ in 2 dimensions and $2$ in higher dimensions, then the improved Laplace mechanism $\ilapmech(\bysinfer, \dataobs)$ is producing an output:
 
- \[
- \betad(\alpha +  \lfloor{\Delta \alpha + Y}\rfloor^n_0,\beta + n - \lfloor{\Delta \alpha + Y}\rfloor^n_0),
- \]
+$$
+\begin{array}{rcl}
+& \ilapmech(\bysinfer, \dataobs) \\
+& = \betad(\alpha +  \lfloor{\Delta \alpha + Y}\rfloor^n_0,\beta + n - \lfloor{\Delta \alpha + Y}\rfloor^n_0),
+\end{array} 
+$$
  where $Y \thicksim \lap{0}{\frac{1}{\epsilon}}$ in Beta-binomial model; and
- \[
- \dirichlet(\alpha_1 +  \lfloor{\Delta \alpha_1 + Y_1}\rfloor^n_0, \cdots, \alpha_k + \lfloor n - \sum_{i = 1}^{k-1}\lfloor{\Delta \alpha_i + Y_i}\rfloor^n_0 \rfloor^n_0),
- \]
+$$
+\begin{array}{rcl}
+ & \ilapmech(\bysinfer, \dataobs) = \\
+ & \dirichlet(\alpha_1 +  \lfloor{\Delta \alpha_1 + Y_1}\rfloor^n_0, \cdots, \\
+ & \alpha_k + \lfloor n - \sum_{i = 1}^{k-1}\lfloor{\Delta \alpha_i + Y_i}\rfloor^n_0 \rfloor^n_0),
+\end{array} 
+$$
 where $Y_i \thicksim \lap{0}{\frac{2}{\epsilon}}$ in Dirichlet-multinomial model.
 
 Both Laplace mechanism and improved one are $\epsilon -$differential privacy\cite{dwork2014algorithmic}.
@@ -1294,16 +1302,16 @@ $\epsilon = 1.0$ is a privacy upper bound, we can observe that the concrete $\ep
 
 A plentiful of data analysis algorithms have been studied to preserve differential privacy, including the subspace clustering algorithm \cite{wang2015differentially}, the gradient decedent algorithm in deep learning \cite{abadi2016deep}, logical regression \cite{chaudhuri2009privacy}, principle component analysis \cite{chaudhuri2012near}, probabilitic inference \cite{williams2010probabilistic} and convergence in statistic estimation \cite{chaudhuri2012convergence}, etc. 
 
-In Bayesian Inference data analysis, mechanisms are proposed corresponded to maintain their differential privacy, focusing on 3 different goals: 1) Inherited differential privacy property of posterior sampling in Bayesian inference. \cite{dimitrakakis2014robust}, \cite{zhang2016differential}, \cite{zheng2015differential} and \cite{wang2015privacy}. 2) Data sampled and released from posterior distribution of Bayesian is differentially private \cite{Zhang2017privbayes}, \cite{dimitrakakis2015differential},  \cite{foulds2016theory}. 3) The inference process is differentially private and the posterior distribution released should be private itself, in the meantime, with good accuracy. The third topic where our work focus on is still very new.
+In Bayesian Inference data analysis, mechanisms are proposed corresponded to maintain their differential privacy, focusing on 3 different goals: 1) Inherited differential privacy property of posterior sampling in Bayesian inference. \cite{dimitrakakis2014robust}, \cite{zhang2016differential}, \cite{zheng2015differential} and \cite{wang2015privacy}. 2) Data sampled and released from posterior distribution of Bayesian is differentially private \cite{Zhang2017privbayes}, \cite{dimitrakakis2015differential},  \cite{foulds2016theory}. 3) The inference process is differentially private and the posterior distribution released should be private itself, in the meantime, with good accuracy. The third topic where our work focus on is still very new. moreover, their design spaces are more specific to the $\ell_1$ norm and Laplace mechanism. That's why we explore different metrics and different algorithms over the design space.
 
 
 \section{Conclusion}
-From what we have seen in the previous sections we can obtain some preliminary conclusions. That is, the probabiliy measure approach outperforms the $\ell_1$-norm approach in the following cases:
+From what we have seen in the previous sections we can obtain following conclusions. We explored the design space of the mechanisms for differentially privacy Bayesian inference, by considering different metrics and different algorithms.
+\begin{itemize}
+  \item The accuracy can change a lot when considering different metrics and using different sensitivity values.
+  \item Different algorithms have different performance w.r.t. different aspect. From the experimental results, Laplace mechanism family have a good efficiency and accuracy when using $\ell_1$ norm metric. But exponential mechanism family can be a good application when considering different metrics.
+\end{itemize}
 
-\begin{enumerate}
-	\item  $\hexpmech$ outperforms the baseline approach but not the improved one, for priors with small parameters.
-  	\item When the prior parameters increase $\hexpmech$ is comparable with the improved baseline approach.
-\end{enumerate}
 
 
 \bibliography{bysinfer}
