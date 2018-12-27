@@ -124,12 +124,6 @@ We will see that in some cases this can happen.
 \end{itemize}
 
 
-\noindent \textbf{Related Work.}
-
-A plentiful of data analysis algorithms have been studied to preserve differential privacy, including the subspace clustering algorithm \cite{wang2015differentially}, the gradient decedent algorithm in deep learning \cite{abadi2016deep}, logical regression \cite{chaudhuri2009privacy}, principle component analysis \cite{chaudhuri2012near}, probabilitic inference \cite{williams2010probabilistic} and convergence in statistic estimation \cite{chaudhuri2012convergence}, etc. 
-
-In Bayesian Inference data analysis, mechanisms are proposed corresponded to maintain their differential privacy, focusing on 3 different goals: 1) Inherited differential privacy property of posterior sampling in Bayesian inference. \cite{dimitrakakis2014robust}, \cite{zhang2016differential}, \cite{zheng2015differential} and \cite{wang2015privacy}. 2) Data sampled and released from posterior distribution of Bayesian is differentially private \cite{Zhang2017privbayes}, \cite{dimitrakakis2015differential},  \cite{foulds2016theory}. 3) The inference process is differentially private and the posterior distribution released should be private itself, in the meantime, with good accuracy. The third topic where our work focus on is still very new.
-
 
 \section{Preliminaries}
 \label{sec_background}
@@ -227,7 +221,7 @@ A randomized mechanism $\mathcal{M}: \mathcal{X} \rightarrow \mathcal{Y}$ is dif
 \end{equation*} 
 \end{definition}
 
-\section{Technical Problem Statement and Motivations}
+\section{Problem Statement}
 \label{sec_moti}
 We are interested in exploring mechanisms for privately releasing the full posterior
 distributions derived in section \ref{sec_background}, as opposed to just sampling from them.
@@ -296,9 +290,12 @@ Our choice to use Hellinger distance is motivated by three facts:
 \lapmech(\bysinfer, \dataobs) = \betad(\alpha +  \lfloor{\Delta \alpha + Y}\rfloor^n_0,\beta + n - \lfloor{\Delta \alpha + Y}\rfloor^n_0),
  \] 
  where $Y \thicksim \lap{0}{\frac{\Delta \bysinfer}{\epsilon}}$, a Laplace distribution with location $0$ and scale $\frac{\Delta \bysinfer}{\epsilon}$ in Beta-binomial model; and
- \[
- \lapmech(\bysinfer, \dataobs) = \dirichlet(\alpha_1 +  \lfloor{\Delta \alpha_1 + Y_1}\rfloor^n_0, \cdots, \alpha_k + \lfloor n - \sum_{i = 1}^{k-1}\lfloor{\Delta \alpha_i + Y_i}\rfloor^n_0 \rfloor^n_0),
- \]
+ \begin{equation*}
+ \begin{split}
+ & \lapmech(\bysinfer, \dataobs) = \\
+ & \dirichlet(\alpha_1 +  \lfloor{\Delta \alpha_1 + Y_1}\rfloor^n_0, \cdots, \alpha_k + \lfloor n - \sum_{i = 1}^{k-1}\lfloor{\Delta \alpha_i + Y_i}\rfloor^n_0 \rfloor^n_0),
+ \end{split}
+ \end{equation*}
  where $Y_i \thicksim \lap{0}{\frac{\Delta \bysinfer}{\epsilon}}$ in Dirichlet-multinomial model. $\lfloor \cdot \rfloor^n_0$ is taking the floor value and truncating into $[0,n]$ to make sure the noised posterior is valid.
 
  We use $ \lapmech(\dataobs) = \betad(\tilde{\alpha}, \tilde{\beta})$ or $\dirichlet(\tilde{\valpha})$ for short. Then release it as the private posterior distribution.
@@ -382,7 +379,7 @@ Exponential mechanism with local sensitivity $\expmech{local}{x}{u}{\candidatese
 where $LS(\dataobs)$ is the local sensitivity of scoring function, calculated by:
 
 \begin{equation*}
-LS(\dataobs)=\max_{\dataobs' \in \datauni^n:\adj{\dataobs}{\dataobs'}, r\in \mathcal{R}}\lvert \hellinger(\bysinfer(\dataobs'), r) - \hellinger(\bysinfer(\dataobs'), r)\rvert.
+LS(\dataobs)=\max_{\dataobs' \in \datauni^n: \\ \adj{\dataobs}{\dataobs'}, r\in \mathcal{R}}\lvert \hellinger(\bysinfer(\dataobs'), r) - \hellinger(\bysinfer(\dataobs'), r)\rvert.
 \end{equation*}
 
 The exponential mechanism with local sensitivity is non-differential privacy\cite{dwork2014algorithmic}.
@@ -517,7 +514,8 @@ $\hexpmech$ is $\epsilon$-differential privacy.
   \frac{-\epsilon\cdot(\uxadj{r})}{4\cdot S(\dataobs)}
   \big)}
   {\unomalizer{\dataobs}}
-  \cdot \exp\big( \frac{\epsilon\cdot(\uxadj{r} - \ux{r})}{4\cdot S(\dataobs)} \big)\\
+  \\
+  & \cdot \exp\big( \frac{\epsilon\cdot(\uxadj{r} - \ux{r})}{4\cdot S(\dataobs)} \big)\\
   \end{split}
   \end{equation*}
   Because $S(\dataobs) \geq LS(\dataobs) \geq (\uxadj{r} - \ux{r})$:
@@ -535,8 +533,8 @@ $\hexpmech$ is $\epsilon$-differential privacy.
   \frac{-\epsilon\cdot(\uxadj{r})}{4\cdot S(\dataobs)}
   \big)
   } 
-  {\unomalizer{\dataobs}}
-  \exp
+  {\unomalizer{\dataobs}}\\
+  & \cdot \exp
   \big(
   \frac{\epsilon\cdot(\uxadj{r})}{4\cdot S(\dataobs')}
   \big)
@@ -551,8 +549,8 @@ $\hexpmech$ is $\epsilon$-differential privacy.
   \frac{-\epsilon\cdot(\uxadj{r})}{4\cdot S(\dataobs')}
   \big)
   } 
-  {\unomalizer{\dataobs}}
-  \exp
+  {\unomalizer{\dataobs}}\\
+  & \cdot \exp
   \big(
   \frac{\epsilon\cdot(\uxadj{r})}{4}(\frac{1}{S(\dataobs')} - \frac{1}{S(\dataobs)})
   \big)\\
@@ -569,8 +567,8 @@ $\hexpmech$ is $\epsilon$-differential privacy.
   \frac{-\epsilon\cdot(\uxadj{r})}{4\cdot S(\dataobs')}
   \big)
   } 
-  {\unomalizer{\dataobs}}
-  \exp
+  {\unomalizer{\dataobs}}\\
+  & \cdot \exp
   \big(
   \frac{\epsilon}{4}(\frac{1}{S(\dataobs')} - \frac{1}{S(\dataobs)})
   \big)\\
@@ -620,7 +618,8 @@ $\hexpmech$ is $\epsilon$-differential privacy.
   \frac{-\epsilon\cdot(\ux{r'} + \uxadj{r'} - \uxadj{r'})}{4 \cdot S(\dataobs)}
   \big)
   }\\
-  & = \exp\big( \frac{\epsilon}{4} + \frac{\epsilon}{4} \cdot \gamma\big) \cdot 
+  & = \exp\big( \frac{\epsilon}{4} + \frac{\epsilon}{4} \cdot \gamma\big) \\
+  & \cdot 
   \frac {
   \exp
   \big(
@@ -641,7 +640,7 @@ $\hexpmech$ is $\epsilon$-differential privacy.
   \end{split}
   \end{equation*}
 
-  Because $S(\dataobs) \geq LS(\dataobs) \geq (\ux{r} - \uxadj{r})$ $\implies$ $ \frac{-\epsilon\cdot(\ux{r'} - \uxadj{r'})}{4 \cdot S(\dataobs)} \geq \frac{-\epsilon}{2}$:
+  Because $S(\dataobs) \geq LS(\dataobs) \geq (\ux{r} - \uxadj{r})$ $\implies$ $ \frac{-\epsilon\cdot(\ux{r'} - \uxadj{r'})}{4 \cdot S(\dataobs)} \geq \frac{-\epsilon}{4}$:
   \begin{equation*}
   \begin{split}
   & \leq \exp\big( \frac{\epsilon}{4} + \frac{\epsilon}{4} \cdot \gamma\big) \cdot 
@@ -700,10 +699,11 @@ $\hexpmech$ is $\epsilon$-differential privacy.
   \exp 
   \big(
   \frac{-\epsilon\cdot(\uxadj{r'}}{4 \cdot S(\dataobs')}
-  \big)
+  \big)}\\
+  & \cdot\frac{1}{
   \exp 
   \big(
-  \frac{-\epsilon}{2}
+  \frac{-\epsilon}{4}
   \big)
   \exp
   \big(
@@ -712,7 +712,7 @@ $\hexpmech$ is $\epsilon$-differential privacy.
 -
   \frac{1}{S(\dataobs')})
   \big)
-  }\\
+  }
   \end{split}
   \end{equation*}
 
@@ -731,7 +731,8 @@ $\hexpmech$ is $\epsilon$-differential privacy.
   \exp 
   \big(
   \frac{-\epsilon\cdot(\uxadj{r'}}{4 \cdot S(\dataobs')}
-  \big)
+  \big)}\\
+  & \cdot \frac{1}{
   \exp 
   \big(
   \frac{-\epsilon}{4}
@@ -831,7 +832,7 @@ $\hexpmech$ is $\epsilon$-differential privacy.
 \subsubsection{Accuracy Bound for Laplace Mechanism}
 \label{subsec_accuracy_lap}
 Given $Y \thicksim \lap{0}{b}$, we have\cite{dwork2014algorithmic}:$Pr[|Y| \geq t \cdot b] = e^{- t}.$\\
-Based on this, we get:$Pr[|Y| \geq t] = e^{- \frac{t \epsilon}{\Delta \bysinfer}}$, where $Y \thicksim \lap{0}{\frac{\Delta \bysinfer}{\epsilon}}$ in our setting.\\
+Based on this, we get:$Pr[|Y| \geq t] = e^{- \frac{t \epsilon}{\Delta \bysinfer}}$, where $Y \thicksim \lap{0}{\frac{\Delta \bysinfer}{\epsilon}}$ in our setting.
 
 Considering the post-processing (i.e., taking the floor value of $Y$) in $\lapmech$, we have:
 \[
@@ -839,7 +840,7 @@ Pr\big[\lfloor Y \rfloor = t\big]
 = Pr[ t \leq Y < t + 1] 
 = \frac{1}{2} (e^{- \frac{\epsilon (t)}{\Delta \bysinfer}} - e^{- \frac{\epsilon (t + 1)}{\Delta \bysinfer}}).
 \]
-when $t \geq 0$, and\\
+when $t \geq 0$, and
 \[
 Pr\big[\lfloor Y \rfloor = t\big] 
 = Pr[ t \leq Y < t + 1] 
@@ -851,16 +852,16 @@ Let $\betad(\alpha, \beta)$ be the true posterior distribution, i.e., $\bysinfer
 $$
 \begin{array}{rcl}
 & Pr\big[\hellinger(\bysinfer(\dataobs), r_L ) 
-= \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)\big] 
-=  \frac{1}{2} (e^{- \frac{\epsilon (t)}{\Delta \bysinfer}} - e^{- \frac{\epsilon (t + 1)}{\Delta \bysinfer}})\\
+= \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)\big] \\
+& =  \frac{1}{2} (e^{- \frac{\epsilon (t)}{\Delta \bysinfer}} - e^{- \frac{\epsilon (t + 1)}{\Delta \bysinfer}})\\
 \end{array}
 $$
 when $t \geq 0$, and\\
 $$
 \begin{array}{rcl}
 & Pr\big[\hellinger(\bysinfer(\dataobs), r_L ) 
-= \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)\big] 
-= \frac{1}{2} (e^{\frac{\epsilon (t + 1)}{\Delta \bysinfer}} - e^{\frac{\epsilon (t)}{\Delta \bysinfer}}).
+= \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)\big]\\
+& = \frac{1}{2} (e^{\frac{\epsilon (t + 1)}{\Delta \bysinfer}} - e^{\frac{\epsilon (t)}{\Delta \bysinfer}}).
 \end{array}
 $$
 when $t < 0$.\\
@@ -874,12 +875,11 @@ when $t < 0$.\\
 %   = \quad & Pr[ - t \leq Y < t + 1] \\
 %   = \quad & \frac{1}{2} (1 - e^{- \frac{\epsilon (t + 1)}{\Delta \bysinfer}}- e^{- \frac{\epsilon t}{\Delta \bysinfer}})\\
 %  \end{align*}
-Unfolding the Hellinger distance formula($\hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)$), we get:
-\begin{itemize}
-  \item[\textbf{case}] \textbf{t is even}\\
+Unfolding the Hellinger distance formula, we get:\\
+  \noindent \textbf{case: t is even}\\
   \begin{align*}
-  & Pr\Bigg[\hellinger(\bysinfer(\dataobs), r_L )^2 
-  = 1 - \prod_{k = 0}^{\frac{t}{2} - 1}
+  & Pr\Bigg[\hellinger(\bysinfer(\dataobs), r_L )^2 \\
+  & = 1 - \prod_{k = 0}^{\frac{t}{2} - 1}
   \sqrt{1 - \frac{\frac{t}{2}}{a + k + \frac{t}{2}}}
   \cdot
   \prod_{k = 1}^{\frac{t}{2}}
@@ -906,11 +906,11 @@ Unfolding the Hellinger distance formula($\hellinger(\betad(\alpha, \beta), \bet
 % 	\item \textbf{Case} of improved Laplace mechanism, where $\Delta \bysinfer = 1$
 % \end{itemize} 
   
-  \item[\textbf{case}] \textbf{t is odd}\\
+  \noindent \textbf{case: t is odd}\\
   let $t = 2 m + 1$
   \begin{align*}
-  Pr\Bigg[ \hellinger(\bysinfer(\dataobs), r_L )^2 =
-  \qquad &
+  & Pr\Bigg[ \hellinger(\bysinfer(\dataobs), r_L )^2 \\
+  & =
   1 - \frac{\Gamma(\alpha+\frac{1}{2})}{\Gamma(\alpha)} \cdot
 \frac{\Gamma(\beta - \frac{1}{2})}{\Gamma(\beta)}\\
 \qquad &\cdot 
@@ -921,23 +921,21 @@ Unfolding the Hellinger distance formula($\hellinger(\betad(\alpha, \beta), \bet
   \qquad & \cdot 
   \prod_{k = 1}^{m} 
   \sqrt{(1 + \frac{1}{2(\beta - \frac{1}{2}- k)})(1 + \frac{\frac{1}{2} - m}{(\beta - \frac{1}{2}- k)})}\ \Bigg] \\
-  = \quad & \frac{1}{2} (e^{- \frac{\epsilon (t)}{\Delta \bysinfer}} - e^{- \frac{\epsilon (t + 1)}{\Delta \bysinfer}})\\
+  = & \frac{1}{2} (e^{- \frac{\epsilon (t)}{\Delta \bysinfer}} - e^{- \frac{\epsilon (t + 1)}{\Delta \bysinfer}})\\
   \end{align*}
 
-\end{itemize}
+Instantiating $t$ with specific values ($1, 2, 3$ for example), we get following accuracy equations:
 
-Given $t$ with specific values ($1, 2, 3$ for example), we get following accuracy equations:
-
-\begin{itemize}
-  \item[\textbf{t = 0}] $\lapmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), r_L ) = 0} = 0.19673467014$.
-  \item[\textbf{t = 1}]
+  $\lapmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), r_L ) = 0} = 0.19673467014$.
+  
   $\lapmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), r_L )^2 = 1 - \frac{\Gamma(\alpha+\frac{1}{2})}{\Gamma(\alpha)} \cdot
   \frac{\Gamma(\beta - \frac{1}{2})}{\Gamma(\beta)} } = 0.11932560927$. 
-  \item[\textbf{t = 2}]$\lapmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), r_L )^2 = 1 - 
+  
+  $\lapmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), r_L )^2 = 1 - 
   \sqrt{1 - \frac{\frac{t}{2}}{a + \frac{t}{2}}}
   \cdot
   \sqrt{1 - \frac{\frac{t}{2}}{\beta}}} = 0.07237464051$.
-\end{itemize}
+
 In all cases above, probability values are fixed even data size changes, only the distance are decreasing.
 
 \subsubsection{Accuracy Bound for Improved Laplace Mechanism}
@@ -946,28 +944,29 @@ Accuracy bound for improved Laplace mechanism is obtained from the standard Lapl
 
 Given $t$ with the same specific values ($1, 2, 3$ as above), we get following accuracy equations:
 
-\begin{itemize}
-  \item[\textbf{t = 0}] $\lapmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), r_L ) = 0} = 0.31606027941$.
-  \item[\textbf{t = 1}]
+  $\lapmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), r_L ) = 0} = 0.31606027941$.
+
   $\lapmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), r_L )^2 = 1 - \frac{\Gamma(\alpha+\frac{1}{2})}{\Gamma(\alpha)} \cdot
   \frac{\Gamma(\beta - \frac{1}{2})}{\Gamma(\beta)} } = 0.11627207896$. 
-  \item[\textbf{t = 2}]$\lapmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), r_L )^2 = 1 - 
+
+  $\lapmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), r_L )^2 = 1 - 
   \sqrt{1 - \frac{\frac{t}{2}}{a + \frac{t}{2}}}
   \cdot
   \sqrt{1 - \frac{\frac{t}{2}}{\beta}}} = 0.04277410743$.
-\end{itemize}
+
 In all cases above, probability values are fixed even data size changes, only the distance are decreasing.
 
 \subsection{Accuracy Bound for $\hexpmech$}
 \label{subsec_accuracy_smoo}
   In Beta-binomial model,
   we have following formula for accuracy:
-  \begin{align}
+  \begin{align*}
   \label{eq_acc}
-  \hexpmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), z) = c} 
+  & \hexpmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), z) = c  }\\ 
   = & \frac{\exp{(\frac{- \epsilon c}{4 S(\dataobs)})}}{\nomalizer{\dataobs}},
-  \end{align}
-  $c = \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)$.\\
+  \end{align*}
+
+  $c = \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)$
 
 \subsection{Accuracy Comparison between $\hexpmech$, $\lapmech$ and $\ilapmech$}
 For comparison with Laplace mechanism, we developed the Table \ref{tab_acc_theo}.
@@ -1047,7 +1046,7 @@ By solving following equations:
 \begin{itemize}
   \item
 \[
-\frac{1}{\nomalizer{\dataobs}} = 0.19673467014\ or\ 0.31606027941
+\frac{1}{\nomalizer{\dataobs}} = 0.19673467\ or\ 0.316060279
 \]
 we can get the range where we can do better than $\lapmech$ or $\ilapmech$ on outputting the correct answer.
 
@@ -1055,10 +1054,10 @@ we can get the range where we can do better than $\lapmech$ or $\ilapmech$ on ou
 \[
 \frac{\exp{(\frac{- \epsilon \sqrt{1 - \frac{\Gamma(\alpha+\frac{1}{2})}{\Gamma(\alpha)} \cdot
  \frac{\Gamma(\beta - \frac{1}{2})}{\Gamma(\beta)}}}{4 S(\dataobs)})}}{\nomalizer{\dataobs}}
- = 0.11932560927\ or\ 0.11627207896
+ = 0.119325609\ or\ 0.116272079
 \]
 we can get the range where we can do better than $\lapmech$ or $\ilapmech$ on outputting the answer with one step from correct one.
-
+\vspace{12cm}
   \item 
 \[
 \frac{2 \exp{(\frac{- \epsilon \sqrt{1 - 
@@ -1066,7 +1065,7 @@ we can get the range where we can do better than $\lapmech$ or $\ilapmech$ on ou
     \cdot
     \sqrt{1 - \frac{\frac{t}{2}}{\beta}}}}
     {4 S(\dataobs)})}}{\nomalizer{\dataobs}}
-     = 0.07237464051\ or\ 0.04277410743
+     = 0.072374641\ or\ 0.042774107
 \]
 we can get the range where we can do better than $\lapmech$ or $\ilapmech$ on outputting the answer with two steps from the correct one.
 
@@ -1289,7 +1288,16 @@ In order to see our privacy behavior, we study the accurate epsilon under concre
 
 $\epsilon = 1.0$ is a privacy upper bound, we can observe that the concrete $\epsilon$ values are smaller than the upper bound. That is to say, we achieved a higher privacy level than expected. 
 
-\section{Conclusion and Future Work}
+
+
+\section{Related Work}
+
+A plentiful of data analysis algorithms have been studied to preserve differential privacy, including the subspace clustering algorithm \cite{wang2015differentially}, the gradient decedent algorithm in deep learning \cite{abadi2016deep}, logical regression \cite{chaudhuri2009privacy}, principle component analysis \cite{chaudhuri2012near}, probabilitic inference \cite{williams2010probabilistic} and convergence in statistic estimation \cite{chaudhuri2012convergence}, etc. 
+
+In Bayesian Inference data analysis, mechanisms are proposed corresponded to maintain their differential privacy, focusing on 3 different goals: 1) Inherited differential privacy property of posterior sampling in Bayesian inference. \cite{dimitrakakis2014robust}, \cite{zhang2016differential}, \cite{zheng2015differential} and \cite{wang2015privacy}. 2) Data sampled and released from posterior distribution of Bayesian is differentially private \cite{Zhang2017privbayes}, \cite{dimitrakakis2015differential},  \cite{foulds2016theory}. 3) The inference process is differentially private and the posterior distribution released should be private itself, in the meantime, with good accuracy. The third topic where our work focus on is still very new.
+
+
+\section{Conclusion}
 From what we have seen in the previous sections we can obtain some preliminary conclusions. That is, the probabiliy measure approach outperforms the $\ell_1$-norm approach in the following cases:
 
 \begin{enumerate}
@@ -1297,28 +1305,6 @@ From what we have seen in the previous sections we can obtain some preliminary c
   	\item When the prior parameters increase $\hexpmech$ is comparable with the improved baseline approach.
 \end{enumerate}
 
-These results although very motivating, are still not enough for real world applications. Hence, we will continue our work in the follwoing directions:
-\begin{enumerate}
-  \item  For now, we just have a intuitive idea on the accuracy
-behavior of our mechanisms, and not a precise formula or bound on
-it. When do our mechanisms perform better than the baseline mechanism
-and when they don't? How much influence will elements in Section
-\ref{sec_experiment} have on the accuracy? Are there any other
-important factors we missed? These are all questions w.r.t. the
-accuracy that we are going to explore next, and in a more principled
-and formal way.
-\item  Theorem \ref{lem_hexpmech_privacy} provides an upper bound on the
-privacy loss for $\hexpmech$ and $\hexpmechd$ but not necessarily a
-tight one. Indeed, experiments have shown that the actual privacy loss
-in the experiments can be smaller than $\epsilon$. This means that we
-could improve accuracy, by adding less noise -- that is noise
-proportional to a higher value of $\epsilon$-- but still achieve
-$(\epsilon, \delta)$-dp.
-\item The choice of the Hellinger distance might seem quite
-ad-hoc. Hence, it is worth exploring other distances over
-distributions. An interesting class of probability metrics is the
-family of $f$-divergences \cite{CIT-004}.
-\end{enumerate}
 
 \bibliography{bysinfer}
 \bibliographystyle{icml2019}
