@@ -199,25 +199,16 @@ where $+$ denotes the componentwise sum of vectors of reals.
 \noindent \textbf{Differential Privacy.} 
 \begin{definition}
 \label{def_epsilon_dp}
-$\epsilon-$differential privacy.
 
-A randomized mechanism $\mathcal{M}: \mathcal{X} \rightarrow \mathcal{Y}$ is differential privacy, iff for any adjacent\footnote{Given $\dataobs, \dataobs'$  we say that $\dataobs$ and $\dataobs'$ are adjacent and we write, $\adj{\dataobs}{\dataobs'}$, iff\\
-$\displaystyle \sum_{i}^{n}\iverson{x_i = x'_i }\leq 1$. } input $\dataobs, \dataobs' \in \mathcal{X}$, a metric $H$ over $\mathcal{Y}$ and a $B \subseteq H(\mathcal{Y})$, $\mathcal{M}$ satisfies:
+A randomized mechanism $\mathcal{M}$ with domain $\mathbb{N}^{|\mathcal{X}|}$ is $(\epsilon, \delta)-$differential privacy, if for all adjacent
+\footnote{Given $\dataobs, \dataobs'$  we say that $\dataobs$ and $\dataobs'$ are adjacent and we write, $\adj{\dataobs}{\dataobs'}$, iff\\
+$\displaystyle \sum_{i}^{n}\iverson{x_i = x'_i }\leq 1$. } $\dataobs, \dataobs' \in \mathbb{N}^{|\mathcal{X}|}$ and all $\mathcal{S} \subset Range(\mathcal{M})$:
 \begin{equation*}
-\Pr[H(\mathcal{M}(\dataobs)) \in B] = e^\epsilon \Pr[H(\mathcal{M}(\dataobs')) \in B].
+\Pr[\mathcal{M}(\dataobs) \in \mathcal{S}] = e^\epsilon \Pr[\mathcal{M}(\dataobs') \in \mathcal{S}].
 \end{equation*}
 
 \end{definition}
 
-\begin{definition}
-\label{def_epsilon_delta_dp}
-$(\epsilon,\delta)-$differential privacy.
-
-A randomized mechanism $\mathcal{M}: \mathcal{X} \rightarrow \mathcal{Y}$ is differential privacy, iff for any $\adj{\dataobs}{\dataobs'} \in \mathcal{X}$, a metric $H$ over $\mathcal{Y}$ and a $B \subseteq H(\mathcal{Y})$, $\mathcal{M}$ satisfies:
-\begin{equation*}
-\Pr[H(\mathcal{M}(\dataobs)) \in B] = e^\epsilon \Pr[H(\mathcal{M}(\dataobs')) \in B] + \delta.
-\end{equation*} 
-\end{definition}
 
 \subsection{Technical Problem Statement}
 \label{subsec_problem}
@@ -487,7 +478,7 @@ Mechanisms in Laplace family are $\epsilon-$differential privacy by \cite{dwork2
 
 \subsection{Privacy of Exponential Mechanism Family}
 \subsubsection{$\expmech{}{}{}{}$ $\epsilon-$Differential Privacy}
-Standard exponential mechanism in $\epsilon-$differential privacy by \cite{dwork2014algorithmic}.
+Standard exponential mechanism is $\epsilon-$differential privacy by \cite{dwork2014algorithmic}.
 
 \subsubsection{$\expmech{local}{}{}{}$ non-Differential Privacy}
 Exponential mechanism with local sensitivity non-differential privacy.
