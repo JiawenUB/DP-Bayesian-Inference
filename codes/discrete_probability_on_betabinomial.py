@@ -259,7 +259,7 @@ def row_discrete_probabilities(sample_size,epsilon,delta,prior,observation):
 		r"$\mathsf{expMech}^{local}$",
 		r"$\mathsf{expMech}$",
 		r'$\mathsf{ilapMech}$ (sensitivity = '+ str(sensitivity1) +')', 
-		r'$\mathsf{lapMech}$ (sensitivity = '+ str(sensitivity1) +')']
+		r'$\mathsf{lapMech}$ (sensitivity = '+ str(sensitivity2) +')']
 
 
 	#############################################################################
@@ -367,7 +367,7 @@ if __name__ == "__main__":
 	#SETTING UP THE PARAMETERS
 	#############################################################################
 	datasize = 600
-	epsilon = 5.0
+	epsilon = 1.0
 	delta = 0.00000001
 	prior = dirichlet([1,1,1])
 	dataset = [200,200,200]

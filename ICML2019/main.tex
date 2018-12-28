@@ -1127,7 +1127,8 @@ Specifically, the maximum value over ${r \in R}$ always achieves at $r = \bysinf
 \begin{equation*}
 \begin{split}
 LS(\dataobs) 
-  & = \max\limits_{\{|\dataobs,\dataobs'| \leq 1;\dataobs'\in \mathcal{X}^n\}} \{\hellinger(\bysinfer(\dataobs), \bysinfer(\dataobs)) - \hellinger(\bysinfer(\dataobs'), \bysinfer(\dataobs))|\} \\
+  & = \max\limits_{\{|\dataobs,\dataobs'| \leq 1;\dataobs'\in \mathcal{X}^n\}} \{\hellinger(\bysinfer(\dataobs), \bysinfer(\dataobs)) \\
+  & - \hellinger(\bysinfer(\dataobs'), \bysinfer(\dataobs))|\} \\
   & = \max\limits_{\{|\dataobs,\dataobs'| \leq 1;\dataobs'\in \mathcal{X}^n\}} \{\hellinger(\bysinfer(\dataobs'), \bysinfer(\dataobs))|\}.
 \end{split}
 \end{equation*}
@@ -1153,11 +1154,11 @@ We consider 5 mechanisms in our comparison experiments, including the Laplace me
 \begin{center}
 \centering
   \subfigure[2 dimensions with data size $600$]{
-    \includegraphics[width=0.45\textwidth]{theory_2d.eps}
+    \includegraphics[width=0.42\textwidth]{theory_2d.eps}
   \label{subfig_theory_2d}
   }
   \subfigure[3 dimensions with data size $600$]{
-    \includegraphics[width=0.45\textwidth]{theory_3d.eps}
+    \includegraphics[width=0.42\textwidth]{theory_3d.eps}
   \label{subfig_theory_3d}
   }
 \caption{The theory probabilities of outputting candidates in certain distance from true posterior, with balanced data set and parameters $\epsilon = 1.0$}
@@ -1165,7 +1166,8 @@ We consider 5 mechanisms in our comparison experiments, including the Laplace me
 \end{center}
 \end{figure}
 
-In Fig. \ref{fig_theory}, candidates of smaller distance from true posterior can be outputted by $\hexpmech$ (in blue line) with larger probability than by baseline Laplace mechanism (in green line). This means $\hexpmech$ can produce good results with larger probability than baseline mechanism. However, the improved Laplace mechanism represented by red line can produce good results with probability higher than $\hexpmech$. It outperforms $\hexpmech$.
+In Fig. \ref{fig_theory}, candidates of smaller distance from true posterior can be outputted by $\hexpmech$ (in blue line) with larger probability than by baseline Laplace mechanism (in green line). This means $\hexpmech$ can produce good results with larger probability than baseline mechanism. However, the improved Laplace mechanism represented by red line can produce good results with probability higher than $\hexpmech$. 
+
 
 \begin{figure}
 \begin{center}
@@ -1229,13 +1231,13 @@ up to $n$.
 \centering
 \subfigure[Increasing data size with $\dirichlet(1,1,1)$ prior distribution, balanced datasets and parameters $\epsilon = 1.0$]
 {
-        \includegraphics[width=0.42\textwidth]{sampling_3d.eps} 
-        \label{fig_vs_datasize_3d}
+  \includegraphics[width=0.42\textwidth]{sampling_3d.eps} 
+  \label{fig_vs_datasize_3d}
 }
 \subfigure[Increasing data size with $\dirichlet(1,1,1,1)$ prior distribution, balanced datasets and parameters $\epsilon = 1.0$]
 {
-     \includegraphics[width=0.42\textwidth]{sampling_4d.eps} 
-\label{fig_vs_datasize_4d}
+  \includegraphics[width=0.42\textwidth]{sampling_4d.eps} 
+  \label{fig_vs_datasize_4d}
 }
 \end{center}
 \end{figure}

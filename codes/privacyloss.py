@@ -112,8 +112,8 @@ def denumerator_privacy_loss_one_pair(datasize,epsilon,delta,prior, x1, x2):
 #########################################################################################################################			
 def plot_privacyloss(x, y, label):
 	plt.figure()
-	plt.title(("PRIVACY LOSS " + label))
-	plt.plot(x,y, 'bo-', label=(r'Exp Mech with $\gamma$ Sensitivity ($\frac{\epsilon}{4}$)'))
+	plt.title(("PRIVACY LOSS" + label))
+	plt.plot(x,y, 'bo-', label=(r'$\mathsf{expMech}^{smoo}$'))
 	plt.xlabel("Data Size")
 	plt.ylabel(r"privacy loss " + label)
 	plt.grid()
