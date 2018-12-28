@@ -199,15 +199,15 @@ def row_discrete_probabilities(sample_size,epsilon,delta,prior,observation):
 	#SUM UP the prob within the same bin
 	#############################################################################
 
-	exp = calculate_prob_exp(Candidate_bins_by_step, Bayesian_Model, mechanism_parameter = 4, 
-		sensitivity = Bayesian_Model._SS, savename = "_exp.txt")
+	# exp = calculate_prob_exp(Candidate_bins_by_step, Bayesian_Model, mechanism_parameter = 4, 
+	# 	sensitivity = Bayesian_Model._SS, savename = "_exp.txt")
 
 
 	#############################################################################
 	#SUM UP the prob within the same bin
 	#############################################################################
 
-	exp_new = calculate_prob_exp(Candidate_bins_by_step, Bayesian_Model, mechanism_parameter = 4,
+	exp_gamma = calculate_prob_exp(Candidate_bins_by_step, Bayesian_Model, mechanism_parameter = 4,
 		sensitivity = Bayesian_Model._alpha_SS, savename = "_exp_new.txt")
 
 
@@ -255,12 +255,11 @@ def row_discrete_probabilities(sample_size,epsilon,delta,prior,observation):
 	#############################################################################
 
 	labels = [
-		r'$\mathcal{M}_{\mathcal{H}}$ with Smooth Sensitivity',
-		r'$\mathcal{M}_{\mathcal{H}}$ with $\gamma -$Sensitivity',
-		r"NON PRIVATE $\mathcal{M}_{\mathcal{E}}$",
-		r"STANDARD $\mathcal{M}_{\mathcal{E}}$",
-		'IMPROVED LapMech (sensitivity ='+ str(sensitivity1) +')', 
-		'LapMech (sensitivity = '+ str(sensitivity1) +')']
+		r'$\mathsf{expMech}^{smoo}$ ',
+		r"$\mathsf{expMech}^{local}$",
+		r"$\mathsf{expMech}$",
+		r'$\mathsf{ilapMech}$ (sensitivity = '+ str(sensitivity1) +')', 
+		r'$\mathsf{lapMech}$ (sensitivity = '+ str(sensitivity1) +')']
 
 
 	#############################################################################
@@ -268,17 +267,16 @@ def row_discrete_probabilities(sample_size,epsilon,delta,prior,observation):
 	#############################################################################
 
 	plt.figure()
-	plt.plot(step, exp, 'o', label=(labels[0]))
+	plt.plot(step, exp_gamma, 'o', label=(labels[0]))
 
-	plt.plot(step, exp_new, '*', label=(labels[1]))
 
-	plt.plot(step, exp_LS, '-', label=(labels[2]))
+	plt.plot(step, exp_LS, '-', label=(labels[1]))
 
-	plt.plot(step, exp_GS, '-', label=(labels[3]))
+	plt.plot(step, exp_GS, '-', label=(labels[2]))
 
-	plt.plot(step, lap_1,'-', color = 'navy', label=(labels[4]))
+	plt.plot(step, lap_1,'-', color = 'navy', label=(labels[3]))
 
-	plt.plot(step, lap_2, '-',color = 'lightblue', label=(labels[5]))
+	plt.plot(step, lap_2, '-',color = 'lightblue', label=(labels[4]))
 
 	# plt.plot(step, exp,  label=(labels[0]))
 
@@ -400,14 +398,6 @@ if __name__ == "__main__":
 	#DO PLOTS BY READING THE PROB FROM FILES
 	#############################################################################
 
-	# discrete_probabilities_from_file(
-	# 	["datas/discrete_prob/data_[1, 1, 1]_exp.txt",
-	# 	"datas/discrete_prob/data_[1, 1, 1]_lap_sensitivity2.txt", 
-	# 	"datas/discrete_prob/data_[1, 1, 1]_lap_sensitivity3.txt"],
-	# 	[r'$\mathcal{M}^{B}_{\mathcal{H}}$',
-	# 	"LapMech (sensitivity = 2)",
-	# 	"LapMech (sensitivity = 3)"],
-	# 	"poster_5")
 
 
 	
