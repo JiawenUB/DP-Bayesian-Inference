@@ -326,7 +326,7 @@ Both Laplace mechanism and improved one are $\epsilon -$differential privacy\cit
 
 
 \subsection{Exponential Mechanism Family}
-In this section, we explore the exponential mechanism family: $\expmech{}{\cdot}{\cdot}{\cdot}$ by considering Hellinger distance metrics and different sensitivities.
+In this section, we explore the exponential mechanism family: $\expmech(\cdot,\cdot,\cdot)$ by considering Hellinger distance metrics and different sensitivities.
 
 Given a prior distribution $\bprior=\betad(\alpha, \beta)$ and a sequence of $n$ observations $\dataobs\in\{0,1\}^n$, we define the follwing set as candidate set where the mechanisms in this family sample from:
 
@@ -349,9 +349,9 @@ fixed and we denote them by $\bprior$ and $binomial(\theta)$, $multinomial(\thet
 
 
 \subsubsection{Standard Exponential Mechanism with Hellinger Metric}
-Standard exponential mechanism $\expmech{}{x}{u}{\candidateset}$ samples an element from the candidate set $\candidateset = \{r_1, r_2, \cdots r_n\}$ with probability proportional to $\exp(\frac{\epsilon u(x,r)}{2 GS})$:
+Standard exponential mechanism $\expmech(x,u,\candidateset)$ samples an element from the candidate set $\candidateset = \{r_1, r_2, \cdots r_n\}$ with probability proportional to $\exp(\frac{\epsilon u(x,r)}{2 GS})$:
 \begin{equation*}
-\underset{z \thicksim \expmech{}{x}{u}{\candidateset} }{Pr}[z=r] = \frac
+\underset{z \thicksim \expmech(x,u,\candidateset) }{Pr}[z=r] = \frac
 {exp(\frac{\epsilon u(x,r)}{2 GS})}
 {\Sigma_{r' \in \mathcal{R}}\ exp(\frac{\epsilon u(x,r')}{2 GS})},
 \end{equation*}
@@ -368,7 +368,7 @@ Exponential mechanism is $\epsilon -$differential privacy\cite{dwork2014algorith
 \subsubsection{Exponential Mechanism with Hellinger Metric and Local Sensitivity}
 \label{subsec_emls}
 % \subsubsection{Mechanism Set up}
-Exponential mechanism with local sensitivity $\expmech{local}{x}{u}{\candidateset}$ share the same candidate set and utility function as it with standard exponential mechanism. This outputs a candidate $r \in \mathcal{R}$ with probability proportional to $exp(\frac{\epsilon u(x,r)}{2 LS(\dataobs)})$:
+Exponential mechanism with local sensitivity $\lexpmech(x,u,\candidateset)$ share the same candidate set and utility function as it with standard exponential mechanism. This outputs a candidate $r \in \mathcal{R}$ with probability proportional to $exp(\frac{\epsilon u(x,r)}{2 LS(\dataobs)})$:
 \begin{equation*}
 \underset{z \thicksim \expmech{local}{x}{u}{\candidateset}}{\Pr}[z=r] = \frac
 {exp(\frac{\epsilon u(x,r)}{2 LS(\dataobs)})}
@@ -477,10 +477,10 @@ Dirichlet-multinomial system.
 Mechanisms in Laplace family are $\epsilon-$differential privacy by \cite{dwork2014algorithmic}.
 
 \subsection{Privacy of Exponential Mechanism Family}
-\subsubsection{$\expmech{}{}{}{}$ $\epsilon-$Differential Privacy}
+\subsubsection{$\expmech$ $\epsilon-$Differential Privacy}
 Standard exponential mechanism is $\epsilon-$differential privacy by \cite{dwork2014algorithmic}.
 
-\subsubsection{$\expmech{local}{}{}{}$ non-Differential Privacy}
+\subsubsection{$\lexpmech$ non-Differential Privacy}
 Exponential mechanism with local sensitivity non-differential privacy.
 
 \subsubsection{$\hexpmech$ $\epsilon-$Differential Privacy}
@@ -1153,12 +1153,12 @@ We consider 5 mechanisms in our comparison experiments, including the Laplace me
 \begin{figure}
 \begin{center}
 \centering
-  \subfigure[2 dimensions with data size $600$]{
-    \includegraphics[width=0.42\textwidth]{theory_2d.eps}
+  \subfigure[2 dimensions, data size $600$]{
+    \includegraphics[width=0.22\textwidth]{theory_2d.eps}
   \label{subfig_theory_2d}
   }
-  \subfigure[3 dimensions with data size $600$]{
-    \includegraphics[width=0.42\textwidth]{theory_3d.eps}
+  \subfigure[3 dimensions, data size $600$]{
+    \includegraphics[width=0.22\textwidth]{theory_3d.eps}
   \label{subfig_theory_3d}
   }
 \caption{The theory probabilities of outputting candidates in certain distance from true posterior, with balanced data set and parameters $\epsilon = 1.0$}
@@ -1166,25 +1166,26 @@ We consider 5 mechanisms in our comparison experiments, including the Laplace me
 \end{center}
 \end{figure}
 
-In Fig. \ref{fig_theory}, candidates of smaller distance from true posterior can be outputted by $\hexpmech$ (in blue line) with larger probability than by baseline Laplace mechanism (in green line). This means $\hexpmech$ can produce good results with larger probability than baseline mechanism. However, the improved Laplace mechanism represented by red line can produce good results with probability higher than $\hexpmech$. 
-
+Candidates of smaller distance from true posterior are considered to be good results, which can result in good accuracy. From Fig. \ref{fig_theory}, it can be derived that all these mechanisms (except standard exponential mechanism $\expmech$ in green line) can output good results with larger probability. The $\lexpmech$ can output good results with higher probability than others, but $\lexpmech$ is non-private. For these are $\epsilon -$differentially private, the improved laplace mechanism $\ilapmech$ with $\ell_1$ norm metric can produce good results with higher probability, i.e., perform better in terms of accuracy than others. As the dimension increases from 2 to 3, mechanisms' behavior remain the same.
 
 \begin{figure}
 \begin{center}
 \centering
-  \subfigure[2 dimensions of data size 1000]{
-    \includegraphics[width=0.42\textwidth]{epsilon5_2d_1000.eps}
+  \subfigure[data size 1000]{
+    \includegraphics[width=0.22\textwidth]{epsilon5_2d_1000.eps}
   \label{subfig_theory_2d}
   }
-  \subfigure[2 dimensions of data size 10000]{
-    \includegraphics[width=0.42\textwidth]{epsilon5_2d_10000.eps}
+  \subfigure[data size 10000]{
+    \includegraphics[width=0.22\textwidth]{epsilon5_2d_10000.eps}
   \label{subfig_theory_3d}
   }
-\caption{The theory probabilities of outputting candidates in certain distance from true posterior, with balanced data set and parameters $\epsilon = 5.0$}
+\caption{The theory probabilities of outputting candidates in certain distance from true posterior, with balanced data set and parameters $\epsilon = 5.0$, in 2 dimensions}
 \label{fig_theory_epsilon}
 \end{center}
 \end{figure}
-Increasing the privacy bound $\epsilon$, we get theoretical results as in Fig. \ref{fig_theory_epsilon}. In 2 dimensions, we can perform better than Laplace mechanisms.
+
+Increasing the privacy bound $\epsilon$, we get theoretical results as in Fig. \ref{fig_theory_epsilon} in 2 dimensions. The $\lexpmech$ is still the one with the best accuracy, but it is non-private. However, the $\lapmech$ and $\ilapmech$ having the similar performance, and $\hexpmech$ can produce the correct posterior with higher probability than the others. And the standard exponential mechanism $\expmech$ is still the worst one.
+
 
 \subsubsection{Experimental Results}
 \label{subsec_vs_variables}
@@ -1217,37 +1218,27 @@ up to $n$.
 \paragraph{Increasing data size with balanced datasets}
 \label{subsubsec_vs_datasize}
 
-\begin{figure}
-\begin{center}
-\centering
-    \includegraphics[width=0.45\textwidth]{sampling_2d.eps}
-\caption{Increasing data size with prior $\betad(1,1)$, balanced datasets and parameters $\epsilon = 1.0$}
-\label{fig_vs_datasize_2d}
-\end{center}
-\end{figure}
 
 \begin{figure}[ht]
 \begin{center}
 \centering
+\subfigure[Increasing data size with prior $\betad(1,1)$, balanced datasets and parameters $\epsilon = 1.0$]
+{ \includegraphics[width=0.4\textwidth]{sampling_2d.eps}
+\label{fig_vs_datasize_2d}
+}
+
 \subfigure[Increasing data size with $\dirichlet(1,1,1)$ prior distribution, balanced datasets and parameters $\epsilon = 1.0$]
 {
-  \includegraphics[width=0.42\textwidth]{sampling_3d.eps} 
+  \includegraphics[width=0.4\textwidth]{sampling_3d.eps} 
   \label{fig_vs_datasize_3d}
 }
 \subfigure[Increasing data size with $\dirichlet(1,1,1,1)$ prior distribution, balanced datasets and parameters $\epsilon = 1.0$]
 {
-  \includegraphics[width=0.42\textwidth]{sampling_4d.eps} 
+  \includegraphics[width=0.4\textwidth]{sampling_4d.eps} 
   \label{fig_vs_datasize_4d}
 }
 \end{center}
 \end{figure}
-
-% \begin{figure}[ht]
-% \begin{center}
-% \centering
-
-% \end{center}
-% \end{figure}
 
 In Figures \ref{fig_vs_datasize_2d}, \ref{fig_vs_datasize_3d} and \ref{fig_vs_datasize_4d} we still consider \emph{balanced} data sets
 of observations. The results show that when the data size increases, the average errors of
@@ -1258,8 +1249,6 @@ But for bigger data sets, that is, bigger than $300$, or as in Figure \ref{fig_v
 we considered data sets of the order of 15 thousands elements,
 the $\hexpmech$ outperforms the baseline Laplace mechanism, and asymptotically approaches the improved Laplace mechanism.
 Similar experimental tendencies were obtained for the Dirichlet-multinomial model (Figure \ref{fig_vs_datasize_3d} and \ref{fig_vs_datasize_4d}).
-
-
 
 
 \paragraph{Fixed dataset varying balanced priors}
