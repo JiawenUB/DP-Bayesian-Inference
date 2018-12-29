@@ -1204,12 +1204,11 @@ different balanced priors used. The boxes extend from the lower to the upper qua
 of the data, with a line at the median. A notch on the box around the
 median is also drawn to give a rough guide to the significance of
 difference of medians; The whiskers extend from the box to show the
-range of the data. A blue box in the plots represents our newly
-designed exponential mechanism's behavior-- where the sensitivity is calibrated
-w.r.t Hellinger distance-- while the yellow box next to
+range of the data. A blue box in the plots represents the $\hexpmech$'s behavior-- where the sensitivity is calibrated
+w.r.t Hellinger distance-- while the green box next to
 it represents the performance of a variation of the basic Laplace
-mechanism presented in Section (\ref{sec_mechs}) with the same
-settings: that is $\epsilon, \delta$, data, prior. The variation
+mechanism $\lapmech$, and red one is $\ilapmech$ presented in Section (\ref{sec_mechs}) with the same
+settings: that is $\epsilon$, data, prior. The variation
 considered performs a postprocessing on the released parameters so
 that they are consistent. For instance when the sum of the noised
 parameters is greater than $n$ we will truncate them so that they sum
