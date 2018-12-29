@@ -1222,18 +1222,18 @@ up to $n$.
 \begin{center}
 \centering
 \subfigure[Increasing data size with prior $\betad(1,1)$, balanced datasets and parameters $\epsilon = 1.0$]
-{ \includegraphics[width=0.4\textwidth]{sampling_2d.eps}
+{ \includegraphics[width=0.35\textwidth]{sampling_2d.eps}
 \label{fig_vs_datasize_2d}
 }
 
 \subfigure[Increasing data size with $\dirichlet(1,1,1)$ prior distribution, balanced datasets and parameters $\epsilon = 1.0$]
 {
-  \includegraphics[width=0.4\textwidth]{sampling_3d.eps} 
+  \includegraphics[width=0.35\textwidth]{sampling_3d.eps} 
   \label{fig_vs_datasize_3d}
 }
 \subfigure[Increasing data size with $\dirichlet(1,1,1,1)$ prior distribution, balanced datasets and parameters $\epsilon = 1.0$]
 {
-  \includegraphics[width=0.4\textwidth]{sampling_4d.eps} 
+  \includegraphics[width=0.35\textwidth]{sampling_4d.eps} 
   \label{fig_vs_datasize_4d}
 }
 \end{center}
@@ -1241,12 +1241,11 @@ up to $n$.
 
 In Figures \ref{fig_vs_datasize_2d}, \ref{fig_vs_datasize_3d} and \ref{fig_vs_datasize_4d} we still consider \emph{balanced} data sets
 of observations. The results show that when the data size increases, the average errors of
-$\hexpmech$, Laplace mechanism and decrease. For small datasets,
-i.e with size less $300$ in the case of Beta-Binomial models,
-both the baseline Laplace mechanisms and improved Laplace mechanism outperform $\hexpmech$.
+$\hexpmech$, $\lapmech$ and $\ilapmech$ decrease. For small datasets,
+i.e with size less $300$ in the case of Beta-Binomial models, the Laplace mechanisms outperform $\hexpmech$.
 But for bigger data sets, that is, bigger than $300$, or as in Figure \ref{fig_vs_datasize_2d} where
 we considered data sets of the order of 15 thousands elements,
-the $\hexpmech$ outperforms the baseline Laplace mechanism, and asymptotically approaches the improved Laplace mechanism.
+the $\hexpmech$ outperforms the $\lapmech$, and asymptotically approaches the improved Laplace mechanism $\ilapmech$.
 Similar experimental tendencies were obtained for the Dirichlet-multinomial model (Figure \ref{fig_vs_datasize_3d} and \ref{fig_vs_datasize_4d}).
 
 
@@ -1256,7 +1255,7 @@ In Figure \ref{fig_vs_prior}, we fix the data set to be $(50,50)$, and the param
 Similar to the plots above, Figure \ref{fig_vs_prior} shows that in the beginning the baseline Laplace mechanism and improved Laplace mechanism performs better but the baseline approach is outperformed after a while, and very close to the improved Laplace mechanism.
 \begin{figure}
 \centering
-\includegraphics[width=0.48\textwidth]{sampling_prior.eps}
+\includegraphics[width=0.35\textwidth]{sampling_prior.eps}
 \caption{Observed data set is: $(50,50)$, varying balanced priors}
 \label{fig_vs_prior}
 \end{figure}
@@ -1268,7 +1267,7 @@ In order to see our privacy behavior, we study the accurate epsilon under concre
 \begin{figure}
 \begin{center}
 \centering
-    \includegraphics[width=0.48\textwidth]{privacyloss.eps}
+    \includegraphics[width=0.35\textwidth]{privacyloss.eps}
 \caption{Actual privacy loss of different data size when privacy bound $\epsilon = 1.0$ in 2 dimensions, prior:$\betad(1,1)$ and balanced data}
 \label{fig_privacy}
 \end{center}
