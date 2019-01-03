@@ -50,12 +50,12 @@
 \printAffiliationsAndNotice{\icmlEqualContribution} % otherwise use the standard text.
 
 \begin{abstract} Bayesian inference is a statistical method which
-allows one to derive a \emph{posterior} distribution,
+allows to derive a \emph{posterior} distribution,
 starting from a \emph{prior} distribution and observed data. Several
 approaches have been explored in order to make this process differentially
-private. For example, \cite{dimitrakakis2014robust}, and
+private. For example \cite{dimitrakakis2014robust} and
 \cite{wang2015privacy} proved that, under specific conditions, sampling from
-the posterior distribution is already differentially private. \cite{zhang2016differential}, \cite{foulds2016theory},
+the posterior distribution is already differentially private, while \cite{zhang2016differential} and \cite{foulds2016theory}
 designed differentially private mechanisms that output a
 representation of the full posterior distribution. 
 
@@ -129,9 +129,9 @@ We will see that in some cases this can happen.
 \noindent \textbf{Bayesian Inference.}
 
 Given a prior belief $\Pr(\theta)$ on some parameter $\theta$,
-and an observation $\dataobs$, the posterior distribution on $\theta$ given $\dataobs$ is computed as:
+and an observation $\dataobs$, the posterior distribution on $\theta$ given $\dataobs$ is defined as:
 \[
-  \Pr(\theta | \dataobs) = \frac{\Pr(\dataobs | \theta) \cdot \Pr(\theta)}{\Pr(\dataobs)}
+  \Pr(\theta | \dataobs) \equiv \frac{\Pr(\dataobs | \theta) \cdot \Pr(\theta)}{\Pr(\dataobs)}
 \]
 where the expression $\Pr(\dataobs | \theta)$ denotes the
 \emph{likelihood} of observing $\dataobs$ under a value of
@@ -141,21 +141,23 @@ For the same reason $\Pr(\dataobs)$ is a constant independent of $\theta$.
 Usually in statistics the prior distribution $\Pr(\theta)$ is chosen so that it represents
 the initial belief on $\theta$, that is, when no data has been observed. In practice though,
 prior distributions and likelihood functions are usually chosen so that the posterior
-belongs to the same \emph{family} of distributions. In this case we say that the prior
+belongs to the same \emph{family} of distribution of the prior. In this case we say that the prior
 is conjugate to the likelihood function. Use of a conjugate prior
 simplifies calculations and allows for inference to be performed in a
-recursive fashion over the data. Then, we have:
-\[
-  \bysinfer(\Pr(\dataobs | \theta), \Pr(\theta), \dataobs) = \frac{\Pr(\dataobs | \theta) \cdot \Pr(\theta)}{\Pr(\dataobs)}
-\]
+recursive fashion over the data.
+% Then, we have:
+% \[
+%   \bysinfer(\Pr(\dataobs | \theta), \Pr(\theta), \dataobs) = \frac{\Pr(\dataobs | \theta) \cdot \Pr(\theta)}{\Pr(\dataobs)}
+% \]
 
 
 \noindent \textbf{Beta-binomial System.}
 
 In this work we will consider a specific instance of Bayesian inference and one of its generalizations.
-specifically, a Beta-binomial mode. We will consider the situation the underlying data is binomial distribution ($\thicksim binomial(\theta)$), where $\theta$ represents
+We will consider the situation where the underlying data is drawn from a binomial distribution
+($\thicksim \binomial{n}{\theta}$), where $\theta$ represents
 the parameter --informally called \emph{bias}-- of a Bernoulli
-distributed random variable. The
+distributed random variable and $n$ is the number of draws. The
 prior distribution over $\theta\in [0,1]$ is going to be a beta
 distribution, $\betad(\alpha, \beta)$, with parameters
 $\alpha,\beta\in\mathbb{R}^{+}$, and with p.d.f:
@@ -168,16 +170,16 @@ The data $\dataobs$ will be a sequence of $n\in\mathbb{N}$ binary values, that i
   \Pr(\dataobs | \theta)\equiv \theta^{\Delta \alpha}(1-\theta)^{n - \Delta \alpha}
 \]
 where $\Delta \alpha = \displaystyle\sum_{i=1}^{n}x_i$.
-From this, the inference can be easily derived:
-\[
-   \bysinfer(binomial(\theta), \betad(\alpha, \beta), \dataobs)=\betad(\alpha + \Delta \alpha,\beta + n - \Delta \alpha)
-\]
-
+The posterior distribution over $\theta$ can be easily proven to be equal to:\[\betad(\alpha + \Delta \alpha,\beta + n - \Delta \alpha)\]
+From now on we will denote by $\bysinfer(\binomial{n}{\theta}, \betad(\alpha, \beta), \dataobs)$ the previous
+posterior distribution. This notation will prove itself handy when its arguments will change types in the next example and
+in section \ref{} when the private mechanisms will be described.
 
 \noindent \textbf{Dirichlet-multinomial Systems.}
 
-The beta-binomial model can be immediately generalized to Dirichlet-multinomial, with underlying data multinomially distributed. The \emph{bias} is represented by parameter $\vtheta$, the vector of parameters of a categorically distributed random variable. The prior distribution over $\vtheta\in [0,1]^{k}$
-is given by a Dirichelet distribution, $\dirichlet(\valpha)$, for $k\in\mathbb{N}$,
+The beta-binomial model can be immediately generalized to the Dirichlet-multinomial model, with underlying data multinomially distributed.
+The \emph{bias} is represented by the parameter $\vtheta$, the vector of parameters of a categorically distributed random variable. The prior distribution over $\vtheta\in [0,1]^{k}$
+is given by a Dirichelet distribution, $\dirichlet{n}{\valpha}$, for $k\in\mathbb{N}$,
 and $\valpha\in(\mathbb{R}^{+})^{k}$, with p.d.f:
 \[
   \Pr(\vtheta)\equiv\frac{1}{\mbetaf(\valpha)}\cdot \displaystyle\prod_{i=1}^{k}{\theta_i^{\alpha_i-1}}
@@ -190,9 +192,9 @@ The likelihood function will be:
   \Pr(\dataobs|\vtheta)\equiv \displaystyle\prod_{a_i\in\datauni}\theta_{i}^{\Delta \alpha_i},
 \]
 with $\Delta \alpha_i=\displaystyle\sum_{j=1}^{n}\iverson{x_j=a_i}$, where $\iverson{\cdot}$ represents Iverson bracket notation.
-Denoting by $\Delta\valpha$ the vector $(\Delta\alpha_1,\dots \Delta\alpha_k)$ the inference over $\vtheta$ turns out to be
+Denoting by $\Delta\valpha$ the vector $(\Delta\alpha_1,\dots \Delta\alpha_k)$ the posterior distribution over $\vtheta$ turns out to be
 \[
-   \bysinfer(multinomial(\theta), \dirichlet(\valpha), \dataobs)=\dirichlet(\valpha + \Delta \valpha)
+   \bysinfer(\multinomial{n}{\vtheta}, \dirichlet{\valpha}, \dataobs)=\dirichlet{\valpha + \Delta \valpha} 
 \]
 where $+$ denotes the componentwise sum of vectors of reals. 
 
@@ -200,11 +202,11 @@ where $+$ denotes the componentwise sum of vectors of reals.
 \begin{definition}
 \label{def_epsilon_dp}
 
-A randomized mechanism $\mathcal{M}$ with domain $\mathbb{N}^{|\mathcal{X}|}$ is $(\epsilon, \delta)-$differential privacy, if for all adjacent
-\footnote{Given $\dataobs, \dataobs'$  we say that $\dataobs$ and $\dataobs'$ are adjacent and we write, $\adj{\dataobs}{\dataobs'}$, iff\\
-$\displaystyle \sum_{i}^{n}\iverson{x_i = x'_i }\leq 1$. } $\dataobs, \dataobs' \in \mathbb{N}^{|\mathcal{X}|}$ and all $\mathcal{S} \subset Range(\mathcal{M})$:
+A randomized mechanism $\mathcal{M}$ with domain $\mathbb{N}^{|\mathcal{X}|}$ and range $\range$, is $(\epsilon, \delta)$-differential privacy, if for all adjacent
+\footnote{Given $\dataobs, \dataobs'\in\{0,1\}^n$  we say that $\dataobs$ and $\dataobs'$ are adjacent and we write, $\adj{\dataobs}{\dataobs'}$, iff\\
+$\displaystyle \sum_{i}^{n}\iverson{x_i = x'_i }\leq 1$. } $\dataobs, \dataobs' \in \mathbb{N}^{|\mathcal{X}|}$ and all $\mathcal{S} \subseteq \range$:
 \begin{equation*}
-\Pr[\mathcal{M}(\dataobs) \in \mathcal{S}] = e^\epsilon \Pr[\mathcal{M}(\dataobs') \in \mathcal{S}].
+\Pr[\mathcal{M}(\dataobs) \in \mathcal{S}] \leq e^\epsilon \Pr[\mathcal{M}(\dataobs') \in \mathcal{S}].
 \end{equation*}
 
 \end{definition}
@@ -234,18 +236,30 @@ $(\alpha',\beta')$ and $(\alpha'',\beta'')$ then
 $|\alpha'-\alpha''|+|\beta'-\beta''|\leq 2$.
 This argument extends similarly to the Dirichelet-Multinomial system. Details are introduced in Sec. \ref{sec_mechs}.
 
-However, in previous works, the accuracy of the posterior was measured again with respect to $\ell_1$ norm. That is, an upper bound was given on
+However, in previous works, the accuracy of the posterior was measured with respect to $\ell_1$ norm. That is, an upper bound was given on
 \[
   \Pr[|\alpha - \tilde\alpha| + |\beta - \tilde\beta |\geq \gamma ]
 \]
-where $(\alpha, \beta), (\tilde\alpha,\tilde\beta)$ are as defined above. This accuracy metric is meaningless when the results released are distributions rather than numerical values. In contrast, distribution metrics such as $f$-divergence, Hellinger distance, etc. come into mind overtly when we are measuring distance between distributions. This gives us motivation on exploring the design space of mechanisms by considering different norms (a distribution metric) to compute the sensitivity
-and provide guarantees on the accuracy. 
+where $(\alpha, \beta), (\tilde\alpha,\tilde\beta)$ are as defined above.
+\todo{This
+accuracy metric is meaningless when the results released are
+distributions rather than numerical values. In contrast, distribution
+metrics such as $f$-divergence, Hellinger distance, etc. come into
+mind overtly when we are measuring distance between
+distributions. }
+{\color{blue}im not sure this is a good way to put it...}
+This gives us motivation on exploring the design space
+of mechanisms by considering different norms (a distribution metric)
+to compute the sensitivity and provide guarantees on the accuracy.
 
-Specifically, we will use the Hellinger distance $\hellinger(\cdot,\cdot)$:
-Given two beta distributions
-$\betad(\alpha_1, \beta_1),$ and $\betad(\alpha_2, \beta_2)$ the following equality holds 
+We will use the Hellinger distance $\hellinger(\cdot,\cdot)$, 
+Given two probability distributions $\textup{P}$ and $\textup{Q}$,
+the Hellinger distance between them is defined as:
 \[
-  \hellinger(\betad(\alpha_1, \beta_1), \betad(\alpha_2, \beta_2))=
+\todo{def}
+\]
+When $\textup{P}=\betad(\alpha_1, \beta_1)$ and $\textup{Q}=\betad(\alpha_2, \beta_2)$ the above reduces to: 
+\[
   \sqrt{1 - \frac{\betaf(\frac{\alpha_1 + \alpha_2}{2}, \frac{\beta_1 + \beta_2}{2})}{\sqrt{\betaf(\alpha_1,\beta_1)\betaf(\alpha_2,\beta_2)}}}
 \]
 
@@ -255,7 +269,8 @@ Our choice to use Hellinger distance is motivated by three facts:
   
   \item It also automatically yields bounds on the total variation distance, which represents also the maximum advantage an unbounded adversary can have in distingishing two distributions. 
 
-  \item The accuracy can be improved by using a smooth bound on Hellinger distance's local sensitivity. As shown in Fig. \ref{fig_sensitivity}, taking advantage of the gap between the global sensitivity and local sensitivity, we can improve the accuracy by applying an upper bound on local sensitivity instead of using global sensitivity.
+  \item The accuracy can be improved by using a smooth bound on Hellinger distance's local sensitivity. As shown in Fig. \ref{fig_sensitivity},
+    taking advantage of the gap between the global sensitivity and local sensitivity, we can improve the accuracy by applying an upper bound on local sensitivity instead of using global sensitivity.
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.35\textwidth]{sensitivity_2d.eps}

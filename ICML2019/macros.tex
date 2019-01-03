@@ -48,8 +48,8 @@
 \newcommand{\adj}[2]{\textbf{adj}(#1,#2)}
 \newcommand{\candidateset}{\mathcal{R}_{\textup{post}}}
 \newcommand{\bprior}{\boldsymbol{\beta}_{\textup{prior}}}
-\newcommand{\bysinfer}{\mathsf{bysInfer}}
-\newcommand{\betad}{\mathsf{beta}}
+\newcommand{\bysinfer}{\mathsf{Infer}}
+\newcommand{\betad}{\mathsf{Beta}}
 \newcommand{\betaf}{\textup{B}}
 \newcommand{\mbetaf}{\boldsymbol{\textup{B}}}
 \newcommand{\vtheta}{\boldsymbol{\theta}}
@@ -57,14 +57,15 @@
 \newcommand{\vbeta}{\boldsymbol{\beta}}
 \newcommand{\lapmech}{\mathsf{lapMech}}
 \newcommand{\ilapmech}{\mathsf{ilapMech}}
-
+\newcommand{\binomial}[2]{\mathsf{Bin}(#1, #2)}
+\newcommand{\multinomial}[2]{\mathsf{Mult}(#1, #2)}
 \newcommand{\expmech}{\mathsf{expMech}}
 \newcommand{\hexpmech}{\mathsf{expMech}^{smoo}}
 \newcommand{\lexpmech}{\mathsf{expMech}^{local}}
 \newcommand{\hexpmechd}{\mathsf{expMech}^{D}_{\hellinger}}
 \newcommand{\privinfer}{\mathsf{PrivInfer}}
 \newcommand{\hlg}{\mathsf{H}}
-\newcommand{\dirichlet}{\mathsf{dirichlet}}
+\newcommand{\dirichlet}[1]{\mathsf{Dir}(#1)}
 \newcommand{\alphas}{\boldsymbol{\alpha}}
 \newcommand{\xis}{\boldsymbol{\xi}}
 \newcommand{\iverson}[1]{[#1]}
@@ -73,6 +74,7 @@
 \newcommand{\ux}[1]{u(\textbf{x}, {#1})}
 \newcommand{\uxadj}[1]{u(\textbf{x}', {#1})}
 \newcommand{\cardinality}[2]{\mathcal{C}^{#1}_{#2}}
+\newcommand{\range}{\mathcal{O}}
 \newcommand{\nomalizer}[1]{\sum\limits_{r'\in \mathcal{R}_{\textup{post}}} \exp \big(\frac{-\epsilon\cdot \mathcal{H} (\mathsf{BI}(#1),r')}{4 \cdot S(#1)}\big)}
 
 \newcommand{\unomalizer}[1]{\sum\limits_{r'\in \mathcal{R}_{\textup{post}}} \exp \big(\frac{-\epsilon\cdot u(#1, r')}{4 \cdot S(#1)}\big)}
