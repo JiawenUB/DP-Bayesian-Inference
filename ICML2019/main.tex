@@ -49,27 +49,28 @@
 
 \printAffiliationsAndNotice{\icmlEqualContribution} % otherwise use the standard text.
 
-\begin{abstract} Bayesian inference is a statistical method which
-allows to derive a \emph{posterior} distribution,
-starting from a \emph{prior} distribution and observed data. Several
-approaches have been explored in order to make this process differentially
-private. For example \cite{dimitrakakis2014robust} and
-\cite{wang2015privacy} proved the differential privacy of sampling from
-the posterior distribution under specific conditions, \cite{zhang2016differential} and \cite{foulds2016theory}
-designed differentially private (DP) mechanisms for this inference process. 
-% When the output of a differentially private mechanism is a probability
-% distribution, accuracy is naturally measured by means of
-% \emph{probabilistic distances} measuring how far this distribution is
-% from the original one. Some classical examples are total variation distance,
-% Hellinger distance, $\chi^2$-distance, KL-divergence, etc.
-Laplace mechanism is mostly used while exponential mechanisms have not yet been fully explored. Also, $\ell_1$ norm is mainly used to measure the accuracy while \emph{probabilistic distances} are more suitable when the output of a DP mechanism is a probability distribution.
-
-In this work, we explore the design space for DP bayesian inference, by considering different metrics and different algorithms. 
-We focused on two discrete models, the Beta-Binomial and the
-Dirichlet-multinomial models, and one distribution distance, Hellinger distance. 
-We design mechanisms based on the Laplace algorithm and exponential algorithm and adopt different metrics in them by calibrating noise to the sensitivity of metric that we want to
-use to measure accuracy. To show the usefulness of these mechanisms we
-show experimental analysis on their performance.
+\begin{abstract}
+% Several approaches have been explored in order to make Bayesian inference
+% differentially private.
+% For instance, \cite{dimitrakakis2014robust} and
+% \cite{wang2015privacy} proved that, under specific conditions of the likelihood function and the prior distribution,
+% sampling from the posterior distribution, is already differentially private. \cite{zhang2016differential} and \cite{foulds2016theory}
+% designed differentially private (d.p.) mechanisms by adding laplacian noise
+% to the numeric parameters of the posterior distributions. 
+% Accuracy, is usally (\cite{??}) measured by providing upper bounds, holding w.h.p, on the
+% $\ell_1$ or $\ell_\infty$-distance between the numeric parameters
+% of the released posterior distribution and the actual real ones of posterior distribution.
+We explore the design space for differentially private Bayesian
+inference.  We focused on two discrete models for parametric Bayesian
+inference i.e., the Beta-Binomial and the Dirichlet-multinomial
+models. We propose a variation of the exponential mechanism that uses
+a scoring function based on a metric over probailistic measures, i.e.,
+the Hellinger distance. We compare it with other approaches based on
+the perturbation of the parameters of the posterior distribution.  We
+measure the accuracy using the Hellinger distance over the posterior
+distribution released and the real one as opposed to measuring the
+$\ell_1$ or $\ell_{\infty}$ distance on the parameters.  We finally
+present an experimental analysis on the accuracy of these mechanisms.
 \end{abstract}
  % TODO: replace with your keywords
 
@@ -119,13 +120,9 @@ We will see that in some cases this can happen.
 \end{itemize}
 
 
-\section{Problem Setting}
-
-\subsection{Preliminaries}
+\section{Preliminaries}
 \label{sec_background}
-
-\noindent \textbf{Bayesian Inference.}
-
+\noindent \textbf{Bayesian inference.} 
 Given a prior belief $\Pr(\theta)$ on some parameter $\theta$,
 and an observation $\dataobs$, the posterior distribution on $\theta$ given $\dataobs$ is defined as:
 \[
@@ -147,10 +144,7 @@ recursive fashion over the data.
 % \[
 %   \bysinfer(\Pr(\dataobs | \theta), \Pr(\theta), \dataobs) = \frac{\Pr(\dataobs | \theta) \cdot \Pr(\theta)}{\Pr(\dataobs)}
 % \]
-
-
-\noindent \textbf{Beta-binomial System.}
-
+% \noindent \textbf{Beta-binomial System.}
 In this work we will consider a specific instance of Bayesian inference and one of its generalizations.
 We will consider the situation where the underlying data is drawn from a binomial distribution
 ($\thicksim \binomial{n}{\theta}$), where $\theta$ represents
@@ -172,8 +166,8 @@ The posterior distribution over $\theta$ can be easily proven to be equal to:\[\
 From now on we will denote by $\bysinfer(\binomial{n}{\theta}, \betad(\alpha, \beta), \dataobs)$ the previous
 posterior distribution. This notation will prove itself handy when its arguments will change types in the next example and
 in section \ref{} when the private mechanisms will be described.
+% \noindent \textbf{Dirichlet-multinomial Systems.}
 
-\noindent \textbf{Dirichlet-multinomial Systems.}
 
 The beta-binomial model can be immediately generalized to the Dirichlet-multinomial model, with underlying data multinomially distributed.
 The \emph{bias} is represented by the parameter $\vtheta$, the vector of parameters of a categorically distributed random variable. The prior distribution over $\vtheta\in [0,1]^{k}$
@@ -194,14 +188,22 @@ Denoting by $\Delta\valpha$ the vector $(\Delta\alpha_1,\dots \Delta\alpha_k)$ t
 \[
    \bysinfer(\multinomial{n}{\vtheta}, \dirichlet{\valpha}, \dataobs)=\dirichlet{\valpha + \Delta \valpha} 
 \]
-where $+$ denotes the componentwise sum of vectors of reals. 
+where $+$ denotes the componentwise sum of vectors of reals.
 
-\noindent \textbf{Differential Privacy.} 
+
+\noindent \textbf{Differential Privacy.}
+\emph{Differential privacy} is a strong quantitative notion of statistical privacy proposed by \cite{}.
+Differential privacy of a mechanism implies that changing the input of a mechanism slightly only reflects
+in a controlled and bounded way on the output distribution. 
+Formally, the $\epsilon$ parameter
+controls how much two outputs starting from \emph{close} inputs can differ. When two inputs are close we call them \emph{adjacent}.
+By adjacency we usually mean a relation over input databases which includes all the pair of databases which differ by at most one row.
+The formal definition of $\epsilon$-differential privacy follows.
 \begin{definition}
 \label{def_epsilon_dp}
 
-A randomized mechanism $\mathcal{M}$ with domain $\mathbb{N}^{|\mathcal{X}|}$ and range $\range$, is $(\epsilon, \delta)$-differential privacy, if for all adjacent
-\footnote{Given $\dataobs, \dataobs'\in\{0,1\}^n$  we say that $\dataobs$ and $\dataobs'$ are adjacent and we write, $\adj{\dataobs}{\dataobs'}$, iff\\
+A randomized mechanism $\mathcal{M}$ with domain $\mathbb{N}^{|\mathcal{X}|}$ and codomain $\range$, is $\epsilon$-differential private, if for all adjacent
+\footnote{Given $\dataobs, \dataobs'\in\{0,1\}^n$  we say that $\dataobs$ and $\dataobs'$ are adjacent and we write, iff
 $\displaystyle \sum_{i}^{n}\iverson{x_i = x'_i }\leq 1$. } $\dataobs, \dataobs' \in \mathbb{N}^{|\mathcal{X}|}$ and all $\mathcal{S} \subseteq \range$:
 \begin{equation*}
 \Pr[\mathcal{M}(\dataobs) \in \mathcal{S}] \leq e^\epsilon \Pr[\mathcal{M}(\dataobs') \in \mathcal{S}].
@@ -210,7 +212,7 @@ $\displaystyle \sum_{i}^{n}\iverson{x_i = x'_i }\leq 1$. } $\dataobs, \dataobs' 
 \end{definition}
 
 
-\subsection{Technical Problem Statement}
+\noindent \textbf{Technical Problem Statement.}
 \label{subsec_problem}
 We are interested in exploring mechanisms for privately releasing the full posterior
 distributions derived in section \ref{sec_background}, as opposed to just sampling from them.
@@ -246,8 +248,8 @@ metrics such as $f$-divergence, Hellinger distance, etc. come into
 mind overtly when we are measuring distance between
 distributions. }
 {\color{blue}im not sure this is a good way to put it...}
-This gives us motivation on exploring the design space
-of mechanisms by considering different norms (a distribution metric)
+This gives us motivation for exploring the design space
+of mechanisms by considering different norms. e.g. a norm over space of measures.
 to compute the sensitivity and provide guarantees on the accuracy.
 
 We will use the Hellinger distance $\hellinger(\cdot,\cdot)$, 
