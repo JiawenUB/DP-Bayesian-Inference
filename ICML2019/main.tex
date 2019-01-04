@@ -54,22 +54,21 @@ allows to derive a \emph{posterior} distribution,
 starting from a \emph{prior} distribution and observed data. Several
 approaches have been explored in order to make this process differentially
 private. For example \cite{dimitrakakis2014robust} and
-\cite{wang2015privacy} proved that, under specific conditions, sampling from
-the posterior distribution is already differentially private, while \cite{zhang2016differential} and \cite{foulds2016theory}
+\cite{wang2015privacy} proved the differentially privacy ofsampling from
+the posterior distribution under specific conditions, \cite{zhang2016differential} and \cite{foulds2016theory}
 designed differentially private mechanisms that output a
 representation of the full posterior distribution. 
+% When the output of a differentially private mechanism is a probability
+% distribution, accuracy is naturally measured by means of
+% \emph{probabilistic distances} measuring how far this distribution is
+% from the original one. Some classical examples are total variation distance,
+% Hellinger distance, $\chi^2$-distance, KL-divergence, etc.
+Laplace mechanism is mostly used while exponential mechanisms have not yet been fully explored. Also, $\ell_1$ norm is mainly used to measure the accuracy while \emph{probabilistic distances} are more suitable when the output of a differentially private mechanism is a probability distribution.
 
-When the output of a differentially private mechanism is a probability
-distribution, accuracy is naturally measured by means of
-\emph{probabilistic distances} measuring how far this distribution is
-from the original one. Some classical examples are total variation distance,
-Hellinger distance, $\chi^2$-distance, KL-divergence, etc.
-
-In this work, we explore the design space for differentially private bayesian inference, by considering different metrics and different algorithms we design a mechanism. 
-We focus on two discrete models, the Beta-Binomial and the
+In this work, we explore the design space for differentially private bayesian inference mechanism, by considering different metrics and different algorithms. 
+We focused on two discrete models, the Beta-Binomial and the
 Dirichlet-multinomial models, and one probability distance, Hellinger distance. 
-For different algorithms, we explore three main mechanisms based on the Laplace algorithm family and exponential algorithm family.
-For different metrics, we apply them by calibrating noise to the sensitivity of that utility function, where the utility function is the probability metric we want to
+We explore three main mechanisms based on the Laplace algorithm family and exponential algorithm family. Also, we apply different metric them by calibrating noise to the sensitivity of that utility function, where the utility function is the probability metric we want to
 use to measure accuracy. To show the usefulness of these mechanisms we
 show an experimental analysis comparing their performance.
 \end{abstract}
