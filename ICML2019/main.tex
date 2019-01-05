@@ -854,16 +854,6 @@ $$
 \end{array}
 $$
 when $t < 0$.\\
-
-
-
-% When $\alpha = \beta$, we also have:
-% \begin{align*}
-%  Pr\big[\hellinger(\bysinfer(\dataobs), r_L ) 
-% \leq \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)\big] 
-%   = \quad & Pr[ - t \leq Y < t + 1] \\
-%   = \quad & \frac{1}{2} (1 - e^{- \frac{\epsilon (t + 1)}{\Delta \bysinfer}}- e^{- \frac{\epsilon t}{\Delta \bysinfer}})\\
-%  \end{align*}
 Unfolding the Hellinger distance formula, we get:\\
   \noindent \textbf{case: t is even}\\
   \begin{align*}
@@ -876,25 +866,6 @@ Unfolding the Hellinger distance formula, we get:\\
   = \quad & \frac{1}{2} (e^{- \frac{\epsilon (t)}{\Delta \bysinfer}} - e^{- \frac{\epsilon (t + 1)}{\Delta \bysinfer}})\\
   \end{align*}
 
-%   We also have:
-%   \begin{align*}
-%   & Pr\Bigg[\hellinger(\bysinfer(\dataobs), r_L )^2 
-%   \leq 1 - \prod_{k = 0}^{\frac{t}{2} - 1}
-%   \sqrt{1 - \frac{\frac{t}{2}}{a + k + \frac{t}{2}}}
-%   \cdot
-%   \prod_{k = 1}^{\frac{t}{2}}
-%   \sqrt{1 - \frac{\frac{t}{2}}{\beta - k}}\ \Bigg] \\
-%   = \quad & \frac{1}{2} (1 - e^{- \frac{\epsilon (t + 1)}{\Delta \bysinfer}}- e^{- \frac{\epsilon t}{\Delta \bysinfer}}),
-%   \end{align*} 
-%   when $\alpha = \beta$.
-% in 2 dimensions, where $\epsilon = 1.0$. 
-% \begin{itemize}
-% 	\item \textbf{Case} of baseline Laplace mechanism, where $\Delta \bysinfer = 2$:\\
-
-
-% 	\item \textbf{Case} of improved Laplace mechanism, where $\Delta \bysinfer = 1$
-% \end{itemize} 
-  
   \noindent \textbf{case: t is odd}\\
   let $t = 2 m + 1$
   \begin{align*}
@@ -913,18 +884,14 @@ Unfolding the Hellinger distance formula, we get:\\
   = & \frac{1}{2} (e^{- \frac{\epsilon (t)}{\Delta \bysinfer}} - e^{- \frac{\epsilon (t + 1)}{\Delta \bysinfer}})\\
   \end{align*}
 
-Instantiating $t$ with specific values ($1, 2, 3$ for example), we get following accuracy equations:
-
-  $\lapmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), r_L ) = 0} = 0.19673467014$.
-  
+  Instantiating $t$ with specific values ($1, 2, 3$ for example), we get following accuracy equations:\\
+  $\lapmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), r_L ) = 0} = 0.19673467014$.\\
   $\lapmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), r_L )^2 = 1 - \frac{\Gamma(\alpha+\frac{1}{2})}{\Gamma(\alpha)} \cdot
-  \frac{\Gamma(\beta - \frac{1}{2})}{\Gamma(\beta)} } = 0.11932560927$. 
-  
+  \frac{\Gamma(\beta - \frac{1}{2})}{\Gamma(\beta)} } = 0.11932560927$.\\  
   $\lapmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), r_L )^2 = 1 - 
   \sqrt{1 - \frac{\frac{t}{2}}{a + \frac{t}{2}}}
   \cdot
-  \sqrt{1 - \frac{\frac{t}{2}}{\beta}}} = 0.07237464051$.
-
+  \sqrt{1 - \frac{\frac{t}{2}}{\beta}}} = 0.07237464051$.\\
 In all cases above, probability values are fixed even data size changes, only the distance are decreasing.
 
 \subsubsection{Accuracy Bound for Improved Laplace Mechanism}
@@ -959,7 +926,7 @@ In all cases above, probability values are fixed even data size changes, only th
 
 \subsection{Accuracy Comparison between $\hexpmech$, $\lapmech$ and $\ilapmech$}
 For comparison with Laplace mechanism, we developed the Table \ref{tab_acc_theo}.
-\begin{table}[h!]
+\begin{table*}[t]
 \scriptsize
 \centering
 \begin{tabular}{ |c|c|c|c| } 
@@ -991,10 +958,10 @@ For comparison with Laplace mechanism, we developed the Table \ref{tab_acc_theo}
 \end{tabular}
 \caption{Accuracy Comparison in Theoretical}
 \label{tab_acc_theo}
-\end{table}
+\end{table*}
 
 In the case when $\alpha = \beta$, there are always 2 symmetric beta distributions with the same distance from the true posterior, then we have accuracy table as:
-\begin{table}[h!]
+\begin{table*}[t]
 \scriptsize
 \centering
 \begin{tabular}{ |c|c|c|c| } 
@@ -1027,28 +994,22 @@ In the case when $\alpha = \beta$, there are always 2 symmetric beta distributio
 \end{tabular}
 \caption{Accuracy Comparison in Theoretical}
 \label{tab_acc_theo}
-\end{table}
+\end{table*}
 
 When $\epsilon$ and dimensions are fixed, the probability of getting the true posterior, or posterior with certain step from Laplace mechanism is fixed whatever the data size or prior changes.
 
 By solving following equations:
-\begin{itemize}
-  \item
-\[
-\frac{1}{\nomalizer{\dataobs}} = 0.19673467\ or\ 0.316060279
-\]
-we can get the range where we can do better than $\lapmech$ or $\ilapmech$ on outputting the correct answer.
-
-  \item 
-\[
-\frac{\exp{(\frac{- \epsilon \sqrt{1 - \frac{\Gamma(\alpha+\frac{1}{2})}{\Gamma(\alpha)} \cdot
- \frac{\Gamma(\beta - \frac{1}{2})}{\Gamma(\beta)}}}{4 S(\dataobs)})}}{\nomalizer{\dataobs}}
- = 0.119325609\ or\ 0.116272079
-\]
-we can get the range where we can do better than $\lapmech$ or $\ilapmech$ on outputting the answer with one step from correct one.
-\vspace{12cm}
-  \item 
-\[
+  \[
+  \frac{1}{\nomalizer{\dataobs}} = 0.19673467\ or\ 0.316060279
+  \]
+  we can get the range where we can do better than $\lapmech$ or $\ilapmech$ on outputting the correct answer. 
+  \[
+  \frac{\exp{(\frac{- \epsilon \sqrt{1 - \frac{\Gamma(\alpha+\frac{1}{2})}{\Gamma(\alpha)} \cdot
+   \frac{\Gamma(\beta - \frac{1}{2})}{\Gamma(\beta)}}}{4 S(\dataobs)})}}{\nomalizer{\dataobs}}
+   = 0.119325609\ or\ 0.116272079
+  \]
+  we can get the range where we can do better than $\lapmech$ or $\ilapmech$ on outputting the answer with one step from correct one.
+  \[
 \frac{2 \exp{(\frac{- \epsilon \sqrt{1 - 
     \sqrt{1 - \frac{\frac{t}{2}}{a + \frac{t}{2}}}
     \cdot
@@ -1056,53 +1017,7 @@ we can get the range where we can do better than $\lapmech$ or $\ilapmech$ on ou
     {4 S(\dataobs)})}}{\nomalizer{\dataobs}}
      = 0.072374641\ or\ 0.042774107
 \]
-we can get the range where we can do better than $\lapmech$ or $\ilapmech$ on outputting the answer with two steps from the correct one.
-
-  \item Following equations can be in the same way.
-\end{itemize}
-
-
-
-
-%   Unfolding the Hellinegr distance in this accuracy formula:
-%  \begin{itemize}
-
-%   \item[\textbf{case 1:}] \textbf{t is even}
-
-%   \begin{align*}
-%   &\hexpmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), z)^2 = 
-%   1 - \prod_{k = 0}^{\frac{t}{2} - 1}
-%   \sqrt{1 - \frac{\frac{t}{2}}{a + k + \frac{t}{2}}}
-%   \cdot
-%   \prod_{k = 1}^{\frac{t}{2}}
-%   \sqrt{1 - \frac{\frac{t}{2}}{\beta - k}}\ }\\
-%   = & \frac{2 \exp{(\frac{- \epsilon \sqrt{1 - \prod_{k = 0}^{\frac{t}{2} - 1}
-%   \sqrt{1 - \frac{\frac{t}{2}}{a + k + \frac{t}{2}}}
-%   \cdot
-%   \prod_{k = 1}^{\frac{t}{2}}
-%   \sqrt{1 - \frac{\frac{t}{2}}{\beta - k}}}}{4 S(\dataobs)})}}
-%   {\nomalizer{\dataobs}}
-%   \end{align*}
-
-
-%   \item[\textbf{case 2:}] \textbf{t is odd}
-
-%   \begin{align*}
-%   c^2 = \qquad &
-%   1 - \frac{1}{\sqrt{1 + \frac{1}{2\alpha}}} \cdot 
-%   \sqrt{\frac{1}{\alpha + 2m} + \frac{- 2m - 1}{\beta(\alpha + 2m)}} \\
-%   \qquad &\cdot 
-%   \prod_{k = 0}^{m-1}
-%   \sqrt{(1 + \frac{1}{2(\alpha + k)})
-%   (1 + \frac{\frac{1}{2} - m}{(\alpha + m  + k)})
-%   } \\
-%   \qquad & \cdot 
-%   \prod_{k = 1}^{m} 
-%   \sqrt{(1 + \frac{1}{2(\beta - \frac{1}{2}- k)})(1 + \frac{\frac{1}{2} - m}{(\beta - \frac{1}{2}- k)})}
-%   \end{align*}
-%   Substitute the $c$ in Equation, (\ref{eq_acc})
-
-% \end{itemize}
+we can get the range where we can do better than $\lapmech$ or $\ilapmech$ on outputting the answer with two steps from the correct one... etc.
 
 
 \section{Experimental Evaluations}

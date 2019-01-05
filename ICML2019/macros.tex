@@ -1,3 +1,5 @@
+
+%packages
 \usepackage{natbib}
 \usepackage{amsmath}
 \usepackage{amsthm}
@@ -28,23 +30,15 @@
 \usepackage{graphicx}
 \usepackage{subfigure}
 \usepackage{booktabs} % for professional tables
-
-% hyperref makes hyperlinks in the resulting PDF.
-% If your build breaks (sometimes temporarily if a hyperlink spans a page)
-% please comment out the following usepackage line and replace
-% \usepackage{icml2019} with \usepackage[nohyperref]{icml2019} above.
 \usepackage{hyperref}
-
-% Attempt to make hyperref and algorithmic work together better:
-\newcommand{\theHalgorithm}{\arabic{algorithm}}
-
-% Use the following line for the initial blind version submitted for review:
 \usepackage{icml2019}
-
+\usepackage{lipsum}
 
 \usepackage{authblk}
-%\usepackage[usenames, dvipsnames]{color}
-%\setlength\parindent{0pt}
+
+
+%new commands
+\newcommand{\theHalgorithm}{\arabic{algorithm}}
 \newtheorem{definition}{Definition}
 \usepackage{cancel}
 \usepackage[normalem]{ulem}
@@ -88,27 +82,10 @@
 \newcommand{\lapmechPr}[2]{\underset{z \thicksim \lapmech(#1)}{Pr}[#2]}
 \newcommand{\ilapmechPr}[2]{\underset{z \thicksim \ilapmech(#1)}{Pr}[#2]}
 
-% \newcommand{\because}{\mathsf{because}}
-% \newcommand{\therefore}{\mathsf{therefore}}
-%\newcommand{\theHalgorithm}{\arabic{algorithm}}
-% \theoremstyle{plain}
 \newtheorem{thm}{Theorem}[section]
 
 \newtheorem{lem}{Lemma}[section]
-% \newtheorem{prop}[thm]{Proposition}
+
 \newtheorem{assert}{Assertion}[lem]
-
-% \newcommand{mech}{Mechanism}[algorithmic]
-
-% \newtheorem*{cor}{Corollary}
-% \theoremstyle{definition}
-% % \newtheorem{definition}{Definition}[section]
-% \newtheorem{defn}{Definition}[section]
-% \newtheorem{conj}{Conjecture}[section]
-% \newtheorem{exmp}{Example}[section]
-
-% \theoremstyle{remark}
-% \newtheorem*{rem}{Remark}
-% \newtheorem*{note}{Note}
 \newcommand{\lap}[2]{\mathsf{Lap}(#1, #2)}
 \newcommand{\todo}[1]{{\footnotesize \color{red}\textbf{[[ #1 ]]}}}
