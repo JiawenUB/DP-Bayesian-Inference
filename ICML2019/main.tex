@@ -344,35 +344,29 @@ with $\eta_i \thicksim \lap{0}{\frac{2}{\epsilon}}$ in Dirichlet-multinomial mod
 
 
 \subsection{Exponential Mechanism Family}
-In this section, we explore the exponential mechanism family: $\expmech(\cdot,\cdot,\cdot)$ by considering Hellinger distance metrics and different sensitivities.
-
-Given a prior distribution $\bprior=\betad(\alpha, \beta)$ and a sequence of $n$ observations $\dataobs\in\{0,1\}^n$, we define the follwing set as candidate set where the mechanisms in this family sample from:
-
+In this section, we explore the exponential mechanism family: $\expmech$ by considering Hellinger distance metrics and different sensitivities.\\
+Given a prior distribution $\bprior=\betad(\alpha, \beta)$ and an observed data set: $\dataobs\in\{0,1\}^n$, we define the follwing set as candidate set where the mechanisms in this family sample from:
 \[
-  \candidateset\equiv\{\bysinfer(binomial(\theta), \bprior,\dataobs)\mid \dataobs \in \{0,1\}^n\}.
+  \candidateset\equiv\{\bysinfer(\binomial{n}{\theta}, \bprior,\dataobs')\mid \dataobs' \in \{0,1\}^n\}.
 \]
 For simplicity:
-\[
+$
   \candidateset\equiv\{\betad(\alpha',\beta')\mid \alpha'=\alpha + \Delta\alpha, \beta'=\beta + n-\Delta\alpha\}
-\]
+$
 over all $\dataobs \in \{0,1\}^n$, where $\Delta\alpha$ is as defined in Section \ref{sec_background}, and
-\[
-  \candidateset\equiv\{\dirichlet(\valpha')\mid \valpha'=\valpha + \Delta\valpha\},
-\]
-over all $\dataobs \in \mathcal{X}^n$ in Dirichlet-multinomial model.
-
-We don't explicitly
-parametrize the result by the prior and likelihood, which from now on we consider
-fixed and we denote them by $\bprior$ and $binomial(\theta)$, $multinomial(\theta)$. We use $\bysinfer(\dataobs)$ to denote the Bayesian inference process when the other two parameters are fixed.
-
+$
+  \candidateset\equiv\{\dirichlet{\valpha'} \mid \valpha'=\valpha + \Delta\valpha\}
+$,
+over all $\dataobs \in \mathcal{X}^n$ in Dirichlet-multinomial model.\\
+We use $\bysinfer(\dataobs)$ to denote the Bayesian inference process when the other two parameters are fixed, denoted by $\bprior$ and $\binomial{n}{\theta}$, $\multinomial{n}{\vtheta}$. 
 
 \subsubsection{Standard Exponential Mechanism with Hellinger Metric}
-Standard exponential mechanism $\expmech(x,u,\candidateset)$ samples an element from the candidate set $\candidateset = \{r_1, r_2, \cdots r_n\}$ with probability proportional to $\exp(\frac{\epsilon u(x,r)}{2 GS})$:
-\begin{equation*}
+Our exploration starts from the standard exponential mechanism $\expmech(x,u,\candidateset)$, which samples an element from the candidate set $\candidateset$ with probability proportional to $\exp(\frac{\epsilon u(x,r)}{2 GS})$:
+\[
 \underset{z \thicksim \expmech(x,u,\candidateset) }{Pr}[z=r] = \frac
 {exp(\frac{\epsilon u(x,r)}{2 GS})}
 {\Sigma_{r' \in \mathcal{R}}\ exp(\frac{\epsilon u(x,r')}{2 GS})},
-\end{equation*}
+\]
 where $u(x,r)$ is the Hellinger scoring function over candidates, $-\hellinger(\bysinfer(\dataobs), r)$, and $GS$ is the global sensitivity of the scoring function (i.e. the global sensitivity of the Bayesian inference w.r.t the Hellinger distance), calculated by:
 \begin{equation*}
 GS = 
@@ -380,30 +374,24 @@ GS =
 |\hellinger(\bysinfer(\dataobs), r) - \hellinger(\bysinfer(\dataobs'), r)|
 \end{equation*}
 
-Exponential mechanism is $\epsilon -$differential privacy\cite{dwork2014algorithmic}.
-
 
 \subsubsection{Exponential Mechanism with Hellinger Metric and Local Sensitivity}
 \label{subsec_emls}
-% \subsubsection{Mechanism Set up}
-Exponential mechanism with local sensitivity $\lexpmech(x,u,\candidateset)$ share the same candidate set and utility function as it with standard exponential mechanism. This outputs a candidate $r \in \mathcal{R}$ with probability proportional to $exp(\frac{\epsilon u(x,r)}{2 LS(\dataobs)})$:
-\begin{equation*}
-\underset{z \thicksim \expmech{local}{x}{u}{\candidateset}}{\Pr}[z=r] = \frac
+In order to achieve good accuracy, we make an attempt on the Exponential mechanism with local sensitivity $\lexpmech(x,u,\candidateset)$. This is just an attempt since local sensitivity is non-private. $\lexpmech$ shares the same candidate set and utility function as $\expmech$, outputting a result $r \in \mathcal{R}$ with probability proportional to $exp(\frac{\epsilon u(x,r)}{2 LS(\dataobs)})$:
+\[
+\underset{z \thicksim \lexpmech(x,u,\candidateset)}{\Pr}[z=r] = \frac
 {exp(\frac{\epsilon u(x,r)}{2 LS(\dataobs)})}
 {\Sigma_{r' \in \mathcal{R}}\ exp(\frac{\epsilon u(x,r')}{2 LS(\dataobs)})},
-\end{equation*}
-
+\]
 where $LS(\dataobs)$ is the local sensitivity of scoring function, calculated by:
-
 \begin{equation*}
 LS(\dataobs)=\max_{\dataobs' \in \datauni^n: \\ \adj{\dataobs}{\dataobs'}, r\in \mathcal{R}}\lvert \hellinger(\bysinfer(\dataobs'), r) - \hellinger(\bysinfer(\dataobs'), r)\rvert.
 \end{equation*}
 
-The exponential mechanism with local sensitivity is non-differential privacy\cite{dwork2014algorithmic}.
 
 \subsubsection{Exponential Mechanism with Hellinger Metric and Smoothed Sensitivity}
 \label{subsec_hexpmech}
-
+In this section, we explore a new mechanism in Exponential family, which can achieve good accuracy and differential privacy simultaneously, by scaling the noise to a new sensitivity. We first define the new sensitivity we are going to use and then present the mechanism.
 \begin{definition}
 \label{def_gamma_smooth}
 Given data set $\dataobs$ of size $n$, we define $\gamma -$smooth sensitivity of Bayesian inference process w.r.t. the Hellinger distance $S(\dataobs)$ is:
@@ -426,19 +414,13 @@ For any $\adj{\dataobs}{\dataobs'}$:
 \end{thm}
 
 \begin{proof}
-of Theorem. \ref{thm_gamma_smooth}.
-
-For $\adj{\dataobs}{\dataobs'}$ and arbitrary $\dataobs'' \in \{0,1\}^{n}$:
-
-By Equation (\ref{eq_smooth}):
-\begin{equation*}
-\begin{split}
-S(\dataobs) 
-& = \max_{\dataobs'' \in \{0,1\}^{n}}\bigg \{ \frac{1}{\frac{1}{LS(\dataobs'')} +\gamma \cdot d(\dataobs,\dataobs'')} \bigg \}\\
+of Theorem. \ref{thm_gamma_smooth}.\\
+For $\adj{\dataobs}{\dataobs'}$ and arbitrary $\dataobs'' \in \{0,1\}^{n}$:\\
+From Equation (\ref{eq_smooth}), we can get:
+\[
 \frac{1}{S(\dataobs)} 
-& = \min_{\dataobs'' \in \{0,1\}^{n}}\bigg \{ \frac{1}{LS(\dataobs'')} +\gamma \cdot d(\dataobs,\dataobs'') \bigg \}\\
-\end{split}
-\end{equation*}
+ = \min_{\dataobs'' \in \{0,1\}^{n}}\bigg \{ \frac{1}{LS(\dataobs'')} +\gamma \cdot d(\dataobs,\dataobs'') \bigg \}\\
+\]
 
 Since $d(\dataobs,\dataobs'') \leq d(\dataobs,\dataobs') + d(\dataobs',\dataobs'') \leq 1 + d(\dataobs',\dataobs'')$:
 
@@ -449,19 +431,15 @@ Since $d(\dataobs,\dataobs'') \leq d(\dataobs,\dataobs') + d(\dataobs',\dataobs'
 \gamma + \frac{1}{LS(\dataobs'')} +\gamma \cdot d(\dataobs',\dataobs'')\bigg 
 \}\\
 & = \gamma + \min_{\dataobs'' \in \{0,1\}^{n}}\bigg \{
-\frac{1}{LS(\dataobs'')} +\gamma \cdot d(\dataobs',\dataobs'')\bigg 
+\frac{1}{LS(\dataobs'')} +\gamma \cdot d(\dataobs',\dataobs'')\bigg
 \}\\
 & = \gamma + \frac{1}{S(\dataobs')}
 \end{split}
 \end{equation*}
-$\implies$
-\begin{equation*}
-\frac{1}{S(\dataobs)} - \frac{1}{S(\dataobs')} \leq \gamma.
-\end{equation*}
-
+Then we can get:
+$\frac{1}{S(\dataobs)} - \frac{1}{S(\dataobs')} \leq \gamma.$
 \end{proof}
  
-
 \begin{definition}
 \label{def_smoo_2}
 $\hexpmech(\dataobs)$ outputs a candidate $r \in \candidateset$ with probability
@@ -471,11 +449,9 @@ $\hexpmech(\dataobs)$ outputs a candidate $r \in \candidateset$ with probability
 \end{equation*}
 where $\ux{r} = \hellinger(\bysinfer(\dataobs),r)$ for $r \in \candidateset$ and $S(\dataobs)$ is the $\gamma -$smooth sensitivity of $\hellinger(\bysinfer(\dataobs),-)$, calculated from Definition \ref{def_gamma_smooth} by setting $\gamma = 1$.
 \end{definition}
-
-
-Mechanisms in Exponential mechanism family also extends to the Dirichlet-multinomial system $\dirichlet(\valpha)$ by rewriting the Hellinger distance as:
+Mechanisms in Exponential mechanism family also extends to the Dirichlet-multinomial system $\dirichlet{\valpha}$ by rewriting the Hellinger distance as:
 \[
-  \hellinger(\dirichlet(\valpha_1), \dirichlet(\valpha_2)) = \sqrt{1 - \frac{\betaf(\frac{\valpha_1 + \valpha_2}{2})}{\sqrt{\betaf(\valpha_1) \betaf(\valpha_2)}}},
+  \hellinger(\dirichlet{\valpha_1}, \dirichlet{\valpha_2}) = \sqrt{1 - \frac{\betaf(\frac{\valpha_1 + \valpha_2}{2})}{\sqrt{\betaf(\valpha_1) \betaf(\valpha_2)}}},
 \]
 and by replacing the $\candidateset$ with set of posterior Dirichlet
 distributions candidates. Also, the smooth sensitivity $S(\dataobs)$
@@ -486,11 +462,8 @@ will denote by $\hexpmechd$ the mechanism for the
 Dirichlet-multinomial system.
 
 
-
 \section{Privacy Analysis}
 
-% \subsection{Privacy Analysis for Baseline Mechanisms}
-% In baseline mechanisms, \emph{exponential mechanism}, \emph{Laplace mechanism}, \emph{improved Laplace mechanism} are $\epsilon-$differential privacy provided by \cite{dwork2014algorithmic}. The \emph{exponential mechanism with local sensitivity} is non-differential privacy, also from \cite{dwork2014algorithmic}.
 \subsection{Privacy of Laplace Mechanism Family}
 Mechanisms in Laplace family are $\epsilon-$differential privacy by \cite{dwork2014algorithmic}.
 
@@ -507,16 +480,12 @@ Exponential mechanism with local sensitivity non-differential privacy.
 \label{lem_hexpmech_privacy}
 $\hexpmech$ is $\epsilon$-differential privacy.
 \end{lem}
-\begin{proof} of Lemma \ref{lem_hexpmech_privacy}.
-
-  By Definition \ref{def_epsilon_dp}, to proof Lemma \ref{lem_hexpmech_privacy}, we need to prove:
-
+\begin{proof} of Lemma \ref{lem_hexpmech_privacy}.\\
+  By Definition \ref{def_epsilon_dp}, to proof Lemma \ref{lem_hexpmech_privacy}, we need to prove:\\
   For any $\adj{\dataobs}{\dataobs'} \in \mathcal{X}$ and any beta distribution $r$:
   \begin{equation*}
   \hexpmechPr{\dataobs}{z = r} \leq e^{\epsilon} \hexpmechPr{\dataobs'}{z = r}. 
   \end{equation*}
-
-
   By definition \ref{def_smoo_2}:
   \begin{equation*}
   \begin{split}
@@ -690,6 +659,10 @@ $\hexpmech$ is $\epsilon$-differential privacy.
   \big(
   \frac{-\epsilon\cdot(\uxadj{r'}}{4 \cdot S(\dataobs)}
   \big)
+  }\\
+  & \cdot 
+  \frac{1}
+  {
   \exp 
   \big(
   \frac{-\epsilon}{4}
@@ -824,7 +797,7 @@ $\hexpmech$ is $\epsilon$-differential privacy.
   \end{split}
   \end{equation*}
 
-  Given $\gamma = 1$, $\epsilon - $differential privacy can be achieved.
+  Given $\gamma = 1$, $\epsilon - $differential privacy can be achieved by $\hexpmech$.
 
 
 \end{proof}
