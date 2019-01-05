@@ -234,33 +234,28 @@ adjacent data observations $\dataobs, \dataobs'$, that, from a unique prior, giv
 distributions, characterized by the pairs
 $(\alpha',\beta')$ and $(\alpha'',\beta'')$ then
 $|\alpha'-\alpha''|+|\beta'-\beta''|\leq 2$.
-This argument extends similarly to the Dirichelet-Multinomial system. Details are introduced in Sec. \ref{sec_mechs}.
-
+This argument extends similarly to the Dirichelet-Multinomial system. Details are introduced in Sec. \ref{sec_mechs}.\\
 However, in previous works, the accuracy of the posterior was measured with respect to $\ell_1$ norm. That is, an upper bound was given on
 \[
   \Pr[|\alpha - \tilde\alpha| + |\beta - \tilde\beta |\geq \gamma ]
 \]
 where $(\alpha, \beta), (\tilde\alpha,\tilde\beta)$ are as defined above.
-\todo{This
-accuracy metric is meaningless when the results released are
-distributions rather than numerical values. In contrast, distribution
-metrics such as $f$-divergence, Hellinger distance, etc. come into
-mind overtly when we are measuring distance between
-distributions. }
-{\color{blue}im not sure this is a good way to put it...}
+\todo{However, distance between
+distributions are more naturally to be measured by distribution
+metrics such as $f$-divergence, Hellinger distance, etc., than the $\ell_1$ norm shown above.}
+{\color{blue} changed a bit, still not sure this is a good way to put it...}
 This gives us motivation for exploring the design space
 of mechanisms by considering different norms. e.g. a norm over space of measures.
-to compute the sensitivity and provide guarantees on the accuracy.
-
+to compute the sensitivity and provide guarantees on the accuracy.\\
 We will use the Hellinger distance $\hellinger(\cdot,\cdot)$, 
 Given two probability distributions $\textup{P}$ and $\textup{Q}$,
 the Hellinger distance between them is defined as:
 \[
-\todo{def}
+\hellinger^2(P,Q) = \frac{1}{2} \int \bigg(\frac{dP}{d \lambda} - \frac{dQ}{d \lambda}\bigg)^2 d \lambda
 \]
 When $\textup{P}=\betad(\alpha_1, \beta_1)$ and $\textup{Q}=\betad(\alpha_2, \beta_2)$ the above reduces to: 
 \[
-  \sqrt{1 - \frac{\betaf(\frac{\alpha_1 + \alpha_2}{2}, \frac{\beta_1 + \beta_2}{2})}{\sqrt{\betaf(\alpha_1,\beta_1)\betaf(\alpha_2,\beta_2)}}}
+ \hellinger(P,Q) =  \sqrt{1 - \frac{\betaf(\frac{\alpha_1 + \alpha_2}{2}, \frac{\beta_1 + \beta_2}{2})}{\sqrt{\betaf(\alpha_1,\beta_1)\betaf(\alpha_2,\beta_2)}}}
 \]
 
 Our choice to use Hellinger distance is motivated by three facts:
@@ -273,8 +268,8 @@ Our choice to use Hellinger distance is motivated by three facts:
     taking advantage of the gap between the global sensitivity and local sensitivity, we can improve the accuracy by applying an upper bound on local sensitivity instead of using global sensitivity.
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.35\textwidth]{sensitivity_2d.eps}
-\caption{{Sensitivity of $\hellinger$}}
+\includegraphics[width=0.32\textwidth]{sensitivity_2d.eps}
+\caption{{The local sensitivity of $\hellinger$}}
 \label{fig_sensitivity}
 \end{figure}
 \end{itemize}
@@ -331,8 +326,8 @@ with $\eta_i \thicksim \lap{0}{\frac{2}{\epsilon}}$ in Dirichlet-multinomial mod
   \begin{algorithmic}
   \REQUIRE observed data set $\dataobs \in \mathcal{X}^n$, inference algorithm: $\bysinfer$, 
   prior: $\dirichlet{\valpha}$, likelihood: $\multinomial{n}{\vtheta}$, $\epsilon$
-  \STATE \quad {\bf let} $\dirichlet{\valpha'} = \bysinfer(\multinomial{n}{\vtheta}, \dirichlet{\valpha}, \dataobs)$.
-  \STATE \quad {\bf Initialize} $\tilde{\valpha} = (0,\dots )$, $k = |\mathcal{X}|$.
+  \STATE \quad {\bf let} $\dirichlet{\valpha'} = \bysinfer(\multinomial{n}{\vtheta}, \dirichlet{\valpha}, \dataobs)$, $k = |\mathcal{X}|$.
+  \STATE \quad {\bf Initialize} a vector $\tilde{\valpha} = (0, \dots, 0 )$ of $k$ dimensions .
   \STATE \quad {\bf For} $i = 1 \dots (k - 1)$:
   \STATE \quad \quad  {\bf let} $\eta \sim \lap{0}{\frac{2}{\epsilon}}$.
   \STATE \quad \quad  $\tilde{\alpha_i}=\alpha_i + \lfloor{(\alpha_i' - \alpha_i) + \eta}\rfloor^n_0$ 
