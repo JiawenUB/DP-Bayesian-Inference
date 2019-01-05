@@ -171,7 +171,7 @@ in section \ref{} when the private mechanisms will be described.
 
 The beta-binomial model can be immediately generalized to the Dirichlet-multinomial model, with underlying data multinomially distributed.
 The \emph{bias} is represented by the parameter $\vtheta$, the vector of parameters of a categorically distributed random variable. The prior distribution over $\vtheta\in [0,1]^{k}$
-is given by a Dirichelet distribution, $\dirichlet{n}{\valpha}$, for $k\in\mathbb{N}$,
+is given by a Dirichlet distribution, $\dirichlet{\valpha}$, for $k\in\mathbb{N}$,
 and $\valpha\in(\mathbb{R}^{+})^{k}$, with p.d.f:
 \[
   \Pr(\vtheta)\equiv\frac{1}{\mbetaf(\valpha)}\cdot \displaystyle\prod_{i=1}^{k}{\theta_i^{\alpha_i-1}}
@@ -283,61 +283,64 @@ Our choice to use Hellinger distance is motivated by three facts:
 
 \section{Mechanism Proposition}
 \label{sec_mechs}
-
-
 \subsection{Laplace Mechanism Family}
 
-\subsubsection{using $\ell_1$ norm metric}
- Adding noise to the posterior distribution parameters directly, through Laplace mechanism with post-processing, $\lapmech(\bysinfer, \dataobs)$, producing an output:
-$$
-\begin{array}{rcl}
-& \lapmech(\bysinfer, \dataobs) \\
-& = \betad(\alpha +  \lfloor{\Delta \alpha + Y}\rfloor^n_0,\beta + n - \lfloor{\Delta \alpha + Y}\rfloor^n_0),
-\end{array} 
-$$
- where $Y \thicksim \lap{0}{\frac{\Delta \bysinfer}{\epsilon}}$, a Laplace distribution with location $0$ and scale $\frac{\Delta \bysinfer}{\epsilon}$ in Beta-binomial model; and
-$$
-\begin{array}{rcl}
- & \lapmech(\bysinfer, \dataobs) = \\
- & \dirichlet(\alpha_1 +  \lfloor{\Delta \alpha_1 + Y_1}\rfloor^n_0, \cdots, \\
- & \alpha_k + \lfloor n - \sum_{i = 1}^{k-1}\lfloor{\Delta \alpha_i + Y_i}\rfloor^n_0 \rfloor^n_0),
-\end{array} 
-$$
- where $Y_i \thicksim \lap{0}{\frac{\Delta \bysinfer}{\epsilon}}$ in Dirichlet-multinomial model. $\lfloor \cdot \rfloor^n_0$ is taking the floor value and truncating into $[0,n]$ to make sure the noised posterior is valid.
+\subsubsection{Using $\ell_1$ Norm Metric}
+  We firstly present the fully explored mechanism in Laplace family -- Laplace mechanism. This mechanism ($\lapmech(\dataobs,\bysinfer, \mathsf{prior}, \mathsf{likelihood}, \epsilon)$) simply adds Laplace noise with post-processing to the posterior distribution parameters, producing an output: $\betad(\alpha +  \lfloor{\Delta \alpha + \eta}\rfloor^n_0,\beta + n - \lfloor{\Delta \alpha + \eta}\rfloor^n_0)$ with $\eta \thicksim \lap{0}{\frac{\Delta \bysinfer}{\epsilon}}$, where $\lfloor \cdot \rfloor^n_0$ is taking the floor value and truncating into $[0,n]$ to make sure the noised posterior is valid, as shown in Mechanism \ref{mech:lapmech}.\\
+  Since we are adding noise directly to the parameter, the sensitivity should be calibrated to $\ell_1$ of two Beta distributions:
+  $
+   \Delta \bysinfer \equiv \max\limits_{\dataobs, \dataobs' \in \{0,1\}^{n}, ||\dataobs - \dataobs'||_1 \leq 1} ||\bysinfer(\dataobs) - \bysinfer(\dataobs')||_1
+  $,
+  i.e., proportional to the dimensionality.
 
- We use $ \lapmech(\dataobs) = \betad(\tilde{\alpha}, \tilde{\beta})$ or $\dirichlet(\tilde{\valpha})$ for short. Then release it as the private posterior distribution.
+  \begin{algorithm}
+  \caption{$\lapmech$ in Beta-binomial model}
+  \label{mech:lapmech}
+  \begin{algorithmic}
+  \REQUIRE observed data set $\dataobs \in \{0,1\}^n$, inference algorithm: $\bysinfer$, 
+  prior: $\betad(\alpha, \beta)$, likelihood: $\binomial{n}{\theta}$, $\epsilon$
+  \STATE \quad {\bf let} $\betad(\alpha', \beta') = \bysinfer(\binomial{n}{\theta}, \betad(\alpha, \beta), \dataobs)$.  
+  \STATE \quad {\bf let} $\eta \sim \lap{0}{\frac{2}{\epsilon}}$.
+  \STATE \quad {\bf let} $\tilde{\alpha}=\alpha + \lfloor{(\alpha' - \alpha) + \eta}\rfloor^n_0$ 
+  \STATE \quad {\bf let} $\tilde{\beta}=\beta + n - \lfloor{(\alpha' - \alpha) + \eta}\rfloor^n_0$ 
+  % \RETURN $a_{k+1}$.
+  \ENSURE $\betad(\tilde{\alpha}, \tilde{\beta})$
+  \end{algorithmic}
+  \end{algorithm}
 
- The sensitivity of the inference process w.r.t. $\ell_1$ norm in $\lapmech$ is:
- \[
- \Delta \bysinfer \equiv \max\limits_{\dataobs, \dataobs' \in \{0,1\}^{n}, ||\dataobs - \dataobs'||_1 \leq 1} ||\bysinfer(\dataobs) - \bysinfer(\dataobs')||_1,
- \]
- which is proportional to the dimensionality.
-
-
-\subsubsection{using improved $\ell_1$ norm metric}
- Noise added to posterior distribution parameters are scaled to smaller sensitivity in this improved Laplace mechanism. Because in terms of two adjacent data sets $\dataobs, \dataobs'$, their posterior distributions by Bayesian inference -- $\bysinfer(\dataobs), \bysinfer(\dataobs')$ -- which parameter differs at most in 2 dimensions even though extended to Dirichlet-multinomial mode, i.e., $\Delta \bysinfer \leq 2$. 
-
- Then it is enough to use sensitivity $1$ in 2 dimensions and $2$ in higher dimensions, then the improved Laplace mechanism $\ilapmech(\bysinfer, \dataobs)$ is producing an output:
-
-$$
-\begin{array}{rcl}
-& \ilapmech(\bysinfer, \dataobs) \\
-& = \betad(\alpha +  \lfloor{\Delta \alpha + Y}\rfloor^n_0,\beta + n - \lfloor{\Delta \alpha + Y}\rfloor^n_0),
-\end{array} 
-$$
- where $Y \thicksim \lap{0}{\frac{1}{\epsilon}}$ in Beta-binomial model; and
-$$
-\begin{array}{rcl}
- & \ilapmech(\bysinfer, \dataobs) = \\
- & \dirichlet(\alpha_1 +  \lfloor{\Delta \alpha_1 + Y_1}\rfloor^n_0, \cdots, \\
- & \alpha_k + \lfloor n - \sum_{i = 1}^{k-1}\lfloor{\Delta \alpha_i + Y_i}\rfloor^n_0 \rfloor^n_0),
-\end{array} 
-$$
-where $Y_i \thicksim \lap{0}{\frac{2}{\epsilon}}$ in Dirichlet-multinomial model.
-
-Both Laplace mechanism and improved one are $\epsilon -$differential privacy\cite{dwork2014algorithmic}.
+  In Dirichlet-multinomial model, $\lapmech$ produces output: $ \dirichlet{\alpha_1 +  \lfloor{\Delta \alpha_1 + \eta_1}\rfloor^n_0, \cdots, \alpha_k + \lfloor n - \sum_{i = 1}^{k-1}\lfloor{\Delta \alpha_i + \eta_i}\rfloor^n_0 \rfloor^n_0},$
+  where $\eta_i \thicksim \lap{0}{\frac{k - 1}{\epsilon}}$.
+  We will use $ \lapmech(\dataobs) = \betad(\tilde{\alpha}, \tilde{\beta})$ or $\dirichlet{\tilde{\valpha}}$ for short.
 
 
+
+\subsubsection{Using $\ell_1$ Norm with Improved Sensitivity}
+ The $\lapmech$ presented above can be improved in our Bayesian inference model, by adding noise scaled to smaller sensitivity in this improved Laplace mechanism $\ilapmech$.\\
+ In terms of two adjacent data sets $\dataobs, \dataobs'$, their posterior distributions by Bayesian inference -- $\bysinfer(\dataobs), \bysinfer(\dataobs')$ -- which parameter differs at most in 2 dimensions even though extended to Dirichlet-multinomial mode, i.e., $\Delta \bysinfer \leq 2$. As a results, it is enough to use sensitivity $1$ in 2 dimensions and $2$ in higher dimensions.\\
+ By calibrating noise to this improved sensitivity, $\ilapmech(\dataobs,\bysinfer, \mathsf{prior}, \mathsf{likelihood}, \epsilon)$ produces output:
+ $\betad(\alpha +  \lfloor{\Delta \alpha + \eta}\rfloor^n_0,\beta + n - \lfloor{\Delta \alpha + \eta}\rfloor^n_0)
+$
+with $\eta \thicksim \lap{0}{\frac{1}{\epsilon}}$ in Beta-binomial model and
+$\dirichlet{\alpha_1 +  \lfloor{\Delta \alpha_1 + \eta_1}\rfloor^n_0, \cdots, 
+\alpha_k + \lfloor n - \sum_{i = 1}^{k-1}\lfloor{\Delta \alpha_i + \eta_i}\rfloor^n_0 \rfloor^n_0}
+$
+with $\eta_i \thicksim \lap{0}{\frac{2}{\epsilon}}$ in Dirichlet-multinomial model. Details are shown in Mechanism \ref{mech:ilapmech}.
+  \begin{algorithm}
+  \caption{$\ilapmech$ in Dirichlet-multinomial model}
+  \label{mech:ilapmech}
+  \begin{algorithmic}
+  \REQUIRE observed data set $\dataobs \in \mathcal{X}^n$, inference algorithm: $\bysinfer$, 
+  prior: $\dirichlet{\valpha}$, likelihood: $\multinomial{n}{\vtheta}$, $\epsilon$
+  \STATE \quad {\bf let} $\dirichlet{\valpha'} = \bysinfer(\multinomial{n}{\vtheta}, \dirichlet{\valpha}, \dataobs)$.
+  \STATE \quad {\bf Initialize} $\tilde{\valpha} = (0,\dots )$, $k = |\mathcal{X}|$.
+  \STATE \quad {\bf For} $i = 1 \dots (k - 1)$:
+  \STATE \quad \quad  {\bf let} $\eta \sim \lap{0}{\frac{2}{\epsilon}}$.
+  \STATE \quad \quad  $\tilde{\alpha_i}=\alpha_i + \lfloor{(\alpha_i' - \alpha_i) + \eta}\rfloor^n_0$ 
+  % \RETURN $a_{k+1}$.
+  \STATE \quad $\tilde{\alpha_k} = \alpha_k + \lfloor n - \sum_{i = 1}^{k-1}\lfloor{(\alpha_i' - \alpha_i) + \eta_i}\rfloor^n_0 \rfloor^n_0$
+  \ENSURE $\dirichlet{\tilde{\valpha}}$
+  \end{algorithmic}
+  \end{algorithm}
 
 
 \subsection{Exponential Mechanism Family}
