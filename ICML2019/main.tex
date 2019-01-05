@@ -920,11 +920,13 @@ In all cases above, probability values are fixed even data size changes, only th
   $c = \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)$
 
 \subsection{Accuracy Comparison between $\hexpmech$, $\lapmech$ and $\ilapmech$}
-For comparison with Laplace mechanism, we developed the Table \ref{tab_acc_theo}.
+For comparison with Laplace mechanism, we developed the Table \ref{tab_acc_theo}. In this table, the first column is the value of distance $c$ from the correct posterior distribution. The first row is three mechanisms: $\lapmech$, $\ilapmech$ and $\hexpmech$. For each mechanism, we calculate the probability of outputting corresponding candidates which is at distance $c$ from the correct posterior distribution and put into the table. We calculate the first three nearest candidates and the others trival.
 \begin{table*}[t]
 \scriptsize
 \centering
-\begin{tabular}{ |c|c|c|c| } 
+\caption{Accuracy Comparison in Theoretical}
+\label{tab_acc_theo}
+\begin{tabular}{ |c|c|c|c|c| } 
 \hline
  c & 0 
  & $1 - \frac{\Gamma(\alpha+\frac{1}{2})}{\Gamma(\alpha)} \cdot
@@ -932,15 +934,15 @@ For comparison with Laplace mechanism, we developed the Table \ref{tab_acc_theo}
  & $1 - 
     \sqrt{1 - \frac{\frac{t}{2}}{a + \frac{t}{2}}}
     \cdot
-    \sqrt{1 - \frac{\frac{t}{2}}{\beta}}$  \\
+    \sqrt{1 - \frac{\frac{t}{2}}{\beta}}$ & \dots  \\
  \hline
- $\lapmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), z ) = c} $
- & 0.19673467014 & 0.11932560927 & 0.07237464051 \\
+ $\lapmech $
+ & 0.19673467014 & 0.11932560927 & 0.07237464051 & \dots \\
  \hline
- $\ilapmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), z) = c}$
- & 0.31606027941 & 0.11627207896 & 0.04277410743 \\
+ $\ilapmech $
+ & 0.31606027941 & 0.11627207896 & 0.04277410743 & \dots \\
  \hline
- $\hexpmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), z) = c}$
+ $\hexpmech $
  & $\frac{1}{\nomalizer{\dataobs}}$
  & $\frac{\exp{(\frac{- \epsilon \sqrt{1 - \frac{\Gamma(\alpha+\frac{1}{2})}{\Gamma(\alpha)} \cdot
  \frac{\Gamma(\beta - \frac{1}{2})}{\Gamma(\beta)}}}{4 S(\dataobs)})}}{\nomalizer{\dataobs}}$
@@ -948,48 +950,46 @@ For comparison with Laplace mechanism, we developed the Table \ref{tab_acc_theo}
     \sqrt{1 - \frac{\frac{t}{2}}{a + \frac{t}{2}}}
     \cdot
     \sqrt{1 - \frac{\frac{t}{2}}{\beta}}}}
-    {4 S(\dataobs)})}}{\nomalizer{\dataobs}}$\\
+    {4 S(\dataobs)})}}{\nomalizer{\dataobs}}$ & \dots\\
  \hline
 \end{tabular}
-\caption{Accuracy Comparison in Theoretical}
-\label{tab_acc_theo}
 \end{table*}
 
-In the case when $\alpha = \beta$, there are always 2 symmetric beta distributions with the same distance from the true posterior, then we have accuracy table as:
-\begin{table*}[t]
-\scriptsize
-\centering
-\begin{tabular}{ |c|c|c|c| } 
-\hline
- c & 0 
- & $1 - \frac{\Gamma(\alpha+\frac{1}{2})}{\Gamma(\alpha)} \cdot
-  \frac{\Gamma(\beta - \frac{1}{2})}{\Gamma(\beta)}$
-  & $1 - 
-    \sqrt{1 - \frac{\frac{t}{2}}{a + \frac{t}{2}}}
-    \cdot
-    \sqrt{1 - \frac{\frac{t}{2}}{\beta}}$  \\
- \hline
- $\lapmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), z ) = c} $
- & 0.19673467014 & 0.31606027941 & 0.19170024978 \\
- \hline
- $\ilapmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), z) = c}$
- & 0.31606027941 & 0.43233235838 & 0.1590461864 \\
- \hline
- $\hexpmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), z) = c}$
- & $\frac{1}{\nomalizer{\dataobs}}$ 
- & $\frac{2 \exp{(\frac{- \epsilon \sqrt{1 - \frac{\Gamma(\alpha+\frac{1}{2})}{\Gamma(\alpha)} 
- \cdot
- \frac{\Gamma(\beta - \frac{1}{2})}{\Gamma(\beta)}}}{4 S(\dataobs)})}}{\nomalizer{\dataobs}}$ 
- & $\frac{2 \exp{(\frac{- \epsilon \sqrt{1 - 
-    \sqrt{1 - \frac{\frac{t}{2}}{a + \frac{t}{2}}}
-    \cdot
-    \sqrt{1 - \frac{\frac{t}{2}}{\beta}}}}
-    {4 S(\dataobs)})}}{\nomalizer{\dataobs}}$\\
- \hline
-\end{tabular}
-\caption{Accuracy Comparison in Theoretical}
-\label{tab_acc_theo}
-\end{table*}
+% In the case when $\alpha = \beta$, there are always 2 symmetric beta distributions with the same distance from the true posterior, then we have accuracy table as:
+% \begin{table*}[t]
+% \scriptsize
+% \centering
+% \begin{tabular}{ |c|c|c|c|c| } 
+% \hline
+%  c & 0 
+%  & $1 - \frac{\Gamma(\alpha+\frac{1}{2})}{\Gamma(\alpha)} \cdot
+%   \frac{\Gamma(\beta - \frac{1}{2})}{\Gamma(\beta)}$
+%   & $1 - 
+%     \sqrt{1 - \frac{\frac{t}{2}}{a + \frac{t}{2}}}
+%     \cdot
+%     \sqrt{1 - \frac{\frac{t}{2}}{\beta}}$ & \dots  \\
+%  \hline
+%  $\lapmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), z ) = c} $
+%  & 0.19673467014 & 0.31606027941 & 0.19170024978 & \dots \\
+%  \hline
+%  $\ilapmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), z) = c}$
+%  & 0.31606027941 & 0.43233235838 & 0.1590461864 & \dots \\
+%  \hline
+%  $\hexpmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), z) = c}$
+%  & $\frac{1}{\nomalizer{\dataobs}}$ 
+%  & $\frac{2 \exp{(\frac{- \epsilon \sqrt{1 - \frac{\Gamma(\alpha+\frac{1}{2})}{\Gamma(\alpha)} 
+%  \cdot
+%  \frac{\Gamma(\beta - \frac{1}{2})}{\Gamma(\beta)}}}{4 S(\dataobs)})}}{\nomalizer{\dataobs}}$ 
+%  & $\frac{2 \exp{(\frac{- \epsilon \sqrt{1 - 
+%     \sqrt{1 - \frac{\frac{t}{2}}{a + \frac{t}{2}}}
+%     \cdot
+%     \sqrt{1 - \frac{\frac{t}{2}}{\beta}}}}
+%     {4 S(\dataobs)})}}{\nomalizer{\dataobs}}$ & \dots \\
+%  \hline
+% \end{tabular}
+% \caption{Accuracy Comparison in Theoretical}
+% \label{tab_acc_theo}
+% \end{table*}
 
 When $\epsilon$ and dimensions are fixed, the probability of getting the true posterior, or posterior with certain step from Laplace mechanism is fixed whatever the data size or prior changes.
 
@@ -1005,7 +1005,7 @@ By solving following equations:
   \]
   we can get the range where we can do better than $\lapmech$ or $\ilapmech$ on outputting the answer with one step from correct one.
   \[
-\frac{2 \exp{(\frac{- \epsilon \sqrt{1 - 
+\frac{\exp{(\frac{- \epsilon \sqrt{1 - 
     \sqrt{1 - \frac{\frac{t}{2}}{a + \frac{t}{2}}}
     \cdot
     \sqrt{1 - \frac{\frac{t}{2}}{\beta}}}}
