@@ -4,12 +4,14 @@
 
 %%\ccsPaper{9999} % TODO: replace with your paper number once obtained
 \input{macros}
-\icmltitlerunning{Exploring Design Space for Differentially Private Bayesian Inference}
+\icmltitlerunning{Exploring the Design Space of Differentially Private
+  Bayesian Inference under Hellinger Distance}
 
 \begin{document}
 
 \twocolumn[
-\icmltitle{Exploring Design Space for Differentially Private Bayesian Inference}
+\icmltitle{Exploring the Design Space of Differentially Private
+  Bayesian Inference under Hellinger Distance}
 
 % It is OKAY to include author information, even for blind
 % submissions: the style file will automatically remove it for you
@@ -27,14 +29,15 @@
 \icmlsetsymbol{equal}{*}
 
 \begin{icmlauthorlist}
-  \icmlauthor{Jiawen Liu}{to}
-  \icmlauthor{Gian Pietro Farina}{to}
-  \icmlauthor{Mark Bun}{ed}
-  \icmlauthor{Marco Gaboardi}{to}
+\icmlauthor{Jiawen Liu}{to}
+\icmlauthor{Gian Pietro Farina}{to}
+\icmlauthor{Tetsuya Sato}{to}
+\icmlauthor{Mark Bun}{ed}
+\icmlauthor{Marco Gaboardi}{to}
 \end{icmlauthorlist}
 
-\icmlaffiliation{to}{Department of Computer Science and Engineering, University at Buffalo, SUNY, New York, United State}
-\icmlaffiliation{ed}{Princeton University, United State}
+\icmlaffiliation{to}{Department of Computer Science and Engineering, University at Buffalo, SUNY, New York, United States}
+\icmlaffiliation{ed}{Princeton University, United States}
 
 % \icmlcorrespondingauthor{Cieua Vvvvv}{c.vvvvv@googol.com}
 % \icmlcorrespondingauthor{Eee Pppp}{ep@eden.co.uk}
@@ -60,17 +63,18 @@
 % Accuracy, is usally (\cite{??}) measured by providing upper bounds, holding w.h.p, on the
 % $\ell_1$ or $\ell_\infty$-distance between the numeric parameters
 % of the released posterior distribution and the actual real ones of posterior distribution.
-In this work we explore the design space for differentially private Bayesian
-inference.  We focus on two discrete models for parametric Bayesian
-inference i.e., the Beta-Binomial and the Dirichlet-Multinomial
-models. We propose a variation of the exponential mechanism that uses
-a scoring function based on a metric over probabilistic measures, i.e.,
-the Hellinger distance. We compare it with other approaches based on
-the perturbation of the parameters of the posterior distribution.  We
-measure the accuracy using the Hellinger distance over the posterior
-distribution released and the real one as opposed to measuring the
-$\ell_1$ or $\ell_{\infty}$ distance on the parameters.  We finally
-present an experimental analysis on the accuracy of these mechanisms.
+We explore the design space of differentially private Bayesian
+inference mechanisms with accuracy measured in terms of Hellinger
+distance over posterior distributtions.  
+We focus on two discrete models for parametric Bayesian
+inference: the Beta-Binomial and the Dirichlet-Multinomial
+models. We study two mechanisms based on the 
+Laplace perturbation of the parameters of the posterior distribution under
+$\ell_1$ norm, and compare them with variations of the exponential
+mechanism calibrated to Hellinger distance. We
+measure the accuracy using the Hellinger distance between the posterior
+distribution released by the different mechanisms and the real one.
+We compare the accuracy theoretically and experimentally.
 \end{abstract}
  % TODO: replace with your keywords
 
@@ -1043,7 +1047,7 @@ This equation is validated by an experimental result shown in Fig. \ref{fig_effi
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.45\textwidth]{efficiency}
+\includegraphics[width=0.45\textwidth]{efficiency.eps}
 \caption{Experimental Results for Finding the Local Sensitivity Efficiently}
 \label{fig_efficiency}
 \end{figure}
