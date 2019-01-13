@@ -27,10 +27,10 @@
 \icmlsetsymbol{equal}{*}
 
 \begin{icmlauthorlist}
-\icmlauthor{Jiawen Liu}{to}
-\icmlauthor{Mark Bun}{ed}
-\icmlauthor{Gian Pietro Farina}{to}
-\icmlauthor{Marco Gaboardi}{to}
+  \icmlauthor{Jiawen Liu}{to}
+  \icmlauthor{Gian Pietro Farina}{to}
+  \icmlauthor{Mark Bun}{ed}
+  \icmlauthor{Marco Gaboardi}{to}
 \end{icmlauthorlist}
 
 \icmlaffiliation{to}{Department of Computer Science and Engineering, University at Buffalo, SUNY, New York, United State}
@@ -60,11 +60,11 @@
 % Accuracy, is usally (\cite{??}) measured by providing upper bounds, holding w.h.p, on the
 % $\ell_1$ or $\ell_\infty$-distance between the numeric parameters
 % of the released posterior distribution and the actual real ones of posterior distribution.
-We explore the design space for differentially private Bayesian
-inference.  We focused on two discrete models for parametric Bayesian
-inference i.e., the Beta-Binomial and the Dirichlet-multinomial
+In this work we explore the design space for differentially private Bayesian
+inference.  We focus on two discrete models for parametric Bayesian
+inference i.e., the Beta-Binomial and the Dirichlet-Multinomial
 models. We propose a variation of the exponential mechanism that uses
-a scoring function based on a metric over probailistic measures, i.e.,
+a scoring function based on a metric over probabilistic measures, i.e.,
 the Hellinger distance. We compare it with other approaches based on
 the perturbation of the parameters of the posterior distribution.  We
 measure the accuracy using the Hellinger distance over the posterior
@@ -104,13 +104,14 @@ distances between probability measures have been used for these purposes.
 
 
 The question that this work aims at answering is whether
-an approach based on probability metrics can improve on the accuracy of approaches based on metrics over
+an approach based on probability metrics can improve on
+the accuracy of approaches based on metrics over
 the numeric parameters of the distributions. 
 We will see that in some cases this can happen.
 
 \noindent \textbf{Main contributions.}
 \begin{itemize}
-	\item We designed a differentially private Bayesian inference mechanism based on the standard exponential mechanism.
+	\item We design a new differentially private Bayesian inference mechanism based on the standard exponential mechanism.
 
 	\item We explored two ways to improve the accuracy: 1) calibrating noise to the sensitivity of a metric over distributions (e.g. Hellinger distance ($\hellinger$), $f$-divergences, etc\dots). 2) Using a smooth upper bound on the local sensitivity and scale the noise to this smooth bound rather than global sensitivity, to improve the mechanism accuracy.
 
@@ -276,18 +277,21 @@ Our choice to use Hellinger distance is motivated by three facts:
 
 
 
-\section{Mechanism Proposition}
+\section{Private Mechanisms}
 \label{sec_mechs}
-\subsection{Laplace Mechanism Family}
-
-\subsubsection{Using $\ell_1$ Norm Metric}
-  We firstly present the fully explored mechanism in Laplace family -- Laplace mechanism. This mechanism ($\lapmech(\dataobs,\bysinfer, \mathsf{prior}, \mathsf{likelihood}, \epsilon)$) simply adds Laplace noise with post-processing to the posterior distribution parameters, producing an output: $\betad(\alpha +  \lfloor{\Delta \alpha + \eta}\rfloor^n_0,\beta + n - \lfloor{\Delta \alpha + \eta}\rfloor^n_0)$ with $\eta \thicksim \lap{0}{\frac{\Delta \bysinfer}{\epsilon}}$, where $\lfloor \cdot \rfloor^n_0$ is taking the floor value and truncating into $[0,n]$ to make sure the noised posterior is valid, as shown in Mechanism \ref{mech:lapmech}.\\
-  Since we are adding noise directly to the parameter, the sensitivity should be calibrated to $\ell_1$ of two Beta distributions:
-  $
+\subsection{Calibrating noise w.r.t. $\ell_1$ norm}
+We start off by presenting a mechanism based on the Laplace primitive.
+The mechanism, denoted by {\color{red}{i think this macro has too many arguments}}($\lapmech(\dataobs,\bysinfer, \mathsf{prior}, \mathsf{likelihood}, \epsilon)$),
+simply adds Laplace noise to the parameters of the posterior distributions. The mechanisms also performs a
+post-processing phase by {\color{red}{flooring}} and  truncating the noisy parameters so that they belong to the right interval.
+In the case of the Beta-Binomial model the output produced is: $\betad(\alpha +  \lfloor{\Delta \alpha + \eta}\rfloor^n_0,\beta + n - \lfloor{\Delta \alpha + \eta}\rfloor^n_0)$
+with $\eta \thicksim \lap{0}{\frac{\Delta \bysinfer}{\epsilon}}$, where $\lfloor \cdot \rfloor^n_0$ is taking the floor value and truncating into
+$[0,n]$. This mechanism is described by the pesudocode in Figure \ref{mech:lapmech}.\\
+Since we are adding noise directly to the parameter, the sensitivity should be calibrated to $\ell_1$ of two Beta distributions:
+$
    \Delta \bysinfer \equiv \max\limits_{\dataobs, \dataobs' \in \{0,1\}^{n}, ||\dataobs - \dataobs'||_1 \leq 1} ||\bysinfer(\dataobs) - \bysinfer(\dataobs')||_1
-  $,
-  i.e., proportional to the dimensionality.
-
+$,
+i.e., proportional to the dimensionality.
   \begin{algorithm}
   \caption{$\lapmech$ in Beta-binomial model}
   \label{mech:lapmech}
@@ -303,15 +307,16 @@ Our choice to use Hellinger distance is motivated by three facts:
   \end{algorithmic}
   \end{algorithm}
 
-  In Dirichlet-multinomial model, $\lapmech$ produces output: $ \dirichlet{\alpha_1 +  \lfloor{\Delta \alpha_1 + \eta_1}\rfloor^n_0, \cdots, \alpha_k + \lfloor n - \sum_{i = 1}^{k-1}\lfloor{\Delta \alpha_i + \eta_i}\rfloor^n_0 \rfloor^n_0},$
+  In Dirichlet-Multinomial model, $\lapmech$ produces output:
+  $\dirichlet{\alpha_1 +  \lfloor{\Delta \alpha_1 + \eta_1}\rfloor^n_0, \cdots, \alpha_k + \lfloor n - \sum_{i = 1}^{k-1}\lfloor{\Delta \alpha_i + \eta_i}\rfloor^n_0 \rfloor^n_0},$
   where $\eta_i \thicksim \lap{0}{\frac{k - 1}{\epsilon}}$.
   We will use $ \lapmech(\dataobs) = \betad(\tilde{\alpha}, \tilde{\beta})$ or $\dirichlet{\tilde{\valpha}}$ for short.
 
 
 
 \subsubsection{Using $\ell_1$ Norm with Improved Sensitivity}
- The $\lapmech$ presented above can be improved in our Bayesian inference model, by adding noise scaled to smaller sensitivity in this improved Laplace mechanism $\ilapmech$.\\
- In terms of two adjacent data sets $\dataobs, \dataobs'$, their posterior distributions by Bayesian inference -- $\bysinfer(\dataobs), \bysinfer(\dataobs')$ -- which parameter differs at most in 2 dimensions even though extended to Dirichlet-multinomial mode, i.e., $\Delta \bysinfer \leq 2$. As a results, it is enough to use sensitivity $1$ in 2 dimensions and $2$ in higher dimensions.\\
+ The accuracy of the previous $\lapmech$ can be improved, by adding noise scaled to smaller sensitivity.
+ In terms of two adjacent data sets $\dataobs, \dataobs'$, the posterior distributions that they induce -- $\bysinfer(\dataobs), \bysinfer(\dataobs')$ -- which parameter differs at most in 2 dimensions even though extended to Dirichlet-multinomial mode, i.e., $\Delta \bysinfer \leq 2$. As a results, it is enough to use sensitivity $1$ in 2 dimensions and $2$ in higher dimensions.\\
  By calibrating noise to this improved sensitivity, $\ilapmech(\dataobs,\bysinfer, \mathsf{prior}, \mathsf{likelihood}, \epsilon)$ produces output:
  $\betad(\alpha +  \lfloor{\Delta \alpha + \eta}\rfloor^n_0,\beta + n - \lfloor{\Delta \alpha + \eta}\rfloor^n_0)
 $
