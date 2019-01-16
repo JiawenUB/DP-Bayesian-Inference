@@ -70,8 +70,8 @@ We focus on two discrete models for parametric Bayesian
 inference: the Beta-Binomial and the Dirichlet-Multinomial
 models. We study two mechanisms based on the 
 Laplace perturbation of the parameters of the posterior distribution under
-$\ell_1$ norm, and compare them with variations of the Exponential
-mechanism where the score function is based on the Hellinger distance.
+$\ell_1$ norm, and compare them with a discrete mechanism calibrating 
+its score function to a smooth bound on the Hellinger distance.
 Accuracy is measured through the Hellinger distance between the posterior
 distribution released by the different mechanisms and the real one.
 We compare the accuracy theoretically and experimentally.
@@ -84,9 +84,31 @@ We compare the accuracy theoretically and experimentally.
 
 \section{Introduction}
 \label{sec_intro}
-Data analysis techniques are broadly used in various applications in different areas to improve their services, including disease-medicine service, financial service, location service, social network and so on. In order to provide a better service, large of data are collected from users for analysis. As a consequence, the data privacy came to be a critical issue. Sensitivity information in data can be revealed through the analysis results. The key challenge here is to release a private analysis results, from which adversary cannot observe individual's sensitive information in data.
+Data analysis techniques have brought significant improvements in a
+variety of applications including applications from the medical,
+financial, social, and transportation fields. In order to provide
+better services, these applications need large amounts of users data
+putting at risk the privacy of individual users contributing their data. 
+Differential privacy was proposed a decade ago to address these
+situations and it on its way to become a gold standard in data
+privacy.  
 
-Plenty of work have been developed to solve this issue, guaranteeing the privacy in specific data analysis algorithms. They achieved the $\epsilon-$differential privacy by adopting either Laplace mechanism or achieved the $(\epsilon, \delta)-$differential privacy. But they are not giving better accuracy than the differential privacy mechanism itself. Here, we are proposing mechanism with better accuracy.
+Bayesian inference is a standard statistical tool that is useful to
+estimate a posterior distribution when given a prior distribution and
+some observed data. 
+
+In this work we consider the design space of  parametric Bayesian
+inference mechanisms guaranteeing differential privacy. Our work is
+motivated by recent developments in the area of probabilistic
+programming where several tools have been proposed to perfor
+parametric and non-parametric Bayesian inference in an efficient
+way. The in
+for our work is the recent development of 
+
+In particular
+we focus on two classical models: the Beta-Binomial and the
+Dirichlet-Multinomial models. These are classical models 
+
 
 Our work is conducted under a Bayesian inference scenario, where the posterior distribution is the analysis result we obtained from the data.
 Publishing the posterior distribution inferred from a sensitive dataset can
