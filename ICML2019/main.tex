@@ -565,33 +565,35 @@ Let $\betad(\alpha, \beta)$ be the true posterior distribution, i.e., $\bysinfer
 \end{align*}
 
 Unfolding the Hellinger distance formula, we get:\\
-  \noindent \textbf{case: t is even}\\
+  \noindent \textbf{case: t is even}
   \begin{align*}
-  & \Pr\Bigg[\hellinger(\bysinfer(\dataobs), r_L )^2 \\
-  & = 1 - \prod_{k = 0}^{\frac{t}{2} - 1}
+  &\Pr\left[
+\begin{aligned}\lefteqn{\hellinger(\bysinfer(\dataobs), r_L )^2}\\
+&= 1 - \prod_{k = 0}^{\frac{t}{2} - 1}
   \sqrt{1 - \frac{\frac{t}{2}}{a + k + \frac{t}{2}}}
-  \cdot
-  \prod_{k = 1}^{\frac{t}{2}}
-  \sqrt{1 - \frac{\frac{t}{2}}{\beta - k}}\ \Bigg] \\
-  = \quad & \frac{1}{2} (e^{- \frac{\epsilon (t)}{\Delta \bysinfer}} - e^{- \frac{\epsilon (t + 1)}{\Delta \bysinfer}})\\
+  \cdot\prod_{k = 1}^{\frac{t}{2}}
+  \sqrt{1 - \frac{\frac{t}{2}}{\beta - k}}
+\end{aligned}
+\right] \\
+  &\qquad = \frac{1}{2} (e^{- \frac{\epsilon (t)}{\Delta \bysinfer}} - e^{- \frac{\epsilon (t + 1)}{\Delta \bysinfer}})
   \end{align*}
-
-  \noindent \textbf{case: t is odd}\\
+  \noindent \textbf{case: t is odd}
   let $t = 2 m + 1$
   \begin{align*}
-  & \Pr\Bigg[ \hellinger(\bysinfer(\dataobs), r_L )^2 \\
+  & \Pr\left[
+	\begin{aligned}\lefteqn{\hellinger(\bysinfer(\dataobs), r_L )^2} \\
   & =
   1 - \frac{\Gamma(\alpha+\frac{1}{2})}{\Gamma(\alpha)} \cdot
 \frac{\Gamma(\beta - \frac{1}{2})}{\Gamma(\beta)}\\
-\qquad &\cdot 
+&\cdot 
   \prod_{k = 0}^{m-1}
   \sqrt{(1 + \frac{1}{2(\alpha + k)})
   (1 + \frac{\frac{1}{2} - m}{(\alpha + m  + k)})
-  } \\
-  \qquad & \cdot 
+  }\\ &\cdot 
   \prod_{k = 1}^{m} 
-  \sqrt{(1 + \frac{1}{2(\beta - \frac{1}{2}- k)})(1 + \frac{\frac{1}{2} - m}{(\beta - \frac{1}{2}- k)})}\ \Bigg] \\
-  = & \frac{1}{2} (e^{- \frac{\epsilon (t)}{\Delta \bysinfer}} - e^{- \frac{\epsilon (t + 1)}{\Delta \bysinfer}})\\
+  \sqrt{(1 + \frac{1}{2(\beta - \frac{1}{2}- k)})(1 + \frac{\frac{1}{2} - m}{(\beta - \frac{1}{2}- k)})} \end{aligned}
+\right] \\
+   &\qquad = \frac{1}{2} (e^{- \frac{\epsilon (t)}{\Delta \bysinfer}} - e^{- \frac{\epsilon (t + 1)}{\Delta \bysinfer}})
   \end{align*}
 
 %  Instantiating $t$ with specific values ($1, 2, 3$ for example), we get following accuracy equations:\\
@@ -781,10 +783,16 @@ Specifically, the maximum value over ${r \in R}$ always achieves at $r = \bysinf
 %  & = \max\limits_{\{|\dataobs,\dataobs'| \leq 1;\dataobs'\in \mathcal{X}^n\}} \{\hellinger(\bysinfer(\dataobs'), \bysinfer(\dataobs))|\}.
 %\end{split}
 \begin{align*}
-&LS(\dataobs)\\
-& = \max\limits_{\{|\dataobs,\dataobs'| \leq 1;\dataobs'\in \mathcal{X}^n\}} \{|\hellinger(\bysinfer(\dataobs), \bysinfer(\dataobs)) \\
-  &\qquad\qquad - \hellinger(\bysinfer(\dataobs'), \bysinfer(\dataobs))|\} \\
-  & = \max\limits_{\{|\dataobs,\dataobs'| \leq 1;\dataobs'\in \mathcal{X}^n\}} \{\hellinger(\bysinfer(\dataobs'), \bysinfer(\dataobs))\}.
+LS(\dataobs)
+& = \max\limits_{\{|\dataobs,\dataobs'| \leq 1;\dataobs'\in \mathcal{X}^n\}}
+\left|~
+\begin{aligned}
+&\hellinger(\bysinfer(\dataobs), \bysinfer(\dataobs))\\
+&\quad - \hellinger(\bysinfer(\dataobs'), \bysinfer(\dataobs))
+\end{aligned}
+\right|\\
+  & = \max\limits_{\{|\dataobs,\dataobs'| \leq 1;\dataobs'\in \mathcal{X}^n\}}
+\hellinger(\bysinfer(\dataobs'), \bysinfer(\dataobs)).
 \end{align*}
 
 %\end{equation*}
