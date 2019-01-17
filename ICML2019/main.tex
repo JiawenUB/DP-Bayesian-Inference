@@ -394,9 +394,9 @@ when the other two parameters, that is prior and likelihood, are fixed.
 \subsubsection{Standard Exponential Mechanism with Hellinger Metric}
 Our exploration starts from the standard exponential mechanism $\expmech(x,u,\candidateset)$, which samples an element from the candidate set $\candidateset$ with probability proportional to $\exp(\frac{\epsilon u(x,r)}{2 GS})$:
 \[
-\underset{z \thicksim \expmech(x,u,\candidateset) }{Pr}[z=r] = \frac
-{exp(\frac{\epsilon u(x,r)}{2 GS})}
-{\Sigma_{r' \in \mathcal{R}}\ exp(\frac{\epsilon u(x,r')}{2 GS})},
+\underset{z \thicksim \expmech(x,u,\candidateset) }{\Pr}[z=r] = \frac
+{\exp(\frac{\epsilon u(x,r)}{2 GS})}
+{\Sigma_{r' \in \mathcal{R}}\exp(\frac{\epsilon u(x,r')}{2 GS})},
 \]
 where $u(x,r)$ is the Hellinger scoring function over candidates, $-\hellinger(\bysinfer(\dataobs), r)$, and $GS$ is the global sensitivity of the scoring function (i.e. the global sensitivity of the Bayesian inference w.r.t the Hellinger distance), calculated by:
 \begin{equation*}
@@ -408,11 +408,11 @@ GS =
 
 \subsubsection{Exponential Mechanism with Hellinger Metric and Local Sensitivity}
 \label{subsec_emls}
-In order to achieve good accuracy, we make an attempt on the Exponential mechanism with local sensitivity $\lexpmech(x,u,\candidateset)$. This is just an attempt since local sensitivity is non-private. $\lexpmech$ shares the same candidate set and utility function as $\expmech$, outputting a result $r \in \mathcal{R}$ with probability proportional to $exp(\frac{\epsilon u(x,r)}{2 LS(\dataobs)})$:
+In order to achieve good accuracy, we make an attempt on the Exponential mechanism with local sensitivity $\lexpmech(x,u,\candidateset)$. This is just an attempt since local sensitivity is non-private. $\lexpmech$ shares the same candidate set and utility function as $\expmech$, outputting a result $r \in \mathcal{R}$ with probability proportional to $\exp(\frac{\epsilon u(x,r)}{2 LS(\dataobs)})$:
 \[
 \underset{z \thicksim \lexpmech(x,u,\candidateset)}{\Pr}[z=r] = \frac
-{exp(\frac{\epsilon u(x,r)}{2 LS(\dataobs)})}
-{\Sigma_{r' \in \mathcal{R}}\ exp(\frac{\epsilon u(x,r')}{2 LS(\dataobs)})},
+{\exp(\frac{\epsilon u(x,r)}{2 LS(\dataobs)})}
+{\Sigma_{r' \in \mathcal{R}}\exp(\frac{\epsilon u(x,r')}{2 LS(\dataobs)})},
 \]
 where $LS(\dataobs)$ is the local sensitivity of scoring function, calculated by:
 \begin{equation*}
@@ -450,7 +450,7 @@ Proof is in Appendix I.
 \label{def_smoo_2}
 $\hexpmech(\dataobs)$ outputs a candidate $r \in \candidateset$ with probability
 \begin{equation*}
-  \hexpmechPr{\dataobs}{z = r} = \frac {exp\big(\frac{-\epsilon\cdot \ux{r}}{4\cdot S(\dataobs)}\big)}
+  \hexpmechPr{\dataobs}{z = r} = \frac {\exp\big(\frac{-\epsilon\cdot \ux{r}}{4\cdot S(\dataobs)}\big)}
 {\unomalizer{\dataobs}}.
 \end{equation*}
 where $\ux{r} = \hellinger(\bysinfer(\dataobs),r)$ for $r \in \candidateset$ and $S(\dataobs)$ is the $\gamma -$smooth sensitivity of $\hellinger(\bysinfer(\dataobs),-)$, calculated from Definition \ref{def_gamma_smooth} by setting $\gamma = 1$.
@@ -506,19 +506,19 @@ $\hexpmech$ is $\epsilon$-differential privacy by setting $\gamma = 1.0$.
 
 \subsubsection{Accuracy Bound for Laplace Mechanism}
 \label{subsec_accuracy_lap}
-Given $Y \thicksim \lap{0}{b}$, we have\cite{dwork2014algorithmic}:$Pr[|Y| \geq t \cdot b] = e^{- t}.$\\
-Based on this, we get:$Pr[|Y| \geq t] = e^{- \frac{t \epsilon}{\Delta \bysinfer}}$, where $Y \thicksim \lap{0}{\frac{\Delta \bysinfer}{\epsilon}}$ in our setting.
+Given $Y \thicksim \lap{0}{b}$, we have\cite{dwork2014algorithmic}:$\Pr[|Y| \geq t \cdot b] = e^{- t}.$\\
+Based on this, we get:$\Pr[|Y| \geq t] = e^{- \frac{t \epsilon}{\Delta \bysinfer}}$, where $Y \thicksim \lap{0}{\frac{\Delta \bysinfer}{\epsilon}}$ in our setting.
 
 Considering the post-processing (i.e., taking the floor value of $Y$) in $\lapmech$, we have:
 \[
-Pr\big[\lfloor Y \rfloor = t\big] 
-= Pr[ t \leq Y < t + 1] 
+\Pr\big[\lfloor Y \rfloor = t\big] 
+= \Pr[ t \leq Y < t + 1] 
 = \frac{1}{2} (e^{- \frac{\epsilon (t)}{\Delta \bysinfer}} - e^{- \frac{\epsilon (t + 1)}{\Delta \bysinfer}}).
 \]
 when $t \geq 0$, and
 \[
-Pr\big[\lfloor Y \rfloor = t\big] 
-= Pr[ t \leq Y < t + 1] 
+\Pr\big[\lfloor Y \rfloor = t\big] 
+= \Pr[ t \leq Y < t + 1] 
 = \frac{1}{2} (e^{\frac{\epsilon (t)}{\Delta \bysinfer}} - e^{\frac{\epsilon (t + 1)}{\Delta \bysinfer}}).
 \]
 when $t < 0$.
@@ -526,7 +526,7 @@ when $t < 0$.
 Let $\betad(\alpha, \beta)$ be the true posterior distribution, i.e., $\bysinfer(\dataobs) = \betad(\alpha, \beta)$, and $r_L$ be the posterior produced by Laplace mechanism, i.e., $r_L = \betad(\alpha + \lfloor Y \rfloor, \beta - \lfloor Y \rfloor)$. By applying Hellinger distance in our case, we get:
 $$
 \begin{array}{rcl}
-& Pr\big[\hellinger(\bysinfer(\dataobs), r_L ) 
+& \Pr\big[\hellinger(\bysinfer(\dataobs), r_L ) 
 = \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)\big] \\
 & =  \frac{1}{2} (e^{- \frac{\epsilon (t)}{\Delta \bysinfer}} - e^{- \frac{\epsilon (t + 1)}{\Delta \bysinfer}})\\
 \end{array}
@@ -534,7 +534,7 @@ $$
 when $t \geq 0$, and\\
 $$
 \begin{array}{rcl}
-& Pr\big[\hellinger(\bysinfer(\dataobs), r_L ) 
+& \Pr\big[\hellinger(\bysinfer(\dataobs), r_L ) 
 = \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)\big]\\
 & = \frac{1}{2} (e^{\frac{\epsilon (t + 1)}{\Delta \bysinfer}} - e^{\frac{\epsilon (t)}{\Delta \bysinfer}}).
 \end{array}
@@ -543,7 +543,7 @@ when $t < 0$.\\
 Unfolding the Hellinger distance formula, we get:\\
   \noindent \textbf{case: t is even}\\
   \begin{align*}
-  & Pr\Bigg[\hellinger(\bysinfer(\dataobs), r_L )^2 \\
+  & \Pr\Bigg[\hellinger(\bysinfer(\dataobs), r_L )^2 \\
   & = 1 - \prod_{k = 0}^{\frac{t}{2} - 1}
   \sqrt{1 - \frac{\frac{t}{2}}{a + k + \frac{t}{2}}}
   \cdot
@@ -555,7 +555,7 @@ Unfolding the Hellinger distance formula, we get:\\
   \noindent \textbf{case: t is odd}\\
   let $t = 2 m + 1$
   \begin{align*}
-  & Pr\Bigg[ \hellinger(\bysinfer(\dataobs), r_L )^2 \\
+  & \Pr\Bigg[ \hellinger(\bysinfer(\dataobs), r_L )^2 \\
   & =
   1 - \frac{\Gamma(\alpha+\frac{1}{2})}{\Gamma(\alpha)} \cdot
 \frac{\Gamma(\beta - \frac{1}{2})}{\Gamma(\beta)}\\
@@ -945,7 +945,7 @@ $\frac{1}{S(\dataobs)} - \frac{1}{S(\dataobs')} \leq \gamma.$
   Because $S(\dataobs) \geq LS(\dataobs) \geq (\uxadj{r} - \ux{r})$:
   \begin{equation*}
   \begin{split}
-  & \leq \frac {exp\big(
+  & \leq \frac {\exp\big(
   \frac{-\epsilon\cdot(\uxadj{r})}{4\cdot S(\dataobs)}
   \big)}
   {\unomalizer{\dataobs}}
