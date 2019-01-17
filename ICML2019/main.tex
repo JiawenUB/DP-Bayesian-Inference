@@ -318,17 +318,19 @@ i.e., proportional to the dimensionality.
 
 
 
-\subsubsection{Using $\ell_1$ Norm with Improved Sensitivity}
- The accuracy of the previous $\lapmech$ can be improved, by adding noise scaled to smaller sensitivity.
- In terms of two adjacent data sets $\dataobs, \dataobs'$, the posterior distributions that they induce -- $\bysinfer(\dataobs), \bysinfer(\dataobs')$ -- which parameter differs at most in 2 dimensions even though extended to Dirichlet-multinomial mode, i.e., $\Delta \bysinfer \leq 2$. As a results, it is enough to use sensitivity $1$ in 2 dimensions and $2$ in higher dimensions.\\
- By calibrating noise to this improved sensitivity, $\ilapmech(\dataobs,\bysinfer, \mathsf{prior}, \mathsf{likelihood}, \epsilon)$ produces output:
- $\betad(\alpha +  \lfloor{\Delta \alpha + \eta}\rfloor^n_0,\beta + n - \lfloor{\Delta \alpha + \eta}\rfloor^n_0)
-$
-with $\eta \thicksim \lap{0}{\frac{1}{\epsilon}}$ in Beta-binomial model and
-$\dirichlet{\alpha_1 +  \lfloor{\Delta \alpha_1 + \eta_1}\rfloor^n_0, \cdots, 
-\alpha_k + \lfloor n - \sum_{i = 1}^{k-1}\lfloor{\Delta \alpha_i + \eta_i}\rfloor^n_0 \rfloor^n_0}
-$
-with $\eta_i \thicksim \lap{0}{\frac{2}{\epsilon}}$ in Dirichlet-multinomial model. Details are shown in Mechanism \ref{mech:ilapmech}.
+\subsection{Improving the sensitivity}
+ The accuracy of $\lapmech$ can be reduced to a constant.
+ Indeed, two adjacent data sets $\dataobs, \dataobs'$  induce posterior distributions -- $\bysinfer(\dataobs), \bysinfer(\dataobs')$ --
+ whose parameters differ by at most 2 w.r.t $\ell_1$ norm. This because we can see the parameters of the distributions as an histogram.
+ Hence, it is enough to use sensitivity $1$ in 2 dimensions and $2$ in higher dimensions.
+ {\color{red} Notice that we are using the bounded notion of differential privacy \cite{????}.}
+ \todo{why 1 in 2 dimensions?}
+ We denote the mechanism which calibrates the noise to this smaller sensitivity as $\ilapmech$.
+ $\ilapmech(\dataobs,\bysinfer, \mathsf{prior}, \mathsf{likelihood}, \epsilon)$ produces:
+ $\betad(\alpha +  \lfloor{\Delta \alpha + \eta}\rfloor^n_0,\beta + n - \lfloor{\Delta \alpha + \eta}\rfloor^n_0) $
+ where $\eta \thicksim \lap{0}{\frac{1}{\epsilon}}$ in the Beta-binomial model and
+ $\dirichlet{\alpha_1 +  \lfloor{\Delta \alpha_1 + \eta_1}\rfloor^n_0, \cdots,  \alpha_k + \lfloor n - \sum_{i = 1}^{k-1}\lfloor{\Delta \alpha_i + \eta_i}\rfloor^n_0 \rfloor^n_0}$
+ with $\eta_i \thicksim \lap{0}{\frac{2}{\epsilon}}$ in Dirichlet-multinomial model. Details are shown in Figure \ref{mech:ilapmech}.
   \begin{algorithm}
   \caption{$\ilapmech$ in Dirichlet-multinomial model}
   \label{mech:ilapmech}
@@ -347,22 +349,25 @@ with $\eta_i \thicksim \lap{0}{\frac{2}{\epsilon}}$ in Dirichlet-multinomial mod
   \end{algorithm}
 
 
-\subsection{Exponential Mechanism Family}
-In this section, we explore the exponential mechanism family: $\expmech$ by considering Hellinger distance metrics and different sensitivities.\\
-Given a prior distribution $\bprior=\betad(\alpha, \beta)$ and an observed data set: $\dataobs\in\{0,1\}^n$, we define the follwing set as candidate set where the mechanisms in this family sample from:
+\subsection{A new mechanism}
+In this section, we explore a new mechanism which we denote by $\expmech$.
+The idea is that $\expmech$ will sample and output a distribution with higher probability when
+it is closer to the real posterior; importantly  \emph{closer} is measured using a metric over probability
+distributions as opposed to a metric over the parameters that represent it. In this work we will
+use the Hellinger distance, but this approach could be extended to other $f$-divergences. We will
+start by describing how the mechanism works in the case of the Beta-Binomial model noticing that
+the extension to the Dirichelet-Multinomial model is straightforward.
+Given a prior distribution $\bprior=\betad(\alpha, \beta)$ and an observed data set: $\dataobs\in\{0,1\}^n$,
+we define the follwing set  where the mechanism will sample from:
 \[
   \candidateset\equiv\{\bysinfer(\binomial{n}{\theta}, \bprior,\dataobs')\mid \dataobs' \in \{0,1\}^n\}.
 \]
-For simplicity:
-$
-  \candidateset\equiv\{\betad(\alpha',\beta')\mid \alpha'=\alpha + \Delta\alpha, \beta'=\beta + n-\Delta\alpha\}
-$
-over all $\dataobs \in \{0,1\}^n$, where $\Delta\alpha$ is as defined in Section \ref{sec_background}, and
-$
-  \candidateset\equiv\{\dirichlet{\valpha'} \mid \valpha'=\valpha + \Delta\valpha\}
-$,
-over all $\dataobs \in \mathcal{X}^n$ in Dirichlet-multinomial model.\\
-We use $\bysinfer(\dataobs)$ to denote the Bayesian inference process when the other two parameters are fixed, denoted by $\bprior$ and $\binomial{n}{\theta}$, $\multinomial{n}{\vtheta}$. 
+Notice that the above set reduces to:
+\[
+  \{\betad(\alpha',\beta')\mid \alpha'=\alpha + \Delta\alpha, \beta'=\beta + n-\Delta\alpha\}
+\]
+We use $\bysinfer(\dataobs)$ to denote the Bayesian inference process on the observed data $\dataobs$
+when the other two parameters, that is prior and likelihood, are fixed. 
 
 \subsubsection{Standard Exponential Mechanism with Hellinger Metric}
 Our exploration starts from the standard exponential mechanism $\expmech(x,u,\candidateset)$, which samples an element from the candidate set $\candidateset$ with probability proportional to $\exp(\frac{\epsilon u(x,r)}{2 GS})$:
