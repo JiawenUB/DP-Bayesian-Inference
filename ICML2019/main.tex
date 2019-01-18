@@ -536,7 +536,7 @@ where $\betad(\alpha, \beta)$ is the true posterior distribution, i.e., $\bysinf
 %  \sqrt{1 - \frac{\frac{t}{2}}{a + \frac{t}{2}}}
 %  \cdot
 %  \sqrt{1 - \frac{\frac{t}{2}}{\beta}}} = 0.07237464051$.\\
-Instantiating $t$ with specific values ($1, 2, 3$ for example), we get the following accuracy equations on Laplace mechanism:
+Instantiating $t$ with specific values ($0,1,2$ for example), we get the following accuracy equations on Laplace mechanism:
 \begin{align*}
 &\lapmechPr{\dataobs}{\textstyle\hellinger(\bysinfer(\dataobs), r_L ) = 0}\\
 &= 0.19673467014,\\
@@ -555,7 +555,9 @@ In all cases above, probability values are fixed even data size changes, only th
 \label{subsec_accuracy_lap}
 Accuracy bound for improved Laplace mechanism is obtained from the standard Laplace Mechanism by replacing the sensitivity of $\Delta \bysinfer$ with $1$ in Beta-binomial model and $2$ in Dirichlet-multinomial model.
 
-Given $t$ with the same specific values ($1, 2, 3$ as above), we get the following accuracy equations on improved Laplace mechanism:
+
+
+Given $t$ with the same specific values ($0,1,2$ as above), we get the following accuracy equations on improved Laplace mechanism:
 %Given $t$ with the same specific values ($1, 2, 3$ as above), we get following accuracy equations:
 %
 %  $\lapmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), r_L ) = 0} = 0.31606027941$.
@@ -583,8 +585,10 @@ In all cases above, probability values are fixed even data size changes, only th
 
 \subsection{Accuracy Bound for $\hexpmech$}
 \label{subsec_accuracy_smoo}
+\begin{lem}
+\label{lem_acc_hexp}
   In Beta-binomial model,
-  we have following formula for accuracy:
+  we have following accuracy bound for this mechanism:
 %  \begin{align*}
 %  \label{eq_acc}
 %  & \hexpmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), z) = c  }\\ 
@@ -592,11 +596,13 @@ In all cases above, probability values are fixed even data size changes, only th
 %  \end{align*}
 %
 %  $c = \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)$
+
   \begin{align*}
   \lefteqn{ \hexpmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), z) = c  } }\\ 
   &  = \frac{\exp{(\frac{- \epsilon c}{4 S(\dataobs)})}}{\nomalizer{\dataobs}}\\
   & \text{ where } c = \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t).
   \end{align*}
+\end{lem}
 
 \subsection{Accuracy Comparison between $\hexpmech$, $\lapmech$ and $\ilapmech$}
 For comparison with Laplace mechanism, we developed the Table \ref{tab_acc_theo}. In this table, the first column is the value of distance $c$ from the correct posterior distribution. The first row is three mechanisms: $\lapmech$, $\ilapmech$ and $\hexpmech$. For each mechanism, we calculate the probability of outputting corresponding candidates which is at distance $c$ from the correct posterior distribution and put into the table. We calculate the first three nearest candidates and the others trival.
