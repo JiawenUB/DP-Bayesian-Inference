@@ -506,48 +506,9 @@ $\hexpmech$ is $\epsilon$-differential privacy by setting $\gamma = 1.0$.
 
 \subsubsection{Accuracy Bound for Laplace Mechanism}
 \label{subsec_accuracy_lap}
-Given $Y \thicksim \lap{0}{b}$, we have\cite{dwork2014algorithmic}:$\Pr[|Y| \geq t \cdot b] = e^{- t}.$\\
-Based on this, we get:$\Pr[|Y| \geq t] = e^{- \frac{t \epsilon}{\Delta \bysinfer}}$, where $Y \thicksim \lap{0}{\frac{\Delta \bysinfer}{\epsilon}}$ in our setting.
-
-Considering the post-processing (i.e., taking the floor value of $Y$) in $\lapmech$, we have:
-%\[
-%\Pr\big[\lfloor Y \rfloor = t\big] 
-%= \Pr[ t \leq Y < t + 1] 
-%= \frac{1}{2} (e^{- \frac{\epsilon (t)}{\Delta \bysinfer}} - e^{- \frac{\epsilon (t + 1)}{\Delta \bysinfer}}).
-%\]
-%when $t \geq 0$, and
-%\[
-%\Pr\big[\lfloor Y \rfloor = t\big] 
-%= \Pr[ t \leq Y < t + 1] 
-%= \frac{1}{2} (e^{\frac{\epsilon (t)}{\Delta \bysinfer}} - e^{\frac{\epsilon (t + 1)}{\Delta \bysinfer}}).
-%\]
-%when $t < 0$.
-\begin{align*}
-\Pr\big[\lfloor Y \rfloor = t\big]&= \Pr[ t \leq Y < t + 1]\\
-&= 
-\begin{cases}
-\frac{1}{2} (e^{- \frac{\epsilon (t)}{\Delta \bysinfer}} - e^{- \frac{\epsilon (t + 1)}{\Delta \bysinfer}}) &  t \geq 0\\
-\frac{1}{2} (e^{\frac{\epsilon (t)}{\Delta \bysinfer}} - e^{\frac{\epsilon (t + 1)}{\Delta \bysinfer}}) & t < 0
-\end{cases}
-\end{align*}
-
-Let $\betad(\alpha, \beta)$ be the true posterior distribution, i.e., $\bysinfer(\dataobs) = \betad(\alpha, \beta)$, and $r_L$ be the posterior produced by Laplace mechanism, i.e., $r_L = \betad(\alpha + \lfloor Y \rfloor, \beta - \lfloor Y \rfloor)$. By applying Hellinger distance in our case, we get:
-%$$
-%\begin{array}{rcl}
-%& \Pr\big[\hellinger(\bysinfer(\dataobs), r_L ) 
-%= \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)\big] \\
-%& =  \frac{1}{2} (e^{- \frac{\epsilon (t)}{\Delta \bysinfer}} - e^{- \frac{\epsilon (t + 1)}{\Delta \bysinfer}})\\
-%\end{array}
-%$$
-%when $t \geq 0$, and\\
-%$$
-%\begin{array}{rcl}
-%& \Pr\big[\hellinger(\bysinfer(\dataobs), r_L ) 
-%= \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)\big]\\
-%& = \frac{1}{2} (e^{\frac{\epsilon (t + 1)}{\Delta \bysinfer}} - e^{\frac{\epsilon (t)}{\Delta \bysinfer}}).
-%\end{array}
-%$$
-%when $t < 0$.\\
+\begin{lem}
+\label{lem_acc_lap}
+Given $Y \thicksim \lap{0}{b}$, the accuracy bound developed for $\lapmech$ is:
 \begin{align*}
 &
 \Pr\left[
@@ -563,38 +524,9 @@ Let $\betad(\alpha, \beta)$ be the true posterior distribution, i.e., $\bysinfer
 \frac{1}{2} (e^{\frac{\epsilon (t + 1)}{\Delta \bysinfer}} - e^{\frac{\epsilon (t)}{\Delta \bysinfer}}) & t < 0
 \end{cases}
 \end{align*}
-
-Unfolding the Hellinger distance formula, we get:\\
-  \noindent \textbf{case: t is even}
-  \begin{align*}
-  &\Pr\left[
-\begin{aligned}\lefteqn{\hellinger(\bysinfer(\dataobs), r_L )^2}\\
-&= 1 - \prod_{k = 0}^{\frac{t}{2} - 1}
-  \sqrt{1 - \frac{\frac{t}{2}}{a + k + \frac{t}{2}}}
-  \cdot\prod_{k = 1}^{\frac{t}{2}}
-  \sqrt{1 - \frac{\frac{t}{2}}{\beta - k}}
-\end{aligned}
-\right] \\
-  &\qquad = \frac{1}{2} (e^{- \frac{\epsilon (t)}{\Delta \bysinfer}} - e^{- \frac{\epsilon (t + 1)}{\Delta \bysinfer}})
-  \end{align*}
-  \noindent \textbf{case: t is odd}
-  let $t = 2 m + 1$
-  \begin{align*}
-  & \Pr\left[
-	\begin{aligned}\lefteqn{\hellinger(\bysinfer(\dataobs), r_L )^2} \\
-  & =
-  1 - \frac{\Gamma(\alpha+\frac{1}{2})}{\Gamma(\alpha)} \cdot
-\frac{\Gamma(\beta - \frac{1}{2})}{\Gamma(\beta)}\\
-&\cdot 
-  \prod_{k = 0}^{m-1}
-  \sqrt{(1 + \frac{1}{2(\alpha + k)})
-  (1 + \frac{\frac{1}{2} - m}{(\alpha + m  + k)})
-  }\\ &\cdot 
-  \prod_{k = 1}^{m} 
-  \sqrt{(1 + \frac{1}{2(\beta - \frac{1}{2}- k)})(1 + \frac{\frac{1}{2} - m}{(\beta - \frac{1}{2}- k)})} \end{aligned}
-\right] \\
-   &\qquad = \frac{1}{2} (e^{- \frac{\epsilon (t)}{\Delta \bysinfer}} - e^{- \frac{\epsilon (t + 1)}{\Delta \bysinfer}})
-  \end{align*}
+where $\betad(\alpha, \beta)$ is the true posterior distribution, i.e., $\bysinfer(\dataobs) = \betad(\alpha, \beta)$, and $r_L$ be the posterior produced by Laplace mechanism, i.e., $r_L = \betad(\alpha + \lfloor Y \rfloor, \beta - \lfloor Y \rfloor)$.
+\end{lem}
+(Proof is in Appendix III)
 
 %  Instantiating $t$ with specific values ($1, 2, 3$ for example), we get following accuracy equations:\\
 %  $\lapmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), r_L ) = 0} = 0.19673467014$.\\
@@ -1310,6 +1242,101 @@ $\frac{1}{S(\dataobs)} - \frac{1}{S(\dataobs')} \leq \gamma.$
 
   Given $\gamma = 1$, $\epsilon - $differential privacy can be achieved by $\hexpmech$.
 
+
+\end{proof}
+
+\section*{Appendix III}
+\begin{proof} of Lemma \ref{lem_acc_lap}.
+
+Given $Y \thicksim \lap{0}{b}$, we have\cite{dwork2014algorithmic}:$\Pr[|Y| \geq t \cdot b] = e^{- t}.$\\
+Based on this, we get:$\Pr[|Y| \geq t] = e^{- \frac{t \epsilon}{\Delta \bysinfer}}$, where $Y \thicksim \lap{0}{\frac{\Delta \bysinfer}{\epsilon}}$ in our setting.
+
+Considering the post-processing (i.e., taking the floor value of $Y$) in $\lapmech$, we have:
+%\[
+%\Pr\big[\lfloor Y \rfloor = t\big] 
+%= \Pr[ t \leq Y < t + 1] 
+%= \frac{1}{2} (e^{- \frac{\epsilon (t)}{\Delta \bysinfer}} - e^{- \frac{\epsilon (t + 1)}{\Delta \bysinfer}}).
+%\]
+%when $t \geq 0$, and
+%\[
+%\Pr\big[\lfloor Y \rfloor = t\big] 
+%= \Pr[ t \leq Y < t + 1] 
+%= \frac{1}{2} (e^{\frac{\epsilon (t)}{\Delta \bysinfer}} - e^{\frac{\epsilon (t + 1)}{\Delta \bysinfer}}).
+%\]
+%when $t < 0$.
+\begin{align*}
+\Pr\big[\lfloor Y \rfloor = t\big]&= \Pr[ t \leq Y < t + 1]\\
+&= 
+\begin{cases}
+\frac{1}{2} (e^{- \frac{\epsilon (t)}{\Delta \bysinfer}} - e^{- \frac{\epsilon (t + 1)}{\Delta \bysinfer}}) &  t \geq 0\\
+\frac{1}{2} (e^{\frac{\epsilon (t)}{\Delta \bysinfer}} - e^{\frac{\epsilon (t + 1)}{\Delta \bysinfer}}) & t < 0
+\end{cases}
+\end{align*}
+
+Let $\betad(\alpha, \beta)$ be the true posterior distribution, i.e., $\bysinfer(\dataobs) = \betad(\alpha, \beta)$, and $r_L$ be the posterior produced by Laplace mechanism, i.e., $r_L = \betad(\alpha + \lfloor Y \rfloor, \beta - \lfloor Y \rfloor)$. By applying Hellinger distance in our case, we get:
+%$$
+%\begin{array}{rcl}
+%& \Pr\big[\hellinger(\bysinfer(\dataobs), r_L ) 
+%= \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)\big] \\
+%& =  \frac{1}{2} (e^{- \frac{\epsilon (t)}{\Delta \bysinfer}} - e^{- \frac{\epsilon (t + 1)}{\Delta \bysinfer}})\\
+%\end{array}
+%$$
+%when $t \geq 0$, and\\
+%$$
+%\begin{array}{rcl}
+%& \Pr\big[\hellinger(\bysinfer(\dataobs), r_L ) 
+%= \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)\big]\\
+%& = \frac{1}{2} (e^{\frac{\epsilon (t + 1)}{\Delta \bysinfer}} - e^{\frac{\epsilon (t)}{\Delta \bysinfer}}).
+%\end{array}
+%$$
+%when $t < 0$.\\
+\begin{align*}
+&
+\Pr\left[
+\begin{aligned}
+\lefteqn{\hellinger(\bysinfer(\dataobs), r_L )}\\ 
+&= \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)
+\end{aligned}
+\right]
+\\
+&\qquad = 
+\begin{cases}
+\frac{1}{2} (e^{- \frac{\epsilon (t)}{\Delta \bysinfer}} - e^{- \frac{\epsilon (t + 1)}{\Delta \bysinfer}}) &  t \geq 0\\
+\frac{1}{2} (e^{\frac{\epsilon (t + 1)}{\Delta \bysinfer}} - e^{\frac{\epsilon (t)}{\Delta \bysinfer}}) & t < 0
+\end{cases}
+\end{align*}
+
+Unfolding the Hellinger distance formula, we get:\\
+  \noindent \textbf{case: t is even}
+  \begin{align*}
+  &\Pr\left[
+\begin{aligned}\lefteqn{\hellinger(\bysinfer(\dataobs), r_L )^2}\\
+&= 1 - \prod_{k = 0}^{\frac{t}{2} - 1}
+  \sqrt{1 - \frac{\frac{t}{2}}{a + k + \frac{t}{2}}}
+  \cdot\prod_{k = 1}^{\frac{t}{2}}
+  \sqrt{1 - \frac{\frac{t}{2}}{\beta - k}}
+\end{aligned}
+\right] \\
+  &\qquad = \frac{1}{2} (e^{- \frac{\epsilon (t)}{\Delta \bysinfer}} - e^{- \frac{\epsilon (t + 1)}{\Delta \bysinfer}})
+  \end{align*}
+  \noindent \textbf{case: t is odd}
+  let $t = 2 m + 1$
+  \begin{align*}
+  & \Pr\left[
+  \begin{aligned}\lefteqn{\hellinger(\bysinfer(\dataobs), r_L )^2} \\
+  & =
+  1 - \frac{\Gamma(\alpha+\frac{1}{2})}{\Gamma(\alpha)} \cdot
+\frac{\Gamma(\beta - \frac{1}{2})}{\Gamma(\beta)}\\
+&\cdot 
+  \prod_{k = 0}^{m-1}
+  \sqrt{(1 + \frac{1}{2(\alpha + k)})
+  (1 + \frac{\frac{1}{2} - m}{(\alpha + m  + k)})
+  }\\ &\cdot 
+  \prod_{k = 1}^{m} 
+  \sqrt{(1 + \frac{1}{2(\beta - \frac{1}{2}- k)})(1 + \frac{\frac{1}{2} - m}{(\beta - \frac{1}{2}- k)})} \end{aligned}
+\right] \\
+   &\qquad = \frac{1}{2} (e^{- \frac{\epsilon (t)}{\Delta \bysinfer}} - e^{- \frac{\epsilon (t + 1)}{\Delta \bysinfer}})
+  \end{align*}
 
 \end{proof}
 \end{document}
