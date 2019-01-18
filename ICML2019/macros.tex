@@ -57,7 +57,7 @@
 \newcommand{\binomial}[2]{\mathsf{Bin}(#1, #2)}
 \newcommand{\multinomial}[2]{\mathsf{Mult}(#1, #2)}
 \newcommand{\expmech}{\mathsf{expMech}}
-\newcommand{\hexpmech}{\mathsf{expMech}^{smoo}}
+\newcommand{\hexpmech}{\mathsf{expMech}^{sm}}
 \newcommand{\lexpmech}{\mathsf{expMech}^{local}}
 \newcommand{\hexpmechd}{\mathsf{expMech}^{D}_{\hellinger}}
 \newcommand{\privinfer}{\mathsf{PrivInfer}}
@@ -79,7 +79,10 @@
 
 \newcommand{\hexpmechPr}[2]{\underset{z \thicksim \hexpmech(#1)}{\Pr}\left[ #2 \right]}
 \newcommand{\lapmechPr}[2]{\underset{z \thicksim \lapmech(#1)}{\Pr}\left[ #2 \right]}
-\newcommand{\ilapmechPr}[2]{\underset{z \thicksim \ilapmech(#1)}{\Pr}\left[ #2 \right]}
+
+\newcommand{\ilapmechPr}[2]{\underset{
+{z \thicksim \ilapmech(#1)}
+}{\Pr}\left[ #2 \right]}
 
 \newtheorem{thm}{Theorem}[section]
 
