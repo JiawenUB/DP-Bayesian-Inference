@@ -538,16 +538,25 @@ where $\betad(\alpha, \beta)$ is the true posterior distribution, i.e., $\bysinf
 %  \sqrt{1 - \frac{\frac{t}{2}}{\beta}}} = 0.07237464051$.\\
 Instantiating $t$ with specific values ($0,1,2$ for example), we get the following accuracy equations on Laplace mechanism:
 \begin{align*}
-&\lapmechPr{\dataobs}{\textstyle\hellinger(\bysinfer(\dataobs), r_L ) = 0}\\
-&= 0.19673467014,\\
-&\lapmechPr{\dataobs}{\textstyle\hellinger(\bysinfer(\dataobs), r_L )^2 = 1 - \frac{\Gamma(\alpha+\frac{1}{2})}{\Gamma(\alpha)} \cdot
-  \frac{\Gamma(\beta - \frac{1}{2})}{\Gamma(\beta)} }\\ 
-&= 0.11932560927,\\
-&\lapmechPr{\dataobs}{\textstyle\hellinger(\bysinfer(\dataobs), r_L )^2 = 1 - 
+&\lapmechPr{\dataobs}{
+\textstyle\hellinger(\bysinfer(\dataobs), r_L ) = 0
+} = 0.19673467014,\\
+&\lapmechPr{\dataobs}{
+\begin{aligned}
+& \textstyle\hellinger(\bysinfer(\dataobs), r_L )^2 \\
+& = 1 - \frac{\Gamma(\alpha+\frac{1}{2})}{\Gamma(\alpha)} \cdot
+  \frac{\Gamma(\beta - \frac{1}{2})}{\Gamma(\beta)} 
+\end{aligned}
+  } = 0.11932560927,\\
+&\lapmechPr{\dataobs}{
+\begin{aligned}
+& \textstyle\hellinger(\bysinfer(\dataobs), r_L )^2 \\
+& = 1 - 
   \sqrt{1 - \frac{\frac{t}{2}}{a + \frac{t}{2}}}
   \cdot
-  \sqrt{1 - \frac{\frac{t}{2}}{\beta}}} \\
-&= 0.07237464051.
+  \sqrt{1 - \frac{\frac{t}{2}}{\beta}}
+  \end{aligned}
+} = 0.07237464051.
 \end{align*}
 In all cases above, probability values are fixed even data size changes, only the distance are decreasing.
 
