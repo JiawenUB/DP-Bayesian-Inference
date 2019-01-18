@@ -636,12 +636,12 @@ Given $t$ with the same specific values ($1, 2, 3$ as above), we get the followi
 %  \cdot
 %  \sqrt{1 - \frac{\frac{t}{2}}{\beta}}} = 0.04277410743$.
 \begin{align*}
-&\lapmechPr{\dataobs}{\textstyle\hellinger(\bysinfer(\dataobs), r_L ) = 0}\\
+&\ilapmechPr{\dataobs}{\textstyle\hellinger(\bysinfer(\dataobs), r_L ) = 0}\\
 &= 0.31606027941,\\
-&\lapmechPr{\dataobs}{\textstyle\hellinger(\bysinfer(\dataobs), r_L )^2 = 1 - \frac{\Gamma(\alpha+\frac{1}{2})}{\Gamma(\alpha)} \cdot
+&\ilapmechPr{\dataobs}{\textstyle\hellinger(\bysinfer(\dataobs), r_L )^2 = 1 - \frac{\Gamma(\alpha+\frac{1}{2})}{\Gamma(\alpha)} \cdot
 \frac{\Gamma(\beta - \frac{1}{2})}{\Gamma(\beta)} }\\
 &= 0.11627207896,\\
-&\lapmechPr{\dataobs}{\textstyle\hellinger(\bysinfer(\dataobs), r_L )^2 = 1 - 
+&\ilapmechPr{\dataobs}{\textstyle\hellinger(\bysinfer(\dataobs), r_L )^2 = 1 - 
   \sqrt{1 - \frac{\frac{t}{2}}{a + \frac{t}{2}}}
   \cdot
   \sqrt{1 - \frac{\frac{t}{2}}{\beta}}}\\
@@ -771,7 +771,7 @@ The formula for computing the local sensitivity presented in Sec. \ref{sec_mechs
 \[
 LS(\dataobs)=\max_{\substack{\dataobs' \in \datauni^n:\adj{\dataobs}{\dataobs'},\\ r\in \mathcal{R}}}\lvert \hellinger(\bysinfer(\dataobs), r) - \hellinger(\bysinfer(\dataobs'), r)\rvert
 \]
-can be reduced to $\max\limits_{\{|\dataobs,\dataobs'| \leq 1; \dataobs'\in \mathcal{X}^n\}}\hellinger(\bysinfer(\dataobs), \bysinfer(\dataobs'))$
+can be reduced to $\max\limits_{\dataobs' \in \datauni^n:\adj{\dataobs}{\dataobs'}}\hellinger(\bysinfer(\dataobs), \bysinfer(\dataobs'))$
 by applying the distance triangle property. 
 
 Specifically, the maximum value over ${r \in R}$ always achieves at $r = \bysinfer(\dataobs)$:
@@ -784,14 +784,14 @@ Specifically, the maximum value over ${r \in R}$ always achieves at $r = \bysinf
 %\end{split}
 \begin{align*}
 LS(\dataobs)
-& = \max\limits_{\{|\dataobs,\dataobs'| \leq 1;\dataobs'\in \mathcal{X}^n\}}
+& = \max\limits_{\dataobs' \in \datauni^n:\adj{\dataobs}{\dataobs'}}
 \left|~
 \begin{aligned}
 &\hellinger(\bysinfer(\dataobs), \bysinfer(\dataobs))\\
 &\quad - \hellinger(\bysinfer(\dataobs'), \bysinfer(\dataobs))
 \end{aligned}
 \right|\\
-  & = \max\limits_{\{|\dataobs,\dataobs'| \leq 1;\dataobs'\in \mathcal{X}^n\}}
+  & = \max\limits_{\dataobs' \in \datauni^n:\adj{\dataobs}{\dataobs'}}
 \hellinger(\bysinfer(\dataobs'), \bysinfer(\dataobs)).
 \end{align*}
 
