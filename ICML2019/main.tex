@@ -138,11 +138,8 @@ We will see that in some cases this can happen.
 \noindent \textbf{Main contributions.}
 \begin{itemize}
 	\item We design a new differentially private Bayesian inference mechanism based on the standard exponential mechanism.
-
 	\item We explored two ways to improve the accuracy: 1) calibrating noise to the sensitivity of a metric over distributions (e.g. Hellinger distance ($\hellinger$), $f$-divergences, etc\dots). 2) Using a smooth upper bound on the local sensitivity and scale the noise to this smooth bound rather than global sensitivity, to improve the mechanism accuracy.
-
   \item A full proof on the newly designed mechanism is $(\epsilon, \delta)-$differential privacy is given in paper.
-
 	\item We implemented the new proposed mechanism and other art-of-state mechanisms, comparing the performance in terms of accuracy and privacy.
 \end{itemize}
 
@@ -188,7 +185,7 @@ The data $\dataobs$ will be a sequence of $n\in\mathbb{N}$ binary values, that i
 \[
   \Pr(\dataobs | \theta)\equiv \theta^{\Delta \alpha}(1-\theta)^{n - \Delta \alpha}
 \]
-where $\Delta \alpha = \displaystyle\sum_{i=1}^{n}x_i$.
+where $\Delta \alpha = \sum_{i=1}^{n}x_i$.
 The posterior distribution over $\theta$ can be easily proven to be equal to:\[\betad(\alpha + \Delta \alpha,\beta + n - \Delta \alpha)\]
 From now on we will denote by $\bysinfer(\binomial{n}{\theta}, \betad(\alpha, \beta), \dataobs)$ the previous
 posterior distribution. This notation will prove itself handy when its arguments will change types in the next example and
@@ -201,21 +198,21 @@ The \emph{bias} is represented by the parameter $\vtheta$, the vector of paramet
 is given by a Dirichlet distribution, $\dirichlet{\valpha}$, for $k\in\mathbb{N}$,
 and $\valpha\in(\mathbb{R}^{+})^{k}$, with p.d.f:
 \[
-  \Pr(\vtheta)\equiv\frac{1}{\mbetaf(\valpha)}\cdot \displaystyle\prod_{i=1}^{k}{\theta_i^{\alpha_i-1}}
+\Pr(\vtheta)\equiv\frac{1}{\mbetaf(\valpha)}\cdot\prod_{i=1}^{k}{\theta_i^{\alpha_i-1}}
 \]
 where $\mbetaf(\cdot)$ is the generalized beta function.
 The data $\dataobs$ will be a sequence of $n\in\mathbb{N}$ values
 coming from a universe $\datauni$, such that $\mid\datauni \mid=k$.
 The likelihood function will be:
 \[
-  \Pr(\dataobs|\vtheta)\equiv \displaystyle\prod_{a_i\in\datauni}\theta_{i}^{\Delta \alpha_i},
+\Pr(\dataobs|\vtheta)\equiv\prod_{a_i\in\datauni}\theta_{i}^{\Delta \alpha_i},
 \]
-with $\Delta \alpha_i=\displaystyle\sum_{j=1}^{n}\iverson{x_j=a_i}$, where $\iverson{\cdot}$ represents Iverson bracket notation.
+with $\Delta \alpha_i=\sum_{j=1}^{n}\iverson{x_j=a_i}$, where $\iverson{\cdot}$ represents Iverson bracket notation.
 Denoting by $\Delta\valpha$ the vector $(\Delta\alpha_1,\dots \Delta\alpha_k)$ the posterior distribution over $\vtheta$ turns out to be
 \[
    \bysinfer(\multinomial{n}{\vtheta}, \dirichlet{\valpha}, \dataobs)=\dirichlet{\valpha + \Delta \valpha} 
 \]
-where $+$ denotes the componentwise sum of vectors of reals.
+where $+$ denotes the componentwise sum of vectors.
 
 
 \noindent \textbf{Differential Privacy.}
@@ -231,7 +228,7 @@ The formal definition of $\epsilon$-differential privacy follows.
 
 A randomized mechanism $\mathcal{M}$ with domain $\mathbb{N}^{|\mathcal{X}|}$ and codomain $\range$, is $\epsilon$-differential private, if for all adjacent
 \footnote{Given $\dataobs, \dataobs'\in\{0,1\}^n$  we say that $\dataobs$ and $\dataobs'$ are adjacent and we write, iff
-$\displaystyle \sum_{i}^{n}\iverson{x_i = x'_i }\leq 1$. } $\dataobs, \dataobs' \in \mathbb{N}^{|\mathcal{X}|}$ and all $\mathcal{S} \subseteq \range$:
+$\sum_{i}^{n}\iverson{x_i = x'_i }\leq 1$. } $\dataobs, \dataobs' \in \mathbb{N}^{|\mathcal{X}|}$ and all $\mathcal{S} \subseteq \range$:
 \begin{equation*}
 \Pr[\mathcal{M}(\dataobs) \in \mathcal{S}] \leq e^\epsilon \Pr[\mathcal{M}(\dataobs') \in \mathcal{S}].
 \end{equation*}
@@ -284,13 +281,10 @@ When $\textup{P}=\betad(\alpha_1, \beta_1)$ and $\textup{Q}=\betad(\alpha_2, \be
 \[
  \hellinger(P,Q) =  \sqrt{1 - \frac{\betaf(\frac{\alpha_1 + \alpha_2}{2}, \frac{\beta_1 + \beta_2}{2})}{\sqrt{\betaf(\alpha_1,\beta_1)\betaf(\alpha_2,\beta_2)}}}
 \]
-
 Our choice to use Hellinger distance is motivated by three facts:
 \begin{itemize}
   \item It simplifies calculations in the case of the probabilistic models considered here.
-  
   \item It also automatically yields bounds on the total variation distance, which represents also the maximum advantage an unbounded adversary can have in distingishing two distributions. 
-
   \item The accuracy can be improved by using a smooth bound on Hellinger distance's local sensitivity. As shown in Fig. \ref{fig_sensitivity},
     taking advantage of the gap between the global sensitivity and local sensitivity, we can improve the accuracy by applying an upper bound on local sensitivity instead of using global sensitivity.
 \begin{figure}[ht]
@@ -415,9 +409,9 @@ In order to achieve good accuracy, we make an attempt on the Exponential mechani
 {\Sigma_{r' \in \mathcal{R}}\exp(\frac{\epsilon u(x,r')}{2 LS(\dataobs)})},
 \]
 where $LS(\dataobs)$ is the local sensitivity of scoring function, calculated by:
-\begin{equation*}
+\begin{equation}\label{eq:local_sensitivity_scoring}
 LS(\dataobs)=\max_{\dataobs' \in \datauni^n: \\ \adj{\dataobs}{\dataobs'}, r\in \mathcal{R}}\lvert \hellinger(\bysinfer(\dataobs'), r) - \hellinger(\bysinfer(\dataobs'), r)\rvert.
-\end{equation*}
+\end{equation}
 
 
 \subsubsection{Exponential Mechanism with Hellinger Metric and Smoothed Sensitivity}
@@ -435,17 +429,15 @@ where $d$ is the Hamming distance between two data sets.
 
 \begin{thm}
 \label{thm_gamma_smooth}
-Given data set $\dataobs$, the $\gamma -$smooth sensitivity of Bayesian inference process w.r.t. the Hellinger distance $S(\dataobs)$ satisfying:\\
-For any $\adj{\dataobs}{\dataobs'}$:
-\begin{equation}
-\label{eq_gamma_smooth}
-\frac{1}{S(\dataobs)} - \frac{1}{S(\dataobs')} \leq \gamma.
-\end{equation}
-
+Given data set $\dataobs$, the $\gamma -$smooth sensitivity of Bayesian inference process w.r.t. the Hellinger distance $S(\dataobs)$ satisfying:%\\
+whenever $\adj{\dataobs}{\dataobs'}$, 
+%\begin{equation}
+%\label{eq_gamma_smooth}
+$\frac{1}{S(\dataobs)} - \frac{1}{S(\dataobs')} \leq \gamma$.
+%\end{equation}
 \end{thm}
-Proof is in Appendix I.
+(Proof is in Appendix I.)
 
- 
 \begin{definition}
 \label{def_smoo_2}
 $\hexpmech(\dataobs)$ outputs a candidate $r \in \candidateset$ with probability
@@ -613,7 +605,6 @@ In all cases above, probability values are fixed even data size changes, only th
 %  \end{align*}
 %
 %  $c = \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)$
-
   \begin{align*}
   \lefteqn{ \hexpmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), z) = c  } }\\ 
   &  = \frac{\exp{(\frac{- \epsilon c}{4 S(\dataobs)})}}{\nomalizer{\dataobs}}\\
@@ -722,13 +713,11 @@ we can get the range where we can do better than $\lapmech$ or $\ilapmech$ on ou
 
 \subsection{Efficiency Evaluation}
 \label{subsec_effi}
-The formula for computing the local sensitivity presented in Sec. \ref{sec_mechs}: %$LS(\dataobs)=\max\limits_{\dataobs' \in \datauni^n:\adj{\dataobs}{\dataobs'}, r\in \mathcal{R}}\lvert \hellinger(\bysinfer(\dataobs'), r) - \hellinger(\bysinfer(\dataobs'), r)\rvert$
-\[
-LS(\dataobs)=\max_{\substack{\dataobs' \in \datauni^n:\adj{\dataobs}{\dataobs'},\\ r\in \mathcal{R}}}\lvert \hellinger(\bysinfer(\dataobs), r) - \hellinger(\bysinfer(\dataobs'), r)\rvert
-\]
-can be reduced to $\max\limits_{\dataobs' \in \datauni^n:\adj{\dataobs}{\dataobs'}}\hellinger(\bysinfer(\dataobs), \bysinfer(\dataobs'))$
-by applying the distance triangle property. 
-
+%The formula for computing the local sensitivity presented in Sec. \ref{sec_mechs}: %$LS(\dataobs)=\max\limits_{\dataobs' \in \datauni^n:\adj{\dataobs}{\dataobs'}, r\in \mathcal{R}}\lvert \hellinger(\bysinfer(\dataobs'), r) - \hellinger(\bysinfer(\dataobs'), r)\rvert$
+%\[
+%LS(\dataobs)=\max_{\substack{\dataobs' \in \datauni^n:\adj{\dataobs}{\dataobs'},\\ r\in \mathcal{R}}}\lvert \hellinger(\bysinfer(\dataobs), r) - \hellinger(\bysinfer(\dataobs'), r)\rvert
+%\]
+By the triangle inequality of Hellinger distance, the local sensitivity  (\ref{eq:local_sensitivity_scoring}) presented in Sec. \ref{sec_mechs} can be simplified to $\max\limits_{\dataobs' \in \datauni^n:\adj{\dataobs}{\dataobs'}} \hellinger(\bysinfer(\dataobs), \bysinfer(\dataobs'))$.
 Specifically, the maximum value over ${r \in R}$ always achieves at $r = \bysinfer(\dataobs)$:
 %\begin{equation*}
 %\begin{split}
