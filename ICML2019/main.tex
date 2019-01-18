@@ -70,8 +70,8 @@ We focus on two discrete models for parametric Bayesian
 inference: the Beta-Binomial and the Dirichlet-Multinomial
 models. We study two mechanisms based on the 
 Laplace perturbation of the parameters of the posterior distribution under
-$\ell_1$ norm, and compare them with a discrete mechanism calibrating 
-its score function to a smooth bound on the Hellinger distance.
+$\ell_1$ norm, and compare them with a discrete mechanism
+calibrating noise to a smooth upper bound on the Hellinger distance.
 Accuracy is measured through the Hellinger distance between the posterior
 distribution released by the different mechanisms and the real one.
 We compare the accuracy theoretically and experimentally.
@@ -196,7 +196,7 @@ in section \ref{} when the private mechanisms will be described.
 % \noindent \textbf{Dirichlet-multinomial Systems.}
 
 
-The beta-binomial model can be immediately generalized to the Dirichlet-multinomial model, with underlying data multinomially distributed.
+The Beta-Binomial model can be immediately generalized to the Dirichlet-Multinomial model, with underlying data multinomially distributed.
 The \emph{bias} is represented by the parameter $\vtheta$, the vector of parameters of a categorically distributed random variable. The prior distribution over $\vtheta\in [0,1]^{k}$
 is given by a Dirichlet distribution, $\dirichlet{\valpha}$, for $k\in\mathbb{N}$,
 and $\valpha\in(\mathbb{R}^{+})^{k}$, with p.d.f:
@@ -210,16 +210,16 @@ The likelihood function will be:
 \[
   \Pr(\dataobs|\vtheta)\equiv \displaystyle\prod_{a_i\in\datauni}\theta_{i}^{\Delta \alpha_i},
 \]
-with $\Delta \alpha_i=\displaystyle\sum_{j=1}^{n}\iverson{x_j=a_i}$, where $\iverson{\cdot}$ represents Iverson bracket notation.
+with $\Delta \alpha_i=\displaystyle\sum_{j=1}^{n}\iverson{x_j=a_i}$, where $\iverson{\cdot}$ represents the Iverson bracket notation.
 Denoting by $\Delta\valpha$ the vector $(\Delta\alpha_1,\dots \Delta\alpha_k)$ the posterior distribution over $\vtheta$ turns out to be
 \[
    \bysinfer(\multinomial{n}{\vtheta}, \dirichlet{\valpha}, \dataobs)=\dirichlet{\valpha + \Delta \valpha} 
 \]
-where $+$ denotes the componentwise sum of vectors of reals.
+where $+$ denotes the componentwise sum of vectors of reals. 
 
 
 \noindent \textbf{Differential Privacy.}
-\emph{Differential privacy} is a strong quantitative notion of statistical privacy proposed by \cite{}.
+\emph{Differential privacy} is a strong quantitative notion of statistical privacy proposed by \cite{dwork2006}.
 Differential privacy of a mechanism implies that changing the input of a mechanism slightly only reflects
 in a controlled and bounded way on the output distribution. 
 Formally, the $\epsilon$ parameter
@@ -239,19 +239,19 @@ $\displaystyle \sum_{i}^{n}\iverson{x_i = x'_i }\leq 1$. } $\dataobs, \dataobs' 
 \end{definition}
 
 
-\noindent \textbf{Technical Problem Statement.}
+\noindent \textbf{Problem setting.}
 \label{subsec_problem}
 We are interested in exploring mechanisms for privately releasing the full posterior
-distributions derived in section \ref{sec_background}, as opposed to just sampling from them.
+distributions derived in Section \ref{sec_background}.
 It's worth noticing that the posterior distributions are fully characterized
-by their parameters, and the family (Beta, Dirichlet distribution) they belong to. Hence, in case of the
-Beta-Binomial model we are interested in releasing a private version of the pair of
+by their parameters, and the family (Beta and Dirichlet distribution) they belong to. Hence, in case of the
+Beta-Binomial model we are interested in releasing a private version of the Beta distribution with 
 parameters $(\alpha',\beta')=(\alpha + \Delta \alpha,\beta + n - \Delta \alpha)$, and
-in the case of the Dirichlet-multinomial model we are interested in a private version of
+in the case of the Dirichlet-Multinomial model we are interested in a private version of the Dirichlet distribution with parameter
 $\valpha'=(\valpha + \Delta \valpha)$. \cite{zhang2016differential} and \cite{xiao2012bayesian}
 have already attacked this problem by adding independent Laplacian noise to the
 parameters of the posteriors. That is, in the case of the Beta-Binomial system,
-the value released would be: $(\tilde\alpha,\tilde\beta)=(\alpha +  \widetilde{\Delta \alpha},\beta + n - \widetilde{\Delta \alpha})$
+the values released would be: $(\tilde\alpha,\tilde\beta)=(\alpha +  \widetilde{\Delta \alpha},\beta + n - \widetilde{\Delta \alpha})$
 where $\widetilde{\Delta \alpha}\thicksim \lap{\Delta \alpha}{\frac{2}{\epsilon}}$,
 and where $\lap{\mu}{\nu}$ denotes a Laplace random variable with mean $\mu$ and scale $\nu$.
 This mechanism is $\epsilon$-differentially private, and the noise is
@@ -261,26 +261,28 @@ adjacent data observations $\dataobs, \dataobs'$, that, from a unique prior, giv
 distributions, characterized by the pairs
 $(\alpha',\beta')$ and $(\alpha'',\beta'')$ then
 $|\alpha'-\alpha''|+|\beta'-\beta''|\leq 2$.
-This argument extends similarly to the Dirichelet-Multinomial system. Details are introduced in Sec. \ref{sec_mechs}.\\
+This argument extends similarly to the Dirichelet-Multinomial system. Details are introduced in Section \ref{sec_mechs}.\\
 However, in previous works, the accuracy of the posterior was measured with respect to $\ell_1$ norm. That is, an upper bound was given on
 \[
   \Pr[|\alpha - \tilde\alpha| + |\beta - \tilde\beta |\geq \gamma ]
 \]
-where $(\alpha, \beta), (\tilde\alpha,\tilde\beta)$ are as defined above.
+where $(\alpha, \beta), (\tilde\alpha,\tilde\beta)$ are the real and the perturbed pairs of parameters, respectively.
 \todo{However, distance between
 distributions are more naturally to be measured by distribution
 metrics such as $f$-divergence, Hellinger distance, etc., than the $\ell_1$ norm shown above.}
 {\color{blue} changed a bit, still not sure this is a good way to put it...}
 This gives us motivation for exploring the design space
 of mechanisms by considering different norms. e.g. a norm over space of measures.
-to compute the sensitivity and provide guarantees on the accuracy.\\
-We will use the Hellinger distance $\hellinger(\cdot,\cdot)$, 
+to compute the sensitivity and provide guarantees on the accuracy.
+
+
+We will use the \emph{Hellinger} distance $\hellinger(\cdot,\cdot)$.
 Given two probability distributions $\textup{P}$ and $\textup{Q}$,
-the Hellinger distance between them is defined as:
+the square of the Hellinger distance between them is defined as:
 \[
-\hellinger^2(P,Q) = \frac{1}{2} \int \bigg(\frac{dP}{d \lambda} - \frac{dQ}{d \lambda}\bigg)^2 d \lambda
+\hellinger(P,Q)^2 =\frac{1}{2} \int \bigg(\frac{dP}{d \lambda} - \frac{dQ}{d \lambda}\bigg)^2 d \lambda
 \]
-When $\textup{P}=\betad(\alpha_1, \beta_1)$ and $\textup{Q}=\betad(\alpha_2, \beta_2)$ the above reduces to: 
+When $\textup{P}=\betad(\alpha_1, \beta_1)$ and $\textup{Q}=\betad(\alpha_2, \beta_2)$ the above can be reduced to: 
 \[
  \hellinger(P,Q) =  \sqrt{1 - \frac{\betaf(\frac{\alpha_1 + \alpha_2}{2}, \frac{\beta_1 + \beta_2}{2})}{\sqrt{\betaf(\alpha_1,\beta_1)\betaf(\alpha_2,\beta_2)}}}
 \]
@@ -289,10 +291,10 @@ Our choice to use Hellinger distance is motivated by three facts:
 \begin{itemize}
   \item It simplifies calculations in the case of the probabilistic models considered here.
   
-  \item It also automatically yields bounds on the total variation distance, which represents also the maximum advantage an unbounded adversary can have in distingishing two distributions. 
+  \item It also automatically yields bounds on the total variation distance, which represents also the maximum advantage an adversary can have in distingishing two distributions. 
 
-  \item The accuracy can be improved by using a smooth bound on Hellinger distance's local sensitivity. As shown in Fig. \ref{fig_sensitivity},
-    taking advantage of the gap between the global sensitivity and local sensitivity, we can improve the accuracy by applying an upper bound on local sensitivity instead of using global sensitivity.
+  \item The accuracy can be improved by using a smooth bound on Hellinger distance's local sensitivity. Indeed, as shown in Figure \ref{fig_sensitivity}, there can be a gap
+    between the global sensitivity and the local sensitivity.
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.32\textwidth]{sensitivity_2d.eps}
