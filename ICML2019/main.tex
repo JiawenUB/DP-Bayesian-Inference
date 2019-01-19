@@ -90,41 +90,53 @@ financial, social, and transportation fields. In order to provide
 better services, these applications need large amounts of users data
 putting at risk the privacy of individual users contributing their data. 
 Differential privacy was proposed a decade ago to address these
-situations and it on its way to become a gold standard in data
+situations and it is on its way to become the gold standard in data
 privacy.  
 
 Bayesian inference is a standard statistical tool that is useful to
-estimate a posterior distribution when given a prior distribution and
-some observed data. 
+estimate a posterior distribution when a prior distribution is given
+and some data is observed. 
 
 In this work we consider the design space of  parametric Bayesian
 inference mechanisms guaranteeing differential privacy. Our work is
 motivated by recent developments in the area of probabilistic
-programming where several tools have been proposed to perfor
+programming where several tools have been proposed to perform
 parametric and non-parametric Bayesian inference in an efficient
-way. The in
-for our work is the recent development of 
-
-In particular
-we focus on two classical models: the Beta-Binomial and the
-Dirichlet-Multinomial models. These are classical models 
+way.
 
 
-Our work is conducted under a Bayesian inference scenario, where the posterior distribution is the analysis result we obtained from the data.
-Publishing the posterior distribution inferred from a sensitive dataset can
-leak information about the individuals in the dataset.
+We focus on two classical models: the Beta-Binomial and the
+Dirichlet-Multinomial models. In the Beta-Binomial model the goal
+is to estimate an unknown fraction of a population from a sequence
+of Bernoulli trials each of which is either 0 or 1 and from an initial
+prior belief, a Beta distribution, on that fraction; the trials are assumed to be independent
+given the value of the bias. In the Dirichlet-Multinomial model a Multinomial
+distribution is used to describe categorical data with more than
+two possible outcomes. Similarly, the aim is to learn the various
+unknown proportions of a population from a sequence of trials
+each of which having more than two possible outcomes. Again,
+a prior belief, a Dirichlet distribution, is used to describe the initial knowledge
+about those fractions. The posterior distributions on the proportions will be
+respectively a Beta distribution and a Dirichlet distribution.
+
+
+In our work  the posterior distribution is the analysis result we obtained from the data.
+While the prior distributions are considerd public information,  publishing the posterior distribution
+inferred from a sensitive dataset can leak information about the individuals in the dataset.
 In order to guarantee differential privacy and to protect the
 individuals' data we can add noise to the posterior before releasing it.
-The amount of the noise that we need to introduced
+The amount of the noise that we need to introduce
 depends on the privacy parameter $\epsilon$ and the sensitivity of the inference to
 small changes in the data set. 
 Sensitivity can be computed in many different ways based on which metric space
-we consider on the output set of the mechanism. In the literature on private Bayesian
-inference (\cite{zhang2016differential,xiao2012bayesian}), it is only measured with
-respect to the vector of numbers parametrizing the output distribution using, e.g. the $\ell_1$ norm.
-A more natural approach which we explore here, is to measure sensitivity with respect to a metric on the space of inferred probability distributions.
-A re-loved question is that of how to measure accuracy. Again,
-this can be answered in different ways based on the metric imposed on the output space, and yet again
+we consider on the output space of the mechanism. In the literature on private Bayesian
+inference (e.g. \cite{zhang2016differential,xiao2012bayesian}), it is usually measured on
+the vector of numbers parametrizing the output distribution using, e.g. the $\ell_1$ norm.
+A more natural approach which we explore here, is to measure sensitivity with respect to
+a metric on the space of inferred probability distributions.
+Another question is that of how to measure accuracy. Again,
+this can be answered in different ways based on the metric
+imposed on the output space, and yet again
 only in few works in literature (e.g. \cite{zhang2016differential})
 distances between probability measures have been used for these purposes.
 
@@ -136,6 +148,7 @@ the numeric parameters of the distributions.
 We will see that in some cases this can happen.
 
 \noindent \textbf{Main contributions.}
+What follows is a summary of the main contributions of this work.
 \begin{itemize}
 	\item We design a new differentially private Bayesian inference mechanism based on the standard exponential mechanism.
 	\item We explored two ways to improve the accuracy: 1) calibrating noise to the sensitivity of a metric over distributions (e.g. Hellinger distance ($\hellinger$), $f$-divergences, etc\dots). 2) Using a smooth upper bound on the local sensitivity and scale the noise to this smooth bound rather than global sensitivity, to improve the mechanism accuracy.
