@@ -399,7 +399,7 @@ Our exploration starts from the standard exponential mechanism $\expmech(x,u,\ca
 where $u(x,r)$ is the Hellinger scoring function over candidates, $-\hellinger(\bysinfer(\dataobs), r)$, and $GS$ is the global sensitivity of the scoring function (i.e. the global sensitivity of the Bayesian inference w.r.t the Hellinger distance), calculated by:
 \begin{equation*}
 GS = 
-\max_{\{|\dataobs,\dataobs'| \leq 1;\dataobs,\dataobs'\in \mathcal{X}^n\}}\max_{\{r\in \mathcal{R}\}}
+\max_{\dataobs' \in \datauni^n: \\ \adj{\dataobs}{\dataobs'}}\max_{\{r\in \mathcal{R}\}}
 |\hellinger(\bysinfer(\dataobs), r) - \hellinger(\bysinfer(\dataobs'), r)|
 \end{equation*}
 
@@ -511,7 +511,7 @@ $\lapmechPr{\dataobs}{\ldots}$? }
 &
 \Pr\left[
 \begin{aligned}
-\lefteqn{\hellinger(\bysinfer(\dataobs), r_L )}\\ 
+\lefteqn{\hellinger(\bysinfer(\dataobs), z )}\\ 
 &= \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)
 \end{aligned}
 \right]
@@ -522,7 +522,7 @@ $\lapmechPr{\dataobs}{\ldots}$? }
 \frac{1}{2} (e^{\frac{\epsilon (t + 1)}{\Delta \bysinfer}} - e^{\frac{\epsilon (t)}{\Delta \bysinfer}}) & t < 0
 \end{cases}
 \end{align*}
-where $\betad(\alpha, \beta)$ is the true posterior distribution, i.e., $\bysinfer(\dataobs) = \betad(\alpha, \beta)$, and $r_L$ be the posterior produced by Laplace mechanism, i.e., $r_L = \betad(\alpha + \lfloor Y \rfloor, \beta - \lfloor Y \rfloor)$.
+where $\betad(\alpha, \beta)$ is the true posterior distribution, i.e., $\bysinfer(\dataobs) = \betad(\alpha, \beta)$, and $r_L$ be the posterior produced by Laplace mechanism, i.e., $z = \betad(\alpha + \lfloor Y \rfloor, \beta - \lfloor Y \rfloor)$.
 \end{lem}
 (Proof is in Appendix III)
 
@@ -534,8 +534,7 @@ where $\betad(\alpha, \beta)$ is the true posterior distribution, i.e., $\bysinf
 %  \sqrt{1 - \frac{\frac{t}{2}}{a + \frac{t}{2}}}
 %  \cdot
 %  \sqrt{1 - \frac{\frac{t}{2}}{\beta}}} = 0.07237464051$.\\
-Instantiating $t$ with specific values ($0,1,2$ for example), we get the following accuracy equations on Laplace mechanism:
-\todo{What is the value of $\varepsilon$?}
+Instantiating $t$ with specific values ($0,1,2$ for example) and $\epsilon = 1$, we get the following accuracy equations on Laplace mechanism:
 %\begin{align*}
 %&\lapmechPr{\dataobs}{
 %\textstyle\hellinger(\bysinfer(\dataobs), r_L ) = 0
@@ -561,7 +560,7 @@ Instantiating $t$ with specific values ($0,1,2$ for example), we get the followi
 \begin{align*}
 &\lapmechPr{\dataobs}{
 \begin{aligned}
-\lefteqn{\hellinger(\bysinfer(\dataobs), r_L )}\\ 
+\lefteqn{\hellinger(\bysinfer(\dataobs), z )}\\ 
 &= \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)
 \end{aligned}
 }\\
@@ -577,18 +576,23 @@ Instantiating $t$ with specific values ($0,1,2$ for example), we get the followi
 \label{subsec_accuracy_lap}
 Accuracy bound for improved Laplace mechanism is obtained from the standard Laplace Mechanism by replacing the sensitivity of $\Delta \bysinfer$ with $1$ in Beta-binomial model and $2$ in Dirichlet-multinomial model.
 
-Given $t$ with the same specific values ($0,1,2$ as above), we get the following accuracy equations on improved Laplace mechanism:
-\todo{
-What is the value of $\varepsilon$?
-Do we have the formula
-\[
-\ilapmechPr{\dataobs}{\begin{aligned}
-\lefteqn{\hellinger(\bysinfer(\dataobs), r_L )}\\ 
+Given $t$ with the same specific values ($0,1,2$) and $\epsilon = 1$ as above, we get the following accuracy equations on improved Laplace mechanism:
+
+\begin{align*}
+&
+\Pr\left[
+\begin{aligned}
+\lefteqn{\hellinger(\bysinfer(\dataobs), z )}\\ 
 &= \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)
 \end{aligned}
-}?
-\]
-}
+\right]
+\\
+&\qquad = 
+\begin{cases}
+\frac{1}{2} (e^{- \frac{\epsilon (t)}{\Delta \bysinfer}} - e^{- \frac{\epsilon (t + 1)}{\Delta \bysinfer}}) &  t \geq 0\\
+\frac{1}{2} (e^{\frac{\epsilon (t + 1)}{\Delta \bysinfer}} - e^{\frac{\epsilon (t)}{\Delta \bysinfer}}) & t < 0
+\end{cases}
+\end{align*}
 %Given $t$ with the same specific values ($1, 2, 3$ as above), we get following accuracy equations:
 %
 %  $\lapmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), r_L ) = 0} = 0.31606027941$.
@@ -796,37 +800,16 @@ For any $r \in \mathcal{R}$, we have
 \end{align*}
 I think it would be a proposition.
 }
-%In particular, the maximum value over ${r \in R}$ always achieves at $r = \bysinfer(\dataobs)$.
-%\begin{equation*}
-%\begin{split}
-%LS(\dataobs) 
-%  & = \max\limits_{\{|\dataobs,\dataobs'| \leq 1;\dataobs'\in \mathcal{X}^n\}} \{\hellinger(\bysinfer(\dataobs), \bysinfer(\dataobs)) \\
-%  & - \hellinger(\bysinfer(\dataobs'), \bysinfer(\dataobs))|\} \\
-%  & = \max\limits_{\{|\dataobs,\dataobs'| \leq 1;\dataobs'\in \mathcal{X}^n\}} \{\hellinger(\bysinfer(\dataobs'), \bysinfer(\dataobs))|\}.
-%\end{split}
-%\begin{align*}
-%LS(\dataobs)
-%& = \max\limits_{\dataobs' \in \datauni^n:\adj{\dataobs}{\dataobs'}}
-%\left|~
-%\begin{aligned}
-%&\hellinger(\bysinfer(\dataobs), \bysinfer(\dataobs))\\
-%&\quad - \hellinger(\bysinfer(\dataobs'), \bysinfer(\dataobs))
-%\end{aligned}
-%\right|\\
-%  & = \max\limits_{\dataobs' \in \datauni^n:\adj{\dataobs}{\dataobs'}}
-%\hellinger(\bysinfer(\dataobs'), \bysinfer(\dataobs)).
-%\end{align*}
 
-%\end{equation*}
 
-This equation is validated by an experimental result shown in Fig. \ref{fig_efficiency}. We calculate the $\max\limits_{\{|\dataobs,\dataobs'| \leq 1;\dataobs'\in \mathcal{X}^n\}}$ value for every candidate $r \in \candidateset$. It is shown that maximum value taken when  $r = \bysinfer(\dataobs)$.
+% This equation is validated by an experimental result shown in Fig. \ref{fig_efficiency}. We calculate the $\max\limits_{\{|\dataobs,\dataobs'| \leq 1;\dataobs'\in \mathcal{X}^n\}}$ value for every candidate $r \in \candidateset$. It is shown that maximum value taken when  $r = \bysinfer(\dataobs)$.
 
-\begin{figure}[ht]
-\centering
-\includegraphics[width=0.45\textwidth]{efficiency.eps}
-\caption{Experimental Results for Finding the Local Sensitivity Efficiently}
-\label{fig_efficiency}
-\end{figure}
+% \begin{figure}[ht]
+% \centering
+% \includegraphics[width=0.45\textwidth]{efficiency.eps}
+% \caption{Experimental Results for Finding the Local Sensitivity Efficiently}
+% \label{fig_efficiency}
+% \end{figure}
 
 \subsection{Accuracy Evaluation}
 \subsubsection{Theoretical Results}
