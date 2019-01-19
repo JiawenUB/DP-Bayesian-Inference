@@ -417,6 +417,15 @@ where $LS(\dataobs)$ is the local sensitivity of scoring function, calculated by
 LS(\dataobs)=\max_{\dataobs' \in \datauni^n: \\ \adj{\dataobs}{\dataobs'}, r\in \mathcal{R}}\lvert \hellinger(\bysinfer(\dataobs'), r) - \hellinger(\bysinfer(\dataobs'), r)\rvert.
 \end{equation}
 
+Thanks to the symmetry and triangle-inequality of the Hellinger
+distance, we can simplify the local sensitivity.
+\begin{lem}
+\[
+LS(\dataobs) = \max\limits_{\dataobs' \in \datauni^n:\adj{\dataobs}{\dataobs'}} \hellinger(\bysinfer(\dataobs), \bysinfer(\dataobs')).
+\]
+\end{lem}
+
+(Proof is in Appendix IV.)
 
 \subsubsection{Exponential Mechanism with Hellinger Metric and Smoothed Sensitivity}
 \label{subsec_hexpmech}
@@ -767,40 +776,40 @@ we can get the range where we can do better than $\lapmech$ or $\ilapmech$ on ou
 \section{Experimental Evaluations}
 \label{sec_experiment}
 
-\subsection{Efficiency Evaluation}
-\label{subsec_effi}
-%The formula for computing the local sensitivity presented in Sec. \ref{sec_mechs}: %$LS(\dataobs)=\max\limits_{\dataobs' \in \datauni^n:\adj{\dataobs}{\dataobs'}, r\in \mathcal{R}}\lvert \hellinger(\bysinfer(\dataobs'), r) - \hellinger(\bysinfer(\dataobs'), r)\rvert$
-%\[
-%LS(\dataobs)=\max_{\substack{\dataobs' \in \datauni^n:\adj{\dataobs}{\dataobs'},\\ r\in \mathcal{R}}}\lvert \hellinger(\bysinfer(\dataobs), r) - \hellinger(\bysinfer(\dataobs'), r)\rvert
-%\]
-Thanks to the symmetry and triangle-inequality of the Hellinger
-distance, we can simplify the local sensitivity.
-\begin{lem}
-\[
-LS(\dataobs) = \max\limits_{\dataobs' \in \datauni^n:\adj{\dataobs}{\dataobs'}} \hellinger(\bysinfer(\dataobs), \bysinfer(\dataobs')).
-\]
-\end{lem}
-\begin{proof}
-For any $r \in \mathcal{R}$ and $\dataobs' \in \datauni^n$ with $\adj{\dataobs}{\dataobs'}$, we have
-\begin{align*}
-&\lvert \hellinger(\bysinfer(\dataobs), r) - \hellinger(\bysinfer(\dataobs'), r)\rvert\\
-& = 
-\begin{cases}
-\hellinger(\bysinfer(\dataobs), r) - \hellinger(\bysinfer(\dataobs'),r) & \text{positive case}\\
-\hellinger(\bysinfer(\dataobs'),r) - \hellinger(\bysinfer(\dataobs), r) & \text{negative case}
-\end{cases}\\
-& \leq 
-\begin{cases}
-\hellinger(\bysinfer(\dataobs'), \bysinfer(\dataobs))+
-\hellinger(\bysinfer(\dataobs'), r) - \hellinger(\bysinfer(\dataobs'),r) & \\
-\hellinger(\bysinfer(\dataobs'), \bysinfer(\dataobs))+
-\hellinger(\bysinfer(\dataobs), r) - \hellinger(\bysinfer(\dataobs), r)&
-\end{cases}\\
-&= \hellinger(\bysinfer(\dataobs'), \bysinfer(\dataobs))
-\end{align*}
-The equality holds if $r = \bysinfer(\dataobs)$ or $r = \bysinfer(\dataobs')$.
-Hence, we conclude the statement of this lemma.
-\end{proof}
+% \subsection{Efficiency Evaluation}
+% \label{subsec_effi}
+% %The formula for computing the local sensitivity presented in Sec. \ref{sec_mechs}: %$LS(\dataobs)=\max\limits_{\dataobs' \in \datauni^n:\adj{\dataobs}{\dataobs'}, r\in \mathcal{R}}\lvert \hellinger(\bysinfer(\dataobs'), r) - \hellinger(\bysinfer(\dataobs'), r)\rvert$
+% %\[
+% %LS(\dataobs)=\max_{\substack{\dataobs' \in \datauni^n:\adj{\dataobs}{\dataobs'},\\ r\in \mathcal{R}}}\lvert \hellinger(\bysinfer(\dataobs), r) - \hellinger(\bysinfer(\dataobs'), r)\rvert
+% %\]
+% Thanks to the symmetry and triangle-inequality of the Hellinger
+% distance, we can simplify the local sensitivity.
+% \begin{lem}
+% \[
+% LS(\dataobs) = \max\limits_{\dataobs' \in \datauni^n:\adj{\dataobs}{\dataobs'}} \hellinger(\bysinfer(\dataobs), \bysinfer(\dataobs')).
+% \]
+% \end{lem}
+% \begin{proof}
+% For any $r \in \mathcal{R}$ and $\dataobs' \in \datauni^n$ with $\adj{\dataobs}{\dataobs'}$, we have
+% \begin{align*}
+% &\lvert \hellinger(\bysinfer(\dataobs), r) - \hellinger(\bysinfer(\dataobs'), r)\rvert\\
+% & = 
+% \begin{cases}
+% \hellinger(\bysinfer(\dataobs), r) - \hellinger(\bysinfer(\dataobs'),r) & \text{positive case}\\
+% \hellinger(\bysinfer(\dataobs'),r) - \hellinger(\bysinfer(\dataobs), r) & \text{negative case}
+% \end{cases}\\
+% & \leq 
+% \begin{cases}
+% \hellinger(\bysinfer(\dataobs'), \bysinfer(\dataobs))+
+% \hellinger(\bysinfer(\dataobs'), r) - \hellinger(\bysinfer(\dataobs'),r) & \\
+% \hellinger(\bysinfer(\dataobs'), \bysinfer(\dataobs))+
+% \hellinger(\bysinfer(\dataobs), r) - \hellinger(\bysinfer(\dataobs), r)&
+% \end{cases}\\
+% &= \hellinger(\bysinfer(\dataobs'), \bysinfer(\dataobs))
+% \end{align*}
+% The equality holds if $r = \bysinfer(\dataobs)$ or $r = \bysinfer(\dataobs')$.
+% Hence, we conclude the statement of this lemma.
+% \end{proof}
 
 %In particular, the maximum value over ${r \in R}$ always achieves at $r = \bysinfer(\dataobs)$.
 %\begin{equation*}
@@ -1433,6 +1442,29 @@ Unfolding the Hellinger distance formula, we get:\\
    &\qquad = \frac{1}{2} (e^{- \frac{\epsilon (t)}{\Delta \bysinfer}} - e^{- \frac{\epsilon (t + 1)}{\Delta \bysinfer}})
   \end{align*}
 
+\end{proof}
+
+\section{Appendix IV}
+\begin{proof}
+For any $r \in \mathcal{R}$ and $\dataobs' \in \datauni^n$ with $\adj{\dataobs}{\dataobs'}$, we have
+\begin{align*}
+&\lvert \hellinger(\bysinfer(\dataobs), r) - \hellinger(\bysinfer(\dataobs'), r)\rvert\\
+& = 
+\begin{cases}
+\hellinger(\bysinfer(\dataobs), r) - \hellinger(\bysinfer(\dataobs'),r) & \text{positive case}\\
+\hellinger(\bysinfer(\dataobs'),r) - \hellinger(\bysinfer(\dataobs), r) & \text{negative case}
+\end{cases}\\
+& \leq 
+\begin{cases}
+\hellinger(\bysinfer(\dataobs'), \bysinfer(\dataobs))+
+\hellinger(\bysinfer(\dataobs'), r) - \hellinger(\bysinfer(\dataobs'),r) & \\
+\hellinger(\bysinfer(\dataobs'), \bysinfer(\dataobs))+
+\hellinger(\bysinfer(\dataobs), r) - \hellinger(\bysinfer(\dataobs), r)&
+\end{cases}\\
+&= \hellinger(\bysinfer(\dataobs'), \bysinfer(\dataobs))
+\end{align*}
+The equality holds if $r = \bysinfer(\dataobs)$ or $r = \bysinfer(\dataobs')$.
+Hence, we conclude the statement of this lemma.
 \end{proof}
 \end{document}
 
