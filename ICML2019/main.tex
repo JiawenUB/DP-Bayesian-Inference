@@ -303,7 +303,7 @@ Our choice to use Hellinger distance is motivated by three facts:
 
 \section{Private Mechanisms}
 \label{sec_mechs}
-\subsection{Calibrating noise w.r.t. $\ell_1$ norm}
+\subsection{Calibrating noise w.r.t. $\ell_1$ norm ($\lapmech$)}
 We start off by presenting a mechanism based on the Laplace primitive.
 The mechanism, denoted by {\color{red}{i think this macro has too many arguments}}($\lapmech(\dataobs,\bysinfer, \mathsf{prior}, \mathsf{likelihood}, \epsilon)$),
 simply adds Laplace noise to the parameters of the posterior distributions. The mechanisms also performs a
@@ -320,14 +320,14 @@ i.e., proportional to the dimensionality.
   \caption{$\lapmech$ in Beta-binomial model}
   \label{mech:lapmech}
   \begin{algorithmic}
-  \REQUIRE observed data set $\dataobs \in \{0,1\}^n$, inference algorithm: $\bysinfer$, 
+  \INPUT observed data set $\dataobs \in \{0,1\}^n$, inference algorithm: $\bysinfer$, 
   prior: $\betad(\alpha, \beta)$, likelihood: $\binomial{n}{\theta}$, $\epsilon$
   \STATE \quad {\bf let} $\betad(\alpha', \beta') = \bysinfer(\binomial{n}{\theta}, \betad(\alpha, \beta), \dataobs)$.  
-  \STATE \quad {\bf let} $\eta \sim \lap{0}{\frac{2}{\epsilon}}$.
-  \STATE \quad {\bf let} $\tilde{\alpha}=\alpha + \lfloor{(\alpha' - \alpha) + \eta}\rfloor^n_0$ 
-  \STATE \quad {\bf let} $\tilde{\beta}=\beta + n - \lfloor{(\alpha' - \alpha) + \eta}\rfloor^n_0$ 
+  \STATE \quad  $\eta \sim \lap{0}{\frac{2}{\epsilon}}$.
+  \STATE \quad  $\tilde{\alpha}=\alpha + \lfloor{(\alpha' - \alpha) + \eta}\rfloor^n_0$ 
+  \STATE \quad  $\tilde{\beta}=\beta + n - \lfloor{(\alpha' - \alpha) + \eta}\rfloor^n_0$ \\
   % \RETURN $a_{k+1}$.
-  \ENSURE $\betad(\tilde{\alpha}, \tilde{\beta})$
+  \noindent {\bf return} $\betad(\tilde{\alpha}, \tilde{\beta})$
   \end{algorithmic}
   \end{algorithm}
 
@@ -338,7 +338,7 @@ i.e., proportional to the dimensionality.
 
 
 
-\subsection{Improving the sensitivity}
+\subsection{Improving the sensitivity ($\ilapmech$)}
  The accuracy of $\lapmech$ can be reduced to a constant.
  Indeed, two adjacent data sets $\dataobs, \dataobs'$  induce posterior distributions -- $\bysinfer(\dataobs), \bysinfer(\dataobs')$ --
  whose parameters differ by at most 2 w.r.t $\ell_1$ norm. This because we can see the parameters of the distributions as an histogram.
@@ -355,7 +355,7 @@ i.e., proportional to the dimensionality.
   \caption{$\ilapmech$ in Dirichlet-multinomial model}
   \label{mech:ilapmech}
   \begin{algorithmic}
-  \REQUIRE observed data set $\dataobs \in \mathcal{X}^n$, inference algorithm: $\bysinfer$, 
+  \INPUT observed data set $\dataobs \in \mathcal{X}^n$, inference algorithm: $\bysinfer$, 
   prior: $\dirichlet{\valpha}$, likelihood: $\multinomial{n}{\vtheta}$, $\epsilon$
   \STATE \quad {\bf let} $\dirichlet{\valpha'} = \bysinfer(\multinomial{n}{\vtheta}, \dirichlet{\valpha}, \dataobs)$, $k = |\mathcal{X}|$.
   \STATE \quad {\bf Initialize} a vector $\tilde{\valpha} = (0, \dots, 0 )$ of $k$ dimensions .
@@ -364,7 +364,7 @@ i.e., proportional to the dimensionality.
   \STATE \quad \quad  $\tilde{\alpha_i}=\alpha_i + \lfloor{(\alpha_i' - \alpha_i) + \eta}\rfloor^n_0$ 
   % \RETURN $a_{k+1}$.
   \STATE \quad $\tilde{\alpha_k} = \alpha_k + \lfloor n - \sum_{i = 1}^{k-1}\lfloor{(\alpha_i' - \alpha_i) + \eta_i}\rfloor^n_0 \rfloor^n_0$
-  \ENSURE $\dirichlet{\tilde{\valpha}}$
+  \STATE {\bf return} $\dirichlet{\tilde{\valpha}}$
   \end{algorithmic}
   \end{algorithm}
 
@@ -380,7 +380,7 @@ the extension to the Dirichelet-Multinomial model is straightforward.
 Given a prior distribution $\bprior=\betad(\alpha, \beta)$ and an observed data set: $\dataobs\in\{0,1\}^n$,
 we define the follwing set  where the mechanism will sample from:
 \[
-  \candidateset\equiv\{\bysinfer(\binomial{n}{\theta}, \bprior,\dataobs')\mid \dataobs' \in \{0,1\}^n\}.
+  \candidateset\equiv\{\bysinfer(\binomial{n}{\theta}, \bprior,\dataobs)\mid \dataobs \in \{0,1\}^n\}.
 \]
 Notice that the above set reduces to:
 \[
@@ -389,7 +389,7 @@ Notice that the above set reduces to:
 We use $\bysinfer(\dataobs)$ to denote the Bayesian inference process on the observed data $\dataobs$
 when the other two parameters, that is prior and likelihood, are fixed. 
 
-\subsubsection{Standard Exponential Mechanism with Hellinger Metric}
+\subsubsection{Exponential Mechanism with Hellinger Distance Metric ($\expmech$)}
 Our exploration starts from the standard exponential mechanism $\expmech(x,u,\candidateset)$, which samples an element from the candidate set $\candidateset$ with probability proportional to $\exp(\frac{\epsilon u(x,r)}{2 GS})$:
 \[
 \underset{z \thicksim \expmech(x,u,\candidateset) }{\Pr}[z=r] = \frac
@@ -404,7 +404,7 @@ GS =
 \end{equation*}
 
 
-\subsubsection{Exponential Mechanism with Hellinger Metric and Local Sensitivity}
+\subsubsection{Exponential Mechanism with Hellinger Metric and Local Sensitivity ($\lexpmech$)}
 \label{subsec_emls}
 In order to achieve good accuracy, we make an attempt on the Exponential mechanism with local sensitivity $\lexpmech(x,u,\candidateset)$. This is just an attempt since local sensitivity is non-private. $\lexpmech$ shares the same candidate set and utility function as $\expmech$, outputting a result $r \in \mathcal{R}$ with probability proportional to $\exp(\frac{\epsilon u(x,r)}{2 LS(\dataobs)})$:
 \[
@@ -427,7 +427,7 @@ LS(\dataobs) = \max\limits_{\dataobs' \in \datauni^n:\adj{\dataobs}{\dataobs'}} 
 
 (Proof is in Appendix IV.)
 
-\subsubsection{Exponential Mechanism with Hellinger Metric and Smoothed Sensitivity}
+\subsubsection{Exponential Mechanism with Hellinger Metric and Smoothed Sensitivity ($\hexpmech$)}
 \label{subsec_hexpmech}
 In this section, we explore a new mechanism in Exponential family, which can achieve good accuracy and differential privacy simultaneously, by scaling the noise to a new sensitivity. We first define the new sensitivity we are going to use and then present the mechanism.
 \begin{definition}
