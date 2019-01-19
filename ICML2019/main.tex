@@ -514,16 +514,14 @@ $\hexpmech$ is $\epsilon$-differential privacy by setting $\gamma = 1.0$.
 \begin{lem}
 \label{lem_acc_lap}
 Given $Y \thicksim \lap{0}{b}$, the accuracy bound developed for $\lapmech$ is:
-\todo{Is it correct
-$\lapmechPr{\dataobs}{\ldots}$? }
 \begin{align*}
 &
-\Pr\left[
+\lapmechPr{\dataobs}{
 \begin{aligned}
 \lefteqn{\hellinger(\bysinfer(\dataobs), z )}\\ 
 &= \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)
 \end{aligned}
-\right]
+}
 \\
 &\qquad = 
 \begin{cases}
@@ -589,17 +587,17 @@ Given $t$ with the same specific values ($0,1,2$) and $\epsilon = 1$ as above, w
 
 \begin{align*}
 &
-\Pr\left[
+\ilapmechPr{\dataobs}{
 \begin{aligned}
 \lefteqn{\hellinger(\bysinfer(\dataobs), z )}\\ 
 &= \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)
 \end{aligned}
-\right]
+}
 \\
 &\qquad = 
 \begin{cases}
-\frac{1}{2} (e^{- \frac{\epsilon (t)}{\Delta \bysinfer}} - e^{- \frac{\epsilon (t + 1)}{\Delta \bysinfer}}) &  t \geq 0\\
-\frac{1}{2} (e^{\frac{\epsilon (t + 1)}{\Delta \bysinfer}} - e^{\frac{\epsilon (t)}{\Delta \bysinfer}}) & t < 0
+\frac{1}{2} (e^{- \frac{\epsilon (t)}{2}} - e^{- \frac{\epsilon (t + 1)}{2}}) &  t \geq 0\\
+\frac{1}{2} (e^{\frac{\epsilon (t + 1)}{2}} - e^{\frac{\epsilon (t)}{2}}) & t < 0
 \end{cases}
 \end{align*}
 %Given $t$ with the same specific values ($1, 2, 3$ as above), we get following accuracy equations:
