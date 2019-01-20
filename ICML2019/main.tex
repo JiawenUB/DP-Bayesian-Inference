@@ -413,15 +413,15 @@ In order to achieve good accuracy, we make an attempt on the Exponential mechani
 {\Sigma_{r' \in \mathcal{R}}\exp(\frac{\epsilon u(x,r')}{2 LS(\dataobs)})},
 \]
 where $LS(\dataobs)$ is the local sensitivity of scoring function, calculated by:
-\begin{equation}\label{eq:local_sensitivity_scoring}
-LS(\dataobs)=\max_{\dataobs' \in \datauni^n: \\ \adj{\dataobs}{\dataobs'}, r\in \mathcal{R}}\lvert \hellinger(\bysinfer(\dataobs'), r) - \hellinger(\bysinfer(\dataobs'), r)\rvert.
-\end{equation}
-
+\begin{equation*}\label{eq:local_sensitivity_scoring}
+LS(\dataobs)= \max_{\substack{\dataobs' \in \datauni^n: \adj{\dataobs}{\dataobs'},\\ r\in \mathcal{R}}}\lvert \hellinger(\bysinfer(\dataobs'), r) - \hellinger(\bysinfer(\dataobs'), r)\rvert.
+\end{equation*}
+%
 Thanks to the symmetry and triangle-inequality of the Hellinger
 distance, we can simplify the local sensitivity.
 \begin{lem}
 \[
-LS(\dataobs) = \max\limits_{\dataobs' \in \datauni^n:\adj{\dataobs}{\dataobs'}} \hellinger(\bysinfer(\dataobs), \bysinfer(\dataobs')).
+LS(\dataobs) = \max_{\dataobs' \in \datauni^n:\adj{\dataobs}{\dataobs'}} \hellinger(\bysinfer(\dataobs), \bysinfer(\dataobs')).
 \]
 \end{lem}
 
@@ -496,7 +496,11 @@ $\hexpmech$ is $\epsilon$-differential privacy by setting $\gamma = 1.0$.
 
 
 \section{Accuracy Analysis}
-
+In this section, we fix $\alpha$ and $\beta$.
+For simplicity, for any integer $t$, we write
+$
+c(t) = \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t).
+$
 \subsection{Accuracy Bound for Baseline Mechanisms}
 
 % \subsubsection{Accuracy Bound for Exponential Mechanism}
@@ -519,10 +523,11 @@ $\lapmechPr{\dataobs}{\ldots}$? }
 \begin{align*}
 &
 \Pr\left[
-\begin{aligned}
-\lefteqn{\hellinger(\bysinfer(\dataobs), z )}\\ 
-&= \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)
-\end{aligned}
+%\begin{aligned}
+%\lefteqn{\hellinger(\bysinfer(\dataobs), z )}\\ 
+%&= \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)
+%\end{aligned}
+\hellinger(\bysinfer(\dataobs), z ) = c(t)
 \right]
 \\
 &\qquad = 
@@ -568,10 +573,11 @@ Instantiating $t$ with specific values ($0,1,2$ for example) and $\epsilon = 1$,
 %In all cases above, probability values are fixed even data size changes, only the distance are decreasing.
 \begin{align*}
 &\lapmechPr{\dataobs}{
-\begin{aligned}
-\lefteqn{\hellinger(\bysinfer(\dataobs), z )}\\ 
-&= \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)
-\end{aligned}
+%\begin{aligned}
+%\lefteqn{\hellinger(\bysinfer(\dataobs), z )}\\ 
+%&= \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)
+%\end{aligned}
+\hellinger(\bysinfer(\dataobs), z ) = c(t)
 }\\
 & \qquad = \begin{cases}
 0.19673467014 & t = 0\\
@@ -586,14 +592,15 @@ Instantiating $t$ with specific values ($0,1,2$ for example) and $\epsilon = 1$,
 Accuracy bound for improved Laplace mechanism is obtained from the standard Laplace Mechanism by replacing the sensitivity of $\Delta \bysinfer$ with $1$ in Beta-binomial model and $2$ in Dirichlet-multinomial model.
 
 Given $t$ with the same specific values ($0,1,2$) and $\epsilon = 1$ as above, we get the following accuracy equations on improved Laplace mechanism:
-
+%
 \begin{align*}
 &
 \Pr\left[
-\begin{aligned}
-\lefteqn{\hellinger(\bysinfer(\dataobs), z )}\\ 
-&= \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)
-\end{aligned}
+%\begin{aligned}
+%\lefteqn{\hellinger(\bysinfer(\dataobs), z )}\\ 
+%&= \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)
+%\end{aligned}
+\hellinger(\bysinfer(\dataobs), z ) = c(t)
 \right]
 \\
 &\qquad = 
@@ -636,10 +643,11 @@ Given $t$ with the same specific values ($0,1,2$) and $\epsilon = 1$ as above, w
 %In all cases above, probability values are fixed even data size changes, only the distance are decreasing.
 \begin{align*}
 &\ilapmechPr{\dataobs}{
-\begin{aligned}
-\lefteqn{\hellinger(\bysinfer(\dataobs), r_L )}\\ 
-&= \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)
-\end{aligned}
+%\begin{aligned}
+%\lefteqn{\hellinger(\bysinfer(\dataobs), r_L )}\\ 
+%&= \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)
+%\end{aligned}
+\hellinger(\bysinfer(\dataobs), z ) = c(t)
 }\\
 & \qquad = \begin{cases}
 0.31606027941 & t = 0\\
@@ -663,8 +671,8 @@ Given $t$ with the same specific values ($0,1,2$) and $\epsilon = 1$ as above, w
 %  $c = \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)$
   \begin{align*}
   \lefteqn{ \hexpmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), z) = c(t)  } }\\ 
-  &  = \frac{\exp{(\frac{- \epsilon c}{4 S(\dataobs)})}}{\nomalizer{\dataobs}}\\
-  & \text{ where } c(t) = \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t).
+  &  = \frac{\exp{(\frac{- \epsilon c}{4 S(\dataobs)})}}{\nomalizer{\dataobs}}%\\
+%  & \text{ where } c(t) = \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t).
   \end{align*}
 \end{lem}
 
@@ -747,17 +755,17 @@ By solving following equations:
   %\frac{1}{\nomalizer{\dataobs}} = 0.19673467\ or\ 0.316060279
 \begin{align*}
  &\hexpmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), z) = c(0)  } \\
- & = 0.19673467 \text{ or } 0.316060279
-\end{align*}
+ & \qquad = 0.19673467 \text{ or } 0.316060279,\\
+%\end{align*}
 %  \]
 %  we can get the range where we can do better than $\lapmech$ or $\ilapmech$ on outputting the correct answer. 
 %  \[
 %  \frac{\exp{(\frac{- \epsilon \sqrt{1 - \frac{\Gamma(\alpha+\frac{1}{2})}{\Gamma(\alpha)} \cdot
 %   \frac{\Gamma(\beta - \frac{1}{2})}{\Gamma(\beta)}}}{4 S(\dataobs)})}}{\nomalizer{\dataobs}}
-\begin{align*}
+%\begin{align*}
   &\hexpmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), z) = c(1)  }\\
-  &= 0.119325609 \text{ or } 0.116272079
-\end{align*}
+  & \qquad = 0.119325609 \text{ or } 0.116272079,\\
+%\end{align*}
 %  we can get the range where we can do better than $\lapmech$ or $\ilapmech$ on outputting the answer with one step from correct one.
 %  \[
 %\frac{\exp{(\frac{- \epsilon \sqrt{1 - 
@@ -765,9 +773,9 @@ By solving following equations:
 %    \cdot
 %    \sqrt{1 - \frac{\frac{t}{2}}{\beta}}}}
 %    {4 S(\dataobs)})}}{\nomalizer{\dataobs}}
-\begin{align*}
+%\begin{align*}
  &\hexpmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), z) = c(2)  }\\
- &=0.072374641 \text{ or }  0.042774107
+ & \qquad = 0.072374641 \text{ or }  0.042774107
 %\]
 \end{align*}
 we can get the range where we can do better than $\lapmech$ or $\ilapmech$ on outputting the answer with two steps from the correct one... etc.
