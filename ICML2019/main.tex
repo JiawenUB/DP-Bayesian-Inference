@@ -90,41 +90,53 @@ financial, social, and transportation fields. In order to provide
 better services, these applications need large amounts of users data
 putting at risk the privacy of individual users contributing their data. 
 Differential privacy was proposed a decade ago to address these
-situations and it on its way to become a gold standard in data
+situations and it is on its way to become the gold standard in data
 privacy.  
 
 Bayesian inference is a standard statistical tool that is useful to
-estimate a posterior distribution when given a prior distribution and
-some observed data. 
+estimate a posterior distribution when a prior distribution is given
+and some data is observed. 
 
 In this work we consider the design space of  parametric Bayesian
 inference mechanisms guaranteeing differential privacy. Our work is
 motivated by recent developments in the area of probabilistic
-programming where several tools have been proposed to perfor
+programming where several tools have been proposed to perform
 parametric and non-parametric Bayesian inference in an efficient
-way. The in
-for our work is the recent development of 
-
-In particular
-we focus on two classical models: the Beta-Binomial and the
-Dirichlet-Multinomial models. These are classical models 
+way.
 
 
-Our work is conducted under a Bayesian inference scenario, where the posterior distribution is the analysis result we obtained from the data.
-Publishing the posterior distribution inferred from a sensitive dataset can
-leak information about the individuals in the dataset.
+We focus on two classical models: the Beta-Binomial and the
+Dirichlet-Multinomial models. In the Beta-Binomial model the goal
+is to estimate an unknown fraction of a population from a sequence
+of Bernoulli trials each of which is either 0 or 1 and from an initial
+prior belief, a Beta distribution, on that fraction; the trials are assumed to be independent
+given the value of the bias. In the Dirichlet-Multinomial model a Multinomial
+distribution is used to describe categorical data with more than
+two possible outcomes. Similarly, the aim is to learn the various
+unknown proportions of a population from a sequence of trials
+each of which having more than two possible outcomes. Again,
+a prior belief, a Dirichlet distribution, is used to describe the initial knowledge
+about those fractions. The posterior distributions on the proportions will be
+respectively a Beta distribution and a Dirichlet distribution.
+
+
+In our work  the posterior distribution is the analysis result we obtained from the data.
+While the prior distributions are considerd public information,  publishing the posterior distribution
+inferred from a sensitive dataset can leak information about the individuals in the dataset.
 In order to guarantee differential privacy and to protect the
 individuals' data we can add noise to the posterior before releasing it.
-The amount of the noise that we need to introduced
+The amount of the noise that we need to introduce
 depends on the privacy parameter $\epsilon$ and the sensitivity of the inference to
 small changes in the data set. 
 Sensitivity can be computed in many different ways based on which metric space
-we consider on the output set of the mechanism. In the literature on private Bayesian
-inference (\cite{zhang2016differential,xiao2012bayesian}), it is only measured with
-respect to the vector of numbers parametrizing the output distribution using, e.g. the $\ell_1$ norm.
-A more natural approach which we explore here, is to measure sensitivity with respect to a metric on the space of inferred probability distributions.
-A re-loved question is that of how to measure accuracy. Again,
-this can be answered in different ways based on the metric imposed on the output space, and yet again
+we consider on the output space of the mechanism. In the literature on private Bayesian
+inference (e.g. \cite{zhang2016differential,xiao2012bayesian}), it is usually measured on
+the vector of numbers parametrizing the output distribution using, e.g. the $\ell_1$ norm.
+A more natural approach which we explore here, is to measure sensitivity with respect to
+a metric on the space of inferred probability distributions.
+Another question is that of how to measure accuracy. Again,
+this can be answered in different ways based on the metric
+imposed on the output space, and yet again
 only in few works in literature (e.g. \cite{zhang2016differential})
 distances between probability measures have been used for these purposes.
 
@@ -136,6 +148,7 @@ the numeric parameters of the distributions.
 We will see that in some cases this can happen.
 
 \noindent \textbf{Main contributions.}
+What follows is a summary of the main contributions of this work.
 \begin{itemize}
 	\item We design a new differentially private Bayesian inference mechanism based on the standard exponential mechanism.
 	\item We explored two ways to improve the accuracy: 1) calibrating noise to the sensitivity of a metric over distributions (e.g. Hellinger distance ($\hellinger$), $f$-divergences, etc\dots). 2) Using a smooth upper bound on the local sensitivity and scale the noise to this smooth bound rather than global sensitivity, to improve the mechanism accuracy.
@@ -303,7 +316,7 @@ Our choice to use Hellinger distance is motivated by three facts:
 
 \section{Private Mechanisms}
 \label{sec_mechs}
-\subsection{Calibrating noise w.r.t. $\ell_1$ norm}
+\subsection{Calibrating noise w.r.t. $\ell_1$ norm ($\lapmech$)}
 We start off by presenting a mechanism based on the Laplace primitive.
 The mechanism, denoted by {\color{red}{i think this macro has too many arguments}}($\lapmech(\dataobs,\bysinfer, \mathsf{prior}, \mathsf{likelihood}, \epsilon)$),
 simply adds Laplace noise to the parameters of the posterior distributions. The mechanisms also performs a
@@ -320,14 +333,14 @@ i.e., proportional to the dimensionality.
   \caption{$\lapmech$ in Beta-binomial model}
   \label{mech:lapmech}
   \begin{algorithmic}
-  \REQUIRE observed data set $\dataobs \in \{0,1\}^n$, inference algorithm: $\bysinfer$, 
+  \INPUT observed data set $\dataobs \in \{0,1\}^n$, inference algorithm: $\bysinfer$, 
   prior: $\betad(\alpha, \beta)$, likelihood: $\binomial{n}{\theta}$, $\epsilon$
   \STATE \quad {\bf let} $\betad(\alpha', \beta') = \bysinfer(\binomial{n}{\theta}, \betad(\alpha, \beta), \dataobs)$.  
-  \STATE \quad {\bf let} $\eta \sim \lap{0}{\frac{2}{\epsilon}}$.
-  \STATE \quad {\bf let} $\tilde{\alpha}=\alpha + \lfloor{(\alpha' - \alpha) + \eta}\rfloor^n_0$ 
-  \STATE \quad {\bf let} $\tilde{\beta}=\beta + n - \lfloor{(\alpha' - \alpha) + \eta}\rfloor^n_0$ 
+  \STATE \quad  $\eta \sim \lap{0}{\frac{2}{\epsilon}}$.
+  \STATE \quad  $\tilde{\alpha}=\alpha + \lfloor{(\alpha' - \alpha) + \eta}\rfloor^n_0$ 
+  \STATE \quad  $\tilde{\beta}=\beta + n - \lfloor{(\alpha' - \alpha) + \eta}\rfloor^n_0$ \\
   % \RETURN $a_{k+1}$.
-  \ENSURE $\betad(\tilde{\alpha}, \tilde{\beta})$
+  \noindent {\bf return} $\betad(\tilde{\alpha}, \tilde{\beta})$
   \end{algorithmic}
   \end{algorithm}
 
@@ -338,7 +351,7 @@ i.e., proportional to the dimensionality.
 
 
 
-\subsection{Improving the sensitivity}
+\subsection{Improving the sensitivity ($\ilapmech$)}
  The accuracy of $\lapmech$ can be reduced to a constant.
  Indeed, two adjacent data sets $\dataobs, \dataobs'$  induce posterior distributions -- $\bysinfer(\dataobs), \bysinfer(\dataobs')$ --
  whose parameters differ by at most 2 w.r.t $\ell_1$ norm. This because we can see the parameters of the distributions as an histogram.
@@ -355,7 +368,7 @@ i.e., proportional to the dimensionality.
   \caption{$\ilapmech$ in Dirichlet-multinomial model}
   \label{mech:ilapmech}
   \begin{algorithmic}
-  \REQUIRE observed data set $\dataobs \in \mathcal{X}^n$, inference algorithm: $\bysinfer$, 
+  \INPUT observed data set $\dataobs \in \mathcal{X}^n$, inference algorithm: $\bysinfer$, 
   prior: $\dirichlet{\valpha}$, likelihood: $\multinomial{n}{\vtheta}$, $\epsilon$
   \STATE \quad {\bf let} $\dirichlet{\valpha'} = \bysinfer(\multinomial{n}{\vtheta}, \dirichlet{\valpha}, \dataobs)$, $k = |\mathcal{X}|$.
   \STATE \quad {\bf Initialize} a vector $\tilde{\valpha} = (0, \dots, 0 )$ of $k$ dimensions .
@@ -364,7 +377,7 @@ i.e., proportional to the dimensionality.
   \STATE \quad \quad  $\tilde{\alpha_i}=\alpha_i + \lfloor{(\alpha_i' - \alpha_i) + \eta}\rfloor^n_0$ 
   % \RETURN $a_{k+1}$.
   \STATE \quad $\tilde{\alpha_k} = \alpha_k + \lfloor n - \sum_{i = 1}^{k-1}\lfloor{(\alpha_i' - \alpha_i) + \eta_i}\rfloor^n_0 \rfloor^n_0$
-  \ENSURE $\dirichlet{\tilde{\valpha}}$
+  \STATE {\bf return} $\dirichlet{\tilde{\valpha}}$
   \end{algorithmic}
   \end{algorithm}
 
@@ -380,7 +393,7 @@ the extension to the Dirichelet-Multinomial model is straightforward.
 Given a prior distribution $\bprior=\betad(\alpha, \beta)$ and an observed data set: $\dataobs\in\{0,1\}^n$,
 we define the follwing set  where the mechanism will sample from:
 \[
-  \candidateset\equiv\{\bysinfer(\binomial{n}{\theta}, \bprior,\dataobs')\mid \dataobs' \in \{0,1\}^n\}.
+  \candidateset\equiv\{\bysinfer(\binomial{n}{\theta}, \bprior,\dataobs)\mid \dataobs \in \{0,1\}^n\}.
 \]
 Notice that the above set reduces to:
 \[
@@ -389,7 +402,7 @@ Notice that the above set reduces to:
 We use $\bysinfer(\dataobs)$ to denote the Bayesian inference process on the observed data $\dataobs$
 when the other two parameters, that is prior and likelihood, are fixed. 
 
-\subsubsection{Standard Exponential Mechanism with Hellinger Metric}
+\subsubsection{Exponential Mechanism with Hellinger Distance Metric ($\expmech$)}
 Our exploration starts from the standard exponential mechanism $\expmech(x,u,\candidateset)$, which samples an element from the candidate set $\candidateset$ with probability proportional to $\exp(\frac{\epsilon u(x,r)}{2 GS})$:
 \[
 \underset{z \thicksim \expmech(x,u,\candidateset) }{\Pr}[z=r] = \frac
@@ -404,7 +417,7 @@ GS =
 \end{equation*}
 
 
-\subsubsection{Exponential Mechanism with Hellinger Metric and Local Sensitivity}
+\subsubsection{Exponential Mechanism with Hellinger Metric and Local Sensitivity ($\lexpmech$)}
 \label{subsec_emls}
 In order to achieve good accuracy, we make an attempt on the Exponential mechanism with local sensitivity $\lexpmech(x,u,\candidateset)$. This is just an attempt since local sensitivity is non-private. $\lexpmech$ shares the same candidate set and utility function as $\expmech$, outputting a result $r \in \mathcal{R}$ with probability proportional to $\exp(\frac{\epsilon u(x,r)}{2 LS(\dataobs)})$:
 \[
@@ -413,21 +426,21 @@ In order to achieve good accuracy, we make an attempt on the Exponential mechani
 {\Sigma_{r' \in \mathcal{R}}\exp(\frac{\epsilon u(x,r')}{2 LS(\dataobs)})},
 \]
 where $LS(\dataobs)$ is the local sensitivity of scoring function, calculated by:
-\begin{equation*}\label{eq:local_sensitivity_scoring}
-LS(\dataobs)= \max_{\substack{\dataobs' \in \datauni^n: \adj{\dataobs}{\dataobs'},\\ r\in \mathcal{R}}}\lvert \hellinger(\bysinfer(\dataobs'), r) - \hellinger(\bysinfer(\dataobs'), r)\rvert.
-\end{equation*}
-%
+\begin{equation}\label{eq:local_sensitivity_scoring}
+LS(\dataobs)=\max_{\dataobs' \in \datauni^n: \\ \adj{\dataobs}{\dataobs'}, r\in \mathcal{R}}\lvert \hellinger(\bysinfer(\dataobs'), r) - \hellinger(\bysinfer(\dataobs'), r)\rvert.
+\end{equation}
+
 Thanks to the symmetry and triangle-inequality of the Hellinger
 distance, we can simplify the local sensitivity.
 \begin{lem}
 \[
-LS(\dataobs) = \max_{\dataobs' \in \datauni^n:\adj{\dataobs}{\dataobs'}} \hellinger(\bysinfer(\dataobs), \bysinfer(\dataobs')).
+LS(\dataobs) = \max\limits_{\dataobs' \in \datauni^n:\adj{\dataobs}{\dataobs'}} \hellinger(\bysinfer(\dataobs), \bysinfer(\dataobs')).
 \]
 \end{lem}
 
 (Proof is in Appendix IV.)
 
-\subsubsection{Exponential Mechanism with Hellinger Metric and Smoothed Sensitivity}
+\subsubsection{Exponential Mechanism with Hellinger Metric and Smoothed Sensitivity ($\hexpmech$)}
 \label{subsec_hexpmech}
 In this section, we explore a new mechanism in Exponential family, which can achieve good accuracy and differential privacy simultaneously, by scaling the noise to a new sensitivity. We first define the new sensitivity we are going to use and then present the mechanism.
 \begin{definition}
@@ -496,11 +509,7 @@ $\hexpmech$ is $\epsilon$-differential privacy by setting $\gamma = 1.0$.
 
 
 \section{Accuracy Analysis}
-In this section, we fix $\alpha$ and $\beta$.
-For simplicity, for any integer $t$, we write
-$
-c(t) = \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t).
-$
+
 \subsection{Accuracy Bound for Baseline Mechanisms}
 
 % \subsubsection{Accuracy Bound for Exponential Mechanism}
@@ -518,17 +527,14 @@ $
 \begin{lem}
 \label{lem_acc_lap}
 Given $Y \thicksim \lap{0}{b}$, the accuracy bound developed for $\lapmech$ is:
-\todo{Is it correct
-$\lapmechPr{\dataobs}{\ldots}$? }
 \begin{align*}
 &
-\Pr\left[
-%\begin{aligned}
-%\lefteqn{\hellinger(\bysinfer(\dataobs), z )}\\ 
-%&= \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)
-%\end{aligned}
-\hellinger(\bysinfer(\dataobs), z ) = c(t)
-\right]
+\lapmechPr{\dataobs}{
+\begin{aligned}
+\lefteqn{\hellinger(\bysinfer(\dataobs), z )}\\ 
+&= \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)
+\end{aligned}
+}
 \\
 &\qquad = 
 \begin{cases}
@@ -573,11 +579,10 @@ Instantiating $t$ with specific values ($0,1,2$ for example) and $\epsilon = 1$,
 %In all cases above, probability values are fixed even data size changes, only the distance are decreasing.
 \begin{align*}
 &\lapmechPr{\dataobs}{
-%\begin{aligned}
-%\lefteqn{\hellinger(\bysinfer(\dataobs), z )}\\ 
-%&= \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)
-%\end{aligned}
-\hellinger(\bysinfer(\dataobs), z ) = c(t)
+\begin{aligned}
+\lefteqn{\hellinger(\bysinfer(\dataobs), z )}\\ 
+&= \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)
+\end{aligned}
 }\\
 & \qquad = \begin{cases}
 0.19673467014 & t = 0\\
@@ -592,21 +597,20 @@ Instantiating $t$ with specific values ($0,1,2$ for example) and $\epsilon = 1$,
 Accuracy bound for improved Laplace mechanism is obtained from the standard Laplace Mechanism by replacing the sensitivity of $\Delta \bysinfer$ with $1$ in Beta-binomial model and $2$ in Dirichlet-multinomial model.
 
 Given $t$ with the same specific values ($0,1,2$) and $\epsilon = 1$ as above, we get the following accuracy equations on improved Laplace mechanism:
-%
+
 \begin{align*}
 &
-\Pr\left[
-%\begin{aligned}
-%\lefteqn{\hellinger(\bysinfer(\dataobs), z )}\\ 
-%&= \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)
-%\end{aligned}
-\hellinger(\bysinfer(\dataobs), z ) = c(t)
-\right]
+\ilapmechPr{\dataobs}{
+\begin{aligned}
+\lefteqn{\hellinger(\bysinfer(\dataobs), z )}\\ 
+&= \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)
+\end{aligned}
+}
 \\
 &\qquad = 
 \begin{cases}
-\frac{1}{2} (e^{- \frac{\epsilon (t)}{\Delta \bysinfer}} - e^{- \frac{\epsilon (t + 1)}{\Delta \bysinfer}}) &  t \geq 0\\
-\frac{1}{2} (e^{\frac{\epsilon (t + 1)}{\Delta \bysinfer}} - e^{\frac{\epsilon (t)}{\Delta \bysinfer}}) & t < 0
+\frac{1}{2} (e^{- \frac{\epsilon (t)}{2}} - e^{- \frac{\epsilon (t + 1)}{2}}) &  t \geq 0\\
+\frac{1}{2} (e^{\frac{\epsilon (t + 1)}{2}} - e^{\frac{\epsilon (t)}{2}}) & t < 0
 \end{cases}
 \end{align*}
 %Given $t$ with the same specific values ($1, 2, 3$ as above), we get following accuracy equations:
@@ -643,11 +647,10 @@ Given $t$ with the same specific values ($0,1,2$) and $\epsilon = 1$ as above, w
 %In all cases above, probability values are fixed even data size changes, only the distance are decreasing.
 \begin{align*}
 &\ilapmechPr{\dataobs}{
-%\begin{aligned}
-%\lefteqn{\hellinger(\bysinfer(\dataobs), r_L )}\\ 
-%&= \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)
-%\end{aligned}
-\hellinger(\bysinfer(\dataobs), z ) = c(t)
+\begin{aligned}
+\lefteqn{\hellinger(\bysinfer(\dataobs), r_L )}\\ 
+&= \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)
+\end{aligned}
 }\\
 & \qquad = \begin{cases}
 0.31606027941 & t = 0\\
@@ -671,8 +674,8 @@ Given $t$ with the same specific values ($0,1,2$) and $\epsilon = 1$ as above, w
 %  $c = \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)$
   \begin{align*}
   \lefteqn{ \hexpmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), z) = c(t)  } }\\ 
-  &  = \frac{\exp{(\frac{- \epsilon c}{4 S(\dataobs)})}}{\nomalizer{\dataobs}}%\\
-%  & \text{ where } c(t) = \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t).
+  &  = \frac{\exp{(\frac{- \epsilon c}{4 S(\dataobs)})}}{\nomalizer{\dataobs}}\\
+  & \text{ where } c(t) = \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t).
   \end{align*}
 \end{lem}
 
@@ -755,17 +758,17 @@ By solving following equations:
   %\frac{1}{\nomalizer{\dataobs}} = 0.19673467\ or\ 0.316060279
 \begin{align*}
  &\hexpmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), z) = c(0)  } \\
- & \qquad = 0.19673467 \text{ or } 0.316060279,\\
-%\end{align*}
+ & = 0.19673467 \text{ or } 0.316060279
+\end{align*}
 %  \]
 %  we can get the range where we can do better than $\lapmech$ or $\ilapmech$ on outputting the correct answer. 
 %  \[
 %  \frac{\exp{(\frac{- \epsilon \sqrt{1 - \frac{\Gamma(\alpha+\frac{1}{2})}{\Gamma(\alpha)} \cdot
 %   \frac{\Gamma(\beta - \frac{1}{2})}{\Gamma(\beta)}}}{4 S(\dataobs)})}}{\nomalizer{\dataobs}}
-%\begin{align*}
+\begin{align*}
   &\hexpmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), z) = c(1)  }\\
-  & \qquad = 0.119325609 \text{ or } 0.116272079,\\
-%\end{align*}
+  &= 0.119325609 \text{ or } 0.116272079
+\end{align*}
 %  we can get the range where we can do better than $\lapmech$ or $\ilapmech$ on outputting the answer with one step from correct one.
 %  \[
 %\frac{\exp{(\frac{- \epsilon \sqrt{1 - 
@@ -773,9 +776,9 @@ By solving following equations:
 %    \cdot
 %    \sqrt{1 - \frac{\frac{t}{2}}{\beta}}}}
 %    {4 S(\dataobs)})}}{\nomalizer{\dataobs}}
-%\begin{align*}
+\begin{align*}
  &\hexpmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), z) = c(2)  }\\
- & \qquad = 0.072374641 \text{ or }  0.042774107
+ &=0.072374641 \text{ or }  0.042774107
 %\]
 \end{align*}
 we can get the range where we can do better than $\lapmech$ or $\ilapmech$ on outputting the answer with two steps from the correct one... etc.
@@ -1452,7 +1455,7 @@ Unfolding the Hellinger distance formula, we get:\\
 
 \end{proof}
 
-\section{Appendix IV}
+\section*{Appendix IV}
 \begin{proof}
 For any $r \in \mathcal{R}$ and $\dataobs' \in \datauni^n$ with $\adj{\dataobs}{\dataobs'}$, we have
 \begin{align*}
