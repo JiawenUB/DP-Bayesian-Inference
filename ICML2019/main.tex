@@ -377,10 +377,10 @@ distributions as opposed to a metric over the parameters that represent it. In t
 use the Hellinger distance, but this approach could be extended to other $f$-divergences. We will
 start by describing how the mechanism works in the case of the Beta-Binomial model noticing that
 the extension to the Dirichelet-Multinomial model is straightforward.
-Given a prior distribution $\bprior=\betad(\alpha, \beta)$ and an observed data set: $\dataobs\in\{0,1\}^n$,
+Given a prior distribution $\betad(\alpha, \beta)$ and an observed data set: $\dataobs\in\{0,1\}^n$,
 we define the follwing set  where the mechanism will sample from:
 \[
-  \candidateset\equiv\{\bysinfer(\binomial{n}{\theta}, \bprior,\dataobs)\mid \dataobs \in \{0,1\}^n\}.
+  \candidateset\equiv\{\bysinfer(\binomial{n}{\theta}, \betad(\alpha, \beta),\dataobs)\mid \dataobs \in \{0,1\}^n\}.
 \]
 Notice that the above set reduces to:
 \[
@@ -390,27 +390,43 @@ We use $\bysinfer(\dataobs)$ to denote the Bayesian inference process on the obs
 when the other two parameters, that is prior and likelihood, are fixed. 
 
 \subsubsection{Exponential Mechanism with Hellinger Distance Metric ($\expmech$)}
-Our exploration starts from the standard exponential mechanism $\expmech(x,u,\candidateset)$, which samples an element from the candidate set $\candidateset$ with probability proportional to $\exp(\frac{\epsilon u(x,r)}{2 GS})$:
+Our exploration starts from the standard exponential mechanism $\expmech(\dataobs,u,\candidateset)$, which samples an element from the candidate set $\candidateset$ with probability proportional to $\exp(\frac{\epsilon u(\dataobs,r)}{2 GS})$:
 \[
-\underset{z \thicksim \expmech(x,u,\candidateset) }{\Pr}[z=r] = \frac
-{\exp(\frac{\epsilon u(x,r)}{2 GS})}
-{\Sigma_{r' \in \mathcal{R}}\exp(\frac{\epsilon u(x,r')}{2 GS})},
+\underset{z \thicksim \expmech(\dataobs,u,\candidateset) }{\Pr}[z=r] = \frac
+{\exp(\frac{- \epsilon u(\dataobs,r)}{2 GS})}
+{\Sigma_{r' \in \mathcal{R}}\exp(\frac{\epsilon u(\dataobs,r')}{2 GS})},
 \]
-where $u(x,r)$ is the Hellinger scoring function over candidates, $-\hellinger(\bysinfer(\dataobs), r)$, and $GS$ is the global sensitivity of the scoring function (i.e. the global sensitivity of the Bayesian inference w.r.t the Hellinger distance), calculated by:
+where $u(\dataobs,r)$ is the Hellinger scoring function over candidates, $\hellinger(\bysinfer(\dataobs), r)$, and $GS$ is the global sensitivity of the scoring function (i.e. the global sensitivity of the Bayesian inference w.r.t the Hellinger distance), calculated by:
 \begin{equation*}
 GS = 
 \max_{\dataobs' \in \datauni^n: \\ \adj{\dataobs}{\dataobs'}}\max_{\{r\in \mathcal{R}\}}
 |\hellinger(\bysinfer(\dataobs), r) - \hellinger(\bysinfer(\dataobs'), r)|
 \end{equation*}
+  \begin{algorithm}
+  \caption{$\expmech$ in Beta-binomial model}
+  \label{mech:expmech}
+  \begin{algorithmic}
+  \INPUT observed data set $\dataobs \in \mathcal{X}^n$, inference algorithm: $\bysinfer$, 
+  prior: $\dirichlet{\valpha}$, likelihood: $\multinomial{n}{\vtheta}$, $\epsilon$
+  \STATE \quad {\bf let} $\dirichlet{\valpha'} = \bysinfer(\multinomial{n}{\vtheta}, \dirichlet{\valpha}, \dataobs)$, $k = |\mathcal{X}|$.
+  \STATE \quad {\bf Initialize} a vector $\tilde{\valpha} = (0, \dots, 0 )$ of $k$ dimensions .
+  \STATE \quad {\bf For} $i = 1 \dots (k - 1)$:
+  \STATE \quad \quad  {\bf let} $\eta \sim \lap{0}{\frac{2}{\epsilon}}$.
+  \STATE \quad \quad  $\tilde{\alpha_i}=\alpha_i + \lfloor{(\alpha_i' - \alpha_i) + \eta}\rfloor^n_0$ 
+  % \RETURN $a_{k+1}$.
+  \STATE \quad $\tilde{\alpha_k} = \alpha_k + \lfloor n - \sum_{i = 1}^{k-1}\lfloor{(\alpha_i' - \alpha_i) + \eta_i}\rfloor^n_0 \rfloor^n_0$
+  \STATE {\bf return} $\dirichlet{\tilde{\valpha}}$
+  \end{algorithmic}
+  \end{algorithm}
 
 
 \subsubsection{Exponential Mechanism with Hellinger Metric and Local Sensitivity ($\lexpmech$)}
 \label{subsec_emls}
-In order to achieve good accuracy, we make an attempt on the Exponential mechanism with local sensitivity $\lexpmech(x,u,\candidateset)$. This is just an attempt since local sensitivity is non-private. $\lexpmech$ shares the same candidate set and utility function as $\expmech$, outputting a result $r \in \mathcal{R}$ with probability proportional to $\exp(\frac{\epsilon u(x,r)}{2 LS(\dataobs)})$:
+In order to achieve good accuracy, we make an attempt on the Exponential mechanism with local sensitivity $\lexpmech(\dataobs,u,\candidateset)$. This is just an attempt since local sensitivity is non-private. $\lexpmech$ shares the same candidate set and utility function as $\expmech$, outputting a result $r \in \mathcal{R}$ with probability proportional to $\exp(\frac{- \epsilon u(\dataobs,r)}{2 LS(\dataobs)})$:
 \[
 \underset{z \thicksim \lexpmech(x,u,\candidateset)}{\Pr}[z=r] = \frac
-{\exp(\frac{\epsilon u(x,r)}{2 LS(\dataobs)})}
-{\Sigma_{r' \in \mathcal{R}}\exp(\frac{\epsilon u(x,r')}{2 LS(\dataobs)})},
+{\exp(\frac{- \epsilon u(\dataobs,r)}{2 LS(\dataobs)})}
+{\Sigma_{r' \in \mathcal{R}}\exp(\frac{\epsilon u(\dataobs,r')}{2 LS(\dataobs)})},
 \]
 where $LS(\dataobs)$ is the local sensitivity of scoring function, calculated by:
 \begin{equation}\label{eq:local_sensitivity_scoring}
@@ -420,12 +436,13 @@ LS(\dataobs)=\max_{\dataobs' \in \datauni^n: \\ \adj{\dataobs}{\dataobs'}, r\in 
 Thanks to the symmetry and triangle-inequality of the Hellinger
 distance, we can simplify the local sensitivity.
 \begin{lem}
+\label{lem_loc_opt}
 \[
 LS(\dataobs) = \max\limits_{\dataobs' \in \datauni^n:\adj{\dataobs}{\dataobs'}} \hellinger(\bysinfer(\dataobs), \bysinfer(\dataobs')).
 \]
 \end{lem}
 
-(Proof is in Appendix IV.)
+(Proof is in Appendix.)
 
 \subsubsection{Exponential Mechanism with Hellinger Metric and Smoothed Sensitivity ($\hexpmech$)}
 \label{subsec_hexpmech}
@@ -476,14 +493,20 @@ Dirichlet-multinomial system.
 \section{Privacy Analysis}
 
 \subsection{Privacy of Laplace Mechanism Family}
-Mechanisms in Laplace family are $\epsilon-$differential privacy by \cite{dwork2014algorithmic}.
+\begin{lem}
+$\lapmech$ and $\ilapmech$ are $\epsilon-$differentially private by \cite{dwork2014algorithmic}.
+\end{lem}
 
 \subsection{Privacy of Exponential Mechanism Family}
 \subsubsection{$\expmech$ $\epsilon-$Differential Privacy}
-Standard exponential mechanism is $\epsilon-$differential privacy by \cite{dwork2014algorithmic}.
+\begin{lem}
+$\expmech$ is $\epsilon-$differentially private by \cite{dwork2014algorithmic}.
+\end{lem}
 
 \subsubsection{$\lexpmech$ non-Differential Privacy}
-Exponential mechanism with local sensitivity non-differential privacy.
+\begin{lem}
+$\lexpmech$ is non-differentially private.
+\end{lem}
 
 \subsubsection{$\hexpmech$ $\epsilon-$Differential Privacy}
 
@@ -491,7 +514,7 @@ Exponential mechanism with local sensitivity non-differential privacy.
 \label{lem_hexpmech_privacy}
 $\hexpmech$ is $\epsilon$-differential privacy by setting $\gamma = 1.0$.
 \end{lem}
-(Proof is in Appendix II)
+(Proof is in Appendix)
 
 
 
@@ -994,8 +1017,17 @@ From what we have seen in the previous sections we can obtain following conclusi
 \bibliographystyle{icml2019}
 
 \newpage
-\section*{Appendix I}
-\label{app_sensitivity}
+\section*{Appendix}
+
+\noindent \textbf{Theorem \ref{thm_gamma_smooth}.}
+\emph{
+Given data set $\dataobs$, the $\gamma -$smooth sensitivity of Bayesian inference process w.r.t. the Hellinger distance $S(\dataobs)$ satisfying:%\\
+whenever $\adj{\dataobs}{\dataobs'}$, 
+%\begin{equation}
+%\label{eq_gamma_smooth}
+$\frac{1}{S(\dataobs)} - \frac{1}{S(\dataobs')} \leq \gamma$.
+}
+
 \begin{proof}
 of Theorem. \ref{thm_gamma_smooth}.\\
 For $\adj{\dataobs}{\dataobs'}$ and arbitrary $\dataobs'' \in \{0,1\}^{n}$:\\
@@ -1023,8 +1055,43 @@ Then we can get:
 $\frac{1}{S(\dataobs)} - \frac{1}{S(\dataobs')} \leq \gamma.$
 \end{proof}
 
-\section*{Appendix II}
-\label{app_privacyproof}
+
+\noindent \textbf{Lemma \ref{lem_loc_opt}.}
+\emph{
+\[
+LS(\dataobs) = \max\limits_{\dataobs' \in \datauni^n:\adj{\dataobs}{\dataobs'}} \hellinger(\bysinfer(\dataobs), \bysinfer(\dataobs')).
+\]
+}
+
+\begin{proof} of Lemma \ref{lem_loc_opt}.\\
+For any $r \in \mathcal{R}$ and $\dataobs' \in \datauni^n$ with $\adj{\dataobs}{\dataobs'}$, we have
+\begin{align*}
+&\lvert \hellinger(\bysinfer(\dataobs), r) - \hellinger(\bysinfer(\dataobs'), r)\rvert\\
+& = 
+\begin{cases}
+\hellinger(\bysinfer(\dataobs), r) - \hellinger(\bysinfer(\dataobs'),r) & \text{positive case}\\
+\hellinger(\bysinfer(\dataobs'),r) - \hellinger(\bysinfer(\dataobs), r) & \text{negative case}
+\end{cases}\\
+& \leq 
+\begin{cases}
+\hellinger(\bysinfer(\dataobs'), \bysinfer(\dataobs))+
+\hellinger(\bysinfer(\dataobs'), r) - \hellinger(\bysinfer(\dataobs'),r) & \\
+\hellinger(\bysinfer(\dataobs'), \bysinfer(\dataobs))+
+\hellinger(\bysinfer(\dataobs), r) - \hellinger(\bysinfer(\dataobs), r)&
+\end{cases}\\
+&= \hellinger(\bysinfer(\dataobs'), \bysinfer(\dataobs))
+\end{align*}
+The equality holds if $r = \bysinfer(\dataobs)$ or $r = \bysinfer(\dataobs')$.
+Hence, we conclude the statement of this lemma.
+\end{proof}
+
+
+
+\noindent \textbf{ Lemma \ref{lem_hexpmech_privacy}. } 
+\emph{
+$\hexpmech$ is $\epsilon$-differential privacy by setting $\gamma = 1.0$.
+}
+
 \begin{proof} of Lemma \ref{lem_hexpmech_privacy}.\\
   By Definition \ref{def_epsilon_dp}, to proof Lemma \ref{lem_hexpmech_privacy}, we need to prove:\\
   For any $\adj{\dataobs}{\dataobs'} \in \mathcal{X}$ and any beta distribution $r$:
@@ -1347,9 +1414,29 @@ $\frac{1}{S(\dataobs)} - \frac{1}{S(\dataobs')} \leq \gamma.$
 
 \end{proof}
 
-\section*{Appendix III}
-\begin{proof} of Lemma \ref{lem_acc_lap}.
 
+\noindent \textbf{ Lemma \ref{lem_acc_lap}.}
+\emph{
+Given $Y \thicksim \lap{0}{b}$, the accuracy bound developed for $\lapmech$ is:
+\begin{align*}
+&
+\lapmechPr{\dataobs}{
+\begin{aligned}
+\lefteqn{\hellinger(\bysinfer(\dataobs), z )}\\ 
+&= \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)
+\end{aligned}
+}
+\\
+&\qquad = 
+\begin{cases}
+\frac{1}{2} (e^{- \frac{\epsilon (t)}{\Delta \bysinfer}} - e^{- \frac{\epsilon (t + 1)}{\Delta \bysinfer}}) &  t \geq 0\\
+\frac{1}{2} (e^{\frac{\epsilon (t + 1)}{\Delta \bysinfer}} - e^{\frac{\epsilon (t)}{\Delta \bysinfer}}) & t < 0
+\end{cases}
+\end{align*}
+where $\betad(\alpha, \beta)$ is the true posterior distribution, i.e., $\bysinfer(\dataobs) = \betad(\alpha, \beta)$, and $r_L$ be the posterior produced by Laplace mechanism, i.e., $z = \betad(\alpha + \lfloor Y \rfloor, \beta - \lfloor Y \rfloor)$.
+}
+
+\begin{proof} of Lemma \ref{lem_acc_lap}.\\
 Given $Y \thicksim \lap{0}{b}$, we have\cite{dwork2014algorithmic}:$\Pr[|Y| \geq t \cdot b] = e^{- t}.$\\
 Based on this, we get:$\Pr[|Y| \geq t] = e^{- \frac{t \epsilon}{\Delta \bysinfer}}$, where $Y \thicksim \lap{0}{\frac{\Delta \bysinfer}{\epsilon}}$ in our setting.
 
@@ -1442,27 +1529,5 @@ Unfolding the Hellinger distance formula, we get:\\
 
 \end{proof}
 
-\section*{Appendix IV}
-\begin{proof}
-For any $r \in \mathcal{R}$ and $\dataobs' \in \datauni^n$ with $\adj{\dataobs}{\dataobs'}$, we have
-\begin{align*}
-&\lvert \hellinger(\bysinfer(\dataobs), r) - \hellinger(\bysinfer(\dataobs'), r)\rvert\\
-& = 
-\begin{cases}
-\hellinger(\bysinfer(\dataobs), r) - \hellinger(\bysinfer(\dataobs'),r) & \text{positive case}\\
-\hellinger(\bysinfer(\dataobs'),r) - \hellinger(\bysinfer(\dataobs), r) & \text{negative case}
-\end{cases}\\
-& \leq 
-\begin{cases}
-\hellinger(\bysinfer(\dataobs'), \bysinfer(\dataobs))+
-\hellinger(\bysinfer(\dataobs'), r) - \hellinger(\bysinfer(\dataobs'),r) & \\
-\hellinger(\bysinfer(\dataobs'), \bysinfer(\dataobs))+
-\hellinger(\bysinfer(\dataobs), r) - \hellinger(\bysinfer(\dataobs), r)&
-\end{cases}\\
-&= \hellinger(\bysinfer(\dataobs'), \bysinfer(\dataobs))
-\end{align*}
-The equality holds if $r = \bysinfer(\dataobs)$ or $r = \bysinfer(\dataobs')$.
-Hence, we conclude the statement of this lemma.
-\end{proof}
 \end{document}
 
