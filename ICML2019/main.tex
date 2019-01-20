@@ -251,6 +251,22 @@ $\sum_{i}^{n}\iverson{x_i = x'_i }\leq 1$. } $\dataobs, \dataobs' \in \mathbb{N}
 \end{definition}
 
 
+It is possible to achieve $\epsilon$-differential privacy through use and composition of
+a few basic components. Some of these components are now reviewed.
+
+\noindent \emph{Laplace mechanism.}
+The Laplace mechanism releases a random number drawn from the Laplace distribution with
+mean $\mu=q(d)$ and scale $\nu$. Where $q$ is a numeric query on a database $d$.
+If $\nu\geq \frac{\Delta_f}{\epsilon}$, with $\Delta_f=\displaystyle\max_{d,d':\adj{d}{d'}}{\lvert f(d_1)-f(d_2)\lvert}$
+then the mechanism is $\epsilon$-differentially private as proven in \cite{???}.
+
+\noindent \emph{Exponential mechanism.}
+
+\noindent \emph{Composition.}
+
+\noindent \emph{Postprocessing.}
+
+
 \noindent \textbf{Problem setting.}
 \label{subsec_problem}
 We are interested in exploring mechanisms for privately releasing the full posterior
@@ -442,9 +458,9 @@ $\lexpmech$ shares candidate set and utility function with $\expmech$,
 and outputs a result $r \in \mathcal{R}$ with probability:
 \[
 %\underset{z \thicksim \lexpmech(x,u,\candidateset)}{\Pr}[z=r] = \frac
-{\Pr}[z=r] = \frac
-  {\exp(\frac{\epsilon u(x,r)}{2 LS(\dataobs)})}
-{\Sigma_{r' \in \mathcal{R}}\exp(\frac{\epsilon u(x,r')}{2 LS(\dataobs)})},
+\frac
+  {\exp(\frac{\epsilon \cdot u(x,r)}{2\cdot LS(\dataobs)})}
+{\displaystyle\sum_{r' \in \mathcal{R}}\exp(\frac{\epsilon\cdot u(x,r')}{2\cdot LS(\dataobs)})},
 \]
 where $LS(\dataobs)$ is the local sensitivity of the scoring function, defined as:
 \begin{equation}\label{eq:local_sensitivity_scoring}
@@ -481,12 +497,13 @@ where $d$ is the Hamming distance between two data sets.
 \end{thm}
 The interested reader will find the proof in Appendix \ref{??}.
 We are now ready to define the mechanism $\hexpmech$. $\hexpmech(\dataobs)$ outputs a candidate $r \in \candidateset$ with probability
-\[\frac {\exp\big(\frac{-\epsilon\cdot \ux{r}}{4\cdot S(\dataobs)}\big)}
-{\unomalizer{\dataobs}}.
+\[
+  \frac {\exp\big(\frac{-\epsilon\cdot \ux{r}}{4\cdot S(\dataobs)}\big)}
+  {\displaystyle\sum_{r' \in \mathcal{R}}\exp(\frac{\epsilon\cdot u(x,r')}{4\cdot S(\dataobs)})},
 \]
 where $S(\dataobs)$ is the 1-smooth sensitivity of  $\hellinger(\bysinfer(\dataobs),\cdot)$. {\color{red}{why do we choose 1???}}
 
-As already mentioned $\expmech, \lexpmech, \sexpmech$ extends straightforwardly to the Dirichlet-multinomial system.
+As already mentioned $\expmech, \lexpmech, \hexpmech$ extends straightforwardly to the Dirichlet-multinomial system.
 Indeed, the Hellinger distance between two Dirichlet distribution, unfolds in:
 \[
   \hellinger(\dirichlet{\valpha_1}, \dirichlet{\valpha_2}) = \sqrt{1 - \frac{\betaf(\frac{\valpha_1 + \valpha_2}{2})}{\sqrt{\betaf(\valpha_1) \betaf(\valpha_2)}}},
@@ -495,19 +512,24 @@ and the $\candidateset$ will consist of the set of all possible posterior Dirich
 distributions candidates. Also, the smooth sensitivity $S(\dataobs)$
 in (\ref{thm_gamma_smooth}) will be computed by letting $\dataobs'$ range
 over all the elements in $\datauni^{n}$ adjacent to $\dataobs$. Notice
-that $\candidateset$ has $\binom{n + 1}{m - 1}$ elements in this case. {\color{red}{what is m here?}}
+that $\candidateset$ has $\binom{n + 1}{m - 1}$ elements in this case. {\color{red}{what is m here? and was $\datauni$} defined?}
 
 \section{Privacy Analysis}
 
 \subsection{Privacy of Laplace Mechanism Family}
-Mechanisms in Laplace family are $\epsilon-$differential privacy by \cite{dwork2014algorithmic}.
+The following lemmas prove the privacy of all the mechanisms (besides $\lexpmech$) presented so far.
+Mechanisms $\lapmech$ and $\ilapmech$ are trivially $\epsilon$-differentially private since the mechanisms
+add Laplacian noise proportional to the $\ell_1$-norm sensitivity to the arguments of the posterior distributions.
+\begin{lem}
+  $\lapmech$, $\ilapmech$ are $\epsilon$-differentially private.
+\end{lem}
 
 \subsection{Privacy of Exponential Mechanism Family}
 \subsubsection{$\expmech$ $\epsilon-$Differential Privacy}
 Standard exponential mechanism is $\epsilon-$differential privacy by \cite{dwork2014algorithmic}.
 
-\subsubsection{$\lexpmech$ non-Differential Privacy}
-Exponential mechanism with local sensitivity non-differential privacy.
+% \subsubsection{$\lexpmech$ non-Differential Privacy}
+% Exponential mechanism with local sensitivity non-differential privacy.
 
 \subsubsection{$\hexpmech$ $\epsilon-$Differential Privacy}
 
@@ -870,7 +892,9 @@ In Fig. \ref{fig_theory} and \ref{fig_theory_epsilon}, we plot on the x-axis the
 Dirichelet-Multinomial (Figure  \ref{subfig_theory_3d})
 the data will be split in the $k=3$ bins with perecentages of: 33\%, 33\% and 34\% in 3 dimensionality. Same concept in 4 dimensionality.
 
-We consider 5 mechanisms in our comparison experiments, including the Laplace mechanism ($\lapmech$), improved Laplace mechanism ($\ilapmech$), standard exponential mechanism ($\mathsf{expMech}$), non-private exponential mechanism ($\lexpmech$) and the newly designed mechanisms ($\hexpmech$ with $\gamma$ sensitivity achieving $\epsilon-$dp).
+We consider 5 mechanisms in our comparison experiments, including the Laplace mechanism ($\lapmech$), improved Laplace mechanism ($\ilapmech$),
+standard exponential mechanism ($\mathsf{expMech}$),
+non private exponential mechanism ($\lexpmech$) and the newly designed mechanisms ($\hexpmech$ with $\gamma$ sensitivity achieving $\epsilon-$dp).
 
 \begin{figure}
 \begin{center}
@@ -888,7 +912,7 @@ We consider 5 mechanisms in our comparison experiments, including the Laplace me
 \end{center}
 \end{figure}
 
-Candidates of smaller distance from true posterior are considered to be good results, which can result in good accuracy. From Fig. \ref{fig_theory}, it can be derived that all these mechanisms (except standard exponential mechanism $\expmech$ in green line) can output good results with larger probability. The $\lexpmech$ can output good results with higher probability than others, but $\lexpmech$ is non-private. For these are $\epsilon -$differentially private, the improved laplace mechanism $\ilapmech$ with $\ell_1$ norm metric can produce good results with higher probability, i.e., perform better in terms of accuracy than others. As the dimension increases from 2 to 3, mechanisms' behavior remain the same.
+Candidates of smaller distance from true posterior are considered to be good results, which can result in good accuracy. From Fig. \ref{fig_theory}, it can be derived that all these mechanisms (except standard exponential mechanism $\expmech$ in green line) can output good results with larger probability. The $\lexpmech$ can output good results with higher probability than others, but $\lexpmech$ is non private. For these are $\epsilon -$differentially private, the improved laplace mechanism $\ilapmech$ with $\ell_1$ norm metric can produce good results with higher probability, i.e., perform better in terms of accuracy than others. As the dimension increases from 2 to 3, mechanisms' behavior remain the same.
 
 \begin{figure}
 \begin{center}
