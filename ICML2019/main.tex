@@ -428,16 +428,7 @@ Notice that the above set reduces to:
 We use $\bysinfer(\dataobs)$ to denote the Bayesian inference process on the observed data $\dataobs$
 when the other two parameters, that is prior and likelihood, are fixed. 
 
-% <<<<<<< HEAD
-% \subsubsection{Exponential Mechanism with Hellinger Distance Metric ($\expmech$)}
-% Our exploration starts from the standard exponential mechanism $\expmech(\dataobs,u,\candidateset)$, which samples an element from the candidate set $\candidateset$ with probability proportional to $\exp(\frac{\epsilon u(\dataobs,r)}{2 GS})$:
-% \[
-% \underset{z \thicksim \expmech(\dataobs,u,\candidateset) }{\Pr}[z=r] = \frac
-% {\exp(\frac{- \epsilon u(\dataobs,r)}{2 GS})}
-% {\Sigma_{r' \in \mathcal{R}}\exp(\frac{\epsilon u(\dataobs,r')}{2 GS})},
-% \]
-% where $u(\dataobs,r)$ is the Hellinger scoring function over candidates, $\hellinger(\bysinfer(\dataobs), r)$, and $GS$ is the global sensitivity of the scoring function (i.e. the global sensitivity of the Bayesian inference w.r.t the Hellinger distance), calculated by:
-% =======
+
 \subsubsection{A first approach: the $\expmech$ mechanism}
 $\expmech(x,u,\candidateset)$  outputs an element $r\in\candidateset$ with  probability: % proportional to $\exp(\frac{\epsilon u(x,r)}{2 GS})$.
 \[
@@ -452,22 +443,22 @@ GS \equiv
 \max_{\dataobs' \in \datauni^n: \\ \adj{\dataobs}{\dataobs'}}\max_{\{r\in \mathcal{R}\}}
 |\hellinger(\bysinfer(\dataobs), r) - \hellinger(\bysinfer(\dataobs'), r)|
 \end{equation*}
-
-
+%
   \begin{algorithm}
   \caption{$\expmech$ in Beta-binomial model}
   \label{mech:expmech}
   \begin{algorithmic}
   \INPUT observed data set $\dataobs \in \mathcal{X}^n$, inference algorithm: $\bysinfer$, 
-  prior: $\dirichlet{\valpha}$, likelihood: $\multinomial{n}{\vtheta}$, $\epsilon$
-  \STATE \quad {\bf let} $\dirichlet{\valpha'} = \bysinfer(\multinomial{n}{\vtheta}, \dirichlet{\valpha}, \dataobs)$, $k = |\mathcal{X}|$.
-  \STATE \quad {\bf Initialize} a vector $\tilde{\valpha} = (0, \dots, 0 )$ of $k$ dimensions .
-  \STATE \quad {\bf For} $i = 1 \dots (k - 1)$:
-  \STATE \quad \quad  {\bf let} $\eta \sim \lap{0}{\frac{2}{\epsilon}}$.
-  \STATE \quad \quad  $\tilde{\alpha_i}=\alpha_i + \lfloor{(\alpha_i' - \alpha_i) + \eta}\rfloor^n_0$ 
-  % \RETURN $a_{k+1}$.
-  \STATE \quad $\tilde{\alpha_k} = \alpha_k + \lfloor n - \sum_{i = 1}^{k-1}\lfloor{(\alpha_i' - \alpha_i) + \eta_i}\rfloor^n_0 \rfloor^n_0$
-  \STATE {\bf return} $\dirichlet{\tilde{\valpha}}$
+  prior: $\betad(\alpha, \beta)$, likelihood: $\binomial{n}{\theta}$, $\epsilon$
+  \STATE \quad {\bf let} $\betad(\alpha', \beta') = \bysinfer(\binomial{n}{\theta}, \betad(\alpha, \beta), \dataobs)$.  
+  \STATE \quad {\bf Initialize} a vector $Pr = (0, \dots, 0 )$ of $|\candidateset|$ length.
+  \STATE \quad {\bf For} $r$ in $\candidateset$:
+  \STATE \quad \quad calculate the outputting probability of $r$.
+  \STATE \quad \quad $Pr[r] = 
+  {\exp(\frac{\epsilon\cdot u(x,r)}{2 GS})}
+/ {\Sigma_{r' \in \mathcal{R}}\exp(\frac{\epsilon\cdot u(x,r')}{2\cdot GS})}$
+\STATE \quad sample $z$ from $\candidateset$ by probability distribution $Pr$.
+  \STATE {\bf return} $z$
   \end{algorithmic}
   \end{algorithm}
 
@@ -483,6 +474,24 @@ will proceed in two steps. We will first define $\lexpmech$, which instead of us
 the noise. This is known to be a non private approach, but it will guide us towards new insights.
 We will then proceed to use a smooth bound the local sensitivity to
 calibrate the noise.
+
+  \begin{algorithm}
+  \caption{$\lexpmech$ in Beta-binomial model}
+  \label{mech:expmech}
+  \begin{algorithmic}
+  \INPUT observed data set $\dataobs \in \mathcal{X}^n$, inference algorithm: $\bysinfer$, 
+  prior: $\betad(\alpha, \beta)$, likelihood: $\binomial{n}{\theta}$, $\epsilon$
+  \STATE \quad {\bf let} $\betad(\alpha', \beta') = \bysinfer(\binomial{n}{\theta}, \betad(\alpha, \beta), \dataobs)$.  
+  \STATE \quad {\bf Initialize} a vector $Pr = (0, \dots, 0 )$ of $|\candidateset|$ length.
+  \STATE \quad {\bf For} $r$ in $\candidateset$:
+  \STATE \quad \quad calculate the outputting probability of $r$.
+  \STATE \quad \quad $Pr[r] = 
+  {\exp(\frac{\epsilon\cdot u(x,r)}{2 GS})}
+/ {\Sigma_{r' \in \mathcal{R}}\exp(\frac{\epsilon\cdot u(x,r')}{2\cdot GS})}$
+\STATE \quad sample $z$ from $\candidateset$ by probability distribution $Pr$.
+  \STATE {\bf return} $z$
+  \end{algorithmic}
+  \end{algorithm}
 
 
 $\lexpmech$ shares candidate set and utility function with $\expmech$,
@@ -504,7 +513,7 @@ The above can be proven to simplify to:
 LS(\dataobs) = \max\limits_{\dataobs' \in \datauni^n:\adj{\dataobs}{\dataobs'}} \hellinger(\bysinfer(\dataobs), \bysinfer(\dataobs')).
 \]
 \end{lem}
-The interested reader can check the proof in the Appendix \ref{??}.
+The interested reader can check the proof in the Appendix.
 
 
 \subsubsection{A third approach based on smooth sensitivity: $\hexpmech$}
@@ -535,6 +544,23 @@ We are now ready to define the mechanism $\hexpmech$. $\hexpmech(\dataobs)$ outp
   {\displaystyle\sum_{r' \in \mathcal{R}}\exp(\frac{\epsilon\cdot u(x,r')}{4\cdot S(\dataobs)})},
 \]
 where $S(\dataobs)$ is the 1-smooth sensitivity of  $\hellinger(\bysinfer(\dataobs),\cdot)$. {\color{red}{why do we choose 1???}}
+  \begin{algorithm}
+  \caption{$\hexpmech$ in Beta-binomial model}
+  \label{mech:expmech}
+  \begin{algorithmic}
+  \INPUT observed data set $\dataobs \in \mathcal{X}^n$, inference algorithm: $\bysinfer$, 
+  prior: $\betad(\alpha, \beta)$, likelihood: $\binomial{n}{\theta}$, $\epsilon$
+  \STATE \quad {\bf let} $\betad(\alpha', \beta') = \bysinfer(\binomial{n}{\theta}, \betad(\alpha, \beta), \dataobs)$.  
+  \STATE \quad {\bf Initialize} a vector $Pr = (0, \dots, 0 )$ of $|\candidateset|$ length.
+  \STATE \quad {\bf For} $r$ in $\candidateset$:
+  \STATE \quad \quad calculate the outputting probability of $r$.
+  \STATE \quad \quad $Pr[r] = 
+  {\exp(\frac{\epsilon\cdot u(x,r)}{2 GS})}
+/ {\Sigma_{r' \in \mathcal{R}}\exp(\frac{\epsilon\cdot u(x,r')}{2\cdot GS})}$
+\STATE \quad sample $z$ from $\candidateset$ by probability distribution $Pr$.
+  \STATE {\bf return} $z$
+  \end{algorithmic}
+  \end{algorithm}
 
 As already mentioned $\expmech, \lexpmech, \hexpmech$ extends straightforwardly to the Dirichlet-multinomial system.
 Indeed, the Hellinger distance between two Dirichlet distribution, unfolds in:
