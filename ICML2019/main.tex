@@ -340,7 +340,17 @@ Our choice to use Hellinger distance is motivated by three facts:
 
 \section{Private Mechanisms}
 \label{sec_mechs}
+In this section we will describe and analyse a series of mechanisms.
+Section \ref{sec_ell1_dim} presents a first mechanism called $\lapmech$ based on the Laplace primitive
+where the sensitivity is measured w.r.t. to $\ell_1$ norm.
+We will then notice, Section \ref{??}, that this mechanism's accuracy can be improved by performing a better analysis on
+the sensitivity of the inference process.
+Section \ref{???}, shows an instance of the exponential mechanism where the scoring
+function is based on the Hellinger distance, we will see how this mechanisms performs
+poorly due to the very high global sensitivity of the inference process w.r.t to this metric.
+Section \ref{???}
 \subsection{Calibrating noise w.r.t. $\ell_1$ norm ($\lapmech$)}
+\label{sec_ell1_dim}
 We start off by presenting a mechanism based on the Laplace primitive.
 The mechanism, denoted by $\lapmech$, takes in input the data $\dataobs$, a mechanism, $\bysinfer$, that is used to perform inference on some parameter,
 a prior and a likelihood function, and the $\epsilon$ parameter measuring the privacy level.
