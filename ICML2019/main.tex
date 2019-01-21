@@ -462,13 +462,13 @@ GS \equiv
   \end{algorithmic}
   \end{algorithm}
 
-Lemma \ref{??} gives us a finite bound on $GS$, while lemma \ref{??} proves privacy $\epsilon$ differential privacy of $\expmech$.
+Lemma \ref{??} gives us a finite bound on $GS$, while lemma \ref{lem_exp_private} proves privacy $\epsilon$ differential privacy of $\expmech$.
 
 
 \subsubsection{A second approach based on local sensitivity: $\lexpmech$}
 \label{subsec_emls}
 
-Figure \ref{??} show that  the accuracy of $\expmech$ is poor if compared with the one of $\ilapmech$. This is due to the fact that
+Figure \ref{fig_theory} show that  the accuracy of $\expmech$ is poor if compared with the one of $\ilapmech$. This is due to the fact that
 $GS$ is relatively big and hence the variance of the distribution $\expmech$ ends up also being too big. In order to solve this issue we
 will proceed in two steps. We will first define $\lexpmech$, which instead of using the global sensitivity, will use the local sensitivity to calibrate
 the noise. This is known to be a non private approach, but it will guide us towards new insights.
@@ -555,8 +555,8 @@ where $S(\dataobs)$ is the 1-smooth sensitivity of  $\hellinger(\bysinfer(\datao
   \STATE \quad {\bf For} $r$ in $\candidateset$:
   \STATE \quad \quad calculate the outputting probability of $r$.
   \STATE \quad \quad $Pr[r] = 
-  {\exp(\frac{\epsilon \cdot \ux{r}}{2 S(\dataobs)})}
-/ {\Sigma_{r' \in \mathcal{R}}\exp(\frac{\epsilon \cdot \ux{r'}}{2\cdot S(\dataobs)})}$
+  {\exp(\frac{\epsilon \cdot \ux{r}}{4 S(\dataobs)})}
+/ {\Sigma_{r' \in \mathcal{R}}\exp(\frac{\epsilon \cdot \ux{r'}}{4 \cdot S(\dataobs)})}$
 \STATE \quad sample $z$ from $\candidateset$ by probability distribution $Pr$.
   \STATE {\bf return} $z$
   \end{algorithmic}
@@ -586,6 +586,7 @@ add Laplacian noise proportional to the $\ell_1$-norm sensitivity to the argumen
 \subsection{Privacy of Exponential Mechanism Family}
 \subsubsection{$\expmech$ $\epsilon-$Differential Privacy}
 \begin{lem}
+\label{lem_exp_private}
 $\expmech$ is $\epsilon-$differentially private by \cite{dwork2014algorithmic}.
 \end{lem}
 
@@ -639,7 +640,7 @@ Given $Y \thicksim \lap{0}{b}$, the accuracy bound developed for $\lapmech$ is:
 \end{align*}
 where $\betad(\alpha, \beta)$ is the true posterior distribution, i.e., $\bysinfer(\dataobs) = \betad(\alpha, \beta)$, and $r_L$ be the posterior produced by Laplace mechanism, i.e., $z = \betad(\alpha + \lfloor Y \rfloor, \beta - \lfloor Y \rfloor)$.
 \end{lem}
-(Proof is in Appendix III)
+(Proof is in Appendix)
 
 %  Instantiating $t$ with specific values ($1, 2, 3$ for example), we get following accuracy equations:\\
 %  $\lapmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), r_L ) = 0} = 0.19673467014$.\\
@@ -1103,8 +1104,7 @@ From what we have seen in the previous sections we can obtain following conclusi
 \bibliography{bysinfer}
 \bibliographystyle{icml2019}
 
-\newpage
-\section*{Appendix}
+\appendix
 
 \noindent \textbf{Theorem \ref{thm_gamma_smooth}.}
 \emph{
