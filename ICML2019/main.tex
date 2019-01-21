@@ -450,7 +450,7 @@ GS \equiv
   \begin{algorithmic}
   \INPUT observed data set $\dataobs \in \mathcal{X}^n$, inference algorithm: $\bysinfer$, 
   prior: $\betad(\alpha, \beta)$, likelihood: $\binomial{n}{\theta}$, $\epsilon$
-  \STATE \quad {\bf let} $\betad(\alpha', \beta') = \bysinfer(\binomial{n}{\theta}, \betad(\alpha, \beta), \dataobs)$.  
+  \STATE \quad {\bf let} $\betad(\alpha', \beta') = \bysinfer(\binomial{n}{\theta}, \betad(\alpha, \beta), \dataobs)$. $GS$ be the global sensitivity of scoring function.  
   \STATE \quad {\bf Initialize} a vector $Pr = (0, \dots, 0 )$ of $|\candidateset|$ length.
   \STATE \quad {\bf For} $r$ in $\candidateset$:
   \STATE \quad \quad calculate the outputting probability of $r$.
@@ -481,13 +481,13 @@ calibrate the noise.
   \begin{algorithmic}
   \INPUT observed data set $\dataobs \in \mathcal{X}^n$, inference algorithm: $\bysinfer$, 
   prior: $\betad(\alpha, \beta)$, likelihood: $\binomial{n}{\theta}$, $\epsilon$
-  \STATE \quad {\bf let} $\betad(\alpha', \beta') = \bysinfer(\binomial{n}{\theta}, \betad(\alpha, \beta), \dataobs)$.  
+  \STATE \quad {\bf let} $\betad(\alpha', \beta') = \bysinfer(\binomial{n}{\theta}, \betad(\alpha, \beta), \dataobs)$. $LS$ be the local sensitivity of scoring function.  
   \STATE \quad {\bf Initialize} a vector $Pr = (0, \dots, 0 )$ of $|\candidateset|$ length.
   \STATE \quad {\bf For} $r$ in $\candidateset$:
   \STATE \quad \quad calculate the outputting probability of $r$.
   \STATE \quad \quad $Pr[r] = 
-  {\exp(\frac{\epsilon\cdot u(x,r)}{2 GS})}
-/ {\Sigma_{r' \in \mathcal{R}}\exp(\frac{\epsilon\cdot u(x,r')}{2\cdot GS})}$
+  {\exp(\frac{\epsilon\cdot u(x,r)}{2 LS})}
+/ {\Sigma_{r' \in \mathcal{R}}\exp(\frac{\epsilon\cdot u(x,r')}{2\cdot LS})}$
 \STATE \quad sample $z$ from $\candidateset$ by probability distribution $Pr$.
   \STATE {\bf return} $z$
   \end{algorithmic}
@@ -537,7 +537,7 @@ where $d$ is the Hamming distance between two data sets.
   For any $\dataobs, \dataobs'\in\{0,1\}^n$, and $\gamma \in \mathbb{R}^{+}$
   if  $\adj{\dataobs}{\dataobs'}$ then $\frac{1}{S(\dataobs)} - \frac{1}{S(\dataobs')} \leq \gamma$.
 \end{thm}
-The interested reader will find the proof in Appendix \ref{??}.
+The interested reader will find the proof in Appendix.
 We are now ready to define the mechanism $\hexpmech$. $\hexpmech(\dataobs)$ outputs a candidate $r \in \candidateset$ with probability
 \[
   \frac {\exp\big(\frac{-\epsilon\cdot \ux{r}}{4\cdot S(\dataobs)}\big)}
@@ -550,13 +550,13 @@ where $S(\dataobs)$ is the 1-smooth sensitivity of  $\hellinger(\bysinfer(\datao
   \begin{algorithmic}
   \INPUT observed data set $\dataobs \in \mathcal{X}^n$, inference algorithm: $\bysinfer$, 
   prior: $\betad(\alpha, \beta)$, likelihood: $\binomial{n}{\theta}$, $\epsilon$
-  \STATE \quad {\bf let} $\betad(\alpha', \beta') = \bysinfer(\binomial{n}{\theta}, \betad(\alpha, \beta), \dataobs)$.  
+  \STATE \quad {\bf let} $\betad(\alpha', \beta') = \bysinfer(\binomial{n}{\theta}, \betad(\alpha, \beta), \dataobs)$. $S(\dataobs)$ be the vector of $\gamma-$sensitivity of scoring function. 
   \STATE \quad {\bf Initialize} a vector $Pr = (0, \dots, 0 )$ of $|\candidateset|$ length.
   \STATE \quad {\bf For} $r$ in $\candidateset$:
   \STATE \quad \quad calculate the outputting probability of $r$.
   \STATE \quad \quad $Pr[r] = 
-  {\exp(\frac{\epsilon\cdot u(x,r)}{2 GS})}
-/ {\Sigma_{r' \in \mathcal{R}}\exp(\frac{\epsilon\cdot u(x,r')}{2\cdot GS})}$
+  {\exp(\frac{\epsilon \cdot \ux{r}}{2 S(\dataobs)})}
+/ {\Sigma_{r' \in \mathcal{R}}\exp(\frac{\epsilon \cdot}{2\cdot S(\dataobs)})}$
 \STATE \quad sample $z$ from $\candidateset$ by probability distribution $Pr$.
   \STATE {\bf return} $z$
   \end{algorithmic}
