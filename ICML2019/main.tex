@@ -434,8 +434,8 @@ $\expmech(x,u,\candidateset)$  outputs an element $r\in\candidateset$ with  prob
 \[
 %\underset{z \thicksim \expmech(x,u,\candidateset) }{\Pr}[z=r] = \frac
 \frac
-  {\exp(\frac{\epsilon\cdot u(x,r)}{2 GS})}
-{\Sigma_{r' \in \mathcal{R}}\exp(\frac{\epsilon\cdot u(x,r')}{2\cdot GS})},
+  {\exp(\frac{\epsilon\cdot \ux{r}}{2 GS})}
+{\Sigma_{r' \in \mathcal{R}}\exp(\frac{\epsilon\cdot \ux{r'}}{2\cdot GS})},
 \]
 where $u(x,r)$ is the Hellinger scoring function: $-\hellinger(\bysinfer(\dataobs), r)$, and $GS$ is the global sensitivity of the scoring function, defined as:
 \begin{equation*}
@@ -455,8 +455,8 @@ GS \equiv
   \STATE \quad {\bf For} $r$ in $\candidateset$:
   \STATE \quad \quad calculate the outputting probability of $r$.
   \STATE \quad \quad $Pr[r] = 
-  {\exp(\frac{\epsilon\cdot u(x,r)}{2 GS})}
-/ {\Sigma_{r' \in \mathcal{R}}\exp(\frac{\epsilon\cdot u(x,r')}{2\cdot GS})}$
+  {\exp(\frac{\epsilon\cdot \ux{r}}{2 GS})}
+/ {\Sigma_{r' \in \mathcal{R}}\exp(\frac{\epsilon\cdot u(\dataobs, r')}{2\cdot GS})}$
 \STATE \quad sample $z$ from $\candidateset$ by probability distribution $Pr$.
   \STATE {\bf return} $z$
   \end{algorithmic}
@@ -486,8 +486,8 @@ calibrate the noise.
   \STATE \quad {\bf For} $r$ in $\candidateset$:
   \STATE \quad \quad calculate the outputting probability of $r$.
   \STATE \quad \quad $Pr[r] = 
-  {\exp(\frac{\epsilon\cdot u(x,r)}{2 LS})}
-/ {\Sigma_{r' \in \mathcal{R}}\exp(\frac{\epsilon\cdot u(x,r')}{2\cdot LS})}$
+  {\exp(\frac{\epsilon\cdot \ux{r}}{2 LS})}
+/ {\Sigma_{r' \in \mathcal{R}}\exp(\frac{\epsilon\cdot \ux{r'}}{2\cdot LS})}$
 \STATE \quad sample $z$ from $\candidateset$ by probability distribution $Pr$.
   \STATE {\bf return} $z$
   \end{algorithmic}
@@ -499,8 +499,8 @@ and outputs a result $r \in \mathcal{R}$ with probability:
 \[
 %\underset{z \thicksim \lexpmech(x,u,\candidateset)}{\Pr}[z=r] = \frac
 \frac
-  {\exp(\frac{\epsilon \cdot u(x,r)}{2\cdot LS(\dataobs)})}
-{\displaystyle\sum_{r' \in \mathcal{R}}\exp(\frac{\epsilon\cdot u(x,r')}{2\cdot LS(\dataobs)})},
+  {\exp(\frac{\epsilon \cdot \ux{r}}{2\cdot LS(\dataobs)})}
+{\sum_{r' \in \mathcal{R}}\exp(\frac{\epsilon\cdot \ux{r'}}{2\cdot LS(\dataobs)})},
 \]
 where $LS(\dataobs)$ is the local sensitivity of the scoring function, defined as:
 \begin{equation}\label{eq:local_sensitivity_scoring}
@@ -541,7 +541,7 @@ The interested reader will find the proof in Appendix.
 We are now ready to define the mechanism $\hexpmech$. $\hexpmech(\dataobs)$ outputs a candidate $r \in \candidateset$ with probability
 \[
   \frac {\exp\big(\frac{-\epsilon\cdot \ux{r}}{4\cdot S(\dataobs)}\big)}
-  {\displaystyle\sum_{r' \in \mathcal{R}}\exp(\frac{\epsilon\cdot u(x,r')}{4\cdot S(\dataobs)})},
+  {\sum_{r' \in \mathcal{R}}\exp(\frac{\epsilon\cdot u(x,r')}{4\cdot S(\dataobs)})},
 \]
 where $S(\dataobs)$ is the 1-smooth sensitivity of  $\hellinger(\bysinfer(\dataobs),\cdot)$. {\color{red}{why do we choose 1???}}
   \begin{algorithm}
@@ -556,7 +556,7 @@ where $S(\dataobs)$ is the 1-smooth sensitivity of  $\hellinger(\bysinfer(\datao
   \STATE \quad \quad calculate the outputting probability of $r$.
   \STATE \quad \quad $Pr[r] = 
   {\exp(\frac{\epsilon \cdot \ux{r}}{2 S(\dataobs)})}
-/ {\Sigma_{r' \in \mathcal{R}}\exp(\frac{\epsilon \cdot}{2\cdot S(\dataobs)})}$
+/ {\Sigma_{r' \in \mathcal{R}}\exp(\frac{\epsilon \cdot \ux{r'}}{2\cdot S(\dataobs)})}$
 \STATE \quad sample $z$ from $\candidateset$ by probability distribution $Pr$.
   \STATE {\bf return} $z$
   \end{algorithmic}
