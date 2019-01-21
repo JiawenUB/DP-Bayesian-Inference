@@ -84,6 +84,7 @@ We compare the accuracy theoretically and experimentally.
 
 \section{Introduction}
 \label{sec_intro}
+%%Data analysis and privacy are important
 Data analysis techniques have brought significant improvements in a
 variety of applications including applications from the medical,
 financial, social, and transportation fields. In order to provide
@@ -93,10 +94,17 @@ Differential privacy was proposed a decade ago to address these
 situations and it is on its way to become the gold standard in data
 privacy.  
 
+%%Bayesian inference is a standard tool for data analysis which is
+%% also a building block of probabilistic programming languages
 Bayesian inference is a standard statistical tool that is useful to
 estimate a posterior distribution when a prior distribution is given
 and some data is observed. 
 
+%%Several works have considered differentially private bayesian
+%%inference 
+
+%%we consider bayesian inference with posterior perturbation 
+%%which could be used as a plug and play in PPL citing CCS2016
 In this work we consider the design space of  parametric Bayesian
 inference mechanisms guaranteeing differential privacy. Our work is
 motivated by recent developments in the area of probabilistic
@@ -104,6 +112,22 @@ programming where several tools have been proposed to perform
 parametric and non-parametric Bayesian inference in an efficient
 way.
 
+
+%%we focus on discrete simple models
+
+%%we focus on hellinger distance
+
+%%the contribution is a comparative study of several ways to achieve
+%%differential privacy in this setting.
+
+%%findings: Laplace with histogram is the best mechanism and this is
+%%because when the data size grows the hellinger between the
+%%posteriors induced by adjacent datasets decreases, and so the impact
+%%of Laplace also decreases. This is a particular case because of the
+%%hellinger, if the Laplace is added accordingly to the dimension the
+%%performance is worse. The exponential with smooth sensitivity is
+%%better than the standard exponential with global sensitivity but it
+%%does not achieve the same performance as the previous ones. 
 
 We focus on two classical models: the Beta-Binomial and the
 Dirichlet-Multinomial models. In the Beta-Binomial model the goal
