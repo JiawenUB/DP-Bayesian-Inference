@@ -255,11 +255,11 @@ def row_discrete_probabilities(sample_size,epsilon,delta,prior,observation):
 	#############################################################################
 
 	labels = [
-		r'$\mathsf{expMech}^{smoo}$ ',
-		r"$\mathsf{expMech}^{local}$",
-		r"$\mathsf{expMech}$",
-		r'$\mathsf{ilapMech}$ (sensitivity = '+ str(sensitivity1) +')', 
-		r'$\mathsf{lapMech}$ (sensitivity = '+ str(sensitivity2) +')']
+		r'Alg 5 - $\mathsf{EHDS}$ ',
+		r"Alg 4 - $\mathsf{EHDL}$",
+		r"Alg 3 - $\mathsf{EHD}$",
+		r'Alg 1 - $\mathsf{LSDim}$ (sensitivity = '+ str(sensitivity2) +')', 
+		r'Alg 2 - $\mathsf{LSHist}$ (sensitivity = '+ str(sensitivity1) +')']
 
 
 	#############################################################################
@@ -267,16 +267,20 @@ def row_discrete_probabilities(sample_size,epsilon,delta,prior,observation):
 	#############################################################################
 
 	plt.figure()
-	plt.plot(step, exp_gamma, 'o', label=(labels[0]))
-
-
-	plt.plot(step, exp_LS, '-', label=(labels[1]))
+	plt.plot(step, lap_2, '-',color = 'lightblue', label=(labels[3]))
+	
+	plt.plot(step, lap_1,'-', color = 'navy', label=(labels[4]))
 
 	plt.plot(step, exp_GS, '-', label=(labels[2]))
 
-	plt.plot(step, lap_1,'-', color = 'navy', label=(labels[3]))
+	plt.plot(step, exp_LS, '-', label=(labels[1]))
 
-	plt.plot(step, lap_2, '-',color = 'lightblue', label=(labels[4]))
+	plt.plot(step, exp_gamma, '-', label=(labels[0]))
+
+
+
+
+
 
 	# plt.plot(step, exp,  label=(labels[0]))
 
@@ -296,7 +300,7 @@ def row_discrete_probabilities(sample_size,epsilon,delta,prior,observation):
 
 	plt.xlabel("c / Hellinger distance from true posterior")
 	plt.ylabel("Pr[H(BI(x),r) = c]")
-	plt.title("Discrete Probabilities", fontsize=15)
+	plt.title("Accuracy with Data size "+str(sample_size), fontsize=15)
 	plt.legend()
 	plt.grid()
 	plt.show()
@@ -366,11 +370,11 @@ if __name__ == "__main__":
 	#############################################################################
 	#SETTING UP THE PARAMETERS
 	#############################################################################
-	datasize = 600
-	epsilon = 1.0
+	datasize = 10000
+	epsilon = 5.0
 	delta = 0.00000001
-	prior = dirichlet([1,1,1])
-	dataset = [200,200,200]
+	prior = dirichlet([1,1])
+	dataset = [5000,5000]
 
 	#############################################################################
 	#SETTING UP THE PARAMETERS WHEN DOING GROUPS EXPERIMENTS

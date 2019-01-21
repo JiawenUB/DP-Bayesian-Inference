@@ -541,7 +541,7 @@ The interested reader will find the proof in Appendix.
 We are now ready to define the mechanism $\hexpmech$. $\hexpmech(\dataobs)$ outputs a candidate $r \in \candidateset$ with probability
 \[
   \frac {\exp\big(\frac{-\epsilon\cdot \ux{r}}{4\cdot S(\dataobs)}\big)}
-  {\sum_{r' \in \mathcal{R}}\exp(\frac{\epsilon\cdot u(x,r')}{4\cdot S(\dataobs)})},
+  {\sum_{r' \in \mathcal{R}}\exp(\frac{\epsilon\cdot \ux{r'}}{4\cdot S(\dataobs)})},
 \]
 where $S(\dataobs)$ is the 1-smooth sensitivity of  $\hellinger(\bysinfer(\dataobs),\cdot)$. {\color{red}{why do we choose 1???}}
   \begin{algorithm}
