@@ -425,7 +425,7 @@ which, based on the notion of \emph{smooth} sensitivity, achieves $\epsilon$-dif
 has good accuracy in specific cases.
 In presenting these mechanisms we will denote by $\inferd{\valpha}{\vtheta}{\dataobs}$ the posterior  $\dirichlet{\valpha'}$
 obtained starting from the prior $\dirichlet{\valpha}$, likelihood $\multinomial{|\dataobs|}{\vtheta}$, and observed data $\dataobs$.
-Two different upper bounds to the value
+Two different upper bounds to the value of
 \begin{align}
   \label{eqn:eq1}
   \max_{\substack{\adj{\dataobs}{\dataobs'},\\
@@ -439,7 +439,8 @@ will be used to calibrate the noise in the mechanisms based on the Laplacian pri
 \subsection{Calibrating noise w.r.t. $\ell_1$ norm ($\lapmech$)}
 \label{sec_ell1_dim}
 We start off by presenting $\lapmech$, in Algorithm \ref{lapmech}, based on the Laplace primitive.
-The idea of $\lapmech$ is to add Laplacian noise to the differences of the respective numeric parameters of the prior
+The idea of $\lapmech$ is to add Laplacian noise with scale proportional to $\mathcal{X}$ to
+the differences between the respective numeric parameters of the prior
 and posterior distribution. 
 \begin{algorithm}
   \caption{$\lapmech$}
@@ -458,33 +459,42 @@ and posterior distribution.
 \end{algorithm}
 \begin{lem}
   Algorithm \ref{lapmech} is $\epsilon$-d.p.
-  \begin{proof} By noticing that $\mathcal{X}-1$ is an upper bound to \ref{eqn:eq1}. \end{proof}
+  \begin{proof} By noticing that $\mathcal{X}-1$ is an upper bound to the value denoted by (\ref{eqn:eq1}). \end{proof}
 \end{lem}
 
 
 \subsection{Improving the sensitivity ($\ilapmech$)}
 \label{sec_ell1_hist}
-By seeing the parameters of the distributions as histograms, we can give a tighter upper bound to \ref{eqn:eq1}.
-Indeed  $\lapmech$ can be reduced to a constant. Algorithm $\ilapmech$ in Algorithm \ref{mech:ilapmech} takes advantage of this fact. 
-Indeed, when $\mathcal{X}=2$, \ref{eqn:eq1} is upper bounded by 1, while when $\mathcal{X}=2$ \ref{eqn:eq1} is upper bounded by 2.
-In Algorithm \ref{mech:ilapmech} the algorithm $\ilapmech$ is presented.
+By seeing the parameters of the distributions as histograms, we can give a tighter upper bound to the value denoted by (\ref{eqn:eq1}).
+Indeed a constant will do. Algorithm $\ilapmech$ in Algorithm \ref{ilapmech} takes advantage of this fact. 
+Indeed, when $\mathcal{X}=2$, 1 is an upper bound for the value of (\ref{eqn:eq1}), while when $\mathcal{X}>2$, 2 is.
+In Algorithm \ref{ilapmech} the algorithm $\ilapmech$ is presented.
 \begin{algorithm}
-  \caption{$\ilapmech$ in Dirichlet-Multinomial model}
-  \label{mech:ilapmech}
+  \caption{$\ilapmech$}
+  \label{ilapmech}
   \begin{algorithmic}
-  \INPUT observed data set $\dataobs \in \mathcal{X}^n$, inference algorithm: $\bysinfer$, 
-  prior: $\dirichlet{\valpha}$, likelihood: $\multinomial{n}{\vtheta}$, $\epsilon$
-  \STATE \quad {\bf let} $\dirichlet{\valpha'} = \bysinfer(\multinomial{n}{\vtheta}, \dirichlet{\valpha}, \dataobs)$, $k = |\mathcal{X}|$.
-  \STATE \quad {\bf Initialize} a vector $\tilde{\valpha} = (0, \dots, 0 )$ of $k$ dimensions .
-  \STATE \quad {\bf For} $i = 1 \dots (k - 1)$:
-  \STATE \quad \quad  {\bf let} $\eta \sim \lap{0}{\frac{2}{\epsilon}}$.
+  \INPUT $\dataobs\in\mathcal{X}^n$, $\dirichlet{\valpha}$
+  \STATE \quad {\bf let} $\dirichlet{\valpha'} = \inferd{\valpha}{\vtheta}{\dataobs}$
+  \STATE \quad ${\bf let}\ k=\left \{
+        \begin{array}{lll}          
+          1&\text{if}& |\mathcal{X}|=2\\
+          2&\text{otherwise}
+        \end{array}
+      \right .\ $
+  \STATE \quad {\bf Initialize} a vector $\tilde{\valpha} = (0, \dots, 0 )\in \mathbb{N}^{|\mathcal{X}|}$ 
+  \STATE \quad {\bf For} $i = 1 \dots |\mathcal{X}|-1$:
+  \STATE \quad \quad  {\bf let} $\eta \sim \lap{0}{\frac{k}{\epsilon}}$
   \STATE \quad \quad  $\tilde{\alpha_i}=\alpha_i + \lfloor{(\alpha_i' - \alpha_i) + \eta}\rfloor^n_0$ 
   % \RETURN $a_{k+1}$.
-  \STATE \quad $\tilde{\alpha_k} = \alpha_k + \lfloor n - \sum_{i = 1}^{k-1}\lfloor{(\alpha_i' - \alpha_i) + \eta_i}\rfloor^n_0 \rfloor^n_0$
-  \STATE {\bf return} $\dirichlet{\tilde{\valpha}}$
+  \STATE \quad $\tilde{\alpha_{|\mathcal{X}|}} = \alpha_{|\mathcal{X}|} + \lfloor n - \sum_{i = 1}^{|\mathcal{X}|-1}\lfloor{(\alpha_i' - \alpha_i) + \eta_i}\rfloor^n_0 \rfloor^n_0$
+  \STATE {\bf return} $\tilde{\valpha}$
   \end{algorithmic}
-  \end{algorithm}
-
+\end{algorithm}
+\begin{lem}
+  Algorithm \ref{ilapmech} is $\epsilon$-d.p.
+  \begin{proof} By noticing that 1 and 2 are upper bounds to the value denoted by (\ref{eqn:eq1}), respectively when $|\mathcal{X}|=2$ and $|\mathcal{X}|>2$.
+  \end{proof}
+\end{lem}
 
 \subsection{A new family of mechanisms}
 \label{sec_exp}
