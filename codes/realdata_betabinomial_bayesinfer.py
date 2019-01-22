@@ -32,11 +32,11 @@ def read_datas(folder):
 		datas.append(read_data(f, 0))
 	return datas
 
-def data_process(datas):
+def data_process(datas, dimension):
 	observations = []
 	datasizes = []
 	for data in datas:
-		observations.append([sum(data), len(data) - sum(data)])
+		observations.append([data.count(i) for i in range(dimension) ])
 		datasizes.append(len(data))
 	return datasizes,observations
 
@@ -56,7 +56,7 @@ def run_experiments(times, datasizes, observations,epsilon, delta, prior):
 			data.append(Bayesian_Model._accuracy[Bayesian_Model._keys[i]])
 
 	plot_error_box(data, "Different Data Sets", 
-		["bike", "cryotherapy", "immunotherapy", "badges"], 
+		["bike", "cryotherapy", "immunotherapy"], 
 		"Experiments on Real Data", 
 		[
 		r'Alg 1 - $\mathsf{LSDim}$ (sensitivity = 2.0)', 
@@ -145,9 +145,10 @@ if __name__ == "__main__":
 
 	epsilon = 1.0
 	delta = 0.00000001
-	prior = dirichlet([1,1])
+	prior = dirichlet([1,1,1])
 
-	datasizes, observations = data_process(read_datas("./datas/*.txt"))
+	datasizes, observations = data_process(read_datas("./datas/3d/*.txt"), 3)
+	print datasizes
 	run_experiments(1000, datasizes, observations,epsilon, delta, prior)
 
 

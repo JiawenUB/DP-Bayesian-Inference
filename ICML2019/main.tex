@@ -1149,15 +1149,24 @@ the $\hexpmech$ outperforms the $\lapmech$, and asymptotically approaches the im
 Similar experimental tendencies were obtained for the Dirichlet-multinomial model (Figure \ref{fig_vs_datasize_3d} and \ref{fig_vs_datasize_4d}).
 
 
-\paragraph{Experiments on Real Data Sets}
-We use four real data sets from UCI Machine Learning repository\footnote{https://archive.ics.uci.edu/ml/datasets.html}. Each data set contains 1 binary variable, which applys our Beta-binomial model. By setting the prior distribution as $\betad(1,1)$, we apply our 5 private inference algorithms on them to derive the underlining distribution of these data. The first data set is the SHARING BIKE data, where $0$ means user use sharing bike at workday and $1$ stands for weekend. The second and third data set the THERAPY data, where $1$ means patient with disease is cured and $1$ means not. The forth data set is the BADGE data, $1$ means people with badge and $0$ means without badge.
+\paragraph{Experiments on Real Data Sets in Beta-binomial Model}
+We use four real data sets from UCI Machine Learning repository\footnote{https://archive.ics.uci.edu/ml/datasets.html}. Each data set contains 1 binary variable, which applys our Beta-binomial model. By setting the prior distribution as $\betad(1,1)$, we apply our 5 private inference algorithms on them to derive the underlining distribution of these data. The first data set is the SHARING BIKE data, where $0$ means user use sharing bike at workday and $1$ stands for weekend. The second and third data set the THERAPY data, where $1$ means patient with disease is cured and $1$ means not. The forth data set is the BADGE data, $1$ means people with badge and $0$ means without badge. The size of the four data set are $731, 90, 294, 90$. The accuracy are shown in Figure \ref{fig_real_2d}.
 \begin{figure}
 \centering
 \includegraphics[width=0.35\textwidth]{realdata.eps}
 \caption{Accuracy on Real Data Sets, with $\epsilon = 1.0$}
-\label{fig_vs_prior}
+\label{fig_real_2d}
 \end{figure}
 
+
+\paragraph{Experiments on Real Data Sets in Dirichlet-multinomial Model}
+We use three real data sets from the same repository repository\footnote{https://archive.ics.uci.edu/ml/datasets.html}. Each data set contains 1 category variable of 3 dimensions ($|\mathcal{X}| = 3$), which applys our 3 dimension Dirichlet-multinomial model. By setting the prior distribution as $\dirichlet(1,1,1)$, we apply our 5 private inference algorithms on them to derive the underlining distribution of these data. The first data set is the SHARING BIKE data, where $0$ means user use sharing bike at workday and $1$ stands for weekend. The second and third data set the THERAPY data, where $1$ means patient with disease is cured and $1$ means not. The forth data set is the BADGE data, $1$ means people with badge and $0$ means without badge. The size of the four data set are $731, 90, 90$. The accuracy are shown in Figure \ref{fig_real_3d}.
+\begin{figure}
+\centering
+\includegraphics[width=0.35\textwidth]{realdata_3d.eps}
+\caption{Accuracy on Real Data Sets, with $\epsilon = 1.0$}
+\label{fig_real_3d}
+\end{figure}
 
 
 \subsection{Privacy Evaluation}

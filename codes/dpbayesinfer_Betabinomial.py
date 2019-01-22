@@ -39,12 +39,12 @@ class BayesInferwithDirPrior(object):
 		self._LS_probabilities = []
 		self._GS_probabilities = []
 		self._SS_probabilities = []
-		self._alpha_SS_probabilities = []
+		self._gamma_SS_probabilities = []
 		self._LS_Candidates = {}
 		self._GS = 0.0
 		self._LS = 0.0
 		self._SS = 0.0
-		self._alpha_SS = 0.0
+		self._gamma_SS = 0.0
 		self._keys = []
 		self._accuracy = {}
 		self._accuracy_mean = {}
@@ -146,7 +146,7 @@ class BayesInferwithDirPrior(object):
 		###################################################################################################################################
 		nomalizer = 0.0
 		for r in self._candidates:
-			temp = math.exp(self._epsilon * self._candidate_scores[r]/(4 * self._SS))
+			temp = math.exp(self._epsilon * self._candidate_scores[r]/(4.0 * self._SS))
 			self._SS_probabilities.append(temp)
 			nomalizer += temp
 
@@ -160,14 +160,14 @@ class BayesInferwithDirPrior(object):
 	#####SETTING UP THE EXPONENTIAL MECHANISM WITH THE ALPHA SMOOTH SENSITIVITY
 	###################################################################################################################################	
 
-	def _set_up_exp_mech_with_alpha_SS(self):
+	def _set_up_exp_mech_with_gamma_SS(self):
 
 		###################################################################################################################################
 		#INITIALIZE THE LISTS FOR EXPERIMENTS
 		###################################################################################################################################		
-		self._keys.append("ExpoMech of alpha SS")
-		self._accuracy["ExpoMech of alpha SS"] = []
-		self._accuracy_mean["ExpoMech of alpha SS"] = []
+		self._keys.append("ExpoMech of gamma SS")
+		self._accuracy["ExpoMech of gamma SS"] = []
+		self._accuracy_mean["ExpoMech of gamma SS"] = []
 
 		###################################################################################################################################
 		#CALCULATING THE SENSITIVITY
@@ -175,9 +175,9 @@ class BayesInferwithDirPrior(object):
 		t0 = time.time()
 		start = time.clock()
 		gamma = 1.0
-		self._alpha_SS = max([(1.0 / (1.0/self._LS_Candidates[r] + gamma * Hamming_Distance(self._observation_counts, [r._alphas[i] - self._prior._alphas[i] for i in range(self._prior._size)]))) for r in self._candidates])
+		self._gamma_SS = max([(1.0 / (1.0/self._LS_Candidates[r] + gamma * Hamming_Distance(self._observation_counts, [r._alphas[i] - self._prior._alphas[i] for i in range(self._prior._size)]))) for r in self._candidates])
 		t1 = time.time()
-		# print ("alpha smooth sensitivity"+str(t1 - t0)), self._alpha_SS
+		print ("gamma smooth sensitivity"+str(t1 - t0)), self._gamma_SS
 
 
 		###################################################################################################################################
@@ -185,11 +185,11 @@ class BayesInferwithDirPrior(object):
 		###################################################################################################################################
 		nomalizer = 0.0
 		for r in self._candidates:
-			temp = math.exp(self._epsilon * self._candidate_scores[r]/(2 * self._alpha_SS))
-			self._alpha_SS_probabilities.append(temp)
+			temp = math.exp(self._epsilon * self._candidate_scores[r]/(4.0 * self._gamma_SS))
+			self._gamma_SS_probabilities.append(temp)
 			nomalizer += temp
 
-		self._alpha_SS_probabilities = [i/nomalizer for i in self._alpha_SS_probabilities]
+		self._gamma_SS_probabilities = [i/nomalizer for i in self._gamma_SS_probabilities]
 		
 		return nomalizer
 
@@ -273,8 +273,8 @@ class BayesInferwithDirPrior(object):
 	def _exponentialize_SS(self):
 		self._exponential_posterior = numpy.random.choice(self._candidates, p=self._SS_probabilities)
 
-	def _exponentialize_alpha_SS(self):
-		self._exponential_posterior = numpy.random.choice(self._candidates, p=self._alpha_SS_probabilities)
+	def _exponentialize_gamma_SS(self):
+		self._exponential_posterior = numpy.random.choice(self._candidates, p=self._gamma_SS_probabilities)
 
 
 	def _propose_test_release(self):
@@ -290,8 +290,8 @@ class BayesInferwithDirPrior(object):
 
 		self._set_up_baseline_lap_mech()
 		self._set_up_improved_lap_mech()
-		self._set_up_exp_mech_with_SS()
-		self._set_up_exp_mech_with_alpha_SS()
+		# self._set_up_exp_mech_with_SS()
+		self._set_up_exp_mech_with_gamma_SS()
 		self._set_up_exp_mech_with_GS()
 		self._set_up_exp_mech_with_LS()
 
@@ -320,26 +320,26 @@ class BayesInferwithDirPrior(object):
 			#############################################################################
 			#SAMPLING WITH THE EXPONENTIAL MECHANISM OF SMOOTH SENSITIVITY
 			#############################################################################
-			self._exponentialize_SS()
+			# self._exponentialize_SS()
+			# self._accuracy[self._keys[2]].append(self._posterior - self._exponential_posterior)
+
+			#############################################################################
+			#SAMPLING WITH THE EXPONENTIAL MECHANISM OF ALPHA SMOOTH SENSITIVITY
+			# #############################################################################
+			self._exponentialize_gamma_SS()
 			self._accuracy[self._keys[2]].append(self._posterior - self._exponential_posterior)
 
 			#############################################################################
 			#SAMPLING WITH THE EXPONENTIAL MECHANISM OF ALPHA SMOOTH SENSITIVITY
 			# #############################################################################
-			self._exponentialize_alpha_SS()
-			self._accuracy[self._keys[3]].append(self._posterior - self._exponential_posterior)
-
-			#############################################################################
-			#SAMPLING WITH THE EXPONENTIAL MECHANISM OF ALPHA SMOOTH SENSITIVITY
-			# #############################################################################
 			self._exponentialize()
-			self._accuracy[self._keys[4]].append(self._posterior - self._exponential_posterior)
+			self._accuracy[self._keys[3]].append(self._posterior - self._exponential_posterior)
 			
 			#############################################################################
 			#SAMPLING WITH THE EXPONENTIAL MECHANISM OF ALPHA SMOOTH SENSITIVITY
 			# #############################################################################
 			self._exponentialize_LS()
-			self._accuracy[self._keys[5]].append(self._posterior - self._exponential_posterior)
+			self._accuracy[self._keys[4]].append(self._posterior - self._exponential_posterior)
 
 			
 		for key,item in self._accuracy.items():
