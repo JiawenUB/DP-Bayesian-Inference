@@ -32,7 +32,16 @@ def read_datas(folder):
 		datas.append(read_data(f, 0))
 	return datas
 
-def run_experiments(times, datasizes, observations,epsilon, delta):
+def data_process(datas):
+	observations = []
+	datasizes = []
+	for data in datas:
+		observations.append([sum(data), len(data) - sum(data)])
+		datasizes.append(len(data))
+	return datasizes,observations
+
+
+def run_experiments(times, datasizes, observations,epsilon, delta, prior):
 	data = []
 	errors = [[],[],[],[],[]]
 	for i in range(len(datasizes)):
@@ -46,7 +55,16 @@ def run_experiments(times, datasizes, observations,epsilon, delta):
 		for i in range(len(mean_error)):
 			errors[i].append(Bayesian_Model._accuracy[Bayesian_Model._keys[i]])
 
-	plot_error_box(errors, "Data Set", [""] )
+	plot_error_box(errors, "Data Set", 
+		["bike", "cryotherapy", "immunotherapy", "badges"], 
+		"Experiments on Real Data", 
+		[
+		r'Alg 5 - $\mathsf{EHDS}$ ',
+		r"Alg 4 - $\mathsf{EHDL}$",
+		r"Alg 3 - $\mathsf{EHD}$",
+		r'Alg 1 - $\mathsf{LSDim}$ (sensitivity = '+ str(sensitivity2) +')', 
+		r'Alg 2 - $\mathsf{LSHist}$ (sensitivity = '+ str(sensitivity1) +')'],
+		["skyblue", "navy", "lightblue", "lightcyan", "blueviolet"] )
 
 	return 
 
@@ -124,55 +142,13 @@ if __name__ == "__main__":
 #SETTING UP THE PARAMETERS
 #############################################################################
 
-	datasize = 20
-	epsilon = 0.1
+	epsilon = 1,0
 	delta = 0.00000001
 	prior = dirichlet([1,1])
-	dataset = [10,10]
 
 
-#############################################################################
-#SETTING UP THE PARAMETERS WHEN DOING GROUPS EXPERIMENTS
-#############################################################################
 	epsilons = numpy.arange(5, 2, 0.1)
-	datasizes = gen_datasizes((2000,5000),500)# + gen_datasizes((150,500),50) + gen_datasizes((600,1000),100)#[300] #[8,12,18,24,30,36,42,44,46,48]#,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80]
-	percentage = [0.5,0.5]
-	datasets = gen_datasets(percentage, datasizes)
-	priors = gen_priors([20,50], 10, 2) + gen_priors([100,200], 50, 2)# + gen_priors([200,500], 100, 2) + gen_priors([600,2000], 200, 2)
-	
+	datasizes, observations = data_process(read_datas("/data/*.txt"))
+	run_experiments(1000, datasizes, observations,epsilon, delta, prior)
 
-
-#############################################################################
-#DOING PLOTS OF ACCURACY V.S. THE DATA SIZE
-#############################################################################
-	
-	accuracy_VS_datasize(epsilon,delta,prior,datasets,datasizes)
-
-#############################################################################
-#DOING PLOTS OF ACCURACY V.S. THE PRIOR
-#############################################################################
-
-	# accuracy_VS_prior(datasize,epsilon,delta,priors,dataset)
-
-#############################################################################
-#DOING PLOTS OF ACCURACY V.S. THE PRIOR AND MEAN
-#############################################################################
-
-	# accuracy_VS_prior_mean(sample_size,epsilon,delta,priors,observations)
-
-#############################################################################
-#DOING PLOTS OF ACCURACY V.S. THE MEAN
-#############################################################################
-
-	# accuracy_VS_mean(sample_size,epsilon,delta,prior)
-
-#############################################################################
-#DOING PLOTS OF ACCURACY V.S. THE EPSILON
-#############################################################################
-
-	# accuracy_VS_epsilon(sample_size,epsilons,delta,prior,observation)
-
-
-
-	
 
