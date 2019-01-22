@@ -291,11 +291,16 @@ If $\nu\geq \frac{\Delta_f}{\epsilon}$, with $\Delta_f=\displaystyle\max_{d,d':\
 then the mechanism is $\epsilon$-differentially private as proven in \cite{???}.
 
 \noindent \emph{Exponential mechanism.}
-
+ 
 \noindent \emph{Composition.}
 
 \noindent \emph{Postprocessing.}
 
+\noindent \emph{A note on input data representation.}
+We will represent our input databases $\dataobs$ of length $n$ as histograms 
+with $k$-$1$ bins where $k$ is the dimensionality of the problem.
+This is w.l.o.g. because given the first $k$-$1$ counts, the $k$-th count
+is known.
 
 \noindent \textbf{Problem setting.}
 \label{subsec_problem}
@@ -365,69 +370,65 @@ Our choice to use Hellinger distance is motivated by three facts:
 \section{Private Mechanisms}
 \label{sec_mechs}
 In this section we will describe and analyse a series of mechanisms.
-Section \ref{sec_ell1_dim} presents a first mechanism called $\lapmech$ based on the Laplace primitive
-where the sensitivity is measured w.r.t. to $\ell_1$ norm.
-We will then notice, Section \ref{??}, that this mechanism's accuracy can be improved by performing a better analysis on
-the sensitivity of the inference process.
-Section \ref{???}, shows an instance of the exponential mechanism where the scoring
+Section \ref{sec_ell1_dim} presents a first mechanism, $\lapmech$,
+based on the Laplace primitive where the sensitivity is measured w.r.t. to $\ell_1$ norm.
+Section \ref{sec_ell1_hist}, shows that $\lapmech$'s accuracy can be improved
+by performing a better analysis on the sensitivity of the inference process.
+Section \ref{sec_ehd}, shows an instance of the exponential mechanism, $\expmech$, where the scoring
 function is based on the Hellinger distance, we will see how this mechanisms performs
 poorly due to the very high global sensitivity of the inference process w.r.t to this metric.
-Section \ref{???}
+Section \ref{sec_ehdl} introduces, $\lexpmech$, a variation of $\expmech$ which uses a lower bound
+on the global sensitivity called local sensitivity.
+Unfortunately, despite improving on accuracy $\lexpmech$ is non-private.
+Finally, building on $\lexpmech$, Section \ref{sec_ehds} introduces $\hexpmech$:
+which, based on the notion of \emph{smooth} sensitivity, achieves $\epsilon$-differential privacy and
+has good accuracy in specific cases.
+In presenting these mechanisms we will denote by $\inferd{\valpha}{\vtheta}{\dataobs}$ the posterior  $\dirichlet{\valpha'}$
+obtained starting from the prior $\dirichlet{\valpha}$, likelihood $\multinomial{|\dataobs|}{\vtheta}$, and observed data $\dataobs$.
+Two different upper bounds to the value
+\begin{align}
+  \label{eqn:eq1}
+  \max_{\substack{\adj{\dataobs}{\dataobs'},\\
+      \dirichlet{\valpha}=\inferd{\valpha}{\vtheta}{\dataobs},\\
+      \dirichlet{\valpha'}=\inferd{\valpha}{\vtheta}{\dataobs'}}}||\valpha-\valpha'||_1 
+\end{align}
+will be used to calibrate the noise in the mechanisms based on the Laplacian primitive.
+
+
+
 \subsection{Calibrating noise w.r.t. $\ell_1$ norm ($\lapmech$)}
 \label{sec_ell1_dim}
-We start off by presenting a mechanism based on the Laplace primitive.
-The mechanism, denoted by $\lapmech$, takes in input the data $\dataobs$, a mechanism, $\bysinfer$, that is used to perform inference on some parameter,
-a prior and a likelihood function, and the $\epsilon$ parameter measuring the privacy level.
-Now, $\lapmech(\dataobs,\bysinfer, \mathsf{prior}, \mathsf{likelihood}, \epsilon)$,
-simply adds Laplace noise to the parameters of the posterior distributions. The mechanisms also performs a
-post-processing phase by flooring and  truncating the noisy parameters so that they belong to the right interval.
-In the case of the Beta-Binomial model the output produced is: $\betad(\alpha +  \lfloor{\Delta \alpha + \eta}\rfloor^n_0,\beta + n - \lfloor{\Delta \alpha + \eta}\rfloor^n_0)$
-with $\eta \thicksim \lap{0}{\frac{\Delta \bysinfer}{\epsilon}}$, where $\lfloor \cdot \rfloor^n_0$ is taking the floor value and truncating into
-$[0,n]$. This mechanism is described by the pesudocode in Figure \ref{mech:lapmech}.\\
-Since we are adding noise directly to the parameters, the sensitivity should be calibrated w.r.t $\ell_1$-norm. That is,
-the sensitivity is defined as:
-\[
-   \Delta \bysinfer \equiv \max\limits_{\dataobs, \dataobs' \in \{0,1\}^{n}, ||\dataobs - \dataobs'||_1 \leq 1} ||\bysinfer(\dataobs) - \bysinfer(\dataobs')||_1
-\]
-This value can be quickly seen as being upper bounded by  the dimensionality. (e.g. 2 for the Beta-Binomial model and  $k$ for
-the Dirichlet-Multinomial model).
-  \begin{algorithm}
-  \caption{$\lapmech$ for the Beta-Binomial model}
-  \label{mech:lapmech}
+We start off by presenting $\lapmech$, in Algorithm \ref{lapmech}, based on the Laplace primitive.
+The idea of $\lapmech$ is to add Laplacian noise to the differences of the respective numeric parameters of the prior
+and posterior distribution. 
+\begin{algorithm}
+  \caption{$\lapmech$}
+  \label{lapmech}
   \begin{algorithmic}
-  \INPUT observed data set $\dataobs \in \{0,1\}^n$, inference algorithm: $\bysinfer$, 
-  prior: $\betad(\alpha, \beta)$, likelihood: $\binomial{n}{\theta}$, $\epsilon$
-  \STATE \quad {\bf let} $\betad(\alpha', \beta') = \bysinfer(\binomial{n}{\theta}, \betad(\alpha, \beta), \dataobs)$.  
-  \STATE \quad  $\eta \sim \lap{0}{\frac{2}{\epsilon}}$.
-  \STATE \quad  $\tilde{\alpha}=\alpha + \lfloor{(\alpha' - \alpha) + \eta}\rfloor^n_0$ 
-  \STATE \quad  $\tilde{\beta}=\beta + n - \lfloor{(\alpha' - \alpha) + \eta}\rfloor^n_0$ \\
+  \INPUT $\dataobs\in\mathcal{X}^n$, $\dirichlet{\valpha}$
+  \STATE \quad {\bf let} $\dirichlet{\valpha'} = \inferd{\valpha}{\vtheta}{\dataobs}$
+  \STATE \quad {\bf Initialize} a vector $\tilde{\valpha} = (0, \dots, 0 )\in \mathbb{N}^{|\mathcal{X}|}$ 
+  \STATE \quad {\bf For} $i = 1 \dots |\mathcal{X}| - 1$:
+  \STATE \quad \quad  {\bf let} $\eta \sim \lap{0}{\frac{|\mathcal{X}|}{\epsilon}}$
+  \STATE \quad \quad  $\tilde{\alpha_i}=\alpha_i + \lfloor{(\alpha_i' - \alpha_i) + \eta}\rfloor^n_0$ 
   % \RETURN $a_{k+1}$.
-  \noindent {\bf return} $\betad(\tilde{\alpha}, \tilde{\beta})$
+  \STATE \quad $\tilde{\alpha_{|\mathcal{X}|}} = \alpha_{|\mathcal{X}|} + \lfloor n - \sum_{i = 1}^{|\mathcal{X}|-1}\lfloor{(\alpha_i' - \alpha_i) + \eta_i}\rfloor^n_0 \rfloor^n_0$
+  \STATE {\bf return} $\tilde{\valpha}$
   \end{algorithmic}
-  \end{algorithm}
-
-  In Dirichlet-Multinomial model, $\lapmech$ produces output:
-  $\dirichlet{\alpha_1 +  \lfloor{\Delta \alpha_1 + \eta_1}\rfloor^n_0, \cdots, \alpha_k + \lfloor n - \sum_{i = 1}^{k-1}\lfloor{\Delta \alpha_i + \eta_i}\rfloor^n_0 \rfloor^n_0},$
-  where $\eta_i \thicksim \lap{0}{\frac{k - 1}{\epsilon}}$.
-  We will use $ \lapmech(\dataobs) = \betad(\tilde{\alpha}, \tilde{\beta})$ or $\dirichlet{\tilde{\valpha}}$ for short.
-
+\end{algorithm}
+\begin{lem}
+  Algorithm \ref{lapmech} is $\epsilon$-d.p.
+  \begin{proof} By noticing that $\mathcal{X}-1$ is an upper bound to \ref{eqn:eq1}. \end{proof}
+\end{lem}
 
 
 \subsection{Improving the sensitivity ($\ilapmech$)}
- The accuracy of $\lapmech$ can be reduced to a constant.
- Indeed, two adjacent data sets $\dataobs, \dataobs'$  induce posterior distributions -- $\bysinfer(\dataobs), \bysinfer(\dataobs')$ --
- whose parameters differ by at most 2 w.r.t $\ell_1$ norm. This because we can see the parameters of the distributions as an histogram.
- Hence, it is enough to use sensitivity $1$ in 2 dimensions and $2$ in higher dimensions.
- {\color{red} Notice that we are using the bounded notion of differential privacy \cite{????}.}
- \todo{why 1 in 2 dimensions?}
- We denote the mechanism which calibrates the noise to this smaller sensitivity as $\ilapmech$.
- $\ilapmech(\dataobs,\bysinfer, \mathsf{prior}, \mathsf{likelihood}, \epsilon)$ produces:
- $\betad(\alpha +  \lfloor{\Delta \alpha + \eta}\rfloor^n_0,\beta + n - \lfloor{\Delta \alpha + \eta}\rfloor^n_0) $
- where $\eta \thicksim \lap{0}{\frac{1}{\epsilon}}$ in the Beta-binomial model and
- $\dirichlet{\alpha_1 +  \lfloor{\Delta \alpha_1 + \eta_1}\rfloor^n_0, \cdots,  \alpha_k + \lfloor n - \sum_{i = 1}^{k-1}\lfloor{\Delta \alpha_i + \eta_i}\rfloor^n_0 \rfloor^n_0}$
- with $\eta_i \thicksim \lap{0}{\frac{2}{\epsilon}}$ in Dirichlet-multinomial model. Details are shown in Figure \ref{mech:ilapmech}. We will also from now on
- write $\ilapmech(\dataobs)$ when the other parameters are obvious from the context.
-  \begin{algorithm}
+\label{sec_ell1_hist}
+By seeing the parameters of the distributions as histograms, we can give a tighter upper bound to \ref{eqn:eq1}.
+Indeed  $\lapmech$ can be reduced to a constant. Algorithm $\ilapmech$ in Algorithm \ref{mech:ilapmech} takes advantage of this fact. 
+Indeed, when $\mathcal{X}=2$, \ref{eqn:eq1} is upper bounded by 1, while when $\mathcal{X}=2$ \ref{eqn:eq1} is upper bounded by 2.
+In Algorithm \ref{mech:ilapmech} the algorithm $\ilapmech$ is presented.
+\begin{algorithm}
   \caption{$\ilapmech$ in Dirichlet-Multinomial model}
   \label{mech:ilapmech}
   \begin{algorithmic}
@@ -446,9 +447,10 @@ the Dirichlet-Multinomial model).
 
 
 \subsection{A new family of mechanisms}
+\label{sec_exp}
 In this section, we explore  mechanism which we denote by $\expmech$. $\expmech$ is an instance
-of the exponential mechanism \cite{??} where the scoring function is based on a metric over
-probability distributoins.
+of the exponential mechanism \cite{talwar} where the scoring function is based on a metric over
+probability distributions.
 The idea is that $\expmech$ will sample and output a distribution with higher probability when
 it is closer to the real posterior; importantly,  \emph{closer} is measured using a metric over probability
 distributions as opposed to a metric over the parameters that represent it. In this work we will
@@ -470,6 +472,7 @@ when the other two parameters, that is prior and likelihood, are fixed.
 
 
 \subsubsection{A first approach: the $\expmech$ mechanism}
+\label{sec_ehd}
 $\expmech(x,u,\candidateset)$  outputs an element $r\in\candidateset$ with  probability: % proportional to $\exp(\frac{\epsilon u(x,r)}{2 GS})$.
 \[
 %\underset{z \thicksim \expmech(x,u,\candidateset) }{\Pr}[z=r] = \frac
@@ -506,8 +509,7 @@ Lemma \ref{??} gives us a finite bound on $GS$, while lemma \ref{lem_exp_private
 
 
 \subsubsection{A second approach based on local sensitivity: $\lexpmech$}
-\label{subsec_emls}
-
+\label{sec_ehdl}
 Figure \ref{fig_theory} show that  the accuracy of $\expmech$ is poor if compared with the one of $\ilapmech$. This is due to the fact that
 $GS$ is relatively big and hence the variance of the distribution $\expmech$ ends up also being too big. In order to solve this issue we
 will proceed in two steps. We will first define $\lexpmech$, which instead of using the global sensitivity, will use the local sensitivity to calibrate
@@ -557,7 +559,7 @@ The interested reader can check the proof in the Appendix.
 
 
 \subsubsection{A third approach based on smooth sensitivity: $\hexpmech$}
-\label{subsec_hexpmech}
+\label{sec_ehds}
 In this section, we explore a new mechanism in Exponential family, which can achieve good accuracy and $\epsilon$-differential privacy simultaneously,
 by scaling the noise to a smooth upper bound on the local sensitivity.
 We first define the smooth sensitivity on a input $\dataobs$. The following definition is specific to binary data, that is it will
