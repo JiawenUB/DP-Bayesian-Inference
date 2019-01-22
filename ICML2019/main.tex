@@ -1092,8 +1092,7 @@ Increasing the privacy bound $\epsilon$, we get theoretical results as in Fig. \
 \label{subsec_vs_variables}
 
 In this section, we evaluate the accuracy of the mechanisms defined in
-Section (\ref{sec_mechs}) w.r.t. four variables, including data size, dimensions,
-data variance, prior distribution, and some combinations thereof.
+Section (\ref{sec_mechs}) w.r.t. data sizes and dimensions by experimenting on real data sets.
 Every plot is an average over 1000 runs. In all the experiments we set
 $\epsilon = 1.0$.
 
@@ -1150,18 +1149,8 @@ the $\hexpmech$ outperforms the $\lapmech$, and asymptotically approaches the im
 Similar experimental tendencies were obtained for the Dirichlet-multinomial model (Figure \ref{fig_vs_datasize_3d} and \ref{fig_vs_datasize_4d}).
 
 
-\paragraph{Fixed dataset varying balanced priors}
-\label{subsubsec_vs_prior}
-In Figure \ref{fig_vs_prior}, we fix the data set to be $(50,50)$, and the parameters the same as before: $\epsilon = 1.0$ and $\delta = 10^{-8}$ . We studied the accuracy under different priors, where the priors considered  are also balanced.
-Similar to the plots above, Figure \ref{fig_vs_prior} shows that in the beginning the baseline Laplace mechanism and improved Laplace mechanism performs better but the baseline approach is outperformed after a while, and very close to the improved Laplace mechanism.
-\begin{figure}
-\centering
-\includegraphics[width=0.35\textwidth]{sampling_prior.eps}
-\caption{Observed data set is: $(50,50)$, varying balanced priors}
-\label{fig_vs_prior}
-\end{figure}
-
 \paragraph{Experiments on Real Data Sets}
+We use four data sets from UCI Machine Learning repository. Each data set contains 1 binary variable. By setting the prior distribution as $\betad(1,1)$, we 
 \begin{figure}
 \centering
 \includegraphics[width=0.35\textwidth]{realdata.eps}
@@ -1173,7 +1162,7 @@ Similar to the plots above, Figure \ref{fig_vs_prior} shows that in the beginnin
 
 \subsection{Privacy Evaluation}
 \label{subsec_experiment_privacy}
-In order to see our privacy behavior, we study the accurate epsilon under concrete cases in this section. The $(\epsilon, \delta)$ - differential privacy we proved in Sec. \ref{subsec_hexpmech} is just an upper bound, we concrete $\epsilon$ should be smaller than upper bound in our exponential mechanism. We calculate the concrete privacy value in following ways wrt. the data size, and obtain plots in Fig. \ref{fig_privacy}.
+In order to see our privacy behavior, we study the accurate epsilon under concrete cases in this section. The $(\epsilon, \delta)$ - differential privacy we proved in Sec. \ref{sec_ehds} is just an upper bound, we concrete $\epsilon$ should be smaller than upper bound in our exponential mechanism. We calculate the concrete privacy value in following ways wrt. the data size, and obtain plots in Fig. \ref{fig_privacy}.
 
 \begin{figure}
 \begin{center}
