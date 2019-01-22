@@ -1,0 +1,294 @@
+1 Naoki Abe
+0 Myriam Abramson
+1 David W. Aha
+1 Kamal M. Ali
+0 Eric Allender
+1 Dana Angluin
+0 Chidanand Apte
+1 Minoru Asada
+1 Lars Asker
+1 Javed Aslam
+1 Haralabos Athanassiou
+1 Jose L. Balcazar
+1 Timothy P. Barber
+1 Michael W. Barley
+0 Cristina Baroglio
+1 Peter Bartlett
+0 Eric Baum
+1 Welton Becket
+0 Shai Ben0David
+1 George Berg
+1 Neil Berkman
+1 Malini Bhandaru
+1 Bir Bhanu
+1 Reinhard Blasig
+0 Avrim Blum
+0 Anselm Blumer
+1 Justin Boyan
+1 Carla E. Brodley
+1 Nader Bshouty
+0 Wray Buntine
+0 Andrey Burago
+1 Tom Bylander
+1 Bill Byrne
+0 Claire Cardie
+1 Richard A. Caruana
+1 John Case
+1 Jason Catlett
+1 Nicolo Cesa0Bianchi
+0 Philip Chan
+1 Mark Changizi
+1 Pang0Chieh Chen
+0 Zhixiang Chen
+1 Wan P. Chiang
+0 Steve A. Chien
+1 Jeffery Clouse
+1 William Cohen
+1 David Cohn
+0 Clare Bates Congdon
+0 Antoine Cornuejols
+1 Mark W. Craven
+1 Robert P. Daley
+1 Lindley Darden
+0 Chris Darken
+0 Bhaskar Dasgupta
+0 Brian D. Davidson
+1 Michael de la Maza
+0 Olivier De Vel
+0 Scott E. Decatur
+1 Gerald F. DeJong
+1 Kan Deng
+0 Thomas G. Dietterich
+1 Michael J. Donahue
+1 George A. Drastal
+1 Harris Drucker
+0 Chris Drummond
+1 Hal Duncan
+0 Thomas Ellman
+1 Tapio Elomaa
+1 Susan L. Epstein
+1 Bob Evans
+0 Claudio Facchinetti
+1 Tom Fawcett
+0 Usama Fayyad
+1 Aaron Feigelson
+1 Nicolas Fiechter
+1 David Finton
+1 John Fischer
+1 Paul Fischer
+1 Seth Flanders
+1 Lance Fortnow
+0 Ameur Foued
+1 Judy A. Franklin
+1 Yoav Freund
+1 Johannes Furnkranz
+1 Merrick L. Furst
+1 Jean Gabriel Ganascia
+1 William Gasarch
+1 Ricard Gavalda
+1 Melinda T. Gervasio
+1 Yolanda Gil
+1 David Gillman
+0 Attilio Giordana
+1 Kate Goelz
+1 Paul W. Goldberg
+1 Sally Goldman
+1 Diana Gordon
+1 Geoffrey Gordon
+1 Jonathan Gratch
+1 Leslie Grate
+1 William A. Greene
+1 Russell Greiner
+1 Marko Grobelnik
+1 Tal Grossman
+1 Margo Guertin
+1 Tom Hancock
+1 Earl S. Harris Jr.
+1 David Haussler
+1 Matthias Heger
+1 Lisa Hellerstein
+1 David Helmbold
+1 Daniel Hennessy
+1 Haym Hirsh
+1 Jonathan Hodgson
+1 Robert C. Holte
+1 Jiarong Hong
+0 Chun0Nan Hsu
+1 Kazushi Ikeda
+1 Masayuki Inaba
+0 Drago Indjic
+1 Nitin Indurkhya
+1 Jeff Jackson
+1 Sanjay Jain
+1 Wolfgang Janko
+0 Klaus P. Jantke
+1 Nathalie Japkowicz
+1 George H. John
+1 Randolph Jones
+1 Michael I. Jordan
+1 Leslie Pack Kaelbling
+1 Bala Kalyanasundaram
+0 Thomas E. Kammeyer
+0 Grigoris Karakoulas
+1 Michael Kearns
+1 Neela Khan
+1 Roni Khardon
+1 Dennis F. Kibler
+1 Jorg0Uwe Kietz
+0 Efim Kinber
+0 Jyrki Kivinen
+0 Emanuel Knill
+0 Craig Knoblock
+1 Ron Kohavi
+1 Pascal Koiran
+1 Moshe Koppel
+1 Daniel Kortenkamp
+1 Matevz Kovacic
+0 Stefan Kramer
+1 Martinch Krikis
+1 Martin Kummer
+0 Eyal Kushilevitz
+0 Stephen Kwek
+1 Wai Lam
+1 Ken Lang
+0 Steffen Lange
+1 Pat Langley
+1 Mary Soon Lee
+1 Wee Sun Lee
+1 Moshe Leshno
+1 Long0Ji Lin
+0 Charles X. Ling
+1 Michael Littman
+1 David Loewenstern
+0 Phil Long
+1 Wolfgang Maass
+0 Bruce A. MacDonald
+1 Rich Maclin
+0 Sridhar Mahadevan
+0 J. Jeffrey Mahoney
+1 Yishay Mansour
+1 Mario Marchand
+0 Shaul Markovitch
+0 Oded Maron
+1 Maja Mataric
+1 David Mathias
+1 Toshiyasu Matsushima
+0 Stan Matwin
+0 Eddy Mayoraz
+0 R. Andrew McCallum
+0 L. Thorne McCarty
+0 Alexander M. Meystel
+1 Michael A. meystel
+0 Steven Minton
+1 Nina Mishra
+1 Tom M. Mitchell
+1 Dunja Mladenic
+1 David Montgomery
+0 Andrew W. Moore
+1 Johanne Morin
+1 Hiroshi Motoda
+0 Stephen Muggleton
+1 Patrick M. Murphy
+0 Sreerama K. Murthy
+1 Filippo Neri
+0 Craig Nevill0Manning
+0 Andrew Y. Ng
+1 Nikolay Nikolaev
+0 Steven W. Norton
+1 Joseph O'Sullivan
+1 Dan Oblinger
+1 Jong0Hoon Oh
+0 Arlindo Oliveira
+1 David W. Opitz
+1 Sandra Panizza
+1 Barak A. Pearlmutter
+0 Ed Pednault
+1 Jing Peng
+1 Fernando Pereira
+1 Aurora Perez
+1 Bernhard Pfahringer
+1 David Pierce
+0 Krishnan Pillaipakkamnatt
+1 Roberto Piola
+1 Leonard Pitt
+1 Lorien Y. Pratt
+0 Armand Prieditis
+1 Foster J. Provost
+0 J. R. Quinlan
+1 John Rachlin
+1 Vijay Raghavan
+0 R. Bharat Rao
+0 Priscilla Rasmussen
+1 Joel Ratsaby
+1 Michael Redmond
+1 Patricia J. Riddle
+1 Lance Riley
+1 Ronald L. Rivest
+1 Huw Roberts
+1 Dana Ron
+1 Robert S. Roos
+1 Justinian Rosca
+1 John R. Rose
+1 Dan Roth
+1 James S. Royer
+1 Ronitt Rubinfeld
+0 Stuart Russell
+1 Lorenza Saitta
+1 Yoshifumi Sakai
+1 William Sakas
+1 Marcos Salganicoff
+0 Steven Salzberg
+0 Claude Sammut
+1 Cullen Schaffer
+1 Robert Schapire
+1 Mark Schwabacher
+1 Michele Sebag
+1 Gary M. Selzer
+1 Sebastian Seung
+0 Arun Sharma
+1 Jude Shavlik
+1 Daniel L. Silver
+0 Glenn Silverstein
+1 Yoram Singer
+1 Mona Singh
+1 Satinder Pal Singh
+1 Kimmen Sjolander
+1 David B. Skalak
+1 Sean Slattery
+1 Robert Sloan
+1 Donna Slonim
+1 Carl H. Smith
+1 Sonya Snedecor
+1 Von0Wun Soo
+0 Thomas G. Spalthoff
+1 Mark Staley
+0 Frank Stephan
+1 Mandayam T. Suraj
+1 Richard S. Sutton
+1 Joe Suzuki
+0 Prasad Tadepalli
+1 Hiroshi Tanaka
+0 Irina Tchoumatchenko
+0 Brian Tester
+0 Chen K. Tham
+1 Tatsuo Unemi
+0 Lyle H. Ungar
+1 Paul Utgoff
+1 Karsten Verbeurgt
+1 Paul Vitanyi
+1 Xuemei Wang
+1 Manfred Warmuth
+1 Gary Weiss
+0 Sholom Weiss
+0 Thomas Wengerek
+0 Bradley L. Whitehall
+0 Alma Whitten
+1 Robert Williamson
+1 Janusz Wnek
+1 Kenji Yamanishi
+1 Takefumi Yamazaki
+1 Holly Yanco
+1 John M. Zelle
+0 Thomas Zeugmann
+1 Jean0Daniel Zucker
+1 Darko Zupanic

@@ -84,6 +84,7 @@ We compare the accuracy theoretically and experimentally.
 
 \section{Introduction}
 \label{sec_intro}
+%%Data analysis and privacy are important
 Data analysis techniques have brought significant improvements in a
 variety of applications including applications from the medical,
 financial, social, and transportation fields. In order to provide
@@ -93,10 +94,17 @@ Differential privacy was proposed a decade ago to address these
 situations and it is on its way to become the gold standard in data
 privacy.  
 
+%%Bayesian inference is a standard tool for data analysis which is
+%% also a building block of probabilistic programming languages
 Bayesian inference is a standard statistical tool that is useful to
 estimate a posterior distribution when a prior distribution is given
 and some data is observed. 
 
+%%Several works have considered differentially private bayesian
+%%inference 
+
+%%we consider bayesian inference with posterior perturbation 
+%%which could be used as a plug and play in PPL citing CCS2016
 In this work we consider the design space of  parametric Bayesian
 inference mechanisms guaranteeing differential privacy. Our work is
 motivated by recent developments in the area of probabilistic
@@ -104,6 +112,22 @@ programming where several tools have been proposed to perform
 parametric and non-parametric Bayesian inference in an efficient
 way.
 
+
+%%we focus on discrete simple models
+
+%%we focus on hellinger distance
+
+%%the contribution is a comparative study of several ways to achieve
+%%differential privacy in this setting.
+
+%%findings: Laplace with histogram is the best mechanism and this is
+%%because when the data size grows the hellinger between the
+%%posteriors induced by adjacent datasets decreases, and so the impact
+%%of Laplace also decreases. This is a particular case because of the
+%%hellinger, if the Laplace is added accordingly to the dimension the
+%%performance is worse. The exponential with smooth sensitivity is
+%%better than the standard exponential with global sensitivity but it
+%%does not achieve the same performance as the previous ones. 
 
 We focus on two classical models: the Beta-Binomial and the
 Dirichlet-Multinomial models. In the Beta-Binomial model the goal
@@ -169,76 +193,113 @@ In Bayesian Inference data analysis, mechanisms are proposed corresponded to mai
 \label{sec_background}
 \noindent \textbf{Bayesian inference.} 
 Given a prior belief $\Pr(\theta)$ on some parameter $\theta$,
-and an observation $\dataobs$, the posterior distribution on $\theta$ given $\dataobs$ is defined as:
+and an observation $\dataobs$, the posterior distribution on $\theta$
+given $\dataobs$ is defined by Bayes' Theorem as:
 \[
-  \Pr(\theta | \dataobs) \equiv \frac{\Pr(\dataobs | \theta) \cdot \Pr(\theta)}{\Pr(\dataobs)}
+  \Pr(\theta | \dataobs) = \frac{\Pr(\dataobs | \theta) \cdot \Pr(\theta)}{\Pr(\dataobs)}
 \]
 where the expression $\Pr(\dataobs | \theta)$ denotes the
 \emph{likelihood} of observing $\dataobs$ under a value of
-$\theta$. Since we consider $\dataobs$ to be fixed, the likelihood is
-a function of $\theta$.
-For the same reason $\Pr(\dataobs)$ is a constant independent of $\theta$.
-Usually in statistics the prior distribution $\Pr(\theta)$ is chosen so that it represents
-the initial belief on $\theta$, that is, when no data has been observed. In practice though,
-prior distributions and likelihood functions are usually chosen so that the posterior
-belongs to the same \emph{family} of distribution of the prior. In this case we say that the prior
+$\theta$. 
+% Since we consider $\dataobs$ to be fixed, the likelihood is
+% a function of $\theta$.
+% For the same reason $\Pr(\dataobs)$ is a constant independent of $\theta$.
+% Usually in statistics the prior distribution $\Pr(\theta)$ is chosen so that it represents
+% the initial belief on $\theta$, that is, when no data has been
+% observed. In practice though,
+In parametric statistics, prior distributions and likelihood functions are usually chosen so that the posterior
+belongs to the same \emph{family} of distributions as the prior. In this case we say that the prior
 is conjugate to the likelihood function. Use of a conjugate prior
 simplifies calculations and allows for inference to be performed in a
-recursive fashion over the data.
-% Then, we have:
+recursive fashion over the data. This approach is implemented in a
+precise or approximate way in the compiler of several
+probabilistic programming languages~\cite{}.
+
+%  support bayesian inference
+% by means of a language primitive, often called $\bysinfer$, which
+% supports the (precise or approximate) parametric computation of the
+% posterior of a given model. In the rest of the paper, we will use the following
+% notation as a shorthand for the inference process:
 % \[
 %   \bysinfer(\Pr(\dataobs | \theta), \Pr(\theta), \dataobs) = \frac{\Pr(\dataobs | \theta) \cdot \Pr(\theta)}{\Pr(\dataobs)}
 % \]
-% \noindent \textbf{Beta-binomial System.}
-In this work we will consider a specific instance of Bayesian inference and one of its generalizations.
-We will consider the situation where the underlying data is drawn from a binomial distribution
-($\thicksim \binomial{n}{\theta}$), where $\theta$ represents
-the parameter --informally called \emph{bias}-- of a Bernoulli
-distributed random variable and $n$ is the number of draws. The
-prior distribution over $\theta\in [0,1]$ is going to be a beta
-distribution, $\betad(\alpha, \beta)$, with parameters
-$\alpha,\beta\in\mathbb{R}^{+}$, and with p.d.f:
+\noindent \textbf{Dirichlet-multinomial model.}
+In this work we will focus on the Dirichlet-Multinomial model for
+categorical data and its restriction to binary data: the Beta-Binomial
+model. 
+That is, we will consider the situation where 
+the underlying categorical data is drawn from a multinomial
+distribution with parameter the vector $\vtheta\in [0,1]^{k}$. The prior distribution over $\vtheta$
+is given by a Dirichlet distribution, $\dirichlet{\valpha}$, for,
+$\valpha\in(\mathbb{R}^{+})^{k}$ and $k\in\mathbb{N}$, with p.d.f:
 \[
-  \Pr(\theta)\equiv \frac{\theta^{\alpha} (1- \theta)^{\beta}}{\betaf(\alpha,\beta)}
-\]
-where $\betaf(\cdot,\cdot)$ is the beta function.
-The data $\dataobs$ will be a sequence of $n\in\mathbb{N}$ binary values, that is $\dataobs= (x_1,\dots x_n), x_i\in\{0,1\}$, and the likelihood function is:
-\[
-  \Pr(\dataobs | \theta)\equiv \theta^{\Delta \alpha}(1-\theta)^{n - \Delta \alpha}
-\]
-where $\Delta \alpha = \sum_{i=1}^{n}x_i$.
-The posterior distribution over $\theta$ can be easily proven to be equal to:\[\betad(\alpha + \Delta \alpha,\beta + n - \Delta \alpha)\]
-From now on we will denote by $\bysinfer(\binomial{n}{\theta}, \betad(\alpha, \beta), \dataobs)$ the previous
-posterior distribution. This notation will prove itself handy when its arguments will change types in the next example and
-in section \ref{} when the private mechanisms will be described.
-% \noindent \textbf{Dirichlet-multinomial Systems.}
-
-
-The Beta-Binomial model can be immediately generalized to the Dirichlet-Multinomial model, with underlying data multinomially distributed.
-The \emph{bias} is represented by the parameter $\vtheta$, the vector of parameters of a categorically distributed random variable. The prior distribution over $\vtheta\in [0,1]^{k}$
-is given by a Dirichlet distribution, $\dirichlet{\valpha}$, for $k\in\mathbb{N}$,
-and $\valpha\in(\mathbb{R}^{+})^{k}$, with p.d.f:
-\[
-\Pr(\vtheta)\equiv\frac{1}{\mbetaf(\valpha)}\cdot\prod_{i=1}^{k}{\theta_i^{\alpha_i-1}}
+\Pr(\vtheta)=\frac{1}{\mbetaf(\valpha)}\cdot\prod_{i=1}^{k}{\theta_i^{\alpha_i-1}}
 \]
 where $\mbetaf(\cdot)$ is the generalized beta function.
-The data $\dataobs$ will be a sequence of $n\in\mathbb{N}$ values
-coming from a universe $\datauni$, such that $\mid\datauni \mid=k$.
-The likelihood function will be:
-\[
-\Pr(\dataobs|\vtheta)\equiv\prod_{a_i\in\datauni}\theta_{i}^{\Delta \alpha_i},
-\]
-with $\Delta \alpha_i=\displaystyle\sum_{j=1}^{n}\iverson{x_j=a_i}$, where $\iverson{\cdot}$ represents the Iverson bracket notation.
-Denoting by $\Delta\valpha$ the vector $(\Delta\alpha_1,\dots \Delta\alpha_k)$ the posterior distribution over $\vtheta$ turns out to be
-\[
-   \bysinfer(\multinomial{n}{\vtheta}, \dirichlet{\valpha}, \dataobs)=\dirichlet{\valpha + \Delta \valpha} 
-\]
-where $+$ denotes the componentwise sum of vectors.
+The data $\dataobs$ is a sequence of $n\in\mathbb{N}$ values
+coming from a universe $\datauni$, such that $|\datauni|=k$.
+The likelihood function is
+$
+\Pr(\dataobs|\vtheta)=\prod_{a_i\in\datauni}\theta_{i}^{\Delta \alpha_i},
+$
+with $\Delta \alpha_i=\displaystyle\sum_{j=1}^{n}\mathbf{1}_{\iverson{x_j=a_i}}$.
+Denoting by $\Delta\valpha$ the vector $(\Delta\alpha_1,\dots
+\Delta\alpha_k)$ the posterior distribution over $\vtheta$ is
+$\dirichlet{\valpha + \Delta \valpha}$, where $+$ denotes the componentwise sum of vectors.
+In the following we will use the notation $\bysdir(n,\vtheta, \valpha,
+\dataobs)$ to denote the posterior of this process.
+%i.e., $\bysdir(n,\vtheta, \valpha, \dataobs)=\dirichlet{\valpha + \Delta \valpha}$.
+%
+% ($\thicksim \binomial{n}{\theta}$), where $\theta$ represents
+% the parameter --informally called \emph{bias}-- of a Bernoulli
+% distributed random variable and $n$ is the number of draws. The
+% prior distribution over $\theta\in [0,1]$ is going to be a beta
+% distribution, $\betad(\alpha, \beta)$, with parameters
+% $\alpha,\beta\in\mathbb{R}^{+}$, and with p.d.f:
+% \[
+%   \Pr(\theta)= \frac{\theta^{\alpha} (1- \theta)^{\beta}}{\betaf(\alpha,\beta)}
+% \]
+% where $\betaf(\cdot,\cdot)$ is the beta function.
+% The data $\dataobs$ will be a sequence of $n\in\mathbb{N}$ binary values, that is $\dataobs= (x_1,\dots x_n), x_i\in\{0,1\}$, and the likelihood function is:
+% \[
+%   \Pr(\dataobs | \theta)= \theta^{\Delta \alpha}(1-\theta)^{n - \Delta \alpha}
+% \]
+% where $\Delta \alpha = \sum_{i=1}^{n}x_i$.
+% The posterior distribution over $\theta$ can be easily proven to be equal to:\[\betad(\alpha + \Delta \alpha,\beta + n - \Delta \alpha)\]
+% From now on we will denote by $\bysinfer(\binomial{n}{\theta}, \betad(\alpha, \beta), \dataobs)$ the previous
+% posterior distribution. This notation will prove itself handy when its arguments will change types in the next example and
+% in section \ref{} when the private mechanisms will be described.
+
+% We will consider the situation where the underlying data is drawn from a binomial distribution
+% ($\thicksim \binomial{n}{\theta}$), where $\theta$ represents
+% the parameter --informally called \emph{bias}-- of a Bernoulli
+% distributed random variable and $n$ is the number of draws. The
+% prior distribution over $\theta\in [0,1]$ is going to be a beta
+% distribution, $\betad(\alpha, \beta)$, with parameters
+% $\alpha,\beta\in\mathbb{R}^{+}$, and with p.d.f:
+% \[
+%   \Pr(\theta)= \frac{\theta^{\alpha} (1- \theta)^{\beta}}{\betaf(\alpha,\beta)}
+% \]
+% where $\betaf(\cdot,\cdot)$ is the beta function.
+% The data $\dataobs$ will be a sequence of $n\in\mathbb{N}$ binary values, that is $\dataobs= (x_1,\dots x_n), x_i\in\{0,1\}$, and the likelihood function is:
+% \[
+%   \Pr(\dataobs | \theta)= \theta^{\Delta \alpha}(1-\theta)^{n - \Delta \alpha}
+% \]
+% where $\Delta \alpha = \sum_{i=1}^{n}x_i$.
+% The posterior distribution over $\theta$ can be easily proven to be equal to:\[\betad(\alpha + \Delta \alpha,\beta + n - \Delta \alpha)\]
+% From now on we will denote by $\bysinfer(\binomial{n}{\theta}, \betad(\alpha, \beta), \dataobs)$ the previous
+% posterior distribution. This notation will prove itself handy when its arguments will change types in the next example and
+% in section \ref{} when the private mechanisms will be described.
+% \noindent \textbf{Dirichlet-multinomial Systems.}
+%
+The Beta-Binomial model can be obtained from the Dirichlet-Multinomial
+model by fixing $k=2$. 
+
 
 
 \noindent \textbf{Differential Privacy.}
-\emph{Differential privacy} is a strong quantitative notion of statistical privacy proposed by \cite{dwork2006}.
-Differential privacy of a mechanism implies that changing the input of a mechanism slightly only reflects
+\emph{Differential privacy}~\cite{dwork2006} is a quantitative notion
+of data privacy guaranteeing  a bound on the that changing the input of a mechanism slightly only reflects
 in a controlled and bounded way on the output distribution. 
 Formally, the $\epsilon$ parameter
 controls how much two outputs starting from \emph{close} inputs can differ. When two inputs are close we call them \emph{adjacent}.
@@ -267,22 +328,30 @@ If $\nu\geq \frac{\Delta_f}{\epsilon}$, with $\Delta_f=\displaystyle\max_{d,d':\
 then the mechanism is $\epsilon$-differentially private as proven in \cite{???}.
 
 \noindent \emph{Exponential mechanism.}
-
+ 
 \noindent \emph{Composition.}
 
 \noindent \emph{Postprocessing.}
 
+\noindent \emph{A note on input data representation.}
+We will represent our input databases $\dataobs$ of length $n$ as histograms 
+with $k$-$1$ bins where $k$ is the dimensionality of the problem.
+This is w.l.o.g. because given the first $k$-$1$ counts, the $k$-th count
+is known.
 
-\noindent \textbf{Problem setting.}
+\section{Problem Statement}
 \label{subsec_problem}
-We are interested in exploring mechanisms for privately releasing the full posterior
-distributions derived in Section \ref{sec_background}.
-It's worth noticing that the posterior distributions are fully characterized
-by their parameters, and the family (Beta and Dirichlet distribution) they belong to. Hence, in case of the
+We are interested in exploring the design space of mechanisms for privately releasing the posterior
+distribution for the Dirichlet-Multinomial model as described in the
+previous section.
+It is worth noticing that the posterior distribution of this model is fully characterized
+by its parameters. That is, we are interested in releasing a private version of
+the Dirichlet distribution with parameter
+$\valpha'=(\valpha + \Delta \valpha)$, or in the case of the
 Beta-Binomial model we are interested in releasing a private version of the Beta distribution with 
-parameters $(\alpha',\beta')=(\alpha + \Delta \alpha,\beta + n - \Delta \alpha)$, and
-in the case of the Dirichlet-Multinomial model we are interested in a private version of the Dirichlet distribution with parameter
-$\valpha'=(\valpha + \Delta \valpha)$. \cite{zhang2016differential} and \cite{xiao2012bayesian}
+parameters $(\alpha',\beta')=(\alpha + \Delta \alpha,\beta + n -
+\Delta \alpha)$.
+\citet{zhang2016differential} and \citet{xiao2012bayesian}
 have already attacked this problem by adding independent Laplacian noise to the
 parameters of the posteriors. That is, in the case of the Beta-Binomial system,
 the values released would be: $(\tilde\alpha,\tilde\beta)=(\alpha +  \widetilde{\Delta \alpha},\beta + n - \widetilde{\Delta \alpha})$
@@ -340,81 +409,98 @@ Our choice to use Hellinger distance is motivated by three facts:
 
 \section{Private Mechanisms}
 \label{sec_mechs}
+In this section we will describe and analyse a series of mechanisms.
+Section \ref{sec_ell1_dim} presents a first mechanism, $\lapmech$,
+based on the Laplace primitive where the sensitivity is measured w.r.t. to $\ell_1$ norm.
+Section \ref{sec_ell1_hist}, shows that $\lapmech$'s accuracy can be improved
+by performing a better analysis on the sensitivity of the inference process.
+Section \ref{sec_ehd}, shows an instance of the exponential mechanism, $\expmech$, where the scoring
+function is based on the Hellinger distance, we will see how this mechanisms performs
+poorly due to the very high global sensitivity of the inference process w.r.t to this metric.
+Section \ref{sec_ehdl} introduces, $\lexpmech$, a variation of $\expmech$ which uses a lower bound
+on the global sensitivity called local sensitivity.
+Unfortunately, despite improving on accuracy $\lexpmech$ is non-private.
+Finally, building on $\lexpmech$, Section \ref{sec_ehds} introduces $\hexpmech$:
+which, based on the notion of \emph{smooth} sensitivity, achieves $\epsilon$-differential privacy and
+has good accuracy in specific cases.
+In presenting these mechanisms we will denote by $\inferd{\valpha}{\vtheta}{\dataobs}$ the posterior  $\dirichlet{\valpha'}$
+obtained starting from the prior $\dirichlet{\valpha}$, likelihood $\multinomial{|\dataobs|}{\vtheta}$, and observed data $\dataobs$.
+Two different upper bounds to the value of
+\begin{align}
+  \label{eqn:eq1}
+  \max_{\substack{\adj{\dataobs}{\dataobs'},\\
+      \dirichlet{\valpha}=\inferd{\valpha}{\vtheta}{\dataobs},\\
+      \dirichlet{\valpha'}=\inferd{\valpha}{\vtheta}{\dataobs'}}}||\valpha-\valpha'||_1 
+\end{align}
+will be used to calibrate the noise in the mechanisms based on the Laplacian primitive.
+
+
+
 \subsection{Calibrating noise w.r.t. $\ell_1$ norm ($\lapmech$)}
-We start off by presenting a mechanism based on the Laplace primitive.
-The mechanism, denoted by $\lapmech$, takes in input the data $\dataobs$, a mechanism, $\bysinfer$, that is used to perform inference on some parameter,
-a prior and a likelihood function, and the $\epsilon$ parameter measuring the privacy level.
-Now, $\lapmech(\dataobs,\bysinfer, \mathsf{prior}, \mathsf{likelihood}, \epsilon)$,
-simply adds Laplace noise to the parameters of the posterior distributions. The mechanisms also performs a
-post-processing phase by flooring and  truncating the noisy parameters so that they belong to the right interval.
-In the case of the Beta-Binomial model the output produced is: $\betad(\alpha +  \lfloor{\Delta \alpha + \eta}\rfloor^n_0,\beta + n - \lfloor{\Delta \alpha + \eta}\rfloor^n_0)$
-with $\eta \thicksim \lap{0}{\frac{\Delta \bysinfer}{\epsilon}}$, where $\lfloor \cdot \rfloor^n_0$ is taking the floor value and truncating into
-$[0,n]$. This mechanism is described by the pesudocode in Figure \ref{mech:lapmech}.\\
-Since we are adding noise directly to the parameters, the sensitivity should be calibrated w.r.t $\ell_1$-norm. That is,
-the sensitivity is defined as:
-\[
-   \Delta \bysinfer \equiv \max\limits_{\dataobs, \dataobs' \in \{0,1\}^{n}, ||\dataobs - \dataobs'||_1 \leq 1} ||\bysinfer(\dataobs) - \bysinfer(\dataobs')||_1
-\]
-This value can be quickly seen as being upper bounded by  the dimensionality. (e.g. 2 for the Beta-Binomial model and  $k$ for
-the Dirichlet-Multinomial model).
-  \begin{algorithm}
-  \caption{$\lapmech$ for the Beta-Binomial model}
-  \label{mech:lapmech}
+\label{sec_ell1_dim}
+We start off by presenting $\lapmech$, in Algorithm \ref{lapmech}, based on the Laplace primitive.
+The idea of $\lapmech$ is to add Laplacian noise with scale proportional to $\mathcal{X}$ to
+the differences between the respective numeric parameters of the prior
+and posterior distribution. 
+\begin{algorithm}
+  \caption{$\lapmech$}
+  \label{lapmech}
   \begin{algorithmic}
-  \INPUT observed data set $\dataobs \in \{0,1\}^n$, inference algorithm: $\bysinfer$, 
-  prior: $\betad(\alpha, \beta)$, likelihood: $\binomial{n}{\theta}$, $\epsilon$
-  \STATE \quad {\bf let} $\betad(\alpha', \beta') = \bysinfer(\binomial{n}{\theta}, \betad(\alpha, \beta), \dataobs)$.  
-  \STATE \quad  $\eta \sim \lap{0}{\frac{2}{\epsilon}}$.
-  \STATE \quad  $\tilde{\alpha}=\alpha + \lfloor{(\alpha' - \alpha) + \eta}\rfloor^n_0$ 
-  \STATE \quad  $\tilde{\beta}=\beta + n - \lfloor{(\alpha' - \alpha) + \eta}\rfloor^n_0$ \\
+  \INPUT $\dataobs\in\mathcal{X}^n$, $\dirichlet{\valpha}$
+  \STATE \quad {\bf let} $\dirichlet{\valpha'} = \inferd{\valpha}{\vtheta}{\dataobs}$
+  \STATE \quad {\bf Initialize} a vector $\tilde{\valpha} = (0, \dots, 0 )\in \mathbb{N}^{|\mathcal{X}|}$ 
+  \STATE \quad {\bf For} $i = 1 \dots |\mathcal{X}| - 1$:
+  \STATE \quad \quad  {\bf let} $\eta \sim \lap{0}{\frac{|\mathcal{X}|}{\epsilon}}$
+  \STATE \quad \quad  $\tilde{\alpha_i}=\alpha_i + \lfloor{(\alpha_i' - \alpha_i) + \eta}\rfloor^n_0$ 
   % \RETURN $a_{k+1}$.
-  \noindent {\bf return} $\betad(\tilde{\alpha}, \tilde{\beta})$
+  \STATE \quad $\tilde{\alpha_{|\mathcal{X}|}} = \alpha_{|\mathcal{X}|} + \lfloor n - \sum_{i = 1}^{|\mathcal{X}|-1}\lfloor{(\alpha_i' - \alpha_i) + \eta_i}\rfloor^n_0 \rfloor^n_0$
+  \STATE {\bf return} $\tilde{\valpha}$
   \end{algorithmic}
-  \end{algorithm}
-
-  In Dirichlet-Multinomial model, $\lapmech$ produces output:
-  $\dirichlet{\alpha_1 +  \lfloor{\Delta \alpha_1 + \eta_1}\rfloor^n_0, \cdots, \alpha_k + \lfloor n - \sum_{i = 1}^{k-1}\lfloor{\Delta \alpha_i + \eta_i}\rfloor^n_0 \rfloor^n_0},$
-  where $\eta_i \thicksim \lap{0}{\frac{k - 1}{\epsilon}}$.
-  We will use $ \lapmech(\dataobs) = \betad(\tilde{\alpha}, \tilde{\beta})$ or $\dirichlet{\tilde{\valpha}}$ for short.
-
+\end{algorithm}
+\begin{lem}
+  Algorithm \ref{lapmech} is $\epsilon$-d.p.
+  \begin{proof} By noticing that $\mathcal{X}-1$ is an upper bound to the value denoted by (\ref{eqn:eq1}). \end{proof}
+\end{lem}
 
 
 \subsection{Improving the sensitivity ($\ilapmech$)}
- The accuracy of $\lapmech$ can be reduced to a constant.
- Indeed, two adjacent data sets $\dataobs, \dataobs'$  induce posterior distributions -- $\bysinfer(\dataobs), \bysinfer(\dataobs')$ --
- whose parameters differ by at most 2 w.r.t $\ell_1$ norm. This because we can see the parameters of the distributions as an histogram.
- Hence, it is enough to use sensitivity $1$ in 2 dimensions and $2$ in higher dimensions.
- {\color{red} Notice that we are using the bounded notion of differential privacy \cite{????}.}
- \todo{why 1 in 2 dimensions?}
- We denote the mechanism which calibrates the noise to this smaller sensitivity as $\ilapmech$.
- $\ilapmech(\dataobs,\bysinfer, \mathsf{prior}, \mathsf{likelihood}, \epsilon)$ produces:
- $\betad(\alpha +  \lfloor{\Delta \alpha + \eta}\rfloor^n_0,\beta + n - \lfloor{\Delta \alpha + \eta}\rfloor^n_0) $
- where $\eta \thicksim \lap{0}{\frac{1}{\epsilon}}$ in the Beta-binomial model and
- $\dirichlet{\alpha_1 +  \lfloor{\Delta \alpha_1 + \eta_1}\rfloor^n_0, \cdots,  \alpha_k + \lfloor n - \sum_{i = 1}^{k-1}\lfloor{\Delta \alpha_i + \eta_i}\rfloor^n_0 \rfloor^n_0}$
- with $\eta_i \thicksim \lap{0}{\frac{2}{\epsilon}}$ in Dirichlet-multinomial model. Details are shown in Figure \ref{mech:ilapmech}. We will also from now on
- write $\ilapmech(\dataobs)$ when the other parameters are obvious from the context.
-  \begin{algorithm}
-  \caption{$\ilapmech$ in Dirichlet-Multinomial model}
-  \label{mech:ilapmech}
+\label{sec_ell1_hist}
+By seeing the parameters of the distributions as histograms, we can give a tighter upper bound to the value denoted by (\ref{eqn:eq1}).
+Indeed a constant will do. Algorithm $\ilapmech$ in Algorithm \ref{ilapmech} takes advantage of this fact. 
+Indeed, when $\mathcal{X}=2$, 1 is an upper bound for the value of (\ref{eqn:eq1}), while when $\mathcal{X}>2$, 2 is.
+In Algorithm \ref{ilapmech} the algorithm $\ilapmech$ is presented.
+\begin{algorithm}
+  \caption{$\ilapmech$}
+  \label{ilapmech}
   \begin{algorithmic}
-  \INPUT observed data set $\dataobs \in \mathcal{X}^n$, inference algorithm: $\bysinfer$, 
-  prior: $\dirichlet{\valpha}$, likelihood: $\multinomial{n}{\vtheta}$, $\epsilon$
-  \STATE \quad {\bf let} $\dirichlet{\valpha'} = \bysinfer(\multinomial{n}{\vtheta}, \dirichlet{\valpha}, \dataobs)$, $k = |\mathcal{X}|$.
-  \STATE \quad {\bf Initialize} a vector $\tilde{\valpha} = (0, \dots, 0 )$ of $k$ dimensions .
-  \STATE \quad {\bf For} $i = 1 \dots (k - 1)$:
-  \STATE \quad \quad  {\bf let} $\eta \sim \lap{0}{\frac{2}{\epsilon}}$.
+  \INPUT $\dataobs\in\mathcal{X}^n$, $\dirichlet{\valpha}$
+  \STATE \quad {\bf let} $\dirichlet{\valpha'} = \inferd{\valpha}{\vtheta}{\dataobs}$
+  \STATE \quad ${\bf let}\ k=\left \{
+        \begin{array}{lll}          
+          1&\text{if}& |\mathcal{X}|=2\\
+          2&\text{otherwise}
+        \end{array}
+      \right .\ $
+  \STATE \quad {\bf Initialize} a vector $\tilde{\valpha} = (0, \dots, 0 )\in \mathbb{N}^{|\mathcal{X}|}$ 
+  \STATE \quad {\bf For} $i = 1 \dots |\mathcal{X}|-1$:
+  \STATE \quad \quad  {\bf let} $\eta \sim \lap{0}{\frac{k}{\epsilon}}$
   \STATE \quad \quad  $\tilde{\alpha_i}=\alpha_i + \lfloor{(\alpha_i' - \alpha_i) + \eta}\rfloor^n_0$ 
   % \RETURN $a_{k+1}$.
-  \STATE \quad $\tilde{\alpha_k} = \alpha_k + \lfloor n - \sum_{i = 1}^{k-1}\lfloor{(\alpha_i' - \alpha_i) + \eta_i}\rfloor^n_0 \rfloor^n_0$
-  \STATE {\bf return} $\dirichlet{\tilde{\valpha}}$
+  \STATE \quad $\tilde{\alpha_{|\mathcal{X}|}} = \alpha_{|\mathcal{X}|} + \lfloor n - \sum_{i = 1}^{|\mathcal{X}|-1}\lfloor{(\alpha_i' - \alpha_i) + \eta_i}\rfloor^n_0 \rfloor^n_0$
+  \STATE {\bf return} $\tilde{\valpha}$
   \end{algorithmic}
-  \end{algorithm}
-
+\end{algorithm}
+\begin{lem}
+  Algorithm \ref{ilapmech} is $\epsilon$-d.p.
+  \begin{proof} By noticing that 1 and 2 are upper bounds to the value denoted by (\ref{eqn:eq1}), respectively when $|\mathcal{X}|=2$ and $|\mathcal{X}|>2$.
+  \end{proof}
+\end{lem}
 
 \subsection{A new family of mechanisms}
+\label{sec_exp}
 In this section, we explore  mechanism which we denote by $\expmech$. $\expmech$ is an instance
-of the exponential mechanism \cite{??} where the scoring function is based on a metric over
-probability distributoins.
+of the exponential mechanism \cite{talwar} where the scoring function is based on a metric over
+probability distributions.
 The idea is that $\expmech$ will sample and output a distribution with higher probability when
 it is closer to the real posterior; importantly,  \emph{closer} is measured using a metric over probability
 distributions as opposed to a metric over the parameters that represent it. In this work we will
@@ -424,7 +510,7 @@ the extension to the Dirichelet-Multinomial model is straightforward.
 Given a prior distribution $\betad(\alpha, \beta)$ and an observed data set: $\dataobs\in\{0,1\}^n$,
 we define the follwing set  where the mechanism will sample from:
 \[
-  \candidateset\equiv\{\bysinfer(\binomial{n}{\theta}, \betad(\alpha, \beta),\dataobs)\mid \dataobs \in \{0,1\}^n\}.
+  \candidateset=\{\bysinfer(\binomial{n}{\theta}, \betad(\alpha, \beta),\dataobs)\mid \dataobs \in \{0,1\}^n\}.
 \]
 Where $\bysinfer(\binomial{n}{\theta}, \bprior,\dataobs)$ denotes the posterior beta distribution inferred starting from the parameters in input.
 Notice that the above set reduces to:
@@ -436,6 +522,7 @@ when the other two parameters, that is prior and likelihood, are fixed.
 
 
 \subsubsection{A first approach: the $\expmech$ mechanism}
+\label{sec_ehd}
 $\expmech(x,u,\candidateset)$  outputs an element $r\in\candidateset$ with  probability: % proportional to $\exp(\frac{\epsilon u(x,r)}{2 GS})$.
 \[
 %\underset{z \thicksim \expmech(x,u,\candidateset) }{\Pr}[z=r] = \frac
@@ -445,7 +532,7 @@ $\expmech(x,u,\candidateset)$  outputs an element $r\in\candidateset$ with  prob
 \]
 where $u(x,r)$ is the Hellinger scoring function: $-\hellinger(\bysinfer(\dataobs), r)$, and $GS$ is the global sensitivity of the scoring function, defined as:
 \begin{equation*}
-GS \equiv 
+GS = 
 \max_{\dataobs' \in \datauni^n: \\ \adj{\dataobs}{\dataobs'}}\max_{\{r\in \mathcal{R}\}}
 |\hellinger(\bysinfer(\dataobs), r) - \hellinger(\bysinfer(\dataobs'), r)|
 \end{equation*}
@@ -472,8 +559,7 @@ Lemma \ref{??} gives us a finite bound on $GS$, while lemma \ref{lem_exp_private
 
 
 \subsubsection{A second approach based on local sensitivity: $\lexpmech$}
-\label{subsec_emls}
-
+\label{sec_ehdl}
 Figure \ref{fig_theory} show that  the accuracy of $\expmech$ is poor if compared with the one of $\ilapmech$. This is due to the fact that
 $GS$ is relatively big and hence the variance of the distribution $\expmech$ ends up also being too big. In order to solve this issue we
 will proceed in two steps. We will first define $\lexpmech$, which instead of using the global sensitivity, will use the local sensitivity to calibrate
@@ -510,7 +596,7 @@ and outputs a result $r \in \mathcal{R}$ with probability:
 \]
 where $LS(\dataobs)$ is the local sensitivity of the scoring function, defined as:
 \begin{equation}\label{eq:local_sensitivity_scoring}
-LS(\dataobs)\equiv\max_{\dataobs' \in \datauni^n: \\ \adj{\dataobs}{\dataobs'}, r\in \mathcal{R}}\lvert \hellinger(\bysinfer(\dataobs'), r) - \hellinger(\bysinfer(\dataobs'), r)\rvert 
+LS(\dataobs)=\max_{\dataobs' \in \datauni^n: \\ \adj{\dataobs}{\dataobs'}, r\in \mathcal{R}}\lvert \hellinger(\bysinfer(\dataobs'), r) - \hellinger(\bysinfer(\dataobs'), r)\rvert 
 \end{equation}
 The above can be proven to simplify to:
 \begin{lem}
@@ -523,7 +609,7 @@ The interested reader can check the proof in the Appendix.
 
 
 \subsubsection{A third approach based on smooth sensitivity: $\hexpmech$}
-\label{subsec_hexpmech}
+\label{sec_ehds}
 In this section, we explore a new mechanism in Exponential family, which can achieve good accuracy and $\epsilon$-differential privacy simultaneously,
 by scaling the noise to a smooth upper bound on the local sensitivity.
 We first define the smooth sensitivity on a input $\dataobs$. The following definition is specific to binary data, that is it will
@@ -1006,8 +1092,7 @@ Increasing the privacy bound $\epsilon$, we get theoretical results as in Fig. \
 \label{subsec_vs_variables}
 
 In this section, we evaluate the accuracy of the mechanisms defined in
-Section (\ref{sec_mechs}) w.r.t. four variables, including data size, dimensions,
-data variance, prior distribution, and some combinations thereof.
+Section (\ref{sec_mechs}) w.r.t. data sizes and dimensions by experimenting on real data sets.
 Every plot is an average over 1000 runs. In all the experiments we set
 $\epsilon = 1.0$.
 
@@ -1019,65 +1104,75 @@ different balanced priors used. The boxes extend from the lower to the upper qua
 of the data, with a line at the median. A notch on the box around the
 median is also drawn to give a rough guide to the significance of
 difference of medians; The whiskers extend from the box to show the
-range of the data. A blue box in the plots represents the $\hexpmech$'s behavior-- where the sensitivity is calibrated
-w.r.t Hellinger distance-- while the green box next to
-it represents the performance of a variation of the basic Laplace
-mechanism $\lapmech$, and red one is $\ilapmech$ presented in Section (\ref{sec_mechs}) with the same
-settings: that is $\epsilon$, data, prior. The variation
-considered performs a postprocessing on the released parameters so
-that they are consistent. For instance when the sum of the noised
-parameters is greater than $n$ we will truncate them so that they sum
-up to $n$.
+range of the data. 
+% A blue box in the plots represents the $\hexpmech$'s behavior-- where the sensitivity is calibrated
+% w.r.t Hellinger distance-- while the green box next to
+% it represents the performance of a variation of the basic Laplace
+% mechanism $\lapmech$, and red one is $\ilapmech$ presented in Section (\ref{sec_mechs}) with the same
+% settings: that is $\epsilon$, data, prior. The variation
+% considered performs a postprocessing on the released parameters so
+% that they are consistent. For instance when the sum of the noised
+% parameters is greater than $n$ we will truncate them so that they sum
+% up to $n$.
 
-\paragraph{Increasing data size with balanced datasets}
-\label{subsubsec_vs_datasize}
-
-
-\begin{figure}[ht]
-\begin{center}
-\centering
-\subfigure[Increasing data size with prior $\betad(1,1)$, balanced datasets and parameters $\epsilon = 1.0$]
-{ \includegraphics[width=0.35\textwidth]{sampling_2d.eps}
-\label{fig_vs_datasize_2d}
-}
-
-\subfigure[Increasing data size with $\dirichlet(1,1,1)$ prior distribution, balanced datasets and parameters $\epsilon = 1.0$]
-{
-  \includegraphics[width=0.35\textwidth]{sampling_3d.eps} 
-  \label{fig_vs_datasize_3d}
-}
-\subfigure[Increasing data size with $\dirichlet(1,1,1,1)$ prior distribution, balanced datasets and parameters $\epsilon = 1.0$]
-{
-  \includegraphics[width=0.35\textwidth]{sampling_4d.eps} 
-  \label{fig_vs_datasize_4d}
-}
-\end{center}
-\end{figure}
-
-In Figures \ref{fig_vs_datasize_2d}, \ref{fig_vs_datasize_3d} and \ref{fig_vs_datasize_4d} we still consider \emph{balanced} data sets
-of observations. The results show that when the data size increases, the average errors of
-$\hexpmech$, $\lapmech$ and $\ilapmech$ decrease. For small datasets,
-i.e with size less $300$ in the case of Beta-Binomial models, the Laplace mechanisms outperform $\hexpmech$.
-But for bigger data sets, that is, bigger than $300$, or as in Figure \ref{fig_vs_datasize_2d} where
-we considered data sets of the order of 15 thousands elements,
-the $\hexpmech$ outperforms the $\lapmech$, and asymptotically approaches the improved Laplace mechanism $\ilapmech$.
-Similar experimental tendencies were obtained for the Dirichlet-multinomial model (Figure \ref{fig_vs_datasize_3d} and \ref{fig_vs_datasize_4d}).
+% \paragraph{Increasing data size with balanced datasets}
+% \label{subsubsec_vs_datasize}
 
 
-\paragraph{Fixed dataset varying balanced priors}
-\label{subsubsec_vs_prior}
-In Figure \ref{fig_vs_prior}, we fix the data set to be $(50,50)$, and the parameters the same as before: $\epsilon = 1.0$ and $\delta = 10^{-8}$ . We studied the accuracy under different priors, where the priors considered  are also balanced.
-Similar to the plots above, Figure \ref{fig_vs_prior} shows that in the beginning the baseline Laplace mechanism and improved Laplace mechanism performs better but the baseline approach is outperformed after a while, and very close to the improved Laplace mechanism.
+% \begin{figure}[ht]
+% \begin{center}
+% \centering
+% \subfigure[Increasing data size with prior $\betad(1,1)$, balanced datasets and parameters $\epsilon = 1.0$]
+% { \includegraphics[width=0.35\textwidth]{sampling_2d.eps}
+% \label{fig_vs_datasize_2d}
+% }
+
+% \subfigure[Increasing data size with $\dirichlet{1,1,1}$ prior distribution, balanced datasets and parameters $\epsilon = 1.0$]
+% {
+%   \includegraphics[width=0.35\textwidth]{sampling_3d.eps} 
+%   \label{fig_vs_datasize_3d}
+% }
+% \subfigure[Increasing data size with $\dirichlet{1,1,1,1}$ prior distribution, balanced datasets and parameters $\epsilon = 1.0$]
+% {
+%   \includegraphics[width=0.35\textwidth]{sampling_4d.eps} 
+%   \label{fig_vs_datasize_4d}
+% }
+% \end{center}
+% \end{figure}
+
+% In Figures \ref{fig_vs_datasize_2d}, \ref{fig_vs_datasize_3d} and \ref{fig_vs_datasize_4d} we still consider \emph{balanced} data sets
+% of observations. The results show that when the data size increases, the average errors of
+% $\hexpmech$, $\lapmech$ and $\ilapmech$ decrease. For small datasets,
+% i.e with size less $300$ in the case of Beta-Binomial models, the Laplace mechanisms outperform $\hexpmech$.
+% But for bigger data sets, that is, bigger than $300$, or as in Figure \ref{fig_vs_datasize_2d} where
+% we considered data sets of the order of 15 thousands elements,
+% the $\hexpmech$ outperforms the $\lapmech$, and asymptotically approaches the improved Laplace mechanism $\ilapmech$.
+% Similar experimental tendencies were obtained for the Dirichlet-multinomial model (Figure \ref{fig_vs_datasize_3d} and \ref{fig_vs_datasize_4d}).
+
+
+\paragraph{Experiments on Real Data Sets in Beta-binomial Model}
+We use four real data sets from UCI Machine Learning repository\footnote{https://archive.ics.uci.edu/ml/datasets.html}. Each data set contains 1 binary variable, which applys our Beta-binomial model. By setting the prior distribution as $\betad(1,1)$, we apply our 5 private inference algorithms on them to derive the underlining distribution of these data. The first data set is the SHARING BIKE data, where $0$ means user use sharing bike at workday and $1$ stands for weekend. The second and third data set the THERAPY data, where $1$ means patient with disease is cured and $1$ means not. The forth data set is the BADGE data, $1$ means people with badge and $0$ means without badge. The size of the four data set are $731, 90, 294, 90$. The accuracy are shown in Figure \ref{fig_real_2d}.
 \begin{figure}
 \centering
-\includegraphics[width=0.35\textwidth]{sampling_prior.eps}
-\caption{Observed data set is: $(50,50)$, varying balanced priors}
-\label{fig_vs_prior}
+\includegraphics[width=0.35\textwidth]{realdata.eps}
+\caption{Accuracy on Real Data Sets, with $\epsilon = 1.0$}
+\label{fig_real_2d}
 \end{figure}
+
+
+\paragraph{Experiments on Real Data Sets in Dirichlet-multinomial Model}
+We use three real data sets from the same repository repository. Each data set contains 1 category variable of 3 dimensions ($|\mathcal{X}| = 3$), which applys our 3 dimension Dirichlet-multinomial model. By setting the prior distribution as $\dirichlet{1,1,1}$, we apply our 5 private inference algorithms on them to derive the underlining distribution of these data. The first data set is the SHARING BIKE data, where $0$ means user use sharing bike at workday and $1$ stands for weekend. The second and third data set the THERAPY data, where $1$ means patient with disease is cured and $1$ means not. The forth data set is the BADGE data, $1$ means people with badge and $0$ means without badge. The size of the four data set are $731, 90, 90$. The accuracy are shown in Figure \ref{fig_real_3d}.
+\begin{figure}
+\centering
+\includegraphics[width=0.35\textwidth]{realdata_3d.eps}
+\caption{Accuracy on Real Data Sets, with $\epsilon = 1.0$}
+\label{fig_real_3d}
+\end{figure}
+
 
 \subsection{Privacy Evaluation}
 \label{subsec_experiment_privacy}
-In order to see our privacy behavior, we study the accurate epsilon under concrete cases in this section. The $(\epsilon, \delta)$ - differential privacy we proved in Sec. \ref{subsec_hexpmech} is just an upper bound, we concrete $\epsilon$ should be smaller than upper bound in our exponential mechanism. We calculate the concrete privacy value in following ways wrt. the data size, and obtain plots in Fig. \ref{fig_privacy}.
+In order to see our privacy behavior, we study the accurate epsilon under concrete cases in this section. The $(\epsilon, \delta)$ - differential privacy we proved in Sec. \ref{sec_ehds} is just an upper bound, we concrete $\epsilon$ should be smaller than upper bound in our exponential mechanism. We calculate the concrete privacy value in following ways wrt. the data size, and obtain plots in Fig. \ref{fig_privacy}.
 
 \begin{figure}
 \begin{center}
@@ -1091,9 +1186,6 @@ In order to see our privacy behavior, we study the accurate epsilon under concre
 $\epsilon = 1.0$ is a privacy upper bound, we can observe that the concrete $\epsilon$ values are smaller than the upper bound. That is to say, we achieved a higher privacy level than expected. 
 
 
-
-
-
 \section{Conclusion}
 From what we have seen in the previous sections we can obtain following conclusions. We explored the design space of the mechanisms for differentially privacy Bayesian inference, by considering different metrics and different algorithms.
 \begin{itemize}
@@ -1104,6 +1196,7 @@ From what we have seen in the previous sections we can obtain following conclusi
 
 \bibliography{bysinfer}
 \bibliographystyle{icml2019}
+
 
 \appendix
 
