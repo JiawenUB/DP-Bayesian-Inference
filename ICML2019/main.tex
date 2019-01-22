@@ -1161,6 +1161,16 @@ Similar to the plots above, Figure \ref{fig_vs_prior} shows that in the beginnin
 \label{fig_vs_prior}
 \end{figure}
 
+\paragraph{Experiments on Real Data Sets}
+\begin{figure}
+\centering
+\includegraphics[width=0.35\textwidth]{realdata.eps}
+\caption{Accuracy on Real Data Sets, with $\epsilon = 1.0$}
+\label{fig_vs_prior}
+\end{figure}
+
+
+
 \subsection{Privacy Evaluation}
 \label{subsec_experiment_privacy}
 In order to see our privacy behavior, we study the accurate epsilon under concrete cases in this section. The $(\epsilon, \delta)$ - differential privacy we proved in Sec. \ref{subsec_hexpmech} is just an upper bound, we concrete $\epsilon$ should be smaller than upper bound in our exponential mechanism. We calculate the concrete privacy value in following ways wrt. the data size, and obtain plots in Fig. \ref{fig_privacy}.
@@ -1178,8 +1188,6 @@ $\epsilon = 1.0$ is a privacy upper bound, we can observe that the concrete $\ep
 
 
 
-
-
 \section{Conclusion}
 From what we have seen in the previous sections we can obtain following conclusions. We explored the design space of the mechanisms for differentially privacy Bayesian inference, by considering different metrics and different algorithms.
 \begin{itemize}
@@ -1190,6 +1198,7 @@ From what we have seen in the previous sections we can obtain following conclusi
 
 \bibliography{bysinfer}
 \bibliographystyle{icml2019}
+
 
 \appendix
 

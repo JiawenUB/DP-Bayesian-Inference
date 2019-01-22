@@ -14,20 +14,20 @@ from decimal import *
 from scipy.special import gammaln
 from dirichlet import dirichlet
 from dpbayesinfer_Betabinomial import BayesInferwithDirPrior
-
+import glob
 #################################################################################
 ###READ DATA FROM FILE###########################################################
 #################################################################################
 def read_data(filename, col):
 	data = []
-	with i = open(filename):
+	with open(filename) as i:
 		for line in i:
-			t = i.split(" ")
-			data.append(t[col])
+			data.append(int(line[col]))
 	return data
 
 def read_datas(folder):
 	datas = []
+	print glob.glob(folder)
 	for f in glob.glob(folder):
 		datas.append(read_data(f, 0))
 	return datas
@@ -52,19 +52,20 @@ def run_experiments(times, datasizes, observations,epsilon, delta, prior):
 		Bayesian_Model._experiments(times)
 		print("finished" + str(observation))
 
-		for i in range(len(mean_error)):
-			errors[i].append(Bayesian_Model._accuracy[Bayesian_Model._keys[i]])
+		for i in range(5):
+			data.append(Bayesian_Model._accuracy[Bayesian_Model._keys[i]])
 
-	plot_error_box(errors, "Data Set", 
+	plot_error_box(data, "Different Data Sets", 
 		["bike", "cryotherapy", "immunotherapy", "badges"], 
 		"Experiments on Real Data", 
 		[
+		r'Alg 1 - $\mathsf{LSDim}$ (sensitivity = 2.0)', 
+		r'Alg 2 - $\mathsf{LSHist}$ (sensitivity = 1.0)',
 		r'Alg 5 - $\mathsf{EHDS}$ ',
-		r"Alg 4 - $\mathsf{EHDL}$",
 		r"Alg 3 - $\mathsf{EHD}$",
-		r'Alg 1 - $\mathsf{LSDim}$ (sensitivity = '+ str(sensitivity2) +')', 
-		r'Alg 2 - $\mathsf{LSHist}$ (sensitivity = '+ str(sensitivity1) +')'],
-		["skyblue", "navy", "lightblue", "lightcyan", "blueviolet"] )
+		r"Alg 4 - $\mathsf{EHDL}$"
+		],
+		["skyblue", "navy", "coral", "crimson", "blueviolet"] )
 
 	return 
 
@@ -79,11 +80,11 @@ def plot_error_box(data, xlabel, xstick, title, legends, colors):
 	# meanlineprops = dict(linestyle='--', linewidth=2.5, color='purple')
 	bplot = plt.boxplot(data, notch=1, widths=0.4, sym='+', showfliers=False, vert=2, whis=1.2, patch_artist=True, medianprops=medianprops)#, meanprops=meanlineprops, meanline=True,showmeans=True)
 	plt.xlabel(xlabel,fontsize=15)
-	plt.ylabel('Hellinger Distance',fontsize=15)
+	plt.ylabel('Error (Measured by Hellinger Distance)',fontsize=15)
 	#ax.set_xlim(0.5, len(errors) + 0.5)
 
 
-	plt.xticks([i*l + (l+1)/2.0 for i in range(len(xstick))],xstick,rotation=40,fontsize=12)
+	plt.xticks([i*l + (l+1)/2.0 for i in range(len(xstick))],xstick,rotation=0,fontsize=12)
 	plt.title(title,fontsize=15)
 
 	for i in range(1, len(bplot["boxes"])/l + 1):
@@ -142,13 +143,11 @@ if __name__ == "__main__":
 #SETTING UP THE PARAMETERS
 #############################################################################
 
-	epsilon = 1,0
+	epsilon = 1.0
 	delta = 0.00000001
 	prior = dirichlet([1,1])
 
-
-	epsilons = numpy.arange(5, 2, 0.1)
-	datasizes, observations = data_process(read_datas("/data/*.txt"))
+	datasizes, observations = data_process(read_datas("./datas/*.txt"))
 	run_experiments(1000, datasizes, observations,epsilon, delta, prior)
 
 
