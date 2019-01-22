@@ -175,7 +175,7 @@ We will see that in some cases this can happen.
 What follows is a summary of the main contributions of this work.
 \begin{itemize}
 	\item We design a new differentially private Bayesian inference mechanism based on the standard exponential mechanism.
-    \item A full proof of $(\epsilon, \delta)$-differential privacy of the mechanism is given in the paper. 
+    \item A full proof of $(\epsilon, \delta)$-differential privacy of the mechanism is given in the paper. \gp{it's only eps-d.p for now}
 	\item We explored two ways to improve the accuracy: 1) calibrating noise to the sensitivity of a metric over distributions
       (e.g. Hellinger distance ($\hellinger$), $f$-divergences, etc\dots). 2) Using a smooth upper bound on the local sensitivity and scale
       the noise to this smooth bound rather than global sensitivity, to improve the mechanism accuracy.
