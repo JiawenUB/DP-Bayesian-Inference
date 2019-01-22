@@ -425,14 +425,18 @@ which, based on the notion of \emph{smooth} sensitivity, achieves $\epsilon$-dif
 has good accuracy in specific cases.
 In presenting these mechanisms we will denote by $\inferd{\valpha}{\vtheta}{\dataobs}$ the posterior  $\dirichlet{\valpha'}$
 obtained starting from the prior $\dirichlet{\valpha}$, likelihood $\multinomial{|\dataobs|}{\vtheta}$, and observed data $\dataobs$.
+To minimize notation we will identify the distribution $\dirichlet{\valpha}$ with its vector
+of parameters.
 Two different upper bounds to the value of
 \begin{align}
   \label{eqn:eq1}
   \max_{\substack{\adj{\dataobs}{\dataobs'},\\
-      \dirichlet{\valpha}=\inferd{\valpha}{\vtheta}{\dataobs},\\
-      \dirichlet{\valpha'}=\inferd{\valpha}{\vtheta}{\dataobs'}}}||\valpha-\valpha'||_1 
+      \valpha=\inferd{\valpha}{\vtheta}{\dataobs},\\
+      \valpha'=\inferd{\valpha}{\vtheta}{\dataobs'}}}||\valpha-\valpha'||_1 
 \end{align}
 will be used to calibrate the noise in the mechanisms based on the Laplacian primitive.
+Finally, with $\bysinfer{\dataobs}$, and $\bys{\dataobs}{\vtheta}$ we will denote $\inferd{\valpha}{\vtheta}{\dataobs}$ when $\valpha, \vtheta$ or just $\valpha$
+are known from the context.
 
 
 
@@ -447,7 +451,7 @@ and posterior distribution.
   \label{lapmech}
   \begin{algorithmic}
   \INPUT $\dataobs\in\mathcal{X}^n$, $\dirichlet{\valpha}$
-  \STATE \quad {\bf let} $\dirichlet{\valpha'} = \inferd{\valpha}{\vtheta}{\dataobs}$
+  \STATE \quad {\bf let} $\valpha' = \inferd{\valpha}{\vtheta}{\dataobs}$
   \STATE \quad {\bf Initialize} a vector $\tilde{\valpha} = (0, \dots, 0 )\in \mathbb{N}^{|\mathcal{X}|}$ 
   \STATE \quad {\bf For} $i = 1 \dots |\mathcal{X}| - 1$:
   \STATE \quad \quad  {\bf let} $\eta \sim \lap{0}{\frac{|\mathcal{X}|}{\epsilon}}$
@@ -474,7 +478,7 @@ In Algorithm \ref{ilapmech} the algorithm $\ilapmech$ is presented.
   \label{ilapmech}
   \begin{algorithmic}
   \INPUT $\dataobs\in\mathcal{X}^n$, $\dirichlet{\valpha}$
-  \STATE \quad {\bf let} $\dirichlet{\valpha'} = \inferd{\valpha}{\vtheta}{\dataobs}$
+  \STATE \quad {\bf let} $\valpha' = \inferd{\valpha}{\vtheta}{\dataobs}$
   \STATE \quad ${\bf let}\ k=\left \{
         \begin{array}{lll}          
           1&\text{if}& |\mathcal{X}|=2\\
@@ -504,122 +508,110 @@ probability distributions.
 The idea is that $\expmech$ will sample and output a distribution with higher probability when
 it is closer to the real posterior; importantly,  \emph{closer} is measured using a metric over probability
 distributions as opposed to a metric over the parameters that represent it. In this work we will
-use the Hellinger distance, but this approach could be extended to other $f$-divergences. We will
-start by describing how the mechanism works in the case of the Beta-Binomial model noticing that
-the extension to the Dirichelet-Multinomial model is straightforward.
-Given a prior distribution $\betad(\alpha, \beta)$ and an observed data set: $\dataobs\in\{0,1\}^n$,
+use the Hellinger distance, but this approach could be extended to other $f$-divergences. 
+Given a prior distribution $\dirichlet{\valpha}$,
 we define the follwing set  where the mechanism will sample from:
 \[
-  \candidateset=\{\bysinfer(\binomial{n}{\theta}, \betad(\alpha, \beta),\dataobs)\mid \dataobs \in \{0,1\}^n\}.
+  \candidateset=\{\inferd{\valpha}{\vtheta}{\dataobs}\mid \dataobs \in \mathcal{X}^n\}.
 \]
-Where $\bysinfer(\binomial{n}{\theta}, \bprior,\dataobs)$ denotes the posterior beta distribution inferred starting from the parameters in input.
-Notice that the above set reduces to:
+In general $|\candidateset|=\binom{n + 1}{|\mathcal{X}| - 1}$, and in the specific case of $|\mathcal{X}|=2$, that is the Beta-Binomial model,
+the above reduces to:
 \[
-  \{\betad(\alpha',\beta')\mid \alpha'=\alpha + \Delta\alpha, \beta'=\beta + n-\Delta\alpha\}
+  \{(\alpha',\beta')\mid \alpha'=\alpha + \Delta\alpha, \beta'=\beta + n-\Delta\alpha,  \Delta\alpha=\sum x_i, \dataobs\in \{0,1\}^n\}
 \]
-We use $\bysinfer(\dataobs)$ to denote the Bayesian inference process on the observed data $\dataobs$
-when the other two parameters, that is prior and likelihood, are fixed. 
+where $\valpha=(\alpha,\beta)$. 
 
-
-\subsubsection{A first approach: the $\expmech$ mechanism}
-\label{sec_ehd}
-$\expmech(x,u,\candidateset)$  outputs an element $r\in\candidateset$ with  probability: % proportional to $\exp(\frac{\epsilon u(x,r)}{2 GS})$.
+\noindent \textbf{A first approach: the $\expmech$ mechanism.} $\expmech$'s pseudocode is shown in Algorithm \ref{mech:expmech1}.
+Given the input $\dataobs\in\{0,1\}^n$ and a prior $\betad(\alpha, \beta)$, the mechanism $\expmech$ outputs an element $r\in\candidateset$ with  probability: 
 \[
-%\underset{z \thicksim \expmech(x,u,\candidateset) }{\Pr}[z=r] = \frac
 \frac
-  {\exp(\frac{\epsilon\cdot \ux{r}}{2 GS})}
+  {\exp(\frac{\epsilon\cdot \ux{r}}{2\cdot GS})}
 {\Sigma_{r' \in \mathcal{R}}\exp(\frac{\epsilon\cdot \ux{r'}}{2\cdot GS})},
 \]
-where $u(x,r)$ is the Hellinger scoring function: $-\hellinger(\bysinfer(\dataobs), r)$, and $GS$ is the global sensitivity of the scoring function, defined as:
-\begin{equation*}
+where $u(\dataobs,r)$ is the Hellinger based score function:
+$-\hellinger(\bysinfer{\dataobs}, r)$, and $GS$ is the global sensitivity of the scoring function, defined as:
+\[
 GS = 
-\max_{\dataobs' \in \datauni^n: \\ \adj{\dataobs}{\dataobs'}}\max_{\{r\in \mathcal{R}\}}
-|\hellinger(\bysinfer(\dataobs), r) - \hellinger(\bysinfer(\dataobs'), r)|
-\end{equation*}
-%
+\max_{\dataobs,\dataobs': \\ \adj{\dataobs}{\dataobs'}}\max_{\{r\in \mathcal{R}\}}
+|\hellinger(\bysinfer{\dataobs}, r) - \hellinger(\bysinfer{\dataobs'}, r)|
+\]
+% 
   \begin{algorithm}
-  \caption{$\expmech$ in Beta-binomial model}
-  \label{mech:expmech}
+  \caption{$\expmech$}
+  \label{mech:expmech1}
   \begin{algorithmic}
-  \INPUT observed data set $\dataobs \in \mathcal{X}^n$, inference algorithm: $\bysinfer$, 
-  prior: $\betad(\alpha, \beta)$, likelihood: $\binomial{n}{\theta}$, $\epsilon$
-  \STATE \quad {\bf let} $\betad(\alpha', \beta') = \bysinfer(\binomial{n}{\theta}, \betad(\alpha, \beta), \dataobs)$. $GS$ be the global sensitivity of scoring function.  
-  \STATE \quad {\bf Initialize} a vector $Pr = (0, \dots, 0 )$ of $|\candidateset|$ length.
+  \INPUT observed data set $\dataobs \in \mathcal{X}^n$, prior: $\dirichlet{\valpha}$, $\epsilon$
+  \STATE \quad {\bf let} $\dirichlet{\valpha'}= \bys{\dataobs}{\valpha}$.   
+  \STATE \quad {\bf Initialize} associative map $pr$ of size $|\candidateset|$.
   \STATE \quad {\bf For} $r$ in $\candidateset$:
-  \STATE \quad \quad calculate the outputting probability of $r$.
-  \STATE \quad \quad $Pr[r] = 
-  {\exp(\frac{\epsilon\cdot \ux{r}}{2 GS})}
+  \STATE \quad \quad $pr[r] = 
+  {\exp(\frac{\epsilon\cdot \ux{r}}{2\cdot GS})}
 / {\Sigma_{r' \in \mathcal{R}}\exp(\frac{\epsilon\cdot u(\dataobs, r')}{2\cdot GS})}$
-\STATE \quad sample $z$ from $\candidateset$ by probability distribution $Pr$.
-  \STATE {\bf return} $z$
+\STATE \quad {\bf sample} in $z$ from probability distribution $pr$.
+\STATE {\bf return} $z$
   \end{algorithmic}
   \end{algorithm}
+\begin{lem}
+  Algorithm \ref{mech:expmech1} is $\epsilon$-d.p.
+\end{lem}
 
-Lemma \ref{??} gives us a finite bound on $GS$, while lemma \ref{lem_exp_private} proves privacy $\epsilon$ differential privacy of $\expmech$.
 
-
-\subsubsection{A second approach based on local sensitivity: $\lexpmech$}
-\label{sec_ehdl}
-Figure \ref{fig_theory} show that  the accuracy of $\expmech$ is poor if compared with the one of $\ilapmech$. This is due to the fact that
-$GS$ is relatively big and hence the variance of the distribution $\expmech$ ends up also being too big. In order to solve this issue we
-will proceed in two steps. We will first define $\lexpmech$, which instead of using the global sensitivity, will use the local sensitivity to calibrate
+\noindent \textbf{A second approach based on local sensitivity: $\lexpmech$.} Figure \ref{fig_theory} shows that  the accuracy of
+$\expmech$ is poor if compared with the one of $\ilapmech$. This is due to the fact that
+$GS$ is relatively large and hence the variance of the distribution $\expmech$ ends up also being too large. In order to solve this issue we
+will proceed in two steps. We will first define, in Algorithm   \ref{mech:lexpmech}, $\lexpmech$, which instead of using the global sensitivity, will use the local sensitivity to calibrate
 the noise. This is known to be a non private approach, but it will guide us towards new insights.
 We will then proceed to use a smooth bound the local sensitivity to
 calibrate the noise.
 
   \begin{algorithm}
-  \caption{$\lexpmech$ in Beta-binomial model}
-  \label{mech:expmech}
+  \caption{$\lexpmech$}
+  \label{mech:lexpmech}
   \begin{algorithmic}
-  \INPUT observed data set $\dataobs \in \mathcal{X}^n$, inference algorithm: $\bysinfer$, 
-  prior: $\betad(\alpha, \beta)$, likelihood: $\binomial{n}{\theta}$, $\epsilon$
-  \STATE \quad {\bf let} $\betad(\alpha', \beta') = \bysinfer(\binomial{n}{\theta}, \betad(\alpha, \beta), \dataobs)$. $LS$ be the local sensitivity of scoring function.  
-  \STATE \quad {\bf Initialize} a vector $Pr = (0, \dots, 0 )$ of $|\candidateset|$ length.
+  \INPUT observed data set $\dataobs \in \mathcal{X}^n$, prior: $\dirichlet{\valpha}$, $\epsilon$
+  \STATE \quad {\bf let} $\dirichlet{\valpha'}= \bys{\dataobs}{\valpha}$.   
+  \STATE \quad {\bf Initialize} associative map $pr$ of size $|\candidateset|$.
   \STATE \quad {\bf For} $r$ in $\candidateset$:
-  \STATE \quad \quad calculate the outputting probability of $r$.
-  \STATE \quad \quad $Pr[r] = 
-  {\exp(\frac{\epsilon\cdot \ux{r}}{2 LS})}
-/ {\Sigma_{r' \in \mathcal{R}}\exp(\frac{\epsilon\cdot \ux{r'}}{2\cdot LS})}$
-\STATE \quad sample $z$ from $\candidateset$ by probability distribution $Pr$.
-  \STATE {\bf return} $z$
+  \STATE \quad \quad $pr[r] = 
+  {\exp(\frac{\epsilon\cdot \ux{r}}{2\cdot LS(\dataobs)})}
+/ {\Sigma_{r' \in \mathcal{R}}\exp(\frac{\epsilon\cdot u(\dataobs, r')}{2\cdot LS(\dataobs)})}$
+\STATE \quad {\bf sample} in $z$ from probability distribution $pr$.
+\STATE {\bf return} $z$
   \end{algorithmic}
   \end{algorithm}
 
 
-$\lexpmech$ shares candidate set and utility function with $\expmech$,
-and outputs a result $r \in \mathcal{R}$ with probability:
+Given $\dataobs, \lexpmech$ samples an element $r \in \mathcal{R}$ with probability:
 \[
-%\underset{z \thicksim \lexpmech(x,u,\candidateset)}{\Pr}[z=r] = \frac
 \frac
   {\exp(\frac{\epsilon \cdot \ux{r}}{2\cdot LS(\dataobs)})}
 {\sum_{r' \in \mathcal{R}}\exp(\frac{\epsilon\cdot \ux{r'}}{2\cdot LS(\dataobs)})},
 \]
 where $LS(\dataobs)$ is the local sensitivity of the scoring function, defined as:
 \begin{equation}\label{eq:local_sensitivity_scoring}
-LS(\dataobs)=\max_{\dataobs' \in \datauni^n: \\ \adj{\dataobs}{\dataobs'}, r\in \mathcal{R}}\lvert \hellinger(\bysinfer(\dataobs'), r) - \hellinger(\bysinfer(\dataobs'), r)\rvert 
+LS(\dataobs)=\max_{\dataobs'\in\mathcal{X}^n,\adj{\dataobs}{\dataobs'}, r\in \mathcal{R}}\lvert \hellinger(\bysinfer{\dataobs'}, r) - \hellinger(\bysinfer{\dataobs'}, r)\rvert 
 \end{equation}
-The above can be proven to simplify to:
+Lemma \ref{lem_loc_opt}  provides a useful characterization of the above function, the interested reader can check the proof in the Appendix.
 \begin{lem}
 \label{lem_loc_opt}
-\[
-LS(\dataobs) = \max\limits_{\dataobs' \in \datauni^n:\adj{\dataobs}{\dataobs'}} \hellinger(\bysinfer(\dataobs), \bysinfer(\dataobs')).
-\]
+For $\dataobs\in\mathcal{X}^n$, 
+\[LS(\dataobs) = \max\limits_{\dataobs' \in \datauni^n:\adj{\dataobs}{\dataobs'}} \hellinger(\bysinfer{\dataobs}, \bysinfer{\dataobs'})\]
 \end{lem}
-The interested reader can check the proof in the Appendix.
 
 
 \subsubsection{A third approach based on smooth sensitivity: $\hexpmech$}
 \label{sec_ehds}
-In this section, we explore a new mechanism in Exponential family, which can achieve good accuracy and $\epsilon$-differential privacy simultaneously,
+In this section, we explore a new mechanism, which compromises between $\expmech$ and $\lexpmech$ and  achieves good accuracy and $\epsilon$-differential privacy simultaneously,
 by scaling the noise to a smooth upper bound on the local sensitivity.
-We first define the smooth sensitivity on a input $\dataobs$. The following definition is specific to binary data, that is it will
-be useful to privately release a posterior Beta distribution. The extension to categorical data is straightforward.
+We first define the smooth sensitivity on a input $\dataobs\in\{0,1\}^n$.
+% The following definition is specific to binary data, hence it will
+% be useful to privately release only posterior Beta distributions in the Beta-Binomial model. The extension to categorical data is straightforward.
 \begin{definition}
 \label{def_gamma_smooth}
-Given a data set $\dataobs$ of size $n$, we define the $\gamma$-smooth sensitivity of $\hellinger(\bysinfer(\dataobs),\cdot)$ as:
+For $\dataobs\in\mathcal{X}^n$, and $\gamma \in \mathbb{R}^{> 0}$, the $\gamma$-smooth sensitivity of $\hellinger(\bysinfer{\dataobs},\cdot)$ is defined as:
 \begin{equation}
   \label{eq_smooth}
-   S(\dataobs)=\max_{\dataobs' \in \{0,1\}^{n}}\bigg \{ \frac{1}{\frac{1}{LS(\dataobs')} +\gamma \cdot d(\dataobs,\dataobs')} \bigg \},
+   S(\dataobs)=\max_{\dataobs' \in \mathcal{X}^{n}}\bigg \{ \frac{1}{\frac{1}{LS(\dataobs')} +\gamma \cdot d(\dataobs,\dataobs')} \bigg \},
 \end{equation}
 where $d$ is the Hamming distance between two data sets.
 \end{definition}
@@ -629,73 +621,41 @@ where $d$ is the Hamming distance between two data sets.
   For any $\dataobs, \dataobs'\in\{0,1\}^n$, and $\gamma \in \mathbb{R}^{+}$
   if  $\adj{\dataobs}{\dataobs'}$ then $\frac{1}{S(\dataobs)} - \frac{1}{S(\dataobs')} \leq \gamma$.
 \end{thm}
-The interested reader will find the proof in Appendix.
-We are now ready to define the mechanism $\hexpmech$. $\hexpmech(\dataobs)$ outputs a candidate $r \in \candidateset$ with probability
+again, the interested reader will find the proof in Appendix.
+We are now ready to describe the mechanism $\hexpmech$ in Algorithm \ref{mech:sexpmech}. $\hexpmech(\dataobs)$ outputs a candidate $r \in \candidateset$ with probability
 \[
   \frac {\exp\big(\frac{-\epsilon\cdot \ux{r}}{4\cdot S(\dataobs)}\big)}
   {\sum_{r' \in \mathcal{R}}\exp(\frac{\epsilon\cdot \ux{r'}}{4\cdot S(\dataobs)})},
 \]
-where $S(\dataobs)$ is the 1-smooth sensitivity of  $\hellinger(\bysinfer(\dataobs),\cdot)$. {\color{red}{why do we choose 1???}}
+where $S(\dataobs)$ is the 1-smooth sensitivity of  $\hellinger(\bysinfer{\dataobs},\cdot)$. {\color{red}{why do we choose 1???}}
   \begin{algorithm}
-  \caption{$\hexpmech$ in Beta-binomial model}
-  \label{mech:expmech}
+  \caption{$\hexpmech$}
+  \label{mech:sexpmech}
   \begin{algorithmic}
-  \INPUT observed data set $\dataobs \in \mathcal{X}^n$, inference algorithm: $\bysinfer$, 
-  prior: $\betad(\alpha, \beta)$, likelihood: $\binomial{n}{\theta}$, $\epsilon$
-  \STATE \quad {\bf let} $\betad(\alpha', \beta') = \bysinfer(\binomial{n}{\theta}, \betad(\alpha, \beta), \dataobs)$. $S(\dataobs)$ be the vector of $\gamma-$sensitivity of scoring function. 
-  \STATE \quad {\bf Initialize} a vector $Pr = (0, \dots, 0 )$ of $|\candidateset|$ length.
+  \INPUT observed data set $\dataobs \in \mathcal{X}^n$,  prior: $\dirichlet{\valpha}$, $\epsilon$
+  \STATE \quad {\bf let} $\dirichlet{\valpha'} = \bys{\valpha}{\dataobs}$.
+  \STATE \quad {\bf Initialize} associative map $pr$ of size $|\candidateset|$.
   \STATE \quad {\bf For} $r$ in $\candidateset$:
-  \STATE \quad \quad calculate the outputting probability of $r$.
-  \STATE \quad \quad $Pr[r] = 
+  \STATE \quad \quad $pr[r] = 
   {\exp(\frac{\epsilon \cdot \ux{r}}{4 S(\dataobs)})}
 / {\Sigma_{r' \in \mathcal{R}}\exp(\frac{\epsilon \cdot \ux{r'}}{4 \cdot S(\dataobs)})}$
-\STATE \quad sample $z$ from $\candidateset$ by probability distribution $Pr$.
-  \STATE {\bf return} $z$
+\STATE \quad {\bf sample} in $z$ from probability distribution $pr$.
+\STATE {\bf return} $z$
   \end{algorithmic}
-  \end{algorithm}
+\end{algorithm}
 
-As already mentioned $\expmech, \lexpmech, \hexpmech$ extends straightforwardly to the Dirichlet-multinomial system.
-Indeed, the Hellinger distance between two Dirichlet distribution, unfolds in:
-\[
-  \hellinger(\dirichlet{\valpha_1}, \dirichlet{\valpha_2}) = \sqrt{1 - \frac{\betaf(\frac{\valpha_1 + \valpha_2}{2})}{\sqrt{\betaf(\valpha_1) \betaf(\valpha_2)}}},
-\]
-and the $\candidateset$ will consist of the set of all possible posterior Dirichlet
-distributions candidates. Also, the smooth sensitivity $S(\dataobs)$
-in (\ref{thm_gamma_smooth}) will be computed by letting $\dataobs'$ range
-over all the elements in $\datauni^{n}$ adjacent to $\dataobs$. Notice
-that $\candidateset$ has $\binom{n + 1}{m - 1}$ elements in this case. {\color{red}{what is m here? and was $\datauni$} defined?}
-
-\section{Privacy Analysis}
-
-\subsection{Privacy of Laplace Mechanism Family}
-The following lemmas prove the privacy of all the mechanisms (besides $\lexpmech$) presented so far.
-Mechanisms $\lapmech$ and $\ilapmech$ are trivially $\epsilon$-differentially private since the mechanisms
-add Laplacian noise proportional to the $\ell_1$-norm sensitivity to the arguments of the posterior distributions.
-\begin{lem}
-  $\lapmech$, $\ilapmech$ are $\epsilon$-differentially private.
-\end{lem}
-
-\subsection{Privacy of Exponential Mechanism Family}
-\subsubsection{$\expmech$ $\epsilon-$Differential Privacy}
-\begin{lem}
-\label{lem_exp_private}
-$\expmech$ is $\epsilon-$differentially private by \cite{dwork2014algorithmic}.
-\end{lem}
-
-
-% \subsubsection{$\lexpmech$ non-Differential Privacy}
-% Exponential mechanism with local sensitivity non-differential privacy.
-
-\subsubsection{$\hexpmech$ $\epsilon-$Differential Privacy}
-
-\begin{lem}
-\label{lem_hexpmech_privacy}
-$\hexpmech$ is $\epsilon$-differential privacy by setting $\gamma = 1.0$.
-\end{lem}
-(Proof is in Appendix)
-
-
-
+\begin{thm}
+  Algorithm \ref{mech:sexpmech} is $\epsilon$-d.p.
+\end{thm}
+% As already mentioned $\hexpmech$ extends straightforwardly to the Dirichlet-multinomial system.
+% Indeed, the Hellinger distance between two Dirichlet distribution, unfolds in:
+% \[
+%   \hellinger(\dirichlet{\valpha_1}, \dirichlet{\valpha_2}) = \sqrt{1 - \frac{\betaf(\frac{\valpha_1 + \valpha_2}{2})}{\sqrt{\betaf(\valpha_1) \betaf(\valpha_2)}}},
+% \]
+% and the $\candidateset$ will consist of the set of all possible posterior Dirichlet
+% distributions candidates. Also, the smooth sensitivity $S(\dataobs)$
+% in (\ref{thm_gamma_smooth}) will be computed by letting $\dataobs'$ range
+% over all the elements in $\datauni^{n}$ adjacent to $\dataobs$. 
 \section{Accuracy Analysis}
 
 \subsection{Accuracy Bound for Baseline Mechanisms}
@@ -726,11 +686,11 @@ Given $Y \thicksim \lap{0}{b}$, the accuracy bound developed for $\lapmech$ is:
 \\
 &\qquad = 
 \begin{cases}
-\frac{1}{2} (e^{- \frac{\epsilon (t)}{\Delta \bysinfer}} - e^{- \frac{\epsilon (t + 1)}{\Delta \bysinfer}}) &  t \geq 0\\
-\frac{1}{2} (e^{\frac{\epsilon (t + 1)}{\Delta \bysinfer}} - e^{\frac{\epsilon (t)}{\Delta \bysinfer}}) & t < 0
+\frac{1}{2} (e^{- \frac{\epsilon (t)}{\Delta }} - e^{- \frac{\epsilon (t + 1)}{\Delta }}) &  t \geq 0\\
+\frac{1}{2} (e^{\frac{\epsilon (t + 1)}{\Delta }} - e^{\frac{\epsilon (t)}{\Delta }}) & t < 0
 \end{cases}
 \end{align*}
-where $\betad(\alpha, \beta)$ is the true posterior distribution, i.e., $\bysinfer(\dataobs) = \betad(\alpha, \beta)$, and $r_L$ be the posterior produced by Laplace mechanism, i.e., $z = \betad(\alpha + \lfloor Y \rfloor, \beta - \lfloor Y \rfloor)$.
+where $\betad(\alpha, \beta)$ is the true posterior distribution, i.e., $\bysinfer{\dataobs} = \betad(\alpha, \beta)$, and $r_L$ be the posterior produced by Laplace mechanism, i.e., $z = \betad(\alpha + \lfloor Y \rfloor, \beta - \lfloor Y \rfloor)$.
 \end{lem}
 (Proof is in Appendix)
 
@@ -1610,16 +1570,16 @@ Given $Y \thicksim \lap{0}{b}$, the accuracy bound developed for $\lapmech$ is:
 \\
 &\qquad = 
 \begin{cases}
-\frac{1}{2} (e^{- \frac{\epsilon (t)}{\Delta \bysinfer}} - e^{- \frac{\epsilon (t + 1)}{\Delta \bysinfer}}) &  t \geq 0\\
-\frac{1}{2} (e^{\frac{\epsilon (t + 1)}{\Delta \bysinfer}} - e^{\frac{\epsilon (t)}{\Delta \bysinfer}}) & t < 0
+\frac{1}{2} (e^{- \frac{\epsilon (t)}{\Delta }} - e^{- \frac{\epsilon (t + 1)}{\Delta }}) &  t \geq 0\\
+\frac{1}{2} (e^{\frac{\epsilon (t + 1)}{\Delta }} - e^{\frac{\epsilon (t)}{\Delta }}) & t < 0
 \end{cases}
 \end{align*}
-where $\betad(\alpha, \beta)$ is the true posterior distribution, i.e., $\bysinfer(\dataobs) = \betad(\alpha, \beta)$, and $r_L$ be the posterior produced by Laplace mechanism, i.e., $z = \betad(\alpha + \lfloor Y \rfloor, \beta - \lfloor Y \rfloor)$.
+where $\betad(\alpha, \beta)$ is the true posterior distribution, i.e., $\bysinfer{\dataobs} = \betad(\alpha, \beta)$, and $r_L$ be the posterior produced by Laplace mechanism, i.e., $z = \betad(\alpha + \lfloor Y \rfloor, \beta - \lfloor Y \rfloor)$.
 }
 
 \begin{proof} of Lemma \ref{lem_acc_lap}.\\
 Given $Y \thicksim \lap{0}{b}$, we have\cite{dwork2014algorithmic}:$\Pr[|Y| \geq t \cdot b] = e^{- t}.$\\
-Based on this, we get:$\Pr[|Y| \geq t] = e^{- \frac{t \epsilon}{\Delta \bysinfer}}$, where $Y \thicksim \lap{0}{\frac{\Delta \bysinfer}{\epsilon}}$ in our setting.
+Based on this, we get:$\Pr[|Y| \geq t] = e^{- \frac{t \epsilon}{\Delta }}$, where $Y \thicksim \lap{0}{\frac{\Delta }{\epsilon}}$ in our setting.
 
 Considering the post-processing (i.e., taking the floor value of $Y$) in $\lapmech$, we have:
 %\[
@@ -1638,8 +1598,8 @@ Considering the post-processing (i.e., taking the floor value of $Y$) in $\lapme
 \Pr\big[\lfloor Y \rfloor = t\big]&= \Pr[ t \leq Y < t + 1]\\
 &= 
 \begin{cases}
-\frac{1}{2} (e^{- \frac{\epsilon (t)}{\Delta \bysinfer}} - e^{- \frac{\epsilon (t + 1)}{\Delta \bysinfer}}) &  t \geq 0\\
-\frac{1}{2} (e^{\frac{\epsilon (t)}{\Delta \bysinfer}} - e^{\frac{\epsilon (t + 1)}{\Delta \bysinfer}}) & t < 0
+\frac{1}{2} (e^{- \frac{\epsilon (t)}{\Delta }} - e^{- \frac{\epsilon (t + 1)}{\Delta }}) &  t \geq 0\\
+\frac{1}{2} (e^{\frac{\epsilon (t)}{\Delta }} - e^{\frac{\epsilon (t + 1)}{\Delta }}) & t < 0
 \end{cases}
 \end{align*}
 
@@ -1671,8 +1631,8 @@ Let $\betad(\alpha, \beta)$ be the true posterior distribution, i.e., $\bysinfer
 \\
 &\qquad = 
 \begin{cases}
-\frac{1}{2} (e^{- \frac{\epsilon (t)}{\Delta \bysinfer}} - e^{- \frac{\epsilon (t + 1)}{\Delta \bysinfer}}) &  t \geq 0\\
-\frac{1}{2} (e^{\frac{\epsilon (t + 1)}{\Delta \bysinfer}} - e^{\frac{\epsilon (t)}{\Delta \bysinfer}}) & t < 0
+\frac{1}{2} (e^{- \frac{\epsilon (t)}{\Delta }} - e^{- \frac{\epsilon (t + 1)}{\Delta }}) &  t \geq 0\\
+\frac{1}{2} (e^{\frac{\epsilon (t + 1)}{\Delta }} - e^{\frac{\epsilon (t)}{\Delta }}) & t < 0
 \end{cases}
 \end{align*}
 
@@ -1680,14 +1640,14 @@ Unfolding the Hellinger distance formula, we get:\\
   \noindent \textbf{case: t is even}
   \begin{align*}
   &\Pr\left[
-\begin{aligned}\lefteqn{\hellinger(\bysinfer(\dataobs), r_L )^2}\\
+\begin{aligned}\lefteqn{\hellinger(\bysinfer{\dataobs}, r_L )^2}\\
 &= 1 - \prod_{k = 0}^{\frac{t}{2} - 1}
   \sqrt{1 - \frac{\frac{t}{2}}{a + k + \frac{t}{2}}}
   \cdot\prod_{k = 1}^{\frac{t}{2}}
   \sqrt{1 - \frac{\frac{t}{2}}{\beta - k}}
 \end{aligned}
 \right] \\
-  &\qquad = \frac{1}{2} (e^{- \frac{\epsilon (t)}{\Delta \bysinfer}} - e^{- \frac{\epsilon (t + 1)}{\Delta \bysinfer}})
+  &\qquad = \frac{1}{2} (e^{- \frac{\epsilon (t)}{\Delta }} - e^{- \frac{\epsilon (t + 1)}{\Delta }})
   \end{align*}
   \noindent \textbf{case: t is odd}
   let $t = 2 m + 1$
@@ -1705,7 +1665,7 @@ Unfolding the Hellinger distance formula, we get:\\
   \prod_{k = 1}^{m} 
   \sqrt{(1 + \frac{1}{2(\beta - \frac{1}{2}- k)})(1 + \frac{\frac{1}{2} - m}{(\beta - \frac{1}{2}- k)})} \end{aligned}
 \right] \\
-   &\qquad = \frac{1}{2} (e^{- \frac{\epsilon (t)}{\Delta \bysinfer}} - e^{- \frac{\epsilon (t + 1)}{\Delta \bysinfer}})
+   &\qquad = \frac{1}{2} (e^{- \frac{\epsilon (t)}{\Delta }} - e^{- \frac{\epsilon (t + 1)}{\Delta }})
   \end{align*}
 
 \end{proof}
