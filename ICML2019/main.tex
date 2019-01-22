@@ -1104,49 +1104,50 @@ different balanced priors used. The boxes extend from the lower to the upper qua
 of the data, with a line at the median. A notch on the box around the
 median is also drawn to give a rough guide to the significance of
 difference of medians; The whiskers extend from the box to show the
-range of the data. A blue box in the plots represents the $\hexpmech$'s behavior-- where the sensitivity is calibrated
-w.r.t Hellinger distance-- while the green box next to
-it represents the performance of a variation of the basic Laplace
-mechanism $\lapmech$, and red one is $\ilapmech$ presented in Section (\ref{sec_mechs}) with the same
-settings: that is $\epsilon$, data, prior. The variation
-considered performs a postprocessing on the released parameters so
-that they are consistent. For instance when the sum of the noised
-parameters is greater than $n$ we will truncate them so that they sum
-up to $n$.
+range of the data. 
+% A blue box in the plots represents the $\hexpmech$'s behavior-- where the sensitivity is calibrated
+% w.r.t Hellinger distance-- while the green box next to
+% it represents the performance of a variation of the basic Laplace
+% mechanism $\lapmech$, and red one is $\ilapmech$ presented in Section (\ref{sec_mechs}) with the same
+% settings: that is $\epsilon$, data, prior. The variation
+% considered performs a postprocessing on the released parameters so
+% that they are consistent. For instance when the sum of the noised
+% parameters is greater than $n$ we will truncate them so that they sum
+% up to $n$.
 
-\paragraph{Increasing data size with balanced datasets}
-\label{subsubsec_vs_datasize}
+% \paragraph{Increasing data size with balanced datasets}
+% \label{subsubsec_vs_datasize}
 
 
-\begin{figure}[ht]
-\begin{center}
-\centering
-\subfigure[Increasing data size with prior $\betad(1,1)$, balanced datasets and parameters $\epsilon = 1.0$]
-{ \includegraphics[width=0.35\textwidth]{sampling_2d.eps}
-\label{fig_vs_datasize_2d}
-}
+% \begin{figure}[ht]
+% \begin{center}
+% \centering
+% \subfigure[Increasing data size with prior $\betad(1,1)$, balanced datasets and parameters $\epsilon = 1.0$]
+% { \includegraphics[width=0.35\textwidth]{sampling_2d.eps}
+% \label{fig_vs_datasize_2d}
+% }
 
-\subfigure[Increasing data size with $\dirichlet(1,1,1)$ prior distribution, balanced datasets and parameters $\epsilon = 1.0$]
-{
-  \includegraphics[width=0.35\textwidth]{sampling_3d.eps} 
-  \label{fig_vs_datasize_3d}
-}
-\subfigure[Increasing data size with $\dirichlet(1,1,1,1)$ prior distribution, balanced datasets and parameters $\epsilon = 1.0$]
-{
-  \includegraphics[width=0.35\textwidth]{sampling_4d.eps} 
-  \label{fig_vs_datasize_4d}
-}
-\end{center}
-\end{figure}
+% \subfigure[Increasing data size with $\dirichlet{1,1,1}$ prior distribution, balanced datasets and parameters $\epsilon = 1.0$]
+% {
+%   \includegraphics[width=0.35\textwidth]{sampling_3d.eps} 
+%   \label{fig_vs_datasize_3d}
+% }
+% \subfigure[Increasing data size with $\dirichlet{1,1,1,1}$ prior distribution, balanced datasets and parameters $\epsilon = 1.0$]
+% {
+%   \includegraphics[width=0.35\textwidth]{sampling_4d.eps} 
+%   \label{fig_vs_datasize_4d}
+% }
+% \end{center}
+% \end{figure}
 
-In Figures \ref{fig_vs_datasize_2d}, \ref{fig_vs_datasize_3d} and \ref{fig_vs_datasize_4d} we still consider \emph{balanced} data sets
-of observations. The results show that when the data size increases, the average errors of
-$\hexpmech$, $\lapmech$ and $\ilapmech$ decrease. For small datasets,
-i.e with size less $300$ in the case of Beta-Binomial models, the Laplace mechanisms outperform $\hexpmech$.
-But for bigger data sets, that is, bigger than $300$, or as in Figure \ref{fig_vs_datasize_2d} where
-we considered data sets of the order of 15 thousands elements,
-the $\hexpmech$ outperforms the $\lapmech$, and asymptotically approaches the improved Laplace mechanism $\ilapmech$.
-Similar experimental tendencies were obtained for the Dirichlet-multinomial model (Figure \ref{fig_vs_datasize_3d} and \ref{fig_vs_datasize_4d}).
+% In Figures \ref{fig_vs_datasize_2d}, \ref{fig_vs_datasize_3d} and \ref{fig_vs_datasize_4d} we still consider \emph{balanced} data sets
+% of observations. The results show that when the data size increases, the average errors of
+% $\hexpmech$, $\lapmech$ and $\ilapmech$ decrease. For small datasets,
+% i.e with size less $300$ in the case of Beta-Binomial models, the Laplace mechanisms outperform $\hexpmech$.
+% But for bigger data sets, that is, bigger than $300$, or as in Figure \ref{fig_vs_datasize_2d} where
+% we considered data sets of the order of 15 thousands elements,
+% the $\hexpmech$ outperforms the $\lapmech$, and asymptotically approaches the improved Laplace mechanism $\ilapmech$.
+% Similar experimental tendencies were obtained for the Dirichlet-multinomial model (Figure \ref{fig_vs_datasize_3d} and \ref{fig_vs_datasize_4d}).
 
 
 \paragraph{Experiments on Real Data Sets in Beta-binomial Model}
@@ -1160,7 +1161,7 @@ We use four real data sets from UCI Machine Learning repository\footnote{https:/
 
 
 \paragraph{Experiments on Real Data Sets in Dirichlet-multinomial Model}
-We use three real data sets from the same repository repository\footnote{https://archive.ics.uci.edu/ml/datasets.html}. Each data set contains 1 category variable of 3 dimensions ($|\mathcal{X}| = 3$), which applys our 3 dimension Dirichlet-multinomial model. By setting the prior distribution as $\dirichlet(1,1,1)$, we apply our 5 private inference algorithms on them to derive the underlining distribution of these data. The first data set is the SHARING BIKE data, where $0$ means user use sharing bike at workday and $1$ stands for weekend. The second and third data set the THERAPY data, where $1$ means patient with disease is cured and $1$ means not. The forth data set is the BADGE data, $1$ means people with badge and $0$ means without badge. The size of the four data set are $731, 90, 90$. The accuracy are shown in Figure \ref{fig_real_3d}.
+We use three real data sets from the same repository repository\footnote{https://archive.ics.uci.edu/ml/datasets.html}. Each data set contains 1 category variable of 3 dimensions ($|\mathcal{X}| = 3$), which applys our 3 dimension Dirichlet-multinomial model. By setting the prior distribution as $\dirichlet{1,1,1}$, we apply our 5 private inference algorithms on them to derive the underlining distribution of these data. The first data set is the SHARING BIKE data, where $0$ means user use sharing bike at workday and $1$ stands for weekend. The second and third data set the THERAPY data, where $1$ means patient with disease is cured and $1$ means not. The forth data set is the BADGE data, $1$ means people with badge and $0$ means without badge. The size of the four data set are $731, 90, 90$. The accuracy are shown in Figure \ref{fig_real_3d}.
 \begin{figure}
 \centering
 \includegraphics[width=0.35\textwidth]{realdata_3d.eps}
@@ -1183,7 +1184,6 @@ In order to see our privacy behavior, we study the accurate epsilon under concre
 \end{figure}
 
 $\epsilon = 1.0$ is a privacy upper bound, we can observe that the concrete $\epsilon$ values are smaller than the upper bound. That is to say, we achieved a higher privacy level than expected. 
-
 
 
 \section{Conclusion}
