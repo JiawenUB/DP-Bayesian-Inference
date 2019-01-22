@@ -193,76 +193,113 @@ In Bayesian Inference data analysis, mechanisms are proposed corresponded to mai
 \label{sec_background}
 \noindent \textbf{Bayesian inference.} 
 Given a prior belief $\Pr(\theta)$ on some parameter $\theta$,
-and an observation $\dataobs$, the posterior distribution on $\theta$ given $\dataobs$ is defined as:
+and an observation $\dataobs$, the posterior distribution on $\theta$
+given $\dataobs$ is defined by Bayes' Theorem as:
 \[
-  \Pr(\theta | \dataobs) \equiv \frac{\Pr(\dataobs | \theta) \cdot \Pr(\theta)}{\Pr(\dataobs)}
+  \Pr(\theta | \dataobs) = \frac{\Pr(\dataobs | \theta) \cdot \Pr(\theta)}{\Pr(\dataobs)}
 \]
 where the expression $\Pr(\dataobs | \theta)$ denotes the
 \emph{likelihood} of observing $\dataobs$ under a value of
-$\theta$. Since we consider $\dataobs$ to be fixed, the likelihood is
-a function of $\theta$.
-For the same reason $\Pr(\dataobs)$ is a constant independent of $\theta$.
-Usually in statistics the prior distribution $\Pr(\theta)$ is chosen so that it represents
-the initial belief on $\theta$, that is, when no data has been observed. In practice though,
-prior distributions and likelihood functions are usually chosen so that the posterior
-belongs to the same \emph{family} of distribution of the prior. In this case we say that the prior
+$\theta$. 
+% Since we consider $\dataobs$ to be fixed, the likelihood is
+% a function of $\theta$.
+% For the same reason $\Pr(\dataobs)$ is a constant independent of $\theta$.
+% Usually in statistics the prior distribution $\Pr(\theta)$ is chosen so that it represents
+% the initial belief on $\theta$, that is, when no data has been
+% observed. In practice though,
+In parametric statistics, prior distributions and likelihood functions are usually chosen so that the posterior
+belongs to the same \emph{family} of distributions as the prior. In this case we say that the prior
 is conjugate to the likelihood function. Use of a conjugate prior
 simplifies calculations and allows for inference to be performed in a
-recursive fashion over the data.
-% Then, we have:
+recursive fashion over the data. This approach is implemented in a
+precise or approximate way in the compiler of several
+probabilistic programming languages~\cite{}.
+
+%  support bayesian inference
+% by means of a language primitive, often called $\bysinfer$, which
+% supports the (precise or approximate) parametric computation of the
+% posterior of a given model. In the rest of the paper, we will use the following
+% notation as a shorthand for the inference process:
 % \[
 %   \bysinfer(\Pr(\dataobs | \theta), \Pr(\theta), \dataobs) = \frac{\Pr(\dataobs | \theta) \cdot \Pr(\theta)}{\Pr(\dataobs)}
 % \]
-% \noindent \textbf{Beta-binomial System.}
-In this work we will consider a specific instance of Bayesian inference and one of its generalizations.
-We will consider the situation where the underlying data is drawn from a binomial distribution
-($\thicksim \binomial{n}{\theta}$), where $\theta$ represents
-the parameter --informally called \emph{bias}-- of a Bernoulli
-distributed random variable and $n$ is the number of draws. The
-prior distribution over $\theta\in [0,1]$ is going to be a beta
-distribution, $\betad(\alpha, \beta)$, with parameters
-$\alpha,\beta\in\mathbb{R}^{+}$, and with p.d.f:
+\noindent \textbf{Dirichlet-multinomial model.}
+In this work we will focus on the Dirichlet-Multinomial model for
+categorical data and its restriction to binary data: the Beta-Binomial
+model. 
+That is, we will consider the situation where 
+the underlying categorical data is drawn from a multinomial
+distribution with parameter the vector $\vtheta\in [0,1]^{k}$. The prior distribution over $\vtheta$
+is given by a Dirichlet distribution, $\dirichlet{\valpha}$, for,
+$\valpha\in(\mathbb{R}^{+})^{k}$ and $k\in\mathbb{N}$, with p.d.f:
 \[
-  \Pr(\theta)\equiv \frac{\theta^{\alpha} (1- \theta)^{\beta}}{\betaf(\alpha,\beta)}
-\]
-where $\betaf(\cdot,\cdot)$ is the beta function.
-The data $\dataobs$ will be a sequence of $n\in\mathbb{N}$ binary values, that is $\dataobs= (x_1,\dots x_n), x_i\in\{0,1\}$, and the likelihood function is:
-\[
-  \Pr(\dataobs | \theta)\equiv \theta^{\Delta \alpha}(1-\theta)^{n - \Delta \alpha}
-\]
-where $\Delta \alpha = \sum_{i=1}^{n}x_i$.
-The posterior distribution over $\theta$ can be easily proven to be equal to:\[\betad(\alpha + \Delta \alpha,\beta + n - \Delta \alpha)\]
-From now on we will denote by $\bysinfer(\binomial{n}{\theta}, \betad(\alpha, \beta), \dataobs)$ the previous
-posterior distribution. This notation will prove itself handy when its arguments will change types in the next example and
-in section \ref{} when the private mechanisms will be described.
-% \noindent \textbf{Dirichlet-multinomial Systems.}
-
-
-The Beta-Binomial model can be immediately generalized to the Dirichlet-Multinomial model, with underlying data multinomially distributed.
-The \emph{bias} is represented by the parameter $\vtheta$, the vector of parameters of a categorically distributed random variable. The prior distribution over $\vtheta\in [0,1]^{k}$
-is given by a Dirichlet distribution, $\dirichlet{\valpha}$, for $k\in\mathbb{N}$,
-and $\valpha\in(\mathbb{R}^{+})^{k}$, with p.d.f:
-\[
-\Pr(\vtheta)\equiv\frac{1}{\mbetaf(\valpha)}\cdot\prod_{i=1}^{k}{\theta_i^{\alpha_i-1}}
+\Pr(\vtheta)=\frac{1}{\mbetaf(\valpha)}\cdot\prod_{i=1}^{k}{\theta_i^{\alpha_i-1}}
 \]
 where $\mbetaf(\cdot)$ is the generalized beta function.
-The data $\dataobs$ will be a sequence of $n\in\mathbb{N}$ values
-coming from a universe $\datauni$, such that $\mid\datauni \mid=k$.
-The likelihood function will be:
-\[
-\Pr(\dataobs|\vtheta)\equiv\prod_{a_i\in\datauni}\theta_{i}^{\Delta \alpha_i},
-\]
-with $\Delta \alpha_i=\displaystyle\sum_{j=1}^{n}\iverson{x_j=a_i}$, where $\iverson{\cdot}$ represents the Iverson bracket notation.
-Denoting by $\Delta\valpha$ the vector $(\Delta\alpha_1,\dots \Delta\alpha_k)$ the posterior distribution over $\vtheta$ turns out to be
-\[
-   \bysinfer(\multinomial{n}{\vtheta}, \dirichlet{\valpha}, \dataobs)=\dirichlet{\valpha + \Delta \valpha} 
-\]
-where $+$ denotes the componentwise sum of vectors.
+The data $\dataobs$ is a sequence of $n\in\mathbb{N}$ values
+coming from a universe $\datauni$, such that $|\datauni|=k$.
+The likelihood function is
+$
+\Pr(\dataobs|\vtheta)=\prod_{a_i\in\datauni}\theta_{i}^{\Delta \alpha_i},
+$
+with $\Delta \alpha_i=\displaystyle\sum_{j=1}^{n}\mathbf{1}_{\iverson{x_j=a_i}}$.
+Denoting by $\Delta\valpha$ the vector $(\Delta\alpha_1,\dots
+\Delta\alpha_k)$ the posterior distribution over $\vtheta$ is
+$\dirichlet{\valpha + \Delta \valpha}$, where $+$ denotes the componentwise sum of vectors.
+In the following we will use the notation $\bysdir(n,\vtheta, \valpha,
+\dataobs)$ to denote the posterior of this process.
+%i.e., $\bysdir(n,\vtheta, \valpha, \dataobs)=\dirichlet{\valpha + \Delta \valpha}$.
+%
+% ($\thicksim \binomial{n}{\theta}$), where $\theta$ represents
+% the parameter --informally called \emph{bias}-- of a Bernoulli
+% distributed random variable and $n$ is the number of draws. The
+% prior distribution over $\theta\in [0,1]$ is going to be a beta
+% distribution, $\betad(\alpha, \beta)$, with parameters
+% $\alpha,\beta\in\mathbb{R}^{+}$, and with p.d.f:
+% \[
+%   \Pr(\theta)= \frac{\theta^{\alpha} (1- \theta)^{\beta}}{\betaf(\alpha,\beta)}
+% \]
+% where $\betaf(\cdot,\cdot)$ is the beta function.
+% The data $\dataobs$ will be a sequence of $n\in\mathbb{N}$ binary values, that is $\dataobs= (x_1,\dots x_n), x_i\in\{0,1\}$, and the likelihood function is:
+% \[
+%   \Pr(\dataobs | \theta)= \theta^{\Delta \alpha}(1-\theta)^{n - \Delta \alpha}
+% \]
+% where $\Delta \alpha = \sum_{i=1}^{n}x_i$.
+% The posterior distribution over $\theta$ can be easily proven to be equal to:\[\betad(\alpha + \Delta \alpha,\beta + n - \Delta \alpha)\]
+% From now on we will denote by $\bysinfer(\binomial{n}{\theta}, \betad(\alpha, \beta), \dataobs)$ the previous
+% posterior distribution. This notation will prove itself handy when its arguments will change types in the next example and
+% in section \ref{} when the private mechanisms will be described.
+
+% We will consider the situation where the underlying data is drawn from a binomial distribution
+% ($\thicksim \binomial{n}{\theta}$), where $\theta$ represents
+% the parameter --informally called \emph{bias}-- of a Bernoulli
+% distributed random variable and $n$ is the number of draws. The
+% prior distribution over $\theta\in [0,1]$ is going to be a beta
+% distribution, $\betad(\alpha, \beta)$, with parameters
+% $\alpha,\beta\in\mathbb{R}^{+}$, and with p.d.f:
+% \[
+%   \Pr(\theta)= \frac{\theta^{\alpha} (1- \theta)^{\beta}}{\betaf(\alpha,\beta)}
+% \]
+% where $\betaf(\cdot,\cdot)$ is the beta function.
+% The data $\dataobs$ will be a sequence of $n\in\mathbb{N}$ binary values, that is $\dataobs= (x_1,\dots x_n), x_i\in\{0,1\}$, and the likelihood function is:
+% \[
+%   \Pr(\dataobs | \theta)= \theta^{\Delta \alpha}(1-\theta)^{n - \Delta \alpha}
+% \]
+% where $\Delta \alpha = \sum_{i=1}^{n}x_i$.
+% The posterior distribution over $\theta$ can be easily proven to be equal to:\[\betad(\alpha + \Delta \alpha,\beta + n - \Delta \alpha)\]
+% From now on we will denote by $\bysinfer(\binomial{n}{\theta}, \betad(\alpha, \beta), \dataobs)$ the previous
+% posterior distribution. This notation will prove itself handy when its arguments will change types in the next example and
+% in section \ref{} when the private mechanisms will be described.
+% \noindent \textbf{Dirichlet-multinomial Systems.}
+%
+The Beta-Binomial model can be obtained from the Dirichlet-Multinomial
+model by fixing $k=2$. 
+
 
 
 \noindent \textbf{Differential Privacy.}
-\emph{Differential privacy} is a strong quantitative notion of statistical privacy proposed by \cite{dwork2006}.
-Differential privacy of a mechanism implies that changing the input of a mechanism slightly only reflects
+\emph{Differential privacy}~\cite{dwork2006} is a quantitative notion
+of data privacy guaranteeing  a bound on the that changing the input of a mechanism slightly only reflects
 in a controlled and bounded way on the output distribution. 
 Formally, the $\epsilon$ parameter
 controls how much two outputs starting from \emph{close} inputs can differ. When two inputs are close we call them \emph{adjacent}.
@@ -302,16 +339,19 @@ with $k$-$1$ bins where $k$ is the dimensionality of the problem.
 This is w.l.o.g. because given the first $k$-$1$ counts, the $k$-th count
 is known.
 
-\noindent \textbf{Problem setting.}
+\section{Problem Statement}
 \label{subsec_problem}
-We are interested in exploring mechanisms for privately releasing the full posterior
-distributions derived in Section \ref{sec_background}.
-It's worth noticing that the posterior distributions are fully characterized
-by their parameters, and the family (Beta and Dirichlet distribution) they belong to. Hence, in case of the
+We are interested in exploring the design space of mechanisms for privately releasing the posterior
+distribution for the Dirichlet-Multinomial model as described in the
+previous section.
+It is worth noticing that the posterior distribution of this model is fully characterized
+by its parameters. That is, we are interested in releasing a private version of
+the Dirichlet distribution with parameter
+$\valpha'=(\valpha + \Delta \valpha)$, or in the case of the
 Beta-Binomial model we are interested in releasing a private version of the Beta distribution with 
-parameters $(\alpha',\beta')=(\alpha + \Delta \alpha,\beta + n - \Delta \alpha)$, and
-in the case of the Dirichlet-Multinomial model we are interested in a private version of the Dirichlet distribution with parameter
-$\valpha'=(\valpha + \Delta \valpha)$. \cite{zhang2016differential} and \cite{xiao2012bayesian}
+parameters $(\alpha',\beta')=(\alpha + \Delta \alpha,\beta + n -
+\Delta \alpha)$.
+\citet{zhang2016differential} and \citet{xiao2012bayesian}
 have already attacked this problem by adding independent Laplacian noise to the
 parameters of the posteriors. That is, in the case of the Beta-Binomial system,
 the values released would be: $(\tilde\alpha,\tilde\beta)=(\alpha +  \widetilde{\Delta \alpha},\beta + n - \widetilde{\Delta \alpha})$
@@ -460,7 +500,7 @@ the extension to the Dirichelet-Multinomial model is straightforward.
 Given a prior distribution $\betad(\alpha, \beta)$ and an observed data set: $\dataobs\in\{0,1\}^n$,
 we define the follwing set  where the mechanism will sample from:
 \[
-  \candidateset\equiv\{\bysinfer(\binomial{n}{\theta}, \betad(\alpha, \beta),\dataobs)\mid \dataobs \in \{0,1\}^n\}.
+  \candidateset=\{\bysinfer(\binomial{n}{\theta}, \betad(\alpha, \beta),\dataobs)\mid \dataobs \in \{0,1\}^n\}.
 \]
 Where $\bysinfer(\binomial{n}{\theta}, \bprior,\dataobs)$ denotes the posterior beta distribution inferred starting from the parameters in input.
 Notice that the above set reduces to:
@@ -482,7 +522,7 @@ $\expmech(x,u,\candidateset)$  outputs an element $r\in\candidateset$ with  prob
 \]
 where $u(x,r)$ is the Hellinger scoring function: $-\hellinger(\bysinfer(\dataobs), r)$, and $GS$ is the global sensitivity of the scoring function, defined as:
 \begin{equation*}
-GS \equiv 
+GS = 
 \max_{\dataobs' \in \datauni^n: \\ \adj{\dataobs}{\dataobs'}}\max_{\{r\in \mathcal{R}\}}
 |\hellinger(\bysinfer(\dataobs), r) - \hellinger(\bysinfer(\dataobs'), r)|
 \end{equation*}
@@ -546,7 +586,7 @@ and outputs a result $r \in \mathcal{R}$ with probability:
 \]
 where $LS(\dataobs)$ is the local sensitivity of the scoring function, defined as:
 \begin{equation}\label{eq:local_sensitivity_scoring}
-LS(\dataobs)\equiv\max_{\dataobs' \in \datauni^n: \\ \adj{\dataobs}{\dataobs'}, r\in \mathcal{R}}\lvert \hellinger(\bysinfer(\dataobs'), r) - \hellinger(\bysinfer(\dataobs'), r)\rvert 
+LS(\dataobs)=\max_{\dataobs' \in \datauni^n: \\ \adj{\dataobs}{\dataobs'}, r\in \mathcal{R}}\lvert \hellinger(\bysinfer(\dataobs'), r) - \hellinger(\bysinfer(\dataobs'), r)\rvert 
 \end{equation}
 The above can be proven to simplify to:
 \begin{lem}
