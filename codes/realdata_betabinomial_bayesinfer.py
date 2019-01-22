@@ -22,11 +22,32 @@ def read_data(filename, col):
 	data = []
 	with i = open(filename):
 		for line in i:
-			t = i.split("	")
+			t = i.split(" ")
 			data.append(t[col])
 	return data
 
-def run_experiments(times, ):
+def read_datas(folder):
+	datas = []
+	for f in glob.glob(folder):
+		datas.append(read_data(f, 0))
+	return datas
+
+def run_experiments(times, datasizes, observations,epsilon, delta):
+	data = []
+	errors = [[],[],[],[],[]]
+	for i in range(len(datasizes)):
+		observation = observations[i]
+		Bayesian_Model = BayesInferwithDirPrior(prior, sum(observation), epsilon, delta)
+		Bayesian_Model._set_observation(observation)
+		print("start" + str(observation))
+		Bayesian_Model._experiments(times)
+		print("finished" + str(observation))
+
+		for i in range(len(mean_error)):
+			errors[i].append(Bayesian_Model._accuracy[Bayesian_Model._keys[i]])
+
+	plot_error_box(errors, "Data Set", [""] )
+
 	return 
 
 #############################################################################
@@ -76,78 +97,6 @@ def plot_mean_error(x,y_list,xstick,xlabel, ylabel, title):
 	plt.legend()
 	plt.show()
 
-#############################################################################
-#SAMPLING UNDER DIFFERENT DATASIZE 
-#############################################################################
-
-def accuracy_VS_datasize(epsilon,delta,prior,observations,datasizes):
-	data = []
-	mean_error = [[],[],[],[],[],[]]
-	for i in range(len(datasizes)):
-		observation = observations[i]
-		Bayesian_Model = BayesInferwithDirPrior(prior, sum(observation), epsilon, delta)
-		Bayesian_Model._set_observation(observation)
-		print("start" + str(observation))
-		Bayesian_Model._experiments(5000)
-		print("finished" + str(observation))
-
-		for i in range(len(mean_error)):
-			mean_error[i].append(Bayesian_Model._accuracy_mean[Bayesian_Model._keys[i]])
-
-		# data.append(Bayesian_Model._accuracy[Bayesian_Model._keys[3]])
-		# data.append(Bayesian_Model._accuracy[Bayesian_Model._keys[0]])
-		# data.append(Bayesian_Model._accuracy[Bayesian_Model._keys[4]])
-		# a = statistics.median(Bayesian_Model._accuracy[Bayesian_Model._keys[3]])
-		# b = statistics.median(Bayesian_Model._accuracy[Bayesian_Model._keys[0]])
-		# c = statistics.median(Bayesian_Model._accuracy[Bayesian_Model._keys[4]])
-
-
-	print('Accuracy / prior: ' + str(prior._alphas) + ", delta: " 
-		+ str(delta) + ", epsilon:" + str(epsilon))
-
-	print mean_error
-
-	plot_mean_error(datasizes, mean_error, datasizes, "Different Datasizes", 
-		["BASELINE LapMech (sensitivity = 2)", 
-		"IMPROVED LapMech (sensitivity = 1)",
-		r'$\mathcal{M}_{\mathcal{H}}$ with Smooth Sensitivity',
-		r'$\mathcal{M}_{\mathcal{H}}$ with $\gamma -$Sensitivity',
-		r"STANDARD $\mathcal{M}_{\mathcal{E}}$",
-		r"NON PRIVATE $\mathcal{M}_{\mathcal{E}}$"
-		], "")
-	
-	# plot_error_box(data,"Different Datasizes",datasizes,"Accuracy VS. Data Size",
-	# 	[r'$\mathcal{M}^{B}_{\mathcal{H}}$',"LapMech (sensitivity = 2)", "LapMech (sensitivity = 3)"],
-	# 	['lightblue', 'navy', 'red'])
-	return
-
-
-#############################################################################
-#SAMPLING UNDER DIFFERENT PRIORS 
-#############################################################################
-
-
-def accuracy_VS_prior(sample_size,epsilon,delta,priors,observation):
-	data = []
-	mean_error = [[],[],[],[],[]]
-	for prior in priors:
-		Bayesian_Model = BayesInferwithDirPrior(prior, sample_size, epsilon, delta)
-		Bayesian_Model._set_observation(observation)
-		Bayesian_Model._experiments(1000)
-		data.append(Bayesian_Model._accuracy[Bayesian_Model._keys[3]])
-		data.append(Bayesian_Model._accuracy[Bayesian_Model._keys[0]])
-		data.append(Bayesian_Model._accuracy[Bayesian_Model._keys[4]])
-		mean_error[0].append(Bayesian_Model._accuracy_mean[Bayesian_Model._keys[3]])
-		mean_error[1].append(Bayesian_Model._accuracy_mean[Bayesian_Model._keys[0]])
-		mean_error[2].append(Bayesian_Model._accuracy_mean[Bayesian_Model._keys[4]])
-
-	print('Accuracy / observation: ' + str(observation) + ", delta: " + str(delta) + ", epsilon:" + str(epsilon))
-		
-	plot_error_box(data,r"Different Priors on $\theta$",[r"$\mathsf{beta}$" + str(i._alphas) for i in priors],
-		"Accuracy VS. Prior Distribution",
-		[r'$\mathcal{M}_{\mathcal{H}}$',"LapMech (sensitivity = 1)", "LapMech (sensitivity = 2)"],
-		['navy', 'red', 'green'])
-	return
 
 
 
