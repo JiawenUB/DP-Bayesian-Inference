@@ -334,7 +334,7 @@ then the mechanism is $\epsilon$-differentially private as proven in \cite{???}.
 \noindent \emph{Postprocessing.}
 
 \noindent \emph{A note on input data representation.}
-We will represent our input databases $\dataobs$ of length $n$ as histograms 
+We will think of our input databases $\dataobs$ of length $n$ as histograms 
 with $k$-$1$ bins where $k$ is the dimensionality of the problem.
 This is w.l.o.g. because given the first $k$-$1$ counts, the $k$-th count
 is known.
@@ -385,10 +385,10 @@ the square of the Hellinger distance between them is defined as:
 \[
 \hellinger(P,Q)^2 =\frac{1}{2} \int \bigg(\frac{dP}{d \lambda} - \frac{dQ}{d \lambda}\bigg)^2 d \lambda
 \]
-When $\textup{P}=\betad(\alpha_1, \beta_1)$ and $\textup{Q}=\betad(\alpha_2, \beta_2)$, we can unfold the above and derive: 
-\[
- \hellinger(P,Q) =  \sqrt{1 - \frac{\betaf(\frac{\alpha_1 + \alpha_2}{2}, \frac{\beta_1 + \beta_2}{2})}{\sqrt{\betaf(\alpha_1,\beta_1)\betaf(\alpha_2,\beta_2)}}}
-\]
+When $\textup{P}=\dirichlet{\valpha_1}$ and $\textup{Q}=\dirichlet{\valpha_2}$, we can unfold the above and derive: 
+ \[
+   \hellinger(\dirichlet{\valpha_1}, \dirichlet{\valpha_2}) = \sqrt{1 - \frac{\betaf(\frac{\valpha_1 + \valpha_2}{2})}{\sqrt{\betaf(\valpha_1) \betaf(\valpha_2)}}}
+ \]
 Our choice to use Hellinger distance is motivated by three facts:
 \begin{itemize}
   \item It simplifies calculations in the case of the probabilistic models considered here.
