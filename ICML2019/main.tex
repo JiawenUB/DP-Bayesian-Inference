@@ -1199,6 +1199,7 @@ We use three real data sets from the same repository repository. Each data set c
 \label{fig_real_3d}
 \end{figure}
 
+The red box representing the $\expmech$ plays worst in terms of accuracy. While the orange one representing the $\hexpmech$ has a better performance even though they achieve the same privacy bound, because we are calibrating noise to the Hellinger distance (the accuracy metric we are using).
 
 \subsection{Privacy Evaluation}
 \label{subsec_experiment_privacy}
@@ -1208,7 +1209,7 @@ In order to see our privacy behavior, we study the accurate epsilon under concre
 \begin{center}
 \centering
     \includegraphics[width=0.35\textwidth]{privacyloss.eps}
-\caption{Actual privacy loss of different data size when privacy bound $\epsilon = 1.0$ in 2 dimensions, prior:$\betad(1,1)$ and balanced data}
+\caption{The privacy loss in practice under different data size when privacy bound $\epsilon = 1.0$ in 2 dimensions, prior:$\betad(1,1)$ and balanced data}
 \label{fig_privacy}
 \end{center}
 \end{figure}
