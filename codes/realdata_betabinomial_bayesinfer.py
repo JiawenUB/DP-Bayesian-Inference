@@ -136,19 +136,26 @@ def gen_datasizes(r, step):
 def gen_priors(r, step, d):
 	return [dirichlet([step*i for j in range(d)]) for i in range(r[0]/step,r[1]/step + 1)]
 
+def setup(dimension):
+	epsilon = 1.0
+	delta = 0.00000001
+	prior = dirichlet([1 for i in range(dimension)])
+
+	return epsilon, delta, prior
 
 if __name__ == "__main__":
 
 #############################################################################
 #SETTING UP THE PARAMETERS
 #############################################################################
+	dimension = 3
+	
+	epsilon,delta, prior = setup(dimension)
 
-	epsilon = 1.0
-	delta = 0.00000001
-	prior = dirichlet([1,1,1])
-
-	datasizes, observations = data_process(read_datas("./datas/3d/*.txt"), 3)
+	datasizes, observations = data_process(read_datas("./datas/3d/*.txt"), dimension)
+	
 	print datasizes
+	
 	run_experiments(1000, datasizes, observations,epsilon, delta, prior)
 
 

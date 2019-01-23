@@ -1126,8 +1126,8 @@ Dirichelet-Multinomial (Figure  \ref{subfig_theory_3d})
 the data will be split in the $k=3$ bins with perecentages of: 33\%, 33\% and 34\% in 3 dimensionality. Same concept in 4 dimensionality.
 
 We consider 5 mechanisms in our comparison experiments, including the Laplace mechanism ($\lapmech$), improved Laplace mechanism ($\ilapmech$),
-standard exponential mechanism ($\mathsf{expMech}$),
-non private exponential mechanism ($\lexpmech$) and the newly designed mechanisms ($\hexpmech$ with $\gamma$ sensitivity achieving $\epsilon-$dp).
+standard exponential mechanism ($\expmech$),
+non private exponential mechanism ($\lexpmech$) and the newly designed mechanisms ($\hexpmech$ with $1-$smooth sensitivity achieving $\epsilon-$dp).
 
 \begin{figure}
 \begin{center}
@@ -1171,14 +1171,12 @@ Increasing the privacy bound $\epsilon$, we get theoretical results as in Fig. \
 
 In this section, we evaluate the accuracy of the mechanisms defined in
 Section (\ref{sec_mechs}) w.r.t. data sizes and dimensions by experimenting on real data sets.
-Every plot is an average over 1000 runs. In all the experiments we set
+Every plot is over 1000 runs. In all following experiments we set
 $\epsilon = 1.0$.
 
-\noindent In the following some of the plots show
-mean error as a function of the datasize while one
-is a whiskers-plot where the y-axis shows the average
-accuracy (or equivalently, the error) of the mechanisms, and the x-axis, instead shows
-different balanced priors used. The boxes extend from the lower to the upper quartile values
+\noindent In the following whiskers-plots, the y-axis shows the
+accuracy (or equivalently, the error measured by the Hellinger distance) of the mechanisms, and the x-axis, instead shows
+different data sets we are using. The boxes extend from the lower to the upper quartile values
 of the data, with a line at the median. A notch on the box around the
 median is also drawn to give a rough guide to the significance of
 difference of medians; The whiskers extend from the box to show the
@@ -1229,7 +1227,7 @@ range of the data.
 
 
 \paragraph{Experiments on Real Data Sets in Beta-binomial Model}
-We use four real data sets from UCI Machine Learning repository\footnote{https://archive.ics.uci.edu/ml/datasets.html}. Each data set contains 1 binary variable, which applys our Beta-binomial model. By setting the prior distribution as $\betad(1,1)$, we apply our 5 private inference algorithms on them to derive the underlining distribution of these data. The first data set is the SHARING BIKE data, where $0$ means user use sharing bike at workday and $1$ stands for weekend. The second and third data set the THERAPY data, where $1$ means patient with disease is cured and $1$ means not. The forth data set is the BADGE data, $1$ means people with badge and $0$ means without badge. The size of the four data set are $731, 90, 294, 90$. The accuracy are shown in Figure \ref{fig_real_2d}.
+We use four real data sets from UCI Machine Learning repository\footnote{https://archive.ics.uci.edu/ml/datasets.html}. Each data set contains 1 binary variable, which applys to our Beta-binomial model. By setting the prior distribution as $\betad(1,1)$, we apply our 5 private inference algorithms on them to derive the underlining distribution of these data. The first data set is the SHARING BIKE data, where $0$ means user use sharing bike at workday and $1$ stands for weekend. The second and third data set are the THERAPY data, where $1$ means patient with disease is cured and $1$ means not. The forth data set is the BADGE data, $1$ means people with badge and $0$ means without badge. The size of the four data set are $731, 90, 294, 90$. The accuracy are shown in Figure \ref{fig_real_2d}.
 \begin{figure}
 \centering
 \includegraphics[width=0.35\textwidth]{realdata.eps}
@@ -1239,7 +1237,7 @@ We use four real data sets from UCI Machine Learning repository\footnote{https:/
 
 
 \paragraph{Experiments on Real Data Sets in Dirichlet-multinomial Model}
-We use three real data sets from the same repository repository. Each data set contains 1 category variable of 3 dimensions ($|\mathcal{X}| = 3$), which applys our 3 dimension Dirichlet-multinomial model. By setting the prior distribution as $\dirichlet{1,1,1}$, we apply our 5 private inference algorithms on them to derive the underlining distribution of these data. The first data set is the SHARING BIKE data, where $0$ means user use sharing bike at workday and $1$ stands for weekend. The second and third data set the THERAPY data, where $1$ means patient with disease is cured and $1$ means not. The forth data set is the BADGE data, $1$ means people with badge and $0$ means without badge. The size of the four data set are $731, 90, 90$. The accuracy are shown in Figure \ref{fig_real_3d}.
+We use three real data sets from the same repository repository. Each data set contains one category variable of 3 values ($|\mathcal{X}| = 3$), which applys to our 3 dimension Dirichlet-multinomial model. By setting the prior distribution as $\dirichlet{1,1,1}$, we apply our 5 private inference algorithms on them to derive the underlining distribution of these data. The first data set is the SHARING BIKE data, where $\mathcal{X} = \{0,1,2\}$ stand for 3 weather conditions. The second and third data set are the THERAPY data, where $0,1,2 \in \mathcal{X}$ represent 3 types of the 2 diseases. The size of the four data set are $731, 90, 90$. The accuracy are shown in Figure \ref{fig_real_3d}.
 \begin{figure}
 \centering
 \includegraphics[width=0.35\textwidth]{realdata_3d.eps}
