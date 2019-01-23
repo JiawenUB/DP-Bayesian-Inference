@@ -1174,8 +1174,8 @@ Section (\ref{sec_mechs}) w.r.t. data sizes and dimensions by experimenting on r
 Every plot is over 1000 runs. In all following experiments we set
 $\epsilon = 1.0$.
 
-\noindent In the following whiskers-plots, the y-axis shows the
-accuracy (or equivalently, the error measured by the Hellinger distance) of the mechanisms, and the x-axis, instead shows
+\noindent In the following whiskery-plots, the y-axis shows the
+accuracy (or equivalently, the error measured by the Hellinger distance) of the mechanisms, and the x-axis shows
 different data sets we are using. The boxes extend from the lower to the upper quartile values
 of the data, with a line at the median. A notch on the box around the
 median is also drawn to give a rough guide to the significance of
@@ -1227,7 +1227,7 @@ range of the data.
 
 
 \paragraph{Experiments on Real Data Sets in Beta-binomial Model}
-We use four real data sets from UCI Machine Learning repository\footnote{https://archive.ics.uci.edu/ml/datasets.html}. Each data set contains 1 binary variable, which applys to our Beta-binomial model. By setting the prior distribution as $\betad(1,1)$, we apply our 5 private inference algorithms on them to derive the underlining distribution of these data. The first data set is the SHARING BIKE data, where $0$ means user use sharing bike at workday and $1$ stands for weekend. The second and third data set are the THERAPY data, where $1$ means patient with disease is cured and $1$ means not. The forth data set is the BADGE data, $1$ means people with badge and $0$ means without badge. The size of the four data set are $731, 90, 294, 90$. The accuracy are shown in Figure \ref{fig_real_2d}.
+We use four real data sets from UCI Machine Learning repository\footnote{https://archive.ics.uci.edu/ml/datasets.html}. Each data set contains 1 binary variable, which fits our Beta-binomial model. By setting the prior distribution as $\betad(1,1)$, we apply our 5 private inference algorithms on them to derive the underlining distribution of these data. The first data set is the SHARING BIKE data, where $0$ means user use sharing bike at workday and $1$ stands for weekend. The second and third data set are the THERAPY data, where $1$ means patient with disease is cured and $1$ means not. The forth data set is the BADGE data, $1$ means people with badge and $0$ means without badge. The size of the four data set are $731, 90, 294, 90$. The accuracy are shown in Figure \ref{fig_real_2d}.
 \begin{figure}
 \centering
 \includegraphics[width=0.35\textwidth]{realdata.eps}
@@ -1237,7 +1237,7 @@ We use four real data sets from UCI Machine Learning repository\footnote{https:/
 
 
 \paragraph{Experiments on Real Data Sets in Dirichlet-multinomial Model}
-We use three real data sets from the same repository repository. Each data set contains one category variable of 3 values ($|\mathcal{X}| = 3$), which applys to our 3 dimension Dirichlet-multinomial model. By setting the prior distribution as $\dirichlet{1,1,1}$, we apply our 5 private inference algorithms on them to derive the underlining distribution of these data. The first data set is the SHARING BIKE data, where $\mathcal{X} = \{0,1,2\}$ stand for 3 weather conditions. The second and third data set are the THERAPY data, where $0,1,2 \in \mathcal{X}$ represent 3 types of the 2 diseases. The size of the four data set are $731, 90, 90$. The accuracy are shown in Figure \ref{fig_real_3d}.
+We use three data sets from the same repository repository. Each data set contains one category variable of 3 values ($|\mathcal{X}| = 3$), which fits our 3 dimension Dirichlet-multinomial model. By setting the prior distribution as $\dirichlet{1,1,1}$, we apply our 5 private inference algorithms on them to derive the underlining distribution of these data. The first data set is the SHARING BIKE data, where $\mathcal{X} = \{0,1,2\}$ stand for 3 weather conditions. The second and third data set are the THERAPY data, where $0,1,2 \in \mathcal{X}$ represent 3 types of the 2 diseases. The size of the four data set are $731, 90, 90$. The accuracy are shown in Figure \ref{fig_real_3d}.
 \begin{figure}
 \centering
 \includegraphics[width=0.35\textwidth]{realdata_3d.eps}
@@ -1245,11 +1245,11 @@ We use three real data sets from the same repository repository. Each data set c
 \label{fig_real_3d}
 \end{figure}
 
-The red box representing the $\expmech$ plays worst in terms of accuracy. While the orange one representing the $\hexpmech$ has a better performance even though they achieve the same privacy bound, because we are calibrating noise to the Hellinger distance (the accuracy metric we are using).
+The red box representing the $\expmech$ plays worst in terms of accuracy. While the orange one representing the $\hexpmech$ has a better performance even though they achieve the same privacy bound, because we are calibrating noise to the Hellinger distance (the accuracy metric we are using). The purple one representing the $\lexpmech$ although performs better than $\expmech$ and $\hexpmech$, but it is non-private. 
 
 \subsection{Privacy Evaluation}
 \label{subsec_experiment_privacy}
-In order to see our privacy behavior, we study the accurate epsilon under concrete cases in this section. The $(\epsilon, \delta)$ - differential privacy we proved in Sec. \ref{sec_ehds} is just an upper bound, we concrete $\epsilon$ should be smaller than upper bound in our exponential mechanism. We calculate the concrete privacy value in following ways wrt. the data size, and obtain plots in Fig. \ref{fig_privacy}.
+In order to see our privacy behavior, we study the privacy loss under concrete cases. The $\epsilon$ - differential privacy we proved in Sec. \ref{sec_mechs} is just an upper bound, the $\epsilon$ in practice might be smaller than upper bound. We calculate the actual privacy loss of $\expmech$, $\lexpmech$ and $\hexpmech$ w.r.t. the data size, and obtain plots in Fig. \ref{fig_privacy}.
 
 \begin{figure}
 \begin{center}
@@ -1260,7 +1260,7 @@ In order to see our privacy behavior, we study the accurate epsilon under concre
 \end{center}
 \end{figure}
 
-$\epsilon = 1.0$ is a privacy upper bound, we can observe that the concrete $\epsilon$ values are smaller than the upper bound. That is to say, we achieved a higher privacy level than expected. 
+We can observe from Fig. \ref{fig_privacy} that the actual privacy loss of $\expmech$ and $\hexpmech$ are smaller than the upper bound. That is to say, we achieved a higher privacy level than expected. 
 
 
 \section{Conclusion}
