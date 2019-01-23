@@ -64,17 +64,17 @@
 % $\ell_1$ or $\ell_\infty$-distance between the numeric parameters
 % of the released posterior distribution and the actual real ones of posterior distribution.
 We explore the design space of differentially private Bayesian
-inference mechanisms with accuracy measured in terms of Hellinger
-distance over posterior distributions.  
+inference mechanisms with accuracy measured in terms of the Hellinger
+distance between posterior distributions.  
 We focus on two discrete models for parametric Bayesian
 inference: the Beta-Binomial and the Dirichlet-Multinomial
-models. We study two mechanisms based on the 
-Laplace perturbation of the parameters of the posterior distribution under
+models. We study two mechanisms based on 
+Laplace perturbation of the parameters of the posterior distribution under the
 $\ell_1$ norm, and compare them with a discrete mechanism
 calibrating noise to a smooth upper bound on the Hellinger distance.
 Accuracy is measured through the Hellinger distance between the posterior
-distribution released by the different mechanisms and the real one.
-We compare the accuracy theoretically and experimentally.
+distribution released by a given mechanism and the one obtained via non-private inference.
+We compare the accuracy of our mechanisms theoretically and experimentally.
 \end{abstract}
  % TODO: replace with your keywords
 
@@ -85,20 +85,23 @@ We compare the accuracy theoretically and experimentally.
 \section{Introduction}
 \label{sec_intro}
 %%Data analysis and privacy are important
-Data analysis techniques have brought significant improvements in a
-variety of applications including applications from the medical,
-financial, social, and transportation fields. In order to provide
-better services, these applications need large amounts of users data
+Modern data analysis techniques have enabled significant advances in a
+variety of applications in medicine, finance, social science, and transportation.
+In order to provide better services, these applications need large amounts of users' data,
 putting at risk the privacy of individual users contributing their data. 
-Differential privacy was proposed a decade ago to address these
-situations and it is on its way to become the gold standard in data
-privacy.  
+Differential privacy was proposed a decade ago to address privacy concerns
+in these situations, and is now the standard for privacy-preserving data analysis.
+ %and it is on its way to become the gold standard in data
+%privacy.  
 
 %%Bayesian inference is a standard tool for data analysis which is
 %% also a building block of probabilistic programming languages
-Bayesian inference is a standard statistical tool that is useful to
-estimate a posterior distribution when a prior distribution is given
-and some data is observed. 
+Many statistical applications are driven by Bayesian inference.
+This is a standard statistical tool in which a prior distribution is combined
+with a sample of observed data in order to estimate a new posterior distribution.
+%is a standard statistical tool that is useful to
+%estimate a posterior distribution when a prior distribution is given
+%and some data is observed. 
 
 %%Several works have considered differentially private bayesian
 %%inference 
@@ -129,57 +132,89 @@ way.
 %%better than the standard exponential with global sensitivity but it
 %%does not achieve the same performance as the previous ones. 
 
-We focus on two classical models: the Beta-Binomial and the
-Dirichlet-Multinomial models. In the Beta-Binomial model the goal
-is to estimate an unknown fraction of a population from a sequence
-of Bernoulli trials each of which is either 0 or 1 and from an initial
-prior belief, a Beta distribution, on that fraction; the trials are assumed to be independent
-given the value of the bias. In the Dirichlet-Multinomial model a Multinomial
-distribution is used to describe categorical data with more than
-two possible outcomes. Similarly, the aim is to learn the various
-unknown proportions of a population from a sequence of trials
-each of which having more than two possible outcomes. Again,
-a prior belief, a Dirichlet distribution, is used to describe the initial knowledge
-about those fractions. The posterior distributions on the proportions will be
-respectively a Beta distribution and a Dirichlet distribution.
+We focus on inference tasks based on two classical statistical models: the Beta-Binomial and the
+Dirichlet-Multinomial models. In the Beta-Binomial model, we are given a
+dataset consisting of independent Bernoulli trials with bias $p$. Given an initial
+prior belief that $p$ follows a Beta distribution, we may use the dataset to infer a
+posterior belief that $p$ follows a Beta distribution with updated parameters. This model
+generalizes to the Dirichlet-Multinomial model, in which a multinomial distribution
+is used to describe categorial data with more than two possible outcomes. Similarly, the goal
+is infer a belief about the proportions of each outcome. Given a prior belief that these proportions
+come from a Dirichlet distribution, the posterior belief given multinomial data will
+also follow a Dirichlet distribution.
+
+%
+%In the Beta-Binomial model the goal
+%is to estimate an unknown fraction of a population from a sequence
+%of Bernoulli trials each of which is either 0 or 1 and from an initial
+%prior belief, a Beta distribution, on that fraction; the trials are assumed to be independent
+%given the value of the bias. In the Dirichlet-Multinomial model a Multinomial
+%distribution is used to describe categorical data with more than
+%two possible outcomes. Similarly, the aim is to learn the various
+%unknown proportions of a population from a sequence of trials
+%each of which having more than two possible outcomes. Again,
+%a prior belief, a Dirichlet distribution, is used to describe the initial knowledge
+%about those fractions. The posterior distributions on the proportions will be
+%respectively a Beta distribution and a Dirichlet distribution.
 
 
-In our work  the posterior distribution is the analysis result we obtained from the data.
-While the prior distributions are considerd public information,  publishing the posterior distribution
-inferred from a sensitive dataset can leak information about the individuals in the dataset.
-In order to guarantee differential privacy and to protect the
-individuals' data we can add noise to the posterior before releasing it.
+In our work, we consider mechanisms which output a complete description of the posterior
+distribution inferred using private data.
+While the prior distribution associated to a given inference task is considered public information,
+the inferred posterior distribution may leak information about the individuals in the dataset.
+In order to guarantee differential privacy, we introduce random noise to the posterior before releasing it.
+Our goal is to design mechanisms which are accurate, in the sense that this noisy posterior is close
+to the posterior one would have inferred without concern for privacy. The most natural way
+to measure closeness is via a distance between probability distributions -- nevertheless, only a few works 
+in the literature (e.g., \cite{zhang2016differential}) actually state accuracy guarantees in this way.
+
+
+
+
+
+
 The amount of the noise that we need to introduce
-depends on the privacy parameter $\epsilon$ and the sensitivity of the inference to
-small changes in the data set. 
-Sensitivity can be computed in many different ways based on which metric space
-we consider on the output space of the mechanism. In the literature on private Bayesian
-inference (e.g. \cite{zhang2016differential,xiao2012bayesian}), it is usually measured on
-the vector of numbers parametrizing the output distribution using, e.g. the $\ell_1$ norm.
-A more natural approach which we explore here, is to measure sensitivity with respect to
-a metric on the space of inferred probability distributions.
-Another question is that of how to measure accuracy. Again,
-this can be answered in different ways based on the metric
-imposed on the output space, and yet again
-only in few works in literature (e.g. \cite{zhang2016differential})
-distances between probability measures have been used for these purposes.
+depends on the differential privacy parameter $\epsilon$ and the sensitivity of the inference to
+small changes in the input dataset.
+As with accuracy, sensitivity may be measured in many different ways, with each choice giving rise to a different
+method of introducing noise for differential privacy.
+%Sensitivity can be computed in many different ways based on which metric space
+%we consider on the output space of the mechanism. 
+In the existing literature on private Bayesian
+inference (e.g. \cite{zhang2016differential,xiao2012bayesian}), sensitivity is measured via a norm (e.g., the $\ell_1$ norm)
+on the the vector of numbers parametrizing the output distribution. But when the accuracy of a mechanism is determined by
+a distance on distributions themselves, this may not be such a natural choice. The distance between
+two parameterized distributions may behave wildly as a function of the distance between the vectors of parameters characterizing them.
+
+A more natural approach, which we propose here, is to also directly measure sensitivity with respect
+to a metric on the space of inferred probability distributions. Our goal is to identify cases where jointly measuring
+accuracy and sensitivity in terms of a single metric on probability distributions can yield improved accuracy. 
+{\color{red}{MB: Is this accurate? Would we ever want to use different metrics for accuracy and sensitivity?}}
 
 
-The question that this work aims at answering is whether
-an approach based on probability metrics can improve on
-the accuracy of approaches based on metrics over
-the numeric parameters of the distributions. 
-We will see that in some cases this can happen.
+%A more natural approach which we explore here, is to measure sensitivity with respect to
+%a metric on the space of inferred probability distributions.
+%Another question is that of how to measure accuracy. Again,
+%this can be answered in different ways based on the metric
+%imposed on the output space, and yet again
+%only in few works in literature (e.g. \cite{zhang2016differential})
+%distances between probability measures have been used for these purposes.
+
+
+%The question that this work aims at answering is whether
+%an approach based on probability metrics can improve on
+%the accuracy of approaches based on metrics over
+%the numeric parameters of the distributions. 
+%We will see that in some cases this can happen.
 
 \noindent \textbf{Main contributions.}
 What follows is a summary of the main contributions of this work.
 \begin{itemize}
-	\item We design a new differentially private Bayesian inference mechanism based on the standard exponential mechanism.
-    \item A full proof of $(\epsilon, \delta)$-differential privacy of the mechanism is given in the paper. \gp{it's only eps-d.p for now}
-	\item We explored two ways to improve the accuracy: 1) calibrating noise to the sensitivity of a metric over distributions
-      (e.g. Hellinger distance ($\hellinger$), $f$-divergences, etc\dots). 2) Using a smooth upper bound on the local sensitivity and scale
-      the noise to this smooth bound rather than global sensitivity, to improve the mechanism accuracy.
-  \item We implemented the new proposed mechanism and other art-of-state mechanisms, comparing their performances in terms of accuracy and privacy.
+	\item We give a new differentially private Bayesian inference mechanism based on the standard exponential mechanism.
+   %    \item A full proof of $(\epsilon, \delta)$-differential privacy of the mechanism is given in the paper. 
+	\item We propose two ways of improving the accuracy of this basic mechanism: 1) We calibrate noise to a measure of sensitivity determined by a metric between distributions
+      (e.g. Hellinger distance ($\hellinger$), $f$-divergences, etc\dots). 2) We scale noise according to a a smooth upper bound on the local sensitivity, rather than according to global sensitivity.
+  \item We implement the new proposed mechanism and other art-of-state mechanisms, comparing their performances in terms of accuracy and privacy.
 \end{itemize}
 
 \section{Related Work}
