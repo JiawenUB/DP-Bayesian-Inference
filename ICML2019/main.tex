@@ -391,8 +391,10 @@ is known.
 \label{subsec_problem}
 We are interested in exploring the design space of mechanisms for privately releasing the posterior
 distribution for the Dirichlet-Multinomial model by output
-perturbation with accuracy measured in Hellinger distance.
-It is worth noticing that the posterior distribution of this model is fully characterized
+perturbation with accuracy measured in Hellinger distance. We assume
+that the prior is given and non-private and we aim at protecting the
+privacy of the observed data.
+It is worth noticing that the posterior distribution of the Dirichlet-Multinomial model is fully characterized
 by its parameters. That is, we are interested in releasing a private version of
 the Dirichlet distribution with parameter
 $\valpha'=(\valpha + \Delta \valpha)$, where $\valpha$ is the
@@ -409,47 +411,61 @@ have considered the problem of releasing the posterior of the
 Beta-Binomial model by output perturbation with accuracy measured in terms of
 $\ell_1$ norm. In addition,  \citet{zhang2016differential} has also
 considered KL-divergence between posteriors. 
-In this work we consider instead the Hellinger Distance between
-posteriors. Similarly to KL-divergence, Hellinger Distance is an
+In this work we consider instead the Hellinger distance between
+posteriors. Similarly to KL-divergence, Hellinger distance is an
 $f$-divergence measuring levels of similarities between
-distributions. However, unlikely KL-divergence, Hellinger Distance is a proper
+distributions. However, unlikely KL-divergence, Hellinger distance is a proper
 distance satisfying reflexivity, symmetry and triangle
-inequality. These properties gives Hellinger Distance analytical
+inequality. These properties gives Hellinger distance analytical
 advantages and makes the minimum hellinger distance  an efficient and
 robust estimator~\cite{}.
 
 
-attacked this problem by adding independent Laplacian noise to the
-parameters of the posteriors. That is, in the case of the Beta-Binomial system,
-the values released would be: $(\tilde\alpha,\tilde\beta)=(\alpha +  \widetilde{\Delta \alpha},\beta + n - \widetilde{\Delta \alpha})$
-where $\widetilde{\Delta \alpha}\thicksim \lap{\Delta \alpha}{\frac{2}{\epsilon}}$,
-and where $\lap{\mu}{\nu}$ denotes a Laplace random variable with mean $\mu$ and scale $\nu$.
-This mechanism is $\epsilon$-differentially private, and the noise is
-calibrated w.r.t. to a sensitivity of 2 which is derived by using
-$\ell_1$ norm over the pair of parameters. Indeed, considering two
-adjacent data observations $\dataobs, \dataobs'$, that, from a unique prior, give rise to two posterior
-distributions, characterized by the pairs
-$(\alpha',\beta')$ and $(\alpha'',\beta'')$ then
-$|\alpha'-\alpha''|+|\beta'-\beta''|\leq 2$.
-This argument extends similarly to the Dirichelet-Multinomial system. Details are introduced in Section \ref{sec_mechs}.\\
-However, in previous works, the accuracy of the posterior was measured with respect to $\ell_1$ norm. That is, an upper bound was given on
-\[
-  \Pr[|\alpha - \tilde\alpha| + |\beta - \tilde\beta |\geq \gamma ]
-\]
-where $(\alpha, \beta), (\tilde\alpha,\tilde\beta)$ are the real and the perturbed pairs of parameters, respectively.
-However, distance between
-distributions are more naturally  measured by distribution
-metrics such as $f$-divergences, e.g. Hellinger distance, etc., than the $\ell_1$ norm shown above.
-{\color{blue} still not sure this is a good way to put it...}
-This gives us motivation for exploring the design space
-of mechanisms by considering different norms. e.g. a norm over space of measures.
-to compute the sensitivity and provide guarantees on the accuracy.
+% attacked this problem by adding independent Laplacian noise to the
+% parameters of the posteriors. That is, in the case of the Beta-Binomial system,
+% the values released would be: $(\tilde\alpha,\tilde\beta)=(\alpha +  \widetilde{\Delta \alpha},\beta + n - \widetilde{\Delta \alpha})$
+% where $\widetilde{\Delta \alpha}\thicksim \lap{\Delta \alpha}{\frac{2}{\epsilon}}$,
+% and where $\lap{\mu}{\nu}$ denotes a Laplace random variable with mean $\mu$ and scale $\nu$.
+% This mechanism is $\epsilon$-differentially private, and the noise is
+% calibrated w.r.t. to a sensitivity of 2 which is derived by using
+% $\ell_1$ norm over the pair of parameters. Indeed, considering two
+% adjacent data observations $\dataobs, \dataobs'$, that, from a unique prior, give rise to two posterior
+% distributions, characterized by the pairs
+% $(\alpha',\beta')$ and $(\alpha'',\beta'')$ then
+% $|\alpha'-\alpha''|+|\beta'-\beta''|\leq 2$.
+% This argument extends similarly to the Dirichelet-Multinomial system. Details are introduced in Section \ref{sec_mechs}.\\
+% However, in previous works, the accuracy of the posterior was measured with respect to $\ell_1$ norm. That is, an upper bound was given on
+% \[
+%   \Pr[|\alpha - \tilde\alpha| + |\beta - \tilde\beta |\geq \gamma ]
+% \]
+% where $(\alpha, \beta), (\tilde\alpha,\tilde\beta)$ are the real and the perturbed pairs of parameters, respectively.
+% However, distance between
+% distributions are more naturally  measured by distribution
+% metrics such as $f$-divergences, e.g. Hellinger distance, etc., than the $\ell_1$ norm shown above.
+% {\color{blue} still not sure this is a good way to put it...}
+% This gives us motivation for exploring the design space
+% of mechanisms by considering different norms. e.g. a norm over space of measures.
+% to compute the sensitivity and provide guarantees on the accuracy.
+
+One of the challenges in working with the Hellinger distance for the
+Dirichlet-multinomial model is that a difference in the parameters of two
+Dirichlet distributions can results in different values  in terms of Hellinger distance
+depending on the value of the parameter
+themselves. The plot in Figure~\ref{fig_sensitivity} illustrates
+this by showing the Hellinger distance between beta distributions
+whose parameters differ by one, for each value of the parameter
+$\alpha$. The reason why this change is relevant
+for differential privacy is that this quantity corresponds to the local
+sensitivity of the function $\hellinger$. 
 
 
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.32\textwidth]{sensitivity_2d.eps}
-\caption{Local sensitivity of $\hellinger$. Data size is 100. $\alpha$ is the number of 1s.}
+\caption{Hellinger distance between the Beta distributions
+  corresponding to two adjacent datasets of size 100
+  when  $\alpha$ (the number of 1s) changes. This quantity corresponds
+  to the local sensitivity of the function $\hellinger$.}
 \label{fig_sensitivity}
 \end{figure}
 
