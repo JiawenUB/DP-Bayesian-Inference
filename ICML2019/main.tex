@@ -747,6 +747,7 @@ where $S(\dataobs)$ is the 1-smooth sensitivity of  the function $\hellinger(\by
 \end{algorithm}
 
 \begin{thm}
+\label{thm_hexpmech_privacy}
   Algorithm \ref{mech:sexpmech} is $\epsilon$-differentially private.
 \end{thm}
 % As already mentioned $\hexpmech$ extends straightforwardly to the Dirichlet-multinomial system.
@@ -1227,7 +1228,7 @@ range of the data.
 
 
 \paragraph{Experiments on Real Data Sets in Beta-binomial Model}
-We use four real data sets from UCI Machine Learning repository\footnote{https://archive.ics.uci.edu/ml/datasets.html}. Each data set contains 1 binary variable, which fits our Beta-binomial model. By setting the prior distribution as $\betad(1,1)$, we apply our 5 private inference algorithms on them to derive the underlining distribution of these data. The first data set is the SHARING BIKE data, where $0$ means user use sharing bike at workday and $1$ stands for weekend. The second and third data set are the THERAPY data, where $1$ means patient with disease is cured and $1$ means not. The forth data set is the BADGE data, $1$ means people with badge and $0$ means without badge. The size of the four data set are $731, 90, 294, 90$. The accuracy are shown in Figure \ref{fig_real_2d}.
+We use four real data sets from UCI Machine Learning repository\footnote{https://archive.ics.uci.edu/ml/datasets.html}. Each data set contains 1 binary variable, which fits our Beta-binomial model. By setting the prior distribution as $\betad(1,1)$, we apply our 5 private inference algorithms on them to obtain the posterior distribution of these data. The first data set is the SHARING BIKE data, where $0$ means user use sharing bike at workday and $1$ stands for weekend. The second and third data set are the THERAPY data, where $1$ means patient with disease is cured and $1$ means not. The forth data set is the BADGE data, $1$ means people with badge and $0$ means without badge. The size of the four data set are $731, 90, 294, 90$. The accuracy are shown in Figure \ref{fig_real_2d}.
 \begin{figure}
 \centering
 \includegraphics[width=0.35\textwidth]{realdata.eps}
@@ -1237,7 +1238,7 @@ We use four real data sets from UCI Machine Learning repository\footnote{https:/
 
 
 \paragraph{Experiments on Real Data Sets in Dirichlet-multinomial Model}
-We use three data sets from the same repository repository. Each data set contains one category variable of 3 values ($|\mathcal{X}| = 3$), which fits our 3 dimension Dirichlet-multinomial model. By setting the prior distribution as $\dirichlet{1,1,1}$, we apply our 5 private inference algorithms on them to derive the underlining distribution of these data. The first data set is the SHARING BIKE data, where $\mathcal{X} = \{0,1,2\}$ stand for 3 weather conditions. The second and third data set are the THERAPY data, where $0,1,2 \in \mathcal{X}$ represent 3 types of the diseases. The size of the four data set are $731, 90, 90$. The accuracy are shown in Figure \ref{fig_real_3d}.
+We use three data sets from the same repository repository. Each data set contains one category variable of 3 values ($|\mathcal{X}| = 3$), which fits our 3 dimension Dirichlet-multinomial model. By setting the prior distribution as $\dirichlet{1,1,1}$, we apply our 5 private inference algorithms on them to obtain the posterior distribution of these data. The first data set is the SHARING BIKE data, where $\mathcal{X} = \{0,1,2\}$ stand for 3 weather conditions. The second and third data set are the THERAPY data, where $0,1,2 \in \mathcal{X}$ represent 3 types of the diseases. The size of the four data set are $731, 90, 90$. The accuracy are shown in Figure \ref{fig_real_3d}.
 \begin{figure}
 \centering
 \includegraphics[width=0.35\textwidth]{realdata_3d.eps}
