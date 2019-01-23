@@ -48,29 +48,29 @@ $\frac{1}{S(\dataobs)} - \frac{1}{S(\dataobs')} \leq \gamma.$
 \noindent \textbf{Lemma \ref{lem_loc_opt}.}
 \emph{
 \[
-LS(\dataobs) = \max\limits_{\dataobs' \in \datauni^n:\adj{\dataobs}{\dataobs'}} \hellinger(\bysinfer{\dataobs}, \bysinfer(\dataobs')).
+LS(\dataobs) = \max\limits_{\dataobs' \in \datauni^n:\adj{\dataobs}{\dataobs'}} \hellinger(\bysinfer{\dataobs}, \bysinfer{\dataobs'}).
 \]
 }
 
 \begin{proof} of Lemma \ref{lem_loc_opt}.\\
 For any $r \in \mathcal{R}$ and $\dataobs' \in \datauni^n$ with $\adj{\dataobs}{\dataobs'}$, we have
 \begin{align*}
-&\lvert \hellinger(\bysinfer{\dataobs}, r) - \hellinger(\bysinfer(\dataobs'), r)\rvert\\
+&\lvert \hellinger(\bysinfer{\dataobs}, r) - \hellinger(\bysinfer{\dataobs'}, r)\rvert\\
 & = 
 \begin{cases}
-\hellinger(\bysinfer{\dataobs}, r) - \hellinger(\bysinfer(\dataobs'),r) & \text{positive case}\\
-\hellinger(\bysinfer(\dataobs'),r) - \hellinger(\bysinfer{\dataobs}, r) & \text{negative case}
+\hellinger(\bysinfer{\dataobs}, r) - \hellinger(\bysinfer{\dataobs'},r) & \text{positive case}\\
+\hellinger(\bysinfer{\dataobs'},r) - \hellinger(\bysinfer{\dataobs}, r) & \text{negative case}
 \end{cases}\\
 & \leq 
 \begin{cases}
-\hellinger(\bysinfer(\dataobs'), \bysinfer{\dataobs})+
-\hellinger(\bysinfer(\dataobs'), r) - \hellinger(\bysinfer(\dataobs'),r) & \\
-\hellinger(\bysinfer(\dataobs'), \bysinfer{\dataobs})+
+\hellinger(\bysinfer{\dataobs'}, \bysinfer{\dataobs})+
+\hellinger(\bysinfer{\dataobs'}, r) - \hellinger(\bysinfer{\dataobs'},r) & \\
+\hellinger(\bysinfer{\dataobs'}, \bysinfer{\dataobs})+
 \hellinger(\bysinfer{\dataobs}, r) - \hellinger(\bysinfer{\dataobs}, r)&
 \end{cases}\\
-&= \hellinger(\bysinfer(\dataobs'), \bysinfer{\dataobs})
+&= \hellinger(\bysinfer{\dataobs'}, \bysinfer{\dataobs})
 \end{align*}
-The equality holds if $r = \bysinfer{\dataobs}$ or $r = \bysinfer(\dataobs')$.
+The equality holds if $r = \bysinfer{\dataobs}$ or $r = \bysinfer{\dataobs'}$.
 Hence, we conclude the statement of this lemma.
 \end{proof}
 
@@ -143,7 +143,7 @@ $\hexpmech$ is $\epsilon$-differential privacy by setting $\gamma = 1.0$.
   \end{split}
   \end{equation*}
   
-  Because $\uxadj{r} = \hellinger(\bysinfer(\dataobs'), r) \leq 1$:
+  Because $\uxadj{r} = \hellinger(\bysinfer{\dataobs'}, r) \leq 1$:
   \begin{equation*}
   \begin{split}
   & \leq \exp\big( \frac{\epsilon}{4} \big) \cdot 
@@ -306,7 +306,7 @@ $\hexpmech$ is $\epsilon$-differential privacy by setting $\gamma = 1.0$.
   \end{split}
   \end{equation*}
 
-  Because $\uxadj{r} = \hellinger(\bysinfer(\dataobs'), r) \leq 1$ $\implies$ $\frac{- \epsilon\cdot(\ux{r'})}{4} \geq  \frac{-\epsilon}{4}$:
+  Because $\uxadj{r} = \hellinger(\bysinfer{\dataobs'}, r) \leq 1$ $\implies$ $\frac{- \epsilon\cdot(\ux{r'})}{4} \geq  \frac{-\epsilon}{4}$:
   \begin{equation*}
   \begin{split}
   & \leq \exp\big( \frac{\epsilon}{4} + \frac{\epsilon}{4} \cdot \gamma\big) \cdot 
