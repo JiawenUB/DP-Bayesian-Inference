@@ -8,7 +8,7 @@
 
 \section*{Appendix}
 
-\noindent \textbf{Theorem \ref{thm_gamma_smooth}.}
+\noindent \textbf{Theorem 5.1.}
 \emph{
 Given data set $\dataobs$, the $\gamma -$smooth sensitivity of Bayesian inference process w.r.t. the Hellinger distance $S(\dataobs)$ satisfying:%\\
 whenever $\adj{\dataobs}{\dataobs'}$, 
@@ -18,9 +18,9 @@ $\frac{1}{S(\dataobs)} - \frac{1}{S(\dataobs')} \leq \gamma$.
 }
 
 \begin{proof}
-of Theorem. \ref{thm_gamma_smooth}.\\
+of Theorem. 5.1.\\
 For $\adj{\dataobs}{\dataobs'}$ and arbitrary $\dataobs'' \in \{0,1\}^{n}$:\\
-From Equation (\ref{eq_smooth}), we can get:
+From Equation (3), we can get:
 \[
 \frac{1}{S(\dataobs)} 
  = \min_{\dataobs'' \in \{0,1\}^{n}}\bigg \{ \frac{1}{LS(\dataobs'')} +\gamma \cdot d(\dataobs,\dataobs'') \bigg \}\\
@@ -45,14 +45,14 @@ $\frac{1}{S(\dataobs)} - \frac{1}{S(\dataobs')} \leq \gamma.$
 \end{proof}
 
 
-\noindent \textbf{Lemma \ref{lem_loc_opt}.}
+\noindent \textbf{Lemma 5.4.}
 \emph{
 \[
 LS(\dataobs) = \max\limits_{\dataobs' \in \datauni^n:\adj{\dataobs}{\dataobs'}} \hellinger(\bysinfer{\dataobs}, \bysinfer{\dataobs'}).
 \]
 }
 
-\begin{proof} of Lemma \ref{lem_loc_opt}.\\
+\begin{proof} of Lemma 5.4.\\
 For any $r \in \mathcal{R}$ and $\dataobs' \in \datauni^n$ with $\adj{\dataobs}{\dataobs'}$, we have
 \begin{align*}
 &\lvert \hellinger(\bysinfer{\dataobs}, r) - \hellinger(\bysinfer{\dataobs'}, r)\rvert\\
@@ -76,18 +76,18 @@ Hence, we conclude the statement of this lemma.
 
 
 
-\noindent \textbf{ Lemma \ref{lem_hexpmech_privacy}. } 
+\noindent \textbf{ Lemma 5.2. } 
 \emph{
 $\hexpmech$ is $\epsilon$-differential privacy by setting $\gamma = 1.0$.
 }
 
-\begin{proof} of Lemma \ref{lem_hexpmech_privacy}.\\
-  By Definition \ref{def_epsilon_dp}, to proof Lemma \ref{lem_hexpmech_privacy}, we need to prove:\\
+\begin{proof} of Lemma 5.2.\\
+  By Definition 1, to proof Lemma 5.2, we need to prove:\\
   For any $\adj{\dataobs}{\dataobs'} \in \mathcal{X}$ and any beta distribution $r$:
   \begin{equation*}
   \hexpmechPr{\dataobs}{z = r} \leq e^{\epsilon} \hexpmechPr{\dataobs'}{z = r}. 
   \end{equation*}
-  By definition \ref{def_smoo_2}:
+  By Algorithm 5:
   \begin{equation*}
   \begin{split}
   \hexpmechPr{\dataobs}{z = r} 
@@ -344,7 +344,8 @@ $\hexpmech$ is $\epsilon$-differential privacy by setting $\gamma = 1.0$.
   \frac{1}{S(\dataobs')}) \geq \frac{- \epsilon}{4} \cdot \gamma$
   \begin{equation*}
   \begin{split}
-  & \leq \exp\big( \frac{\epsilon}{4} + \frac{\epsilon}{4} \cdot \gamma\big) \cdot 
+  & \leq \exp\big( \frac{\epsilon}{4} + \frac{\epsilon}{4} \cdot \gamma\big) \\
+  & \cdot 
   \frac {
   \exp
   \big(
@@ -366,7 +367,8 @@ $\hexpmech$ is $\epsilon$-differential privacy by setting $\gamma = 1.0$.
   \frac{- \epsilon}{4} \cdot \gamma
   \big)
   }\\
-  & = \exp\big( \frac{\epsilon}{4} + \frac{\epsilon}{4} \cdot \gamma\big) \cdot 
+  & = \exp\big( \frac{\epsilon}{4} + \frac{\epsilon}{4} \cdot \gamma\big) \\
+  & \cdot 
   \frac {
   \exp
   \big(
@@ -404,7 +406,7 @@ $\hexpmech$ is $\epsilon$-differential privacy by setting $\gamma = 1.0$.
 \end{proof}
 
 
-\noindent \textbf{ Lemma \ref{lem_acc_lap}.}
+\noindent \textbf{ Lemma 6.1.}
 \emph{
 Given $Y \thicksim \lap{0}{b}$, the accuracy bound developed for $\lapmech$ is:
 \begin{align*}
@@ -425,8 +427,8 @@ Given $Y \thicksim \lap{0}{b}$, the accuracy bound developed for $\lapmech$ is:
 where $\betad(\alpha, \beta)$ is the true posterior distribution, i.e., $\bysinfer{\dataobs} = \betad(\alpha, \beta)$, and $r_L$ be the posterior produced by Laplace mechanism, i.e., $z = \betad(\alpha + \lfloor Y \rfloor, \beta - \lfloor Y \rfloor)$.
 }
 
-\begin{proof} of Lemma \ref{lem_acc_lap}.\\
-Given $Y \thicksim \lap{0}{b}$, we have\cite{dwork2014algorithmic}:$\Pr[|Y| \geq t \cdot b] = e^{- t}.$\\
+\begin{proof} of Lemma 6.1.\\
+Given $Y \thicksim \lap{0}{b}$, we have: $\Pr[|Y| \geq t \cdot b] = e^{- t}.$\\
 Based on this, we get:$\Pr[|Y| \geq t] = e^{- \frac{t \epsilon}{\Delta }}$, where $Y \thicksim \lap{0}{\frac{\Delta }{\epsilon}}$ in our setting.
 
 Considering the post-processing (i.e., taking the floor value of $Y$) in $\lapmech$, we have:
