@@ -629,7 +629,7 @@ we define the follwing set  where the mechanism will sample from:
 In general $|\candidateset{\valpha}|=\binom{n + 1}{|\mathcal{X}| - 1}$ when $\valpha\in\mathcal{X}^n$. In the specific case of $|\mathcal{X}|=2$ with $\valpha=(\alpha,\beta)$,
 that is the Beta-Binomial model, the above reduces to:
 \[
-  \{(\alpha',\beta')\mid \alpha'=\alpha + \Delta\alpha, \beta'=\beta + n-\Delta\alpha,  \Delta\alpha=\sum x_i, \dataobs\in \{0,1\}^n\}
+\candidateset{\valpha}=  \left \{(\alpha',\beta') ~\vline~ \begin{aligned} & \alpha'=\alpha + \Delta\alpha, \beta'=\beta + n-\Delta\alpha, \\ & \Delta\alpha={\textstyle \sum x_i}, \dataobs\in \{0,1\}^n \end{aligned} \right\}.
 \]
 
 \noindent \textbf{A first approach: the $\expmech$ mechanism.}
