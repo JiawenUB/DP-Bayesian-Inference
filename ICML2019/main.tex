@@ -704,6 +704,247 @@ where $S(\dataobs)$ is the 1-smooth sensitivity of  $\hellinger(\bysinfer{\datao
 % distributions candidates. Also, the smooth sensitivity $S(\dataobs)$
 % in (\ref{thm_gamma_smooth}) will be computed by letting $\dataobs'$ range
 % over all the elements in $\datauni^{n}$ adjacent to $\dataobs$. 
+\section{Private Mechanisms}
+\label{sec_mechs}
+In this section we will describe and analyse a series of mechanisms to privately compute and release
+a posterior distribution.
+Section \ref{sec_ell1_dim} presents a first mechanism, $\lapmech$,
+based on the Laplace primitive where the sensitivity is measured w.r.t. to $\ell_1$ norm.
+Section \ref{sec_ell1_hist}, shows that $\lapmech$'s accuracy can be improved
+by performing a better analysis on the sensitivity of the inference process.
+Section \ref{sec_ehd}, shows an instance of the exponential mechanism, $\expmech$, where the scoring
+function is based on the Hellinger distance, we will see how this mechanisms performs
+poorly due to the very high global sensitivity of the inference process w.r.t to this metric.
+We then proceed to introduce $\lexpmech$, a variation of $\expmech$ which uses a lower bound
+on the global sensitivity called local sensitivity.
+Unfortunately, despite improving on accuracy $\lexpmech$ is non-private.
+Finally, building on $\lexpmech$, we introduce $\hexpmech$:
+which, based on the notion of \emph{smooth} sensitivity, achieves $\epsilon$-differential privacy and
+has good accuracy in specific cases.
+In presenting these mechanisms we will denote by $\inferd{\valpha}{\vtheta}{\dataobs}$ the posterior  $\dirichlet{\valpha'}$
+obtained starting from the prior $\dirichlet{\valpha}$, likelihood $\multinomial{|\dataobs|}{\vtheta}$, and observed data $\dataobs$.
+To minimize notation we will identify the distribution $\dirichlet{\valpha}$ with its vector
+of parameters.
+Two different upper bounds to the value of
+\begin{align}
+  \label{eqn:eq1}
+  \max_{\substack{\adj{\dataobs}{\dataobs'},\\
+      \valpha=\inferd{\valpha}{\vtheta}{\dataobs},\\
+      \valpha'=\inferd{\valpha}{\vtheta}{\dataobs'}}}||\valpha-\valpha'||_1 
+\end{align}
+will be used to calibrate the noise in the mechanisms based on the Laplacian primitive.
+Finally, with $\bys{\dataobs}{\vtheta}$ we will denote $\inferd{\valpha}{\vtheta}{\dataobs}$ when no confusion can arise.
+
+
+
+\subsection{Calibrating noise w.r.t. $\ell_1$ norm ($\lapmech$)}
+\label{sec_ell1_dim}
+We start off by presenting $\lapmech$, in Algorithm \ref{lapmech}, based on the Laplace primitive.
+The idea of $\lapmech$ is to add Laplacian noise with scale proportional to $\mathcal{X}$ to
+the differences between the respective numeric parameters of the prior
+and posterior distribution. 
+\begin{algorithm}
+  \caption{$\lapmech$}
+  \label{lapmech}
+  \begin{algorithmic}
+  \INPUT $\dataobs\in\mathcal{X}^n$, $\dirichlet{\valpha}$
+  \STATE \quad {\bf let} $\valpha' = \inferd{\valpha}{\vtheta}{\dataobs}$
+  \STATE \quad {\bf Initialize} a vector $\tilde{\valpha} = (0, \dots, 0 )\in \mathbb{N}^{|\mathcal{X}|}$ 
+  \STATE \quad {\bf For} $i = 1 \dots |\mathcal{X}| - 1$:
+  \STATE \quad \quad  {\bf let} $\eta \sim \lap{0}{\frac{|\mathcal{X}|}{\epsilon}}$
+  \STATE \quad \quad  $\tilde{\alpha_i}=\alpha_i + \lfloor{(\alpha_i' - \alpha_i) + \eta}\rfloor^n_0$ 
+  % \RETURN $a_{k+1}$.
+  \STATE \quad $\tilde{\alpha_{|\mathcal{X}|}} = \alpha_{|\mathcal{X}|} + \lfloor n - \sum_{i = 1}^{|\mathcal{X}|-1}\lfloor{(\alpha_i' - \alpha_i) + \eta_i}\rfloor^n_0 \rfloor^n_0$
+  \STATE {\bf return} $\tilde{\valpha}$
+  \end{algorithmic}
+\end{algorithm}
+\begin{lem}
+  Algorithm \ref{lapmech} is $\epsilon$-d.p.
+  \begin{proof} By noticing that $\mathcal{X}-1$ is an upper bound to the value denoted by (\ref{eqn:eq1}). \end{proof}
+\end{lem}
+
+
+\subsection{Improving the sensitivity ($\ilapmech$)}
+\label{sec_ell1_hist}
+By seeing the parameters of the distributions as histograms, we can give a tighter upper bound to the value denoted by (\ref{eqn:eq1}).
+Indeed a constant will do. Algorithm $\ilapmech$ in Algorithm \ref{ilapmech} takes advantage of this fact. 
+Indeed, when $\mathcal{X}=2$, 1 is an upper bound for the value of (\ref{eqn:eq1}), while when $\mathcal{X}>2$, 2 is.
+In Algorithm \ref{ilapmech} the algorithm $\ilapmech$ is presented.
+\begin{algorithm}
+  \caption{$\ilapmech$}
+  \label{ilapmech}
+  \begin{algorithmic}
+  \INPUT $\dataobs\in\mathcal{X}^n$, $\dirichlet{\valpha}$
+  \STATE \quad {\bf let} $\valpha' = \inferd{\valpha}{\vtheta}{\dataobs}$
+  \STATE \quad ${\bf let}\ k=\left \{
+        \begin{array}{lll}          
+          1&\text{if}& |\mathcal{X}|=2\\
+          2&\text{otherwise}
+        \end{array}
+      \right .\ $
+  \STATE \quad {\bf Initialize} a vector $\tilde{\valpha} = (0, \dots, 0 )\in \mathbb{N}^{|\mathcal{X}|}$ 
+  \STATE \quad {\bf For} $i = 1 \dots |\mathcal{X}|-1$:
+  \STATE \quad \quad  {\bf let} $\eta \sim \lap{0}{\frac{k}{\epsilon}}$
+  \STATE \quad \quad  $\tilde{\alpha_i}=\alpha_i + \lfloor{(\alpha_i' - \alpha_i) + \eta}\rfloor^n_0$ 
+  % \RETURN $a_{k+1}$.
+  \STATE \quad $\tilde{\alpha_{|\mathcal{X}|}} = \alpha_{|\mathcal{X}|} + \lfloor n - \sum_{i = 1}^{|\mathcal{X}|-1}\lfloor{(\alpha_i' - \alpha_i) + \eta_i}\rfloor^n_0 \rfloor^n_0$
+  \STATE {\bf return} $\tilde{\valpha}$
+  \end{algorithmic}
+\end{algorithm}
+\begin{lem}
+  Algorithm \ref{ilapmech} is $\epsilon$-d.p.
+  \begin{proof} By noticing that 1 and 2 are upper bounds to the value denoted by (\ref{eqn:eq1}), respectively when $|\mathcal{X}|=2$ and $|\mathcal{X}|>2$.
+  \end{proof}
+\end{lem}
+
+\subsection{A new family of mechanisms}
+\label{sec_exp}
+In this section, we explore  mechanism which we denote by $\expmech$. $\expmech$ is an instance
+of the exponential mechanism \cite{talwar} where the scoring function is based on a metric over
+probability distributions.
+The idea is that $\expmech$ will sample and output a distribution with higher probability when
+it is closer to the real posterior; importantly,  \emph{closer} is measured using a metric over probability
+distributions as opposed to a metric over the parameters that represent it. In this work we will
+use the Hellinger distance, but this approach could be extended to other $f$-divergences. 
+Given a prior distribution $\dirichlet{\valpha}$,
+we define the follwing set  where the mechanism will sample from:
+\[
+  \candidateset{\valpha}=\{\inferd{\valpha}{\vtheta}{\dataobs}\mid \dataobs \in \mathcal{X}^n\}.
+\]
+In general $|\candidateset{\valpha}|=\binom{n + 1}{|\mathcal{X}| - 1}$ when $\valpha\in\mathcal{X}^n$. In the specific case of $|\mathcal{X}|=2$ with $\valpha=(\alpha,\beta)$,
+that is the Beta-Binomial model, the above reduces to:
+\[
+  \{(\alpha',\beta')\mid \alpha'=\alpha + \Delta\alpha, \beta'=\beta + n-\Delta\alpha,  \Delta\alpha=\sum x_i, \dataobs\in \{0,1\}^n\}
+\]
+
+\noindent \textbf{A first approach: the $\expmech$ mechanism.}
+\label{sec_ehd}
+$\expmech$'s pseudocode is shown in Algorithm \ref{mech:expmech1}. $\expmech$ is an instance
+of the Exponential mechanism where the scoring function is instantiated with the function: $r\mapsto -\hellinger(\bysinfer{\dataobs}, r)$.
+Given the input $\dataobs\in\mathcal{X}^n$ and a prior $\dirichlet{\valpha}$, the mechanism $\expmech$ outputs an element $r\in\candidateset{\valpha}$ with  probability: 
+\[
+\frac
+  {\exp(\frac{-\epsilon\cdot \hellinger(\bys{\dataobs}{\valpha}, r)}{2\cdot GS})}
+{\Sigma_{r' \in \candidateset{\valpha}}\exp(\frac{-\epsilon\cdot \hellinger(\bys{\dataobs}{\valpha}, r')}{2\cdot GS})},
+\]
+where $GS$ is the global sensitivity of the scoring function, defined as:
+\[
+\max_{\dataobs,\dataobs': \\ \adj{\dataobs}{\dataobs'}}\max_{r\in \candidateset{\valpha}}
+|\hellinger(\bys{\dataobs}{\valpha}, r) - \hellinger(\bys{\dataobs'}{\valpha}, r)|
+\]
+% 
+  \begin{algorithm}
+  \caption{$\expmech$}
+  \label{mech:expmech1}
+  \begin{algorithmic}
+  \INPUT observed data set $\dataobs \in \mathcal{X}^n$, prior: $\dirichlet{\valpha}$, $\epsilon$
+  \STATE \quad {\bf let} $\dirichlet{\valpha'}= \bys{\dataobs}{\valpha}$.   
+  \STATE \quad {\bf set} $z=r$ with probability $\frac
+  {\exp(\frac{-\epsilon\cdot \hellinger(\bys{\dataobs}{\valpha}, r)}{2\cdot GS})}
+{\Sigma_{r' \in \candidateset{\valpha}}\exp(\frac{-\epsilon\cdot \hellinger(\bys{\dataobs}{\valpha}, r')}{2\cdot GS})}$
+\STATE {\bf return} $z$
+  \end{algorithmic}
+  \end{algorithm}
+\begin{lem}
+  Algorithm \ref{mech:expmech1} is $\epsilon$-d.p.
+\end{lem}
+
+
+\noindent \textbf{A second approach based on local sensitivity: $\lexpmech$.}
+\label{sec_ehdl}
+Figure \ref{fig_theory} shows that  the accuracy of
+$\expmech$ is poor if compared with the one of $\ilapmech$. This is due to the fact that
+$GS$ is relatively large and hence the variance of the distribution $\expmech$ ends up also being too large. In order to solve this issue we
+will proceed in two steps. We will first define, in Algorithm   \ref{mech:lexpmech}, $\lexpmech$, which instead of using the global sensitivity, will use the local sensitivity to calibrate
+the noise. This is known to be a non private approach, but it will guide us towards new insights.
+We will then proceed to use a smooth bound the local sensitivity to
+calibrate the noise.
+
+  \begin{algorithm}
+  \caption{$\lexpmech$}
+  \label{mech:lexpmech}
+  \begin{algorithmic}
+  \INPUT observed data set $\dataobs \in \mathcal{X}^n$, prior: $\dirichlet{\valpha}$, $\epsilon$
+  \STATE \quad {\bf let} $\dirichlet{\valpha'}= \bys{\dataobs}{\valpha}$.
+  \STATE \quad {\bf set} $z=r$ with probability $\frac
+  {\exp(\frac{-\epsilon\cdot \hellinger(\bys{\dataobs}{\valpha}, r)}{2\cdot LS(\dataobs)})}
+{\Sigma_{r' \in \candidateset{\valpha}}\exp(\frac{-\epsilon\cdot \hellinger(\bys{\dataobs}{\valpha}, r')}{2\cdot LS(\dataobs)})}$
+\STATE {\bf return} $z$
+  \end{algorithmic}
+  \end{algorithm}
+
+
+Given $\dataobs$, and a prior $\dirichlet{\valpha}$, $\lexpmech$ samples an element $r \in \candidateset{\valpha}$ with probability:
+\[
+ \frac
+  {\exp(\frac{-\epsilon\cdot \hellinger(\bys{\dataobs}{\valpha}, r)}{2\cdot LS(\dataobs)})}
+{\Sigma_{r' \in \candidateset{\valpha}}\exp(\frac{-\epsilon\cdot \hellinger(\bys{\dataobs}{\valpha}, r')}{2\cdot LS(\dataobs)})}
+\]
+where $LS(\dataobs)$ is the local sensitivity of the scoring function, defined as:
+\begin{equation}\label{eq:local_sensitivity_scoring}
+\max_{\dataobs'\in\mathcal{X}^n,\adj{\dataobs}{\dataobs'}, r\in \candidateset{\valpha}}\lvert \hellinger(\bys{\dataobs}{\valpha}, r) - \hellinger(\bys{\dataobs'}{\valpha}, r)\rvert 
+\end{equation}
+Lemma \ref{lem_loc_opt}  provides a useful characterization of the above function, the interested reader can check the proof in the Appendix.
+\begin{lem}
+\label{lem_loc_opt}
+For $\dataobs\in\mathcal{X}^n$, 
+\[LS(\dataobs) = \max\limits_{\dataobs' \in \datauni^n:\adj{\dataobs}{\dataobs'}} \hellinger(\bys{\dataobs}{\valpha}, \bys{\dataobs'}{\valpha})\]
+\end{lem}
+
+
+\noindent \textbf{A third approach based on smooth sensitivity: $\hexpmech$}. 
+\label{sec_ehds}
+In this section, we explore a new mechanism, which compromises between $\expmech$ and $\lexpmech$ and  achieves good accuracy and $\epsilon$-differential privacy simultaneously,
+by scaling the noise to a smooth upper bound on the local sensitivity.
+%We first define the smooth sensitivity on a input $\dataobs\in\{0,1\}^n$.
+% The following definition is specific to binary data, hence it will
+% be useful to privately release only posterior Beta distributions in the Beta-Binomial model. The extension to categorical data is straightforward.
+\begin{definition}
+\label{def_gamma_smooth}
+For $\dataobs\in\mathcal{X}^n$, and $\gamma \in \mathbb{R}^{> 0}$, the $\gamma$-smooth sensitivity of $\hellinger(\bysinfer{\dataobs},\cdot)$ is defined as:
+\begin{equation}
+  \label{eq_smooth}
+   S(\dataobs)=\max_{\dataobs' \in \mathcal{X}^{n}}\bigg \{ \frac{1}{\frac{1}{LS(\dataobs')} +\gamma \cdot d(\dataobs,\dataobs')} \bigg \},
+\end{equation}
+where $d$ is the Hamming distance between two data sets.
+\end{definition}
+
+\begin{thm}
+  \label{thm_gamma_smooth}
+  For any $\dataobs, \dataobs'\in\mathcal{X}^n$, and $\gamma \in \mathbb{R}^{+}$
+  if  $\adj{\dataobs}{\dataobs'}$ then $\frac{1}{S(\dataobs)} - \frac{1}{S(\dataobs')} \leq \gamma$.
+\end{thm}
+again, the interested reader will find the proof in Appendix.
+We are now ready to describe the mechanism $\hexpmech$ in Algorithm \ref{mech:sexpmech}. $\hexpmech$ outputs a candidate $r \in \candidateset{\valpha}$ with probability
+\[
+ \frac
+  {\exp(\frac{-\epsilon\cdot \hellinger(\bys{\dataobs}{\valpha}, r)}{4\cdot S(\dataobs)})}
+{\Sigma_{r' \in \candidateset{\valpha}}\exp(\frac{-\epsilon\cdot \hellinger(\bys{\dataobs}{\valpha}, r')}{4\cdot S(\dataobs)})}
+\]
+where $S(\dataobs)$ is the 1-smooth sensitivity of  the function $\hellinger(\bysinfer{\dataobs},\cdot)$. {\color{red}{why do we choose 1???}}
+  \begin{algorithm}
+  \caption{$\hexpmech$}
+  \label{mech:sexpmech}
+  \begin{algorithmic}
+  \INPUT observed data set $\dataobs \in \mathcal{X}^n$, prior: $\dirichlet{\valpha}$, $\epsilon$
+  \STATE \quad {\bf let} $\dirichlet{\valpha'}= \bys{\dataobs}{\valpha}$.   
+  \STATE \quad {\bf set} $z=r$ with probability $\frac{\exp(\frac{\epsilon\cdot \ux{r}}{4\cdot S(\dataobs)})}{\Sigma_{r' \in \candidateset{\valpha}}\exp(\frac{\epsilon\cdot u(\dataobs, r')}{4\cdot S(\dataobs)})}$
+\STATE {\bf return} $z$
+  \end{algorithmic}
+\end{algorithm}
+
+\begin{thm}
+  Algorithm \ref{mech:sexpmech} is $\epsilon$-d.p.
+\end{thm}
+% As already mentioned $\hexpmech$ extends straightforwardly to the Dirichlet-multinomial system.
+% Indeed, the Hellinger distance between two Dirichlet distribution, unfolds in:
+% \[
+%   \hellinger(\dirichlet{\valpha_1}, \dirichlet{\valpha_2}) = \sqrt{1 - \frac{\betaf(\frac{\valpha_1 + \valpha_2}{2})}{\sqrt{\betaf(\valpha_1) \betaf(\valpha_2)}}},
+% \]
+% and the $\candidateset$ will consist of the set of all possible posterior Dirichlet
+% distributions candidates. Also, the smooth sensitivity $S(\dataobs)$
+% in (\ref{thm_gamma_smooth}) will be computed by letting $\dataobs'$ range
+% over all the elements in $\datauni^{n}$ adjacent to $\dataobs$. 
 \section{Accuracy Analysis}
 We will observe accuracy of mechanisms.
 In this section, we fix $\alpha$ and $\beta$, and for simplicity, we define the term of difference from $\betad(\alpha, \beta)$, the true posterior distribution.
