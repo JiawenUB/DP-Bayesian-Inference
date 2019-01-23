@@ -99,6 +99,8 @@ in these situations, and is now the standard for privacy-preserving data analysi
 Many statistical applications are driven by Bayesian inference.
 This is a standard statistical tool in which a prior distribution is combined
 with a sample of observed data in order to estimate a new posterior distribution.
+
+
 %is a standard statistical tool that is useful to
 %estimate a posterior distribution when a prior distribution is given
 %and some data is observed. 
@@ -108,6 +110,8 @@ with a sample of observed data in order to estimate a new posterior distribution
 
 %%we consider bayesian inference with posterior perturbation 
 %%which could be used as a plug and play in PPL citing CCS2016
+
+
 In this work we consider the design space of  parametric Bayesian
 inference mechanisms guaranteeing differential privacy. Our work is
 motivated by recent developments in the area of probabilistic
@@ -207,8 +211,8 @@ accuracy and sensitivity in terms of a single metric on probability distribution
 %the numeric parameters of the distributions. 
 %We will see that in some cases this can happen.
 
-\noindent \textbf{Main contributions.}
-What follows is a summary of the main contributions of this work.
+%\noindent \textbf{Main contributions.}
+In summary, the main contributions of our work are:
 \begin{itemize}
 	\item We give a new differentially private Bayesian inference mechanism based on the standard exponential mechanism.
    %    \item A full proof of $(\epsilon, \delta)$-differential privacy of the mechanism is given in the paper. 
@@ -219,9 +223,51 @@ What follows is a summary of the main contributions of this work.
 
 \section{Related Work}
 
-A plentiful of data analysis algorithms have been studied to preserve differential privacy, including the subspace clustering algorithm \cite{wang2015differentially}, the gradient decedent algorithm in deep learning \cite{abadi2016deep}, logical regression \cite{chaudhuri2009privacy}, principle component analysis \cite{chaudhuri2012near}, probabilitic inference \cite{williams2010probabilistic} and convergence in statistic estimation \cite{chaudhuri2012convergence}, etc. 
+% A plentiful of data analysis algorithms have been studied to preserve differential privacy, including the subspace clustering algorithm \cite{wang2015differentially}, the gradient decedent algorithm in deep learning \cite{abadi2016deep}, logical regression \cite{chaudhuri2009privacy}, principle component analysis \cite{chaudhuri2012near}, probabilitic inference \cite{williams2010probabilistic} and convergence in statistic estimation \cite{chaudhuri2012convergence}, etc. 
 
-In Bayesian Inference data analysis, mechanisms are proposed corresponded to maintain their differential privacy, focusing on 3 different goals: 1) Inherited differential privacy property of posterior sampling in Bayesian inference. \cite{dimitrakakis2014robust,zhang2016differential,zheng2015differential,wang2015privacy}. 2) Data sampled and released from posterior distribution of Bayesian is differentially private \cite{Zhang2017privbayes}, \cite{dimitrakakis2015differential},  \cite{foulds2016theory}. 3) The inference process is differentially private and the posterior distribution released should be private itself, in the meantime, with good accuracy. The third topic where our work focus on is still very new. moreover, their design spaces are more specific to the $\ell_1$ norm and Laplace mechanism. That's why we explore different metrics and different algorithms over the design space.
+Several works have considered the intersection of Bayesian Inference and differential
+privacy. \citet{williams2010probabilistic} explored the use of
+probabilistic inference to improve the accuracy of differentially
+private data analyses. A similar approach has been also studied by
+\citet{xiao2012bayesian}.
+
+
+A general trend has been to study robustness conditions
+for different likelihood functions and different classes of conjugate priors 
+guaranteeing differential privacy for samples taken from a
+posterior distribution. \citet{dimitrakakis2014robust}
+consider this approach and identify some general robustness technique
+which can be applied to several models including the one considered in
+this paper. Similarly, \citet{zheng2015differential} considers a similar approach
+but with different conditions. \citet{zhang2016differential} extend
+the previous approaches to address more general models with multiple
+random variables. 
+\citet{wang2015privacy} identifies
+conditions guaranteeing differential privacy for samples generated
+using standard montecarlo algorithm.
+\citet{GeumlekSC17} consider the problem of releasing samples from
+distributions in the exponential family under the constraints imposed
+by Renyi differential privacy. 
+\citet{Zhang2017privbayes} propose a technique for releasing high
+dimensional data based on the differentially private learning of a
+Bayesian graphical model. 
+
+Few works take an approach similar to the one we consider here. 
+\citet{dimitrakakis2015differential} study differentially private
+posterior release by output perturbation based on Laplace noise for the Beta-Binomial
+model. However, they measure accuracy in terms of $\ell_1$
+distance over the parameters and in term of KL-divergence over the distribution.  \citet{foulds2016theory}
+generalizes the approach of \citet{dimitrakakis2015differential} by
+analyzing further the impact that Laplace noise has on the inference.
+They also focus on accuracy measured in term of  $\ell_1$ distance
+over the parameters. \citet{BartheFGAGHS16} study a verification
+method for probabilistic programs including constructs for Bayesian
+inference. In their work they also study an approach based on the use
+of the exponential mechanism with the Hellinger distance as scoring
+function. We show here that their approach achieve very poor utility. 
+
+
+% 3) The inference process is differentially private and the posterior distribution released should be private itself, in the meantime, with good accuracy. The third topic where our work focus on is still very new. moreover, their design spaces are more specific to the $\ell_1$ norm and Laplace mechanism. That's why we explore different metrics and different algorithms over the design space.
 
 
 \section{Preliminaries}
