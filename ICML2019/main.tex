@@ -327,7 +327,7 @@ with $\Delta \alpha_i=\displaystyle\sum_{j=1}^{n}\mathbf{1}_{\iverson{x_j=a_i}}$
 Denoting by $\Delta\valpha$ the vector $(\Delta\alpha_1,\dots
 \Delta\alpha_k)$ the posterior distribution over $\vtheta$ is
 $\dirichlet{\valpha + \Delta \valpha}$, where $+$ denotes the componentwise sum of vectors.
-In the following we will use the notation $\bysdir(n,\vtheta, \valpha,
+In the following we will use the notation $\bysinfer(\valpha,\vtheta,
 \dataobs)$ to denote the posterior of this process.
 %i.e., $\bysdir(n,\vtheta, \valpha, \dataobs)=\dirichlet{\valpha + \Delta \valpha}$.
 %
@@ -555,7 +555,8 @@ is understood.
 \subsection{Calibrating noise w.r.t. $\ell_1$ norm ($\lapmech$)}
 \label{sec_ell1_dim}
 We start off by presenting $\lapmech$, in Algorithm \ref{lapmech}, based on the Laplace primitive.
-The idea of $\lapmech$ is to add Laplacian noise with scale proportional to $\mathcal{X}$ to
+The idea of $\lapmech$ is to add Laplacian noise with scale
+proportional to $\mathcal{X}$ (the dimension of the parameter space) to
 the differences between the respective numeric parameters of the prior
 and posterior distribution. 
 \begin{algorithm}
