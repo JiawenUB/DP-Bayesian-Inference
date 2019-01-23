@@ -1239,7 +1239,7 @@ We use four real data sets from UCI Machine Learning repository\footnote{https:/
 
 
 \paragraph{Experiments on Real Data Sets in Dirichlet-multinomial Model}
-We use three data sets from the same repository repository. Each data set contains one category variable of 3 values ($|\mathcal{X}| = 3$), which fits our 3 dimension Dirichlet-multinomial model. By setting the prior distribution as $\dirichlet{1,1,1}$, we apply our 5 private inference algorithms on them to derive the underlining distribution of these data. The first data set is the SHARING BIKE data, where $\mathcal{X} = \{0,1,2\}$ stand for 3 weather conditions. The second and third data set are the THERAPY data, where $0,1,2 \in \mathcal{X}$ represent 3 types of the 2 diseases. The size of the four data set are $731, 90, 90$. The accuracy are shown in Figure \ref{fig_real_3d}.
+We use three data sets from the same repository repository. Each data set contains one category variable of 3 values ($|\mathcal{X}| = 3$), which fits our 3 dimension Dirichlet-multinomial model. By setting the prior distribution as $\dirichlet{1,1,1}$, we apply our 5 private inference algorithms on them to derive the underlining distribution of these data. The first data set is the SHARING BIKE data, where $\mathcal{X} = \{0,1,2\}$ stand for 3 weather conditions. The second and third data set are the THERAPY data, where $0,1,2 \in \mathcal{X}$ represent 3 types of the diseases. The size of the four data set are $731, 90, 90$. The accuracy are shown in Figure \ref{fig_real_3d}.
 \begin{figure}
 \centering
 \includegraphics[width=0.35\textwidth]{realdata_3d.eps}
@@ -1247,7 +1247,7 @@ We use three data sets from the same repository repository. Each data set contai
 \label{fig_real_3d}
 \end{figure}
 
-The red box representing the $\expmech$ plays worst in terms of accuracy. While the orange one representing the $\hexpmech$ has a better performance even though they achieve the same privacy bound, because we are calibrating noise to the Hellinger distance (the accuracy metric we are using). The purple one representing the $\lexpmech$ although performs better than $\expmech$ and $\hexpmech$, but it is non-private. 
+The red box representing the $\expmech$ plays worst in terms of accuracy. While the orange one representing the $\hexpmech$ has a better performance even though they achieve the same privacy bound, because we are calibrating noise to a smooth bound on Hellinger distance (the accuracy metric we are using). The purple one representing the $\lexpmech$ although performs better than $\expmech$ and $\hexpmech$, but it is non-private.
 
 \subsection{Privacy Evaluation}
 \label{subsec_experiment_privacy}
@@ -1266,10 +1266,13 @@ We can observe from Fig. \ref{fig_privacy} that the actual privacy loss of $\exp
 
 
 \section{Conclusion}
-From what we have seen in the previous sections we can obtain following conclusions. We explored the design space of the mechanisms for differentially privacy Bayesian inference, by considering different metrics and different algorithms.
+From what we have seen in the previous sections, we can obtain following conclusions. We explored the design space of the mechanisms for differentially privacy Bayesian inference, by considering different metrics and different algorithms.
 \begin{itemize}
   \item The accuracy can change a lot when considering different metrics and using different sensitivity values.
-  \item Different algorithms have different performance w.r.t. different aspect. From the experimental results, Laplace mechanism family have a good efficiency and accuracy when using $\ell_1$ norm metric. But exponential mechanism family can be a good application when considering different metrics.
+ 
+  \item Different algorithms have different performance in terms of accuracy and privacy. From the experimental results, mechanisms calibrating to $\ell_1$ norm metric have fixed probability of outputting certain candidate when data size changes, while mechanisms calibrating to Hellinger distance have varying probability. 
+
+  \item Mechanisms calibrating to global sensitivity has large improve space in terms of accuracy. The accuracy of $\expmech$ is improved by applying a smooth bound to the sensitivity of scoring function in $\hexpmech$.
 \end{itemize}
 
 
