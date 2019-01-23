@@ -1,0 +1,522 @@
+\documentclass{article}
+% We want page numbers on submissions
+
+%%\ccsPaper{9999} % TODO: replace with your paper number once obtained
+\input{macros}
+
+\begin{document}
+
+\section*{Appendix}
+
+\noindent \textbf{Theorem \ref{thm_gamma_smooth}.}
+\emph{
+Given data set $\dataobs$, the $\gamma -$smooth sensitivity of Bayesian inference process w.r.t. the Hellinger distance $S(\dataobs)$ satisfying:%\\
+whenever $\adj{\dataobs}{\dataobs'}$, 
+%\begin{equation}
+%\label{eq_gamma_smooth}
+$\frac{1}{S(\dataobs)} - \frac{1}{S(\dataobs')} \leq \gamma$.
+}
+
+\begin{proof}
+of Theorem. \ref{thm_gamma_smooth}.\\
+For $\adj{\dataobs}{\dataobs'}$ and arbitrary $\dataobs'' \in \{0,1\}^{n}$:\\
+From Equation (\ref{eq_smooth}), we can get:
+\[
+\frac{1}{S(\dataobs)} 
+ = \min_{\dataobs'' \in \{0,1\}^{n}}\bigg \{ \frac{1}{LS(\dataobs'')} +\gamma \cdot d(\dataobs,\dataobs'') \bigg \}\\
+\]
+
+Since $d(\dataobs,\dataobs'') \leq d(\dataobs,\dataobs') + d(\dataobs',\dataobs'') \leq 1 + d(\dataobs',\dataobs'')$:
+
+\begin{equation*}
+\begin{split}
+& \leq \min_{\dataobs'' \in \{0,1\}^{n}}\bigg \{  \frac{1}{LS(\dataobs'')} +\gamma \cdot (1 + d(\dataobs',\dataobs'')) \bigg \}\\
+& = \min_{\dataobs'' \in \{0,1\}^{n}}\bigg \{
+\gamma + \frac{1}{LS(\dataobs'')} +\gamma \cdot d(\dataobs',\dataobs'')\bigg 
+\}\\
+& = \gamma + \min_{\dataobs'' \in \{0,1\}^{n}}\bigg \{
+\frac{1}{LS(\dataobs'')} +\gamma \cdot d(\dataobs',\dataobs'')\bigg
+\}\\
+& = \gamma + \frac{1}{S(\dataobs')}
+\end{split}
+\end{equation*}
+Then we can get:
+$\frac{1}{S(\dataobs)} - \frac{1}{S(\dataobs')} \leq \gamma.$
+\end{proof}
+
+
+\noindent \textbf{Lemma \ref{lem_loc_opt}.}
+\emph{
+\[
+LS(\dataobs) = \max\limits_{\dataobs' \in \datauni^n:\adj{\dataobs}{\dataobs'}} \hellinger(\bysinfer{\dataobs}, \bysinfer{\dataobs'}).
+\]
+}
+
+\begin{proof} of Lemma \ref{lem_loc_opt}.\\
+For any $r \in \mathcal{R}$ and $\dataobs' \in \datauni^n$ with $\adj{\dataobs}{\dataobs'}$, we have
+\begin{align*}
+&\lvert \hellinger(\bysinfer{\dataobs}, r) - \hellinger(\bysinfer{\dataobs'}, r)\rvert\\
+& = 
+\begin{cases}
+\hellinger(\bysinfer{\dataobs}, r) - \hellinger(\bysinfer{\dataobs'},r) & \text{positive case}\\
+\hellinger(\bysinfer{\dataobs'},r) - \hellinger(\bysinfer{\dataobs}, r) & \text{negative case}
+\end{cases}\\
+& \leq 
+\begin{cases}
+\hellinger(\bysinfer{\dataobs'}, \bysinfer{\dataobs})+
+\hellinger(\bysinfer{\dataobs'}, r) - \hellinger(\bysinfer{\dataobs'},r) & \\
+\hellinger(\bysinfer{\dataobs'}, \bysinfer{\dataobs})+
+\hellinger(\bysinfer{\dataobs}, r) - \hellinger(\bysinfer{\dataobs}, r)&
+\end{cases}\\
+&= \hellinger(\bysinfer{\dataobs'}, \bysinfer{\dataobs})
+\end{align*}
+The equality holds if $r = \bysinfer{\dataobs}$ or $r = \bysinfer{\dataobs'}$.
+Hence, we conclude the statement of this lemma.
+\end{proof}
+
+
+
+\noindent \textbf{ Lemma \ref{lem_hexpmech_privacy}. } 
+\emph{
+$\hexpmech$ is $\epsilon$-differential privacy by setting $\gamma = 1.0$.
+}
+
+\begin{proof} of Lemma \ref{lem_hexpmech_privacy}.\\
+  By Definition \ref{def_epsilon_dp}, to proof Lemma \ref{lem_hexpmech_privacy}, we need to prove:\\
+  For any $\adj{\dataobs}{\dataobs'} \in \mathcal{X}$ and any beta distribution $r$:
+  \begin{equation*}
+  \hexpmechPr{\dataobs}{z = r} \leq e^{\epsilon} \hexpmechPr{\dataobs'}{z = r}. 
+  \end{equation*}
+  By definition \ref{def_smoo_2}:
+  \begin{equation*}
+  \begin{split}
+  \hexpmechPr{\dataobs}{z = r} 
+  & = \frac {\exp\big(\frac{-\epsilon\cdot\ux{r}}{4\cdot S(\dataobs)}\big)}{\unomalizer{\dataobs}} \\
+  & = \frac {\exp\big(
+  \frac{-\epsilon\cdot(\ux{r} + \uxadj{r} - \uxadj{r})}{4\cdot S(\dataobs)}
+  \big)}
+  {\unomalizer{\dataobs}} \\
+  & = \frac {\exp\big(
+  \frac{-\epsilon\cdot(\uxadj{r})}{4\cdot S(\dataobs)}
+  \big)}
+  {\unomalizer{\dataobs}}
+  \\
+  & \cdot \exp\big( \frac{\epsilon\cdot(\uxadj{r} - \ux{r})}{4\cdot S(\dataobs)} \big)\\
+  \end{split}
+  \end{equation*}
+  Because $S(\dataobs) \geq LS(\dataobs) \geq (\uxadj{r} - \ux{r})$:
+  \begin{equation*}
+  \begin{split}
+  & \leq \frac {\exp\big(
+  \frac{-\epsilon\cdot(\uxadj{r})}{4\cdot S(\dataobs)}
+  \big)}
+  {\unomalizer{\dataobs}}
+  \cdot \exp\big( \frac{\epsilon}{4} \big) \\
+  & = \exp\big( \frac{\epsilon}{4} \big) \cdot 
+  \frac {
+  \exp
+  \big(
+  \frac{-\epsilon\cdot(\uxadj{r})}{4\cdot S(\dataobs)}
+  \big)
+  } 
+  {\unomalizer{\dataobs}}\\
+  & \cdot \exp
+  \big(
+  \frac{\epsilon\cdot(\uxadj{r})}{4\cdot S(\dataobs')}
+  \big)
+  \exp
+  \big(
+  \frac{-\epsilon\cdot(\uxadj{r})}{4\cdot S(\dataobs')}
+  \big)\\
+  & = \exp\big( \frac{\epsilon}{4} \big) \cdot 
+  \frac {
+  \exp
+  \big(
+  \frac{-\epsilon\cdot(\uxadj{r})}{4\cdot S(\dataobs')}
+  \big)
+  } 
+  {\unomalizer{\dataobs}}\\
+  & \cdot \exp
+  \big(
+  \frac{\epsilon\cdot(\uxadj{r})}{4}(\frac{1}{S(\dataobs')} - \frac{1}{S(\dataobs)})
+  \big)\\
+  \end{split}
+  \end{equation*}
+  
+  Because $\uxadj{r} = \hellinger(\bysinfer{\dataobs'}, r) \leq 1$:
+  \begin{equation*}
+  \begin{split}
+  & \leq \exp\big( \frac{\epsilon}{4} \big) \cdot 
+  \frac {
+  \exp
+  \big(
+  \frac{-\epsilon\cdot(\uxadj{r})}{4\cdot S(\dataobs')}
+  \big)
+  } 
+  {\unomalizer{\dataobs}}\\
+  & \cdot \exp
+  \big(
+  \frac{\epsilon}{4}(\frac{1}{S(\dataobs')} - \frac{1}{S(\dataobs)})
+  \big)\\
+  \end{split}
+  \end{equation*}
+
+  Because the property of $\gamma -$smooth sensitivity: $\frac{1}{S(\dataobs')} - \frac{1}{S(\dataobs)} \leq \gamma$:  
+  \begin{equation*}
+  \begin{split}
+  & \leq \exp\big( \frac{\epsilon}{4} \big) \cdot 
+  \frac {
+  \exp
+  \big(
+  \frac{-\epsilon\cdot(\uxadj{r})}{4\cdot S(\dataobs')}
+  \big)
+  } 
+  {\unomalizer{\dataobs}}
+  \exp
+  \big(
+  \frac{\epsilon}{4} \cdot \gamma
+  \big)\\
+  & = \exp\big( \frac{\epsilon}{4} + \frac{\epsilon}{4} \cdot \gamma\big) \cdot 
+  \frac {
+  \exp
+  \big(
+  \frac{-\epsilon\cdot(\uxadj{r})}{4\cdot S(\dataobs')}
+  \big)
+  } 
+  {\unomalizer{\dataobs}}\\
+  \end{split}
+  \end{equation*}
+
+  Doing the same transformation in the denominator:
+  \begin{equation*}
+  \begin{split}
+  & = \exp\big( \frac{\epsilon}{4} + \frac{\epsilon}{4} \cdot \gamma\big) \cdot 
+  \frac {
+  \exp
+  \big(
+  \frac{-\epsilon\cdot(\uxadj{r})}{4\cdot S(\dataobs')}
+  \big)
+  } 
+  {
+  \sum_{r'\in \candidateset{}} 
+  \exp 
+  \big(
+  \frac{-\epsilon\cdot(\ux{r'} + \uxadj{r'} - \uxadj{r'})}{4 \cdot S(\dataobs)}
+  \big)
+  }\\
+  & = \exp\big( \frac{\epsilon}{4} + \frac{\epsilon}{4} \cdot \gamma\big) \\
+  & \cdot 
+  \frac {
+  \exp
+  \big(
+  \frac{-\epsilon\cdot(\uxadj{r})}{4\cdot S(\dataobs')}
+  \big)
+  } 
+  {
+  \sum_{r'\in \candidateset{}} 
+  \exp 
+  \big(
+  \frac{-\epsilon\cdot(\uxadj{r'}}{4 \cdot S(\dataobs)}
+  \big)
+  \exp 
+  \big(
+  \frac{-\epsilon\cdot(\ux{r'} - \uxadj{r'})}{4 \cdot S(\dataobs)}
+  \big)
+  }\\
+  \end{split}
+  \end{equation*}
+
+  Because $S(\dataobs) \geq LS(\dataobs) \geq (\ux{r} - \uxadj{r})$ $\implies$ $ \frac{-\epsilon\cdot(\ux{r'} - \uxadj{r'})}{4 \cdot S(\dataobs)} \geq \frac{-\epsilon}{4}$:
+  \begin{equation*}
+  \begin{split}
+  & \leq \exp\big( \frac{\epsilon}{4} + \frac{\epsilon}{4} \cdot \gamma\big) \cdot 
+  \frac {
+  \exp
+  \big(
+  \frac{-\epsilon\cdot(\uxadj{r})}{4\cdot S(\dataobs')}
+  \big)
+  } 
+  {
+  \sum_{r'\in \candidateset{}} 
+  \exp 
+  \big(
+  \frac{-\epsilon\cdot(\uxadj{r'}}{4 \cdot S(\dataobs)}
+  \big)
+  \exp 
+  \big(
+  \frac{-\epsilon}{4}
+  \big)
+  }\\
+  & = \exp\big( \frac{\epsilon}{4} + \frac{\epsilon}{4} \cdot \gamma\big) \cdot 
+  \frac {
+  \exp
+  \big(
+  \frac{-\epsilon\cdot(\uxadj{r})}{4\cdot S(\dataobs')}
+  \big)
+  } 
+  {
+  \sum_{r'\in \candidateset{}} 
+  \exp 
+  \big(
+  \frac{-\epsilon\cdot(\uxadj{r'}}{4 \cdot S(\dataobs)}
+  \big)
+  }\\
+  & \cdot 
+  \frac{1}
+  {
+  \exp 
+  \big(
+  \frac{-\epsilon}{4}
+  \big)
+  \exp
+  \big(
+  \frac{\epsilon\cdot(\uxadj{r'})}{4\cdot S(\dataobs')}
+  \big)
+  \exp
+  \big(
+  \frac{-\epsilon\cdot(\uxadj{r'})}{4\cdot S(\dataobs')}
+  \big)
+  }\\
+  & = \exp\big( \frac{\epsilon}{4} + \frac{\epsilon}{4} \cdot \gamma\big) \cdot 
+  \frac {
+  \exp
+  \big(
+  \frac{-\epsilon\cdot(\uxadj{r})}{4\cdot S(\dataobs')}
+  \big)
+  } 
+  {
+  \sum_{r'\in \candidateset{}} 
+  \exp 
+  \big(
+  \frac{-\epsilon\cdot(\uxadj{r'}}{4 \cdot S(\dataobs')}
+  \big)}\\
+  & \cdot\frac{1}{
+  \exp 
+  \big(
+  \frac{-\epsilon}{4}
+  \big)
+  \exp
+  \big(
+  \frac{- \epsilon\cdot(\ux{r'})}{4}
+  (\frac{1}{S(\dataobs)}
+-
+  \frac{1}{S(\dataobs')})
+  \big)
+  }
+  \end{split}
+  \end{equation*}
+
+  Because $\uxadj{r} = \hellinger(\bysinfer{\dataobs'}, r) \leq 1$ $\implies$ $\frac{- \epsilon\cdot(\ux{r'})}{4} \geq  \frac{-\epsilon}{4}$:
+  \begin{equation*}
+  \begin{split}
+  & \leq \exp\big( \frac{\epsilon}{4} + \frac{\epsilon}{4} \cdot \gamma\big) \cdot 
+  \frac {
+  \exp
+  \big(
+  \frac{-\epsilon\cdot(\uxadj{r})}{4\cdot S(\dataobs')}
+  \big)
+  } 
+  {
+  \sum_{r'\in \candidateset{}} 
+  \exp 
+  \big(
+  \frac{-\epsilon\cdot(\uxadj{r'}}{4 \cdot S(\dataobs')}
+  \big)}\\
+  & \cdot \frac{1}{
+  \exp 
+  \big(
+  \frac{-\epsilon}{4}
+  \big)
+  \exp
+  \big(
+  \frac{- \epsilon}{4}
+  (\frac{1}{S(\dataobs)}
+-
+  \frac{1}{S(\dataobs')})
+  \big)
+  }\\
+  \end{split}
+  \end{equation*}
+
+  Because the property of $\gamma -$ smooth sensitivity: $\frac{1}{S(\dataobs)} - \frac{1}{S(\dataobs')} \leq \gamma$ $\implies$
+  $\frac{- \epsilon}{4}
+  (\frac{1}{S(\dataobs)}-
+  \frac{1}{S(\dataobs')}) \geq \frac{- \epsilon}{4} \cdot \gamma$
+  \begin{equation*}
+  \begin{split}
+  & \leq \exp\big( \frac{\epsilon}{4} + \frac{\epsilon}{4} \cdot \gamma\big) \cdot 
+  \frac {
+  \exp
+  \big(
+  \frac{-\epsilon\cdot(\uxadj{r})}{4\cdot S(\dataobs')}
+  \big)
+  } 
+  {
+  \sum_{r'\in \candidateset{}} 
+  \exp 
+  \big(
+  \frac{-\epsilon\cdot(\uxadj{r'}}{4 \cdot S(\dataobs')}
+  \big)
+  \exp 
+  \big(
+  \frac{-\epsilon}{4}
+  \big)
+  \exp
+  \big(
+  \frac{- \epsilon}{4} \cdot \gamma
+  \big)
+  }\\
+  & = \exp\big( \frac{\epsilon}{4} + \frac{\epsilon}{4} \cdot \gamma\big) \cdot 
+  \frac {
+  \exp
+  \big(
+  \frac{-\epsilon\cdot(\uxadj{r})}{4\cdot S(\dataobs')}
+  \big)
+  } 
+  {
+  \sum_{r'\in \candidateset{}} 
+  \exp 
+  \big(
+  \frac{-\epsilon\cdot(\uxadj{r'}}{4 \cdot S(\dataobs')}
+  \big)
+  \exp 
+  \big(
+  \frac{-\epsilon}{4} +   \frac{- \epsilon}{4} \cdot \gamma
+  \big)
+  }\\
+  & = e^{( \frac{\epsilon}{2} + \frac{\epsilon}{2} \cdot \gamma )} \cdot 
+  \frac {
+  \exp
+  \big(
+  \frac{-\epsilon\cdot(\uxadj{r})}{4\cdot S(\dataobs')}
+  \big)
+  } 
+  {
+  \unomalizer{\dataobs'}
+  }\\
+  & = e^{( \frac{\epsilon}{2} + \frac{\epsilon}{2} \cdot \gamma )} \cdot   \hexpmechPr{\dataobs'}{z = r}
+  \end{split}
+  \end{equation*}
+
+  Given $\gamma = 1$, $\epsilon - $differential privacy can be achieved by $\hexpmech$.
+
+
+\end{proof}
+
+
+\noindent \textbf{ Lemma \ref{lem_acc_lap}.}
+\emph{
+Given $Y \thicksim \lap{0}{b}$, the accuracy bound developed for $\lapmech$ is:
+\begin{align*}
+&
+\lapmechPr{\dataobs}{
+\begin{aligned}
+\lefteqn{\hellinger(\bysinfer{\dataobs}, z )}\\ 
+&= \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)
+\end{aligned}
+}
+\\
+&\qquad = 
+\begin{cases}
+\frac{1}{2} (e^{- \frac{\epsilon (t)}{\Delta }} - e^{- \frac{\epsilon (t + 1)}{\Delta }}) &  t \geq 0\\
+\frac{1}{2} (e^{\frac{\epsilon (t + 1)}{\Delta }} - e^{\frac{\epsilon (t)}{\Delta }}) & t < 0
+\end{cases}
+\end{align*}
+where $\betad(\alpha, \beta)$ is the true posterior distribution, i.e., $\bysinfer{\dataobs} = \betad(\alpha, \beta)$, and $r_L$ be the posterior produced by Laplace mechanism, i.e., $z = \betad(\alpha + \lfloor Y \rfloor, \beta - \lfloor Y \rfloor)$.
+}
+
+\begin{proof} of Lemma \ref{lem_acc_lap}.\\
+Given $Y \thicksim \lap{0}{b}$, we have\cite{dwork2014algorithmic}:$\Pr[|Y| \geq t \cdot b] = e^{- t}.$\\
+Based on this, we get:$\Pr[|Y| \geq t] = e^{- \frac{t \epsilon}{\Delta }}$, where $Y \thicksim \lap{0}{\frac{\Delta }{\epsilon}}$ in our setting.
+
+Considering the post-processing (i.e., taking the floor value of $Y$) in $\lapmech$, we have:
+%\[
+%\Pr\big[\lfloor Y \rfloor = t\big] 
+%= \Pr[ t \leq Y < t + 1] 
+%= \frac{1}{2} (e^{- \frac{\epsilon (t)}{\Delta \bysinfer}} - e^{- \frac{\epsilon (t + 1)}{\Delta \bysinfer}}).
+%\]
+%when $t \geq 0$, and
+%\[
+%\Pr\big[\lfloor Y \rfloor = t\big] 
+%= \Pr[ t \leq Y < t + 1] 
+%= \frac{1}{2} (e^{\frac{\epsilon (t)}{\Delta \bysinfer}} - e^{\frac{\epsilon (t + 1)}{\Delta \bysinfer}}).
+%\]
+%when $t < 0$.
+\begin{align*}
+\Pr\big[\lfloor Y \rfloor = t\big]&= \Pr[ t \leq Y < t + 1]\\
+&= 
+\begin{cases}
+\frac{1}{2} (e^{- \frac{\epsilon (t)}{\Delta }} - e^{- \frac{\epsilon (t + 1)}{\Delta }}) &  t \geq 0\\
+\frac{1}{2} (e^{\frac{\epsilon (t)}{\Delta }} - e^{\frac{\epsilon (t + 1)}{\Delta }}) & t < 0
+\end{cases}
+\end{align*}
+
+Let $\betad(\alpha, \beta)$ be the true posterior distribution, i.e., $\bysinfer{\dataobs} = \betad(\alpha, \beta)$, and $r_L$ be the posterior produced by Laplace mechanism, i.e., $r_L = \betad(\alpha + \lfloor Y \rfloor, \beta - \lfloor Y \rfloor)$. By applying Hellinger distance in our case, we get:
+%$$
+%\begin{array}{rcl}
+%& \Pr\big[\hellinger(\bysinfer{\dataobs}, r_L ) 
+%= \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)\big] \\
+%& =  \frac{1}{2} (e^{- \frac{\epsilon (t)}{\Delta \bysinfer}} - e^{- \frac{\epsilon (t + 1)}{\Delta \bysinfer}})\\
+%\end{array}
+%$$
+%when $t \geq 0$, and\\
+%$$
+%\begin{array}{rcl}
+%& \Pr\big[\hellinger(\bysinfer{\dataobs}, r_L ) 
+%= \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)\big]\\
+%& = \frac{1}{2} (e^{\frac{\epsilon (t + 1)}{\Delta \bysinfer}} - e^{\frac{\epsilon (t)}{\Delta \bysinfer}}).
+%\end{array}
+%$$
+%when $t < 0$.\\
+\begin{align*}
+&
+\Pr\left[
+\begin{aligned}
+\lefteqn{\hellinger(\bysinfer{\dataobs}, r_L )}\\ 
+&= \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)
+\end{aligned}
+\right]
+\\
+&\qquad = 
+\begin{cases}
+\frac{1}{2} (e^{- \frac{\epsilon (t)}{\Delta }} - e^{- \frac{\epsilon (t + 1)}{\Delta }}) &  t \geq 0\\
+\frac{1}{2} (e^{\frac{\epsilon (t + 1)}{\Delta }} - e^{\frac{\epsilon (t)}{\Delta }}) & t < 0
+\end{cases}
+\end{align*}
+
+Unfolding the Hellinger distance formula, we get:\\
+  \noindent \textbf{case: t is even}
+  \begin{align*}
+  &\Pr\left[
+\begin{aligned}\lefteqn{\hellinger(\bysinfer{\dataobs}, r_L )^2}\\
+&= 1 - \prod_{k = 0}^{\frac{t}{2} - 1}
+  \sqrt{1 - \frac{\frac{t}{2}}{a + k + \frac{t}{2}}}
+  \cdot\prod_{k = 1}^{\frac{t}{2}}
+  \sqrt{1 - \frac{\frac{t}{2}}{\beta - k}}
+\end{aligned}
+\right] \\
+  &\qquad = \frac{1}{2} (e^{- \frac{\epsilon (t)}{\Delta }} - e^{- \frac{\epsilon (t + 1)}{\Delta }})
+  \end{align*}
+  \noindent \textbf{case: t is odd}
+  let $t = 2 m + 1$
+  \begin{align*}
+  & \Pr\left[
+  \begin{aligned}\lefteqn{\hellinger(\bysinfer{\dataobs}, r_L )^2} \\
+  & =
+  1 - \frac{\Gamma(\alpha+\frac{1}{2})}{\Gamma(\alpha)} \cdot
+\frac{\Gamma(\beta - \frac{1}{2})}{\Gamma(\beta)}\\
+&\cdot 
+  \prod_{k = 0}^{m-1}
+  \sqrt{(1 + \frac{1}{2(\alpha + k)})
+  (1 + \frac{\frac{1}{2} - m}{(\alpha + m  + k)})
+  }\\ &\cdot 
+  \prod_{k = 1}^{m} 
+  \sqrt{(1 + \frac{1}{2(\beta - \frac{1}{2}- k)})(1 + \frac{\frac{1}{2} - m}{(\beta - \frac{1}{2}- k)})} \end{aligned}
+\right] \\
+   &\qquad = \frac{1}{2} (e^{- \frac{\epsilon (t)}{\Delta }} - e^{- \frac{\epsilon (t + 1)}{\Delta }})
+  \end{align*}
+
+\end{proof}
+
+
+\end{document}
