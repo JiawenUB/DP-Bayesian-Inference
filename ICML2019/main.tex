@@ -666,38 +666,40 @@ over all the elements in $\datauni^{n}$ adjacent to $\dataobs$. Notice
 that $\candidateset$ has $\binom{n + 1}{m - 1}$ elements in this case. {\color{red}{what is m here? and was $\datauni$} defined?}
 
 \section{Privacy Analysis}
-
-\subsection{Privacy of Laplace Mechanism Family}
 The following lemmas prove the privacy of all the mechanisms (besides $\lexpmech$) presented so far.
+\subsection{Privacy of Laplace Mechanism Family}
 Mechanisms $\lapmech$ and $\ilapmech$ are trivially $\epsilon$-differentially private since the mechanisms
 add Laplacian noise proportional to the $\ell_1$-norm sensitivity to the arguments of the posterior distributions.
 \begin{lem}
-  $\lapmech$, $\ilapmech$ are $\epsilon$-differentially private.
+$\lapmech$, $\ilapmech$ are $\epsilon$-differentially private.
 \end{lem}
-
 \subsection{Privacy of Exponential Mechanism Family}
-\subsubsection{$\expmech$ $\epsilon-$Differential Privacy}
+%\subsubsection{$\expmech$ $\epsilon-$Differential Privacy}
+By applying the result of \cite{dwork2014algorithmic},
+we obtain $\epsilon-$differential privacy of the mechanism $\expmech$.
 \begin{lem}
 \label{lem_exp_private}
-$\expmech$ is $\epsilon-$differentially private by \cite{dwork2014algorithmic}.
+$\expmech$ is $\epsilon-$differentially private.
 \end{lem}
-
-
 % \subsubsection{$\lexpmech$ non-Differential Privacy}
 % Exponential mechanism with local sensitivity non-differential privacy.
-
-\subsubsection{$\hexpmech$ $\epsilon-$Differential Privacy}
-
+%\subsubsection{$\hexpmech$ $\epsilon-$Differential Privacy}
+In this paper, we prove the $\epsilon-$differential privacy of the 
+exponential mechanism $\hexpmech$ with $\gamma$-smooth sensitivity.
 \begin{lem}
 \label{lem_hexpmech_privacy}
-$\hexpmech$ is $\epsilon$-differential privacy by setting $\gamma = 1.0$.
+$\hexpmech$ is $\epsilon$-differential private when $\gamma = 1.0$.
 \end{lem}
+\todo{(Tetsuya) I think this should be theorem or proposition.}
 (Proof is in Appendix)
 
-
-
 \section{Accuracy Analysis}
-
+We will observe accuracy of mechanisms.
+In this section, we fix $\alpha$ and $\beta$, and for simplicity, we define the term of difference from $\betad(\alpha, \beta)$, the true posterior distribution.
+\[
+c(t) = \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t).
+\]
+%where $\betad(\alpha, \beta)$ is the true posterior distribution
 \subsection{Accuracy Bound for Baseline Mechanisms}
 
 % \subsubsection{Accuracy Bound for Exponential Mechanism}
@@ -709,28 +711,29 @@ $\hexpmech$ is $\epsilon$-differential privacy by setting $\gamma = 1.0$.
 % \end{equation*}
 % where $|R|$ is the size of the candidate set, $OPT$ is the optimal candidates, $|R_{OPT}|$ is the number of optimal candidates.
 
-
 \subsubsection{Accuracy Bound for Laplace Mechanism}
 \label{subsec_accuracy_lap}
 \begin{lem}
 \label{lem_acc_lap}
-Given $Y \thicksim \lap{0}{b}$, the accuracy bound developed for $\lapmech$ is:
+%Given $Y \thicksim \lap{0}{b}$, the accuracy bound developed for $\lapmech$ is:
+The accuracy bound of $\lapmech$ is given by
 \begin{align*}
 &
 \lapmechPr{\dataobs}{
-\begin{aligned}
-\lefteqn{\hellinger(\bysinfer(\dataobs), z )}\\ 
-&= \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)
-\end{aligned}
+%\begin{aligned}
+%\lefteqn{\hellinger(\bysinfer(\dataobs), z )}\\ 
+%&= \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)
+\hellinger(\bysinfer(\dataobs), z ) = c(t)
+%\end{aligned}
 }
 \\
 &\qquad = 
 \begin{cases}
 \frac{1}{2} (e^{- \frac{\epsilon (t)}{\Delta \bysinfer}} - e^{- \frac{\epsilon (t + 1)}{\Delta \bysinfer}}) &  t \geq 0\\
 \frac{1}{2} (e^{\frac{\epsilon (t + 1)}{\Delta \bysinfer}} - e^{\frac{\epsilon (t)}{\Delta \bysinfer}}) & t < 0
-\end{cases}
+\end{cases}.
 \end{align*}
-where $\betad(\alpha, \beta)$ is the true posterior distribution, i.e., $\bysinfer(\dataobs) = \betad(\alpha, \beta)$, and $r_L$ be the posterior produced by Laplace mechanism, i.e., $z = \betad(\alpha + \lfloor Y \rfloor, \beta - \lfloor Y \rfloor)$.
+%where $\betad(\alpha, \beta)$ is the true posterior distribution, i.e., $\bysinfer(\dataobs) = \betad(\alpha, \beta)$, and $r_L$ be the posterior produced by Laplace mechanism, i.e., $z = \betad(\alpha + \lfloor Y \rfloor, \beta - \lfloor Y \rfloor)$.
 \end{lem}
 (Proof is in Appendix)
 
@@ -765,34 +768,41 @@ Instantiating $t$ with specific values ($0,1,2$ for example) and $\epsilon = 1$,
 %} = 0.07237464051.
 %\end{align*}
 %In all cases above, probability values are fixed even data size changes, only the distance are decreasing.
-\begin{align*}
-&\lapmechPr{\dataobs}{
-\begin{aligned}
-\lefteqn{\hellinger(\bysinfer(\dataobs), z )}\\ 
-&= \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)
-\end{aligned}
-}\\
-& \qquad = \begin{cases}
+%\begin{align*}
+%&\lapmechPr{\dataobs}{
+%\begin{aligned}
+%\lefteqn{\hellinger(\bysinfer(\dataobs), z )}\\ 
+%&= \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)
+%\end{aligned}
+%
+%}\\
+%& \qquad = \begin{cases}
+%0.19673467014 & t = 0\\
+%0.11932560927 & t = 1\\
+%0.07237464051 & t = 2
+%\end{cases}.
+%\end{align*}
+\[
+\Pr[\hellinger(\bysinfer(\dataobs), z ) = c(t)]
+=
+\begin{cases}
 0.19673467014 & t = 0\\
 0.11932560927 & t = 1\\
 0.07237464051 & t = 2
 \end{cases}.
-\end{align*}
-
+\]
 
 \subsubsection{Accuracy Bound for Improved Laplace Mechanism}
 \label{subsec_accuracy_lap}
 Accuracy bound for improved Laplace mechanism is obtained from the standard Laplace Mechanism by replacing the sensitivity of $\Delta \bysinfer$ with $1$ in Beta-binomial model and $2$ in Dirichlet-multinomial model.
-
-Given $t$ with the same specific values ($0,1,2$) and $\epsilon = 1$ as above, we get the following accuracy equations on improved Laplace mechanism:
-
 \begin{align*}
 &
 \ilapmechPr{\dataobs}{
-\begin{aligned}
-\lefteqn{\hellinger(\bysinfer(\dataobs), z )}\\ 
-&= \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)
-\end{aligned}
+%\begin{aligned}
+%\lefteqn{\hellinger(\bysinfer(\dataobs), z )}\\ 
+%&= \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)
+%\end{aligned}
+\hellinger(\bysinfer(\dataobs), z ) = c(t)
 }
 \\
 &\qquad = 
@@ -833,20 +843,15 @@ Given $t$ with the same specific values ($0,1,2$) and $\epsilon = 1$ as above, w
 %} = 0.04277411.
 %\end{align*}
 %In all cases above, probability values are fixed even data size changes, only the distance are decreasing.
-\begin{align*}
-&\ilapmechPr{\dataobs}{
-\begin{aligned}
-\lefteqn{\hellinger(\bysinfer(\dataobs), r_L )}\\ 
-&= \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)
-\end{aligned}
-}\\
-& \qquad = \begin{cases}
+Given $t$ with the same specific values ($0,1,2$) and $\epsilon = 1$ as above, we get the following accuracy equations on improved Laplace mechanism:
+\[
+\Pr[\hellinger(\bysinfer(\dataobs), z ) = c(t)]
+= \begin{cases}
 0.31606027941 & t = 0\\
 0.11627207896 & t = 1\\
 0.04277410743 & t = 2
 \end{cases}.
-\end{align*}
-
+\]
 \subsection{Accuracy Bound for $\hexpmech$}
 \label{subsec_accuracy_smoo}
 \begin{lem}
@@ -862,8 +867,8 @@ Given $t$ with the same specific values ($0,1,2$) and $\epsilon = 1$ as above, w
 %  $c = \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)$
   \begin{align*}
   \lefteqn{ \hexpmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), z) = c(t)  } }\\ 
-  &  = \frac{\exp{(\frac{- \epsilon c}{4 S(\dataobs)})}}{\nomalizer{\dataobs}}\\
-  & \text{ where } c(t) = \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t).
+  &  = \frac{\exp{(\frac{- \epsilon c(t)}{4 S(\dataobs)})}}{\nomalizer{\dataobs}}%\\
+%  & \text{ where } c(t) = \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t).
   \end{align*}
 \end{lem}
 
@@ -902,7 +907,6 @@ For comparison with Laplace mechanism, we developed the Table \ref{tab_acc_theo}
  \hline
 \end{tabular}
 \end{table*}
-
 % In the case when $\alpha = \beta$, there are always 2 symmetric beta distributions with the same distance from the true posterior, then we have accuracy table as:
 % \begin{table*}[t]
 % \scriptsize
@@ -941,22 +945,29 @@ For comparison with Laplace mechanism, we developed the Table \ref{tab_acc_theo}
 
 When $\epsilon$ and dimensions are fixed, the probability of getting the true posterior, or posterior with certain step from Laplace mechanism is fixed whatever the data size or prior changes.
 
-By solving following equations:
+By solving equations on accuracy such as:
+\begin{align*}
+\lefteqn{\hexpmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), z) = c(1)  }}\\
+&\qquad =
+\lapmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), z) = c(1)  }
+=
+0.19673467 
+\end{align*}
 %  \[
   %\frac{1}{\nomalizer{\dataobs}} = 0.19673467\ or\ 0.316060279
-\begin{align*}
- &\hexpmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), z) = c(0)  } \\
- & = 0.19673467 \text{ or } 0.316060279
-\end{align*}
+%\begin{align*}
+% &\hexpmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), z) = c(0)  } \\
+% & = 0.19673467 \text{ or } 0.316060279
+%\end{align*}
 %  \]
 %  we can get the range where we can do better than $\lapmech$ or $\ilapmech$ on outputting the correct answer. 
 %  \[
 %  \frac{\exp{(\frac{- \epsilon \sqrt{1 - \frac{\Gamma(\alpha+\frac{1}{2})}{\Gamma(\alpha)} \cdot
 %   \frac{\Gamma(\beta - \frac{1}{2})}{\Gamma(\beta)}}}{4 S(\dataobs)})}}{\nomalizer{\dataobs}}
-\begin{align*}
-  &\hexpmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), z) = c(1)  }\\
-  &= 0.119325609 \text{ or } 0.116272079
-\end{align*}
+%\begin{align*}
+%  &\hexpmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), z) = c(1)  }\\
+%  &= 0.119325609 \text{ or } 0.116272079
+%\end{align*}
 %  we can get the range where we can do better than $\lapmech$ or $\ilapmech$ on outputting the answer with one step from correct one.
 %  \[
 %\frac{\exp{(\frac{- \epsilon \sqrt{1 - 
@@ -964,11 +975,11 @@ By solving following equations:
 %    \cdot
 %    \sqrt{1 - \frac{\frac{t}{2}}{\beta}}}}
 %    {4 S(\dataobs)})}}{\nomalizer{\dataobs}}
-\begin{align*}
- &\hexpmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), z) = c(2)  }\\
- &=0.072374641 \text{ or }  0.042774107
+%\begin{align*}
+% &\hexpmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), z) = c(2)  }\\
+% &=0.072374641 \text{ or }  0.042774107
 %\]
-\end{align*}
+%\end{align*}
 we can get the range where we can do better than $\lapmech$ or $\ilapmech$ on outputting the answer with two steps from the correct one... etc.
 
 
