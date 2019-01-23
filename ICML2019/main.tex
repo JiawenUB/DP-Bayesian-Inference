@@ -331,18 +331,19 @@ The Beta-Binomial model can be obtained from the Dirichlet-Multinomial
 model by fixing $k=2$. 
 
 \noindent \textbf{Hellinger distance.}
-\emph{Hellinger} distance $\hellinger(\cdot,\cdot)$ is a statistical
+The \emph{Hellinger} distance $\hellinger(\cdot,\cdot)$ is a statistical
 divergence measuring the distance between two probability
 distributions. Given two probability distributions $\textup{P}$ and $\textup{Q}$,
 the Hellinger distance between them is defined as:
 \[
 \hellinger(P,Q) =\sqrt{\frac{1}{2} \int \bigg(\frac{dP}{d \lambda} - \frac{dQ}{d \lambda}\bigg)^2 d \lambda}
 \]
-When $\textup{P}=\betad(\alpha_1, \beta_1)$ and $\textup{Q}=\betad(\alpha_2, \beta_2)$, we can unfold the above and derive: 
-\[
- \hellinger(P,Q) =  \sqrt{1 - \frac{\betaf(\frac{\alpha_1 + \alpha_2}{2}, \frac{\beta_1 + \beta_2}{2})}{\sqrt{\betaf(\alpha_1,\beta_1)\betaf(\alpha_2,\beta_2)}}}
-\]
-
+When we consider the Hellinger distance between Dirichlet
+distributions we can simplify this definition to close form. If $\textup{P}=\dirichlet{\valpha_1}$ and
+$\textup{Q}=\dirichlet{\valpha_2}$ we have: 
+ \[
+   \hellinger(\dirichlet{\valpha_1}, \dirichlet{\valpha_2}) = \sqrt{1 - \frac{\betaf(\frac{\valpha_1 + \valpha_2}{2})}{\sqrt{\betaf(\valpha_1) \betaf(\valpha_2)}}}
+ \]
 
 \noindent \textbf{Differential Privacy.}
 \emph{Differential privacy}~\cite{dwork2006} is a quantitative notion
@@ -445,31 +446,12 @@ of mechanisms by considering different norms. e.g. a norm over space of measures
 to compute the sensitivity and provide guarantees on the accuracy.
 
 
-We will use the \emph{Hellinger} distance $\hellinger(\cdot,\cdot)$.
-Given two probability distributions $\textup{P}$ and $\textup{Q}$,
-the square of the Hellinger distance between them is defined as:
-\[
-\hellinger(P,Q)^2 =\frac{1}{2} \int \bigg(\frac{dP}{d \lambda} - \frac{dQ}{d \lambda}\bigg)^2 d \lambda
-\]
-When $\textup{P}=\dirichlet{\valpha_1}$ and $\textup{Q}=\dirichlet{\valpha_2}$, we can unfold the above and derive: 
- \[
-   \hellinger(\dirichlet{\valpha_1}, \dirichlet{\valpha_2}) = \sqrt{1 - \frac{\betaf(\frac{\valpha_1 + \valpha_2}{2})}{\sqrt{\betaf(\valpha_1) \betaf(\valpha_2)}}}
- \]
-Our choice to use Hellinger distance is motivated by three facts:
-\begin{itemize}
-  \item It simplifies calculations in the case of the probabilistic models considered here.
-  
-  \item It also automatically yields bounds on the total variation distance, which represents also the maximum advantage an adversary can have in distingishing two distributions. 
-
-  \item The accuracy can be improved by using a smooth bound on Hellinger distance's local sensitivity. Indeed, as shown in Figure \ref{fig_sensitivity}, there can be a gap
-    between the global sensitivity and the local sensitivity.
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.32\textwidth]{sensitivity_2d.eps}
 \caption{Local sensitivity of $\hellinger$. Data size is 100. $\alpha$ is the number of 1s.}
 \label{fig_sensitivity}
 \end{figure}
-\end{itemize}
 
 
 
