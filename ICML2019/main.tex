@@ -657,7 +657,11 @@ where $S(\dataobs)$ is the 1-smooth sensitivity of  $\hellinger(\bysinfer{\datao
 % in (\ref{thm_gamma_smooth}) will be computed by letting $\dataobs'$ range
 % over all the elements in $\datauni^{n}$ adjacent to $\dataobs$. 
 \section{Accuracy Analysis}
-
+We will observe accuracy of mechanisms.
+In this section, we fix $\alpha$ and $\beta$, and for simplicity, we define the term of difference from $\betad(\alpha, \beta)$, the true posterior distribution.
+\[
+c(t) = \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t).
+\]
 \subsection{Accuracy Bound for Baseline Mechanisms}
 
 % \subsubsection{Accuracy Bound for Exponential Mechanism}
@@ -678,10 +682,7 @@ Given $Y \thicksim \lap{0}{b}$, the accuracy bound developed for $\lapmech$ is:
 \begin{align*}
 &
 \lapmechPr{\dataobs}{
-\begin{aligned}
-\lefteqn{\hellinger(\bysinfer(\dataobs), z )}\\ 
-&= \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)
-\end{aligned}
+\hellinger(\bysinfer{\dataobs}, z ) = c(t)
 }
 \\
 &\qquad = 
@@ -690,33 +691,33 @@ Given $Y \thicksim \lap{0}{b}$, the accuracy bound developed for $\lapmech$ is:
 \frac{1}{2} (e^{\frac{\epsilon (t + 1)}{\Delta }} - e^{\frac{\epsilon (t)}{\Delta }}) & t < 0
 \end{cases}
 \end{align*}
-where $\betad(\alpha, \beta)$ is the true posterior distribution, i.e., $\bysinfer{\dataobs} = \betad(\alpha, \beta)$, and $r_L$ be the posterior produced by Laplace mechanism, i.e., $z = \betad(\alpha + \lfloor Y \rfloor, \beta - \lfloor Y \rfloor)$.
+where $\betad(\alpha, \beta)$ is the true posterior distribution, i.e., $\bysinfer{\dataobs} = \betad(\alpha, \beta)$, and $z$ be the posterior produced by Laplace mechanism, i.e., $z = \betad(\alpha + \lfloor Y \rfloor, \beta - \lfloor Y \rfloor)$.
 \end{lem}
 (Proof is in Appendix)
 
 %  Instantiating $t$ with specific values ($1, 2, 3$ for example), we get following accuracy equations:\\
-%  $\lapmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), r_L ) = 0} = 0.19673467014$.\\
-%  $\lapmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), r_L )^2 = 1 - \frac{\Gamma(\alpha+\frac{1}{2})}{\Gamma(\alpha)} \cdot
+%  $\lapmechPr{\dataobs}{\hellinger(\bysinfer{\dataobs}, r_L ) = 0} = 0.19673467014$.\\
+%  $\lapmechPr{\dataobs}{\hellinger(\bysinfer{\dataobs}, r_L )^2 = 1 - \frac{\Gamma(\alpha+\frac{1}{2})}{\Gamma(\alpha)} \cdot
 %  \frac{\Gamma(\beta - \frac{1}{2})}{\Gamma(\beta)} } = 0.11932560927$.\\  
-%  $\lapmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), r_L )^2 = 1 - 
+%  $\lapmechPr{\dataobs}{\hellinger(\bysinfer{\dataobs}, r_L )^2 = 1 - 
 %  \sqrt{1 - \frac{\frac{t}{2}}{a + \frac{t}{2}}}
 %  \cdot
 %  \sqrt{1 - \frac{\frac{t}{2}}{\beta}}} = 0.07237464051$.\\
 Instantiating $t$ with specific values ($0,1,2$ for example) and $\epsilon = 1$, we get the following accuracy equations on Laplace mechanism:
 %\begin{align*}
 %&\lapmechPr{\dataobs}{
-%\textstyle\hellinger(\bysinfer(\dataobs), r_L ) = 0
+%\textstyle\hellinger(\bysinfer{\dataobs}, r_L ) = 0
 %} = 0.19673467014,\\
 %&\lapmechPr{\dataobs}{
 %\begin{aligned}
-%& \textstyle\hellinger(\bysinfer(\dataobs), r_L )^2 \\
+%& \textstyle\hellinger(\bysinfer{\dataobs}, r_L )^2 \\
 %& = 1 - \frac{\Gamma(\alpha+\frac{1}{2})}{\Gamma(\alpha)} \cdot
 %  \frac{\Gamma(\beta - \frac{1}{2})}{\Gamma(\beta)} 
 %\end{aligned}
 %  } = 0.11932560927,\\
 %&\lapmechPr{\dataobs}{
 %\begin{aligned}
-%& \textstyle\hellinger(\bysinfer(\dataobs), r_L )^2 \\
+%& \textstyle\hellinger(\bysinfer{\dataobs}, r_L )^2 \\
 %& = 1 - 
 %  \sqrt{1 - \frac{\frac{t}{2}}{a + \frac{t}{2}}}
 %  \cdot
@@ -725,34 +726,32 @@ Instantiating $t$ with specific values ($0,1,2$ for example) and $\epsilon = 1$,
 %} = 0.07237464051.
 %\end{align*}
 %In all cases above, probability values are fixed even data size changes, only the distance are decreasing.
-\begin{align*}
-&\lapmechPr{\dataobs}{
-\begin{aligned}
-\lefteqn{\hellinger(\bysinfer(\dataobs), z )}\\ 
-&= \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)
-\end{aligned}
-}\\
-& \qquad = \begin{cases}
+\[
+\Pr[\hellinger(\bysinfer{\dataobs}, z ) = c(t)]
+= \begin{cases}
 0.19673467014 & t = 0\\
 0.11932560927 & t = 1\\
 0.07237464051 & t = 2
 \end{cases}.
-\end{align*}
-
+\]
+%\begin{align*}
+%&\ilapmechPr{\dataobs}{
+%\hellinger(\bysinfer{\dataobs}, z ) = c(t)
+%}\\
+%& \qquad =  \begin{cases}
+%0.31606027941 & t = 0\\
+%0.11627207896 & t = 1\\
+%0.04277410743 & t = 2
+%\end{cases}.
+%\end{align*}
 
 \subsubsection{Accuracy Bound for Improved Laplace Mechanism}
 \label{subsec_accuracy_lap}
 Accuracy bound for improved Laplace mechanism is obtained from the standard Laplace Mechanism by replacing the sensitivity of $\Delta \bysinfer$ with $1$ in Beta-binomial model and $2$ in Dirichlet-multinomial model.
-
-Given $t$ with the same specific values ($0,1,2$) and $\epsilon = 1$ as above, we get the following accuracy equations on improved Laplace mechanism:
-
 \begin{align*}
 &
 \ilapmechPr{\dataobs}{
-\begin{aligned}
-\lefteqn{\hellinger(\bysinfer(\dataobs), z )}\\ 
-&= \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)
-\end{aligned}
+\hellinger(\bysinfer{\dataobs}, z ) = c(t)
 }
 \\
 &\qquad = 
@@ -763,28 +762,28 @@ Given $t$ with the same specific values ($0,1,2$) and $\epsilon = 1$ as above, w
 \end{align*}
 %Given $t$ with the same specific values ($1, 2, 3$ as above), we get following accuracy equations:
 %
-%  $\lapmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), r_L ) = 0} = 0.31606027941$.
+%  $\lapmechPr{\dataobs}{\hellinger(\bysinfer{\dataobs}, r_L ) = 0} = 0.31606027941$.
 %
-%  $\lapmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), r_L )^2 = 1 - \frac{\Gamma(\alpha+\frac{1}{2})}{\Gamma(\alpha)} \cdot
+%  $\lapmechPr{\dataobs}{\hellinger(\bysinfer{\dataobs}, r_L )^2 = 1 - \frac{\Gamma(\alpha+\frac{1}{2})}{\Gamma(\alpha)} \cdot
 %  \frac{\Gamma(\beta - \frac{1}{2})}{\Gamma(\beta)} } = 0.11627207896$. 
 %
-%  $\lapmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), r_L )^2 = 1 - 
+%  $\lapmechPr{\dataobs}{\hellinger(\bysinfer{\dataobs}, r_L )^2 = 1 - 
 %  \sqrt{1 - \frac{\frac{t}{2}}{a + \frac{t}{2}}}
 %  \cdot
 %  \sqrt{1 - \frac{\frac{t}{2}}{\beta}}} = 0.04277410743$.
 %\begin{align*}
 %&\ilapmechPr{\dataobs}{
-%\textstyle\hellinger(\bysinfer(\dataobs), r_L ) = 0}= 0.31606027941,\\
+%\textstyle\hellinger(\bysinfer{\dataobs}, r_L ) = 0}= 0.31606027941,\\
 %&\ilapmechPr{\dataobs}{
 %\begin{aligned}
-%& \textstyle\hellinger(\bysinfer(\dataobs), r_L )^2 \\
+%& \textstyle\hellinger(\bysinfer{\dataobs}, r_L )^2 \\
 %& = 1 - \frac{\Gamma(\alpha+\frac{1}{2})}{\Gamma(\alpha)} \cdot
 %\frac{\Gamma(\beta - \frac{1}{2})}{\Gamma(\beta)} 
 %  \end{aligned}
 %} = 0.116272079,\\
 %&\ilapmechPr{\dataobs}{
 %\begin{aligned}
-%& \textstyle\hellinger(\bysinfer(\dataobs), r_L )^2 \\
+%& \textstyle\hellinger(\bysinfer{\dataobs}, r_L )^2 \\
 %& = 1 - 
 %  \sqrt{1 - \frac{\frac{t}{2}}{a + \frac{t}{2}}}
 %  \cdot
@@ -793,19 +792,28 @@ Given $t$ with the same specific values ($0,1,2$) and $\epsilon = 1$ as above, w
 %} = 0.04277411.
 %\end{align*}
 %In all cases above, probability values are fixed even data size changes, only the distance are decreasing.
-\begin{align*}
-&\ilapmechPr{\dataobs}{
-\begin{aligned}
-\lefteqn{\hellinger(\bysinfer(\dataobs), r_L )}\\ 
-&= \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)
-\end{aligned}
-}\\
-& \qquad = \begin{cases}
+
+Given $t$ with the same specific values ($0,1,2$) and $\epsilon = 1$ as above, we get the following accuracy equations on improved Laplace mechanism:
+\[
+\Pr[
+\hellinger(\bysinfer{\dataobs}, z ) = c(t)
+]
+ =  \begin{cases}
 0.31606027941 & t = 0\\
 0.11627207896 & t = 1\\
 0.04277410743 & t = 2
 \end{cases}.
-\end{align*}
+\]
+%\begin{align*}
+%&\ilapmechPr{\dataobs}{
+%\hellinger(\bysinfer{\dataobs}, z ) = c(t)
+%}\\
+%& \qquad =  \begin{cases}
+%0.31606027941 & t = 0\\
+%0.11627207896 & t = 1\\
+%0.04277410743 & t = 2
+%\end{cases}.
+%\end{align*}
 
 \subsection{Accuracy Bound for $\hexpmech$}
 \label{subsec_accuracy_smoo}
@@ -815,15 +823,15 @@ Given $t$ with the same specific values ($0,1,2$) and $\epsilon = 1$ as above, w
   we have following accuracy bound for this mechanism:
 %  \begin{align*}
 %  \label{eq_acc}
-%  & \hexpmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), z) = c  }\\ 
+%  & \hexpmechPr{\dataobs}{\hellinger(\bysinfer{\dataobs}, z) = c  }\\ 
 %  = & \frac{\exp{(\frac{- \epsilon c}{4 S(\dataobs)})}}{\nomalizer{\dataobs}},
 %  \end{align*}
 %
 %  $c = \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)$
   \begin{align*}
-  \lefteqn{ \hexpmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), z) = c(t)  } }\\ 
-  &  = \frac{\exp{(\frac{- \epsilon c}{4 S(\dataobs)})}}{\nomalizer{\dataobs}}\\
-  & \text{ where } c(t) = \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t).
+  \lefteqn{ \hexpmechPr{\dataobs}{\hellinger(\bysinfer{\dataobs}, z) = c(t)  } }\\ 
+  &  = \frac{\exp{(\frac{- \epsilon c}{4 S(\dataobs)})}}{\nomalizer{\dataobs}}
+%  & \text{ where } c(t) = \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t).
   \end{align*}
 \end{lem}
 
@@ -877,13 +885,13 @@ For comparison with Laplace mechanism, we developed the Table \ref{tab_acc_theo}
 %     \cdot
 %     \sqrt{1 - \frac{\frac{t}{2}}{\beta}}$ & \dots  \\
 %  \hline
-%  $\lapmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), z ) = c} $
+%  $\lapmechPr{\dataobs}{\hellinger(\bysinfer{\dataobs}, z ) = c} $
 %  & 0.19673467014 & 0.31606027941 & 0.19170024978 & \dots \\
 %  \hline
-%  $\ilapmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), z) = c}$
+%  $\ilapmechPr{\dataobs}{\hellinger(\bysinfer{\dataobs}, z) = c}$
 %  & 0.31606027941 & 0.43233235838 & 0.1590461864 & \dots \\
 %  \hline
-%  $\hexpmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), z) = c}$
+%  $\hexpmechPr{\dataobs}{\hellinger(\bysinfer{\dataobs}, z) = c}$
 %  & $\frac{1}{\nomalizer{\dataobs}}$ 
 %  & $\frac{2 \exp{(\frac{- \epsilon \sqrt{1 - \frac{\Gamma(\alpha+\frac{1}{2})}{\Gamma(\alpha)} 
 %  \cdot
@@ -901,22 +909,30 @@ For comparison with Laplace mechanism, we developed the Table \ref{tab_acc_theo}
 
 When $\epsilon$ and dimensions are fixed, the probability of getting the true posterior, or posterior with certain step from Laplace mechanism is fixed whatever the data size or prior changes.
 
-By solving following equations:
-%  \[
-  %\frac{1}{\nomalizer{\dataobs}} = 0.19673467\ or\ 0.316060279
+By solving equations on accuracy such as:
 \begin{align*}
- &\hexpmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), z) = c(0)  } \\
- & = 0.19673467 \text{ or } 0.316060279
+\lefteqn{\hexpmechPr{\dataobs}{\hellinger(\bysinfer{\dataobs}, z) = c(1)  }}\\
+&\qquad =
+\lapmechPr{\dataobs}{\hellinger(\bysinfer{\dataobs}, z) = c(1)  }
+=
+0.19673467 
 \end{align*}
+%By solving following equations:
+%  \[
+%  %\frac{1}{\nomalizer{\dataobs}} = 0.19673467\ or\ 0.316060279
+%\begin{align*}
+% &\hexpmechPr{\dataobs}{\hellinger(\bysinfer{\dataobs}, z) = c(0)  } \\
+% & = 0.19673467 \text{ or } 0.316060279
+%\end{align*}
 %  \]
 %  we can get the range where we can do better than $\lapmech$ or $\ilapmech$ on outputting the correct answer. 
 %  \[
 %  \frac{\exp{(\frac{- \epsilon \sqrt{1 - \frac{\Gamma(\alpha+\frac{1}{2})}{\Gamma(\alpha)} \cdot
 %   \frac{\Gamma(\beta - \frac{1}{2})}{\Gamma(\beta)}}}{4 S(\dataobs)})}}{\nomalizer{\dataobs}}
-\begin{align*}
-  &\hexpmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), z) = c(1)  }\\
-  &= 0.119325609 \text{ or } 0.116272079
-\end{align*}
+%\begin{align*}
+%  &\hexpmechPr{\dataobs}{\hellinger(\bysinfer{\dataobs}, z) = c(1)  }\\
+%  &= 0.119325609 \text{ or } 0.116272079
+%\end{align*}
 %  we can get the range where we can do better than $\lapmech$ or $\ilapmech$ on outputting the answer with one step from correct one.
 %  \[
 %\frac{\exp{(\frac{- \epsilon \sqrt{1 - 
@@ -924,11 +940,11 @@ By solving following equations:
 %    \cdot
 %    \sqrt{1 - \frac{\frac{t}{2}}{\beta}}}}
 %    {4 S(\dataobs)})}}{\nomalizer{\dataobs}}
-\begin{align*}
- &\hexpmechPr{\dataobs}{\hellinger(\bysinfer(\dataobs), z) = c(2)  }\\
- &=0.072374641 \text{ or }  0.042774107
+%\begin{align*}
+% &\hexpmechPr{\dataobs}{\hellinger(\bysinfer{\dataobs}, z) = c(2)  }\\
+% &=0.072374641 \text{ or }  0.042774107
 %\]
-\end{align*}
+%\end{align*}
 we can get the range where we can do better than $\lapmech$ or $\ilapmech$ on outputting the answer with two steps from the correct one... etc.
 
 
@@ -939,60 +955,60 @@ we can get the range where we can do better than $\lapmech$ or $\ilapmech$ on ou
 % \label{subsec_effi}
 % %The formula for computing the local sensitivity presented in Sec. \ref{sec_mechs}: %$LS(\dataobs)=\max\limits_{\dataobs' \in \datauni^n:\adj{\dataobs}{\dataobs'}, r\in \mathcal{R}}\lvert \hellinger(\bysinfer(\dataobs'), r) - \hellinger(\bysinfer(\dataobs'), r)\rvert$
 % %\[
-% %LS(\dataobs)=\max_{\substack{\dataobs' \in \datauni^n:\adj{\dataobs}{\dataobs'},\\ r\in \mathcal{R}}}\lvert \hellinger(\bysinfer(\dataobs), r) - \hellinger(\bysinfer(\dataobs'), r)\rvert
+% %LS(\dataobs)=\max_{\substack{\dataobs' \in \datauni^n:\adj{\dataobs}{\dataobs'},\\ r\in \mathcal{R}}}\lvert \hellinger(\bysinfer{\dataobs}, r) - \hellinger(\bysinfer(\dataobs'), r)\rvert
 % %\]
 % Thanks to the symmetry and triangle-inequality of the Hellinger
 % distance, we can simplify the local sensitivity.
 % \begin{lem}
 % \[
-% LS(\dataobs) = \max\limits_{\dataobs' \in \datauni^n:\adj{\dataobs}{\dataobs'}} \hellinger(\bysinfer(\dataobs), \bysinfer(\dataobs')).
+% LS(\dataobs) = \max\limits_{\dataobs' \in \datauni^n:\adj{\dataobs}{\dataobs'}} \hellinger(\bysinfer{\dataobs}, \bysinfer(\dataobs')).
 % \]
 % \end{lem}
 % \begin{proof}
 % For any $r \in \mathcal{R}$ and $\dataobs' \in \datauni^n$ with $\adj{\dataobs}{\dataobs'}$, we have
 % \begin{align*}
-% &\lvert \hellinger(\bysinfer(\dataobs), r) - \hellinger(\bysinfer(\dataobs'), r)\rvert\\
+% &\lvert \hellinger(\bysinfer{\dataobs}, r) - \hellinger(\bysinfer(\dataobs'), r)\rvert\\
 % & = 
 % \begin{cases}
-% \hellinger(\bysinfer(\dataobs), r) - \hellinger(\bysinfer(\dataobs'),r) & \text{positive case}\\
-% \hellinger(\bysinfer(\dataobs'),r) - \hellinger(\bysinfer(\dataobs), r) & \text{negative case}
+% \hellinger(\bysinfer{\dataobs}, r) - \hellinger(\bysinfer(\dataobs'),r) & \text{positive case}\\
+% \hellinger(\bysinfer(\dataobs'),r) - \hellinger(\bysinfer{\dataobs}, r) & \text{negative case}
 % \end{cases}\\
 % & \leq 
 % \begin{cases}
-% \hellinger(\bysinfer(\dataobs'), \bysinfer(\dataobs))+
+% \hellinger(\bysinfer(\dataobs'), \bysinfer{\dataobs})+
 % \hellinger(\bysinfer(\dataobs'), r) - \hellinger(\bysinfer(\dataobs'),r) & \\
-% \hellinger(\bysinfer(\dataobs'), \bysinfer(\dataobs))+
-% \hellinger(\bysinfer(\dataobs), r) - \hellinger(\bysinfer(\dataobs), r)&
+% \hellinger(\bysinfer(\dataobs'), \bysinfer{\dataobs})+
+% \hellinger(\bysinfer{\dataobs}, r) - \hellinger(\bysinfer{\dataobs}, r)&
 % \end{cases}\\
-% &= \hellinger(\bysinfer(\dataobs'), \bysinfer(\dataobs))
+% &= \hellinger(\bysinfer(\dataobs'), \bysinfer{\dataobs})
 % \end{align*}
-% The equality holds if $r = \bysinfer(\dataobs)$ or $r = \bysinfer(\dataobs')$.
+% The equality holds if $r = \bysinfer{\dataobs}$ or $r = \bysinfer(\dataobs')$.
 % Hence, we conclude the statement of this lemma.
 % \end{proof}
 
-%In particular, the maximum value over ${r \in R}$ always achieves at $r = \bysinfer(\dataobs)$.
+%In particular, the maximum value over ${r \in R}$ always achieves at $r = \bysinfer{\dataobs}$.
 %\begin{equation*}
 %\begin{split}
 %LS(\dataobs) 
-%  & = \max\limits_{\{|\dataobs,\dataobs'| \leq 1;\dataobs'\in \mathcal{X}^n\}} \{\hellinger(\bysinfer(\dataobs), \bysinfer(\dataobs)) \\
-%  & - \hellinger(\bysinfer(\dataobs'), \bysinfer(\dataobs))|\} \\
-%  & = \max\limits_{\{|\dataobs,\dataobs'| \leq 1;\dataobs'\in \mathcal{X}^n\}} \{\hellinger(\bysinfer(\dataobs'), \bysinfer(\dataobs))|\}.
+%  & = \max\limits_{\{|\dataobs,\dataobs'| \leq 1;\dataobs'\in \mathcal{X}^n\}} \{\hellinger(\bysinfer{\dataobs}, \bysinfer{\dataobs}) \\
+%  & - \hellinger(\bysinfer(\dataobs'), \bysinfer{\dataobs})|\} \\
+%  & = \max\limits_{\{|\dataobs,\dataobs'| \leq 1;\dataobs'\in \mathcal{X}^n\}} \{\hellinger(\bysinfer(\dataobs'), \bysinfer{\dataobs})|\}.
 %\end{split}
 %\begin{align*}
 %LS(\dataobs)
 %& = \max\limits_{\dataobs' \in \datauni^n:\adj{\dataobs}{\dataobs'}}
 %\left|~
 %\begin{aligned}
-%&\hellinger(\bysinfer(\dataobs), \bysinfer(\dataobs))\\
-%&\quad - \hellinger(\bysinfer(\dataobs'), \bysinfer(\dataobs))
+%&\hellinger(\bysinfer{\dataobs}, \bysinfer{\dataobs})\\
+%&\quad - \hellinger(\bysinfer(\dataobs'), \bysinfer{\dataobs})
 %\end{aligned}
 %\right|\\
 %  & = \max\limits_{\dataobs' \in \datauni^n:\adj{\dataobs}{\dataobs'}}
-%\hellinger(\bysinfer(\dataobs'), \bysinfer(\dataobs)).
+%\hellinger(\bysinfer(\dataobs'), \bysinfer{\dataobs}).
 %\end{align*}
 
 
-% This equation is validated by an experimental result shown in Fig. \ref{fig_efficiency}. We calculate the $\max\limits_{\{|\dataobs,\dataobs'| \leq 1;\dataobs'\in \mathcal{X}^n\}}$ value for every candidate $r \in \candidateset$. It is shown that maximum value taken when  $r = \bysinfer(\dataobs)$.
+% This equation is validated by an experimental result shown in Fig. \ref{fig_efficiency}. We calculate the $\max\limits_{\{|\dataobs,\dataobs'| \leq 1;\dataobs'\in \mathcal{X}^n\}}$ value for every candidate $r \in \candidateset$. It is shown that maximum value taken when  $r = \bysinfer{\dataobs}$.
 
 % \begin{figure}[ht]
 % \centering
@@ -1200,29 +1216,29 @@ $\frac{1}{S(\dataobs)} - \frac{1}{S(\dataobs')} \leq \gamma.$
 \noindent \textbf{Lemma \ref{lem_loc_opt}.}
 \emph{
 \[
-LS(\dataobs) = \max\limits_{\dataobs' \in \datauni^n:\adj{\dataobs}{\dataobs'}} \hellinger(\bysinfer(\dataobs), \bysinfer(\dataobs')).
+LS(\dataobs) = \max\limits_{\dataobs' \in \datauni^n:\adj{\dataobs}{\dataobs'}} \hellinger(\bysinfer{\dataobs}, \bysinfer(\dataobs')).
 \]
 }
 
 \begin{proof} of Lemma \ref{lem_loc_opt}.\\
 For any $r \in \mathcal{R}$ and $\dataobs' \in \datauni^n$ with $\adj{\dataobs}{\dataobs'}$, we have
 \begin{align*}
-&\lvert \hellinger(\bysinfer(\dataobs), r) - \hellinger(\bysinfer(\dataobs'), r)\rvert\\
+&\lvert \hellinger(\bysinfer{\dataobs}, r) - \hellinger(\bysinfer(\dataobs'), r)\rvert\\
 & = 
 \begin{cases}
-\hellinger(\bysinfer(\dataobs), r) - \hellinger(\bysinfer(\dataobs'),r) & \text{positive case}\\
-\hellinger(\bysinfer(\dataobs'),r) - \hellinger(\bysinfer(\dataobs), r) & \text{negative case}
+\hellinger(\bysinfer{\dataobs}, r) - \hellinger(\bysinfer(\dataobs'),r) & \text{positive case}\\
+\hellinger(\bysinfer(\dataobs'),r) - \hellinger(\bysinfer{\dataobs}, r) & \text{negative case}
 \end{cases}\\
 & \leq 
 \begin{cases}
-\hellinger(\bysinfer(\dataobs'), \bysinfer(\dataobs))+
+\hellinger(\bysinfer(\dataobs'), \bysinfer{\dataobs})+
 \hellinger(\bysinfer(\dataobs'), r) - \hellinger(\bysinfer(\dataobs'),r) & \\
-\hellinger(\bysinfer(\dataobs'), \bysinfer(\dataobs))+
-\hellinger(\bysinfer(\dataobs), r) - \hellinger(\bysinfer(\dataobs), r)&
+\hellinger(\bysinfer(\dataobs'), \bysinfer{\dataobs})+
+\hellinger(\bysinfer{\dataobs}, r) - \hellinger(\bysinfer{\dataobs}, r)&
 \end{cases}\\
-&= \hellinger(\bysinfer(\dataobs'), \bysinfer(\dataobs))
+&= \hellinger(\bysinfer(\dataobs'), \bysinfer{\dataobs})
 \end{align*}
-The equality holds if $r = \bysinfer(\dataobs)$ or $r = \bysinfer(\dataobs')$.
+The equality holds if $r = \bysinfer{\dataobs}$ or $r = \bysinfer(\dataobs')$.
 Hence, we conclude the statement of this lemma.
 \end{proof}
 
@@ -1563,7 +1579,7 @@ Given $Y \thicksim \lap{0}{b}$, the accuracy bound developed for $\lapmech$ is:
 &
 \lapmechPr{\dataobs}{
 \begin{aligned}
-\lefteqn{\hellinger(\bysinfer(\dataobs), z )}\\ 
+\lefteqn{\hellinger(\bysinfer{\dataobs}, z )}\\ 
 &= \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)
 \end{aligned}
 }
@@ -1603,10 +1619,10 @@ Considering the post-processing (i.e., taking the floor value of $Y$) in $\lapme
 \end{cases}
 \end{align*}
 
-Let $\betad(\alpha, \beta)$ be the true posterior distribution, i.e., $\bysinfer(\dataobs) = \betad(\alpha, \beta)$, and $r_L$ be the posterior produced by Laplace mechanism, i.e., $r_L = \betad(\alpha + \lfloor Y \rfloor, \beta - \lfloor Y \rfloor)$. By applying Hellinger distance in our case, we get:
+Let $\betad(\alpha, \beta)$ be the true posterior distribution, i.e., $\bysinfer{\dataobs} = \betad(\alpha, \beta)$, and $r_L$ be the posterior produced by Laplace mechanism, i.e., $r_L = \betad(\alpha + \lfloor Y \rfloor, \beta - \lfloor Y \rfloor)$. By applying Hellinger distance in our case, we get:
 %$$
 %\begin{array}{rcl}
-%& \Pr\big[\hellinger(\bysinfer(\dataobs), r_L ) 
+%& \Pr\big[\hellinger(\bysinfer{\dataobs}, r_L ) 
 %= \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)\big] \\
 %& =  \frac{1}{2} (e^{- \frac{\epsilon (t)}{\Delta \bysinfer}} - e^{- \frac{\epsilon (t + 1)}{\Delta \bysinfer}})\\
 %\end{array}
@@ -1614,7 +1630,7 @@ Let $\betad(\alpha, \beta)$ be the true posterior distribution, i.e., $\bysinfer
 %when $t \geq 0$, and\\
 %$$
 %\begin{array}{rcl}
-%& \Pr\big[\hellinger(\bysinfer(\dataobs), r_L ) 
+%& \Pr\big[\hellinger(\bysinfer{\dataobs}, r_L ) 
 %= \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)\big]\\
 %& = \frac{1}{2} (e^{\frac{\epsilon (t + 1)}{\Delta \bysinfer}} - e^{\frac{\epsilon (t)}{\Delta \bysinfer}}).
 %\end{array}
@@ -1624,7 +1640,7 @@ Let $\betad(\alpha, \beta)$ be the true posterior distribution, i.e., $\bysinfer
 &
 \Pr\left[
 \begin{aligned}
-\lefteqn{\hellinger(\bysinfer(\dataobs), r_L )}\\ 
+\lefteqn{\hellinger(\bysinfer{\dataobs}, r_L )}\\ 
 &= \hellinger(\betad(\alpha, \beta), \betad(\alpha + t, \beta - t)
 \end{aligned}
 \right]
@@ -1653,7 +1669,7 @@ Unfolding the Hellinger distance formula, we get:\\
   let $t = 2 m + 1$
   \begin{align*}
   & \Pr\left[
-  \begin{aligned}\lefteqn{\hellinger(\bysinfer(\dataobs), r_L )^2} \\
+  \begin{aligned}\lefteqn{\hellinger(\bysinfer{\dataobs}, r_L )^2} \\
   & =
   1 - \frac{\Gamma(\alpha+\frac{1}{2})}{\Gamma(\alpha)} \cdot
 \frac{\Gamma(\beta - \frac{1}{2})}{\Gamma(\beta)}\\
