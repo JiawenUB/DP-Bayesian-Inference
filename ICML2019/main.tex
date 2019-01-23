@@ -473,34 +473,36 @@ sensitivity of the function $\hellinger$.
 
 \section{Private Mechanisms}
 \label{sec_mechs}
-In this section we will describe and analyse a series of mechanisms to privately compute and release
+In this section we describe and analyze a variety of mechanisms which privately compute and release
 a posterior distribution.
 Section \ref{sec_ell1_dim} presents a first mechanism, $\lapmech$,
-based on the Laplace primitive where the sensitivity is measured w.r.t. to $\ell_1$ norm.
-Section \ref{sec_ell1_hist}, shows that $\lapmech$'s accuracy can be improved
-by performing a better analysis on the sensitivity of the inference process.
-Section \ref{sec_ehd}, shows an instance of the exponential mechanism, $\expmech$, where the scoring
-function is based on the Hellinger distance, we will see how this mechanisms performs
-poorly due to the very high global sensitivity of the inference process w.r.t to this metric.
-We then proceed to introduce $\lexpmech$, a variation of $\expmech$ which uses a lower bound
-on the global sensitivity called local sensitivity.
-Unfortunately, despite improving on accuracy $\lexpmech$ is non-private.
-Finally, building on $\lexpmech$, we introduce $\hexpmech$:
-which, based on the notion of \emph{smooth} sensitivity, achieves $\epsilon$-differential privacy and
+based on Laplace noise addition calibrated to sensitivity measured with respect to the $\ell_1$ norm.
+In Section \ref{sec_ell1_hist} we observe that the accuracy of $\lapmech$ can be optimized
+through a better analysis of the sensitivity of the inference process.
+Section \ref{sec_ehd} describes an instantiation of the exponential mechanism, $\expmech$, where the scoring
+function is based on the Hellinger distance. We will see that this mechanism performs
+poorly due to the very high global sensitivity of the inference process with respect to this metric.
+We then proceed to introduce $\lexpmech$, a variation of $\expmech$ based on local sensitivity,
+a quantity which is at most the global sensitivity but which can be much lower.
+Unfortunately, $\lexpmech$ by itself is non-private, but its accuracy guarantees serve as a useful benchmark.
+Building on $\lexpmech$, we introduce $\hexpmech$
+which instead relies on the notion of  \emph{smooth} sensitivity. This mechanism is $\epsilon$-differentially private and
 has good accuracy in specific cases.
-In presenting these mechanisms we will denote by $\inferd{\valpha}{\vtheta}{\dataobs}$ the posterior  $\dirichlet{\valpha'}$
-obtained starting from the prior $\dirichlet{\valpha}$, likelihood $\multinomial{|\dataobs|}{\vtheta}$, and observed data $\dataobs$.
+
+When describing these mechanisms, we denote by $\inferd{\valpha}{\vtheta}{\dataobs}$ the posterior  distribution $\dirichlet{\valpha'}$
+obtained from the prior $\dirichlet{\valpha}$, likelihood function $\multinomial{|\dataobs|}{\vtheta}$, and observed data $\dataobs$.
 To minimize notation we will identify the distribution $\dirichlet{\valpha}$ with its vector
 of parameters.
-Two different upper bounds to the value of
+Two different upper bounds on the value of
 \begin{align}
   \label{eqn:eq1}
   \max_{\substack{\adj{\dataobs}{\dataobs'},\\
       \valpha=\inferd{\valpha}{\vtheta}{\dataobs},\\
       \valpha'=\inferd{\valpha}{\vtheta}{\dataobs'}}}||\valpha-\valpha'||_1 
 \end{align}
-will be used to calibrate the noise in the mechanisms based on the Laplacian primitive.
-Finally, with $\bys{\dataobs}{\vtheta}$ we will denote $\inferd{\valpha}{\vtheta}{\dataobs}$ when no confusion can arise.
+will be used to calibrate the noise in the mechanisms based on the Laplace primitive.
+Finally, we use the abbreviation $\bys{\dataobs}{\vtheta}$ to denote $\inferd{\valpha}{\vtheta}{\dataobs}$ when the underlying vector $\valpha$
+is understood.
 
 
 
