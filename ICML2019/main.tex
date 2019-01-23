@@ -554,11 +554,10 @@ is understood.
 
 \subsection{Calibrating noise w.r.t. $\ell_1$ norm ($\lapmech$)}
 \label{sec_ell1_dim}
-We start off by presenting $\lapmech$, in Algorithm \ref{lapmech}, based on the Laplace primitive.
-The idea of $\lapmech$ is to add Laplacian noise with scale
-proportional to $\mathcal{X}$ (the dimension of the parameter space) to
-the differences between the respective numeric parameters of the prior
-and posterior distribution. 
+We first present $\lapmech$, in Algorithm \ref{lapmech}, which is based on the Laplace primitive.
+The idea of $\lapmech$ is to add Laplace noise with scale
+proportional to $|\mathcal{X}|$ (the dimension of the parameter space) to
+the vector of numeric parameters of the posterior distribution.
 \begin{algorithm}
   \caption{$\lapmech$}
   \label{lapmech}
@@ -570,22 +569,22 @@ and posterior distribution.
   \STATE \quad \quad  {\bf let} $\eta \sim \lap{0}{\frac{|\mathcal{X}|}{\epsilon}}$
   \STATE \quad \quad  $\tilde{\alpha_i}=\alpha_i + \lfloor{(\alpha_i' - \alpha_i) + \eta}\rfloor^n_0$ 
   % \RETURN $a_{k+1}$.
-  \STATE \quad $\tilde{\alpha_{|\mathcal{X}|}} = \alpha_{|\mathcal{X}|} + \lfloor n - \sum_{i = 1}^{|\mathcal{X}|-1}\lfloor{(\alpha_i' - \alpha_i) + \eta_i}\rfloor^n_0 \rfloor^n_0$
+  \STATE \quad $\tilde{\alpha}_{|\mathcal{X}|} = \alpha_{|\mathcal{X}|} + \lfloor n - \sum_{i = 1}^{|\mathcal{X}|-1}\lfloor{(\alpha_i' - \alpha_i) + \eta_i}\rfloor^n_0 \rfloor^n_0$
   \STATE {\bf return} $\tilde{\valpha}$
   \end{algorithmic}
 \end{algorithm}
 \begin{lem}
   Algorithm \ref{lapmech} is $\epsilon$-differentially private.
-  \begin{proof} By noticing that $\mathcal{X}-1$ is an upper bound to the value denoted by (\ref{eqn:eq1}). \end{proof}
+  \begin{proof} Privacy follows by noticing that $|\mathcal{X}|-1$ is an upper bound on the $\ell_1$ sensitivity denoted by (\ref{eqn:eq1}). \end{proof}
 \end{lem}
 
 
 \subsection{Improving the sensitivity ($\ilapmech$)}
 \label{sec_ell1_hist}
-By seeing the parameters of the distributions as histograms, we can give a tighter upper bound to the value denoted by (\ref{eqn:eq1}).
-Indeed a constant will do. Algorithm $\ilapmech$ in Algorithm \ref{ilapmech} takes advantage of this fact. 
-Indeed, when $\mathcal{X}=2$, 1 is an upper bound for the value of (\ref{eqn:eq1}), while when $\mathcal{X}>2$, 2 is.
-In Algorithm \ref{ilapmech} the algorithm $\ilapmech$ is presented.
+By viewing the parameters of a Dirichlet distribution as a histogram, we can give a tighter upper bound on the sensitivity (\ref{eqn:eq1}).
+Indeed a constant suffices independent of the dimension $|\mathcal{X}| - 1$. Algorithm $\ilapmech$ in Algorithm \ref{ilapmech} takes advantage of this fact. 
+Indeed, when $\mathcal{X}=2$ (corresponding to the Beta-Binomial model), we have an upper bound of $1$ (\ref{eqn:eq1}), whereas when $\mathcal{X}>2$, we have an upper bound of $2$.
+In Algorithm \ref{ilapmech} we present the algorithm $\ilapmech$.
 \begin{algorithm}
   \caption{$\ilapmech$}
   \label{ilapmech}
@@ -603,40 +602,40 @@ In Algorithm \ref{ilapmech} the algorithm $\ilapmech$ is presented.
   \STATE \quad \quad  {\bf let} $\eta \sim \lap{0}{\frac{k}{\epsilon}}$
   \STATE \quad \quad  $\tilde{\alpha_i}=\alpha_i + \lfloor{(\alpha_i' - \alpha_i) + \eta}\rfloor^n_0$ 
   % \RETURN $a_{k+1}$.
-  \STATE \quad $\tilde{\alpha_{|\mathcal{X}|}} = \alpha_{|\mathcal{X}|} + \lfloor n - \sum_{i = 1}^{|\mathcal{X}|-1}\lfloor{(\alpha_i' - \alpha_i) + \eta_i}\rfloor^n_0 \rfloor^n_0$
+  \STATE \quad $\tilde{\alpha}_{|\mathcal{X}|} = \alpha_{|\mathcal{X}|} + \lfloor n - \sum_{i = 1}^{|\mathcal{X}|-1}\lfloor{(\alpha_i' - \alpha_i) + \eta_i}\rfloor^n_0 \rfloor^n_0$
   \STATE {\bf return} $\tilde{\valpha}$
   \end{algorithmic}
 \end{algorithm}
 \begin{lem}
   Algorithm \ref{ilapmech} is $\epsilon$-differentially private.
-  \begin{proof} By noticing that 1 and 2 are upper bounds to the value denoted by (\ref{eqn:eq1}), respectively when $|\mathcal{X}|=2$ and $|\mathcal{X}|>2$.
+  \begin{proof} This follows immediately from the upper bounds of $1$ and $2$ on the sensitivity (\ref{eqn:eq1}), respectively, when $|\mathcal{X}|=2$ and $|\mathcal{X}|>2$.
   \end{proof}
 \end{lem}
 
-\subsection{A new family of mechanisms}
+\subsection{Variants of the Exponential Mechanism}
 \label{sec_exp}
-In this section, we explore  mechanism which we denote by $\expmech$. $\expmech$ is an instance
+In this section, we describe a mechanism which we denote by $\expmech$. $\expmech$ is an instantiation
 of the exponential mechanism \cite{talwar} where the scoring function is based on a metric over
 probability distributions.
 The idea is that $\expmech$ will sample and output a distribution with higher probability when
-it is closer to the real posterior; importantly,  \emph{closer} is measured using a metric over probability
-distributions as opposed to a metric over the parameters that represent it. In this work we will
+it is closer to the real posterior; importantly,  \emph{closeness} is measured using a metric over probability
+distributions as opposed to a metric over the underlying space of parameters. In this work we will
 use the Hellinger distance, but this approach could be extended to other $f$-divergences. 
 Given a prior distribution $\dirichlet{\valpha}$,
-we define the follwing set  where the mechanism will sample from:
+we define the following set from which the mechanism samples:
 \[
   \candidateset{\valpha}=\{\inferd{\valpha}{\vtheta}{\dataobs}\mid \dataobs \in \mathcal{X}^n\}.
 \]
 In general $|\candidateset{\valpha}|=\binom{n + 1}{|\mathcal{X}| - 1}$ when $\valpha\in\mathcal{X}^n$. In the specific case of $|\mathcal{X}|=2$ with $\valpha=(\alpha,\beta)$,
-that is the Beta-Binomial model, the above reduces to:
+i.e., the Beta-Binomial model, the above reduces to:
 \[
-\candidateset{\valpha}=  \left \{(\alpha',\beta') ~\vline~ \begin{aligned} & \alpha'=\alpha + \Delta\alpha, \beta'=\beta + n-\Delta\alpha, \\ & \Delta\alpha={\textstyle \sum x_i}, \dataobs\in \{0,1\}^n \end{aligned} \right\}.
+\candidateset{\valpha}=  \left \{(\alpha',\beta') ~\vline~ \begin{aligned} & \alpha'=\alpha + \Delta\alpha, \beta'=\beta + n-\Delta\alpha, \\ & \Delta\alpha={\textstyle \sum x_i} \text{ for } \dataobs\in \{0,1\}^n \end{aligned} \right\}.
 \]
 
 \noindent \textbf{A first approach: the $\expmech$ mechanism.}
 \label{sec_ehd}
 $\expmech$'s pseudocode is shown in Algorithm \ref{mech:expmech1}. $\expmech$ is an instance
-of the Exponential mechanism where the scoring function is instantiated with the function: $r\mapsto -\hellinger(\bysinfer{\dataobs}, r)$.
+of the Exponential mechanism where the score is taken to be the function: $r\mapsto -\hellinger(\bysinfer{\dataobs, \valpha}, r)$.
 Given the input $\dataobs\in\mathcal{X}^n$ and a prior $\dirichlet{\valpha}$, the mechanism $\expmech$ outputs an element $r\in\candidateset{\valpha}$ with  probability: 
 \[
 \frac
@@ -669,12 +668,10 @@ where $GS$ is the global sensitivity of the scoring function, defined as:
 \noindent \textbf{A second approach based on local sensitivity: $\lexpmech$.}
 \label{sec_ehdl}
 Figure \ref{fig_theory} shows that  the accuracy of
-$\expmech$ is poor if compared with the one of $\ilapmech$. This is due to the fact that
-$GS$ is relatively large and hence the variance of the distribution $\expmech$ ends up also being too large. In order to solve this issue we
-will proceed in two steps. We will first define, in Algorithm   \ref{mech:lexpmech}, $\lexpmech$, which instead of using the global sensitivity, will use the local sensitivity to calibrate
-the noise. This is known to be a non private approach, but it will guide us towards new insights.
-We will then proceed to use a smooth bound the local sensitivity to
-calibrate the noise.
+$\expmech$ is poor in comparison to that of $\ilapmech$. This is because
+$GS$ is relatively large and hence the variance of the distribution $\expmech$ is large as well. To resolve this issue we
+will proceed in two steps. We will first define, in Algorithm   \ref{mech:lexpmech}, $\lexpmech$, which instead of using the global sensitivity, dampens the score function proportional to the local sensitivity. This approach by itself does not guarantee differential privacy, but it suggests new insights and provides a useful benchmark for comparing accuracy.
+We will then proceed to modify this algorithm by using a smooth upper bound on the local sensitivity.
 
   \begin{algorithm}
   \caption{$\lexpmech$}
