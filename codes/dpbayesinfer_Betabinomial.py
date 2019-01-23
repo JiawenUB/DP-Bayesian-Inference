@@ -177,7 +177,7 @@ class BayesInferwithDirPrior(object):
 		gamma = 1.0
 		self._gamma_SS = max([(1.0 / (1.0/self._LS_Candidates[r] + gamma * Hamming_Distance(self._observation_counts, [r._alphas[i] - self._prior._alphas[i] for i in range(self._prior._size)]))) for r in self._candidates])
 		t1 = time.time()
-		print ("gamma smooth sensitivity"+str(t1 - t0)), self._gamma_SS
+		#print ("gamma smooth sensitivity"+str(t1 - t0)), self._gamma_SS
 
 
 		###################################################################################################################################
