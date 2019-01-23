@@ -21,23 +21,34 @@ from dpbayesinfer_Betabinomial import BayesInferwithDirPrior
 #########################################################################################################################
 #OBTAIN OUTPUTTING PROBABILITIES OF ONE DATA SET
 #########################################################################################################################	
-def probability_values(datasize,epsilon,delta,prior,observation):
+def probability_values(datasize,epsilon,delta,prior,observation, mech):
 	
 	Bayesian_Model = BayesInferwithDirPrior(prior, datasize, epsilon, delta)
 	Bayesian_Model._set_observation(observation)
 
 	Bayesian_Model._set_candidate_scores()
 	Bayesian_Model._set_local_sensitivities()
-	Bayesian_Model._set_up_exp_mech_with_alpha_SS()
+	if(mech == r'Alg 3 - $\mathsf{EHD}$'):
+		Bayesian_Model._set_up_exp_mech_with_GS()
+	elif(mech == r'Alg 4 - $\mathsf{EHDL}$'):
+		Bayesian_Model._set_up_exp_mech_with_LS()
+	elif(mech == r'Alg 5 - $\mathsf{EHDS}$'):
+		Bayesian_Model._set_up_exp_mech_with_gamma_SS()
 	
 
 	probabilities_exp = {}
 
 	for i in range(len(Bayesian_Model._candidates)):
 		z = Bayesian_Model._candidates[i]
-		probabilities_exp[str(z._alphas)] = Bayesian_Model._alpha_SS_probabilities[i]
+		if(mech == r'Alg 3 - $\mathsf{EHD}$'):
+			probabilities_exp[str(z._alphas)] = Bayesian_Model._GS_probabilities[i]
+		elif(mech == r'Alg 4 - $\mathsf{EHDL}$'):
+			probabilities_exp[str(z._alphas)] = Bayesian_Model._LS_probabilities[i]
+		elif(mech == r'Alg 5 - $\mathsf{EHDS}$'):
+			probabilities_exp[str(z._alphas)] = Bayesian_Model._gamma_SS_probabilities[i]
 	
 	return probabilities_exp
+
 
 #########################################################################################################################
 #OBTAIN DECOMPOSED OUTPUTTING PROBABILITIES OF ONE DATA SET
@@ -62,10 +73,10 @@ def decomposed_probability_values(datasize,epsilon,delta,prior,observation):
 #########################################################################################################################
 #OBTAIN THE OUTPUTTING PROBABILITIES OF A PAIR OF ADJACENT DATA SET
 #########################################################################################################################	
-def privacy_loss_one_pair(datasize,epsilon,delta,prior, x1, x2):
+def privacy_loss_one_pair(datasize,epsilon,delta,prior, x1, x2, mech):
 
-	x1_probabilities = probability_values(datasize,epsilon,delta,prior,x1)
-	x2_probabilities = probability_values(datasize,epsilon,delta,prior,x2)
+	x1_probabilities = probability_values(datasize,epsilon,delta,prior,x1, mech)
+	x2_probabilities = probability_values(datasize,epsilon,delta,prior,x2, mech)
 
 	epsilons = {}
 	for key, item in x1_probabilities.items():
@@ -110,12 +121,13 @@ def denumerator_privacy_loss_one_pair(datasize,epsilon,delta,prior, x1, x2):
 #########################################################################################################################
 #PLOT THE PRIVACY LOSS UNDER DIFFERENT DATA SIZE
 #########################################################################################################################			
-def plot_privacyloss(x, y, label):
+def plot_privacyloss(x, ylist):
 	plt.figure()
-	plt.title(("PRIVACY LOSS" + label))
-	plt.plot(x,y, 'bo-', label=(r'$\mathsf{expMech}^{smoo}$'))
-	plt.xlabel("Data Size")
-	plt.ylabel(r"privacy loss " + label)
+	plt.title(("PRIVACY LOSS in Practice"))
+	for key,item in ylist.items():
+		plt.plot(x, item, 'o-', label=key)
+	plt.xlabel("x / Data Size")
+	plt.ylabel(r"y / Privacy Loss ($e^{y}$)")
 	plt.grid()
 	plt.legend(loc='best')
 	plt.show()
@@ -178,7 +190,7 @@ def get_adjacent_set(x):
 		C_adj[1] += 1
 	return C_adj
 
-def privacy_loss_of_size_n(prior, datasize, epsilon, delta):
+def privacy_loss_of_size_n(prior, datasize, epsilon, delta, mech):
 	Bayesian_Model = BayesInferwithDirPrior(prior, datasize, epsilon, delta)
 	Bayesian_Model._set_candidate_scores()
 		
@@ -193,7 +205,7 @@ def privacy_loss_of_size_n(prior, datasize, epsilon, delta):
 	privacyloss_of_n = 0.0
 	pair_of_n = []
 
-	candidates = [[datasize-2,2],[datasize-1,1],[datasize, 0],[0,datasize], [1, datasize - 1], [2, datasize - 2]]
+	candidates = [[datasize - 3,3], [datasize - 2, 2],[datasize - 1, 1],[datasize, 0],[0, datasize], [1, datasize - 1], [2, datasize - 2], [3, datasize - 3]]
 
 	for C in candidates:
 	#########################################################################################################################
@@ -201,28 +213,31 @@ def privacy_loss_of_size_n(prior, datasize, epsilon, delta):
 		C_adj = get_adjacent_set(C)
 			#########################################################################################################################
 			#GET THE PRIVACY LOSS UNDER TWO ADJACENT DATA SET C	AND 		
-		loss = privacy_loss_one_pair(datasize,epsilon,delta,prior,C,C_adj)
+		loss = privacy_loss_one_pair(datasize,epsilon,delta,prior,C,C_adj, mech)
 		if privacyloss_of_n < loss[-1][1]:
 			privacyloss_of_n = loss[-1][1]
 			pair_of_n = (C,C_adj)
 
 	return privacyloss_of_n, pair_of_n
 
-def privacy_loss(datasizes,epsilon,delta,prior):
-	epsilons = []
+def privacy_loss(datasizes,epsilon,delta,prior, mechs):
+	epsilons = {}
+	for mech in mechs:
+		epsilons[mech] = []
 	#########################################################################################################################
 	#MAX PRIVACY LOSS UNDER SIZE N
 	#########################################################################################################################			
 	for n in datasizes:
-		privacyloss_of_n, pair_of_n = privacy_loss_of_size_n(prior, n, epsilon, delta)
+		for mech in mechs:
+			privacyloss_of_n, pair_of_n = privacy_loss_of_size_n(prior, n, epsilon, delta, mech)
+			epsilons[mech].append(privacyloss_of_n)
+			print " Practical Privacy Loss:", str(privacyloss_of_n), str(pair_of_n)
 
-		print " Practical Privacy Loss:", str(privacyloss_of_n), str(pair_of_n)
-		epsilons.append(privacyloss_of_n)
 
 	#########################################################################################################################
 	#PLOT THE PRIVACY LOSS UNDER DIFFERENT DATA SIZE
 	#########################################################################################################################			
-	plot_privacyloss(datasizes,epsilons, "")
+	plot_privacyloss(datasizes,epsilons)
 
 
 
@@ -250,10 +265,10 @@ if __name__ == "__main__":
 	prior = dirichlet([1,1])
 	dataset = [50,50]
 	epsilons = numpy.arange(0.1, 2, 0.1)
-	datasizes = gen_datasizes((100000,500000),100000)# gen_datasizes((10,20),2) + gen_datasizes((25,100),10) + gen_datasizes((100,500), 100) + gen_datasizes((1000,5000),1000)  + gen_datasizes((10000,50000),10000) + 
+	datasizes = gen_datasizes((10,20),2) + gen_datasizes((25,100),10) + gen_datasizes((100,500), 100) + gen_datasizes((1000,5000),1000)  + gen_datasizes((10000,50000),10000)
 	# datasizes =  gen_datasizes((15,50),10)
 	percentage = [0.1,0.9]
 	datasets = gen_datasets(percentage, datasizes)
 	priors = [dirichlet([1,1])] + gen_priors([5,20], 5, 2) + gen_priors([40,100], 20, 2) + gen_priors([150,300], 50, 2) + gen_priors([400,400], 50, 2)
-	privacy_loss(datasizes,epsilon,delta,prior)
+	privacy_loss(datasizes,epsilon,delta,prior, [r'Alg 3 - $\mathsf{EHD}$',r'Alg 4 - $\mathsf{EHDL}$',r'Alg 5 - $\mathsf{EHDS}$'])
 
