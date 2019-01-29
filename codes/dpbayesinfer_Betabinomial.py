@@ -21,11 +21,12 @@ def Hamming_Distance(c1, c2):
 
 
 class BayesInferwithDirPrior(object):
-	def __init__(self, prior, sample_size, epsilon, delta):
+	def __init__(self, prior, sample_size, epsilon, delta, gamma=1.0):
 		self._prior = prior
 		self._sample_size = sample_size
 		self._epsilon = epsilon
 		self._delta = delta
+		self._gamma = gamma
 		self._bias = numpy.random.dirichlet(self._prior._alphas)
 		self._observation = numpy.random.multinomial(1, self._bias, self._sample_size)
 		self._observation_counts = numpy.sum(self._observation, 0)
@@ -48,7 +49,9 @@ class BayesInferwithDirPrior(object):
 		self._keys = []
 		self._accuracy = {}
 		self._accuracy_mean = {}
-	
+	def _set_gamma(self, gamma):
+		self._gamma = gamma
+		
 	def _set_bias(self, bias):
 		self._bias = bias
 		self._update_observation()
@@ -174,8 +177,7 @@ class BayesInferwithDirPrior(object):
 		###################################################################################################################################
 		t0 = time.time()
 		start = time.clock()
-		gamma = 1.0
-		self._gamma_SS = max([(1.0 / (1.0/self._LS_Candidates[r] + gamma * Hamming_Distance(self._observation_counts, [r._alphas[i] - self._prior._alphas[i] for i in range(self._prior._size)]))) for r in self._candidates])
+		self._gamma_SS = max([(1.0 / (1.0/self._LS_Candidates[r] + self._gamma * Hamming_Distance(self._observation_counts, [r._alphas[i] - self._prior._alphas[i] for i in range(self._prior._size)]))) for r in self._candidates])
 		t1 = time.time()
 		#print ("gamma smooth sensitivity"+str(t1 - t0)), self._gamma_SS
 
