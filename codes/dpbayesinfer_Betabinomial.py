@@ -21,7 +21,7 @@ def Hamming_Distance(c1, c2):
 
 
 class BayesInferwithDirPrior(object):
-	def __init__(self, prior, sample_size, epsilon, delta, gamma=1.0):
+	def __init__(self, prior, sample_size, epsilon, delta = 0.0000000001, gamma=1.0):
 		self._prior = prior
 		self._sample_size = sample_size
 		self._epsilon = epsilon
@@ -252,9 +252,9 @@ class BayesInferwithDirPrior(object):
 ########################################################################################################################################	
 
 	def _laplace_mechanism(self, sensitivity):
-		noised = [i + math.ceil(numpy.random.laplace(0, sensitivity/self._epsilon)) for i in self._observation_counts]
+		noised = [i + math.floor(numpy.random.laplace(0, sensitivity/self._epsilon)) for i in self._observation_counts]
 		noised = [self._sample_size if i > self._sample_size else i for i in noised]
-		noised = [0 if i < 0 else i for i in noised]
+		noised = [0.0 if i < 0.0 else i for i in noised]
 		if self._sample_size - sum(noised[:-1]) < 0:
 			noised[-1] = 0
 		elif self._sample_size - sum(noised[:-1]) > self._sample_size:
@@ -263,6 +263,17 @@ class BayesInferwithDirPrior(object):
 			noised[-1] = self._sample_size - sum(noised[:-1]) 
 		self._laplaced_posterior = dirichlet(noised) + self._prior
 
+
+	def _laplace_mechanism_no_post(self, sensitivity):
+		noised = []
+		for a in self._posterior._alphas:
+			t = a + numpy.random.laplace(0, sensitivity/self._epsilon)
+			if t < 0.0:
+				noised.append(0.0)
+			else:
+				noised.append(t)
+
+		self._laplaced_posterior = dirichlet(noised)
 
 
 	def _exponentialize(self):
