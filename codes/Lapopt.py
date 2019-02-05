@@ -72,6 +72,7 @@ def test(n, prior, epsilon, times):
 
 	ls,_ = ls_scaled_by_eps(n, prior, epsilon)
 
+
 	plot_2d([meanerror1, meanerror2, ls], xstick, 
 		[r"Average of $(HD(Beta(k+\mu, n-k+\mu), Beta(k, n-k))$", 
 		r"Average of $(HD(Beta(k+\mu, n-k+\mu), Beta(k, n-k))$ with post-processing", 
@@ -81,6 +82,40 @@ def test(n, prior, epsilon, times):
 	return
 
 
+def get_ratio(datasizes, prior, epsilon, times):
+	r = []
+
+	r_post = []
+
+	for n in datasizes:
+
+		meanerror,xstick = mean_error_fix_n(n, prior, epsilon, times, "lap")
+
+		meanerror_post,xstick = mean_error_fix_n(n, prior, epsilon, times, "lappost")
+
+		ls,_ = ls_scaled_by_eps(n, prior, epsilon)
+
+		ratio = 0.0
+
+		ratio_post = 0.0
+
+		for i in range(len(ls)):
+
+			ratio = max(ratio, meanerror[i]/ls[i])
+
+			ratio_post = max(ratio_post, meanerror_post[i]/ ls[i])
+
+		r.append(ratio)
+
+		r_post.append(ratio_post)
+
+	plot_2d([r, r_post], datasizes, 
+		[r"$\max_{k \in [0,n]}\frac{E[HD(Beta(k+\mu, n-k+\mu), Beta(k, n-k)]}{LS(k)/ \epsilon}$", 
+		r"$\max_{k \in [0,n]}\frac{E[HD(Beta(k+\mu, n-k+\mu), Beta(k, n-k)]}{LS(k)/ \epsilon}$ with post-processing"],
+		"With epsilon " + str(epsilon))
+	
+	return
+
 def plot_2d(y,xstick,labels, title):
 	plt.figure()
 	x = range(len(xstick))
@@ -88,6 +123,17 @@ def plot_2d(y,xstick,labels, title):
 		plt.plot(x,y[i],label=labels[i])
 	plt.xlabel(r"($[k, n-k]$)")
 	plt.xticks(x,xstick,rotation=70,fontsize=6)
+	plt.title(title)
+	plt.legend(loc='best',fontsize=6)
+	plt.grid()
+	plt.show()
+
+def plot_2d_numerator(y,x,labels, title):
+	plt.figure()
+
+	for i in range(len(y)):
+		plt.plot(x,y[i],label=labels[i])
+	plt.xlabel(r"($[k, n-k]$)")
 	plt.title(title)
 	plt.legend(loc='best',fontsize=6)
 	plt.grid()
@@ -123,7 +169,9 @@ if __name__ == "__main__":
 	delta = 0.00000001
 	prior = dirichlet([1,1])
 	dataset = [50,50]
-	test(datasize, prior, epsilon, 5000)
+	# test(datasize, prior, epsilon, 5000)
+
+	get_ratio([100, 500, 1000, 2000, 3000, 5000], prior, epsilon, 5000)
 
 
 
