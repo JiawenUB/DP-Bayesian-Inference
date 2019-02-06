@@ -275,6 +275,22 @@ class BayesInferwithDirPrior(object):
 
 		self._laplaced_posterior = dirichlet(noised)
 
+	def _laplace_mechanism_symetric(self, sensitivity):
+		noised = [0.0,0.0]
+
+		if(random.random() < 0.5):
+			noised[0] = self._observation_counts[0] + math.floor(numpy.random.laplace(0, sensitivity/self._epsilon))
+			noised[0] = 0.0 if noised[0] < 0.0 else noised[0]
+			noised[0] = self._sample_size if noised[0] > self._sample_size else noised[0]
+			noised[1] = self._sample_size - noised[0]
+		else:
+			noised[1] = self._observation_counts[1] + math.floor(numpy.random.laplace(0, sensitivity/self._epsilon))
+			noised[1] = 0.0 if noised[1] < 0.0 else noised[1]
+			noised[1] = self._sample_size if noised[1] > self._sample_size else noised[1]
+			noised[0] = self._sample_size - noised[1]
+
+		self._laplaced_posterior = dirichlet(noised) + self._prior
+
 
 	def _exponentialize(self):
 		self._exponential_posterior = numpy.random.choice(self._candidates, p=self._GS_probabilities)

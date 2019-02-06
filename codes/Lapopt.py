@@ -35,7 +35,7 @@ def mean_error_fix_n(n, prior, epsilon, times, mech):
 			if(mech == "lap"):
 				Bayesian_Model._laplace_mechanism_no_post(sensitivity = 1.0)
 			elif(mech == "lappost"):
-				Bayesian_Model._laplace_mechanism(sensitivity = 1.0)
+				Bayesian_Model._laplace_mechanism_symetric(sensitivity = 1.0)
 			accuracy.append(Bayesian_Model._posterior - Bayesian_Model._laplaced_posterior)
 		meanerror.append(numpy.mean(accuracy))
 		xstick.append(str(list(numpy.array(c._alphas) - 1)))
@@ -77,7 +77,7 @@ def test(n, prior, epsilon, times):
 		[r"Average of $(HD(Beta(k+\mu, n-k+\mu), Beta(k, n-k))$", 
 		r"Average of $(HD(Beta(k+\mu, n-k+\mu), Beta(k, n-k))$ with post-processing", 
 		r"(LS of $Beta(k, n- k))/ \epsilon$"],
-		"With data size " + str(n))
+		"With data size " + str(n) + " epsilon " + str(epsilon))
 	
 	return
 
@@ -109,7 +109,7 @@ def get_ratio(datasizes, prior, epsilon, times):
 
 		r_post.append(ratio_post)
 
-	plot_2d([r, r_post], datasizes, 
+	plot_2d_numerator([r, r_post], datasizes, 
 		[r"$\max_{k \in [0,n]}\frac{E[HD(Beta(k+\mu, n-k+\mu), Beta(k, n-k)]}{LS(k)/ \epsilon}$", 
 		r"$\max_{k \in [0,n]}\frac{E[HD(Beta(k+\mu, n-k+\mu), Beta(k, n-k)]}{LS(k)/ \epsilon}$ with post-processing"],
 		"With epsilon " + str(epsilon))
@@ -121,7 +121,7 @@ def plot_2d(y,xstick,labels, title):
 	x = range(len(xstick))
 	for i in range(len(y)):
 		plt.plot(x,y[i],label=labels[i])
-	plt.xlabel(r"($[k, n-k]$)")
+	plt.xlabel(r"dataset$[k, n- k]$")
 	plt.xticks(x,xstick,rotation=70,fontsize=6)
 	plt.title(title)
 	plt.legend(loc='best',fontsize=6)
@@ -130,10 +130,9 @@ def plot_2d(y,xstick,labels, title):
 
 def plot_2d_numerator(y,x,labels, title):
 	plt.figure()
-
 	for i in range(len(y)):
 		plt.plot(x,y[i],label=labels[i])
-	plt.xlabel(r"($[k, n-k]$)")
+	plt.xlabel(r"datasize (n)")
 	plt.title(title)
 	plt.legend(loc='best',fontsize=6)
 	plt.grid()
@@ -169,9 +168,9 @@ if __name__ == "__main__":
 	delta = 0.00000001
 	prior = dirichlet([1,1])
 	dataset = [50,50]
-	# test(datasize, prior, epsilon, 5000)
-	datasizes = gen_datasizes((100, 1000), 100)
+	datasizes = gen_datasizes((300, 1000), 100)
 
+	# test(datasize, prior, epsilon, 10000)
 
 	get_ratio(datasizes, prior, epsilon, 5000)
 
