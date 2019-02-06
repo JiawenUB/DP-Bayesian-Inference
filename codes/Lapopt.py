@@ -165,13 +165,15 @@ def gen_gammas(r, step, scale):
 if __name__ == "__main__":
 
 	datasize = 100
-	epsilon = 1.0
+	epsilon = 0.5
 	delta = 0.00000001
 	prior = dirichlet([1,1])
 	dataset = [50,50]
 	# test(datasize, prior, epsilon, 5000)
+	datasizes = gen_datasizes((100, 1000), 100)
 
-	get_ratio([100, 500, 1000, 2000, 3000, 5000], prior, epsilon, 5000)
+
+	get_ratio(datasizes, prior, epsilon, 5000)
 
 
 
