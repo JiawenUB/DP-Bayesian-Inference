@@ -15,6 +15,55 @@ from scipy.special import gammaln
 from dirichlet import dirichlet
 from dpbayesinfer_Betabinomial import BayesInferwithDirPrior
 
+def LAPLACE_CDF(interval, scale):
+	if interval[0] >= 0.0:
+		return (1 - 0.5 * math.exp( (-interval[1]*1.0/scale))) - (1 - 0.5 * math.exp( (-interval[0]/scale)))
+	else:
+		return (0.5 * math.exp( (interval[1]*1.0/scale))) - (0.5 * math.exp( (interval[0]/scale)))
+
+
+def expect_error_Lap(post, prior, eps):
+	expect = 0.0
+
+	n = post._alphas[0] + post._alphas[1] - prior._alphas[0] - prior._alphas[1]
+
+	k = post._alphas[0] - prior._alphas[0]
+	############### the expected error when the noises are valid######
+	for t in range(- k, n - k):
+		expect += 0.5 * LAPLACE_CDF((t, t+1), 1.0/eps) * ((dirichlet([k + t, n - k - t]) + prior) - post) 
+
+	############### the expected error when the noises are not valid######
+	expect += 0.5 * (0.5 - LAPLACE_CDF((-k, 0.0), 1.0/eps)) * ((dirichlet([0, n])+ prior) - post)
+
+	expect += 0.5 * (0.5 - LAPLACE_CDF((0.0, n - k), 1.0/eps)) * ((dirichlet([n, 0])+ prior) - post)
+
+	############### the expected error when the noises are valid######
+	for t in range(- (n - k), k):
+		expect += 0.5 * LAPLACE_CDF((t, t+1), 1.0/eps) * ((dirichlet([k - t, n - k + t]) + prior) - post) 
+	
+	############### the expected error when the noises are not valid######
+	expect += 0.5 * (0.5 - LAPLACE_CDF((-(n - k), 0.0), 1.0/eps)) * ((dirichlet([n, 0])+ prior) - post)
+
+	expect += 0.5 * (0.5 - LAPLACE_CDF((0.0, k), 1.0/eps)) * ((dirichlet([0, n])+ prior) - post)
+
+	return expect
+
+def expect_errors_Lap(n, prior, epsilon):
+
+	Bayesian_Model = BayesInferwithDirPrior(prior, n, epsilon)
+	Bayesian_Model._set_observation(gen_dataset_rand(len(prior._alphas), n))
+	Bayesian_Model._set_candidate_scores()
+	candidates = Bayesian_Model._candidates
+
+	expecterror = []
+	xstick = []
+	
+	for c in candidates:
+		expecterror.append(expect_error_Lap(c, prior, epsilon))
+		xstick.append(str(c._alphas))
+
+	return expecterror,xstick
+
 
 #########################################################################################################################
 ###########################Expectation of Error (Accuracy) of Laplace Mechanism##########################################
@@ -64,11 +113,12 @@ def ls_scaled_by_eps(n, prior, epsilon):
 	return ls,xstick
 
 
-def test(n, prior, epsilon, times):
+def get_separatevalue(n, prior, epsilon, times):
 
 	meanerror1,xstick = mean_error_fix_n(n, prior, epsilon, times, "lap")
 
-	meanerror2,xstick = mean_error_fix_n(n, prior, epsilon, times, "lappost")
+	# meanerror2,xstick = mean_error_fix_n(n, prior, epsilon, times, "lappost")
+	meanerror2,xstick = expect_errors_Lap(n, prior, epsilon)
 
 	ls,_ = ls_scaled_by_eps(n, prior, epsilon)
 
@@ -77,9 +127,10 @@ def test(n, prior, epsilon, times):
 		[r"Average of $(HD(Beta(k+\mu, n-k+\mu), Beta(k, n-k))$", 
 		r"Average of $(HD(Beta(k+\mu, n-k+\mu), Beta(k, n-k))$ with post-processing", 
 		r"(LS of $Beta(k, n- k))/ \epsilon$"],
-		"With data size " + str(n) + " epsilon " + str(epsilon))
+		"With data size n = " + str(n) + r", $\epsilon = $ " + str(epsilon))
 	
 	return
+
 
 
 def get_ratio(datasizes, prior, epsilon, times):
@@ -109,26 +160,30 @@ def get_ratio(datasizes, prior, epsilon, times):
 
 		r_post.append(ratio_post)
 
-	plot_2d_numerator([r, r_post], datasizes, 
+	plot_2d_ratio([r, r_post], datasizes, 
 		[r"$\max_{k \in [0,n]}\frac{E[HD(Beta(k+\mu, n-k+\mu), Beta(k, n-k)]}{LS(k)/ \epsilon}$", 
 		r"$\max_{k \in [0,n]}\frac{E[HD(Beta(k+\mu, n-k+\mu), Beta(k, n-k)]}{LS(k)/ \epsilon}$ with post-processing"],
 		"With epsilon " + str(epsilon))
 	
 	return
 
+
+
 def plot_2d(y,xstick,labels, title):
 	plt.figure()
 	x = range(len(xstick))
 	for i in range(len(y)):
 		plt.plot(x,y[i],label=labels[i])
-	plt.xlabel(r"dataset$[k, n- k]$")
+	plt.xlabel(r"different dataset: $[k, n- k]$")
 	plt.xticks(x,xstick,rotation=70,fontsize=6)
 	plt.title(title)
 	plt.legend(loc='best',fontsize=6)
 	plt.grid()
 	plt.show()
 
-def plot_2d_numerator(y,x,labels, title):
+
+
+def plot_2d_ratio(y,x,labels, title):
 	plt.figure()
 	for i in range(len(y)):
 		plt.plot(x,y[i],label=labels[i])
@@ -138,8 +193,13 @@ def plot_2d_numerator(y,x,labels, title):
 	plt.grid()
 	plt.show()
 
+
+
+
 def gen_dataset(v, n):
 	return [int(n * i) for i in v]
+
+
 
 def gen_dataset_rand(d, n):
 	v = []
@@ -148,31 +208,40 @@ def gen_dataset_rand(d, n):
 	v.append(1.0 - sum(v))
 	return [int(n * i) for i in v]
 
+
+
 def gen_datasets(v, n_list):
 	return [gen_dataset(v,n) for n in n_list]
+
 
 
 def gen_datasizes(r, step):
 	return [(r[0] + i*step) for i in range(0,(r[1] - r[0])/step + 1)]
 
+
+
 def gen_priors(r, step, d):
 	return [dirichlet([step*i for j in range(d)]) for i in range(r[0]/step,r[1]/step + 1)]
+
+
 
 def gen_gammas(r, step, scale):
 	return [((r[0] + i*step) * scale) for i in range(0,(r[1] - r[0])/step + 1)]
 
+
+
 if __name__ == "__main__":
 
-	datasize = 100
-	epsilon = 0.5
+	datasize = 500
+	epsilon = 1.0
 	delta = 0.00000001
 	prior = dirichlet([1,1])
 	dataset = [50,50]
-	datasizes = gen_datasizes((300, 1000), 100)
+	datasizes = gen_datasizes((500, 3000), 200)
 
-	# test(datasize, prior, epsilon, 10000)
+	get_separatevalue(datasize, prior, epsilon, 500)
 
-	get_ratio(datasizes, prior, epsilon, 5000)
+	# get_ratio(datasizes, prior, epsilon, 10000)
 
 
 
