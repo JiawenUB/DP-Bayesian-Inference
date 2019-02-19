@@ -140,11 +140,12 @@ def get_ratio(datasizes, prior, epsilon, times):
 
 	for n in datasizes:
 
-		meanerror,xstick = mean_error_fix_n(n, prior, epsilon, times, "lap")
+		meanerror, _ = mean_error_fix_n(n, prior, epsilon, times, "lap")
 
-		meanerror_post,xstick = mean_error_fix_n(n, prior, epsilon, times, "lappost")
+		# meanerror_post,xstick = mean_error_fix_n(n, prior, epsilon, times, "lappost")
+		meanerror_post, _ = expect_errors_Lap(n, prior, epsilon)
 
-		ls,_ = ls_scaled_by_eps(n, prior, epsilon)
+		ls, _ = ls_scaled_by_eps(n, prior, epsilon)
 
 		ratio = 0.0
 
@@ -233,15 +234,15 @@ def gen_gammas(r, step, scale):
 if __name__ == "__main__":
 
 	datasize = 500
-	epsilon = 1.0
+	epsilon = 0.3
 	delta = 0.00000001
 	prior = dirichlet([1,1])
 	dataset = [50,50]
-	datasizes = gen_datasizes((500, 3000), 200)
+	datasizes = gen_datasizes((50, 1000), 50)
 
-	get_separatevalue(datasize, prior, epsilon, 500)
+	#get_separatevalue(datasize, prior, epsilon, 500)
 
-	# get_ratio(datasizes, prior, epsilon, 10000)
+	get_ratio(datasizes, prior, epsilon, 10000)
 
 
 
