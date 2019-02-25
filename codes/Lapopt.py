@@ -139,6 +139,7 @@ def get_ratio(datasizes, prior, epsilon, times):
 	r_post = []
 
 	for n in datasizes:
+		print n
 
 		meanerror, _ = mean_error_fix_n(n, prior, epsilon, times, "lap")
 
@@ -234,15 +235,15 @@ def gen_gammas(r, step, scale):
 if __name__ == "__main__":
 
 	datasize = 500
-	epsilon = 0.3
+	epsilon = 1.0
 	delta = 0.00000001
 	prior = dirichlet([1,1])
 	dataset = [50,50]
-	datasizes = gen_datasizes((50, 1000), 50)
+	datasizes = gen_datasizes((50, 2000), 50)
 
 	#get_separatevalue(datasize, prior, epsilon, 500)
 
-	get_ratio(datasizes, prior, epsilon, 10000)
+	get_ratio(datasizes, prior, epsilon, 5000)
 
 
 
