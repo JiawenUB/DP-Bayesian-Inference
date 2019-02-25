@@ -1,31 +1,201 @@
-\documentclass[sigconf]{acmart}
+\documentclass{article}
 
-\fancyhf{} % Remove fancy page headers 
-% \fancyhead[C]{Anonymous submission \#9999 to ACM CCS 2017} % TODO: replace 9999 with your paper number
-\fancyfoot[C]{\thepage}
-
-\setcopyright{none} % No copyright notice required for submissions
-% \acmConference[Anonymous Submission to ACM CCS 2017]{ACM Conference on Computer and Communications Security}{Due 19 May 2017}{Dallas, Texas}
-% \acmYear{2017}
-
-\settopmatter{printacmref=false, printccs=true, printfolios=true} % We want page numbers on submissions
-
-%%\ccsPaper{9999} % TODO: replace with your paper number once obtained
 \input{macros}
 \usepackage{accents}
 
 \begin{document}
-\title{Accuracy Analysis For Three Mechanisms}
+\title{Towards Optimization of Laplace Mechanism}
 
-
-\begin{abstract} 
-\end{abstract}
-
-
-\keywords{Accuracy analysis} % TODO: replace with your keywords
+\author{Jiawen \textsc{Liu}} % Author name
 
 \maketitle
 
-\section{Introduction}
-\label{sec_intro}
+\section{Laplace Mechanism Accuracy Analysis}
+\label{sec_fullacc}
+\begin{table}[htbp]
+	\centering
+	\caption{Accuracy with $n = 2$}
+\begin{tabular}{|c|r|r|r|}
+	\hline
+
+	\multirow{2}{*}{$n = 2$} 	& \multicolumn{3}{c|}{Possible Noised Results ($\dataobs'$)}  \\ \cline{2-4}
+	                      		&  $\Pr[\dataobs' = (0, 2)]$  	
+	                      		&  $\Pr[\dataobs' = (1, 1)]$ 	
+	                      		&  $\Pr[\dataobs' = (2, 0)]$ 	\\  \hline
+	$\dataobs = (0,2)$          & 0.658030139707	& 0.216166179191	& \\  \hline
+	$\dataobs = (1,1)$          & 0.658030139707	&  100 			& \\  \hline
+	$\dataobs = (2,0)$          & 0.658030139707	&  100 			& \\  \hline
+\end{tabular}
+\end{table}
+
+The computation formula for each of the value in the table:
+
+\noindent $\dataobs = (0,2):$
+\[
+\Pr[\dataobs']
+= \begin{cases}
+\begin{array}{ll}
+ 	& 0.5 \times 
+ 	\big(
+ 	\Pr[	0	< \lap{0}{\frac{1}{\epsilon}}	\leq	1] 
+ 	+ 
+ 	\Pr[	\lap{0}{\frac{1}{\epsilon}}			\leq	0] 
+ 	\big) \\
+ 	+ 	
+ 	& 0.5 \times 
+ 	\big(
+ 	\Pr[	0	< \lap{0}{\frac{1}{\epsilon}}	\leq	1] 
+ 	+ 
+ 	\Pr[	1 	< \lap{0}{\frac{1}{\epsilon}}] 
+ 	\big) 
+\end{array} 
+	& \dataobs' = (0, 2)\\
+\begin{array}{ll}
+ 	0.5 \times 
+ 	\big(
+ 	\Pr[	1	< \lap{0}{\frac{1}{\epsilon}}	\leq	2] 
+ 	\big)
+ 	+ 	
+ 	0.5 \times 
+ 	\big(
+ 	\Pr[	-1	< \lap{0}{\frac{1}{\epsilon}}	\leq	0] 
+ 	\big) 
+\end{array}  
+	& \dataobs' = (1, 1)\\
+\begin{array}{ll}
+ 	& 0.5 \times 
+ 	\big(
+ 	\Pr[	2	<	\lap{0}{\frac{1}{\epsilon}}	\leq	3] 
+ 	+ 
+ 	\Pr[	3	<	\lap{0}{\frac{1}{\epsilon}}]
+ 	\big) \\
+ 	+ 	
+ 	& 0.5 \times 
+ 	\big(
+ 	\Pr[	-2	< \lap{0}{\frac{1}{\epsilon}}	\leq	-1] 
+ 	+ 
+ 	\Pr[	\lap{0}{\frac{1}{\epsilon}}			\leq	-2] 
+ 	\big) 
+\end{array}  
+& \dataobs' = (2, 0)
+\end{cases}.
+\]
+
+
+\noindent $\dataobs = (1,1):$
+\[
+\Pr[\dataobs']
+= \begin{cases}
+\begin{array}{ll}
+ 	& 0.5 \times 
+ 	\big(
+ 	\Pr[	-1	< \lap{0}{\frac{1}{\epsilon}}	\leq	0] 
+ 	+ 
+ 	\Pr[	\lap{0}{\frac{1}{\epsilon}}			\leq	-1] 
+ 	\big) \\
+ 	+ 	
+ 	& 0.5 \times 
+ 	\big(
+ 	\Pr[	1	< \lap{0}{\frac{1}{\epsilon}}	\leq	2] 
+ 	+ 
+ 	\Pr[	2 	< \lap{0}{\frac{1}{\epsilon}}] 
+ 	\big) 
+\end{array} 
+	& \dataobs' = (0, 2)\\
+\begin{array}{ll}
+ 	0.5 \times 
+ 	\big(
+ 	\Pr[	0	< \lap{0}{\frac{1}{\epsilon}}	\leq	1] 
+ 	\big)
+ 	+ 	
+ 	0.5 \times 
+ 	\big(
+ 	\Pr[	0	< \lap{0}{\frac{1}{\epsilon}}	\leq	1] 
+ 	\big) 
+\end{array}  
+	& \dataobs' = (1, 1)\\
+\begin{array}{ll}
+ 	& 0.5 \times 
+ 	\big(
+ 	\Pr[	1	<	\lap{0}{\frac{1}{\epsilon}}	\leq	2] 
+ 	+ 
+ 	\Pr[	2	<	\lap{0}{\frac{1}{\epsilon}}]
+ 	\big) \\
+ 	+ 	
+ 	& 0.5 \times 
+ 	\big(
+ 	\Pr[	-1	< \lap{0}{\frac{1}{\epsilon}}	\leq	0] 
+ 	+ 
+ 	\Pr[	\lap{0}{\frac{1}{\epsilon}}			\leq	-1] 
+ 	\big) 
+\end{array}  
+& \dataobs' = (2, 0)
+\end{cases}.
+\]
+
+\noindent $\dataobs = (2,0):$
+\[
+\Pr[\dataobs']
+= \begin{cases}
+\begin{array}{ll}
+ 	& 0.5 \times 
+ 	\big(
+ 	\Pr[	-2	< \lap{0}{\frac{1}{\epsilon}}	\leq	-1] 
+ 	+ 
+ 	\Pr[	\lap{0}{\frac{1}{\epsilon}}			\leq 	-2] 
+ 	\big) \\
+ 	+ 	
+ 	& 0.5 \times 
+ 	\big(
+ 	\Pr[	2	< \lap{0}{\frac{1}{\epsilon}}	\leq	3] 
+ 	+ 
+ 	\Pr[	3	< \lap{0}{\frac{1}{\epsilon}}] 
+ 	\big) 
+\end{array} 
+	& \dataobs' = (0, 2)\\
+\begin{array}{ll}
+ 	0.5 \times 
+ 	\big(
+ 	\Pr[	-1	< \lap{0}{\frac{1}{\epsilon}}	\leq	0] 
+ 	\big)
+ 	+ 	
+ 	0.5 \times 
+ 	\big(
+ 	\Pr[	1	< \lap{0}{\frac{1}{\epsilon}}	\leq	2] 
+ 	\big) 
+\end{array}  
+	& \dataobs' = (1, 1)\\
+\begin{array}{ll}
+ 	& 0.5 \times 
+ 	\big(
+ 	\Pr[	0	<	\lap{0}{\frac{1}{\epsilon}}	\leq	1] 
+ 	+ 
+ 	\Pr[	1	<	\lap{0}{\frac{1}{\epsilon}}]
+ 	\big) \\
+ 	+ 	
+ 	& 0.5 \times 
+ 	\big(
+ 	\Pr[	0	< \lap{0}{\frac{1}{\epsilon}}	\leq	1] 
+ 	+ 
+ 	\Pr[	\lap{0}{\frac{1}{\epsilon}}			\leq	0] 
+ 	\big) 
+\end{array}  
+& \dataobs' = (2, 0)
+\end{cases}.
+\]
+
+
+\begin{table}[htbp]
+	\centering
+	\caption{Accuracy with $n = 3$}
+\begin{tabular}{|c|r|r|}
+	\hline
+
+	\multirow{2}{*}{$n = 3$} & \multicolumn{2}{c|}{Flag}  \\ \cline{2-3}
+	                      &  Yes  &   NO \\  \hline
+	Index                 & 87    &  100 \\  \hline
+\end{tabular}
+\end{table}
+
+
 \end{document}
