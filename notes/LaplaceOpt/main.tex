@@ -10,26 +10,66 @@
 
 \maketitle
 
+\section{Laplace Mechanism with Post-Processing}
+
+\begin{algorithm}
+  \caption{$\lapmech$}
+  \label{lapmech}
+  \begin{algorithmic}
+  	\REQUIRE $\dataobs \in \{0 ,1 \}^n$
+	\STATE \quad apply the Bayesian inference algorithm on $\dataobs'$, get true posterior $\betad(\valpha)$
+  	\STATE \quad {\bf let} $p = \uniform{0}{1}$, $\eta \sim \lap{0}{\frac{1.0}{\epsilon}}$
+  	\STATE \quad {\bf If} $p >0.5$: 
+  	\STATE \quad \quad with 0.5 probability adding noise to first component.
+  	\STATE \quad \quad  $\dataobs' = (\lfloor \text{x}_1 + \mu \rfloor_0^n, n - \lfloor \text{x}_1 + \mu \rfloor_0^n)$ 
+  	\STATE \quad {\bf Else}: 
+  	\STATE \quad \quad with 0.5 probability adding noise to second component.
+  	\STATE \quad \quad  $\dataobs' = (n - \lfloor \text{x}_2 + \mu \rfloor_0^n, \lfloor \text{x}_2 + \mu \rfloor_0^n)$ 
+	\STATE \quad apply the Bayesian inference algorithm on $\dataobs'$, get: $\betad(\valpha')$
+	\RETURN $\valpha'$
+  \end{algorithmic}
+\end{algorithm}
+
+
+
+\newpage
 \section{Laplace Mechanism Accuracy Analysis}
 \label{sec_fullacc}
+
+
+
 \begin{table}[htbp]
 	\centering
-	\caption{Accuracy with $n = 2$}
-\begin{tabular}{|c|r|r|r|}
+	\caption{Accuracy with $n = 2, \epsilon = 1.0$}
+	\label{tab_n2prob}
+\begin{tabular}{|c||r|r|r|}
 	\hline
 
-	\multirow{2}{*}{$n = 2$} 	& \multicolumn{3}{c|}{Possible Noised Results ($\dataobs'$)}  \\ \cline{2-4}
+	\multirow{2}{*}{True data ($\dataobs$)} 	
+								& \multicolumn{3}{c|}{Noised Results ($\dataobs'$)}  		
+								\\ \cline{2-4}
 	                      		&  $\Pr[\dataobs' = (0, 2)]$  	
 	                      		&  $\Pr[\dataobs' = (1, 1)]$ 	
-	                      		&  $\Pr[\dataobs' = (2, 0)]$ 	\\  \hline
-	$\dataobs = (0,2)$          & 0.658030139707	& 0.216166179191	& \\  \hline
-	$\dataobs = (1,1)$          & 0.658030139707	&  100 			& \\  \hline
-	$\dataobs = (2,0)$          & 0.658030139707	&  100 			& \\  \hline
+	                      		&  $\Pr[\dataobs' = (2, 0)]$ 	\\  \hline \hline
+	$\dataobs = (0,2)$          & {\bf 0.658030139707}	
+								& {\bf 0.216166179191}	
+								& 0.125803681102 
+								\\  \hline
+	$\dataobs = (1,1)$          & {\bf 0.341969860293}	
+								& {\bf 0.316060279414} 			
+								& 0.341969860293
+								\\  \hline
+	$\dataobs = (2,0)$          & 0.125803681102
+								& {\bf 0.216166179191} 			
+								& {\bf 0.658030139707}
+								\\  \hline
 \end{tabular}
 \end{table}
 
-The computation formula for each of the value in the table:
 
+The computation formula for each of the value in the Tbable \ref{tab_n2prob}:
+
+{\small
 \noindent $\dataobs = (0,2):$
 \[
 \Pr[\dataobs']
@@ -183,19 +223,282 @@ The computation formula for each of the value in the table:
 & \dataobs' = (2, 0)
 \end{cases}.
 \]
+}
 
 
 \begin{table}[htbp]
 	\centering
-	\caption{Accuracy with $n = 3$}
-\begin{tabular}{|c|r|r|}
+	\caption{Error (Hellinger Distance) Between Noised Posterior and True Posterior with $n = 2, \epsilon = 1.0$, prior: $\betad(1,1)$}
+	\label{tab_n2error}
+\begin{tabular}{|c||r|r|r|}
 	\hline
 
-	\multirow{2}{*}{$n = 3$} & \multicolumn{2}{c|}{Flag}  \\ \cline{2-3}
-	                      &  Yes  &   NO \\  \hline
-	Index                 & 87    &  100 \\  \hline
+	\multirow{2}{*}{True data ($\dataobs$)} 	
+								& \multicolumn{3}{c|}{$\hellinger(\betad(\valpha), \betad(\valpha'))$}  		
+								\\ \cline{2-4}
+	                      		& $\dataobs' = (0, 2)$
+	                      		& $\dataobs' = (1, 1)$
+	                      		& $\dataobs' = (2, 0)$
+	                      		\\  \hline \hline
+	$\dataobs = (0,2)$          & 0.0	
+								& 0.351365939808
+								& 0.627271345023 
+								\\  \hline
+	$\dataobs = (1,1)$          & 0.351365939808	
+								& 0.0			
+								& 0.351365939808
+								\\  \hline
+	$\dataobs = (2,0)$          & 0.627271345023
+								& 0.351365939808 			
+								& 0.0
+								\\  \hline
 \end{tabular}
 \end{table}
+
+
+
+\begin{table}[htbp]
+	\footnotesize
+	\centering
+	\caption{Accuracy with $n = 3, \epsilon = 1.0$}
+	\label{tab_n3prob}
+\begin{tabular}{|c||r|r|r|r|}
+	\hline
+
+	\multirow{2}{*}{True data ($\dataobs$)}
+								& \multicolumn{4}{c|}{Noised Results ($\dataobs'$)}  
+								\\ \cline{2-5}
+	                      		&  $\Pr[\dataobs' = (0, 3)]$  	
+	                      		&  $\Pr[\dataobs' = (1, 2)]$ 	
+	                      		&  $\Pr[\dataobs' = (2, 1)]$ 	
+	                      		&  $\Pr[\dataobs' = (3, 0)]$ 	
+	                      		\\  \hline
+	                      		\hline
+	$\dataobs = (0,3)$          & {\bf 0.658030139707}	
+								& {\bf 0.216166179191}	
+								&  0.0795230932009
+								&  0.0462805879011
+								\\  \hline
+	$\dataobs = (1,2)$          & {\bf 0.341969860293}	
+								& {\bf 0.316060279414}			
+								&  0.216166179191
+								&  0.125803681102
+								\\  \hline
+	$\dataobs = (2,1)$          & 0.125803681102
+								& 0.216166179191			
+								& {\bf 0.316060279414}
+								& {\bf 0.341969860293} 
+								\\  \hline
+	$\dataobs = (3,0)$          & 0.0462805879011
+								& 0.0795230932009 			
+								& {\bf 0.216166179191}
+								& {\bf 0.658030139707} 
+								\\  \hline
+\end{tabular}
+\end{table}
+
+
+The computation formula for each of the value in the table:
+
+{\small
+
+\noindent $\dataobs = (0,3):$
+\[
+\Pr[\dataobs']
+= \begin{cases}
+	0.5 \times 
+ 	\Pr[	\lap{0}{\frac{1}{\epsilon}}	\leq	1] 
+ 	+ 	
+ 	0.5 \times 
+ 	\Pr[	0	< \lap{0}{\frac{1}{\epsilon}}] 
+%
+	& \dataobs' = (0, 3)\\
+%
+ 	0.5 \times 
+ 	\Pr[	1	< \lap{0}{\frac{1}{\epsilon}}	\leq	2] 
+ 	+ 	
+ 	0.5 \times 
+ 	\Pr[	-1	< \lap{0}{\frac{1}{\epsilon}}	\leq	0] 
+%
+	& \dataobs' = (1, 2)\\
+%
+ 	0.5 \times 
+ 	\Pr[	2	<	\lap{0}{\frac{1}{\epsilon}}	\leq	3] 
+ 	+ 	
+ 	0.5 \times 
+ 	\Pr[	-2	< \lap{0}{\frac{1}{\epsilon}}	\leq	-1] 
+%
+	& \dataobs' = (2, 1)\\
+%
+ 	0.5 \times 
+ 	\Pr[	3	<	\lap{0}{\frac{1}{\epsilon}}]
+ 	+ 	
+ 	0.5 \times 
+ 	\Pr[	\lap{0}{\frac{1}{\epsilon}}	\leq	-2] 
+%
+& \dataobs' = (3, 0)
+\end{cases}.
+\]
+
+
+\noindent $\dataobs = (1,2):$
+\[
+\Pr[\dataobs']
+= \begin{cases}
+ 	0.5 \times 
+ 	\Pr[	\lap{0}{\frac{1}{\epsilon}}	\leq	0] 
+ 	+ 	
+ 	0.5 \times 
+ 	\Pr[	1	< \lap{0}{\frac{1}{\epsilon}}] 
+	& \dataobs' = (0, 3)\\
+%
+ 	0.5 \times 
+ 	\Pr[	0	< \lap{0}{\frac{1}{\epsilon}}	\leq	1] 
+ 	+ 	
+ 	0.5 \times 
+ 	\Pr[	0	< \lap{0}{\frac{1}{\epsilon}}	\leq	1] 
+	& \dataobs' = (1, 2)\\
+%
+ 	0.5 \times 
+ 	\Pr[	1	<	\lap{0}{\frac{1}{\epsilon}}	\leq	2] 
+ 	+ 	
+ 	0.5 \times 
+ 	\Pr[	-1	< \lap{0}{\frac{1}{\epsilon}}	\leq	0] 
+	& \dataobs' = (2, 1)\\
+%
+ 	0.5 \times 
+ 	\Pr[	2	<	\lap{0}{\frac{1}{\epsilon}}] 
+ 	+ 	
+ 	0.5 \times 
+ 	\Pr[	\lap{0}{\frac{1}{\epsilon}}	\leq	-1] 
+	& \dataobs' = (3, 0)
+\end{cases}.
+\]
+
+\noindent $\dataobs = (2,1):$
+\[
+\Pr[\dataobs']
+= \begin{cases}
+ 	0.5 \times 
+ 	\Pr[	\lap{0}{\frac{1}{\epsilon}}	\leq	-1]
+ 	+ 	
+ 	0.5 \times 
+ 	\Pr[	2	< \lap{0}{\frac{1}{\epsilon}}] 
+%
+	& \dataobs' = (0, 3)\\
+%
+ 	0.5 \times 
+ 	\Pr[	-1	< \lap{0}{\frac{1}{\epsilon}}	\leq	0] 
+ 	+ 	
+ 	0.5 \times 
+ 	\Pr[	1	< \lap{0}{\frac{1}{\epsilon}}	\leq	2] 
+%
+	& \dataobs' = (1, 2)\\
+%
+ 	0.5 \times 
+ 	\Pr[	0	<	\lap{0}{\frac{1}{\epsilon}}	\leq	1] 
+ 	+ 	
+ 	0.5 \times 
+ 	\Pr[	0	< \lap{0}{\frac{1}{\epsilon}}	\leq	1] 
+%
+& \dataobs' = (2, 1)\\
+%
+ 	0.5 \times 
+ 	\Pr[	1	<	\lap{0}{\frac{1}{\epsilon}}	] 
+ 	+ 	
+ 	0.5 \times 
+ 	\Pr[	\lap{0}{\frac{1}{\epsilon}}	\leq	0] 
+%
+& \dataobs' = (3, 0)
+\end{cases}.
+\]
+
+
+
+\noindent $\dataobs = (3,0):$
+\[
+\Pr[\dataobs']
+= \begin{cases}
+ 	0.5 \times 
+ 	\Pr[	\lap{0}{\frac{1}{\epsilon}}	\leq	-2] 
+ 	+ 	
+ 	0.5 \times 
+ 	\Pr[	3	< \lap{0}{\frac{1}{\epsilon}}] 
+	& \dataobs' = (0, 3)\\
+%
+ 	0.5 \times 
+ 	\Pr[	-2	< \lap{0}{\frac{1}{\epsilon}}	\leq	-1] 
+ 	+ 	
+ 	0.5 \times 
+ 	\Pr[	2	< \lap{0}{\frac{1}{\epsilon}}	\leq	3] 
+	& \dataobs' = (1, 2)\\
+%
+ 	0.5 \times 
+ 	\Pr[	-1	<	\lap{0}{\frac{1}{\epsilon}}	\leq	0] 
+ 	+ 	
+ 	0.5 \times 
+ 	\Pr[	1	< \lap{0}{\frac{1}{\epsilon}}	\leq	2] 
+	& \dataobs' = (2, 1)\\
+%
+ 	0.5 \times 
+ 	\Pr[	0	<	\lap{0}{\frac{1}{\epsilon}}	] 
+ 	+ 	
+ 	0.5 \times 
+ 	\Pr[	\lap{0}{\frac{1}{\epsilon}}	\leq	1] 
+	& \dataobs' = (3, 0)
+\end{cases}.
+\]
+}
+
+\begin{table}[htbp]
+	\centering
+	\small
+	\caption{Error (Hellinger Distance) with $n = 3, \epsilon = 1.0$, prior: $\betad(1,1)$}
+	\label{tab_n3error}
+\begin{tabular}{|c||r|r|r|r|}
+	\hline
+
+	\multirow{2}{*}{True data ($\dataobs$)}
+								& \multicolumn{4}{c|}
+								{$\hellinger(\betad(\valpha), \betad(\valpha'))$}  
+								\\ \cline{2-5}
+	                      		&  $\dataobs' = (0, 3)$  	
+	                      		&  $\dataobs' = (1, 2)$ 	
+	                      		&  $\dataobs' = (2, 1)$ 	
+	                      		&  $\dataobs' = (3, 0)$ 	
+	                      		\\  \hline
+	                      		\hline
+	$\dataobs = (0,3)$          & 0.0	
+								& 0.309682680332	
+								& 0.537732813886
+								& 0.72945673866
+								\\  \hline
+	$\dataobs = (1,2)$          & 0.309682680332
+								& 0.0
+								& 0.272078233285
+								& 0.537732813886
+								\\  \hline
+	$\dataobs = (2,1)$          & 0.537732813886
+								& 0.272078233285			
+								& 0.0
+								& 0.309682680332
+								\\  \hline
+	$\dataobs = (3,0)$          & 0.72945673866
+								& 0.537732813886 			
+								& 0.309682680332
+								& 0.0
+								\\  \hline
+\end{tabular}
+\end{table}
+
+
+$n = 4$
+
+$\dots$
+
+
+
+
 
 
 \end{document}

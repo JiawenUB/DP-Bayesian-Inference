@@ -36,7 +36,7 @@
 \usepackage{lipsum}
 \usepackage{multirow}
 \usepackage{authblk}
-
+\SetSymbolFont{stmry}{bold}{U}{stmry}{m}{n}
 
 %new commands
 \newcommand{\theHalgorithm}{\arabic{algorithm}}
@@ -49,7 +49,6 @@
 \newcommand{\bprior}{\boldsymbol{\beta}_{\textup{prior}}}
 \newcommand{\bysinfer}[1]{\mathsf{DirP}(#1)}
 \newcommand{\bys}[2]{\mathsf{DirP}(#1,#2)}
-
 \newcommand{\bysdir}{\mathsf{DIR}}
 \newcommand{\betad}{\mathsf{Beta}}
 \newcommand{\betaf}{\textup{B}}
@@ -98,4 +97,6 @@
 
 \newtheorem{assert}{Assertion}[lem]
 \newcommand{\lap}[2]{\mathsf{Lap}(#1, #2)}
+\newcommand{\uniform}[2]{\mathsf{uniform}(#1, #2)}
+
 \newcommand{\todo}[1]{{\footnotesize \color{red}\textbf{[[ #1 ]]}}}
