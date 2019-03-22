@@ -153,4 +153,4 @@ class dirichlet(object):
 			temp[i] -= 1
 		return LS
 
-
+print opt_hellinger(dirichlet([4,2]), dirichlet([5,1]))
