@@ -891,21 +891,21 @@ $\dots$
 \begin{thm}
 To prove the optimality of Laplace mechanism, we are showing 
 \[
-\frac{ELap(\dataobs)}{(\epsilon*LS(\dataobs))}
+\frac{ELap(\dataobs)}{(\epsilon \times sLS(\dataobs))}
 \]
 is $O(1)$, considering $n=|\dataobs| \geq 2$ being the parameter.
 
 Where $LS(\cdot)$ is the local sensitivity, and where $ELap(\cdot)$ is the measure of the error of the Laplace mechanism, defined in this way:
 \[
-ELap(\dataobs) = \arg\big( \min\limits_{t}\{Pr[\hlg(\bysinfer(\dataobs), \ilapmech(\dataobs))< t] >= 0.748\} \big).
+ELap(\dataobs) = \arg\big( \min\limits_{t}\{Pr[\hlg(\bysinfer{\dataobs}, \ilapmech(\dataobs))< t] >= 0.748\} \big).
 \]
 \end{thm}
 
 \begin{proof}
 From the calculation above, we can conclude that the $ELap(\dataobs) = LS(\dataobs)$.\\
-Then $\frac{ELap(\dataobs)}{(\epsilon*LS(\dataobs))} = \frac{1}{\epsilon} = O(1)$.
+Then $\frac{ELap(\dataobs)}{(\epsilon \times LS(\dataobs))} = \frac{1}{\epsilon} = O(1)$.
 
-Given data set $\dataobs = (a,b)$ of size $ n = a + b \geq 2$, when apply the Laplace mechanism on it, we get the noised results $\dataobs'$. The probability that $\dataobs' = (a,b)$ or $(a + 1, b-1)$ or $(a - 1, b + 1)$ is:
+Given data set $\dataobs = (a,b)$ of size $ n = a + b \geq 2$, when apply the Laplace noise on it, we get the noised results $\dataobs'$. The probability that $\dataobs' = (a,b)$ or $(a + 1, b-1)$ or $(a - 1, b + 1)$ is:
 
 {\scriptsize
 \[
@@ -1045,7 +1045,7 @@ Simplified:
  	= 0.8742
 	& a = 1,	b = n - 1, n \geq 3\\
 %
-	= 1
+	1
 	& a = 1, b = 1\\
 %
  	0.5 \times 
@@ -1081,7 +1081,7 @@ LS(\dataobs) = \max\limits_{\adj{\dataobs}{\dataobs''}}\hlg(\bysinfer{\dataobs},
 i.e., $\hlg(\bysinfer{\dataobs},\bysinfer{\dataobs'}) \leq LS(\dataobs)$.\\
 Then, we can get:
 \[
-\{Pr[\hlg(\bysinfer{\dataobs}, \ilapmech(\dataobs)) < LS(\dataobs)] >= 0.748\}.
+Pr[\hlg(\bysinfer{\dataobs}, \ilapmech(\dataobs)) < LS(\dataobs)] >= 0.748.
 \]
 Since the three $\dataobs'$ we are looking into is already the 3 nearest data set, so Hellinger distance between them are already the minimum distances. So, we can get: $ELap(\dataobs) = LS(\dataobs)$.\\
 \[
