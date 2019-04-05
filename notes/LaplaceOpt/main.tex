@@ -286,7 +286,6 @@
 \vspace{-0.2cm}
 \begin{tabular}{|c||r|r|r|}
 	\hline
-
 	\multirow{2}{*}{True data ($\dataobs$)}
 								& \multicolumn{3}{c|}{$\hellinger(\betad(\valpha), \betad(\valpha'))$}
 								\\ \cline{2-4}
@@ -298,12 +297,12 @@
 								& 0.351365939808
 								& 0.627271345023 
 								\\  \hline
-	$\dataobs = (1,1)$          & 0.351365939808	
+	$\dataobs = (1,1)$          & 0.351365939808
 								& 0.0			
 								& 0.351365939808
 								\\  \hline
 	$\dataobs = (2,0)$          & 0.627271345023
-								& 0.351365939808 			
+								& 0.351365939808
 								& 0.0
 								\\  \hline
 \end{tabular}
@@ -313,12 +312,13 @@
 \clearpage
 The following tables are with data size $n = 3:$
 
+
+
 \begin{table}[htbp]
-	\vspace{-0.5cm}
 	\footnotesize
 	\centering
-	\caption{Accuracy with $n = 3, \epsilon = 1.0$}
-	\label{tab_n3eps1.0prob}
+	\caption{Accuracy of $\ilapmech$ with $n = 3, \epsilon = 1.0$}
+	\label{tab_n3eps1prob}
 \begin{tabular}{|c||r|r|r|r|}
 	\hline
 	\multirow{2}{*}{True data ($\dataobs$)}
@@ -330,34 +330,136 @@ The following tables are with data size $n = 3:$
 	                      		&  $\Pr[\dataobs' = (3, 0)]$ 	
 	                      		\\  \hline
 	                      		\hline
-	$\dataobs = (0,3)$          & {\bf 0.658030139707}	
-								& {\bf 0.216166179191}	
+	$\dataobs = (0,3)$          & {\bf 0.658030140}
+								& {\bf 0.216166179}
 								&  0.0795230932009
 								&  0.0462805879011
 								\\  \hline
-	$\dataobs = (1,2)$          & {\bf 0.341969860293}	
-								& {\bf 0.316060279414}			
-								& {\bf 0.216166179191}
-								&  0.125803681102
+	$\dataobs = (1,2)$          & {\bf 0.341969860}
+								& {\bf 0.316060279}
+								& {\bf 0.216166179}
+								&  0.125803681
 								\\  \hline
-	$\dataobs = (2,1)$          & 0.125803681102
-								& {\bf 0.216166179191}			
-								& {\bf 0.316060279414}
-								& {\bf 0.341969860293} 
+	$\dataobs = (2,1)$          & 0.125803681
+								& {\bf 0.216166179}
+								& {\bf 0.316060279}
+								& {\bf 0.341969860}
 								\\  \hline
-	$\dataobs = (3,0)$          & 0.0462805879011
-								& 0.0795230932009 			
-								& {\bf 0.216166179191}
-								& {\bf 0.658030139707} 
+	$\dataobs = (3,0)$          & 0.0462805879
+								& 0.0795230932	
+								& {\bf 0.216166179}
+								& {\bf 0.658030140}
+								\\  \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+	\footnotesize
+	\centering
+	\caption{Accuracy of $\lapmech$ with $n = 3, \epsilon = 1.0$}
+	\label{tab_n3eps1prob_lap}
+\begin{tabular}{|c||r|r|r|r|}
+	\hline
+	\multirow{2}{*}{True data ($\dataobs$)}
+								& \multicolumn{4}{c|}{Noised Results ($\dataobs'$)}  
+								\\ \cline{2-5}
+	                      		&  $\Pr[\dataobs' = (0, 3)]$  	
+	                      		&  $\Pr[\dataobs' = (1, 2)]$ 	
+	                      		&  $\Pr[\dataobs' = (2, 1)]$ 	
+	                      		&  $\Pr[\dataobs' = (3, 0)]$ 	
+	                      		\\  \hline
+	                      		\hline
+	$\dataobs = (0,3)$          & 0.598367335
+								& 0.158030140	
+								& 0.095850125
+								& 0.147752400
+								\\  \hline
+	$\dataobs = (1,2)$          & 0.40163266
+								& 0.19673467
+								& 0.15803013
+								& 0.24360252
+								\\  \hline
+	$\dataobs = (2,1)$          & 0.24360252
+								& 0.15803013
+								& 0.19673467
+								& 0.40163266
+								\\  \hline
+	$\dataobs = (3,0)$          & 0.147752400
+								& 0.095850125	
+								& 0.158030140
+								& 0.598367335
+								\\  \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+	\footnotesize
+	\centering
+	\caption{Accuracy of $\hexpmech$ with $n = 3, \epsilon = 1.0$}
+	\label{tab_n3eps1prob_exp}
+\begin{tabular}{|c||r|r|r|r|}
+	\hline
+	\multirow{2}{*}{True data ($\dataobs$)}
+								& \multicolumn{4}{c|}{Noised Results ($\dataobs'$)}  
+								\\ \cline{2-5}
+	                      		&  $\Pr[\dataobs' = (0, 3)]$  	
+	                      		&  $\Pr[\dataobs' = (1, 2)]$ 	
+	                      		&  $\Pr[\dataobs' = (2, 1)]$ 	
+	                      		&  $\Pr[\dataobs' = (3, 0)]$ 	
+	                      		\\  \hline
+	                      		\hline
+	$\dataobs = (0,3)$          & 0.335390398
+								& 0.261202304
+								& 0.217281854
+								& 0.186125444
+								\\  \hline
+	$\dataobs = (1,2)$          & 0.241155567
+								& 0.309649877
+								& 0.248588637
+								& 0.200605920
+								\\  \hline
+	$\dataobs = (2,1)$          & 0.200605920
+								& 0.248588637
+								& 0.309649877
+								& 0.241155567
+								\\  \hline
+	$\dataobs = (3,0)$          & 0.186125444
+								& 0.217281854
+								& 0.261202304
+								& 0.335390398
 								\\  \hline
 \end{tabular}
 \end{table}
 
 
+\begin{figure*}[ht]
+\begin{center}
+\vspace{-0.5cm}
+     \centering
+     \subfigure[True data $(0,3)$]
+     {
+         \includegraphics[width=0.4\textwidth]{data[0-3]eps1.eps}
+     }
+     \subfigure[True data $(1,2)$]
+     {
+         \includegraphics[width=0.4\textwidth]{data[1-2]eps1.eps}
+     }
+     \subfigure[True data $(2,1)$]
+     {
+         \includegraphics[width=0.4\textwidth]{data[2-1]eps1.eps}
+     }
+     \subfigure[True data $(3,0)$]
+     {
+         \includegraphics[width=0.4\textwidth]{data[3-0]eps1.eps}
+     }
+      \caption{\footnotesize The probability of outputting candidates with different true data and $\epsilon = 1.0$, representing same statics as the Table \ref{tab_n3eps1prob}, \ref{tab_n3eps1prob_lap}, \ref{tab_n3eps1prob_exp}}
+\vspace{-0.5cm}
+\end{center}
+\end{figure*}
+
 
 
 \begin{table}[htbp]
-	\vspace{-0.5cm}
 	\centering
 	\small
 	\caption{Error (Hellinger Distance) with $n = 3, \epsilon = 1.0$, prior: $\betad(1,1)$}
@@ -376,7 +478,7 @@ The following tables are with data size $n = 3:$
 	                      		\\  \hline
 	                      		\hline
 	$\dataobs = (0,3)$          & 0.0	
-								& 0.309682680332	
+								& 0.30968268033	
 								& 0.537732813886
 								& 0.72945673866
 								\\  \hline
@@ -398,14 +500,15 @@ The following tables are with data size $n = 3:$
 \end{tabular}
 \end{table}
 
+
+
 \clearpage
 $n = 4:$
 \begin{table}[htbp]
-	\vspace{-0.5cm}
 	\scriptsize
 	\centering
-	\caption{Accuracy with $n = 4, \epsilon = 1.0$}
-	\label{tab_n4prob}
+	\caption{Accuracy of $\ilapmech$ with $n = 4, \epsilon = 1.0$}
+	\label{tab_n4eps1prob_ilap}
 \begin{tabular}{|c||r|r|r|r|r|}
 	\hline
 
@@ -440,11 +543,11 @@ $n = 4:$
 	$\dataobs = (3,1)$          & 0.0462805879011
 								& 0.0795230932009 			
 								& {\bf 0.216166179191}
-								& {\bf 0.316060279414} 
+								& {\bf0.316060279414} 
 								&  0.341969860293
 								\\  \hline
-	$\dataobs = (4,0)$          & 0.0170256768141
-								& 0.029254911087 			
+	$\dataobs = (4,0)$          & 0.017025676814
+								& 0.029254911087
 								& {\bf 0.0795230932009}
 								& {\bf 0.216166179191} 
 								&  0.658030139707
@@ -453,10 +556,141 @@ $n = 4:$
 \vspace{-0.5cm}
 \end{table}
 
+\begin{table}[htbp]
+	\scriptsize
+	\centering
+	\caption{Accuracy of $\lapmech$ with $n = 4, \epsilon = 1.0$}
+	\label{tab_n4eps1prob_lap}
+\begin{tabular}{|c||r|r|r|r|r|}
+	\hline
+
+	\multirow{2}{*}{True data ($\dataobs$)}
+								& \multicolumn{5}{c|}{Noised Results ($\dataobs'$)}  
+								\\ \cline{2-6}
+	                      		&  $\Pr[\dataobs' = (0, 4)]$  	
+	                      		&  $\Pr[\dataobs' = (1, 3)]$ 	
+	                      		&  $\Pr[\dataobs' = (2, 2)]$ 	
+	                      		&  $\Pr[\dataobs' = (3, 1)]$ 	
+	                      		&  $\Pr[\dataobs' = (4, 0)]$ 	
+	                      		\\  \hline
+	                      		\hline
+	$\dataobs = (0,4)$          & 0.598367335
+								& 0.158030140	
+								& 0.095850125
+								& 0.058136040
+								& 0.089616361
+								\\  \hline
+	$\dataobs = (1,3)$          & 0.401632665
+								& 0.196734670
+								& 0.158030140
+								& 0.095850125
+								& 0.147752400
+								\\  \hline
+	$\dataobs = (2,2)$          & 0.243602525
+								& 0.158030140
+								& 0.196734670
+								& 0.158030140
+								& 0.243602525
+								\\  \hline
+	$\dataobs = (3,1)$          & 0.147752400
+								& 0.095850125
+								& 0.158030140
+								& 0.196734670
+								& 0.401632665
+								\\  \hline
+	$\dataobs = (4,0)$          & 0.089616361
+								& 0.058136040
+								& 0.095850125
+								& 0.158030140
+								& 0.598367335
+								\\  \hline
+\end{tabular}
+\vspace{-0.5cm}
+\end{table}
+
+\begin{table}[htbp]
+	\scriptsize
+	\centering
+	\caption{Accuracy of $\hexpmech$ with $n = 4, \epsilon = 1.0$}
+	\label{tab_n4eps1prob_exp}
+\begin{tabular}{|c||r|r|r|r|r|}
+	\hline
+
+	\multirow{2}{*}{True data ($\dataobs$)}
+								& \multicolumn{5}{c|}{Noised Results ($\dataobs'$)}  
+								\\ \cline{2-6}
+	                      		&  $\Pr[\dataobs' = (0, 4)]$  	
+	                      		&  $\Pr[\dataobs' = (1, 3)]$ 	
+	                      		&  $\Pr[\dataobs' = (2, 2)]$ 	
+	                      		&  $\Pr[\dataobs' = (3, 1)]$ 	
+	                      		&  $\Pr[\dataobs' = (4, 0)]$ 	
+	                      		\\  \hline
+	                      		\hline
+	$\dataobs = (0,4)$          & 0.28639286
+								& 0.22304298
+								& 0.18648505
+								& 0.16144157
+								& 0.14263753
+								\\  \hline
+	$\dataobs = (1,3)$          & 0.20339335
+								& 0.26116223
+								& 0.21220610
+								& 0.17601942
+								& 0.14721890
+								\\  \hline
+	$\dataobs = (2,2)$          & 0.15904127
+								& 0.20764682
+								& 0.26662381
+								& 0.20764683
+								& 0.15904127
+								\\  \hline
+	$\dataobs = (3,1)$          & 0.14721890
+								& 0.17601942
+								& 0.21220610
+								& 0.26116223
+								& 0.20339335
+								\\  \hline
+	$\dataobs = (4,0)$          & 0.14263753
+								& 0.16144157
+								& 0.18648505
+								& 0.22304298
+								& 0.28639286
+								\\  \hline
+\end{tabular}
+\vspace{-0.5cm}
+\end{table}
+
+\begin{figure*}[ht]
+\begin{center}
+\vspace{-0.5cm}
+     \centering
+     \subfigure[True data $(0,4)$]
+     {
+         \includegraphics[width=0.3\textwidth]{data[0-4]eps1.eps}
+     }
+     \subfigure[True data $(1,3)$]
+     {
+         \includegraphics[width=0.3\textwidth]{data[1-3]eps1.eps}
+     }
+     \subfigure[True data $(2,2)$]
+     {
+         \includegraphics[width=0.3\textwidth]{data[2-2]eps1.eps}
+     }
+     \subfigure[True data $(3,1)$]
+     {
+         \includegraphics[width=0.3\textwidth]{data[3-1]eps1.eps}
+     }
+     \subfigure[True data $(4,0)$]
+     {
+         \includegraphics[width=0.3\textwidth]{data[3-1]eps1.eps}
+     }
+      \caption{\footnotesize The probability of outputting candidates with different true data and $\epsilon = 1.0$, representing same statics as the Table \ref{tab_n4eps1prob_ilap}, \ref{tab_n4eps1prob_lap}, \ref{tab_n4eps1prob_exp}}
+\vspace{-0.5cm}
+\end{center}
+\end{figure*}
 
 
 \begin{table}[htbp]
-	\vspace{-0.5cm}
 	\scriptsize
 	\centering
 	\caption{Error (Hellinger Distance) with $n = 4, \epsilon = 1.0$, prior: $\betad(1,1)$}
@@ -597,129 +831,11 @@ Then $\frac{ELap(\dataobs)}{(\epsilon \times LS(\dataobs))} = \frac{ELap(\dataob
 
 Given data set $\dataobs = (a,b)$ of size $ n = a + b \geq 2$, when apply the Laplace noise on it, we get the noised results $\dataobs'$. The probability that $\dataobs' = (a,b)$ or $(a + 1, b-1)$ or $(a - 1, b + 1)$ is:
 
-{\scriptsize
-\[
-\begin{cases}
-\left\{
-\begin{array}{lr}
- 	&
-	0.5 \times 
- 	(\Pr[	\lap{0}{\frac{1}{\epsilon}}	<	1] 
- 	 	+ 	
- 	 	\Pr[	0	\leq \lap{0}{\frac{1}{\epsilon}}])\\
-%
-+	&
- 	0.5 \times 
- 	(\Pr[	1	\leq \lap{0}{\frac{1}{\epsilon}}	<	2] 
- 	 	+ 	
- 	 \Pr[	-1	\leq \lap{0}{\frac{1}{\epsilon}}	<	0])\\
-\end{array}
-\right\}
-	= 0.8742
-	& a = 0,	b = n\\
-%
-\left\{
-\begin{array}{lr}
- 	&
- 	0.5 \times 
- 	(\Pr[	\lap{0}{\frac{1}{\epsilon}}	<	0] 
- 	+ 	
- 	\Pr[	1	\leq \lap{0}{\frac{1}{\epsilon}}])\\
-%
-+	&
- 	0.5 \times 
- 	(\Pr[	0	\leq \lap{0}{\frac{1}{\epsilon}}	<	1] 
- 	+ 	 
- 	\Pr[	0	\leq \lap{0}{\frac{1}{\epsilon}}	<	1] )\\
-%
-+ 	&
- 	0.5 \times 
- 	(\Pr[	1	\leq	\lap{0}{\frac{1}{\epsilon}}	<	2] 
- 	+ 	 
- 	\Pr[	-1	\leq \lap{0}{\frac{1}{\epsilon}}	<	0])\\
-\end{array}
-\right\}
- 	= 0.8742
-	& a = 1,	b = n - 1, n \geq 3\\
-%
-	1
-	& a = 1, b = 1\\
-%
-\left\{ 	
-\begin{array}{lr}
-	&
-	0.5 \times
-	(
-	\Pr[-1 \leq \lap{0}{\frac{1}{\epsilon}}	< 	0]
-	+
-	\Pr[1 \leq \lap{0}{\frac{1}{\epsilon}}	< 	2]
-	)\\
-+	&
-	0.5 \times
-	(
-	\Pr[0 \leq \lap{0}{\frac{1}{\epsilon}}	< 	1]
-	+
-	\Pr[0 \leq \lap{0}{\frac{1}{\epsilon}}	< 	1]
-	)\\
-+	&
-	0.5 \times
-	(
-	\Pr[1 \leq \lap{0}{\frac{1}{\epsilon}}]
-	+
-	\Pr[\lap{0}{\frac{1}{\epsilon}} < 0])
-\end{array}
-\right\}
-	= 0.8742
-	& a = n - 1,	b = 1, n \geq 3\\
-%
-\left\{
-\begin{array}{lr}
- 	&
- 	0.5 \times 
- 	(\Pr[	-1	\leq	\lap{0}{\frac{1}{\epsilon}}	<	0] 
- 	+ 	
- 	\Pr[	1	\leq	\lap{0}{\frac{1}{\epsilon}}	<	2])\\
-+	&
- 	0.5 \times 
- 	(\Pr[	0	\leq	\lap{0}{\frac{1}{\epsilon}}	] 
- 	  	+ 
- 	  	\Pr[	\lap{0}{\frac{1}{\epsilon}}	<	1]) 
-\end{array}
-\right\}
-	= 0.8742
-	& a = n,b = 0\\
-%
-\left\{
-\begin{array}{lr}
- 	&
- 	0.5 \times 
- 	(\Pr[	-1	\leq \lap{0}{\frac{1}{\epsilon}}	<	0] 
- 	+ 	
- 	\Pr[	1	\leq \lap{0}{\frac{1}{\epsilon}}	<	2])\\
-%
-+	&
- 	0.5 \times 
- 	(\Pr[	0	\leq	\lap{0}{\frac{1}{\epsilon}}	<	1] 
- 	+ 	
- 	\Pr[	0	\leq \lap{0}{\frac{1}{\epsilon}}	<	1])\\
-%
-+	&
- 	0.5 \times 
- 	(\Pr[	1	\leq	\lap{0}{\frac{1}{\epsilon}}	<	2] 
- 	+ 	
- 	\Pr[	-1 	\leq	\lap{0}{\frac{1}{\epsilon}}	<	0]) 
-\end{array}
-\right\}
-	= 0.74839
-	& o.w.\\
-%
-\end{cases}.
-\]
-}
 
-Simplified:
+Simplified: (The full calculation is in Appendix)
 {\footnotesize
-\[
+\begin{equation}
+\label{eq:proofbound1}
 \begin{cases}
  	0.5 \times 
  	(\Pr[	\lap{0}{\frac{1}{\epsilon}}	<	2] 
@@ -760,7 +876,7 @@ Simplified:
 	& o.w.
 %
 \end{cases}.
-\]
+\end{equation}
 }
 
 By definition of adjacent data set, we know $\adj{\dataobs}{\dataobs'}$.\\
@@ -962,7 +1078,7 @@ The computation formula for each of the value of $\ilapmech$ in the Table \ref{t
 \]
 }
 
-The computation formula for each of the value in the table. \ref{tab_n3eps1.0prob}:
+The computation formula for each of the value in the table. \ref{tab_n3eps1prob}:
 
 {\small
 
@@ -1114,7 +1230,7 @@ The computation formula for each of the value in the table. \ref{tab_n3eps1.0pro
 \]
 }
 
-
+The computation formula for each of the value in Table. \ref{tab_n4eps1prob_ilap}
 {\scriptsize
 
 \[
@@ -1332,4 +1448,126 @@ The computation formula for each of the value in the table. \ref{tab_n3eps1.0pro
 \end{cases}.
 \]
 }
+
+Full calculation of Equation. \ref{eq:proofbound1}.
+{\scriptsize
+\[
+\begin{cases}
+\left\{
+\begin{array}{lr}
+ 	&
+	0.5 \times 
+ 	(\Pr[	\lap{0}{\frac{1}{\epsilon}}	<	1] 
+ 	 	+ 	
+ 	 	\Pr[	0	\leq \lap{0}{\frac{1}{\epsilon}}])\\
+%
++	&
+ 	0.5 \times 
+ 	(\Pr[	1	\leq \lap{0}{\frac{1}{\epsilon}}	<	2] 
+ 	 	+ 	
+ 	 \Pr[	-1	\leq \lap{0}{\frac{1}{\epsilon}}	<	0])\\
+\end{array}
+\right\}
+	= 0.8742
+	& a = 0,	b = n\\
+%
+\left\{
+\begin{array}{lr}
+ 	&
+ 	0.5 \times 
+ 	(\Pr[	\lap{0}{\frac{1}{\epsilon}}	<	0] 
+ 	+ 	
+ 	\Pr[	1	\leq \lap{0}{\frac{1}{\epsilon}}])\\
+%
++	&
+ 	0.5 \times 
+ 	(\Pr[	0	\leq \lap{0}{\frac{1}{\epsilon}}	<	1] 
+ 	+ 	 
+ 	\Pr[	0	\leq \lap{0}{\frac{1}{\epsilon}}	<	1] )\\
+%
++ 	&
+ 	0.5 \times 
+ 	(\Pr[	1	\leq	\lap{0}{\frac{1}{\epsilon}}	<	2] 
+ 	+ 	 
+ 	\Pr[	-1	\leq \lap{0}{\frac{1}{\epsilon}}	<	0])\\
+\end{array}
+\right\}
+ 	= 0.8742
+	& a = 1,	b = n - 1, n \geq 3\\
+%
+	1
+	& a = 1, b = 1\\
+%
+\left\{ 	
+\begin{array}{lr}
+	&
+	0.5 \times
+	(
+	\Pr[-1 \leq \lap{0}{\frac{1}{\epsilon}}	< 	0]
+	+
+	\Pr[1 \leq \lap{0}{\frac{1}{\epsilon}}	< 	2]
+	)\\
++	&
+	0.5 \times
+	(
+	\Pr[0 \leq \lap{0}{\frac{1}{\epsilon}}	< 	1]
+	+
+	\Pr[0 \leq \lap{0}{\frac{1}{\epsilon}}	< 	1]
+	)\\
++	&
+	0.5 \times
+	(
+	\Pr[1 \leq \lap{0}{\frac{1}{\epsilon}}]
+	+
+	\Pr[\lap{0}{\frac{1}{\epsilon}} < 0])
+\end{array}
+\right\}
+	= 0.8742
+	& a = n - 1,	b = 1, n \geq 3\\
+%
+\left\{
+\begin{array}{lr}
+ 	&
+ 	0.5 \times 
+ 	(\Pr[	-1	\leq	\lap{0}{\frac{1}{\epsilon}}	<	0] 
+ 	+ 	
+ 	\Pr[	1	\leq	\lap{0}{\frac{1}{\epsilon}}	<	2])\\
++	&
+ 	0.5 \times 
+ 	(\Pr[	0	\leq	\lap{0}{\frac{1}{\epsilon}}	] 
+ 	  	+ 
+ 	  	\Pr[	\lap{0}{\frac{1}{\epsilon}}	<	1]) 
+\end{array}
+\right\}
+	= 0.8742
+	& a = n,b = 0\\
+%
+\left\{
+\begin{array}{lr}
+ 	&
+ 	0.5 \times 
+ 	(\Pr[	-1	\leq \lap{0}{\frac{1}{\epsilon}}	<	0] 
+ 	+ 	
+ 	\Pr[	1	\leq \lap{0}{\frac{1}{\epsilon}}	<	2])\\
+%
++	&
+ 	0.5 \times 
+ 	(\Pr[	0	\leq	\lap{0}{\frac{1}{\epsilon}}	<	1] 
+ 	+ 	
+ 	\Pr[	0	\leq \lap{0}{\frac{1}{\epsilon}}	<	1])\\
+%
++	&
+ 	0.5 \times 
+ 	(\Pr[	1	\leq	\lap{0}{\frac{1}{\epsilon}}	<	2] 
+ 	+ 	
+ 	\Pr[	-1 	\leq	\lap{0}{\frac{1}{\epsilon}}	<	0]) 
+\end{array}
+\right\}
+	= 0.74839
+	& o.w.\\
+%
+\end{cases}.
+\]
+}
+
 \end{document}

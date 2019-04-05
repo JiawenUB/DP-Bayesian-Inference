@@ -121,10 +121,10 @@ def gen_priors(r, step, d):
 if __name__ == "__main__":
 
 	datasize = 50
-	epsilon = 0.1
+	epsilon = 1.0
 	delta = 0.00000001
 	prior = dirichlet([1,1])
-	dataobs = [2,0]
+	dataobs = [4,0]
 	datasizes = gen_datasizes((50, 2000), 50)
 
 	lap_prob = lap_distribution_over_candidates(dataobs, prior, epsilon, 1.0)
