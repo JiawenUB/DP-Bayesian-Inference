@@ -917,6 +917,25 @@ Or following limitations, $\forall \rho \in (0,1), \forall M \in \mathbb{N}$:
 \]
 \end{thm}
 
+\begin{proof}
+By setting $|t| = 1$, we have: 
+\[
+\max\limits_{|t| \leq \frac{\lg(\frac{1}{\gamma})}{\epsilon}}
+		\hlg(\betad(\alpha, \beta), \betad(\alpha + t, n - \lfloor \alpha + t \rfloor)) \leq LS(\dataobs)
+\]
+i.e.,
+\[
+\begin{array}{ll}
+\leq &	\frac{\max\limits_{|t| \leq \frac{\lg(\frac{1}{\gamma})}{\epsilon}}
+		\hlg(\betad(\alpha, \beta), \betad(\alpha + t, n - \lfloor \alpha + t \rfloor))}
+		{	LS(\dataobs)	}\\
+\leq & 	O(1)
+\end{array}
+\] 
+in that case:
+$\frac{lg(\frac{1}{\gamma})}{\epsilon} = 1$, i.e. $\gamma = \frac{1}{e^{\epsilon}}$
+\end{proof}
+
 \clearpage
 
 \section*{Appendix}
