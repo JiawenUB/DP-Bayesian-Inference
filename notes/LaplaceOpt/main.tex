@@ -36,205 +36,190 @@
 \section{Laplace Mechanism Accuracy Analysis}
 \label{sec_fullacc}
 
-
-
 \begin{table}[htbp]
+	\tiny
 	\centering
 	\caption{Accuracy with $n = 2, \epsilon = 1.0$}
-	\label{tab_n2prob}
-\begin{tabular}{|c||r|r|r|}
+	\label{tab_n2eps1.0prob}
+\begin{tabular}{|c||r|r|r|r|r|r|r|r|r|}
 	\hline
 
-	\multirow{2}{*}{True data ($\dataobs$)} 	
-								& \multicolumn{3}{c|}{Noised Results ($\dataobs'$)}  		
-								\\ \cline{2-4}
-	                      		&  $\Pr[\dataobs' = (0, 2)]$  	
-	                      		&  $\Pr[\dataobs' = (1, 1)]$ 	
-	                      		&  $\Pr[\dataobs' = (2, 0)]$ 	\\  \hline \hline
-	$\dataobs = (0,2)$          & {\bf 0.658030139707}	
-								& {\bf 0.216166179191}	
-								& 0.125803681102 
+	\multirow{3}{*}{True data ($\dataobs$)} 	
+								&  \multicolumn{9}{c|}{Noised Results ($\dataobs'$)}  		
+								\\ \cline{2-10}
+	                      		&  \multicolumn{3}{c|}{$\Pr[\dataobs' = (0, 2)]$}  	
+	                      		&  \multicolumn{3}{c|}{$\Pr[\dataobs' = (1, 1)]$} 	
+	                      		&  \multicolumn{3}{c|}{$\Pr[\dataobs' = (2, 0)]$} 	\\
+	                      		\cline{2-10}
+						        & $\ilapmech$	
+								& $\lapmech$
+								& $\hexpmech$
+								& $\ilapmech$
+								& $\lapmech$	
+								& $\hexpmech$
+								& $\ilapmech$
+								& $\lapmech$
+								& $\hexpmech$\\
+	                      		\hline \hline
+	$\dataobs = (0,2)$          & {\bf 0.65803}	
+								& {\bf 0.21617}	
+								& 0.12580
+								& {\bf 0.21617}	
+								& {\bf 0.21617}	
+								& 0.12580 
+								& 0.12580
+								& {\bf 0.65803}	
+								& {\bf 0.21617}	
 								\\  \hline
-	$\dataobs = (1,1)$          & {\bf 0.341969860293}	
-								& {\bf 0.316060279414} 			
-								& 0.341969860293
+	$\dataobs = (1,1)$          & {\bf 0.34197}	
+								& {\bf 0.31606} 			
+								& 0.34197
+								& {\bf 0.31606}	
+								& {\bf 0.21617}	
+								& 0.1258 
+								& 0.34197
+								& {\bf 0.65803}	
+								& {\bf 0.21617}	
 								\\  \hline
-	$\dataobs = (2,0)$          & 0.125803681102
-								& {\bf 0.216166179191} 			
-								& {\bf 0.658030139707}
+	$\dataobs = (2,0)$          & 0.1258
+								& {\bf 0.2162} 			
+								& {\bf 0.65803}
+								& {\bf 0.2162}	
+								& {\bf 0.21617}	
+								& 0.1258 
+								& {\bf 0.65803}
+								& {\bf 0.65803}	
+								& {\bf 0.21617}	
+								\\  \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+	\tiny
+	\centering
+	\caption{Accuracy with $n = 2, \epsilon = 0.5$}
+	\label{tab_n2eps0.5prob}
+\begin{tabular}{|c||r|r|r|r|r|r|r|r|r|}
+	\hline
+
+	\multirow{3}{*}{True data ($\dataobs$)} 	
+								&  \multicolumn{9}{c|}{Noised Results ($\dataobs'$)}  		
+								\\ \cline{2-10}
+	                      		&  \multicolumn{3}{c|}{$\Pr[\dataobs' = (0, 2)]$}  	
+	                      		&  \multicolumn{3}{c|}{$\Pr[\dataobs' = (1, 1)]$} 	
+	                      		&  \multicolumn{3}{c|}{$\Pr[\dataobs' = (2, 0)]$} 	\\
+	                      		\cline{2-10}
+						        & $\ilapmech$	
+								& $\lapmech$
+								& $\hexpmech$
+								& $\ilapmech$
+								& $\lapmech$	
+								& $\hexpmech$
+								& $\ilapmech$
+								& $\lapmech$
+								& $\hexpmech$\\
+	                      		\hline \hline
+	$\dataobs = (0,2)$          & {\bf 0.65803}	
+								& {\bf 0.21617}	
+								& 0.12580
+								& {\bf 0.21617}	
+								& {\bf 0.21617}	
+								& 0.12580 
+								& 0.12580
+								& {\bf 0.65803}	
+								& {\bf 0.21617}	
+								\\  \hline
+	$\dataobs = (1,1)$          & {\bf 0.34197}	
+								& {\bf 0.31606} 			
+								& 0.34197
+								& {\bf 0.31606}	
+								& {\bf 0.21617}	
+								& 0.1258 
+								& 0.34197
+								& {\bf 0.65803}	
+								& {\bf 0.21617}	
+								\\  \hline
+	$\dataobs = (2,0)$          & 0.1258
+								& {\bf 0.2162} 			
+								& {\bf 0.65803}
+								& {\bf 0.2162}	
+								& {\bf 0.21617}	
+								& 0.1258 
+								& {\bf 0.65803}
+								& {\bf 0.65803}	
+								& {\bf 0.21617}	
+								\\  \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+	\tiny
+	\centering
+	\caption{Accuracy with $n = 2, \epsilon = 0.1$}
+	\label{tab_n2eps0.1prob}
+\begin{tabular}{|c||r|r|r|r|r|r|r|r|r|}
+	\hline
+	\multirow{3}{*}{True data ($\dataobs$)}
+								&  \multicolumn{9}{c|}{Noised Results ($\dataobs'$)}
+								\\ \cline{2-10}
+	                      		&  \multicolumn{3}{c|}{$\Pr[\dataobs' = (0, 2)]$}  	
+	                      		&  \multicolumn{3}{c|}{$\Pr[\dataobs' = (1, 1)]$} 	
+	                      		&  \multicolumn{3}{c|}{$\Pr[\dataobs' = (2, 0)]$} 	\\
+	                      		\cline{2-10}
+						        & $\ilapmech$	
+								& $\lapmech$
+								& $\hexpmech$
+								& $\ilapmech$
+								& $\lapmech$	
+								& $\hexpmech$
+								& $\ilapmech$
+								& $\lapmech$
+								& $\hexpmech$\\
+	                      		\hline \hline
+	$\dataobs = (0,2)$          & {\bf 0.65803}	
+								& {\bf 0.21617}	
+								& 0.12580
+								& {\bf 0.21617}	
+								& {\bf 0.21617}	
+								& 0.12580 
+								& 0.12580
+								& {\bf 0.65803}	
+								& {\bf 0.21617}	
+								\\  \hline
+	$\dataobs = (1,1)$          & {\bf 0.34197}	
+								& {\bf 0.31606} 			
+								& 0.34197
+								& {\bf 0.31606}	
+								& {\bf 0.21617}	
+								& 0.1258 
+								& 0.34197
+								& {\bf 0.65803}	
+								& {\bf 0.21617}	
+								\\  \hline
+	$\dataobs = (2,0)$          & 0.1258
+								& {\bf 0.2162} 			
+								& {\bf 0.65803}
+								& {\bf 0.2162}	
+								& {\bf 0.21617}	
+								& 0.1258 
+								& {\bf 0.65803}
+								& {\bf 0.65803}	
+								& {\bf 0.21617}	
 								\\  \hline
 \end{tabular}
 \end{table}
 
 
-The computation formula for each of the value in the Tbable \ref{tab_n2prob}:
-
-{\small
-\noindent $\dataobs = (0,2):$
-\[
-\Pr[\dataobs']
-= \begin{cases}
-\begin{array}{ll}
- 	& 0.5 \times 
- 	\big(
- 	\Pr[	0	< \lap{0}{\frac{1}{\epsilon}}	<	1] 
- 	+ 
- 	\Pr[	\lap{0}{\frac{1}{\epsilon}}			<	0] 
- 	\big) \\
- 	+ 	
- 	& 0.5 \times 
- 	\big(
- 	\Pr[	0	< \lap{0}{\frac{1}{\epsilon}}	<	1] 
- 	+ 
- 	\Pr[	1 	< \lap{0}{\frac{1}{\epsilon}}] 
- 	\big) 
-\end{array} 
-	& \dataobs' = (0, 2)\\
-\begin{array}{ll}
- 	0.5 \times 
- 	\big(
- 	\Pr[	1	< \lap{0}{\frac{1}{\epsilon}}	<	2] 
- 	\big)
- 	+ 	
- 	0.5 \times 
- 	\big(
- 	\Pr[	-1	< \lap{0}{\frac{1}{\epsilon}}	<	0] 
- 	\big) 
-\end{array}  
-	& \dataobs' = (1, 1)\\
-\begin{array}{ll}
- 	& 0.5 \times 
- 	\big(
- 	\Pr[	2	<	\lap{0}{\frac{1}{\epsilon}}	<	3] 
- 	+ 
- 	\Pr[	3	<	\lap{0}{\frac{1}{\epsilon}}]
- 	\big) \\
- 	+ 	
- 	& 0.5 \times 
- 	\big(
- 	\Pr[	-2	< \lap{0}{\frac{1}{\epsilon}}	<	-1] 
- 	+ 
- 	\Pr[	\lap{0}{\frac{1}{\epsilon}}			<	-2] 
- 	\big) 
-\end{array}  
-& \dataobs' = (2, 0)
-\end{cases}.
-\]
-
-
-\noindent $\dataobs = (1,1):$
-\[
-\Pr[\dataobs']
-= \begin{cases}
-\begin{array}{ll}
- 	& 0.5 \times 
- 	\big(
- 	\Pr[	-1	< \lap{0}{\frac{1}{\epsilon}}	<	0] 
- 	+ 
- 	\Pr[	\lap{0}{\frac{1}{\epsilon}}			<	-1] 
- 	\big) \\
- 	+ 	
- 	& 0.5 \times 
- 	\big(
- 	\Pr[	1	< \lap{0}{\frac{1}{\epsilon}}	<	2] 
- 	+ 
- 	\Pr[	2 	< \lap{0}{\frac{1}{\epsilon}}] 
- 	\big) 
-\end{array} 
-	& \dataobs' = (0, 2)\\
-\begin{array}{ll}
- 	0.5 \times 
- 	\big(
- 	\Pr[	0	< \lap{0}{\frac{1}{\epsilon}}	<	1] 
- 	\big)
- 	+ 	
- 	0.5 \times 
- 	\big(
- 	\Pr[	0	< \lap{0}{\frac{1}{\epsilon}}	<	1] 
- 	\big) 
-\end{array}  
-	& \dataobs' = (1, 1)\\
-\begin{array}{ll}
- 	& 0.5 \times 
- 	\big(
- 	\Pr[	1	<	\lap{0}{\frac{1}{\epsilon}}	<	2] 
- 	+ 
- 	\Pr[	2	<	\lap{0}{\frac{1}{\epsilon}}]
- 	\big) \\
- 	+ 	
- 	& 0.5 \times 
- 	\big(
- 	\Pr[	-1	< \lap{0}{\frac{1}{\epsilon}}	<	0] 
- 	+ 
- 	\Pr[	\lap{0}{\frac{1}{\epsilon}}			<	-1] 
- 	\big) 
-\end{array}  
-& \dataobs' = (2, 0)
-\end{cases}.
-\]
-
-\noindent $\dataobs = (2,0):$
-\[
-\Pr[\dataobs']
-= \begin{cases}
-\begin{array}{ll}
- 	& 0.5 \times 
- 	\big(
- 	\Pr[	-2	< \lap{0}{\frac{1}{\epsilon}}	<	-1] 
- 	+ 
- 	\Pr[	\lap{0}{\frac{1}{\epsilon}}			< 	-2] 
- 	\big) \\
- 	+ 	
- 	& 0.5 \times 
- 	\big(
- 	\Pr[	2	< \lap{0}{\frac{1}{\epsilon}}	<	3] 
- 	+ 
- 	\Pr[	3	< \lap{0}{\frac{1}{\epsilon}}] 
- 	\big) 
-\end{array} 
-	& \dataobs' = (0, 2)\\
-\begin{array}{ll}
- 	0.5 \times 
- 	\big(
- 	\Pr[	-1	< \lap{0}{\frac{1}{\epsilon}}	<	0] 
- 	\big)
- 	+ 	
- 	0.5 \times 
- 	\big(
- 	\Pr[	1	< \lap{0}{\frac{1}{\epsilon}}	<	2] 
- 	\big) 
-\end{array}  
-	& \dataobs' = (1, 1)\\
-\begin{array}{ll}
- 	& 0.5 \times 
- 	\big(
- 	\Pr[	0	<	\lap{0}{\frac{1}{\epsilon}}	<	1] 
- 	+ 
- 	\Pr[	1	<	\lap{0}{\frac{1}{\epsilon}}]
- 	\big) \\
- 	+ 	
- 	& 0.5 \times 
- 	\big(
- 	\Pr[	0	< \lap{0}{\frac{1}{\epsilon}}	<	1] 
- 	+ 
- 	\Pr[	\lap{0}{\frac{1}{\epsilon}}			<	0] 
- 	\big) 
-\end{array}  
-& \dataobs' = (2, 0)
-\end{cases}.
-\]
-}
-
-
 \begin{table}[htbp]
+\vspace{-1.0cm}
 	\centering
 	\caption{Error (Hellinger Distance) Between Noised Posterior and True Posterior with $n = 2, \epsilon = 1.0$, prior: $\betad(1,1)$}
 	\label{tab_n2error}
 \begin{tabular}{|c||r|r|r|}
 	\hline
 
-	\multirow{2}{*}{True data ($\dataobs$)} 	
-								& \multicolumn{3}{c|}{$\hellinger(\betad(\valpha), \betad(\valpha'))$}  		
+	\multirow{2}{*}{True data ($\dataobs$)}
+								& \multicolumn{3}{c|}{$\hellinger(\betad(\valpha), \betad(\valpha'))$}
 								\\ \cline{2-4}
 	                      		& $\dataobs' = (0, 2)$
 	                      		& $\dataobs' = (1, 1)$
@@ -256,6 +241,7 @@ The computation formula for each of the value in the Tbable \ref{tab_n2prob}:
 \end{table}
 
 
+
 \newpage
 $n = 3:$
 \begin{table}[htbp]
@@ -264,10 +250,9 @@ $n = 3:$
 	\footnotesize
 	\centering
 	\caption{Accuracy with $n = 3, \epsilon = 1.0$}
-	\label{tab_n3prob}
+	\label{tab_n3eps1.0prob}
 \begin{tabular}{|c||r|r|r|r|}
 	\hline
-
 	\multirow{2}{*}{True data ($\dataobs$)}
 								& \multicolumn{4}{c|}{Noised Results ($\dataobs'$)}  
 								\\ \cline{2-5}
@@ -301,157 +286,7 @@ $n = 3:$
 \end{table}
 
 
-The computation formula for each of the value in the table:
 
-{\small
-
-\noindent $\dataobs = (0,3):$
-\[
-\Pr[\dataobs']
-= \begin{cases}
-	0.5 \times 
- 	\Pr[	\lap{0}{\frac{1}{\epsilon}}	<	1] 
- 	+ 	
- 	0.5 \times 
- 	\Pr[	0	< \lap{0}{\frac{1}{\epsilon}}] 
-%
-	& \dataobs' = (0, 3)\\
-%
- 	0.5 \times 
- 	\Pr[	1	< \lap{0}{\frac{1}{\epsilon}}	<	2] 
- 	+ 	
- 	0.5 \times 
- 	\Pr[	-1	< \lap{0}{\frac{1}{\epsilon}}	<	0] 
-%
-	& \dataobs' = (1, 2)\\
-%
- 	0.5 \times 
- 	\Pr[	2	<	\lap{0}{\frac{1}{\epsilon}}	<	3] 
- 	+ 	
- 	0.5 \times 
- 	\Pr[	-2	< \lap{0}{\frac{1}{\epsilon}}	<	-1] 
-%
-	& \dataobs' = (2, 1)\\
-%
- 	0.5 \times 
- 	\Pr[	3	<	\lap{0}{\frac{1}{\epsilon}}]
- 	+ 	
- 	0.5 \times 
- 	\Pr[	\lap{0}{\frac{1}{\epsilon}}	<	-2] 
-%
-& \dataobs' = (3, 0)
-\end{cases}.
-\]
-
-
-\noindent $\dataobs = (1,2):$
-\[
-\Pr[\dataobs']
-= \begin{cases}
- 	0.5 \times 
- 	\Pr[	\lap{0}{\frac{1}{\epsilon}}	<	0] 
- 	+ 	
- 	0.5 \times 
- 	\Pr[	1	< \lap{0}{\frac{1}{\epsilon}}] 
-	& \dataobs' = (0, 3)\\
-%
- 	0.5 \times 
- 	\Pr[	0	< \lap{0}{\frac{1}{\epsilon}}	<	1] 
- 	+ 	
- 	0.5 \times 
- 	\Pr[	0	< \lap{0}{\frac{1}{\epsilon}}	<	1] 
-	& \dataobs' = (1, 2)\\
-%
- 	0.5 \times 
- 	\Pr[	1	<	\lap{0}{\frac{1}{\epsilon}}	<	2] 
- 	+ 	
- 	0.5 \times 
- 	\Pr[	-1	< \lap{0}{\frac{1}{\epsilon}}	<	0] 
-	& \dataobs' = (2, 1)\\
-%
- 	0.5 \times 
- 	\Pr[	2	<	\lap{0}{\frac{1}{\epsilon}}] 
- 	+ 	
- 	0.5 \times 
- 	\Pr[	\lap{0}{\frac{1}{\epsilon}}	<	-1] 
-	& \dataobs' = (3, 0)
-\end{cases}.
-\]
-
-\noindent $\dataobs = (2,1):$
-\[
-\Pr[\dataobs']
-= \begin{cases}
- 	0.5 \times 
- 	\Pr[	\lap{0}{\frac{1}{\epsilon}}	<	-1]
- 	+ 	
- 	0.5 \times 
- 	\Pr[	2	< \lap{0}{\frac{1}{\epsilon}}] 
-%
-	& \dataobs' = (0, 3)\\
-%
- 	0.5 \times 
- 	\Pr[	-1	< \lap{0}{\frac{1}{\epsilon}}	<	0] 
- 	+ 	
- 	0.5 \times 
- 	\Pr[	1	< \lap{0}{\frac{1}{\epsilon}}	<	2] 
-%
-	& \dataobs' = (1, 2)\\
-%
- 	0.5 \times 
- 	\Pr[	0	<	\lap{0}{\frac{1}{\epsilon}}	<	1] 
- 	+ 	
- 	0.5 \times 
- 	\Pr[	0	< \lap{0}{\frac{1}{\epsilon}}	<	1] 
-%
-& \dataobs' = (2, 1)\\
-%
- 	0.5 \times 
- 	\Pr[	1	<	\lap{0}{\frac{1}{\epsilon}}	] 
- 	+ 	
- 	0.5 \times 
- 	\Pr[	\lap{0}{\frac{1}{\epsilon}}	<	0] 
-%
-& \dataobs' = (3, 0)
-\end{cases}.
-\]
-
-
-
-\noindent $\dataobs = (3,0):$
-\[
-\Pr[\dataobs']
-= \begin{cases}
- 	0.5 \times 
- 	\Pr[	\lap{0}{\frac{1}{\epsilon}}	<	-2] 
- 	+ 	
- 	0.5 \times 
- 	\Pr[	3	< \lap{0}{\frac{1}{\epsilon}}] 
-	& \dataobs' = (0, 3)\\
-%
- 	0.5 \times 
- 	\Pr[	-2	< \lap{0}{\frac{1}{\epsilon}}	<	-1] 
- 	+ 	
- 	0.5 \times 
- 	\Pr[	2	< \lap{0}{\frac{1}{\epsilon}}	<	3] 
-	& \dataobs' = (1, 2)\\
-%
- 	0.5 \times 
- 	\Pr[	-1	<	\lap{0}{\frac{1}{\epsilon}}	<	0] 
- 	+ 	
- 	0.5 \times 
- 	\Pr[	1	< \lap{0}{\frac{1}{\epsilon}}	<	2] 
-	& \dataobs' = (2, 1)\\
-%
- 	0.5 \times 
- 	\Pr[	0	<	\lap{0}{\frac{1}{\epsilon}}	] 
- 	+ 	
- 	0.5 \times 
- 	\Pr[	\lap{0}{\frac{1}{\epsilon}}	<	1] 
-	& \dataobs' = (3, 0)
-\end{cases}.
-\]
-}
 
 \begin{table}[htbp]
 	\vspace{-0.5cm}
@@ -891,7 +726,7 @@ $\dots$
 \begin{thm}
 To prove the optimality of Laplace mechanism, we are showing 
 \[
-\frac{ELap(\dataobs)}{(\epsilon \times sLS(\dataobs))}
+\frac{ELap(\dataobs)}{(\epsilon \times LS(\dataobs))}
 \]
 is $O(1)$, considering $n=|\dataobs| \geq 2$ being the parameter.
 
@@ -902,8 +737,8 @@ ELap(\dataobs) = \arg\big( \min\limits_{t}\{Pr[\hlg(\bysinfer{\dataobs}, \ilapme
 \end{thm}
 
 \begin{proof}
-From the calculation above, we can conclude that the $ELap(\dataobs) = LS(\dataobs)$.\\
-Then $\frac{ELap(\dataobs)}{(\epsilon \times LS(\dataobs))} = \frac{1}{\epsilon} = O(1)$.
+From the calculation above, we can conclude that the $ELap(\dataobs) = LS(\dataobs)$, under the case $\epsilon = 1$\\
+Then $\frac{ELap(\dataobs)}{(\epsilon \times LS(\dataobs))} = \frac{ELap(\dataobs)}{(LS(\dataobs))} = 1 = O(1)$.
 
 Given data set $\dataobs = (a,b)$ of size $ n = a + b \geq 2$, when apply the Laplace noise on it, we get the noised results $\dataobs'$. The probability that $\dataobs' = (a,b)$ or $(a + 1, b-1)$ or $(a - 1, b + 1)$ is:
 
@@ -1090,7 +925,338 @@ Since the three $\dataobs'$ we are looking into is already the 3 nearest data se
 
 
 \end{proof}
+\begin{thm}
+In order to prove the optimality of Laplace mechanism, instead of prove
+$\frac{ELap(\dataobs)}{(\epsilon \times LS(\dataobs))}$ is $O(1)$, we prove a constant upper bound on following equations:
+\[
+\begin{array}{ll}
+	 &	\frac{\arg\min\limits_{t}\{\Pr[\hlg(\betad(\alpha, \beta), \ilapmech(\dataobs))< t] >= 1 - \gamma\}}
+	 	{	LS(\dataobs)	}\\
+\leq &	\frac{\max\limits_{|t| \leq \frac{\lg(\frac{1}{\gamma})}{\epsilon}}
+		\hlg(\betad(\alpha, \beta), \betad(\alpha + t, n - \lfloor \alpha + t \rfloor))}
+		{	LS(\dataobs)	}\\
+\leq & 	O(\frac{\lg{\frac{1}{\gamma}}}{\epsilon})
+\end{array}
+\]
+where $\betad(\alpha, \beta) = \bysinfer{\dataobs} $.\\
+Or following limitations, $\forall \rho \in (0,1), \forall M \in \mathbb{N}$:
+\[
+\lim\sup\limits_{n \rightarrow \infty} \frac{\hlg(\betad(\rho n, (1 - \rho) n), \betad(\rho n + M, (1 - \rho) n - M))}{\hlg(\betad(\rho n, (1 - \rho) n), \betad(\rho n + 1, (1 - \rho) n - 1))}
+\leq O(M)
+\]
+\end{thm}
+
+\newpage
+
+\section*{Appendix}
+The computation formula for each of the value of $\ilapmech$ in the Table \ref{tab_n2eps1.0prob} is
+
+{\scriptsize
+\noindent $\dataobs = (0,2):$
+\[
+\Pr[\dataobs']
+= \begin{cases}
+\begin{array}{ll}
+ 	& 0.5 \times 
+ 	\big(
+ 	\Pr[	0	< \lap{0}{\frac{1}{\epsilon}}	<	1] 
+ 	+ 
+ 	\Pr[	\lap{0}{\frac{1}{\epsilon}}			<	0] 
+ 	\big) \\
+ 	+ 	
+ 	& 0.5 \times 
+ 	\big(
+ 	\Pr[	0	< \lap{0}{\frac{1}{\epsilon}}	<	1] 
+ 	+ 
+ 	\Pr[	1 	< \lap{0}{\frac{1}{\epsilon}}] 
+ 	\big) 
+\end{array} 
+	& \dataobs' = (0, 2)\\
+\begin{array}{ll}
+ 	0.5 \times 
+ 	\big(
+ 	\Pr[	1	< \lap{0}{\frac{1}{\epsilon}}	<	2] 
+ 	\big)
+ 	+ 	
+ 	0.5 \times 
+ 	\big(
+ 	\Pr[	-1	< \lap{0}{\frac{1}{\epsilon}}	<	0] 
+ 	\big) 
+\end{array}  
+	& \dataobs' = (1, 1)\\
+\begin{array}{ll}
+ 	& 0.5 \times 
+ 	\big(
+ 	\Pr[	2	<	\lap{0}{\frac{1}{\epsilon}}	<	3] 
+ 	+ 
+ 	\Pr[	3	<	\lap{0}{\frac{1}{\epsilon}}]
+ 	\big) \\
+ 	+ 	
+ 	& 0.5 \times 
+ 	\big(
+ 	\Pr[	-2	< \lap{0}{\frac{1}{\epsilon}}	<	-1] 
+ 	+ 
+ 	\Pr[	\lap{0}{\frac{1}{\epsilon}}			<	-2] 
+ 	\big) 
+\end{array}  
+& \dataobs' = (2, 0)
+\end{cases}.
+\]
 
 
+\noindent $\dataobs = (1,1):$
+\[
+\Pr[\dataobs']
+= \begin{cases}
+\begin{array}{ll}
+ 	& 0.5 \times 
+ 	\big(
+ 	\Pr[	-1	< \lap{0}{\frac{1}{\epsilon}}	<	0] 
+ 	+ 
+ 	\Pr[	\lap{0}{\frac{1}{\epsilon}}			<	-1] 
+ 	\big) \\
+ 	+ 	
+ 	& 0.5 \times 
+ 	\big(
+ 	\Pr[	1	< \lap{0}{\frac{1}{\epsilon}}	<	2] 
+ 	+ 
+ 	\Pr[	2 	< \lap{0}{\frac{1}{\epsilon}}] 
+ 	\big) 
+\end{array} 
+	& \dataobs' = (0, 2)\\
+\begin{array}{ll}
+ 	0.5 \times 
+ 	\big(
+ 	\Pr[	0	< \lap{0}{\frac{1}{\epsilon}}	<	1] 
+ 	\big)
+ 	+ 	
+ 	0.5 \times 
+ 	\big(
+ 	\Pr[	0	< \lap{0}{\frac{1}{\epsilon}}	<	1] 
+ 	\big) 
+\end{array}  
+	& \dataobs' = (1, 1)\\
+\begin{array}{ll}
+ 	& 0.5 \times 
+ 	\big(
+ 	\Pr[	1	<	\lap{0}{\frac{1}{\epsilon}}	<	2] 
+ 	+ 
+ 	\Pr[	2	<	\lap{0}{\frac{1}{\epsilon}}]
+ 	\big) \\
+ 	+ 	
+ 	& 0.5 \times 
+ 	\big(
+ 	\Pr[	-1	< \lap{0}{\frac{1}{\epsilon}}	<	0] 
+ 	+ 
+ 	\Pr[	\lap{0}{\frac{1}{\epsilon}}			<	-1] 
+ 	\big) 
+\end{array}  
+& \dataobs' = (2, 0)
+\end{cases}.
+\]
+
+\noindent $\dataobs = (2,0):$
+\[
+\Pr[\dataobs']
+= \begin{cases}
+\begin{array}{ll}
+ 	& 0.5 \times 
+ 	\big(
+ 	\Pr[	-2	< \lap{0}{\frac{1}{\epsilon}}	<	-1] 
+ 	+ 
+ 	\Pr[	\lap{0}{\frac{1}{\epsilon}}			< 	-2] 
+ 	\big) \\
+ 	+ 	
+ 	& 0.5 \times 
+ 	\big(
+ 	\Pr[	2	< \lap{0}{\frac{1}{\epsilon}}	<	3] 
+ 	+ 
+ 	\Pr[	3	< \lap{0}{\frac{1}{\epsilon}}] 
+ 	\big) 
+\end{array} 
+	& \dataobs' = (0, 2)\\
+\begin{array}{ll}
+ 	0.5 \times 
+ 	\big(
+ 	\Pr[	-1	< \lap{0}{\frac{1}{\epsilon}}	<	0] 
+ 	\big)
+ 	+ 	
+ 	0.5 \times 
+ 	\big(
+ 	\Pr[	1	< \lap{0}{\frac{1}{\epsilon}}	<	2] 
+ 	\big) 
+\end{array}  
+	& \dataobs' = (1, 1)\\
+\begin{array}{ll}
+ 	& 0.5 \times 
+ 	\big(
+ 	\Pr[	0	<	\lap{0}{\frac{1}{\epsilon}}	<	1] 
+ 	+ 
+ 	\Pr[	1	<	\lap{0}{\frac{1}{\epsilon}}]
+ 	\big) \\
+ 	+ 	
+ 	& 0.5 \times 
+ 	\big(
+ 	\Pr[	0	< \lap{0}{\frac{1}{\epsilon}}	<	1] 
+ 	+ 
+ 	\Pr[	\lap{0}{\frac{1}{\epsilon}}			<	0] 
+ 	\big) 
+\end{array}  
+& \dataobs' = (2, 0)
+\end{cases}.
+\]
+}
+
+The computation formula for each of the value in the table. \ref{tab_n3eps1.0prob}:
+
+{\small
+
+\noindent $\dataobs = (0,3):$
+\[
+\Pr[\dataobs']
+= \begin{cases}
+	0.5 \times 
+ 	\Pr[	\lap{0}{\frac{1}{\epsilon}}	<	1] 
+ 	+ 	
+ 	0.5 \times 
+ 	\Pr[	0	< \lap{0}{\frac{1}{\epsilon}}] 
+%
+	& \dataobs' = (0, 3)\\
+%
+ 	0.5 \times 
+ 	\Pr[	1	< \lap{0}{\frac{1}{\epsilon}}	<	2] 
+ 	+ 	
+ 	0.5 \times 
+ 	\Pr[	-1	< \lap{0}{\frac{1}{\epsilon}}	<	0] 
+%
+	& \dataobs' = (1, 2)\\
+%
+ 	0.5 \times 
+ 	\Pr[	2	<	\lap{0}{\frac{1}{\epsilon}}	<	3] 
+ 	+ 	
+ 	0.5 \times 
+ 	\Pr[	-2	< \lap{0}{\frac{1}{\epsilon}}	<	-1] 
+%
+	& \dataobs' = (2, 1)\\
+%
+ 	0.5 \times 
+ 	\Pr[	3	<	\lap{0}{\frac{1}{\epsilon}}]
+ 	+ 	
+ 	0.5 \times 
+ 	\Pr[	\lap{0}{\frac{1}{\epsilon}}	<	-2] 
+%
+& \dataobs' = (3, 0)
+\end{cases}.
+\]
+
+
+\noindent $\dataobs = (1,2):$
+\[
+\Pr[\dataobs']
+= \begin{cases}
+ 	0.5 \times 
+ 	\Pr[	\lap{0}{\frac{1}{\epsilon}}	<	0] 
+ 	+ 	
+ 	0.5 \times 
+ 	\Pr[	1	< \lap{0}{\frac{1}{\epsilon}}] 
+	& \dataobs' = (0, 3)\\
+%
+ 	0.5 \times 
+ 	\Pr[	0	< \lap{0}{\frac{1}{\epsilon}}	<	1] 
+ 	+ 	
+ 	0.5 \times 
+ 	\Pr[	0	< \lap{0}{\frac{1}{\epsilon}}	<	1] 
+	& \dataobs' = (1, 2)\\
+%
+ 	0.5 \times 
+ 	\Pr[	1	<	\lap{0}{\frac{1}{\epsilon}}	<	2] 
+ 	+ 	
+ 	0.5 \times 
+ 	\Pr[	-1	< \lap{0}{\frac{1}{\epsilon}}	<	0] 
+	& \dataobs' = (2, 1)\\
+%
+ 	0.5 \times 
+ 	\Pr[	2	<	\lap{0}{\frac{1}{\epsilon}}] 
+ 	+ 	
+ 	0.5 \times 
+ 	\Pr[	\lap{0}{\frac{1}{\epsilon}}	<	-1] 
+	& \dataobs' = (3, 0)
+\end{cases}.
+\]
+
+\noindent $\dataobs = (2,1):$
+\[
+\Pr[\dataobs']
+= \begin{cases}
+ 	0.5 \times 
+ 	\Pr[	\lap{0}{\frac{1}{\epsilon}}	<	-1]
+ 	+ 	
+ 	0.5 \times 
+ 	\Pr[	2	< \lap{0}{\frac{1}{\epsilon}}] 
+%
+	& \dataobs' = (0, 3)\\
+%
+ 	0.5 \times 
+ 	\Pr[	-1	< \lap{0}{\frac{1}{\epsilon}}	<	0] 
+ 	+ 	
+ 	0.5 \times 
+ 	\Pr[	1	< \lap{0}{\frac{1}{\epsilon}}	<	2] 
+%
+	& \dataobs' = (1, 2)\\
+%
+ 	0.5 \times 
+ 	\Pr[	0	<	\lap{0}{\frac{1}{\epsilon}}	<	1] 
+ 	+ 	
+ 	0.5 \times 
+ 	\Pr[	0	< \lap{0}{\frac{1}{\epsilon}}	<	1] 
+%
+& \dataobs' = (2, 1)\\
+%
+ 	0.5 \times 
+ 	\Pr[	1	<	\lap{0}{\frac{1}{\epsilon}}	] 
+ 	+ 	
+ 	0.5 \times 
+ 	\Pr[	\lap{0}{\frac{1}{\epsilon}}	<	0] 
+%
+& \dataobs' = (3, 0)
+\end{cases}.
+\]
+
+
+
+\noindent $\dataobs = (3,0):$
+\[
+\Pr[\dataobs']
+= \begin{cases}
+ 	0.5 \times 
+ 	\Pr[	\lap{0}{\frac{1}{\epsilon}}	<	-2] 
+ 	+ 	
+ 	0.5 \times 
+ 	\Pr[	3	< \lap{0}{\frac{1}{\epsilon}}] 
+	& \dataobs' = (0, 3)\\
+%
+ 	0.5 \times 
+ 	\Pr[	-2	< \lap{0}{\frac{1}{\epsilon}}	<	-1] 
+ 	+ 	
+ 	0.5 \times 
+ 	\Pr[	2	< \lap{0}{\frac{1}{\epsilon}}	<	3] 
+	& \dataobs' = (1, 2)\\
+%
+ 	0.5 \times 
+ 	\Pr[	-1	<	\lap{0}{\frac{1}{\epsilon}}	<	0] 
+ 	+ 	
+ 	0.5 \times 
+ 	\Pr[	1	< \lap{0}{\frac{1}{\epsilon}}	<	2] 
+	& \dataobs' = (2, 1)\\
+%
+ 	0.5 \times 
+ 	\Pr[	0	<	\lap{0}{\frac{1}{\epsilon}}	] 
+ 	+ 	
+ 	0.5 \times 
+ 	\Pr[	\lap{0}{\frac{1}{\epsilon}}	<	1] 
+	& \dataobs' = (3, 0)
+\end{cases}.
+\]
+}
 
 \end{document}

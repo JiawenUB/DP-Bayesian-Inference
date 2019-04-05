@@ -22,29 +22,46 @@ def LAPLACE_CDF(interval, scale):
 		return (0.5 * math.exp( (interval[1]*1.0/scale))) - (0.5 * math.exp( (interval[0]/scale)))
 
 
+def lap_distribution_over_candidates(dataobs, prior, eps):
+	lap_prob = {}
+
+	n = sum(dataobs)
+
+	k = dataobs[0]
+
+	candidates = []
+	sensitivity = 1.0
+
+	############### the expected error when the noises are valid######
+	for t in range(- k, n - k + 1):
+		c = dirichlet([k + t, n - k - t])
+		candidates.append(c)
+		lap_prob[c] = 0.5 * LAPLACE_CDF((t, t+1), sensitivity/eps) + 0.5 * LAPLACE_CDF((-t, -t + 1), sensitivity/eps)
+
+	############### the expected error when the noises are not valid######
+	lap_prob[candidates[0]] += 0.5 * (0.5 - LAPLACE_CDF((- k, 0.0), sensitivity/eps)) +  0.5 * (0.5 - LAPLACE_CDF((0.0, k + 1), sensitivity/eps))
+
+	lap_prob[candidates[n]] += 0.5 * (0.5 - LAPLACE_CDF((0.0, n - k + 1), sensitivity/eps)) + 0.5 * (0.5 - LAPLACE_CDF((-(n - k), 0.0), sensitivity/eps))
+	
+	############### the expected error when the noises are not valid######
+	for c,prob in lap_prob.items():
+		print c._alphas, prob
+	return lap_prob
+
+
 def expect_error_Lap(post, prior, eps):
 	expect = 0.0
 
 	n = post._alphas[0] + post._alphas[1] - prior._alphas[0] - prior._alphas[1]
 
 	k = post._alphas[0] - prior._alphas[0]
-	############### the expected error when the noises are valid######
-	for t in range(- k, n - k):
-		expect += 0.5 * LAPLACE_CDF((t, t+1), 1.0/eps) * ((dirichlet([k + t, n - k - t]) + prior) - post) 
 
-	############### the expected error when the noises are not valid######
-	expect += 0.5 * (0.5 - LAPLACE_CDF((-k, 0.0), 1.0/eps)) * ((dirichlet([0, n])+ prior) - post)
-
-	expect += 0.5 * (0.5 - LAPLACE_CDF((0.0, n - k), 1.0/eps)) * ((dirichlet([n, 0])+ prior) - post)
+	lap_prob = lap_distribution_over_candidates(post._pointwise_sub(prior)._alphas, prior, eps)
 
 	############### the expected error when the noises are valid######
-	for t in range(- (n - k), k):
-		expect += 0.5 * LAPLACE_CDF((t, t+1), 1.0/eps) * ((dirichlet([k - t, n - k + t]) + prior) - post) 
-	
-	############### the expected error when the noises are not valid######
-	expect += 0.5 * (0.5 - LAPLACE_CDF((-(n - k), 0.0), 1.0/eps)) * ((dirichlet([n, 0])+ prior) - post)
+	for c,prob in lap_prob.items():
+		expect += prob * ((c + prior) - post) 
 
-	expect += 0.5 * (0.5 - LAPLACE_CDF((0.0, k), 1.0/eps)) * ((dirichlet([0, n])+ prior) - post)
 
 	return expect
 
@@ -234,16 +251,17 @@ def gen_gammas(r, step, scale):
 
 if __name__ == "__main__":
 
-	datasize = 500
+	datasize = 50
 	epsilon = 1.0
 	delta = 0.00000001
 	prior = dirichlet([1,1])
 	dataset = [50,50]
 	datasizes = gen_datasizes((50, 2000), 50)
 
-	#get_separatevalue(datasize, prior, epsilon, 500)
+	# get_separatevalue(datasize, prior, epsilon, 500)
 
-	get_ratio(datasizes, prior, epsilon, 5000)
+	# get_ratio(datasizes, prior, epsilon, 5000)
+
 
 
 

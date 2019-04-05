@@ -60,15 +60,15 @@ def calculate_prob_exp(bins, Bayesian_Model, mechanism_parameter, sensitivity, s
 	#SORT AND SPLIT THE PROBABILITY FROM PAIRS #WRITE DATAS INTO FILE
 	#############################################################################
 
-	f_exp = open("datas/discrete_prob/data_" + str(Bayesian_Model._observation_counts) + savename, "w")
+	# f_exp = open("datas/discrete_prob/data_" + str(Bayesian_Model._observation_counts) + savename, "w")
 
-	f_exp.write("Candidates_of_the_same_steps&Hellinger Distance&Probabilities \n")
+	# f_exp.write("Candidates_of_the_same_steps&Hellinger Distance&Probabilities \n")
 
-	for triple in probability_distance_pairs_in_exp:
-		#WRITE DATAS INTO FILE
-		f_exp.write(str(triple[2]) + "&" + str(triple[0]) + "&" + str(triple[1]) + "\n")
+	# for triple in probability_distance_pairs_in_exp:
+	# 	#WRITE DATAS INTO FILE
+	# 	f_exp.write(str(triple[2]) + "&" + str(triple[0]) + "&" + str(triple[1]) + "\n")
 	
-	f_exp.close()
+	# f_exp.close()
 
 
 	t, exp, _ = zip(*probability_distance_pairs_in_exp)
@@ -85,9 +85,9 @@ def calculate_prob_lap(bins, Bayesian_Model, sensitivity, savename):
 	#SENSITIVITY SETTING
 	#############################################################################
 	
-	f_lap = open("datas/discrete_prob/data_" + str(Bayesian_Model._observation_counts) + savename, "w")
+	# f_lap = open("datas/discrete_prob/data_" + str(Bayesian_Model._observation_counts) + savename, "w")
 	
-	f_lap.write("Candidates_of_the_same_steps, Hellinger Distance, Probabilities \n")
+	# f_lap.write("Candidates_of_the_same_steps, Hellinger Distance, Probabilities \n")
 
 	
 	#############################################################################
@@ -117,9 +117,9 @@ def calculate_prob_lap(bins, Bayesian_Model, sensitivity, savename):
 	for i in range(len(probability_distance_pairs_in_lap)):
 		e = probability_distance_pairs_in_lap[i]
 
-		f_lap.write(str(e[2]) + "&" + str(e[0]) +"&" + str(e[1]) + "\n")
+	# 	f_lap.write(str(e[2]) + "&" + str(e[0]) +"&" + str(e[1]) + "\n")
 
-	f_lap.close()
+	# f_lap.close()
 
 	t, lap, _ = zip(*(probability_distance_pairs_in_lap))
 
@@ -144,7 +144,7 @@ def row_discrete_probabilities(sample_size,epsilon,delta,prior,observation):
 
 	Bayesian_Model._set_candidate_scores()
 	Bayesian_Model._set_local_sensitivities()
-	Bayesian_Model._set_up_exp_mech_with_alpha_SS()
+	Bayesian_Model._set_up_exp_mech_with_gamma_SS()
 	Bayesian_Model._set_up_exp_mech_with_SS()
 	Bayesian_Model._set_up_exp_mech_with_GS()
 	Bayesian_Model._set_up_exp_mech_with_LS()
@@ -154,43 +154,37 @@ def row_discrete_probabilities(sample_size,epsilon,delta,prior,observation):
 	#SPLIT THE BINS
 	#############################################################################
 	
-	# Candidate_bins_by_step = {}
-	# probability_distance_pairs_in_exp =[]
+	Candidate_bins_by_step = {}
+	probability_distance_pairs_in_exp =[]
 
-	# nomalizer = 0.0
+	nomalizer = 0.0
 
-	# sorted_scores = sorted(Bayesian_Model._candidate_scores.items(), key=operator.itemgetter(1))
-	# counter = 0
-	# while counter < len(sorted_scores):
-	# 	flage = counter
-	# 	Candidate_bins_by_step[str(sorted(sorted_scores[flage][0]._alphas))] = []
-
-	# 	parameters_in_bin = []
-
-	# 	while counter < len(sorted_scores) and set(sorted_scores[flage][0]._alphas) == set(sorted_scores[counter][0]._alphas):
-	# 		Candidate_bins_by_step[str(sorted(sorted_scores[flage][0]._alphas))].append(sorted_scores[counter][0])
-	# 		parameters_in_bin.append(sorted_scores[counter][0]._alphas)
-	# 		counter += 1
-
-	# 	prob = (len(parameters_in_bin) * math.exp(epsilon * Bayesian_Model._candidate_scores[sorted_scores[flage][0]]/(2 * Bayesian_Model._SS)))
-
-	# 	probability_distance_pairs_in_exp.append((-sorted_scores[flage][1], prob, parameters_in_bin))
-
-	# 	nomalizer += prob
-
+	sorted_scores = sorted(Bayesian_Model._candidate_scores.items(), key=operator.itemgetter(1))
+	counter = 0
+	while counter < len(sorted_scores):
+		flage = counter
+		key = str(sorted_scores[flage][1])
+		Candidate_bins_by_step[key] = []
+		parameters_of_bin = []
+		while counter < len(sorted_scores) and sorted_scores[flage][1] == sorted_scores[counter][1]:
+			Candidate_bins_by_step[key].append(sorted_scores[counter][0])
+			parameters_of_bin.append(sorted_scores[counter][0]._alphas)
+			counter += 1
+		print parameters_of_bin
+		print key
 
 
 	#############################################################################
 	#SPLIT THE BINS
 	#############################################################################
 	
-	Candidate_bins_by_step = {}
-	for r in Bayesian_Model._candidates:
-		if str(sorted(r._alphas)) not in Candidate_bins_by_step.keys():
-			Candidate_bins_by_step[str(sorted(r._alphas))] = []
-			for c in Bayesian_Model._candidates:
-				if set(c._alphas) == set(r._alphas):
-					Candidate_bins_by_step[str(sorted(r._alphas))].append(c)
+	# Candidate_bins_by_step = {}
+	# for r in Bayesian_Model._candidates:
+	# 	if str(sorted(r._alphas)) not in Candidate_bins_by_step.keys():
+	# 		Candidate_bins_by_step[str(sorted(r._alphas))] = []
+	# 		for c in Bayesian_Model._candidates:
+	# 			if set(c._alphas) == set(r._alphas):
+	# 				Candidate_bins_by_step[str(sorted(r._alphas))].append(c)
 
 			
 
@@ -208,7 +202,7 @@ def row_discrete_probabilities(sample_size,epsilon,delta,prior,observation):
 	#############################################################################
 
 	exp_gamma = calculate_prob_exp(Candidate_bins_by_step, Bayesian_Model, mechanism_parameter = 4,
-		sensitivity = Bayesian_Model._alpha_SS, savename = "_exp_new.txt")
+		sensitivity = Bayesian_Model._gamma_SS, savename = "_exp_new.txt")
 
 
 	#############################################################################
@@ -244,6 +238,9 @@ def row_discrete_probabilities(sample_size,epsilon,delta,prior,observation):
 
 	step,lap_2 = calculate_prob_lap(Candidate_bins_by_step, Bayesian_Model, 
 		sensitivity = sensitivity2, savename = "_lap_2.txt")
+
+	print step, exp_gamma, lap_1, lap_2
+	return
 
 
 	#############################################################################
@@ -370,11 +367,11 @@ if __name__ == "__main__":
 	#############################################################################
 	#SETTING UP THE PARAMETERS
 	#############################################################################
-	datasize = 10000
-	epsilon = 5.0
+	datasize = 2
+	epsilon = 1.0
 	delta = 0.00000001
 	prior = dirichlet([1,1])
-	dataset = [5000,5000]
+	dataset = [2,0]
 
 	#############################################################################
 	#SETTING UP THE PARAMETERS WHEN DOING GROUPS EXPERIMENTS

@@ -60,13 +60,13 @@ def decomposed_probability_values(datasize,epsilon,delta,prior,observation):
 
 	Bayesian_Model._set_candidate_scores()
 	Bayesian_Model._set_local_sensitivities()
-	nomalizer = Bayesian_Model._set_up_exp_mech_with_alpha_SS()
+	nomalizer = Bayesian_Model._set_up_exp_mech_with_gamma_SS()
 	
 	probabilities_exp = {}
 
 	for i in range(len(Bayesian_Model._candidates)):
 		z = Bayesian_Model._candidates[i]
-		probabilities_exp[str(z._alphas)] = nomalizer * Bayesian_Model._alpha_SS_probabilities[i]
+		probabilities_exp[str(z._alphas)] = nomalizer * Bayesian_Model._gamma_SS_probabilities[i]
 	
 	return nomalizer, probabilities_exp
 

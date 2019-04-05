@@ -102,6 +102,9 @@ class dirichlet(object):
 		self._alphas = list(numpy.array(self._alphas) - numpy.array(other._alphas))
 		return self
 
+	def _pointwise_sub(self, other):
+		return dirichlet(list(numpy.array(self._alphas) - numpy.array(other._alphas)))
+
 	def __add__(self, other):
 		return dirichlet(list(numpy.array(self._alphas) + numpy.array(other._alphas)))
 
