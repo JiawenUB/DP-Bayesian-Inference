@@ -901,39 +901,50 @@ In order to prove the optimality of Laplace mechanism, instead of prove
 $\frac{ELap(\dataobs)}{(\epsilon \times LS(\dataobs))}$ is $O(1)$, we prove a constant upper bound on following equations:
 \[
 \begin{array}{ll}
-	 &	\frac{\arg\min\limits_{t}\{\Pr[\hlg(\betad(\alpha, \beta), \ilapmech(\dataobs))< t] >= 1 - \gamma\}}
+	 &	\frac{\arg\min\limits_{t}\big\{\Pr[\hlg(\betad(\alpha, \beta), \ilapmech(\dataobs))< t] \geq 1 - \gamma \big\}}
 	 	{	LS(\dataobs)	}\\
-\leq &	\frac{\max\limits_{|t| \leq \frac{\lg(\frac{1}{\gamma})}{\epsilon}}
-		\hlg(\betad(\alpha, \beta), \betad(\alpha + t, n - \lfloor \alpha + t \rfloor))}
+\leq &	\frac{\max\limits_{|k| \leq \frac{\lg(\frac{1}{\gamma})}{\epsilon}}
+		\hlg(\betad(\alpha, \beta), \betad(\alpha + k, n - \lfloor \alpha + k \rfloor))}
 		{	LS(\dataobs)	}\\
 \leq & 	O(\frac{\lg{\frac{1}{\gamma}}}{\epsilon})
 \end{array}
 \]
-where $\betad(\alpha, \beta) = \bysinfer{\dataobs} $.\\
-Or following limitations, $\forall \rho \in (0,1), \forall M \in \mathbb{N}$:
-\[
-\lim\sup\limits_{n \rightarrow \infty} \frac{\hlg(\betad(\rho n, (1 - \rho) n), \betad(\rho n + M, (1 - \rho) n - M))}{\hlg(\betad(\rho n, (1 - \rho) n), \betad(\rho n + 1, (1 - \rho) n - 1))}
-\leq O(M)
-\]
+% where $\betad(\alpha, \beta) = \bysinfer{\dataobs} $.\\
+% Or following limitations, $\forall \rho \in (0,1), \forall M \in \mathbb{N}$:
+% \[
+% \lim\sup\limits_{n \rightarrow \infty} \frac{\hlg(\betad(\rho n, (1 - \rho) n), \betad(\rho n + M, (1 - \rho) n - M))}{\hlg(\betad(\rho n, (1 - \rho) n), \betad(\rho n + 1, (1 - \rho) n - 1))}
+% \leq O(M)
+% \]
 \end{thm}
 
 \begin{proof}
-By setting $|t| = 1$, we have: 
+By setting $ -1 \leq k < 2$, we have: 
+\begin{equation}
+\label{eq:hls}
+\hlg(\betad(\alpha, \beta), \betad(\alpha + k, n - \lfloor \alpha + k \rfloor)) \leq LS(\dataobs)
+\end{equation}
+For any $\epsilon$, $k \sim \lap{0}{\frac{1}{\epsilon}}$ from Laplace mechanism, we have:
 \[
-\max\limits_{|t| \leq \frac{\lg(\frac{1}{\gamma})}{\epsilon}}
-		\hlg(\betad(\alpha, \beta), \betad(\alpha + t, n - \lfloor \alpha + t \rfloor)) \leq LS(\dataobs)
+\Pr[|k| \leq \frac{b}{\epsilon}] = 1 - \exp(-b)
+\]
+Then we can get:
+\begin{equation}
+\label{eq:lap-1to2}
+\Pr[ -1 \leq k < 2] = 1 - \frac{\exp(-\epsilon) + \exp(-2\epsilon)}{2}
+\end{equation}
+By Equation (\ref{eq:hls}) and (\ref{eq:lap-1to2}), we can get:
+\[
+\Pr[\hlg(\betad(\alpha, \beta), \betad(\alpha + k, n - \lfloor \alpha + k \rfloor)) \leq LS(\dataobs)] \geq 1 - \frac{\exp(-\epsilon) + \exp(-2\epsilon)}{2}
 \]
 i.e.,
 \[
 \begin{array}{ll}
-\leq &	\frac{\max\limits_{|t| \leq \frac{\lg(\frac{1}{\gamma})}{\epsilon}}
-		\hlg(\betad(\alpha, \beta), \betad(\alpha + t, n - \lfloor \alpha + t \rfloor))}
-		{	LS(\dataobs)	}\\
-\leq & 	O(1)
+	 &	\frac{\arg\min\limits_{t}\big\{\Pr[\hlg(\betad(\alpha, \beta), \ilapmech(\dataobs))< t] \geq 1 - \frac{\exp(-\epsilon) + \exp(-2\epsilon)}{2} \big\} }
+	 {	LS(\dataobs)	}\\
+\leq & 	O(\frac{\lg( \frac{2}{\exp(-\epsilon) + \exp(-2\epsilon)})}{\epsilon})\\
+<    & O(\frac{\lg( \frac{2}{2 \exp(-2\epsilon)})}{\epsilon}) = 2
 \end{array}
-\] 
-in that case:
-$\frac{lg(\frac{1}{\gamma})}{\epsilon} = 1$, i.e. $\gamma = \frac{1}{e^{\epsilon}}$
+\]
 \end{proof}
 
 \clearpage
