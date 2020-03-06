@@ -76,7 +76,7 @@ def accuracy_VS_datasize(epsilon,delta,prior,observations,datasizes):
 		Bayesian_Model = BayesInferwithDirPrior(prior, sum(observation), epsilon, delta)
 		Bayesian_Model._set_observation(observation)
 		print("start" + str(observation))
-		Bayesian_Model._experiments(5000)
+		Bayesian_Model._experiments(500)
 		print("finished" + str(observation))
 
 		for i in range(len(mean_error)):
@@ -245,7 +245,7 @@ if __name__ == "__main__":
 #SETTING UP THE PARAMETERS WHEN DOING GROUPS EXPERIMENTS
 #############################################################################
 	epsilons = numpy.arange(5, 2, 0.1)
-	datasizes = gen_datasizes((2000,5000),500)# + gen_datasizes((150,500),50) + gen_datasizes((600,1000),100)#[300] #[8,12,18,24,30,36,42,44,46,48]#,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80]
+	datasizes = gen_datasizes((100,500),50) + gen_datasizes((600,1000),100)#[300] #[8,12,18,24,30,36,42,44,46,48]#,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80]
 	percentage = [0.5,0.5]
 	datasets = gen_datasets(percentage, datasizes)
 	priors = gen_priors([20,50], 10, 2) + gen_priors([100,200], 50, 2)# + gen_priors([200,500], 100, 2) + gen_priors([600,2000], 200, 2)

@@ -124,8 +124,8 @@ if __name__ == "__main__":
 	epsilon = 1.0
 	delta = 0.00000001
 	prior = dirichlet([1,1])
-	dataobs = [4,0]
-	datasizes = gen_datasizes((50, 2000), 50)
+	dataobs = [10,10]
+	# datasizes = gen_datasizes((50, 200), 50)
 
 	lap_prob = lap_distribution_over_candidates(dataobs, prior, epsilon, 1.0)
 	lap_prob_2 = lap_distribution_over_candidates(dataobs, prior, epsilon, 2.0)

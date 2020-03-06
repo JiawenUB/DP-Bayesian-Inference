@@ -1,0 +1,100 @@
+
+%packages
+\newcommand{\mg}[1]{\textcolor[rgb]{.90,0.00,0.00}{[MG: #1]}}
+\newcommand{\gp}[1]{\textcolor[rgb]{0.00,0.5,0.5}{[GP: #1]}}
+
+\usepackage{natbib}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{mdframed}
+\usepackage{subfigure}
+\usepackage{booktabs}
+% \usepackage{hyperref}
+\usepackage{siunitx} % Provides the \SI{}{} and \si{} command for typesetting SI units
+\usepackage{graphicx} % Required for the inclusion of images
+% \usepackage{natbib} % Required to change bibliography style to APA
+\usepackage{datetime}
+\usepackage{lscape}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{xspace}
+\usepackage[english]{babel} % English language/hyphenation
+\usepackage{proof}
+\usepackage{booktabs} % Top and bottom rules for tables
+\usepackage[colorlinks, allcolors = blue,]{hyperref}
+\usepackage{accents}
+\usepackage{amsfonts}
+\usepackage{stmaryrd}
+\usepackage{amsmath,amsthm,amssymb,latexsym} 
+\usepackage{microtype}
+\usepackage{subfigure}
+\usepackage{booktabs} % for professional tables
+\usepackage{hyperref}
+\usepackage{lipsum}
+\usepackage{multirow}
+\usepackage{authblk}
+\SetSymbolFont{stmry}{bold}{U}{stmry}{m}{n}
+
+%new commands
+\newcommand{\theHalgorithm}{\arabic{algorithm}}
+\newtheorem{definition}{Definition}
+\usepackage{cancel}
+\usepackage[normalem]{ulem}
+\newcommand{\dataobs}{\textbf{x}}
+\newcommand{\adj}[2]{\textbf{adj}(#1,#2)}
+\newcommand{\candidateset}[1]{\mathcal{R}_{#1}}
+\newcommand{\bprior}{\boldsymbol{\beta}_{\textup{prior}}}
+\newcommand{\bysinfer}[1]{\mathsf{DirP}(#1)}
+\newcommand{\bys}[2]{\mathsf{DirP}(#1,#2)}
+\newcommand{\bysdir}{\mathsf{DIR}}
+\newcommand{\betad}{\mathsf{Beta}}
+\newcommand{\betaf}{\textup{B}}
+\newcommand{\mbetaf}{\boldsymbol{\textup{B}}}
+\newcommand{\vtheta}{\boldsymbol{\theta}}
+\newcommand{\valpha}{\boldsymbol{\alpha}}
+\newcommand{\vbeta}{\boldsymbol{\beta}}
+\newcommand{\lapmech}{\mathsf{LSDim}}
+\newcommand{\ilapmech}{\mathsf{LSHist}}
+\newcommand{\binomial}[2]{\mathsf{Bin}(#1, #2)}
+\newcommand{\multinomial}[2]{\mathsf{Mult}(#1, #2)}
+\newcommand{\expmech}{\mathsf{EHD}}
+\newcommand{\hexpmech}{\mathsf{EHDS}}
+\newcommand{\lexpmech}{\mathsf{EHDL}}
+\newcommand{\hexpmechd}{\mathsf{expMech}^{D}_{\hellinger}}
+\newcommand{\privinfer}{\mathsf{PrivInfer}}
+\newcommand{\hlg}{\mathsf{H}}
+\newcommand{\dirichlet}[1]{\mathsf{Dir}(#1)}
+\newcommand{\inferd}[3]{\mathsf{DirP}(#1,#2,#3)}
+\newcommand{\dirf}[4]{\mathsf{Dir}_{#2, #3}(#1,#4)}
+\newcommand{\alphas}{\boldsymbol{\alpha}}
+\newcommand{\xis}{\boldsymbol{\xi}}
+\newcommand{\iverson}[1]{[#1]}
+\newcommand{\datauni}{\mathcal{X}}
+\newcommand{\hellinger}{\mathcal{H}}
+\newcommand{\ux}[1]{u(\textbf{x}, {#1})}
+\newcommand{\uxadj}[1]{u(\textbf{x}', {#1})}
+\newcommand{\cardinality}[2]{\mathcal{C}^{#1}_{#2}}
+\newcommand{\range}{\mathcal{O}}
+\newcommand{\nomalizer}[1]{\sum\limits_{r'\in \mathcal{R}_{\textup{post}}} \exp \big(\frac{-\epsilon\cdot \mathcal{H} (\mathsf{BI}(#1),r')}{4 \cdot S(#1)}\big)}
+
+\newcommand{\unomalizer}[1]{\sum\limits_{r'\in \mathcal{R}_{\textup{post}}} \exp \big(\frac{-\epsilon\cdot u(#1, r')}{4 \cdot S(#1)}\big)}
+
+
+
+\newcommand{\hexpmechPr}[2]{\underset{z \thicksim \hexpmech(#1)}{\Pr}\left[ #2 \right]}
+\newcommand{\lapmechPr}[2]{\underset{z \thicksim \lapmech(#1)}{\Pr}\left[ #2 \right]}
+
+\newcommand{\ilapmechPr}[2]{\underset{
+{z \thicksim \ilapmech(#1)}
+}{\Pr}\left[ #2 \right]}
+
+\newtheorem{thm}{Theorem}[section]
+
+\newtheorem{lem}{Lemma}[section]
+
+\newtheorem{assert}{Assertion}[lem]
+\newcommand{\lap}[2]{\mathsf{Lap}(#1, #2)}
+\newcommand{\uniform}[2]{\mathsf{uniform}(#1, #2)}
+
+\newcommand{\todo}[1]{{\footnotesize \color{red}\textbf{[[ #1 ]]}}}

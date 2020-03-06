@@ -817,12 +817,13 @@ To prove the optimality of Laplace mechanism, we are showing
 \[
 \frac{ELap(\dataobs)}{(\epsilon \times LS(\dataobs))}
 \]
-is $O(1)$, considering $n=|\dataobs| \geq 2$ being the parameter.
+is {\color{red}$O(\epsilon)$}, considering $n=|\dataobs| \geq 2$ being the parameter.
 
 Where $LS(\cdot)$ is the local sensitivity, and where $ELap(\cdot)$ is the measure of the error of the Laplace mechanism, defined in this way:
-\[
-ELap(\dataobs) = \arg\big( \min\limits_{t}\{Pr[\hlg(\bysinfer{\dataobs}, \ilapmech(\dataobs))< t] >= 0.748\} \big).
-\]
+ {\color{red}
+ \[
+ELap(\dataobs) = \arg\big( \min\limits_{t}\{Pr[\hlg(\bysinfer{\dataobs}, \ilapmech(\dataobs))< t] >= O(\epsilon)\} \big).
+\]}
 \end{thm}
 
 \begin{proof}

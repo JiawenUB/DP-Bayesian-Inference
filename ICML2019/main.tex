@@ -193,7 +193,7 @@ two parameterized distributions may behave wildly as a function of the distance 
 A more natural approach, which we propose here, is to also directly measure sensitivity with respect
 to a metric on the space of inferred probability distributions. Our goal is to identify cases where jointly measuring
 accuracy and sensitivity in terms of a single metric on probability distributions can yield improved accuracy. 
-{\color{red}{MB: Is this accurate? Would we ever want to use different metrics for accuracy and sensitivity?}}
+% {\color{red}{MB: Is this accurate? Would we ever want to use different metrics for accuracy and sensitivity?}}
 
 
 %A more natural approach which we explore here, is to measure sensitivity with respect to
@@ -734,7 +734,8 @@ We are now ready to describe the mechanism $\hexpmech$ in Algorithm \ref{mech:se
   {\exp(\frac{-\epsilon\cdot \hellinger(\bys{\dataobs}{\valpha}, r)}{4\cdot S(\dataobs)})}
 {\Sigma_{r' \in \candidateset{\valpha}}\exp(\frac{-\epsilon\cdot \hellinger(\bys{\dataobs}{\valpha}, r')}{4\cdot S(\dataobs)})}
 \]
-where $S(\dataobs)$ is the 1-smooth sensitivity of  the function $\hellinger(\bysinfer{\dataobs},\cdot)$. {\color{red}{why do we choose 1???}}
+where $S(\dataobs)$ is the 1-smooth sensitivity of  the function $\hellinger(\bysinfer{\dataobs},\cdot)$. 
+% {\color{red}{why do we choose 1???}}
   \begin{algorithm}
   \caption{$\hexpmech$}
   \label{mech:sexpmech}
