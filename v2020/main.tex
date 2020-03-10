@@ -16,11 +16,12 @@
 \begin{array}{lcl}
 	\vtheta 
 	& : &
-	\mbox{the parameter vector of multinomial distribution, $\vtheta\in [0,1]^{k}$}.\\
+	\mbox{The parameter vector of multinomial distribution, $\vtheta\in [0,1]^{k}$}.\\
 	%
 	\dataobs 
 	& : &
-	\mbox{Observed dataset.} \dataobs \in \datauni^n\\
+	\mbox{Observed dataset.}
+	\dataobs \in \datauni^n, |\datauni| = k\\
 	%
 	\dirichlet{\valpha} 
 	& : &
@@ -28,7 +29,7 @@
 	%
 	\bysinfer{\valpha, \vtheta, \dataobs}
 	& : & 
-	\mbox{posterior distribution over $\vtheta$ from Bayesian inference given prior distribution $\dirichlet{\valpha}$}\\
+	\mbox{Posterior distribution over $\vtheta$ from Bayesian inference given prior distribution $\dirichlet{\valpha}$}\\
 	%
 	& &
 	\mbox{and observed data set $\dataobs$.}\\
@@ -42,7 +43,7 @@
    %
    u(\dataobs, r)
    & : &
-   \mbox{scoring function given $\valpha$ and $\vtheta$ for candidate $r$. }
+   \mbox{Scoring function given $\valpha$ and $\vtheta$ for candidate $r$. }
    u(\dataobs, r) =
    -\hellinger(\bysinfer{\valpha, \vtheta, \dataobs}, r)\\
    %
@@ -188,6 +189,12 @@ of the exponential mechanism}
 \end{algorithm}
 
 
+\clearpage
+\section{Privacy Analysis}
+\begin{thm}
+The $\lapmech$, $\ilapmech$, $\expmech$ and $\hexpmech$ are $\epsilon$-differentially private.
+\end{thm}
+The proofs are in the Arxiv version.
 
 \clearpage
 \section{Accuracy Analysis}
