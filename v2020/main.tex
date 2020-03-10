@@ -14,6 +14,9 @@
 
 \section{Private Mechanisms}
 
+%
+%
+%
 \begin{algorithm}
   \caption{$\lapmech$}
   \label{lapmech}
@@ -34,23 +37,49 @@
 %
 %
 %
+
 \begin{algorithm}
-  \caption{$\lapmech$}
-  \label{lapmech}
+  \caption{$\ilapmech$}
+  \label{ilapmech}
   \begin{algorithmic}
-  	\REQUIRE $\dataobs \in \{0 ,1 \}^n$
-	\STATE \quad apply the Bayesian inference algorithm on $\dataobs'$, get true posterior $\betad(\valpha)$
-  	\STATE \quad {\bf let} $p = \uniform{0}{1}$, $\eta \sim \lap{0}{\frac{1.0}{\epsilon}}$
-  	\STATE \quad {\bf If} $p >0.5$: 
-  	\STATE \quad \quad with 0.5 probability adding noise to first component.
-  	\STATE \quad \quad  $\dataobs' = (\lfloor \text{x}_1 + \mu \rfloor_0^n, n - \lfloor \text{x}_1 + \mu \rfloor_0^n)$ 
-  	\STATE \quad {\bf Else}: 
-  	\STATE \quad \quad with 0.5 probability adding noise to second component.
-  	\STATE \quad \quad  $\dataobs' = (n - \lfloor \text{x}_2 + \mu \rfloor_0^n, \lfloor \text{x}_2 + \mu \rfloor_0^n)$ 
-	\STATE \quad apply the Bayesian inference algorithm on $\dataobs'$, get: $\betad(\valpha')$
-	\RETURN $\valpha'$
+  \STATE {\bf input} $\dataobs\in\mathcal{X}^n$, $\dirichlet{\valpha}$
+  \STATE \quad {\bf let} $\valpha' = \inferd{\valpha}{\vtheta}{\dataobs}$
+  \STATE \quad ${\bf let}\ k=\left \{
+        \begin{array}{lll}          
+          1&\text{if}& |\mathcal{X}|=2\\
+          2&\text{otherwise}
+        \end{array}
+      \right .\ $
+  \STATE \quad {\bf Initialize} a vector $\tilde{\valpha} = (0, \dots, 0 )\in \mathbb{N}^{|\mathcal{X}|}$ 
+  \STATE \quad {\bf For} $i = 1 \dots |\mathcal{X}|-1$:
+  \STATE \quad \quad  {\bf let} $\eta \sim \lap{0}{\frac{k}{\epsilon}}$
+  \STATE \quad \quad  $\tilde{\alpha_i}=\alpha_i + \lfloor{(\alpha_i' - \alpha_i) + \eta}\rfloor^n_0$ 
+  % \RETURN $a_{k+1}$.
+  \STATE \quad $\tilde{\alpha}_{|\mathcal{X}|} = \alpha_{|\mathcal{X}|} + \lfloor n - \sum_{i = 1}^{|\mathcal{X}|-1}\lfloor{(\alpha_i' - \alpha_i) + \eta_i}\rfloor^n_0 \rfloor^n_0$
+  \STATE {\bf return} $\tilde{\valpha}$
   \end{algorithmic}
 \end{algorithm}
+%
+%
+%
+%
+% \begin{algorithm}
+%   \caption{$\lapmech$}
+%   \label{lapmech}
+%   \begin{algorithmic}
+%   	\REQUIRE $\dataobs \in \{0 ,1 \}^n$
+% 	\STATE \quad apply the Bayesian inference algorithm on $\dataobs$, get true posterior $\betad(\valpha)$
+%   	\STATE \quad {\bf let} $p = \uniform{0}{1}$, $\eta \sim \lap{0}{\frac{1.0}{\epsilon}}$
+%   	\STATE \quad {\bf If} $p >0.5$: 
+%   	\STATE \quad \quad with 0.5 probability adding noise to first component.
+%   	\STATE \quad \quad  $\dataobs' = (\lfloor \text{x}_1 + \mu \rfloor_0^n, n - \lfloor \text{x}_1 + \mu \rfloor_0^n)$ 
+%   	\STATE \quad {\bf Else}: 
+%   	\STATE \quad \quad with 0.5 probability adding noise to second component.
+%   	\STATE \quad \quad  $\dataobs' = (n - \lfloor \text{x}_2 + \mu \rfloor_0^n, \lfloor \text{x}_2 + \mu \rfloor_0^n)$ 
+% 	\STATE \quad apply the Bayesian inference algorithm on $\dataobs'$, get: $\betad(\valpha')$
+% 	\RETURN $\valpha'$
+%   \end{algorithmic}
+% \end{algorithm}
 %
 %
 %
@@ -107,59 +136,25 @@
 \section{Accuracy Analysis}
 {\color{red}
 \begin{thm}
-Let $R_{g}$ be the good output set where $\forall r \in R$, $\hlg(\bysinfer{\dataobs}, r) \leq LS(\dataobs)$, we have:
-\[
-	Pr[\ilapmech(\dataobs, \epsilon) \in R_{g}] > Pr[\expmech(\dataobs, \epsilon) \in R_{g}] 
-\]
-for data size $n = |\dataobs| > O(\frac{e^{\epsilon}}{1 - e^{-\epsilon}})$
-\end{thm}
-}
-%
-Let $R_{g}$ be the good output set where $\forall r \in R$, $\hlg(\bysinfer{\dataobs}, r) \leq LS(\dataobs)$, we have:
-
-\[
-	Pr[\ilapmech(\dataobs) \in R_{g}] 
-	\geq 1 - \frac{1}{2}(e^{-\epsilon} + e^{-2\epsilon})
-	> 1 - e^{-\epsilon}
-\]
-By definition of $\expmech$ and $GS = \sqrt{1 - \pi/4}$, we have:
-
-\[
-	\begin{array}{lcl}
-	Pr[\expmech(\dataobs) \in R_{g}] 
-	& =  & \sum\limits_{c \geq - LS(\dataobs)}
-	\frac
-  {\exp(\frac{\epsilon\cdot c}{2\cdot GS})}
-{\Sigma_{r' \in \candidateset{\valpha}}\exp(\frac{-\epsilon\cdot \hellinger(\bys{\dataobs}{\valpha}, r')}{2\cdot GS})}\\
- 	& \leq &
- 	\frac
-  {2\exp(-\frac{\epsilon LS(\dataobs)}{2\cdot GS}) + 1}
-{n\exp(\frac{-\epsilon }{2\cdot GS})}\\
- 	& \leq &
- 	\frac
-  	{3}
-	{n\exp(\frac{-\epsilon }{2\sqrt{1 - \pi/4}})}\\
-	& \leq & 
- 	\frac
-  	{3}
-	{n\exp(-\epsilon)}\\
-\end{array}
-\]
-
-Let $c = 2\sqrt{1 - \pi/4}$, we have when $n > \frac{3}{e^{-\epsilon/c}(1 - e^{-\epsilon})} \sim O(\frac{e^{\epsilon}}{1 - e^{-\epsilon}})$ $\ilapmech$ performs better than $\expmech$.
-
-{\color{red}
-\begin{thm}
 To prove the optimality of Laplace mechanism, we are showing 
 \[
 \frac{ELap(\dataobs)}{(\epsilon \times LS(\dataobs))}
 \]
-is {\color{red}$O(\epsilon)$}, considering $n=|\dataobs| \geq 2$ being the parameter.
+is {\color{red}$O(1)$}, considering $n=|\dataobs| \geq 2$ being the parameter.
 
 Where $LS(\cdot)$ is the local sensitivity, and where $ELap(\cdot)$ is the measure of the error of the Laplace mechanism, defined in this way:
  \[
 ELap(\dataobs) = \arg\big( \min\limits_{t}\{Pr[\hlg(\bysinfer{\dataobs}, \ilapmech(\dataobs))< t] \geq 1 - \gamma \big).
 \]
+\end{thm}
+}
+
+\jiawen{
+\begin{thm}
+For $\gamma = e^{O(\epsilon)}$,
+%
+$\frac{ELap(\dataobs)}{(\epsilon \times LS(\dataobs))}$
+is {\color{red}$O(\epsilon)$}
 \end{thm}
 }
 %
@@ -197,13 +192,20 @@ $\frac{ELap(\dataobs)}{(\epsilon \times LS(\dataobs))}$ is $O(1)$, we prove a co
 \end{thm}
 }
 
+\jiawen{
+\begin{thm}
+For $\gamma = e^{O(k) \epsilon}$, it is proved that $O(\frac{\lg{\frac{1}{\gamma}}}{\epsilon})$ is bounded by $O(k)$.
+\end{thm}
+}
+%
+%
 \begin{proof}
 By Laplace distribution, we have:
 \[
 \begin{array}{lcl}
 	 \Pr[\hlg(\betad(\alpha, \beta), \ilapmech(\dataobs))< t]
 	 & = & 
-	 \Pr[\{|\lap(\frac{1}{\epsilon}|< O(k) |
+	 \Pr[\{|\lap{0}{\frac{1}{\epsilon}}|< O(k) |
 	 \hlg(\betad(\alpha, \beta), \betad(\alpha + k, n - \lfloor \alpha + k \rfloor)) < t \}]\\
 	 & \leq & 1 - e^{- O(k)\epsilon} \\
 \end{array}
@@ -218,11 +220,20 @@ So we can get:
 	= O(\frac{\lg{\frac{1}{e^{- O(k)\epsilon}}}}{\epsilon})
 	= O(k)
 \]
-
+%
 \end{proof}
 %
+%
+%
+\jiawen{
+\begin{corollary}
+For $-1 \leq k < 2$, it is proved that $O(\frac{\lg{\frac{1}{\gamma}}}{\epsilon})$ is bounded by $O(1)$.
+\end{corollary}
+}
+%
+%
 \begin{proof}
-By setting $ -1 \leq k < 2$, we have: 
+Given $ -1 \leq k < 2$, we have: 
 \begin{equation}
 \label{eq:hls}
 \hlg(\betad(\alpha, \beta), \betad(\alpha + k, n - \lfloor \alpha + k \rfloor)) \leq LS(\dataobs)
@@ -251,7 +262,198 @@ i.e.,
 \]
 \end{proof}
 
+\jiawen{
+\begin{thm}
+Let $k = |k'|$ be the largest integer that satisfying $\hlg(\betad(\alpha, \beta), \ilapmech(\dataobs))< t$, we have:
+\[
+	\Pr[\hlg(\betad(\alpha, \beta), \ilapmech(\dataobs))< t] \geq 1 - e^{-k\epsilon}
+\]
+\[
+	\frac{2ke^{-\epsilon} + 1}{n}
+	<
+	\Pr[\hlg(\betad(\alpha, \beta), \expmech(\dataobs)) < t]
+	< 
+	\frac{2k+1}{ne^{-\epsilon}}.
+\]
+\[
+	\frac
+  	{2k\exp(\frac{-\epsilon }{2\cdot LS(\dataobs)}) + 1}
+	{n}
+	<
+	\Pr[\hlg(\betad(\alpha, \beta), \lexpmech(\dataobs)) < t]
+	< 
+	\frac
+  	{2k + 1}
+	{n\exp(\frac{-\epsilon }{2\cdot LS(\dataobs)})}.
+\]
+\end{thm}
+}
+\begin{proof}
+By the p.d.f. of Laplace distribution, we have:
+
+\[
+	\Pr[\hlg(\betad(\alpha, \beta), \ilapmech(\dataobs))< t]
+	= Pr[\ilapmech(\dataobs) \leq k] 
+	\geq 1 - e^{-k\epsilon}.
+\]
+%
+%
+By definition of $\expmech$ and $GS = \sqrt{1 - \pi/4}$, we have:
+%
+%
+\[
+	\begin{array}{lcl}
+	Pr[\hlg(\betad(\alpha, \beta), \expmech(\dataobs)) < t] 
+	& =  & \sum\limits_{c \geq - t}
+	\frac
+  {\exp(\frac{\epsilon\cdot c}{2\cdot GS})}
+{\Sigma_{r' \in \candidateset{\valpha}}\exp(\frac{-\epsilon\cdot \hellinger(\bys{\dataobs}{\valpha}, r')}{2\cdot GS})}\\
+ 	& \leq &
+ 	\frac
+  	{2k\exp(-\frac{0\epsilon }{2\cdot GS}) + 1}
+	{n\exp(\frac{-\epsilon }{2\cdot GS})}\\
+ 	& = &
+ 	\frac
+  	{2k + 1}
+	{n\exp(\frac{-\epsilon }{2\sqrt{1 - \pi/4}})}\\
+	& < & 
+ 	\frac
+  	{2k + 1}
+	{n\exp(-\epsilon)}
+\end{array}
+\]
+\[
+	\begin{array}{lcl}
+	Pr[\hlg(\betad(\alpha, \beta), \expmech(\dataobs)) < t] 
+	& =  & \sum\limits_{c \geq - t}
+	\frac
+  	{\exp(\frac{\epsilon\cdot c}{2\cdot GS})}
+	{\Sigma_{r' \in \candidateset{\valpha}}\exp(\frac{-\epsilon\cdot \hellinger(\bys{\dataobs}{\valpha}, r')}{2\cdot GS})}\\
+ 	& \geq &
+ 	\frac
+  	{2k\exp(\frac{-t\epsilon }{2\cdot GS}) + 1}
+	{n\exp(\frac{-0\epsilon }{2\cdot GS})}\\
+ 	& > &
+ 	\frac
+  	{2k\exp(\frac{-\epsilon }{2\sqrt{1 - \pi/4}}) + 1}
+	{n}\\
+	& > & 
+ 	\frac
+  	{2ke^{-\epsilon} + 1}{n}
+\end{array}
+\]
+%
+%
+By definition of $\lexpmech$, we have:
+%
+%
+\[
+	\begin{array}{lcl}
+	Pr[\hlg(\betad(\alpha, \beta), \lexpmech(\dataobs)) < t] 
+	& =  & \sum\limits_{c \geq - t}
+	\frac
+  	{\exp(\frac{c\epsilon}{2\cdot LS(\dataobs)})}
+	{\Sigma_{r' \in \candidateset{\valpha}}\exp(\frac{-\epsilon\cdot \hellinger(\bys{\dataobs}{\valpha}, r')}{2\cdot LS(\dataobs)})}\\
+ 	& \leq &
+ 	\frac
+  	{2k\exp(\frac{-0\epsilon }{2\cdot LS(\dataobs)}) + 1}
+	{n\exp(\frac{-\epsilon }{2\cdot LS(\dataobs)})}\\
+ 	& = &
+ 	\frac
+  	{2k + 1}
+	{n\exp(\frac{-\epsilon }{2\cdot LS(\dataobs)})}
+\end{array}
+\]
+\[
+	\begin{array}{lcl}
+	Pr[\hlg(\betad(\alpha, \beta), \expmech(\dataobs)) < t] 
+	& =  & \sum\limits_{c \geq - t}
+	\frac
+  {\exp(\frac{\epsilon\cdot c}{2\cdot LS(\dataobs)})}
+{\Sigma_{r' \in \candidateset{\valpha}}\exp(\frac{-\epsilon\cdot \hellinger(\bys{\dataobs}{\valpha}, r')}{2\cdot LS(\dataobs)})}\\
+ 	& \geq &
+ 	\frac
+  	{2k\exp(\frac{-t\epsilon }{2\cdot LS(\dataobs)}) + 1}
+	{n\exp(\frac{-0\epsilon }{2\cdot LS(\dataobs)})}\\
+ 	& > &
+ 	\frac
+  	{2k\exp(\frac{-\epsilon }{2\cdot LS(\dataobs)}) + 1}
+	{n}
+\end{array}
+\]
+Since $\lim\limits_{n \rightarrow \infty} LS(\dataobs) \rightarrow 0$, 
+we have $\lim\limits_{n \rightarrow \infty}\frac{-1}{LS(\dataobs)} \rightarrow -\infty$. So $\exp(\frac{-\epsilon }{2\cdot LS(\dataobs)})$ can only be bounded by $0$. We cannot found a tighter lower bound.
+%
+\end{proof}
+%
+%
+\jiawen{
+\begin{corollary}
+For a reasonable small $t$, we have when data size $n = |\dataobs| > O(\frac{(2k + 1 )e^{\epsilon}}{1 - e^{-\epsilon}})$, the accuracy of $\ilapmech$ is higher than $\expmech$.
+\end{corollary}
+}
+\begin{proof}
+Based on Theorem 2.5, let:
+\[
+	\frac
+  	{2k+1}
+	{n\exp(-\epsilon)} \leq 1 - e^{-k\epsilon},
+\]
+we can have:
+\[
+	\Pr[\hlg(\betad(\alpha, \beta), \ilapmech(\dataobs))< t]
+	> 
+	\Pr[\hlg(\betad(\alpha, \beta), \expmech(\dataobs))< t].
+\]
+By simplification, we have $n > \frac{2k + 1}{e^{-\epsilon}(1 - e^{-k\epsilon})} \sim O(\frac{(2k + 1 )e^{\epsilon}}{1 - e^{-\epsilon}})$.
+\end{proof}
+
+\jiawen{
+\begin{corollary}
+Let $R_{g}$ be the good output set where $\forall r \in R$, $\hlg(\bysinfer{\dataobs}, r) \leq LS(\dataobs)$, we have:
+\[
+	Pr[\ilapmech(\dataobs, \epsilon) \in R_{g}] > Pr[\expmech(\dataobs, \epsilon) \in R_{g}] 
+\]
+for data size $n = |\dataobs| > O(\frac{e^{\epsilon}}{1 - e^{-\epsilon}})$
+\end{corollary}
+}
+%
+\begin{proof}
+simply apply the Theorem 2.5 and corollary 2.5.1, we can get this conclusion.
 
 
+Let $R_{g}$ be the good output set where $\forall r \in R$, $\hlg(\bysinfer{\dataobs}, r) \leq LS(\dataobs)$, we have:
+
+\[
+	Pr[\ilapmech(\dataobs) \in R_{g}] 
+	\geq 1 - \frac{1}{2}(e^{-\epsilon} + e^{-2\epsilon})
+	> 1 - e^{-\epsilon}
+\]
+By definition of $\expmech$ and $GS = \sqrt{1 - \pi/4}$, we have:
+
+\[
+	\begin{array}{lcl}
+	Pr[\expmech(\dataobs) \in R_{g}] 
+	& =  & \sum\limits_{c \geq - LS(\dataobs)}
+	\frac
+  {\exp(\frac{\epsilon\cdot c}{2\cdot GS})}
+{\Sigma_{r' \in \candidateset{\valpha}}\exp(\frac{-\epsilon\cdot \hellinger(\bys{\dataobs}{\valpha}, r')}{2\cdot GS})}\\
+ 	& \leq &
+ 	\frac
+  {2\exp(-\frac{\epsilon LS(\dataobs)}{2\cdot GS}) + 1}
+{n\exp(\frac{-\epsilon }{2\cdot GS})}\\
+ 	& \leq &
+ 	\frac
+  	{3}
+	{n\exp(\frac{-\epsilon }{2\sqrt{1 - \pi/4}})}\\
+	& \leq & 
+ 	\frac
+  	{3}
+	{n\exp(-\epsilon)}\\
+\end{array}
+\]
+
+Let $c = 2\sqrt{1 - \pi/4}$, we have when $n > \frac{3}{e^{-\epsilon/c}(1 - e^{-\epsilon})} \sim O(\frac{e^{\epsilon}}{1 - e^{-\epsilon}})$ $\ilapmech$ performs better than $\expmech$.
+\end{proof}
 
 \end{document}

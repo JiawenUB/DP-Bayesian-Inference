@@ -36,7 +36,7 @@
 \usepackage{authblk}
 \SetSymbolFont{stmry}{bold}{U}{stmry}{m}{n}
 
-%new commands
+%%%%%%%%%%%%%%%%%new commands for  MECHANISMS%%%%%%%%%%%
 \newcommand{\theHalgorithm}{\arabic{algorithm}}
 \newtheorem{definition}{Definition}
 \usepackage{cancel}
@@ -78,9 +78,9 @@
 \newcommand{\range}{\mathcal{O}}
 \newcommand{\nomalizer}[1]{\sum\limits_{r'\in \mathcal{R}_{\textup{post}}} \exp \big(\frac{-\epsilon\cdot \mathcal{H} (\mathsf{BI}(#1),r')}{4 \cdot S(#1)}\big)}
 
+
+%%%%%%%%%%%%%%%%FOR DISTRIBUTIONS 
 \newcommand{\unomalizer}[1]{\sum\limits_{r'\in \mathcal{R}_{\textup{post}}} \exp \big(\frac{-\epsilon\cdot u(#1, r')}{4 \cdot S(#1)}\big)}
-
-
 
 \newcommand{\hexpmechPr}[2]{\underset{z \thicksim \hexpmech(#1)}{\Pr}\left[ #2 \right]}
 \newcommand{\lapmechPr}[2]{\underset{z \thicksim \lapmech(#1)}{\Pr}\left[ #2 \right]}
@@ -89,12 +89,18 @@
 {z \thicksim \ilapmech(#1)}
 }{\Pr}\left[ #2 \right]}
 
-\newtheorem{thm}{Theorem}[section]
-
-\newtheorem{lem}{Lemma}[section]
-
-\newtheorem{assert}{Assertion}[lem]
 \newcommand{\lap}[2]{\mathsf{Lap}(#1, #2)}
 \newcommand{\uniform}[2]{\mathsf{uniform}(#1, #2)}
 
+
+%%%%%%%%%%%%%%%%Regular 
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[thm]
+\newtheorem{lem}{Lemma}[thm]
+
+\newtheorem{assert}{Assertion}[lem]
+
 \newcommand{\todo}[1]{{\footnotesize \color{red}\textbf{[[ #1 ]]}}}
+\newcommand{\jiawen}[1]{{\small \color{blue}\textbf{[[Jiawen: #1 ]]}}}
+
+

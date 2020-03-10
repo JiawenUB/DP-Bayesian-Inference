@@ -18,7 +18,7 @@
   \label{lapmech}
   \begin{algorithmic}
   	\REQUIRE $\dataobs \in \{0 ,1 \}^n$
-	\STATE \quad apply the Bayesian inference algorithm on $\dataobs'$, get true posterior $\betad(\valpha)$
+	\STATE \quad apply the Bayesian inference algorithm on $\dataobs$, get true posterior $\betad(\valpha)$
   	\STATE \quad {\bf let} $p = \uniform{0}{1}$, $\eta \sim \lap{0}{\frac{1.0}{\epsilon}}$
   	\STATE \quad {\bf If} $p >0.5$: 
   	\STATE \quad \quad with 0.5 probability adding noise to first component.
