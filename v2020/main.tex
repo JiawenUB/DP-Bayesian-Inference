@@ -5,12 +5,66 @@
 \usepackage{accents}
 
 \begin{document}
-\title{ Differentially Private Bayesian Inference \\
- Optimality of Laplace Mechanism}
+\title{ Differentially Private Bayesian Inference}
 
 \author{} % Author name
 
 \maketitle
+
+\section{Preliminary}
+\[
+\begin{array}{lcl}
+	\vtheta 
+	& : &
+	\mbox{the parameter vector of multinomial distribution, $\vtheta\in [0,1]^{k}$}.\\
+	%
+	\dataobs 
+	& : &
+	\mbox{Observed dataset.} \dataobs \in \datauni^n\\
+	%
+	\dirichlet{\valpha} 
+	& : &
+	\mbox{Dirichlet distribution. The prior or posterior distribution over $\vtheta$.}\\
+	%
+	\bysinfer{\valpha, \vtheta, \dataobs}
+	& : & 
+	\mbox{posterior distribution over $\vtheta$ from Bayesian inference given prior distribution $\dirichlet{\valpha}$}\\
+	%
+	& &
+	\mbox{and observed data set $\dataobs$.}\\
+	%
+	%
+	\hellinger(\cdot, \cdot)
+	& : &
+   \mbox{Hellinger Distance between two distributions. }
+   \hellinger(\dirichlet{\valpha_1}, \dirichlet{\valpha_2}) = \sqrt{1 - \frac{\betaf(\frac{\valpha_1 + \valpha_2}{2})}{\sqrt{\betaf(\valpha_1) \betaf(\valpha_2)}}} \\
+   %
+   %
+   u(\dataobs, r)
+   & : &
+   \mbox{scoring function given $\valpha$ and $\vtheta$ for candidate $r$. }
+   u(\dataobs, r) =
+   -\hellinger(\bysinfer{\valpha, \vtheta, \dataobs}, r)\\
+   %
+   GS
+   & : & 
+   \mbox{Global sensitivity of Hellinger distance. }
+   GS = \sqrt{1 - \pi/4}\\
+   %
+   LS(\dataobs)
+   & : & 
+   \mbox{Local sensitivity of Hellinger distance for $\dataobs$. }\\
+   %
+   & &
+   LS(\dataobs) = \max\limits_{\dataobs'\in\mathcal{X}^n,\adj{\dataobs}{\dataobs'}, r\in \candidateset{\valpha}}
+   \lvert \hellinger(\bys{\dataobs}{\valpha}, r) - \hellinger(\bys{\dataobs'}{\valpha}, r)\rvert \\
+   %
+   S(\dataobs)
+   & : & 
+   \gamma-\mbox{smooth sensitivity. }
+   S(\dataobs)=\max_{\dataobs' \in \mathcal{X}^{n}}\bigg \{ \frac{1}{\frac{1}{LS(\dataobs')} +\gamma \cdot Himming(\dataobs,\dataobs')} \bigg \}
+\end{array}
+\]
 
 \section{Private Mechanisms}
 
@@ -18,7 +72,7 @@
 %
 %
 \begin{algorithm}
-  \caption{$\lapmech$}
+  \caption{$\lapmech$ - Calibrating noise w.r.t. $\ell_1$ norm}
   \label{lapmech}
   \begin{algorithmic}
   \STATE $\dataobs\in\mathcal{X}^n$, $\dirichlet{\valpha}$
@@ -39,7 +93,7 @@
 %
 
 \begin{algorithm}
-  \caption{$\ilapmech$}
+  \caption{$\ilapmech$ - Calibrating noise w.r.t. histogram sensitivity}
   \label{ilapmech}
   \begin{algorithmic}
   \STATE {\bf input} $\dataobs\in\mathcal{X}^n$, $\dirichlet{\valpha}$
@@ -86,7 +140,8 @@
 %
 %
   \begin{algorithm}
-  \caption{$\expmech$}
+  \caption{$\expmech$ - Instantiation
+of the exponential mechanism}
   \label{mech:expmech1}
   \begin{algorithmic}
   \STATE observed data set $\dataobs \in \mathcal{X}^n$, prior: $\dirichlet{\valpha}$, $\epsilon$
@@ -104,7 +159,8 @@
 %
 %
   \begin{algorithm}
-  \caption{$\lexpmech$}
+  \caption{$\lexpmech$ - Instantiation
+	of the exponential mechanism with local sensitivity}
   \label{mech:lexpmech}
   \begin{algorithmic}
   \STATE {\bf input} observed data set $\dataobs \in \mathcal{X}^n$, prior: $\dirichlet{\valpha}$, $\epsilon$
@@ -119,7 +175,8 @@
 %
 %
   \begin{algorithm}
-  \caption{$\hexpmech$}
+  \caption{$\hexpmech$ - Instantiation
+	of the exponential mechanism with $\gamma$-smooth sensitivity}
   \label{mech:sexpmech}
   \begin{algorithmic}
   \STATE observed data set $\dataobs \in \mathcal{X}^n$, prior: $\dirichlet{\valpha}$, $\epsilon$
