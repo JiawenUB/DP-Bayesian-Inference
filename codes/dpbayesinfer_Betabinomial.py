@@ -78,7 +78,7 @@ class BayesInferwithDirPrior(object):
 
 	def _set_candidate_scores(self):
 		start = time.clock()
-		self._set_candidates([], numpy.sum(self._observation))
+		self._set_candidates([], self._sample_size)
 
 		for r in self._candidates:
 			self._candidate_scores[r] = -(self._posterior - r)

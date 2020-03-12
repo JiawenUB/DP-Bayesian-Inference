@@ -330,7 +330,8 @@ i.e.,
 \begin{thm}
 Let $k = |k'|$ be the largest integer that satisfying $\hlg(\betad(\alpha, \beta), \betad(\alpha + k', n - \lfloor \alpha + k' \rfloor)) < t$, we have:
 \[
-	\Pr[\hlg(\betad(\alpha, \beta), \ilapmech(\dataobs))< t] \geq 1 - e^{-k\epsilon}
+	\Pr[\hlg(\betad(\alpha, \beta), \ilapmech(\dataobs))< t]
+  = 1 - \frac{1}{2}(e^{-k\epsilon} + e^{-(k + 1)\epsilon}) \geq 1 - e^{-k\epsilon}
 \]
 \[
 	\frac{2ke^{-\epsilon} + 1}{n}
@@ -353,12 +354,14 @@ Let $k = |k'|$ be the largest integer that satisfying $\hlg(\betad(\alpha, \beta
 \end{thm}
 }
 \begin{proof}
-By the p.d.f. of Laplace distribution, we have:
-
+Given $k = |k'|$ be the largest integer that satisfying $\hlg(\betad(\alpha, \beta), \betad(\alpha + k', n - \lfloor \alpha + k' \rfloor)) < t$, by the post-processing of Laplace distribution
+and p.d.f. of Laplace distribution, we have:
+%
 \[
 	\Pr[\hlg(\betad(\alpha, \beta), \ilapmech(\dataobs))< t]
-	= Pr[\ilapmech(\dataobs) \leq k] 
-	\geq 1 - e^{-k\epsilon}.
+	= \Pr[-k < \ilapmech(\dataobs) \leq k + 1] 
+	= 1 - \frac{1}{2}(e^{-k\epsilon} + e^{-(k + 1)\epsilon})
+  \geq 1 - e^{-k\epsilon}.
 \]
 %
 %
@@ -471,7 +474,32 @@ we can have:
 \]
 By simplification, we have $n > \frac{2k + 1}{e^{-\epsilon}(1 - e^{-k\epsilon})} \sim O(\frac{(2k + 1 )e^{\epsilon}}{1 - e^{-\epsilon}})$.
 \end{proof}
-
+%
+%
+\jiawen{
+\begin{corollary}
+For a reasonable small $t$, we have when data size $n = |\dataobs| < O(\frac{(2ke^{-\epsilon} + 1 )}{1 - \frac{1}{2}(e^{-k\epsilon} + e^{-(k + 1)\epsilon})})$, the accuracy of $\expmech$ is better than $\ilapmech$.
+\end{corollary}
+}
+%
+%
+\begin{proof}
+Applying the Theorem 2.5, let:
+\[
+  \frac
+    {2ke^{-\epsilon}+1}
+  {n} > 1 - \frac{1}{2}(e^{-k\epsilon} + e^{-(k + 1)\epsilon}),
+\]
+we can have:
+\[
+  \Pr[\hlg(\betad(\alpha, \beta), \ilapmech(\dataobs))< t]
+  <
+  \Pr[\hlg(\betad(\alpha, \beta), \expmech(\dataobs))< t].
+\]
+By simplification, we have $n < \frac{(2ke^{-\epsilon} + 1 )}{1 - \frac{1}{2}(e^{-k\epsilon} + e^{-(k + 1)\epsilon})}$.
+\end{proof}
+%
+%
 \jiawen{
 \begin{corollary}
 Let $R_{g}$ be the good output set where $\forall r \in R$, $\hlg(\bysinfer{\dataobs}, r) \leq LS(\dataobs)$, we have:

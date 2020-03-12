@@ -15,6 +15,10 @@ from scipy.special import gammaln
 from dirichlet import dirichlet
 from dpbayesinfer_Betabinomial import BayesInferwithDirPrior
 
+
+# class TheoryProbs(object):
+# 	def __init__(self, dataobs, prior, eps):
+		
 def LAPLACE_CDF(interval, scale):
 	if interval[0] >= 0.0:
 		return (1 - 0.5 * math.exp( (-interval[1]*1.0/scale))) - (1 - 0.5 * math.exp( (-interval[0]/scale)))
@@ -41,28 +45,35 @@ def lap_distribution_over_candidates(dataobs, prior, eps, sensitivity = 1.0):
 
 	lap_prob[str([n,0])] += 0.5 * (0.5 - LAPLACE_CDF((0.0, n - k + 1), sensitivity/eps)) + 0.5 * (0.5 - LAPLACE_CDF((-(n - k), 0.0), sensitivity/eps))
 	
-	############### the expected error when the noises are not valid######
 
-	print lap_prob
+	print sensitivity, lap_prob
 
 	return lap_prob
 
-def exp_distribution_over_candidates(dataobs, prior, epsilon):
+def exp_distribution_over_candidates(dataobs, prior, epsilon, mech):
 	n = sum(dataobs)
 	Bayesian_Model = BayesInferwithDirPrior(prior, n, epsilon)
 	Bayesian_Model._set_observation(dataobs)
 
 	Bayesian_Model._set_candidate_scores()
 	Bayesian_Model._set_local_sensitivities()
-	Bayesian_Model._set_up_exp_mech_with_gamma_SS()
+	if mech == "exp":
+
+		Bayesian_Model._set_up_exp_mech_with_GS()
+	elif mech == "gamma":
+		Bayesian_Model._set_up_exp_mech_with_gamma_SS()
 
 	exp_prob = {}
 
 	for i in range(len(Bayesian_Model._candidates)):
 		z = Bayesian_Model._candidates[i]._pointwise_sub(prior)
-		exp_prob[str(z._alphas)] = Bayesian_Model._gamma_SS_probabilities[i]
-	
-	print exp_prob
+		if mech == "exp":
+			exp_prob[str(z._alphas)] = Bayesian_Model._GS_probabilities[i]
+		elif mech == "gamma":
+			exp_prob[str(z._alphas)] = Bayesian_Model._gamma_SS_probabilities[i]
+
+		
+	# print exp_prob
 	
 	return exp_prob
 
@@ -120,18 +131,19 @@ def gen_priors(r, step, d):
 
 if __name__ == "__main__":
 
-	datasize = 50
+	datasize = 2
 	epsilon = 1.0
 	delta = 0.00000001
 	prior = dirichlet([1,1])
-	dataobs = [10,10]
+	dataobs = [3, 3]
 	# datasizes = gen_datasizes((50, 200), 50)
 
 	lap_prob = lap_distribution_over_candidates(dataobs, prior, epsilon, 1.0)
 	lap_prob_2 = lap_distribution_over_candidates(dataobs, prior, epsilon, 2.0)
-	exp_prob = exp_distribution_over_candidates(dataobs, prior, epsilon)
+	exp_prob = exp_distribution_over_candidates(dataobs, prior, epsilon, "exp")
+	exp_prob2 = exp_distribution_over_candidates(dataobs, prior, epsilon, "gamma")
 	steps = get_steps(dataobs, prior, epsilon)
 
-	plot_2d(list_of_map(steps, [lap_prob, lap_prob_2, exp_prob]),
-		steps, [r"$\mathsf{LSHist}$", r"$\mathsf{LSDim}$", r"$\mathsf{EHDS}$"], "prob of each candidates with data: "+str(dataobs)+", eps: " + str(epsilon))
+	plot_2d(list_of_map(steps, [lap_prob, lap_prob_2, exp_prob, exp_prob2]),
+		steps, [r"$\mathsf{LSHist}$", r"$\mathsf{LSDim}$", r"$\mathsf{EHD}$", r"$\mathsf{EHDS}$"], "prob of each candidates with data: "+str(dataobs)+", eps: " + str(epsilon))
 

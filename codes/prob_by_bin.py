@@ -26,54 +26,99 @@ def LAPLACE_CDF(interval, scale):
 #############################################################################
 #SUM UP the prob within the same bin
 #############################################################################
+def exp_distribution_over_candidates(dataobs, prior, epsilon, mech):
+	n = sum(dataobs)
+	Bayesian_Model = BayesInferwithDirPrior(prior, n, epsilon)
+	Bayesian_Model._set_observation(dataobs)
 
-def calculate_prob_exp(bins, Bayesian_Model, mechanism_parameter, sensitivity, savename):
+	Bayesian_Model._set_candidate_scores()
+	Bayesian_Model._set_local_sensitivities()
+	if mech == "exp":
 
-	#############################################################################
-	#CALCULATING THE UNOMARLIZED PROBABILITY OF EACH BIN
-	#############################################################################
+		Bayesian_Model._set_up_exp_mech_with_GS()
+	elif mech == "gamma":
+		Bayesian_Model._set_up_exp_mech_with_gamma_SS()
+	else:
+		Bayesian_Model._set_up_exp_mech_with_LS()
 
-	probability_distance_pairs_in_exp =[]
+	exp_prob = {}
 
-	nomalizer = 0.0
+	for i in range(len(Bayesian_Model._candidates)):
+		z = Bayesian_Model._candidates[i]._pointwise_sub(prior)
+		if mech == "exp":
+			exp_prob[str(z._alphas)] = Bayesian_Model._GS_probabilities[i]
+		elif mech == "gamma":
+			exp_prob[str(z._alphas)] = Bayesian_Model._gamma_SS_probabilities[i]
+		else:
+			exp_prob[str(z._alphas)] = Bayesian_Model._LS_probabilities[i]
 
-	for key,item in bins.items():
-		distance = -Bayesian_Model._candidate_scores[item[0]]
+
 		
-		#THE PROBABILITY OF THIS BIN
-		prob = (len(item) * math.exp(Bayesian_Model._epsilon * Bayesian_Model._candidate_scores[item[0]]/(mechanism_parameter * sensitivity)))
-
-		probability_distance_pairs_in_exp.append((distance, prob, [i._alphas for i in item]))
-
-		nomalizer += prob
-
-	#############################################################################
-	#NOMARLIZING PROBABILITY
-	#############################################################################
-
-	probability_distance_pairs_in_exp = [(t[0],t[1]/nomalizer,t[2]) for t in probability_distance_pairs_in_exp]
-
-
-	probability_distance_pairs_in_exp.sort()
-
-	#############################################################################
-	#SORT AND SPLIT THE PROBABILITY FROM PAIRS #WRITE DATAS INTO FILE
-	#############################################################################
-
-	# f_exp = open("datas/discrete_prob/data_" + str(Bayesian_Model._observation_counts) + savename, "w")
-
-	# f_exp.write("Candidates_of_the_same_steps&Hellinger Distance&Probabilities \n")
-
-	# for triple in probability_distance_pairs_in_exp:
-	# 	#WRITE DATAS INTO FILE
-	# 	f_exp.write(str(triple[2]) + "&" + str(triple[0]) + "&" + str(triple[1]) + "\n")
+	# print exp_prob
 	
-	# f_exp.close()
+	return exp_prob
 
+def calculate_prob_exp(bins, Bayesian_Model, mech):
+	exp_prob = exp_distribution_over_candidates(Bayesian_Model._observation_counts, Bayesian_Model._prior, Bayesian_Model._epsilon, mech)
+	prob_by_bin = []
+	for key,item in bins.items():
+		p = 0.0
+		for c in item:
+			p += exp_prob[str(c._pointwise_sub(Bayesian_Model._prior)._alphas)]
 
-	t, exp, _ = zip(*probability_distance_pairs_in_exp)
-
+		prob_by_bin.append((-Bayesian_Model._candidate_scores[item[0]], p))
+	print prob_by_bin
+	prob_by_bin.sort()
+	t, exp = zip(*prob_by_bin)
 	return exp
+
+# def calculate_prob_exp(bins, Bayesian_Model, mechanism_parameter, sensitivity, savename):
+
+# 	#############################################################################
+# 	#CALCULATING THE UNOMARLIZED PROBABILITY OF EACH BIN
+# 	#############################################################################
+
+# 	probability_distance_pairs_in_exp =[]
+
+# 	nomalizer = 0.0
+
+# 	for key,item in bins.items():
+# 		distance = -Bayesian_Model._candidate_scores[item[0]]
+		
+# 		#THE PROBABILITY OF THIS BIN
+# 		prob = (len(item) * math.exp(Bayesian_Model._epsilon * Bayesian_Model._candidate_scores[item[0]]/(mechanism_parameter * sensitivity)))
+
+# 		probability_distance_pairs_in_exp.append((distance, prob, [i._alphas for i in item]))
+
+# 		nomalizer += prob
+
+# 	#############################################################################
+# 	#NOMARLIZING PROBABILITY
+# 	#############################################################################
+
+# 	probability_distance_pairs_in_exp = [(t[0],t[1]/nomalizer,t[2]) for t in probability_distance_pairs_in_exp]
+
+
+# 	probability_distance_pairs_in_exp.sort()
+
+# 	#############################################################################
+# 	#SORT AND SPLIT THE PROBABILITY FROM PAIRS #WRITE DATAS INTO FILE
+# 	#############################################################################
+
+# 	# f_exp = open("datas/discrete_prob/data_" + str(Bayesian_Model._observation_counts) + savename, "w")
+
+# 	# f_exp.write("Candidates_of_the_same_steps&Hellinger Distance&Probabilities \n")
+
+# 	# for triple in probability_distance_pairs_in_exp:
+# 	# 	#WRITE DATAS INTO FILE
+# 	# 	f_exp.write(str(triple[2]) + "&" + str(triple[0]) + "&" + str(triple[1]) + "\n")
+	
+# 	# f_exp.close()
+
+
+# 	t, exp, _ = zip(*probability_distance_pairs_in_exp)
+
+# 	return exp
 
 #############################################################################
 #CALCULATE the Laplace prob within the same bin
@@ -137,10 +182,11 @@ def calculate_prob_lap(bins, Bayesian_Model, sensitivity, savename):
 #CALCULATING THE DISCRETE PROBABILITIES
 #############################################################################
 
-def row_discrete_probabilities(sample_size,epsilon,delta,prior,observation):
+def row_discrete_probabilities(sample_size, epsilon,delta,prior,observation):
 
 	Bayesian_Model = BayesInferwithDirPrior(prior, sample_size, epsilon, delta)
 	Bayesian_Model._set_observation(observation)
+	print Bayesian_Model._observation_counts
 
 	Bayesian_Model._set_candidate_scores()
 	Bayesian_Model._set_local_sensitivities()
@@ -165,12 +211,12 @@ def row_discrete_probabilities(sample_size,epsilon,delta,prior,observation):
 		flage = counter
 		key = str(sorted_scores[flage][1])
 		Candidate_bins_by_step[key] = []
-		parameters_of_bin = []
+		# parameters_of_bin = []
 		while counter < len(sorted_scores) and sorted_scores[flage][1] == sorted_scores[counter][1]:
 			Candidate_bins_by_step[key].append(sorted_scores[counter][0])
-			parameters_of_bin.append(sorted_scores[counter][0]._alphas)
+			# parameters_of_bin.append(sorted_scores[counter][0]._alphas)
 			counter += 1
-		print parameters_of_bin
+		# print parameters_of_bin
 		print key
 
 
@@ -201,21 +247,21 @@ def row_discrete_probabilities(sample_size,epsilon,delta,prior,observation):
 	#SUM UP the prob within the same bin
 	#############################################################################
 
-	exp_gamma = calculate_prob_exp(Candidate_bins_by_step, Bayesian_Model, mechanism_parameter = 4,
-		sensitivity = Bayesian_Model._gamma_SS, savename = "_exp_new.txt")
+	exp_gamma = calculate_prob_exp(Candidate_bins_by_step, Bayesian_Model,
+		"gamma")
 
 
 	#############################################################################
 	#SUM UP the prob within the same bin
 	#############################################################################
-	exp_LS = calculate_prob_exp(Candidate_bins_by_step, Bayesian_Model, mechanism_parameter = 1,
-		sensitivity = Bayesian_Model._LS, savename = "_exp_LS.txt")
+	exp_LS = calculate_prob_exp(Candidate_bins_by_step, Bayesian_Model,
+		"local")
 
 	#############################################################################
 	#SUM UP the prob within the same bin
 	#############################################################################
-	exp_GS = calculate_prob_exp(Candidate_bins_by_step, Bayesian_Model, mechanism_parameter = 2,
-		sensitivity = Bayesian_Model._GS, savename = "_exp_GS.txt")
+	exp_GS = calculate_prob_exp(Candidate_bins_by_step, Bayesian_Model,
+		"exp")
 	
 	#############################################################################
 	#SETTING THE SENSITIVITY
@@ -240,7 +286,7 @@ def row_discrete_probabilities(sample_size,epsilon,delta,prior,observation):
 		sensitivity = sensitivity2, savename = "_lap_2.txt")
 
 	print step, exp_gamma, lap_1, lap_2
-	return
+	# return
 
 
 	#############################################################################
@@ -367,11 +413,11 @@ if __name__ == "__main__":
 	#############################################################################
 	#SETTING UP THE PARAMETERS
 	#############################################################################
-	datasize = 2
+	datasize = 4
 	epsilon = 1.0
 	delta = 0.00000001
 	prior = dirichlet([1,1])
-	dataset = [2,0]
+	dataset = [2,2]
 
 	#############################################################################
 	#SETTING UP THE PARAMETERS WHEN DOING GROUPS EXPERIMENTS
