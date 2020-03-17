@@ -54,7 +54,7 @@ def plot_mean_error(x,y_list,xstick,xlabel, ylabel, title):
 	plt.figure(figsize=(11,8))
 	i = 0	
 	for i in range(len(y_list)):
-		plt.plot(x, y_list[i],'^',label=ylabel[i])
+		plt.plot(x, y_list[i],'o-',label=ylabel[i])
 
 	plt.xticks(x,xstick,rotation=70,fontsize=12)
 	plt.title(title,fontsize=20)
@@ -79,8 +79,8 @@ def accuracy_VS_datasize(epsilon,delta,prior,observations,datasizes):
 		Bayesian_Model._experiments(500)
 		print("finished" + str(observation))
 
-		for i in range(len(mean_error)):
-			mean_error[i].append(Bayesian_Model._accuracy_mean[Bayesian_Model._keys[i]])
+		for j in range(len(mean_error)):
+			mean_error[j].append(Bayesian_Model._accuracy_mean[Bayesian_Model._keys[j]])
 
 		# data.append(Bayesian_Model._accuracy[Bayesian_Model._keys[3]])
 		# data.append(Bayesian_Model._accuracy[Bayesian_Model._keys[0]])
@@ -95,14 +95,14 @@ def accuracy_VS_datasize(epsilon,delta,prior,observations,datasizes):
 
 	print mean_error
 
-	plot_mean_error(datasizes, mean_error, datasizes, "Different Datasizes", 
-		["BASELINE LapMech (sensitivity = 2)", 
-		"IMPROVED LapMech (sensitivity = 1)",
-		r'$\mathcal{M}_{\mathcal{H}}$ with Smooth Sensitivity',
-		r'$\mathcal{M}_{\mathcal{H}}$ with $\gamma -$Sensitivity',
-		r"STANDARD $\mathcal{M}_{\mathcal{E}}$",
-		r"NON PRIVATE $\mathcal{M}_{\mathcal{E}}$"
-		], "")
+	plot_mean_error(datasizes, mean_error, datasizes, 
+		"Different Datasizes", 
+		[r"$\mathsf{LSDim}$",
+		r"$\mathsf{LSHist}$",
+		r"$\mathsf{LSDimNa}$",
+		r"$\mathsf{EHDS}$",
+		r"$\mathsf{EHD}$",
+		r"$\mathsf{EHDL}$"], "")
 	
 	# plot_error_box(data,"Different Datasizes",datasizes,"Accuracy VS. Data Size",
 	# 	[r'$\mathcal{M}^{B}_{\mathcal{H}}$',"LapMech (sensitivity = 2)", "LapMech (sensitivity = 3)"],
@@ -245,7 +245,7 @@ if __name__ == "__main__":
 #SETTING UP THE PARAMETERS WHEN DOING GROUPS EXPERIMENTS
 #############################################################################
 	epsilons = numpy.arange(5, 2, 0.1)
-	datasizes = gen_datasizes((100,500),50) + gen_datasizes((600,1000),100)#[300] #[8,12,18,24,30,36,42,44,46,48]#,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80]
+	datasizes = gen_datasizes((10,50),10) + gen_datasizes((100,500),100) + gen_datasizes((600,1000),200) + gen_datasizes((1000,5000),1000)#[300] #[8,12,18,24,30,36,42,44,46,48]#,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80]
 	percentage = [0.5,0.5]
 	datasets = gen_datasets(percentage, datasizes)
 	priors = gen_priors([20,50], 10, 2) + gen_priors([100,200], 50, 2)# + gen_priors([200,500], 100, 2) + gen_priors([600,2000], 200, 2)

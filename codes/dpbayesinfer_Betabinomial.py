@@ -120,6 +120,10 @@ class BayesInferwithDirPrior(object):
 		self._accuracy["Improved LaplaceMech"]=[]
 		self._accuracy_mean["Improved LaplaceMech"]=[]
 
+	def _set_up_naive_lap_mech(self):
+		self._keys.append("Naive LaplaceMech")
+		self._accuracy["Naive LaplaceMech"]=[]
+		self._accuracy_mean["Naive LaplaceMech"]=[]
 
 	###################################################################################################################################
 	#####SETTING UP THE EMPONENTIAL MECHANISM WITH THE SMOOTH SENSITIVITY
@@ -277,6 +281,12 @@ class BayesInferwithDirPrior(object):
 
 		self._laplaced_posterior = dirichlet(noised)
 
+	def _laplace_mechanism_naive(self):
+		y1, y2 = numpy.random.laplace(0, 2.0/self._epsilon), numpy.random.laplace(0, 2.0/self._epsilon)
+		noised =[0 if y1 < 0.0 else self._sample_size if y1 > self._sample_size else y1, 0 if y2 < 0.0 else self._sample_size if y2 > self._sample_size else y2]
+
+		self._laplaced_posterior = dirichlet(noised) + self._prior
+		
 	def _laplace_mechanism_symetric(self, sensitivity):
 		noised = [0.0,0.0]
 
@@ -321,7 +331,8 @@ class BayesInferwithDirPrior(object):
 
 		self._set_up_baseline_lap_mech()
 		self._set_up_improved_lap_mech()
-		self._set_up_exp_mech_with_SS()
+		self._set_up_naive_lap_mech()
+		# self._set_up_exp_mech_with_SS()
 		self._set_up_exp_mech_with_gamma_SS()
 		self._set_up_exp_mech_with_GS()
 		self._set_up_exp_mech_with_LS()
@@ -348,11 +359,16 @@ class BayesInferwithDirPrior(object):
 			self._laplace_mechanism(sensitivity = s1)
 			self._accuracy[self._keys[1]].append(self._posterior - self._laplaced_posterior)
 
+			#SAMPLING WITH THE NAIVE LAPLACE MECHANISM 
+			#############################################################################
+			self._laplace_mechanism_naive()
+			self._accuracy[self._keys[2]].append(self._posterior - self._laplaced_posterior)
+
 			#############################################################################
 			#SAMPLING WITH THE EXPONENTIAL MECHANISM OF SMOOTH SENSITIVITY
 			#############################################################################
-			self._exponentialize_SS()
-			self._accuracy[self._keys[2]].append(self._posterior - self._exponential_posterior)
+			# self._exponentialize_SS()
+			# self._accuracy[self._keys[2]].append(self._posterior - self._exponential_posterior)
 
 			#############################################################################
 			#SAMPLING WITH THE EXPONENTIAL MECHANISM OF ALPHA SMOOTH SENSITIVITY
@@ -371,6 +387,7 @@ class BayesInferwithDirPrior(object):
 			# #############################################################################
 			self._exponentialize_LS()
 			self._accuracy[self._keys[5]].append(self._posterior - self._exponential_posterior)
+
 
 			
 		for key,item in self._accuracy.items():
