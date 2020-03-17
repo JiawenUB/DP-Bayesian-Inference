@@ -259,14 +259,10 @@ class BayesInferwithDirPrior(object):
 
 	def _laplace_mechanism(self, sensitivity):
 		noised = [i + math.floor(numpy.random.laplace(0, sensitivity/self._epsilon)) for i in self._observation_counts]
-		noised = [self._sample_size if i > self._sample_size else i for i in noised]
-		noised = [0.0 if i < 0.0 else i for i in noised]
-		if self._sample_size - sum(noised[:-1]) < 0:
-			noised[-1] = 0
-		elif self._sample_size - sum(noised[:-1]) > self._sample_size:
-			noised[-1] = self._sample_size
-		else:
-			noised[-1] = self._sample_size - sum(noised[:-1]) 
+		noised = [self._sample_size if i > self._sample_size else 0.0 if i < 0.0 else i for i in noised]
+		r = self._sample_size - sum(noised[:-1])
+		noised[-1] = 0.0 if r < 0.0 else self._sample_size if r > self._sample_size else r
+
 		self._laplaced_posterior = dirichlet(noised) + self._prior
 
 

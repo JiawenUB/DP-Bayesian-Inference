@@ -6,11 +6,12 @@
 
 \begin{document}
 \title{ Differentially Private Bayesian Inference}
-
+%
 \author{} % Author name
-
+\date{}
 \maketitle
-
+%
+\vspace{-50pt}
 \section{Preliminary}
 \[
 \begin{array}{lcl}
@@ -66,9 +67,23 @@
    S(\dataobs)=\max_{\dataobs' \in \mathcal{X}^{n}}\bigg \{ \frac{1}{\frac{1}{LS(\dataobs')} +\gamma \cdot Himming(\dataobs,\dataobs')} \bigg \}
 \end{array}
 \]
-
+%
 \section{Private Mechanisms}
-
+%
+%
+%
+\begin{algorithm}
+  \caption{$\zlapmech$\cite{zhang2016differential} - Calibrating noise w.r.t. $\ell_1$ norm and Dimension}
+  \label{lapmech}
+  \begin{algorithmic}
+  \STATE $\dataobs\in\mathcal{X}^n$, $\dirichlet{\valpha}$
+  \STATE \quad {\bf let} $\valpha' = \inferd{\valpha}{\vtheta}{\dataobs}$
+  \STATE \quad {\bf Initialize} a vector $\tilde{\valpha} = (0, \dots, 0 )\in \mathbb{N}^{|\mathcal{X}|}$ 
+  \STATE \quad {\bf For} $i = 1 \dots |\mathcal{X}| - 1$:
+  \STATE \quad \quad  {\bf let} $\tilde{\alpha_i}=\alpha_i + \lfloor{(\alpha_i' - \alpha_i)+ \lap{0}{\frac{2|\mathcal{X}|}{\epsilon}} }\rfloor^n_0$
+  \STATE {\bf return} $\tilde{\valpha}$
+  \end{algorithmic}
+\end{algorithm}
 %
 %
 %
@@ -80,8 +95,8 @@
   \STATE \quad {\bf let} $\valpha' = \inferd{\valpha}{\vtheta}{\dataobs}$
   \STATE \quad {\bf Initialize} a vector $\tilde{\valpha} = (0, \dots, 0 )\in \mathbb{N}^{|\mathcal{X}|}$ 
   \STATE \quad {\bf For} $i = 1 \dots |\mathcal{X}| - 1$:
-  \STATE \quad \quad  {\bf let} $\eta \sim \lap{0}{\frac{|\mathcal{X}|}{\epsilon}}$
-  \STATE \quad \quad  $\tilde{\alpha_i}=\alpha_i + \lfloor{(\alpha_i' - \alpha_i) + \eta}\rfloor^n_0$ 
+  % \STATE \quad \quad  {\bf let} $\eta \sim \lap{0}{\frac{|\mathcal{X}|}{\epsilon}}$
+  \STATE \quad \quad  $\tilde{\alpha_i}=\alpha_i + \lfloor{(\alpha_i' - \alpha_i) + \lap{0}{\frac{|\mathcal{X}|}{\epsilon}}}\rfloor^n_0$ 
   % \RETURN $a_{k+1}$.
   \STATE \quad $\tilde{\alpha}_{|\mathcal{X}|} = \alpha_{|\mathcal{X}|} + \lfloor n - \sum_{i = 1}^{|\mathcal{X}|-1}\lfloor{(\alpha_i' - \alpha_i) + \eta_i}\rfloor^n_0 \rfloor^n_0$
   \STATE {\bf return} $\tilde{\valpha}$
@@ -92,7 +107,7 @@
 %
 %
 %
-
+%
 \begin{algorithm}
   \caption{$\ilapmech$ - Calibrating noise w.r.t. histogram sensitivity}
   \label{ilapmech}
@@ -330,6 +345,11 @@ i.e.,
 \begin{thm}
 Let $k = |k'|$ be the largest integer that satisfying $\hlg(\betad(\alpha, \beta), \betad(\alpha + k', n - \lfloor \alpha + k' \rfloor)) < t$, we have:
 \[
+  \Pr[\hlg(\betad(\alpha, \beta), \zlapmech(\dataobs))< t]
+  = (1 - \frac{1}{2}(e^{-k\epsilon/2} + e^{-(k + 1)\epsilon/2})) ^2 \geq (1 - e^{-k\epsilon/2})^2
+\]
+%
+\[
 	\Pr[\hlg(\betad(\alpha, \beta), \ilapmech(\dataobs))< t]
   = 1 - \frac{1}{2}(e^{-k\epsilon} + e^{-(k + 1)\epsilon}) \geq 1 - e^{-k\epsilon}
 \]
@@ -547,5 +567,8 @@ By definition of $\expmech$ and $GS = \sqrt{1 - \pi/4}$, we have:
 
 Let $c = 2\sqrt{1 - \pi/4}$, we have when $n > \frac{3}{e^{-\epsilon/c}(1 - e^{-\epsilon})} \sim O(\frac{e^{\epsilon}}{1 - e^{-\epsilon}})$ $\ilapmech$ performs better than $\expmech$.
 \end{proof}
+
+\small{\bibliographystyle{unsrt}
+\bibliography{bayesian}}
 
 \end{document}
