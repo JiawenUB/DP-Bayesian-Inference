@@ -152,8 +152,9 @@ class BayesInferwithDirPrior(object):
 		#CALCULATING THE OUTPUTTING PROBABILITIES
 		###################################################################################################################################
 		nomalizer = 0.0
+		eps = self._epsilon/(0.5 + 0.5 * self._gamma)
 		for r in self._candidates:
-			temp = math.exp(self._epsilon * self._candidate_scores[r]/(4.0 * self._SS))
+			temp = math.exp(eps * self._candidate_scores[r]/(4.0 * self._SS))
 			self._SS_probabilities.append(temp)
 			nomalizer += temp
 

@@ -94,8 +94,6 @@ def exp_distribution_over_candidates(dataobs, prior, epsilon, mech):
 	if mech == "exp":
 		Bayesian_Model._set_up_exp_mech_with_GS()
 	elif mech == "gamma":
-		Bayesian_Model._gamma = 0.25
-		Bayesian_Model._epsilon = epsilon * 8.0/5
 		Bayesian_Model._set_up_exp_mech_with_gamma_SS()
 
 	exp_prob = {}
@@ -112,19 +110,51 @@ def exp_distribution_over_candidates(dataobs, prior, epsilon, mech):
 	
 	return exp_prob
 
-
-
-def get_steps(dataobs, prior, epsilon):
+def exp_smooth_theoryProb(dataobs, prior, epsilon, gamma):
 	n = sum(dataobs)
-	# Bayesian_Model = BayesInferwithDirPrior(prior, n, epsilon)
-	# Bayesian_Model._set_observation(dataobs)
+	Bayesian_Model = BayesInferwithDirPrior(prior, n, epsilon, 0.1, gamma)
+	Bayesian_Model._set_observation(dataobs)
 
-	# Bayesian_Model._set_candidate_scores()
+	Bayesian_Model._set_candidate_scores()
+	Bayesian_Model._set_local_sensitivities()
+	Bayesian_Model._gamma = gamma
+	Bayesian_Model._set_up_exp_mech_with_gamma_SS()
 
-	# cpara = []
-	# for c in Bayesian_Model._candidates:
-	# 	cpara.append(str(c._minus(prior)._alphas))
+	exp_prob = {}
+
+	for i in range(len(Bayesian_Model._candidates)):
+		z = Bayesian_Model._candidates[i]._pointwise_sub(prior)
+		exp_prob[list2key(z._alphas)] = Bayesian_Model._gamma_SS_probabilities[i]
 	
+	return exp_prob
+
+
+def exp_distribution_vs_gammas(dataobs, prior, epsilon, gammas):
+	probs = []
+	# keys = get_steps_opt(dataobs, prior, epsilon)
+	for g in gammas:
+		probdict = exp_smooth_theoryProb(dataobs, prior, epsilon, g)
+		probs.append(probdict)
+		print g, probs
+		# prob = list_of_map(keys, probdict)
+		# probs.append((keys, prob))
+	
+	return probs
+
+def get_steps_opt(dataobs, prior, epsilon):
+	n = sum(dataobs)
+	Bayesian_Model = BayesInferwithDirPrior(prior, n, epsilon)
+	Bayesian_Model._set_observation(dataobs)
+
+	Bayesian_Model._set_candidate_scores()
+	cpara = []
+	for c in Bayesian_Model._candidates:
+		cpara.append(list2key(c._minus(prior)._alphas))
+	return cpara
+
+
+def get_steps_full(dataobs, prior, epsilon):
+	n = sum(dataobs)	
 	cpara = []
 	
 	for a in range(0, n + 1):
@@ -159,7 +189,7 @@ def plot_2d(y, xstick, labels, title):
 				x_.append(x[j])
 		plt.plot(x_, y_, "o-", label=labels[i])
 	plt.xlabel(r"different dataset: $[k, n- k]$")
-	plt.xticks(x,xstick,rotation=70,fontsize=6)
+	plt.xticks(x, xstick,rotation=70,fontsize=6)
 	plt.title(title)
 	plt.legend(loc='best',fontsize=6)
 	plt.grid()
@@ -188,16 +218,22 @@ if __name__ == "__main__":
 	epsilon = 1.0
 	delta = 0.00000001
 	prior = dirichlet([1,1])
-	dataobs = [10, 10]
+	dataobs = [3, 3]
+	gammas = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
 	# datasizes = gen_datasizes((50, 200), 50)
 
-	lap_prob = lap_distribution_over_candidates(dataobs, prior, epsilon, 1.0)
-	lap_prob_2 = lap_distribution_over_candidates(dataobs, prior, epsilon, 2.0)
-	exp_prob = exp_distribution_over_candidates(dataobs, prior, epsilon, "exp")
-	exp_prob2 = exp_distribution_over_candidates(dataobs, prior, epsilon, "gamma")
-	lap3 = lap_distribution_over_candidates_naive(dataobs, prior, epsilon)
-	steps = get_steps(dataobs, prior, epsilon)
+	# lap_prob = lap_distribution_over_candidates(dataobs, prior, epsilon, 1.0)
+	# lap_prob_2 = lap_distribution_over_candidates(dataobs, prior, epsilon, 2.0)
+	# exp_prob = exp_distribution_over_candidates(dataobs, prior, epsilon, "exp")
+	# exp_prob2 = exp_distribution_over_candidates(dataobs, prior, epsilon, "gamma")
+	# lap3 = lap_distribution_over_candidates_naive(dataobs, prior, epsilon)
+	# steps = get_steps_full(dataobs, prior, epsilon)
 
-	plot_2d(list_of_map(steps, [lap_prob, lap_prob_2, lap3, exp_prob, exp_prob2]),
-		steps, [r"$\mathsf{LSHist}$", r"$\mathsf{LSDim}$", r"$\mathsf{LSDimNa}$", r"$\mathsf{EHD}$", r"$\mathsf{EHDS}$"], "prob of each candidates with data: "+str(dataobs)+", eps: " + str(epsilon))
+	# plot_2d(list_of_map(steps, [lap_prob, lap_prob_2, lap3, exp_prob, exp_prob2]),
+	# 	steps, [r"$\mathsf{LSHist}$", r"$\mathsf{LSDim}$", r"$\mathsf{LSDimNa}$", r"$\mathsf{EHD}$", r"$\mathsf{EHDS}$"], "prob of each candidates with data: "+str(dataobs)+", eps: " + str(epsilon))
+
+	probs = exp_distribution_vs_gammas(dataobs, prior, epsilon, gammas)
+	steps = get_steps_opt(dataobs, prior, epsilon)
+	plot_2d(list_of_map(steps, probs),
+		steps, gammas, "probs of smooth sensitivity with different gammas")
 

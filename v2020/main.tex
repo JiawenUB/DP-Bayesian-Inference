@@ -198,7 +198,7 @@ of the exponential mechanism}
   \STATE observed data set $\dataobs \in \mathcal{X}^n$, prior: $\dirichlet{\valpha}$, $\epsilon$
   \STATE \quad {\bf let} $\dirichlet{\valpha'}= \bys{\dataobs}{\valpha}$.   
   \STATE \quad {\bf let} $S(\dataobs)$ be the smooth sensitivity for $\dataobs$.
-  \STATE \quad {\bf set} $z=r$ with probability $\frac{\exp(\frac{\epsilon\cdot \ux{r}}{4\cdot S(\dataobs)})}{\Sigma_{r' \in \candidateset{\valpha}}\exp(\frac{\epsilon\cdot u(\dataobs, r')}{4\cdot S(\dataobs)})}$
+  \STATE \quad {\bf set} $z=r$ with probability $\frac{\exp(\frac{\epsilon\cdot \ux{r}}{2 (1 + \gamma) S(\dataobs)})}{\Sigma_{r' \in \candidateset{\valpha}}\exp(\frac{\epsilon\cdot u(\dataobs, r')}{2 (1 + \gamma) S(\dataobs)})}$
 \STATE {\bf return} $z$
   \end{algorithmic}
 \end{algorithm}

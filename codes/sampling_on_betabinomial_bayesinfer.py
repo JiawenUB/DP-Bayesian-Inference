@@ -73,7 +73,7 @@ def accuracy_VS_datasize(epsilon,delta,prior,observations,datasizes):
 	mean_error = [[],[],[],[],[],[]]
 	for i in range(len(datasizes)):
 		observation = observations[i]
-		Bayesian_Model = BayesInferwithDirPrior(prior, sum(observation), epsilon, delta)
+		Bayesian_Model = BayesInferwithDirPrior(prior, sum(observation), epsilon, delta, 0.2)
 		Bayesian_Model._set_observation(observation)
 		print("start" + str(observation))
 		Bayesian_Model._experiments(500)
@@ -93,13 +93,13 @@ def accuracy_VS_datasize(epsilon,delta,prior,observations,datasizes):
 	print('Accuracy / prior: ' + str(prior._alphas) + ", delta: " 
 		+ str(delta) + ", epsilon:" + str(epsilon))
 
-	print mean_error
+	# print mean_error
 
 	plot_mean_error(datasizes, mean_error, datasizes, 
 		"Different Datasizes", 
 		[r"$\mathsf{LSDim}$",
 		r"$\mathsf{LSHist}$",
-		r"$\mathsf{LSDimNa}$",
+		r"$\mathsf{LSZhang}$",
 		r"$\mathsf{EHDS}$",
 		r"$\mathsf{EHD}$",
 		r"$\mathsf{EHDL}$"], "")
@@ -211,6 +211,34 @@ def accuracy_VS_prior_mean(sample_size,epsilon,delta,priors,observations):
 
 	return
 	
+
+
+def accuracy_VS_gamma(epsilon,prior, data, gammas):
+	mean_error = [[]]
+	for g in gammas:
+		Bayesian_Model = BayesInferwithDirPrior(prior, sum(data), epsilon, 0.1, g)
+		Bayesian_Model._set_observation(data)
+		print("start" + str(g))
+		Bayesian_Model._experiments(1000)
+		print("finished" + str(g))
+
+		mean_error[0].append(Bayesian_Model._accuracy_mean[Bayesian_Model._keys[3]])
+
+
+	print('Accuracy / prior: ' + str(prior._alphas) + ", delta: " 
+		+ str(delta) + ", epsilon:" + str(epsilon))
+
+	# print mean_error
+
+	plot_mean_error(gammas, mean_error, gammas, 
+		"Different Gammas for Smooth Sensitivity", 
+		[r"$\mathsf{EHDS}$"], "")
+	
+	# plot_error_box(data,"Different Datasizes",datasizes,"Accuracy VS. Data Size",
+	# 	[r'$\mathcal{M}^{B}_{\mathcal{H}}$',"LapMech (sensitivity = 2)", "LapMech (sensitivity = 3)"],
+	# 	['lightblue', 'navy', 'red'])
+	return
+
 #############################################################################
 #GENERATING DATA SIZE AND CONRRESPONDING PARAMETER
 #############################################################################
@@ -238,23 +266,24 @@ if __name__ == "__main__":
 	epsilon = 0.1
 	delta = 0.00000001
 	prior = dirichlet([1,1])
-	dataset = [10,10]
+	data = [10,10]
 
 
 #############################################################################
 #SETTING UP THE PARAMETERS WHEN DOING GROUPS EXPERIMENTS
 #############################################################################
 	epsilons = numpy.arange(5, 2, 0.1)
-	datasizes = gen_datasizes((10,50),10) + gen_datasizes((100,500),100) + gen_datasizes((600,1000),200) + gen_datasizes((1000,5000),1000)#[300] #[8,12,18,24,30,36,42,44,46,48]#,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80]
+	datasizes = gen_datasizes((10,50),10) + gen_datasizes((100,500),100)# + gen_datasizes((600,1000),200) + gen_datasizes((1000,5000),1000)#[300] #[8,12,18,24,30,36,42,44,46,48]#,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80]
 	percentage = [0.5,0.5]
 	datasets = gen_datasets(percentage, datasizes)
 	priors = gen_priors([20,50], 10, 2) + gen_priors([100,200], 50, 2)# + gen_priors([200,500], 100, 2) + gen_priors([600,2000], 200, 2)
 	
-
+	gammas = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
 
 #############################################################################
 #DOING PLOTS OF ACCURACY V.S. THE DATA SIZE
 #############################################################################
+	# accuracy_VS_gamma(epsilon, prior, data, gammas)
 	
 	accuracy_VS_datasize(epsilon,delta,prior,datasets,datasizes)
 
