@@ -80,7 +80,7 @@
   \STATE \quad {\bf let} $\valpha' = \inferd{\valpha}{\vtheta}{\dataobs}$
   \STATE \quad {\bf Initialize} a vector $\tilde{\valpha} = (0, \dots, 0 )\in \mathbb{N}^{|\mathcal{X}|}$ 
   \STATE \quad {\bf For} $i = 1 \dots |\mathcal{X}| - 1$:
-  \STATE \quad \quad  {\bf let} $\tilde{\alpha_i}=\alpha_i + \lfloor{(\alpha_i' - \alpha_i)+ \lap{0}{\frac{2|\mathcal{X}|}{\epsilon}} }\rfloor^n_0$
+  \STATE \quad \quad  {\bf let} $\tilde{\alpha_i}=\alpha_i + \lfloor{(\alpha_i' - \alpha_i)+ \lap{0}{\frac{2}{\epsilon}} }\rfloor^n_0$
   \STATE {\bf return} $\tilde{\valpha}$
   \end{algorithmic}
 \end{algorithm}
@@ -567,6 +567,40 @@ By definition of $\expmech$ and $GS = \sqrt{1 - \pi/4}$, we have:
 
 Let $c = 2\sqrt{1 - \pi/4}$, we have when $n > \frac{3}{e^{-\epsilon/c}(1 - e^{-\epsilon})} \sim O(\frac{e^{\epsilon}}{1 - e^{-\epsilon}})$ $\ilapmech$ performs better than $\expmech$.
 \end{proof}
+
+
+From this theorem, we can derive with probability at most $\delta$, following utility for these mechanisms:
+\begin{center}
+ \begin{tabular}{||c| c| c||} 
+ \hline
+ Mechs  & $\hellinger$ & KL  \\ 
+ \hline\hline
+ $\ilapmech$ 
+ & $\sqrt{1 - 
+ \bigo{\frac{ n + \frac{1}{\epsilon}\ln(1/\delta) }
+          {n - \frac{1}{\epsilon}\ln(1/\delta)}}
+          ^{\frac{1}{2\epsilon}\ln(1/\delta)}
+          }$ 
+&  $\bigo{4 n\ln n}[1 - e^{-n\epsilon}] + \sqrt{-\bigo{4 n\ln n}\ln\delta}$  \\ 
+ \hline
+ $\zlapmech$ & $\sqrt{1 - 
+ \bigo{\frac{ n + \frac{1}{\epsilon}\ln \frac{1}{(2 - \delta - 2 \sqrt{1 - \delta})} }
+          {n - \frac{1}{\epsilon}\ln \frac{1}{(2 - \delta - 2 \sqrt{1 - \delta})}}}
+          ^{\frac{1}{2\epsilon}\ln \frac{1}{(2 - \delta - 2 \sqrt{1 - \delta})}}
+          }$ 
+& $\bigo{8 n\ln n}[1 - e^{-n\epsilon/2}] + \sqrt{-\bigo{8 n\ln n}\ln\delta}$   \\ 
+ \hline
+ $\expmech$ & $\sqrt{1 - 
+ \bigo{\frac{ n + \frac{n - \delta n - 1}{2}e^{-\epsilon} }
+          {n - \frac{n - \delta n - 1}{2}e^{-\epsilon}}}
+          ^{\frac{n - \delta n - 1}{2}e^{-\epsilon}}
+          }$ 
+&    \\ 
+ \hline
+ \hline
+\end{tabular}
+\end{center}
+
 
 \small{\bibliographystyle{unsrt}
 \bibliography{bayesian}}

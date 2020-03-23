@@ -188,7 +188,7 @@ def plot_2d(y, xstick, labels, title):
 				y_.append(y[i][j])
 				x_.append(x[j])
 		plt.plot(x_, y_, "o-", label=labels[i])
-	plt.xlabel(r"different dataset: $[k, n- k]$")
+	plt.xlabel(r"different dataset")
 	plt.xticks(x, xstick,rotation=70,fontsize=6)
 	plt.title(title)
 	plt.legend(loc='best',fontsize=6)
@@ -222,18 +222,18 @@ if __name__ == "__main__":
 	gammas = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
 	# datasizes = gen_datasizes((50, 200), 50)
 
-	# lap_prob = lap_distribution_over_candidates(dataobs, prior, epsilon, 1.0)
-	# lap_prob_2 = lap_distribution_over_candidates(dataobs, prior, epsilon, 2.0)
-	# exp_prob = exp_distribution_over_candidates(dataobs, prior, epsilon, "exp")
-	# exp_prob2 = exp_distribution_over_candidates(dataobs, prior, epsilon, "gamma")
-	# lap3 = lap_distribution_over_candidates_naive(dataobs, prior, epsilon)
-	# steps = get_steps_full(dataobs, prior, epsilon)
+	lap_prob = lap_distribution_over_candidates(dataobs, prior, epsilon, 1.0)
+	lap_prob_2 = lap_distribution_over_candidates(dataobs, prior, epsilon, 2.0)
+	exp_prob = exp_distribution_over_candidates(dataobs, prior, epsilon, "exp")
+	exp_prob2 = exp_distribution_over_candidates(dataobs, prior, epsilon, "gamma")
+	lap3 = lap_distribution_over_candidates_naive(dataobs, prior, epsilon)
+	steps = get_steps_full(dataobs, prior, epsilon)
 
-	# plot_2d(list_of_map(steps, [lap_prob, lap_prob_2, lap3, exp_prob, exp_prob2]),
-	# 	steps, [r"$\mathsf{LSHist}$", r"$\mathsf{LSDim}$", r"$\mathsf{LSDimNa}$", r"$\mathsf{EHD}$", r"$\mathsf{EHDS}$"], "prob of each candidates with data: "+str(dataobs)+", eps: " + str(epsilon))
+	plot_2d(list_of_map(steps, [lap_prob, lap_prob_2, lap3, exp_prob, exp_prob2]),
+		steps, [r"$\mathsf{LSHist}$", r"$\mathsf{LSDim}$", r"$\mathsf{LSDimZhang}$", r"$\mathsf{EHD}$", r"$\mathsf{EHDS}$"], "prob of each candidates with data: "+str(dataobs)+", eps: " + str(epsilon))
 
-	probs = exp_distribution_vs_gammas(dataobs, prior, epsilon, gammas)
-	steps = get_steps_opt(dataobs, prior, epsilon)
-	plot_2d(list_of_map(steps, probs),
-		steps, gammas, "probs of smooth sensitivity with different gammas")
+	# probs = exp_distribution_vs_gammas(dataobs, prior, epsilon, gammas)
+	# steps = get_steps_opt(dataobs, prior, epsilon)
+	# plot_2d(list_of_map(steps, probs),
+	# 	steps, gammas, "probs of smooth sensitivity with different gammas")
 
