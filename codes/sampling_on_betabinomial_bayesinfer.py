@@ -273,10 +273,10 @@ if __name__ == "__main__":
 #SETTING UP THE PARAMETERS WHEN DOING GROUPS EXPERIMENTS
 #############################################################################
 	epsilons = numpy.arange(5, 2, 0.1)
-	datasizes = gen_datasizes((10,50),10) + gen_datasizes((100,500),100)# + gen_datasizes((600,1000),200) + gen_datasizes((1000,5000),1000)#[300] #[8,12,18,24,30,36,42,44,46,48]#,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80]
+	datasizes = gen_datasizes((10,50),10) + gen_datasizes((100,500),100) + gen_datasizes((600,1000),200)# + gen_datasizes((1000,5000),1000)#[300] #[8,12,18,24,30,36,42,44,46,48]#,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80]
 	percentage = [0.5,0.5]
 	datasets = gen_datasets(percentage, datasizes)
-	priors = gen_priors([20,50], 10, 2) + gen_priors([100,200], 50, 2)# + gen_priors([200,500], 100, 2) + gen_priors([600,2000], 200, 2)
+	priors = gen_priors([20,50], 10, 2) + gen_priors([100,200], 50, 2) + gen_priors([200,500], 100, 2) + gen_priors([600,2000], 200, 2)
 	
 	gammas = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
 

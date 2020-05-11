@@ -353,6 +353,12 @@ Let $k = |k'|$ be the largest integer that satisfying $\hlg(\betad(\alpha, \beta
 	\Pr[\hlg(\betad(\alpha, \beta), \ilapmech(\dataobs))< t]
   = 1 - \frac{1}{2}(e^{-k\epsilon} + e^{-(k + 1)\epsilon}) \geq 1 - e^{-k\epsilon}
 \]
+%
+\[
+	\Pr[\hlg(\betad(\alpha, \beta), \lapmech(\dataobs))< t]
+  = 1 - \frac{1}{2}(e^{-k\epsilon /2} + e^{-(k + 1)\epsilon / 2}) \geq 1 - e^{-k\epsilon/2}
+\]
+%
 \[
 	\frac{2ke^{-\epsilon} + 1}{n}
 	<
@@ -370,6 +376,17 @@ Let $k = |k'|$ be the largest integer that satisfying $\hlg(\betad(\alpha, \beta
 	\frac
   	{2k + 1}
 	{n\exp(\frac{-\epsilon }{2\cdot LS(\dataobs)})}.
+\]
+\[
+  \frac
+    {2k\exp(\frac{-\epsilon }{2(1 + \gamma) S(\dataobs)}) + 1}
+  {n}
+  <
+  \Pr[\hlg(\betad(\alpha, \beta), \lexpmech(\dataobs)) < t]
+  < 
+  \frac
+    {2k + 1}
+  {n\exp(\frac{-\epsilon }{2(1 + \gamma) S(\dataobs)})}.
 \]
 \end{thm}
 }
@@ -570,8 +587,10 @@ Let $c = 2\sqrt{1 - \pi/4}$, we have when $n > \frac{3}{e^{-\epsilon/c}(1 - e^{-
 
 
 From this theorem, we can derive with probability at most $\delta$, following utility for these mechanisms:
+\begin {table}
+\caption{Comparing the Utility Bounds}
 \begin{center}
- \begin{tabular}{||c| c| c||} 
+\begin{tabular}{||c| c| c||} 
  \hline
  Mechs  & $\hellinger$ & KL  \\ 
  \hline\hline
@@ -600,7 +619,7 @@ From this theorem, we can derive with probability at most $\delta$, following ut
  \hline
 \end{tabular}
 \end{center}
-
+\end{table}
 
 \small{\bibliographystyle{unsrt}
 \bibliography{bayesian}}

@@ -218,7 +218,7 @@ if __name__ == "__main__":
 	epsilon = 1.0
 	delta = 0.00000001
 	prior = dirichlet([1,1])
-	dataobs = [3, 3]
+	dataobs = [4, 4]
 	gammas = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
 	# datasizes = gen_datasizes((50, 200), 50)
 
